@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmer Connection</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/farmer.css') }}">
+</head>
+
+<body>
+  <header>
+    <h1>Farmer Connection</h1>
+    <a href="main.html" class="back-button">Back to Main</a>
+
+  </header>
+
+  <main>
+    <!-- Sell Section -->
+    <!-- Sell Section -->
+    <section id="sell-section">
+      <h2>Sell Your Product</h2>
+      <div class="form-container">
+        <form id="product-form">
+          <input type="text" id="seller-name" placeholder="Your Name" required />
+          <input type="text" id="seller-contact" placeholder="Contact Info" required />
+          <input type="text" id="product-name" placeholder="Product Name" required />
+          <input type="text" id="product-quantity" placeholder="Quantity" required />
+          <input type="text" id="product-price" placeholder="Price" required />
+          <button type="submit">Add Product</button>
+        </form>
+      </div>
+      <ul id="product-display"></ul>
+    </section>
+
+    <!-- Buy Section -->
+    <section id="buy-section">
+      <h2>Buy a Product</h2>
+      <div class="form-container">
+        <form id="buy-form">
+          <input type="text" id="buyer-name" placeholder="Your Name" required />
+          <input type="text" id="buyer-contact" placeholder="Contact Info" required />
+          <input type="text" id="buy-product-name" placeholder="Product Name to Buy" required />
+          <input type="text" id="buy-product-quantity" placeholder="Quantity to Buy" required />
+          <button type="submit">Send Request</button>
+        </form>
+      </div>
+      <ul id="buy-request-display"></ul>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2025 AgriTech. All rights reserved.</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/farmer.js') }}"></script>
+</body>
+
+</html>

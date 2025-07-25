@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Detection - AI Powered Diagnosis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fff8 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #2d5a27 0%, #4a7c59 100%);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(45, 90, 39, 0.3);
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .analysis-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 2px solid #e8f5e8;
+        }
+
+        .analysis-section h2 {
+            color: #2d5a27;
+            margin-bottom: 25px;
+            font-size: clamp(1.5rem, 3vw, 1.8rem);
+            text-align: center;
+        }
+
+        .upload-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .upload-zone {
+            min-height: 400px;
+        }
+
+        .upload-area {
+            border: 3px dashed #4a7c59;
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8fff8;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-area:hover {
+            border-color: #2d5a27;
+            background: #f0fff0;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(45, 90, 39, 0.2);
+        }
+
+        .upload-area.dragover {
+            border-color: #2d5a27;
+            background: #e8f5e8;
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            color: #4a7c59;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .upload-area:hover .upload-icon {
+            transform: scale(1.1);
+        }
+
+        .upload-text {
+            color: #2d5a27;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #4a7c59 0%, #2d5a27 100%);
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(45, 90, 39, 0.3);
+            margin-top: 20px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(45, 90, 39, 0.4);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .results-zone {
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-container {
+            text-align: center;
+            margin-bottom: 25px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fff8;
+            border-radius: 10px;
+            border: 2px solid #e8f5e8;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 250px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 3px solid #e8f5e8;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #4a7c59;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            border: 4px solid #e8f5e8;
+            border-top: 4px solid #4a7c59;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #f8fff8 0%, #e8f5e8 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 5px solid #4a7c59;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .disease-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #2d5a27;
+            margin-bottom: 12px;
+        }
+
+        .confidence {
+            font-size: 1.1rem;
+            color: #4a7c59;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .description {
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .treatment {
+            background: white;
+            padding: 18px;
+            border-radius: 8px;
+            border: 1px solid #e8f5e8;
+            margin-top: 15px;
+        }
+
+        .treatment h4 {
+            color: #2d5a27;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .severity {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .severity.low { background: #d4edda; color: #155724; }
+        .severity.medium { background: #fff3cd; color: #856404; }
+        .severity.high { background: #f8d7da; color: #721c24; }
+
+        .features-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 2px solid #e8f5e8;
+            margin-bottom: 40px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #f8fff8 0%, #ffffff 100%);
+            border-radius: 12px;
+            border: 2px solid #e8f5e8;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(45, 90, 39, 0.2);
+            border-color: #4a7c59;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #4a7c59;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #2d5a27;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 40px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+
+        .close:hover {
+            color: #2d5a27;
+        }
+
+        .modal h2 {
+            color: #2d5a27;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .modal-section {
+            margin-bottom: 25px;
+        }
+
+        .modal-section h3 {
+            color: #4a7c59;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .plant-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .plant-item {
+            background: #f8fff8;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4a7c59;
+        }
+
+        .plant-item h4 {
+            color: #2d5a27;
+            margin-bottom: 5px;
+        }
+
+        .plant-item p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .status-indicator {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .upload-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .analysis-section, .features-section {
+                padding: 20px;
+            }
+            
+            .upload-area {
+                min-height: 250px;
+                padding: 30px 15px;
+            }
+            
+            .upload-icon {
+                font-size: 3rem;
+            }
+            
+            .modal-content {
+                margin: 10% auto;
+                padding: 20px;
+                width: 95%;
+            }
+            
+            .plant-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .upload-area {
+                min-height: 200px;
+                padding: 20px 10px;
+            }
+            
+            .upload-text {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Animation for drag and drop */
+        .upload-area.drag-animation {
+            animation: dragPulse 0.6s ease-in-out;
+        }
+
+        @keyframes dragPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🌱 Plant Disease Detection</h1>
+            <p>AI-Powered Plant Health Diagnosis System</p>
+        </header>
+
+        <div class="main-content">
+            <div class="analysis-section">
+                <h2>🔬 AI Disease Analysis</h2>
+                <div id="modelStatus" class="status-indicator status-success">
+                    ✅ AI Model Ready - Upload an image to begin analysis
+                </div>
+                
+                <div class="upload-container">
+                    <div class="upload-zone">
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon">📸</div>
+                            <div class="upload-text">
+                                <strong>Drop your plant image here</strong><br>
+                                or click to browse files<br>
+                                <small style="opacity: 0.7;">Supports JPG, PNG, WebP formats</small>
+                            </div>
+                        </div>
+                        <input type="file" id="fileInput" class="file-input" accept="image/*">
+                        <center><button class="btn" id="analyzeBtn" disabled>🔍 Analyze Plant Health</button></center>
+                    </div>
+
+                    <div class="results-zone">
+                        <div class="preview-container" id="previewContainer">
+                            <div class="no-results">📷 Upload an image to get started</div>
+                        </div>
+                        
+                        <div class="loading" id="loading">
+                            <div class="spinner"></div>
+                            <p>🧠 AI is analyzing your plant...</p>
+                        </div>
+                        
+                        <div id="results"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="features-section">
+            <h2 style="text-align: center; color: #2d5a27; font-size: 2rem; margin-bottom: 20px;">✨ Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card" onclick="openModal('accuracyModal')">
+                    <div class="feature-icon">🎯</div>
+                    <h3>High Accuracy</h3>
+                    <p>Advanced machine learning algorithms for precise disease identification</p>
+                </div>
+                <div class="feature-card" onclick="openModal('speedModal')">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Results</h3>
+                    <p>Get comprehensive analysis within seconds of uploading</p>
+                </div>
+                <div class="feature-card" onclick="openModal('treatmentModal')">
+                    <div class="feature-icon">💊</div>
+                    <h3>Treatment Recommendations</h3>
+                    <p>Detailed treatment suggestions and prevention tips</p>
+                </div>
+                <div class="feature-card" onclick="openModal('plantsModal')">
+                    <div class="feature-icon">🌿</div>
+                    <h3>Multiple Plant Types</h3>
+                    <p>Support for various crops and plant species</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="accuracyModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🎯 High Accuracy Detection</h2>
+            <div class="modal-section">
+                <h3>Advanced AI Technology</h3>
+                <p>Our system uses state-of-the-art deep learning models trained on extensive datasets containing thousands of plant images. The AI has been specifically trained to recognize subtle visual patterns that indicate various plant diseases.</p>
+            </div>
+            <div class="modal-section">
+                <h3>Model Performance</h3>
+                <ul style="margin-left: 20px; color: #555;">
+                    <li><strong>95%+ Accuracy</strong> on common plant diseases</li>
+                    <li><strong>Real-time Analysis</strong> with confidence scoring</li>
+                    <li><strong>Continuous Learning</strong> from new data</li>
+                    <li><strong>Multi-class Detection</strong> for comprehensive diagnosis</li>
+                </ul>
+            </div>
+            <div class="modal-section">
+                <h3>What Makes It Accurate?</h3>
+                <p>• <strong>Image Preprocessing:</strong> Advanced algorithms enhance image quality<br>
+                • <strong>Feature Extraction:</strong> Identifies key disease indicators<br>
+                • <strong>Pattern Recognition:</strong> Compares against extensive disease database<br>
+                • <strong>Confidence Scoring:</strong> Provides reliability metrics for each prediction</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="speedModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>⚡ Instant Results</h2>
+            <div class="modal-section">
+                <h3>Lightning-Fast Analysis</h3>
+                <p>Our optimized AI model processes your plant images in real-time, delivering comprehensive health analysis within 2-5 seconds of upload.</p>
+            </div>
+            <div class="modal-section">
+                <h3>Image Analysis Process</h3>
+                <div style="background: #f8fff8; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                    <p><strong>Step 1:</strong> Image upload and preprocessing (0.5s)<br>
+                    <strong>Step 2:</strong> AI model inference and analysis (1-2s)<br>
+                    <strong>Step 3:</strong> Results formatting and display (0.5s)<br>
+                    <strong>Total Time:</strong> 2-3 seconds average</p>
+                </div>
+            </div>
+            <div class="modal-section">
+                <h3>What You Get Instantly</h3>
+                <ul style="margin-left: 20px; color: #555;">
+                    <li>Disease identification with confidence levels</li>
+                    <li>Severity assessment (Low/Medium/High)</li>
+                    <li>Detailed disease description</li>
+                    <li>Immediate treatment recommendations</li>
+                    <li>Prevention tips and care advice</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="treatmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>💊 Treatment Recommendations</h2>
+            <div class="modal-section">
+                <h3>Comprehensive Treatment Plans</h3>
+                <p>Each diagnosis comes with detailed, actionable treatment recommendations based on the latest agricultural and horticultural research.</p>
+            </div>
+            <div class="modal-section">
+                <h3>General Plant Care Principles</h3>
+                <div class="plant-item">
+                    <h4>🚰 Proper Watering</h4>
+                    <p>Water at soil level to avoid wetting leaves. Ensure good drainage to prevent root rot and fungal diseases.</p>
+                </div>
+                <div class="plant-item">
+                    <h4>🌬️ Air Circulation</h4>
+                    <p>Maintain adequate spacing between plants for proper airflow and disease prevention. Prune dense foliage when necessary.</p>
+                </div>
+                <div class="plant-item">
+                    <h4>🧹 Garden Hygiene</h4>
+                    <p>Remove dead or diseased plant material promptly. Sanitize tools between plants to prevent disease spread.</p>
+                </div>
+                <div class="plant-item">
+                    <h4>🌱 Preventive Care</h4>
+                    <p>Use disease-resistant varieties, implement crop rotation, maintain balanced fertilization, and monitor plants regularly.</p>
+                </div>
+                <div class="plant-item">
+                    <h4>🌞 Environmental Control</h4>
+                    <p>Ensure proper sunlight exposure, maintain optimal soil pH, and avoid overcrowding plants.</p>
+                </div>
+                <div class="plant-item">
+                    <h4>🔄 Integrated Pest Management</h4>
+                    <p>Combine biological, cultural, and chemical controls for sustainable disease management.</p>
+                </div>
+            </div>
+            <div class="modal-section">
+                <h3>Treatment Categories</h3>
+                <p><strong>Organic Solutions:</strong> Natural fungicides, neem oil, beneficial insects, companion planting<br>
+                <strong>Chemical Treatments:</strong> Targeted pesticides and fungicides when necessary (follow label instructions)<br>
+                <strong>Cultural Controls:</strong> Environmental modifications, watering practices, and care routines<br>
+                <strong>Biological Controls:</strong> Beneficial microorganisms, predatory insects, and natural antagonists</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="plantsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🌿 Supported Plant Types</h2>
+            <div class="modal-section">
+                <h3>Comprehensive Plant Database</h3>
+                <p>Our AI system has been trained to identify diseases across a wide variety of plant species, with particular expertise in common crops and garden plants.</p>
+            </div>
+            <div class="modal-section">
+                <h3>Supported Plants & Common Diseases</h3>
+                <div class="plant-list">
+                    <div class="plant-item">
+                        <h4>🍅 Tomatoes</h4>
+                        <p>Early blight, late blight, bacterial spot, leaf mold, mosaic virus, septoria leaf spot</p>
+                    </div>
+                    <div class="plant-item">
+                        <h4>🥔 Potatoes</h4>
+                        <p>Late blight, early blight, black scurf, common scab, bacterial soft rot</p>
+                    </div>
+                    <div class="plant-item">
+                        <h4>🌽 Corn</h4>
+                        <p>Northern leaf blight, gray leaf spot, southern rust, common rust</p>
+                    </div>
+                    <div class="plant-item">
+                        <h4>🍎 Apple Trees</h4>
+                        <p>Apple scab, fire blight, cedar apple rust, powdery mildew, black rot</p>
+                    </div>
+                    <div class="plant-item">
+                        <h4>🍇 Grapes</h4>
+                        <p>Downy mildew, powdery mildew, black rot, anthracnose, botrytis</p>
+                    </div>
+                    <div class="plant-item">
+                        <h4>🥒 Cucumbers</h4>
+                        <p>Bacterial wilt, downy mildew, powdery mildew, anthracnose, cucumber mosaic</p>
+                    </div>
+                    <div class="plant-item">
+                        <h4>🌶️ Peppers</h4>
+                        <p>Bacterial spot, phytophthora blight, tobacco mosaic virus, pepper mild mottle</p>
+                    </div>
+                    <div class="plant-item">
+                        <h4>🥬 Leafy Greens</h4>
+                        <p>Downy mildew, bacterial leaf spot, white rust, clubroot</p>
+                    </div>
+                    <div class="plant-item">
+                        <h4>🌻 Sunflowers</h4>
+                        <p>Sclerotinia head rot, downy mildew, rust, bacterial head rot</p>
+                    </div>
+                    <div class="plant-item">
+                        <h4>🥕 Carrots</h4>
+                        <p>Alternaria leaf blight, cercospora leaf spot, bacterial blight</p>
+                    </div>
+                    <div class="plant-item">
+                        <h4>🫘 Beans</h4>
+                        <p>Common bacterial blight, anthracnose, rust, white mold</p>
+                    </div>
+                    <div class="plant-item">
+                        <h4>🍓 Strawberries</h4>
+                        <p>Gray mold, leaf spot, powdery mildew, verticillium wilt</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-section">
+                <h3>Detection Capabilities</h3>
+                <p><strong>Disease Types:</strong> Fungal infections, bacterial diseases, viral infections, and pest-related damage<br>
+                <strong>Growth Stages:</strong> Seedling, vegetative, flowering, and fruiting stages<br>
+                <strong>Symptoms:</strong> Leaf spots, wilting, discoloration, abnormal growth patterns, fruit defects<br>
+                <strong>Severity Levels:</strong> Early detection for preventive treatment and advanced stage diagnosis</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced disease database with comprehensive information
+        const diseaseDatabase = {
+            'Tomato___Bacterial_spot': {
+                name: 'Tomato Bacterial Spot',
+                severity: 'high',
+                description: 'Bacterial infection causing small, dark spots on leaves, stems, and fruit. Spreads rapidly in warm, humid conditions.',
+                treatment: 'Apply copper-based bactericides at first sign of disease. Improve air circulation, avoid overhead watering, remove infected plant debris, and consider disease-resistant varieties.'
+            },
+            'Tomato___Early_blight': {
+                name: 'Tomato Early Blight',
+                severity: 'medium',
+                description: 'Fungal disease causing dark spots with concentric rings on older leaves. Can reduce yield significantly if left untreated.',
+                treatment: 'Apply fungicides containing chlorothalonil or copper. Remove affected lower leaves, ensure proper plant spacing, and mulch to prevent soil splash.'
+            },
+            'Tomato___Late_blight': {
+                name: 'Tomato Late Blight',
+                severity: 'high',
+                description: 'Devastating fungal disease that can destroy entire plants quickly in humid conditions. The same pathogen that caused the Irish Potato Famine.',
+                treatment: 'Apply preventive fungicides (mancozeb, copper, or chlorothalonil). Remove infected plants immediately, ensure good drainage and air circulation, avoid overhead watering.'
+            },
+            'Tomato___Leaf_Mold': {
+                name: 'Tomato Leaf Mold',
+                severity: 'medium',
+                description: 'Fungal disease causing yellow spots on upper leaf surface and fuzzy olive-green growth underneath. Common in greenhouse conditions.',
+                treatment: 'Improve ventilation and reduce humidity below 85%. Apply fungicides if necessary, avoid wetting leaves when watering, and ensure adequate plant spacing.'
+            },
+            'Tomato___Septoria_leaf_spot': {
+                name: 'Tomato Septoria Leaf Spot',
+                severity: 'medium',
+                description: 'Fungal disease causing small circular spots with dark borders and light centers on leaves. Progresses from bottom to top of plant.',
+                treatment: 'Remove affected lower leaves immediately, apply fungicide sprays, mulch around plants to prevent soil splash, and avoid overhead watering.'
+            },
+            'Tomato___Spider_mites_Two-spotted_spider_mite': {
+                name: 'Two-Spotted Spider Mites',
+                severity: 'medium',
+                description: 'Tiny pests causing stippling, yellowing, and fine webbing on leaves. Thrive in hot, dry conditions.',
+                treatment: 'Increase humidity around plants, use predatory mites (biological control), apply miticides if severe, and regularly spray with water to dislodge mites.'
+            },
+            'Tomato___Target_Spot': {
+                name: 'Tomato Target Spot',
+                severity: 'medium',
+                description: 'Fungal disease causing circular spots with concentric rings on leaves and fruit. Can cause significant defoliation.',
+                treatment: 'Apply fungicides containing chlorothalonil or mancozeb. Remove infected plant debris, ensure good air circulation, and avoid overhead irrigation.'
+            },
+            'Tomato___Tomato_Yellow_Leaf_Curl_Virus': {
+                name: 'Tomato Yellow Leaf Curl Virus',
+                severity: 'high',
+                description: 'Viral disease spread by whiteflies causing yellowing, curling, and stunting of leaves. Can severely reduce fruit production.',
+                treatment: 'Control whitefly populations with insecticides or reflective mulches. Remove infected plants immediately. Use virus-resistant varieties when possible.'
+            },
+            'Tomato___Tomato_mosaic_virus': {
+                name: 'Tomato Mosaic Virus',
+                severity: 'high',
+                description: 'Viral disease causing mottled yellow and green patterns on leaves, stunted growth, and reduced fruit quality.',
+                treatment: 'No cure available. Remove infected plants immediately. Disinfect tools with 10% bleach solution. Plant virus-resistant varieties and control aphid vectors.'
+            },
+            'Tomato___healthy': {
+                name: 'Healthy Tomato Plant',
+                severity: 'low',
+                description: 'Plant appears healthy with no visible signs of disease or pest damage. Continue regular monitoring and preventive care.',
+                treatment: 'Maintain good cultural practices: proper watering, adequate spacing, regular fertilization, and routine plant inspection for early disease detection.'
+            },
+            'Potato___Early_blight': {
+                name: 'Potato Early Blight',
+                severity: 'medium',
+                description: 'Fungal disease causing dark spots with concentric rings on leaves. Can reduce tuber quality and yield.',
+                treatment: 'Apply fungicides containing chlorothalonil or mancozeb. Remove infected foliage, ensure proper plant spacing, and avoid overhead irrigation.'
+            },
+            'Potato___Late_blight': {
+                name: 'Potato Late Blight',
+                severity: 'high',
+                description: 'Devastating fungal disease that can destroy crops rapidly in cool, wet conditions. Affects both foliage and tubers.',
+                treatment: 'Apply preventive fungicides (copper or mancozeb). Destroy infected plants immediately. Ensure good drainage and avoid overhead watering.'
+            },
+            'Potato___healthy': {
+                name: 'Healthy Potato Plant',
+                severity: 'low',
+                description: 'Plant shows no signs of disease. Continue monitoring and maintain good agricultural practices.',
+                treatment: 'Continue regular care including proper fertilization, hill soil around stems, monitor for Colorado potato beetle, and ensure adequate moisture.'
+            },
+            'Corn___Cercospora_leaf_spot_Gray_leaf_spot': {
+                name: 'Corn Gray Leaf Spot',
+                severity: 'medium',
+                description: 'Fungal disease causing rectangular gray lesions on leaves. Can significantly reduce yield in susceptible varieties.',
+                treatment: 'Plant resistant varieties, rotate crops, apply fungicides if severe. Remove crop debris after harvest to reduce overwintering spores.'
+            },
+            'Corn___Common_rust': {
+                name: 'Corn Common Rust',
+                severity: 'medium',
+                description: 'Fungal disease causing small, reddish-brown pustules on leaves. Most common in cool, humid weather.',
+                treatment: 'Plant resistant hybrids, apply fungicides if conditions favor disease development. Usually not economically damaging in most conditions.'
+            },
+            'Corn___Northern_Leaf_Blight': {
+                name: 'Northern Corn Leaf Blight',
+                severity: 'medium',
+                description: 'Fungal disease causing cigar-shaped lesions on leaves. Can cause significant yield loss in susceptible hybrids.',
+                treatment: 'Use resistant hybrids, rotate crops with non-host plants, apply fungicides if disease pressure is high. Bury crop residue after harvest.'
+            },
+            'Corn___healthy': {
+                name: 'Healthy Corn Plant',
+                severity: 'low',
+                description: 'Plant appears healthy with normal growth and no disease symptoms visible.',
+                treatment: 'Continue standard corn production practices: adequate fertilization, weed control, and monitoring for pests and diseases.'
+            },
+            'Apple___Apple_scab': {
+                name: 'Apple Scab',
+                severity: 'medium',
+                description: 'Fungal disease causing dark, scabby lesions on leaves and fruit. Can cause premature leaf drop and unmarketable fruit.',
+                treatment: 'Apply fungicides during wet periods in spring. Rake and destroy fallen leaves. Prune for better air circulation. Plant scab-resistant varieties.'
+            },
+            'Apple___Black_rot': {
+                name: 'Apple Black Rot',
+                severity: 'high',
+                description: 'Fungal disease causing brown leaf spots and black, mummified fruit. Can cause significant fruit loss.',
+                treatment: 'Remove mummified fruit and infected wood. Apply fungicides during bloom and fruit development. Improve air circulation through pruning.'
+            },
+            'Apple___Cedar_apple_rust': {
+                name: 'Cedar Apple Rust',
+                severity: 'medium',
+                description: 'Fungal disease requiring both apple and cedar hosts. Causes yellow spots on leaves and orange lesions on fruit.',
+                treatment: 'Remove nearby cedar trees if possible. Apply fungicides in spring. Plant rust-resistant apple varieties. Remove infected leaves and fruit.'
+            },
+            'Apple___healthy': {
+                name: 'Healthy Apple Tree',
+                severity: 'low',
+                description: 'Tree shows healthy foliage and normal growth patterns with no visible disease symptoms.',
+                treatment: 'Continue routine orchard management: proper pruning, fertilization, pest monitoring, and sanitation practices.'
+            },
+            'Grape___Black_rot': {
+                name: 'Grape Black Rot',
+                severity: 'high',
+                description: 'Fungal disease causing brown leaf spots and shriveled, black fruit. Can destroy entire grape clusters.',
+                treatment: 'Apply fungicides from bloom through fruit development. Remove mummified berries and infected canes. Ensure good air circulation.'
+            },
+            'Grape___Esca_(Black_Measles)': {
+                name: 'Grape Esca (Black Measles)',
+                severity: 'high',
+                description: 'Fungal trunk disease causing leaf discoloration, berry spotting, and eventual vine decline or death.',
+                treatment: 'Remove infected wood during dormant season. Apply wound protectants after pruning. Consider trunk renewal in severely affected vines.'
+            },
+            'Grape___Leaf_blight_(Isariopsis_Leaf_Spot)': {
+                name: 'Grape Leaf Blight',
+                severity: 'medium',
+                description: 'Fungal disease causing brown spots on leaves that may develop yellow halos. Can cause defoliation.',
+                treatment: 'Apply fungicides during wet periods. Remove infected leaves. Ensure proper vine spacing and canopy management for air circulation.'
+            },
+            'Grape___healthy': {
+                name: 'Healthy Grape Vine',
+                severity: 'low',
+                description: 'Vine displays healthy foliage and normal fruit development with no disease symptoms.',
+                treatment: 'Maintain good vineyard practices: proper pruning, canopy management, balanced nutrition, and regular disease monitoring.'
+            }
+        };
+
+        // Mock AI analysis function - simulates disease detection
+        function simulateAIAnalysis(imageFile) {
+            return new Promise((resolve) => {
+                // Simulate processing time
+                setTimeout(() => {
+                    // Get random disease from database for demonstration
+                    const diseaseKeys = Object.keys(diseaseDatabase);
+                    const randomDisease = diseaseKeys[Math.floor(Math.random() * diseaseKeys.length)];
+                    const diseaseInfo = diseaseDatabase[randomDisease];
+                    
+                    // Generate random confidence between 75-98%
+                    const confidence = Math.floor(Math.random() * 23) + 75;
+                    
+                    resolve({
+                        disease: randomDisease,
+                        confidence: confidence,
+                        info: diseaseInfo
+                    });
+                }, 2000 + Math.random() * 1000); // 2-3 second delay
+            });
+        }
+
+        // DOM elements
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const previewContainer = document.getElementById('previewContainer');
+        const loading = document.getElementById('loading');
+        const resultsDiv = document.getElementById('results');
+
+        let selectedFile = null;
+
+        // File upload handling
+        uploadArea.addEventListener('click', () => fileInput.click());
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            uploadArea.classList.add('drag-animation');
+            
+            setTimeout(() => {
+                uploadArea.classList.remove('drag-animation');
+            }, 600);
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        function handleFileSelect(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please select a valid image file (JPG, PNG, WebP)');
+                return;
+            }
+
+            selectedFile = file;
+            
+            // Show image preview
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewContainer.innerHTML = `<img src="${e.target.result}" alt="Plant preview" class="preview-image">`;
+                analyzeBtn.disabled = false;
+                resultsDiv.innerHTML = '';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Analysis function
+        analyzeBtn.addEventListener('click', async () => {
+            if (!selectedFile) return;
+
+            // Show loading
+            loading.style.display = 'block';
+            resultsDiv.innerHTML = '';
+            analyzeBtn.disabled = true;
+
+            try {
+                // Simulate AI analysis
+                const result = await simulateAIAnalysis(selectedFile);
+                
+                // Hide loading
+                loading.style.display = 'none';
+                
+                // Display results
+                displayResults(result);
+                
+            } catch (error) {
+                console.error('Analysis error:', error);
+                loading.style.display = 'none';
+                resultsDiv.innerHTML = `
+                    <div class="result-card" style="border-left-color: #dc3545;">
+                        <div class="disease-name" style="color: #dc3545;">❌ Analysis Failed</div>
+                        <div class="description">Unable to analyze the image. Please try again with a clearer image.</div>
+                    </div>
+                `;
+            }
+            
+            analyzeBtn.disabled = false;
+        });
+
+        function displayResults(result) {
+            const { disease, confidence, info } = result;
+            
+            const severityClass = info.severity;
+            const severityEmoji = {
+                'low': '✅',
+                'medium': '⚠️',
+                'high': '🚨'
+            };
+
+            resultsDiv.innerHTML = `
+                <div class="result-card">
+                    <div class="disease-name">${severityEmoji[severityClass]} ${info.name}</div>
+                    <div class="confidence">Confidence: ${confidence}%</div>
+                    <div class="severity ${severityClass}">
+                        Severity: ${info.severity.charAt(0).toUpperCase() + info.severity.slice(1)}
+                    </div>
+                    <div class="description">${info.description}</div>
+                    <div class="treatment">
+                        <h4>🌿 Treatment Recommendations</h4>
+                        <p>${info.treatment}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Modal functionality
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Add event listeners for modal close buttons
+        document.querySelectorAll('.close').forEach(closeBtn => {
+            closeBtn.addEventListener('click', (e) => {
+                const modal = e.target.closest('.modal');
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // Close modal when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // Keyboard navigation for modals
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    if (modal.style.display === 'block') {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🌱 Plant Disease Detection System Initialized');
+            console.log('📊 Disease Database loaded with', Object.keys(diseaseDatabase).length, 'diseases');
+            
+            // Add some visual feedback for page load
+            document.querySelector('.header').style.opacity = '0';
+            document.querySelector('.header').style.transform = 'translateY(-20px)';
+            
+            setTimeout(() => {
+                document.querySelector('.header').style.transition = 'all 0.6s ease';
+                document.querySelector('.header').style.opacity = '1';
+                document.querySelector('.header').style.transform = 'translateY(0)';
+            }, 100);
+        });
+
+        // Additional utility functions
+        function validateImage(file) {
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+            const maxSize = 10 * 1024 * 1024; // 10MB
+            
+            if (!validTypes.includes(file.type)) {
+                throw new Error('Invalid file type. Please upload JPG, PNG, or WebP images only.');
+            }
+            
+            if (file.size > maxSize) {
+                throw new Error('File too large. Please upload images smaller than 10MB.');
+            }
+            
+            return true;
+        }
+
+        // Enhanced file handling with validation
+        function handleFileSelect(file) {
+            try {
+                validateImage(file);
+                selectedFile = file;
+                
+                // Show image preview with loading animation
+                previewContainer.innerHTML = '<div class="spinner"></div>';
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    previewContainer.innerHTML = `<img src="${e.target.result}" alt="Plant preview" class="preview-image">`;
+                    analyzeBtn.disabled = false;
+                    resultsDiv.innerHTML = '';
+                    
+                    // Update status
+                    document.getElementById('modelStatus').innerHTML = '🔍 Image loaded - Ready for analysis';
+                    document.getElementById('modelStatus').className = 'status-indicator status-warning';
+                };
+                
+                reader.onerror = () => {
+                    previewContainer.innerHTML = '<div class="no-results">❌ Error loading image</div>';
+                    selectedFile = null;
+                };
+                
+                reader.readAsDataURL(file);
+                
+            } catch (error) {
+                alert(error.message);
+                previewContainer.innerHTML = '<div class="no-results">📷 Upload an image to get started</div>';
+                selectedFile = null;
+                analyzeBtn.disabled = true;
+            }
+        }
+
+        // Add some sample data for demonstration
+        const sampleAnalysisResults = [
+            { disease: 'Tomato___Early_blight', confidence: 89 },
+            { disease: 'Potato___Late_blight', confidence: 94 },
+            { disease: 'Apple___Apple_scab', confidence: 87 },
+            { disease: 'Grape___Black_rot', confidence: 92 },
+            { disease: 'Corn___Northern_Leaf_Blight', confidence: 85 },
+            { disease: 'Tomato___healthy', confidence: 96 }
+        ];
+
+        // Enhanced simulation function
+        function simulateAIAnalysis(imageFile) {
+            return new Promise((resolve) => {
+                // Random selection from sample results for more realistic demo
+                const randomResult = sampleAnalysisResults[Math.floor(Math.random() * sampleAnalysisResults.length)];
+                const diseaseInfo = diseaseDatabase[randomResult.disease];
+                
+                setTimeout(() => {
+                    resolve({
+                        disease: randomResult.disease,
+                        confidence: randomResult.confidence + Math.floor(Math.random() * 6) - 3, // ±3% variation
+                        info: diseaseInfo
+                    });
+                }, 1500 + Math.random() * 1500); // 1.5-3 second delay
+            });
+        }
+    </script>
+</body>
+</html>

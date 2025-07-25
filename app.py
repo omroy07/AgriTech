@@ -1,40 +1,56 @@
-from flask import Flask, render_template, request
-from utils import load_keras_model, predict_image_keras
-import os
+from flask import Flask, render_template_string, redirect, url_for, session
+from Disease_prediction.disease_blueprint import disease_bp
+from Crop_Recommendation.crop_recommendation_blueprint import crop_recommendation_bp
+from Crop_Yield_Prediction.crop_yield_app.crop_yield_blueprint import crop_yield_bp
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = r'disease/static/uploads'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+# Register blueprints
+app.register_blueprint(disease_bp)
+app.register_blueprint(crop_recommendation_bp)
+app.register_blueprint(crop_yield_bp)
 
-# Load the Keras model
-model = load_keras_model(r'disease/model.h5')
-
-# Route for homepage
+# Simple homepage with links to each module
 @app.route('/')
-def index():
-    return render_template('index.html')
+def home():
+    return render_template_string('''
+        <h1>AgriTech Unified App</h1>
+        <ul>
+            <li><a href="/disease/">Disease Prediction</a></li>
+            <li><a href="/crop-recommendation/">Crop Recommendation</a></li>
+            <li><a href="/crop-yield/">Crop Yield Prediction</a></li>
+        </ul>
+    ''')
 
-# Route for prediction
-@app.route('/predict', methods=['POST'])
-def predict():
-    if 'file' not in request.files:
-        return "No file uploaded."
-    file = request.files['file']
-    if file.filename == '':
-        return "No selected file."
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
 
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-    file.save(filepath)
+@app.route('/login')
+def login():
+    # Render your login template here
+    return render_template_string('<h2>Login Page Placeholder</h2>')
 
-    predicted_class, description = predict_image_keras(model, filepath)
+@app.route('/farmer-connection')
+def farmer_connection():
+    return render_template_string('<h2>Farmer Connection Page Placeholder</h2>')
 
-    return render_template('result.html',
-                           prediction=predicted_class,
-                           description=description,
-                           image_path=filepath)
+@app.route('/organic')
+def organic():
+    return render_template_string('<h2>Organic Farming Page Placeholder</h2>')
 
+@app.route('/shopkeeper')
+def shopkeeper():
+    return render_template_string('<h2>Shopkeeper Listings Page Placeholder</h2>')
+
+@app.route('/chat')
+def chat():
+    return render_template_string('<h2>ChatBot Page Placeholder</h2>')
+
+@app.route('/plantation')
+def plantation():
+    return render_template_string('<h2>Plantation Page Placeholder</h2>')
 
 if __name__ == '__main__':
     app.run(debug=True)

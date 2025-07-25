@@ -1,0 +1,138 @@
+/* Reset default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+/* Navbar styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2e7d32;
+  padding: 1rem 2rem;
+  color: white;
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.navbar .nav-buttons .btn {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  color: #2e7d32;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .nav-buttons .btn:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: #1b5e20;
+}
+
+/* Hero section styling */
+.hero {
+  background-image: url('images/hero-background.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: white;
+}
+
+.hero .hero-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero .hero-content p {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Carousel styling */
+.carousel {
+  overflow: hidden;
+  margin: 2rem 0;
+}
+
+.slider {
+  display: flex;
+  width: calc(250px * 6);
+  animation: scroll 20s linear infinite;
+}
+
+.slide-track {
+  display: flex;
+}
+
+.slide-track img {
+  width: 250px;
+  height: 150px;
+  object-fit: cover;
+  margin-right: 1rem;
+  border-radius: 8px;
+}
+
+/* Footer styling */
+footer {
+  background-color: #2e7d32;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: 2rem;
+}
+
+/* Keyframes for carousel animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar .nav-buttons {
+    margin-top: 1rem;
+  }
+
+  .hero .hero-content h2 {
+    font-size: 2rem;
+  }
+
+  .hero .hero-content p {
+    font-size: 1rem;
+  }
+
+  .slide-track img {
+    width: 200px;
+    height: 120px;
+  }
+}
