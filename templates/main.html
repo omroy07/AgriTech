@@ -30,19 +30,19 @@
   <main>
     <section class="grid-container">
       <div class="grid-container">
-        <a href="http://127.0.0.1:5501" class="grid-item">
+        <a href="{{ url_for('crop_recommendation.home') }}" class="grid-item">
           <img src="{{ url_for('static', filename='images/crop.avif') }}" alt="Crop Recommendation">
           <h3>Crop Recommendation</h3>
           <p>Find the best crop to cultivate based on your soil and weather conditions.</p>
         </a>
 
-        <a href="http://127.0.0.1:5502" class="grid-item">
+        <a href="{{ url_for('crop_yield.index') }}" class="grid-item">
           <img src="{{ url_for('static', filename='images/yield.avif') }}" alt="Yield Prediction">
           <h3>Yield Prediction</h3>
           <p>Predict the expected yield for different crops using advanced AI models.</p>
         </a>
 
-        <a href="disease.html" class="grid-item">
+        <a href="{{ url_for('disease.index') }}" class="grid-item">
           <img src="{{ url_for('static', filename='images/disease.avif') }}" alt="Disease Prediction">
           <h3>Disease Prediction</h3>
           <p>Detect plant diseases early and get preventive measures and treatment advice.</p>

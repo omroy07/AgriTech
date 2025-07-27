@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🌾 Crop Recommendation Result - AgriTech</title>
+  <title>🔬 Disease Prediction Result - AgriTech</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
@@ -22,13 +22,12 @@
     }
 
     .container {
-      max-width: 800px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 20px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
     }
 
     .header {
@@ -48,15 +47,42 @@
       opacity: 0.9;
     }
 
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      text-decoration: none;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .result-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+      margin-top: 20px;
+    }
+
     .result-card {
       background: white;
       border-radius: 20px;
-      padding: 50px 40px;
+      padding: 40px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       text-align: center;
       position: relative;
       overflow: hidden;
-      margin-bottom: 30px;
     }
 
     .result-card::before {
@@ -70,7 +96,7 @@
     }
 
     .result-icon {
-      font-size: 4rem;
+      font-size: 3rem;
       margin-bottom: 20px;
       color: #667eea;
     }
@@ -82,45 +108,41 @@
       font-weight: 600;
     }
 
-    .crop-name {
-      font-size: 3rem;
+    .disease-name {
+      font-size: 2.5rem;
       font-weight: 700;
       color: #667eea;
-      margin-bottom: 30px;
-      text-shadow: 2px 2px 4px rgba(102, 126, 234, 0.1);
-      padding: 20px;
+      margin-bottom: 20px;
+      padding: 15px;
       background: linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 100%);
       border-radius: 15px;
       border: 2px solid #e1e5e9;
     }
 
-    .crop-description {
+    .disease-description {
       font-size: 1.1rem;
       color: #666;
-      margin-bottom: 30px;
       line-height: 1.8;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
+      margin-bottom: 30px;
     }
 
     .action-buttons {
       display: flex;
-      gap: 20px;
+      gap: 15px;
       justify-content: center;
       flex-wrap: wrap;
     }
 
     .btn {
-      padding: 15px 30px;
+      padding: 12px 25px;
       border-radius: 12px;
       text-decoration: none;
       font-weight: 600;
-      font-size: 16px;
+      font-size: 14px;
       transition: all 0.3s ease;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .btn-primary {
@@ -148,7 +170,7 @@
       color: white;
     }
 
-    .info-section {
+    .image-section {
       background: rgba(255, 255, 255, 0.1);
       border-radius: 20px;
       padding: 30px;
@@ -157,26 +179,55 @@
       text-align: center;
     }
 
+    .image-section h3 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+    }
+
+    .uploaded-image {
+      max-width: 100%;
+      max-height: 300px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
+    }
+
+    .info-section {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      backdrop-filter: blur(10px);
+      color: white;
+      margin-top: 20px;
+    }
+
     .info-section h3 {
       font-size: 1.3rem;
       margin-bottom: 15px;
+      text-align: center;
     }
 
     .info-section p {
       opacity: 0.9;
       line-height: 1.6;
+      text-align: center;
     }
 
     @media (max-width: 768px) {
+      .result-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
       .header h1 {
         font-size: 2rem;
       }
 
-      .result-card {
+      .result-card, .image-section {
         padding: 30px 20px;
       }
 
-      .crop-name {
+      .disease-name {
         font-size: 2rem;
         padding: 15px;
       }
@@ -188,8 +239,16 @@
 
       .btn {
         width: 100%;
-        max-width: 300px;
+        max-width: 250px;
         justify-content: center;
+      }
+
+      .back-btn {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin-bottom: 20px;
+        display: inline-block;
       }
     }
 
@@ -206,35 +265,46 @@
 </head>
 <body>
   <div class="container">
+    <a href="/" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
     <div class="header">
-      <h1>🌾 Crop Recommendation Result</h1>
-      <p>Based on your soil and climate data, here's your personalized recommendation</p>
+      <h1>🔬 Disease Prediction Result</h1>
+      <p>Analysis complete! Here's what we found in your image</p>
     </div>
 
-    <div class="result-card celebration">
-      <div class="result-icon">🌱</div>
-      <div class="result-title">Recommended Crop</div>
-      <div class="crop-name">{{ crop }}</div>
-      <div class="crop-description">
-        This crop is well-suited for your soil conditions and climate. It should thrive in your environment and provide good yields.
+    <div class="result-content">
+      <div class="result-card celebration">
+        <div class="result-icon">🔍</div>
+        <div class="result-title">Detection Result</div>
+        <div class="disease-name">{{ prediction }}</div>
+        <div class="disease-description">
+          {{ description }}
+        </div>
+        
+        <div class="action-buttons">
+          <a href="/disease/" class="btn btn-primary">
+            <i class="fas fa-redo"></i> Try Another Image
+          </a>
+          <a href="/" class="btn btn-secondary">
+            <i class="fas fa-home"></i> Back to Home
+          </a>
+        </div>
       </div>
-      
-      <div class="action-buttons">
-        <a href="/crop-recommendation/" class="btn btn-primary">
-          <i class="fas fa-redo"></i> Try Another Prediction
-        </a>
-        <a href="/" class="btn btn-secondary">
-          <i class="fas fa-home"></i> Back to Home
-        </a>
+
+      <div class="image-section">
+        <h3>📸 Your Uploaded Image</h3>
+        <img src="{{ image_path }}" alt="Uploaded Plant Image" class="uploaded-image">
+        <p>This image was analyzed using our AI model</p>
       </div>
     </div>
 
     <div class="info-section">
-      <h3>💡 What's Next?</h3>
+      <h3>💡 Next Steps</h3>
       <p>
-        Now that you have your crop recommendation, consider researching optimal planting times, 
-        care requirements, and market demand for {{ crop }}. Our AI model analyzed multiple factors 
-        to provide this recommendation, but always consult with local agricultural experts for best results.
+        Based on this diagnosis, consider consulting with a local agricultural expert for treatment recommendations. 
+        Our AI model provides initial analysis, but professional guidance ensures the best care for your plants.
       </p>
     </div>
   </div>

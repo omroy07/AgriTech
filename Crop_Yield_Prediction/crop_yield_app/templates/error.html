@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🌾 Crop Recommendation Result - AgriTech</title>
+  <title>⚠️ Error - AgriTech</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
@@ -22,7 +22,7 @@
     }
 
     .container {
-      max-width: 800px;
+      max-width: 600px;
       margin: 0 auto;
       padding: 20px;
       min-height: 100vh;
@@ -48,7 +48,27 @@
       opacity: 0.9;
     }
 
-    .result-card {
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      text-decoration: none;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .error-card {
       background: white;
       border-radius: 20px;
       padding: 50px 40px;
@@ -59,68 +79,57 @@
       margin-bottom: 30px;
     }
 
-    .result-card::before {
+    .error-card::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       height: 4px;
-      background: linear-gradient(90deg, #667eea, #764ba2);
+      background: linear-gradient(90deg, #ff6b6b, #ee5a52);
     }
 
-    .result-icon {
+    .error-icon {
       font-size: 4rem;
       margin-bottom: 20px;
-      color: #667eea;
+      color: #ff6b6b;
     }
 
-    .result-title {
-      font-size: 1.5rem;
+    .error-title {
+      font-size: 1.8rem;
       margin-bottom: 20px;
       color: #333;
       font-weight: 600;
     }
 
-    .crop-name {
-      font-size: 3rem;
-      font-weight: 700;
-      color: #667eea;
-      margin-bottom: 30px;
-      text-shadow: 2px 2px 4px rgba(102, 126, 234, 0.1);
-      padding: 20px;
-      background: linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 100%);
-      border-radius: 15px;
-      border: 2px solid #e1e5e9;
-    }
-
-    .crop-description {
+    .error-message {
       font-size: 1.1rem;
       color: #666;
-      margin-bottom: 30px;
       line-height: 1.8;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      border-left: 4px solid #ff6b6b;
     }
 
     .action-buttons {
       display: flex;
-      gap: 20px;
+      gap: 15px;
       justify-content: center;
       flex-wrap: wrap;
     }
 
     .btn {
-      padding: 15px 30px;
+      padding: 12px 25px;
       border-radius: 12px;
       text-decoration: none;
       font-weight: 600;
-      font-size: 16px;
+      font-size: 14px;
       transition: all 0.3s ease;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .btn-primary {
@@ -172,13 +181,8 @@
         font-size: 2rem;
       }
 
-      .result-card {
+      .error-card {
         padding: 30px 20px;
-      }
-
-      .crop-name {
-        font-size: 2rem;
-        padding: 15px;
       }
 
       .action-buttons {
@@ -188,40 +192,41 @@
 
       .btn {
         width: 100%;
-        max-width: 300px;
+        max-width: 250px;
         justify-content: center;
       }
-    }
 
-    .celebration {
-      animation: celebrate 0.6s ease-in-out;
-    }
-
-    @keyframes celebrate {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
+      .back-btn {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin-bottom: 20px;
+        display: inline-block;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <a href="/" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
     <div class="header">
-      <h1>🌾 Crop Recommendation Result</h1>
-      <p>Based on your soil and climate data, here's your personalized recommendation</p>
+      <h1>⚠️ Oops! Something went wrong</h1>
+      <p>We encountered an issue while processing your request</p>
     </div>
 
-    <div class="result-card celebration">
-      <div class="result-icon">🌱</div>
-      <div class="result-title">Recommended Crop</div>
-      <div class="crop-name">{{ crop }}</div>
-      <div class="crop-description">
-        This crop is well-suited for your soil conditions and climate. It should thrive in your environment and provide good yields.
+    <div class="error-card">
+      <div class="error-icon">⚠️</div>
+      <div class="error-title">Error Occurred</div>
+      <div class="error-message">
+        {{ message }}
       </div>
       
       <div class="action-buttons">
-        <a href="/crop-recommendation/" class="btn btn-primary">
-          <i class="fas fa-redo"></i> Try Another Prediction
+        <a href="/crop-yield/" class="btn btn-primary">
+          <i class="fas fa-redo"></i> Try Again
         </a>
         <a href="/" class="btn btn-secondary">
           <i class="fas fa-home"></i> Back to Home
@@ -230,21 +235,12 @@
     </div>
 
     <div class="info-section">
-      <h3>💡 What's Next?</h3>
+      <h3>💡 Need Help?</h3>
       <p>
-        Now that you have your crop recommendation, consider researching optimal planting times, 
-        care requirements, and market demand for {{ crop }}. Our AI model analyzed multiple factors 
-        to provide this recommendation, but always consult with local agricultural experts for best results.
+        If you're experiencing persistent issues, please ensure all input values are valid and within the expected ranges. 
+        For technical support, contact our team.
       </p>
     </div>
   </div>
-
-  <script>
-    // Add celebration effect when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-      const resultCard = document.querySelector('.result-card');
-      resultCard.classList.add('celebration');
-    });
-  </script>
 </body>
-</html>
+</html> 

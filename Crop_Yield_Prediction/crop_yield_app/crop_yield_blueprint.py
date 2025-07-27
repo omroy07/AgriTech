@@ -6,15 +6,27 @@ import os
 crop_yield_bp = Blueprint('crop_yield', __name__, template_folder='templates', static_folder='static', url_prefix='/crop-yield')
 
 # Load model and encoders
-model = joblib.load('models/xgb_crop_model.pkl')
-crop_encoder = joblib.load('models/Crop_encoder.pkl')
-season_encoder = joblib.load('models/Season_encoder.pkl')
-state_encoder = joblib.load('models/State_encoder.pkl')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+try:
+    model = joblib.load(os.path.join(BASE_DIR, 'models', 'xgb_crop_model.pkl'))
+    crop_encoder = joblib.load(os.path.join(BASE_DIR, 'models', 'Crop_encoder.pkl'))
+    season_encoder = joblib.load(os.path.join(BASE_DIR, 'models', 'Season_encoder.pkl'))
+    state_encoder = joblib.load(os.path.join(BASE_DIR, 'models', 'State_encoder.pkl'))
+    print("Crop Yield models loaded successfully")
+except FileNotFoundError as e:
+    print(f"Warning: Model files not found: {e}")
+    print("Crop Yield prediction functionality will be limited.")
+    model = None
+    crop_encoder = None
+    season_encoder = None
+    state_encoder = None
 
 @crop_yield_bp.route('/', methods=['GET', 'POST'])
 def index():
     prediction = None
     if request.method == 'POST':
+        if model is None:
+            return render_template('error.html', message='Crop Yield prediction model is not available. Please ensure the model files are present.'), 503
         try:
             # Get form inputs
             crop = request.form['crop']
