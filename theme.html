@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriTech - Empowering Agriculture Through Technology</title>
+    <style>
+        [data-theme="dark"] {
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --bg-primary: #111827;
+            --bg-secondary: #1f2937;
+            --hero-bg: #065f46;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .theme-toggle {
+            background: var(--bg-primary);
+            border: 1px solid #e5e7eb;
+            border-radius: 50px;
+            padding: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            position: relative;
+            width: 50px;
+            height: 26px;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] .theme-toggle {
+            border-color: #374151;
+            box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.1);
+        }
+
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(45deg, #4ade80, #22c55e);
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            transform: translateX(2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        [data-theme="dark"] .theme-toggle::before {
+            transform: translateX(26px);
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
+        }
+
+        .theme-label {
+            position: absolute;
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .theme-toggle:hover .theme-label {
+            opacity: 1;
+        }
+         </style>
+         <button class="theme-toggle" onclick="toggleTheme()">
+                <span class="theme-label">Theme</span>
+            </button>
+
+             <script>
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load saved theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        });
+    </script>
+    </body>
+</html>
