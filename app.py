@@ -1,4 +1,4 @@
-from flask import Flask, render_template_string, redirect, url_for, session
+from flask import Flask, render_template_string, redirect, url_for
 import sys
 import os
 
@@ -9,21 +9,15 @@ from Crop_Yield_Prediction.crop_yield_app.crop_yield_blueprint import crop_yield
 
 app = Flask(__name__)
 
-# Register blueprints with debug info
-print("Registering blueprints...")
-print(f"Disease blueprint URL prefix: {disease_bp.url_prefix}")
-print(f"Crop Recommendation blueprint URL prefix: {crop_recommendation_bp.url_prefix}")
-print(f"Crop Yield blueprint URL prefix: {crop_yield_bp.url_prefix}")
-
-app.register_blueprint(disease_bp)
-app.register_blueprint(crop_recommendation_bp)
-app.register_blueprint(crop_yield_bp)
-
-print("All blueprints registered successfully!")
+# Register blueprints with unique URL prefixes
+app.register_blueprint(disease_bp, url_prefix='/disease')
+app.register_blueprint(crop_recommendation_bp, url_prefix='/crop-recommendation')
+app.register_blueprint(crop_yield_bp, url_prefix='/crop-yield')
 
 # Beautiful landing page with modern design
 @app.route('/')
 def home():
+    print("🎯 Home route accessed - rendering landing page")
     return render_template_string('''
     <!DOCTYPE html>
     <html lang="en">

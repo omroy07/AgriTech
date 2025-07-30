@@ -21,7 +21,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Load the PyTorch model once - Fixed path to model subdirectory
-MODEL_PATH = os.path.join(BASE_DIR, 'model', 'model.pkl')  # Changed from rf_model.pkl to model.pkl
+MODEL_PATH = os.path.join(BASE_DIR, 'model', 'rf_model.pkl')  # Temporarily use rf_model.pkl to prevent error
 try:
     model = load_keras_model(MODEL_PATH)  # This now loads PyTorch model
     model_loaded = True
