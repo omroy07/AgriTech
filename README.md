@@ -35,7 +35,9 @@ AgriTech is an innovative web platform designed to empower farmers and agricultu
 
 - **Crop Planning**  
   Plan your season with confidence and unlock your farm's true potential for a more profitable and sustainable future.
-  
+
+- **Labour Scheduling And Alerts**  
+  A platform for farmers to post job requirements, receive weather and scheme notifications, and connect with labourers efficiently.
 ---
 
 ## 🚀 Technologies Used
