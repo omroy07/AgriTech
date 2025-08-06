@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Crop Price Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <h2>Crop Price Tracker</h2>
+
+    <form method="POST">
+        <select name="crop" id="crop" required>
+            <option value="">-- Select Crop --</option>
+            {% for crop in crops %}
+                <option value="{{ crop }}">{{ crop }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="state" id="state" required>
+            <option value="">-- Select State --</option>
+        </select>
+
+        <select name="market" id="market" required>
+            <option value="">-- Select Market --</option>
+        </select>
+
+        <button type="submit">Track Prices</button>
+    </form>
+
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %} {% if result %}
+    <h3>Prices:</h3>
+    <ul>
+        {% for row in result %}
+        <li>{{ row['arrival_date'] }} | ₹{{ row['modal_price'] }} / quintal in {{ row['market'] }}, {{ row['state'] }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <script>
+        const cropSelect = document.getElementById('crop');
+        const stateSelect = document.getElementById('state');
+        const marketSelect = document.getElementById('market');
+
+        cropSelect.addEventListener('change', function() {
+            fetch('/get_states?crop=' + this.value)
+                .then(res => res.json())
+                .then(states => {
+                    stateSelect.innerHTML = '<option value="">-- Select State --</option>';
+                    states.forEach(state => {
+                        stateSelect.innerHTML += `<option value="${state}">${state}</option>`;
+                    });
+                    marketSelect.innerHTML = '<option value="">-- Select Market --</option>'; // Reset market
+                });
+        });
+
+        stateSelect.addEventListener('change', function() {
+            const crop = cropSelect.value;
+            const state = this.value;
+            fetch(`/get_markets?crop=${crop}&state=${state}`)
+                .then(res => res.json())
+                .then(markets => {
+                    marketSelect.innerHTML = '<option value="">-- Select Market --</option>';
+                    markets.forEach(market => {
+                        marketSelect.innerHTML += `<option value="${market}">${market}</option>`;
+                    });
+                });
+        });
+    </script>
+</body>
+
+</html>
