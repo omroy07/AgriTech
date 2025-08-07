@@ -237,3 +237,58 @@ footer {
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
+/* 🌙 Dark Mode Styles */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+header.dark-mode,
+nav.dark-mode,
+main.dark-mode,
+footer.dark-mode {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+/* Smooth transition */
+body, header, nav, main, footer {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover styles for buttons/links */
+a:hover, button:hover {
+  cursor: pointer;
+}
+#dark-toggle {
+  position: fixed;
+  bottom: 20px;     /* changed from top to bottom */
+  left: 20px;       /* changed from right to left */
+  z-index: 9999;
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  width: 45px;
+  height: 45px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+#dark-toggle:hover {
+  background-color: #333333;
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+#dark-toggle:hover {
+  background-color: #333333;
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+body {
+  cursor: url("leaf.png") 16 16, auto;
+}
+
