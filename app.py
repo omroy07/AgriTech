@@ -9,7 +9,12 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # Load the Keras model
-model = load_keras_model(r'disease/model.h5')
+try:
+    model = load_keras_model(r'disease/model.h5')
+except FileNotFoundError:
+    model = None
+    print("Warning: model.h5 not found, continuing without model.")
+
 
 # Route for homepage
 
@@ -27,6 +32,8 @@ def main():
 
 @app.route('/predict', methods=['POST'])
 def predict():
+    if model is None:
+        return "Model not loaded.Prediction is unavailable."
     if 'file' not in request.files:
         return "No file uploaded."
     file = request.files['file']
