@@ -18,6 +18,10 @@ model = load_keras_model(r'disease/model.h5')
 def index():
     return render_template('index.html')
 
+
+@app.route('/main')
+def main():
+    return render_template('main.html')
 # Route for prediction
 
 
