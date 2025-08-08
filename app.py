@@ -12,11 +12,15 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 model = load_keras_model(r'disease/model.h5')
 
 # Route for homepage
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
 # Route for prediction
+
+
 @app.route('/predict', methods=['POST'])
 def predict():
     if 'file' not in request.files:
