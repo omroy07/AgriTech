@@ -1,75 +1,161 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crop Price Tracker</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
+    <link rel="stylesheet" href="../static/styles.css">
+  </head>
 
-<body>
-    <h2>Crop Price Tracker</h2>
+  <body>
+    <div class="header">
+      <a href="/main.html" class="back-button">Back to Main</a>
+      <h2>🌾 Crop Price Tracker</h2>
+      <div style="width: 120px"></div>
+    </div>
 
-    <form method="POST">
-        <select name="crop" id="crop" required>
-            <option value="">-- Select Crop --</option>
+    <div class="form-container">
+      <form method="POST" id="priceForm">
+        <div class="form-row">
+          <label for="crop" class="form-label">Select Crop</label>
+          <select name="crop" id="crop" required>
+            <option value="">-- Choose your crop --</option>
             {% for crop in crops %}
-                <option value="{{ crop }}">{{ crop }}</option>
+            <option value="{{ crop }}">{{ crop }}</option>
             {% endfor %}
-        </select>
+          </select>
+        </div>
 
-        <select name="state" id="state" required>
-            <option value="">-- Select State --</option>
-        </select>
+        <div class="form-row">
+          <label for="state" class="form-label">Select State</label>
+          <select name="state" id="state" required disabled>
+            <option value="">-- First select a crop --</option>
+          </select>
+        </div>
 
-        <select name="market" id="market" required>
-            <option value="">-- Select Market --</option>
-        </select>
+        <div class="form-row">
+          <label for="market" class="form-label">Select Market</label>
+          <select name="market" id="market" required disabled>
+            <option value="">-- First select a state --</option>
+          </select>
+        </div>
 
-        <button type="submit">Track Prices</button>
-    </form>
+        <button type="submit" class="submit-button" id="submitBtn" disabled>
+          Track Prices
+        </button>
+      </form>
+    </div>
 
     {% if error %}
-    <p class="error">{{ error }}</p>
+    <div class="error"><strong>⚠️ Error:</strong> {{ error }}</div>
     {% endif %} {% if result %}
-    <h3>Prices:</h3>
-    <ul>
+    <div class="results-container">
+      <h3>📈 Latest Market Prices</h3>
+      <div class="price-grid">
         {% for row in result %}
-        <li>{{ row['arrival_date'] }} | ₹{{ row['modal_price'] }} / quintal in {{ row['market'] }}, {{ row['state'] }}</li>
+        <div class="price-card">
+          <div class="price-date">{{ row['arrival_date'] }}</div>
+          <div class="price-amount">₹{{ row['modal_price'] }} / quintal</div>
+          <div class="price-location">
+            {{ row['market'] }}, {{ row['state'] }}
+          </div>
+        </div>
         {% endfor %}
-    </ul>
+      </div>
+    </div>
     {% endif %}
 
     <script>
-        const cropSelect = document.getElementById('crop');
-        const stateSelect = document.getElementById('state');
-        const marketSelect = document.getElementById('market');
+      const cropSelect = document.getElementById("crop");
+      const stateSelect = document.getElementById("state");
+      const marketSelect = document.getElementById("market");
+      const submitBtn = document.getElementById("submitBtn");
 
-        cropSelect.addEventListener('change', function() {
-            fetch('/get_states?crop=' + this.value)
-                .then(res => res.json())
-                .then(states => {
-                    stateSelect.innerHTML = '<option value="">-- Select State --</option>';
-                    states.forEach(state => {
-                        stateSelect.innerHTML += `<option value="${state}">${state}</option>`;
-                    });
-                    marketSelect.innerHTML = '<option value="">-- Select Market --</option>'; // Reset market
-                });
+      // Enable/disable submit button based on form completion
+      function updateSubmitButton() {
+        const isFormComplete =
+          cropSelect.value && stateSelect.value && marketSelect.value;
+        submitBtn.disabled = !isFormComplete;
+      }
+
+      cropSelect.addEventListener("change", function () {
+        const loadingText = "Loading states...";
+        stateSelect.innerHTML = `<option value="">${loadingText}</option>`;
+        stateSelect.disabled = true;
+        stateSelect.classList.add("loading");
+
+        fetch("/get_states?crop=" + this.value)
+          .then((res) => res.json())
+          .then((states) => {
+            stateSelect.innerHTML =
+              '<option value="">-- Select State --</option>';
+            states.forEach((state) => {
+              stateSelect.innerHTML += `<option value="${state}">${state}</option>`;
+            });
+            stateSelect.disabled = false;
+            stateSelect.classList.remove("loading");
+
+            marketSelect.innerHTML =
+              '<option value="">-- First select a state --</option>';
+            marketSelect.disabled = true;
+            updateSubmitButton();
+          })
+          .catch((error) => {
+            console.error("Error fetching states:", error);
+            stateSelect.innerHTML =
+              '<option value="">-- Error loading states --</option>';
+            stateSelect.classList.remove("loading");
+          });
+      });
+
+      // Load markets based on selected state
+      stateSelect.addEventListener("change", function () {
+        const crop = cropSelect.value;
+        const state = this.value;
+
+        if (state) {
+          const loadingText = "Loading markets...";
+          marketSelect.innerHTML = `<option value="">${loadingText}</option>`;
+          marketSelect.disabled = true;
+          marketSelect.classList.add("loading");
+
+          fetch(`/get_markets?crop=${crop}&state=${state}`)
+            .then((res) => res.json())
+            .then((markets) => {
+              marketSelect.innerHTML =
+                '<option value="">-- Select Market --</option>';
+              markets.forEach((market) => {
+                marketSelect.innerHTML += `<option value="${market}">${market}</option>`;
+              });
+              marketSelect.disabled = false;
+              marketSelect.classList.remove("loading");
+              updateSubmitButton();
+            })
+            .catch((error) => {
+              console.error("Error fetching markets:", error);
+              marketSelect.innerHTML =
+                '<option value="">-- Error loading markets --</option>';
+              marketSelect.classList.remove("loading");
+            });
+        } else {
+          marketSelect.innerHTML =
+            '<option value="">-- First select a state --</option>';
+          marketSelect.disabled = true;
+          updateSubmitButton();
+        }
+      });
+
+      marketSelect.addEventListener("change", updateSubmitButton);
+
+      // Form submission with loading state
+      document
+        .getElementById("priceForm")
+        .addEventListener("submit", function () {
+          submitBtn.classList.add("loading");
+          submitBtn.textContent = "Fetching Prices...";
         });
 
-        stateSelect.addEventListener('change', function() {
-            const crop = cropSelect.value;
-            const state = this.value;
-            fetch(`/get_markets?crop=${crop}&state=${state}`)
-                .then(res => res.json())
-                .then(markets => {
-                    marketSelect.innerHTML = '<option value="">-- Select Market --</option>';
-                    markets.forEach(market => {
-                        marketSelect.innerHTML += `<option value="${market}">${market}</option>`;
-                    });
-                });
-        });
+      updateSubmitButton();
     </script>
-</body>
-
+  </body>
 </html>

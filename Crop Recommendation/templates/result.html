@@ -1,70 +1,550 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Crop Recommendation Result</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #a8edea, #fed6e3);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <title>Crop Recommendation Result</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
 
-    .container {
-      background-color: #fff;
-      padding: 40px 30px;
-      border-radius: 16px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-      text-align: center;
-      max-width: 400px;
-      width: 90%;
-    }
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #a8edea, #fed6e3);
+        background-size: 400% 400%;
+        animation: gradientShift 10s ease infinite;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+      }
 
-    h2 {
-      margin-bottom: 20px;
-      color: #333;
-    }
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
 
-    .result {
-      font-size: 28px;
-      font-weight: 600;
-      color: #2d8f85;
-      margin-bottom: 30px;
-    }
+      .container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(15px);
+        padding: 50px 40px;
+        border-radius: 24px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1),
+          0 15px 30px rgba(0, 0, 0, 0.05),
+          inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        text-align: center;
+        max-width: 650px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        animation: slideInUp 0.8s ease-out;
+      }
 
-    a {
-      text-decoration: none;
-      background-color: #2d8f85;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: 500;
-      transition: background-color 0.3s ease;
-    }
+      @keyframes slideInUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-    a:hover {
-      background-color: #1e6f67;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2>🌿 Recommended Crop</h2>
-    <p class="result">{{ crop }}</p>
-    <form method="post" action="/download_report" style="margin-bottom: 16px;">
-      {% for key, value in params.items() %}
-        <input type="hidden" name="{{ key }}" value="{{ value }}">
-      {% endfor %}
-      <input type="hidden" name="crop" value="{{ crop }}">
-      <button type="submit" style="background-color: #2d8f85; color: #fff; padding: 10px 20px; border: none; border-radius: 8px; font-weight: 500; cursor: pointer; margin-bottom: 10px;">⬇️ Download as PDF</button>
-    </form>
-    <a href="/">🔄 Try Again</a>
-  </div>
-</body>
+      .container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        animation: shimmer 4s infinite;
+      }
+
+      @keyframes shimmer {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+
+      h2 {
+        margin-bottom: 30px;
+        color: #333;
+        font-size: 28px;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 1;
+      }
+
+      .result-container {
+        background: linear-gradient(
+          135deg,
+          rgba(45, 143, 133, 0.1),
+          rgba(45, 143, 133, 0.05)
+        );
+        border: 2px solid rgba(45, 143, 133, 0.2);
+        border-radius: 16px;
+        padding: 30px 20px;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .result-container::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(45, 143, 133, 0.1) 0%,
+          transparent 70%
+        );
+        animation: rotate 20s linear infinite;
+      }
+
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .result {
+        font-size: 36px;
+        font-weight: 700;
+        color: #2d8f85;
+        margin-bottom: 15px;
+        text-transform: capitalize;
+        position: relative;
+        z-index: 1;
+        
+        animation: bounceIn 1.2s ease-out 0.3s both;
+      }
+
+      @keyframes bounceIn {
+        0% {
+          opacity: 0;
+          transform: scale(0.3);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.05);
+        }
+        70% {
+          transform: scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .result-subtitle {
+        color: #666;
+        font-size: 16px;
+        font-weight: 500;
+        position: relative;
+        z-index: 1;
+        opacity: 0;
+        animation: fadeInUp 0.8s ease-out 1s both;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .btn {
+        padding: 16px 24px;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+        animation: slideInLeft 0.6s ease-out both;
+      }
+
+      .btn:nth-child(1) {
+        animation-delay: 1.2s;
+      }
+      .btn:nth-child(2) {
+        animation-delay: 1.4s;
+      }
+      .btn:nth-child(3) {
+        animation-delay: 1.6s;
+      }
+
+      @keyframes slideInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #2d8f85, #1e6f67);
+        color: #fff;
+      }
+
+      .btn-primary:hover {
+        background: linear-gradient(135deg, #1e6f67, #145a52);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(45, 143, 133, 0.3),
+          0 6px 16px rgba(45, 143, 133, 0.2);
+      }
+
+      .btn-secondary {
+        background: linear-gradient(135deg, #fff, #f8f9fa);
+        color: #2d8f85;
+        border: 2px solid #2d8f85;
+      }
+
+      .btn-secondary:hover {
+        background: linear-gradient(135deg, #2d8f85, #1e6f67);
+        color: #fff;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(45, 143, 133, 0.25),
+          0 6px 16px rgba(45, 143, 133, 0.15);
+      }
+
+      .btn-back {
+        background: linear-gradient(135deg, #dc7916, #f7ab38);
+        color: #fff;
+      }
+
+      .btn-back:hover {
+        background: linear-gradient(135deg, #ef5502, #f57c00);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(245, 124, 0, 0.3),
+          0 6px 16px rgba(245, 124, 0, 0.2);
+      }
+
+      .btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.6s;
+      }
+
+      .btn:hover::before {
+        left: 100%;
+      }
+
+      .btn:active {
+        transform: translateY(-1px);
+      }
+
+      .success-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 20px;
+        background: linear-gradient(135deg, #4caf50, #45a049);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 28px;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+        }
+        70% {
+          box-shadow: 0 0 0 20px rgba(76, 175, 80, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+        }
+      }
+
+      .stats {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 25px;
+        padding-top: 25px;
+        border-top: 1px solid rgba(45, 143, 133, 0.1);
+      }
+
+      .stat {
+        text-align: center;
+        opacity: 0;
+        animation: fadeInScale 0.6s ease-out both;
+      }
+
+      .stat:nth-child(1) {
+        animation-delay: 1.8s;
+      }
+      .stat:nth-child(2) {
+        animation-delay: 2s;
+      }
+      .stat:nth-child(3) {
+        animation-delay: 2.2s;
+      }
+
+      @keyframes fadeInScale {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .stat-icon {
+        font-size: 24px;
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      .stat-text {
+        font-size: 12px;
+        color: #2d8f85;
+        font-weight: 600;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 15px;
+        }
+
+        .container {
+          padding: 40px 30px;
+          max-width: none;
+          margin: 10px;
+        }
+
+        h2 {
+          font-size: 24px;
+          margin-bottom: 25px;
+        }
+
+        .result {
+          font-size: 28px;
+          margin-bottom: 12px;
+        }
+
+        .action-buttons {
+          gap: 12px;
+        }
+
+        .btn {
+          padding: 14px 20px;
+          font-size: 15px;
+        }
+
+        .stats {
+          flex-direction: column;
+          gap: 15px;
+          align-items: center;
+        }
+
+        .stat {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .stat-icon {
+          margin-bottom: 0;
+        }
+      }
+
+      /* Loading states */
+      .loading {
+        pointer-events: none;
+        opacity: 0.7;
+      }
+
+      .loading::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 2px solid transparent;
+        border-top: 2px solid #2d8f85;
+        border-radius: 50%;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: translateY(-50%) rotate(0deg);
+        }
+        100% {
+          transform: translateY(-50%) rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="success-icon">✓</div>
+      <h2>🌿 Recommended Crop</h2>
+
+      <div class="result-container">
+        <div class="result">{{ crop }}</div>
+        <div class="result-subtitle">Best crop for your soil conditions</div>
+      </div>
+
+      <div class="action-buttons">
+        <form method="post" action="/download_report" style="width: 100%">
+          {% for key, value in params.items() %}
+          <input type="hidden" name="{{ key }}" value="{{ value }}" />
+          {% endfor %}
+          <input type="hidden" name="crop" value="{{ crop }}" />
+          <button
+            type="submit"
+            class="btn btn-primary"
+            onclick="this.classList.add('loading'); this.innerHTML='📊 Generating PDF...';"
+          >
+            📄 Download Report
+          </button>
+        </form>
+
+        <a href="/" class="btn btn-secondary"> 🔄 New Analysis </a>
+        
+        <a href="javascript:history.back()" class="btn btn-back">🔙 Back to Main</a>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-icon">🎯</span>
+          <span class="stat-text">AI Powered</span>
+        </div>
+        <div class="stat">
+          <span class="stat-icon">📊</span>
+          <span class="stat-text">Data Driven</span>
+        </div>
+        <div class="stat">
+          <span class="stat-icon">🌱</span>
+          <span class="stat-text">Optimized</span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function createConfetti() {
+        const colors = ["#4caf50", "#2d8f85", "#66bb6a", "#81c784"];
+        for (let i = 0; i < 50; i++) {
+          const confetti = document.createElement("div");
+          confetti.style.cssText = `
+          position: fixed;
+          width: 10px;
+          height: 10px;
+          background: ${colors[Math.floor(Math.random() * colors.length)]};
+          left: ${Math.random() * 100}vw;
+          animation: fall ${Math.random() * 3 + 2}s linear forwards;
+          z-index: 1000;
+          border-radius: 50%;
+        `;
+
+          document.body.appendChild(confetti);
+
+          setTimeout(() => {
+            confetti.remove();
+          }, 5000);
+        }
+      }
+
+      const style = document.createElement("style");
+      style.textContent = `
+      @keyframes fall {
+        to {
+          transform: translateY(100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+    `;
+      document.head.appendChild(style);
+
+      setTimeout(createConfetti, 1000);
+
+      document.querySelectorAll(".btn").forEach((btn) => {
+        btn.addEventListener("mouseenter", function () {
+          this.style.transform = "translateY(-3px) scale(1.02)";
+        });
+
+        btn.addEventListener("mouseleave", function () {
+          if (!this.classList.contains("loading")) {
+            this.style.transform = "translateY(0) scale(1)";
+          }
+        });
+      });
+    </script>
+  </body>
 </html>

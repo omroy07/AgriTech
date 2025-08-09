@@ -1,96 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Labour Scheduling & Alerts</title>
-    <link rel="stylesheet" href="../static/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
 
-</head>
-
-<body>
+  <body>
 
     <header>
+      <div class="header-content">
+        <i class="fas fa-users header-icon"></i>
         <h1>Labour Scheduling & Alerts</h1>
+        <a href="/main.html" class="back-button"> ← Back to Main </a>
+      </div>
     </header>
 
     <div class="container">
-        <div class="tabs">
-            <div class="tab active" data-tab="schedule">Labour Scheduling</div>
-            <div class="tab" data-tab="alerts">Alerts</div>
+      <div class="tabs">
+        <div class="tab active" data-tab="schedule">
+          <i class="fas fa-calendar-alt"></i>
+          <span>Labour Scheduling</span>
         </div>
+        <div class="tab" data-tab="alerts">
+          <i class="fas fa-bell"></i>
+          <span>Alerts</span>
+        </div>
+      </div>
 
-        <div id="schedule" class="content active">
-            <div class="card">
-                <h2>Post Labour Requirement</h2>
+      <div id="schedule" class="content active">
+        <div class="card form-card">
+          <div class="card-header">
+            <h2><i class="fas fa-plus-circle"></i> Post Labour Requirement</h2>
+            <p>Fill in the details to post your labour requirement</p>
+          </div>
 
-                <div class="form-group">
-                    <label for="workType">Type of Work</label>
-                    <select id="workType">
-                        <option value="">Select Work Type</option>
-                        <option value="Harvesting">Harvesting</option>
-                        <option value="Ploughing">Ploughing</option>
-                        <option value="Weeding">Weeding</option>
-                        <option value="Sowing">Sowing</option>
-                        <option value="Irrigation">Irrigation</option>
-                    </select>
-                </div>
+          <form id="labourForm" class="enhanced-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="workType">
+                  <i class="fas fa-hammer"></i>
+                  Type of Work
+                </label>
+                <select id="workType" required>
+                  <option value="">Select Work Type</option>
+                  <option value="Harvesting">🌾 Harvesting</option>
+                  <option value="Ploughing">🚜 Ploughing</option>
+                  <option value="Weeding">🌱 Weeding</option>
+                  <option value="Sowing">🌿 Sowing</option>
+                  <option value="Irrigation">💧 Irrigation</option>
+                  <option value="Fertilizing">🧪 Fertilizing</option>
+                  <option value="Pest Control">🐛 Pest Control</option>
+                </select>
+              </div>
 
-                <div class="form-group">
-                    <label for="peopleCount">Number of People Required</label>
-                    <input type="number" id="peopleCount" placeholder="e.g., 5">
-                </div>
-
-                <div class="form-group">
-                    <label for="date">Date Needed</label>
-                    <input type="date" id="date">
-                </div>
-
-                <div class="form-group">
-                    <label for="village">Village Name</label>
-                    <input type="text" id="village" placeholder="Enter village name">
-                </div>
-
-                <div class="form-group">
-                    <label for="location">Taluka / District</label>
-                    <input type="text" id="location" placeholder="Enter Taluka/District">
-                </div>
-
-                <div class="form-group">
-                    <label for="address">Full Address (Optional)</label>
-                    <textarea id="address" rows="3" placeholder="House no, street, landmark, etc."></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="wage">Wage per Day (in Rs.)</label>
-                    <input type="number" id="wage" placeholder="e.g., 300">
-                </div>
-
-                <div class="form-group">
-                    <label for="contact">Contact Number</label>
-                    <input type="tel" id="contact" placeholder="e.g., 9876543210">
-                </div>
-
-                <button id="postJobBtn">Post Requirement</button>
+              <div class="form-group">
+                <label for="peopleCount">
+                  <i class="fas fa-users"></i>
+                  Number of People Required
+                </label>
+                <input
+                  type="number"
+                  id="peopleCount"
+                  placeholder="e.g., 5"
+                  min="1"
+                  max="50"
+                  required
+                />
+              </div>
             </div>
 
-            <h3>Posted Jobs</h3>
-            <div id="postedJobs" class="cards-list"></div>
-        </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="date">
+                  <i class="fas fa-calendar"></i>
+                  Date Needed
+                </label>
+                <input type="date" id="date" required />
+              </div>
 
-
-        <div id="alerts" class="content">
-            <h2>Live Alerts</h2>
-            <div id="newsList" class="cards-list">
+              <div class="form-group">
+                <label for="duration">
+                  <i class="fas fa-clock"></i>
+                  Duration (Days)
+                </label>
+                <input
+                  type="number"
+                  id="duration"
+                  placeholder="e.g., 3"
+                  min="1"
+                  max="30"
+                  value="1"
+                />
+              </div>
             </div>
 
-            <h2>Job Alerts</h3>
-                <div id="dynamicJobAlerts" class="cards-list"></div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="village">
+                  <i class="fas fa-map-marker-alt"></i>
+                  Village Name
+                </label>
+                <input
+                  type="text"
+                  id="village"
+                  placeholder="Enter village name"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="location">
+                  <i class="fas fa-map"></i>
+                  Taluka / District
+                </label>
+                <input
+                  type="text"
+                  id="location"
+                  placeholder="Enter Taluka/District"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="address">
+                <i class="fas fa-home"></i>
+                Full Address (Optional)
+              </label>
+              <textarea
+                id="address"
+                rows="3"
+                placeholder="House no, street, landmark, etc."
+              ></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="wage">
+                  <i class="fas fa-rupee-sign"></i>
+                  Wage per Day (in Rs.)
+                </label>
+                <input
+                  type="number"
+                  id="wage"
+                  placeholder="e.g., 300"
+                  min="100"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="contact">
+                  <i class="fas fa-phone"></i>
+                  Contact Number
+                </label>
+                <input
+                  type="tel"
+                  id="contact"
+                  placeholder="e.g., 9876543210"
+                  pattern="[0-9]{10}"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="additionalInfo">
+                <i class="fas fa-info-circle"></i>
+                Additional Information
+              </label>
+              <textarea
+                id="additionalInfo"
+                rows="2"
+                placeholder="Any specific requirements or details..."
+              ></textarea>
+            </div>
+
+            <button type="submit" id="postJobBtn" class="enhanced-btn">
+              <i class="fas fa-paper-plane"></i>
+              Post Requirement
+            </button>
+          </form>
         </div>
+
+        <div class="section-header">
+          <h3><i class="fas fa-briefcase"></i> Posted Jobs</h3>
+          <div class="job-stats">
+            <span class="stat-badge"
+              >Active: <span id="activeJobCount">0</span></span
+            >
+          </div>
+        </div>
+        <div id="postedJobs" class="cards-list enhanced-grid"></div>
+
+        <div id="noJobsMessage" class="no-content-message">
+          <i class="fas fa-briefcase"></i>
+          <h4>No jobs posted yet</h4>
+          <p>Post your first labour requirement to get started!</p>
+        </div>
+      </div>
+
+      <div id="alerts" class="content">
+        <div class="section-header">
+          <h2><i class="fas fa-newspaper"></i> Live News & Updates</h2>
+          <button id="refreshNewsBtn" class="icon-btn">
+            <i class="fas fa-sync-alt"></i>
+          </button>
+        </div>
+        <div id="newsList" class="cards-list enhanced-grid">
+          <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading latest news...</p>
+          </div>
+        </div>
+
+        <div class="section-header">
+          <h2><i class="fas fa-exclamation-triangle"></i> Job Alerts</h2>
+          <div class="alert-stats">
+            <span class="stat-badge urgent"
+              >Urgent: <span id="urgentAlertCount">0</span></span
+            >
+            <span class="stat-badge normal"
+              >Normal: <span id="normalAlertCount">0</span></span
+            >
+          </div>
+        </div>
+        <div id="dynamicJobAlerts" class="cards-list enhanced-grid"></div>
+
+        <div id="noAlertsMessage" class="no-content-message">
+          <i class="fas fa-bell-slash"></i>
+          <h4>No active alerts</h4>
+          <p>
+            Job alerts will appear here when posted jobs are expiring or need
+            attention.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div id="toastContainer"></div>
+
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="loading-content">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Processing...</p>
+      </div>
     </div>
 
     <script src="../static/script.js"></script>
-</body>
-
+  </body>
 </html>

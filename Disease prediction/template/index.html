@@ -1,33 +1,202 @@
-<!-- <!DOCTYPE html>
-<html>
-
-<head>
-  <title>Plant Disease Detector</title>
-</head>
-
-<body>
-  <h1>Upload a Plant Leaf Image</h1>
-  <form action="/predict" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" required>
-    <input type="submit" value="Predict">
-  </form>
-</body>
-
-</html> -->
-<!-- templates/index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plant Disease Detector - AI-Powered Diagnosis</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../static/index.css" />
+  </head>
+  <body>
+    <div class="background-animation">
+      <div class="leaf"></div>
+      <div class="leaf"></div>
+      <div class="leaf"></div>
+      <div class="leaf"></div>
+      <div class="leaf"></div>
+      <div class="leaf"></div>
+      <div class="leaf"></div>
+      <div class="leaf"></div>
+    </div>
 
-<head>
-  <title>Plant Disease Detector</title>
-</head>
+    <header class="header">
+      <div class="nav-container">
+        <div class="logo">
+          <i class="fas fa-leaf"></i>
+          <span>PlantCare AI</span>
+        </div>
+      </div>
+    </header>
 
-<body>
-  <h1>Upload Plant Leaf Image</h1>
-  <form action="/predict" method="POST" enctype="multipart/form-data">
-    <input type="file" name="file" required>
-    <input type="submit" value="Predict">
-  </form>
-</body>
+    <div class="main-container">
+      <div class="hero-section">
+        <h1 class="hero-title">Plant Disease Detector</h1>
+        <p class="hero-subtitle">
+          Upload a photo of your plant leaf and get instant AI-powered disease
+          diagnosis with treatment recommendations
+        </p>
+      </div>
 
+      <div class="upload-card">
+        <form
+          class="upload-form"
+          action="/predict"
+          method="POST"
+          enctype="multipart/form-data"
+          id="upload-form"
+        >
+          <div class="file-upload-area" id="upload-area">
+            <div class="upload-content">
+              <i class="fas fa-cloud-upload-alt upload-icon"></i>
+              <div class="upload-text">Drop your plant image here</div>
+              <div class="upload-subtext">
+                or click to browse • Supports JPG, PNG, WebP
+              </div>
+            </div>
+            <input
+              type="file"
+              name="file"
+              id="file-input"
+              accept="image/*"
+              required
+            />
+          </div>
+
+          <div class="file-preview" id="file-preview">
+            <img class="preview-image" id="preview-image" alt="Preview" />
+            <div class="file-info">
+              <span id="file-name"></span>
+              <button type="button" class="remove-file" id="remove-file">
+                <i class="fas fa-times"></i> Remove
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submit-btn" disabled>
+            <div class="loading-spinner" id="loading-spinner"></div>
+            <span class="btn-text">
+              <i class="fas fa-search"></i>
+              Analyze Plant Health
+            </span>
+          </button>
+        </form>
+      </div>
+
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          <div class="feature-title">AI-Powered Analysis</div>
+          <div class="feature-description">
+            Advanced machine learning algorithms trained on thousands of plant
+            disease images
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <div class="feature-title">Instant Results</div>
+          <div class="feature-description">
+            Get accurate disease diagnosis in seconds with confidence scores
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-seedling"></i>
+          </div>
+          <div class="feature-title">Treatment Guidance</div>
+          <div class="feature-description">
+            Receive personalized care recommendations to help your plants
+            recover
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const uploadArea = document.getElementById("upload-area");
+      const fileInput = document.getElementById("file-input");
+      const filePreview = document.getElementById("file-preview");
+      const previewImage = document.getElementById("preview-image");
+      const fileName = document.getElementById("file-name");
+      const removeFile = document.getElementById("remove-file");
+      const submitBtn = document.getElementById("submit-btn");
+      const loadingSpinner = document.getElementById("loading-spinner");
+      const btnText = submitBtn.querySelector(".btn-text");
+      const uploadForm = document.getElementById("upload-form");
+
+      // Drag and drop functionality
+      uploadArea.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        uploadArea.classList.add("dragover");
+      });
+
+      uploadArea.addEventListener("dragleave", () => {
+        uploadArea.classList.remove("dragover");
+      });
+
+      uploadArea.addEventListener("drop", (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove("dragover");
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          fileInput.files = files;
+          handleFileSelect(files[0]);
+        }
+      });
+
+      // File input change handler
+      fileInput.addEventListener("change", (e) => {
+        if (e.target.files.length > 0) {
+          handleFileSelect(e.target.files[0]);
+        }
+      });
+
+      // Handle file selection
+      function handleFileSelect(file) {
+        if (file && file.type.startsWith("image/")) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            previewImage.src = e.target.result;
+            fileName.textContent = file.name;
+            filePreview.classList.add("show");
+            submitBtn.disabled = false;
+            uploadArea.style.display = "none";
+          };
+          reader.readAsDataURL(file);
+        } else {
+          alert("Please select a valid image file.");
+        }
+      }
+
+      // Remove file handler
+      removeFile.addEventListener("click", () => {
+        fileInput.value = "";
+        filePreview.classList.remove("show");
+        submitBtn.disabled = true;
+        uploadArea.style.display = "block";
+      });
+
+      // Form submission handler
+      uploadForm.addEventListener("submit", (e) => {
+        loadingSpinner.style.display = "block";
+        btnText.innerHTML = '<i class="fas fa-cog fa-spin"></i> Processing...';
+        submitBtn.disabled = true;
+      });
+
+      // Click to upload
+      uploadArea.addEventListener("click", () => {
+        fileInput.click();
+      });
+    </script>
+  </body>
 </html>
