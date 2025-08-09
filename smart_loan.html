@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Loan Guide</title>
+    <link rel="stylesheet" href="../static/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Smart Loan Guide for Farmers</h1>
+            <p>Select the type of loan you want to apply for:</p>
+        </header>
+
+        <div class="loan-cards">
+            <div class="loan-card" data-type="crop">
+                <img
+                    src="https://5.imimg.com/data5/SELLER/Default/2024/2/389292204/CR/MJ/TT/191214086/fresh-wheat-crop.webp">
+                <span>Crop Cultivation</span>
+            </div>
+            <div class="loan-card" data-type="equipment">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1DzqFJ-uX4N9Hm1AO-o88YUgG40sl6WPJTg&s"
+                    alt="Farm Equipment">
+                <span>Farm Equipment</span>
+            </div>
+            <div class="loan-card" data-type="water">
+                <img src="https://img-cdn.publive.online/fit-in/1200x675/filters:format(webp)/saur-energy/media/post_attachments/2017/06/Solar-Pump-Irrigators.jpg"
+                    alt="Water Source">
+                <span>Water Source Development</span>
+            </div>
+            <div class="loan-card" data-type="land">
+                <img src="https://genuineplots.com/images/propertytype/featured1-compressed.jpg" alt="Land Purchase">
+                <span>Land Purchase</span>
+            </div>
+        </div>
+
+        <div id="formContainer"></div>
+
+        <div id="statusMessage"></div>
+        <button id="printButton" style="display: none;">View as Printable Document</button>
+        <div id="geminiResponseContainer" class="response-box"></div>
+    </div>
+
+    <script src="../static/script.js"></script>
+</body>
+
+</html>
