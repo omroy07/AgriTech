@@ -97,11 +97,36 @@
 
         </section>
 
-    </main>
+</main>
 
-    <footer>
-        <p>&copy; 2025 AgriTech. All rights reserved.</p>
-    </footer>
+<footer>
+  <p>&copy; 2025 AgriTech. All rights reserved.</p>
+</footer>
+
+<button id="dark-toggle" title="Toggle Dark Mode">🌙</button>
+
+<script>
+  const toggleButton = document.getElementById('dark-toggle');
+  const elementsToToggle = ['body', 'header', 'nav', 'main', 'footer'];
+
+  toggleButton.addEventListener('click', () => {
+    elementsToToggle.forEach(selector => {
+      document.querySelector(selector).classList.toggle('dark-mode');
+    });
+
+    // Toggle button style
+    if (document.body.classList.contains('dark-mode')) {
+      toggleButton.innerText = '🌞'; // Sun for light mode
+      toggleButton.style.backgroundColor = '#333333';
+      toggleButton.style.color = '#ffffff';
+    } else {
+      toggleButton.innerText = '🌙'; // Moon for dark mode
+      toggleButton.style.backgroundColor = '#ffffff';
+      toggleButton.style.color = '#000000';
+    }
+  });
+</script>
+
 </body>
 
 </html>
