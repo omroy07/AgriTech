@@ -1,57 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <title>AgriTech - Feedback</title>
-  <link rel="stylesheet" href="feed-back.css" />
-</head>
-<body>
-  <header>
-    <h1>Welcome to AgriTech</h1>
-    <a href="#" class="logout-button" onclick="showLogoutConfirmation()">Logout</a>
-  </header>
-
-  <main>
-    <div class="feedback-container">
-      <h2 class="feedback-title">Share Your Feedback</h2>
-      <form id="feedbackForm">
-        <div class="form-group">
-          <label for="name">Name*</label>
-          <input type="text" id="name" name="name" required>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>AgriTech - Feedback</title>
+    <link rel="stylesheet" href="feed-back.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="page-container">
+      <header>
+        <div class="header-content">
+          <div class="logo-section">
+            <i class="fas fa-seedling logo-icon"></i>
+            <h1>AgriTech</h1>
+          </div>
+          <a href="#" class="logout-button" onclick="showLogoutConfirmation()">Logout</a>
         </div>
-        <div class="form-group">
-          <label for="email">Email (optional)</label>
-          <input type="email" id="email" name="email">
+      </header>
+
+      <main>
+        <div class="feedback-container">
+          <div class="feedback-header">
+            <i class="fas fa-comments feedback-icon"></i>
+            <h2 class="feedback-title">Share Your Feedback</h2>
+            <p class="feedback-subtitle">
+              Help us improve by sharing your thoughts and experiences
+            </p>
+          </div>
+
+          <form id="feedbackForm" class="feedback-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">
+                  <i class="fas fa-user input-icon"></i>
+                  Name <span class="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  placeholder="Enter your full name"
+                />
+                <div class="input-underline"></div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">
+                  <i class="fas fa-envelope input-icon"></i>
+                  Email <span class="optional">(optional)</span>
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="your.email@example.com"
+                />
+                <div class="input-underline"></div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="feedback">
+                  <i class="fas fa-comment-dots input-icon"></i>
+                  Your Feedback <span class="required">*</span>
+                </label>
+                <textarea
+                  id="feedback"
+                  name="feedback"
+                  rows="5"
+                  required
+                  placeholder="Tell us about your experience, suggestions for improvement, or any issues you've encountered..."
+                ></textarea>
+                <div class="input-underline"></div>
+                <div class="character-count">
+                  <span id="charCount">0</span> characters
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="submit-button">
+              <i class="fas fa-paper-plane"></i>
+              <span>Submit Feedback</span>
+              <div class="button-ripple"></div>
+            </button>
+          </form>
+
+          <div id="thankYouMessage" class="hidden thank-you-section">
+            <div class="success-animation">
+              <i class="fas fa-check-circle success-icon"></i>
+            </div>
+            <h3>Thank You for Your Feedback!</h3>
+            <p>
+              We appreciate you taking the time to share your thoughts with us.
+              Your feedback helps us create better agricultural solutions.
+            </p>
+            <div class="action-buttons">
+              <a href="main.html" class="home-button">
+                <i class="fas fa-home"></i>
+                Back to Home
+              </a>
+              <button id="viewFeedbacks" class="view-button">
+                <i class="fas fa-list"></i>
+                View All Feedbacks
+              </button>
+            </div>
+          </div>
+
+          <div id="allFeedbacks" class="hidden feedback-list-section">
+            <div class="section-header">
+              <i class="fas fa-history"></i>
+              <h3>All Feedback Submissions</h3>
+            </div>
+            <div id="feedbacksList" class="feedbacks-container"></div>
+            <div class="action-buttons">
+              <a href="main.html" class="home-button">
+                <i class="fas fa-home"></i>
+                Back to Home
+              </a>
+            </div>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="feedback">Your Feedback*</label>
-          <textarea id="feedback" name="feedback" rows="5" required></textarea>
+      </main>
+
+      <div class="floating-help">
+        <button class="help-button" title="Need help?">
+          <i class="fas fa-question"></i>
+        </button>
+        <div class="help-tooltip">
+          <p>
+            Having trouble with feedback submission? Contact our support team!
+          </p>
         </div>
-        <button type="submit" class="submit-button">Submit Feedback</button>
-      </form>
-      <!-- Change this part in your HTML -->
-    <div id="thankYouMessage" class="hidden">
-    <h3>Thank You for Your Feedback!</h3>
-    <p>We appreciate you taking the time to share your thoughts with us.</p>
-    <div class="home-button-container">
-        <a href="main.html" class="home-button">Back to Home Page</a>
-        <button id="viewFeedbacks" class="view-button">View All Feedbacks</button>
-    </div>
+      </div>
     </div>
 
-    <div id="allFeedbacks" class="hidden">
-    <h3>All Feedback Submissions</h3>
-    <div id="feedbacksList"></div>
-    <div class="home-button-container">
-        <a href="main.html" class="home-button">Back to Home Page</a>
-    </div>
-    </div>
-  </main>
+    <footer>
+      <p>
+        &copy; 2025 AgriTech. All rights reserved. | Empowering India's Farming
+        Future 🌾
+      </p>
+    </footer>
 
-  <script src="feed-back.js"></script>
-  <script>
+    <script src="feed-back.js"></script>
+    <script>
         function showLogoutConfirmation() {
             Swal.fire({
             title: 'Confirm Logout',
@@ -70,5 +170,5 @@
             });
         }
     </script>
-</body>
+  </body>
 </html>

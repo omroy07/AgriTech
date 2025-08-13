@@ -1,80 +1,434 @@
-/* styles.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-green: #1a5f1a;
+  --secondary-green: #2e8b2e;
+  --accent-green: #4caf50;
+  --light-green: #81c784;
+  --pale-green: #c8e6c9;
+  --gradient-primary: linear-gradient(
+    135deg,
+    #1a5f1a 0%,
+    #2e8b2e 50%,
+    #4caf50 100%
+  );
+  --gradient-card: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.7) 100%
+  );
+  --text-dark: #1a1a1a;
+  --text-medium: #4a4a4a;
+  --text-light: #6a6a6a;
+  --background: #f8fffe;
+  --surface: rgba(255, 255, 255, 0.95);
+  --shadow-light: 0 2px 10px rgba(26, 95, 26, 0.08);
+  --shadow-medium: 0 8px 30px rgba(26, 95, 26, 0.12);
+  --shadow-heavy: 0 20px 60px rgba(26, 95, 26, 0.15);
+  --border-radius: 16px;
+  --border-radius-large: 24px;
+  --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
 body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-  background-color: #f9f9f9;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--background);
+  color: var(--text-dark);
+  line-height: 1.7;
+  overflow-x: hidden;
 }
 
-header {
+/* === Canvas Background === */
+#particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* === Header === */
+.header {
+  position: relative;
+  background: var(--gradient-primary);
+  padding: 4rem 2rem 6rem;
   text-align: center;
-  padding: 20px;
-  background-color: #4CAF50;
-  color: white;
+  overflow: hidden;
 }
 
-section {
-  margin-bottom: 40px;
+.header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,0V50c0,0,200,50,400,50s400-50,400-50s200,50,400,50V0Z" fill="rgba(255,255,255,0.05)"/></svg>')
+    repeat-x;
+  animation: wave 20s ease-in-out infinite;
 }
 
-h2 {
-  color: #4CAF50;
-  border-bottom: 2px solid #4CAF50;
-  padding-bottom: 5px;
-}
-
-.dealer-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.dealer-card {
-  background-color: white;
-  padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.dealer-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-
-.dealer-card h3 {
-  margin-top: 0;
-  color: #333;
-}
-
-.dealer-card p {
-  margin: 5px 0;
-  color: #555;
-}
-
-@media (max-width: 600px) {
-  .dealer-grid {
-    grid-template-columns: 1fr;
+@keyframes wave {
+  0%,
+  100% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(-200px);
   }
 }
 
-/* Back Button Styling */
+.header-content {
+  position: relative;
+  z-index: 2;
+}
+
+.header h1 {
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 1s ease-out;
+}
+
+.header-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 2rem;
+  animation: fadeInUp 1s ease-out 0.2s both;
+}
+
 .back-button {
-  background-color: #4CAF50; /* Green background */
-  border: none;
-  color: white; /* White text */
-  padding: 10px 20px;
-  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
   text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 10px 0;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
+  font-weight: 500;
+  transition: var(--transition);
+  animation: fadeInUp 1s ease-out 0.4s both;
 }
 
 .back-button:hover {
-  background-color: #45a049; /* Darker green on hover */
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+/* === Main Content === */
+.main-content {
+  max-width: 1400px;
+  margin: -3rem auto 0;
+  padding: 0 2rem 4rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* === Section Styling === */
+.section {
+  background: var(--surface);
+  backdrop-filter: blur(20px);
+  border-radius: var(--border-radius-large);
+  margin-bottom: 3rem;
+  overflow: hidden;
+  box-shadow: var(--shadow-medium);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  animation: slideInUp 0.8s ease-out;
+}
+
+.section-header {
+  background: var(--gradient-primary);
+  color: white;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.section-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at 70% 20%,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+}
+
+.section-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+
+.section-icon {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* === Dealer Grid === */
+.dealer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.dealer-card {
+  background: var(--gradient-card);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: var(--shadow-light);
+}
+
+.dealer-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--gradient-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: var(--transition);
+}
+
+.dealer-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-heavy);
+  border-color: var(--accent-green);
+}
+
+.dealer-card:hover::before {
+  transform: scaleX(1);
+}
+
+.dealer-name {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--primary-green);
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.dealer-info {
+  margin-bottom: 0.8rem;
+  color: var(--text-medium);
+  font-size: 0.95rem;
+}
+
+.dealer-info strong {
+  color: var(--primary-green);
+  font-weight: 600;
+}
+
+.dealer-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--pale-green);
+  color: var(--primary-green);
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: var(--transition);
+  margin-top: 1rem;
+}
+
+.dealer-contact:hover {
+  background: var(--accent-green);
+  color: white;
+  transform: scale(1.05);
+}
+
+/* === Footer === */
+.footer {
+  background: var(--gradient-primary);
+  color: white;
+  text-align: center;
+  padding: 3rem 2rem;
+  margin-top: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--light-green),
+    var(--accent-green),
+    var(--light-green)
+  );
+}
+
+.footer-content {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.footer-text {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+}
+
+.footer-tagline {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--pale-green);
+}
+
+/* === Animations === */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === Loading States === */
+.section {
+  animation-fill-mode: both;
+}
+
+.section:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.section:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.section:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.section:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+  .header {
+    padding: 3rem 1rem 4rem;
+  }
+
+  .main-content {
+    padding: 0 1rem 3rem;
+  }
+
+  .dealer-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+
+  .dealer-card {
+    padding: 1.5rem;
+  }
+
+  .section-header {
+    padding: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .section-icon {
+    font-size: 2rem;
+  }
+}
+
+/* === Focus and Accessibility === */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+*:focus-visible {
+  outline: 2px solid var(--accent-green);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* === Search Container === */
+.search-container {
+  background: var(--surface);
+  backdrop-filter: blur(20px);
+  border-radius: var(--border-radius-large);
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-light);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.search-input {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border: 2px solid var(--pale-green);
+  border-radius: 50px;
+  font-size: 1rem;
+  background: white;
+  transition: var(--transition);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent-green);
+  box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.1);
 }

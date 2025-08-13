@@ -1,30 +1,335 @@
-<!-- <!DOCTYPE html>
-<html>
-
-<head>
-  <title>Prediction Result</title>
-</head>
-
-<body>
-  <h1>Prediction: {{ prediction }}</h1>
-  <img src="{{ image_path }}" alt="Uploaded Image" style="max-width:300px;">
-  <br><a href="/">Try Another</a>
-</body>
-
-</html> -->
-<!-- templates/result.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plant Disease Analysis Results - PlantCare AI</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../static/result.css">
+  </head>
+  <body>
+    <div class="background-animation">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
 
-<head>
-  <title>Prediction Result</title>
-</head>
+    <header class="header">
+      <div class="nav-container">
+        <div class="logo">
+          <i class="fas fa-leaf"></i>
+          <span>PlantCare AI</span>
+        </div>
+        <div class="nav-actions">
+          <a href="/" class="nav-btn">
+            <i class="fas fa-upload"></i>
+            New Analysis
+          </a>
+        </div>
+      </div>
+    </header>
 
-<body>
-  <h2>Prediction: {{ prediction }}</h2>
-  <p>{{ description }}</p>
-  <img src="{{ image_path }}" width="300">
+    <div class="main-container">
+      <div class="results-header">
+        <h1 class="results-title">Analysis Complete</h1>
+        <p class="results-subtitle">Your plant health diagnosis is ready</p>
+      </div>
 
-</body>
+      <div class="results-grid">
+        <div class="image-section">
+          <div class="image-card">
+            <img
+              src="{{ image_path }}"
+              alt="Analyzed Plant Image"
+              class="analyzed-image"
+              id="plant-image"
+            />
+            <div class="image-info">
+              <i class="fas fa-camera"></i>
+              Click image to enlarge • AI Analysis Complete
+            </div>
+          </div>
+        </div>
 
+        <div class="results-section">
+          <div class="result-card">
+            <div class="prediction-result">
+              <!-- Dynamic status indicator based on prediction -->
+              <div
+                class="status-indicator status-diseased"
+                id="status-indicator"
+              >
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>Disease Detected</span>
+              </div>
+
+              <div class="prediction-name">{{ prediction }}</div>
+
+              <div class="confidence-score">
+                <span class="confidence-text">Confidence:</span>
+                <div class="confidence-bar">
+                  <div
+                    class="confidence-fill"
+                    id="confidence-fill"
+                    style="width: 87%"
+                  ></div>
+                </div>
+                <span class="confidence-text">87%</span>
+              </div>
+            </div>
+
+            <div class="description-section">
+              <h3 class="section-title">
+                <i class="fas fa-info-circle"></i>
+                Description
+              </h3>
+              <p class="description-text">{{ description }}</p>
+            </div>
+
+            <div class="treatment-section">
+              <h3 class="section-title">
+                <i class="fas fa-medkit"></i>
+                Treatment Recommendations
+              </h3>
+              <ul class="treatment-list" id="treatment-list">
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-section">
+        <a href="/" class="action-btn btn-primary">
+          <i class="fas fa-upload"></i>
+          Analyze Another Plant
+        </a>
+        <button class="action-btn btn-secondary" onclick="window.print()">
+          <i class="fas fa-download"></i>
+          Save Report
+        </button>
+        <button class="action-btn btn-outline" onclick="shareResults()">
+          <i class="fas fa-share-alt"></i>
+          Share Results
+        </button>
+      </div>
+
+      <div class="info-cards">
+        <div class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <div class="info-card-title">Prevention Tips</div>
+          </div>
+          <div class="info-card-content">
+            Ensure proper watering, adequate sunlight, and good air circulation.
+            Regular inspection of leaves can help detect issues early.
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+            <div class="info-card-title">Follow-up Care</div>
+          </div>
+          <div class="info-card-content">
+            Monitor your plant's progress over the next 2-3 weeks. Take another
+            photo if symptoms persist or worsen.
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon">
+              <i class="fas fa-phone"></i>
+            </div>
+            <div class="info-card-title">Need Help?</div>
+          </div>
+          <div class="info-card-content">
+            For severe cases or persistent issues, consider consulting with a
+            local horticulturist or plant specialist.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image modal -->
+    <div class="modal" id="imageModal">
+      <span class="modal-close" id="modalClose">&times;</span>
+      <div class="modal-content">
+        <img
+          src=""
+          alt="Enlarged plant image"
+          class="modal-image"
+          id="modalImage"
+        />
+      </div>
+    </div>
+
+    <script>
+      // Dynamic treatment recommendations based on prediction
+      const treatmentData = {
+        Healthy: [
+          {
+            icon: "fas fa-check-circle",
+            title: "Continue Current Care",
+            description:
+              "Your plant appears healthy! Maintain current watering and lighting conditions.",
+          },
+          {
+            icon: "fas fa-eye",
+            title: "Regular Monitoring",
+            description:
+              "Keep watching for any changes in leaf color, texture, or growth patterns.",
+          },
+        ],
+        default: [
+          {
+            icon: "fas fa-tint",
+            title: "Adjust Watering",
+            description:
+              "Ensure proper drainage and avoid overwatering. Water when top soil feels dry.",
+          },
+          {
+            icon: "fas fa-cut",
+            title: "Remove Affected Areas",
+            description:
+              "Carefully remove diseased leaves with sterilized pruning shears to prevent spread.",
+          },
+          {
+            icon: "fas fa-spray-can",
+            title: "Apply Treatment",
+            description:
+              "Use appropriate fungicide or treatment as recommended for this specific condition.",
+          },
+          {
+            icon: "fas fa-seedling",
+            title: "Improve Growing Conditions",
+            description:
+              "Ensure adequate lighting, proper air circulation, and optimal temperature.",
+          },
+        ],
+      };
+
+      // Populate treatment recommendations
+      function populateTreatments(prediction) {
+        const treatmentList = document.getElementById("treatment-list");
+        const treatments =
+          treatmentData[prediction] || treatmentData["default"];
+
+        treatments.forEach((treatment, index) => {
+          const listItem = document.createElement("li");
+          listItem.className = "treatment-item";
+          listItem.style.animationDelay = `${0.8 + index * 0.1}s`;
+          listItem.innerHTML = `
+                    <div class="treatment-icon">
+                        <i class="${treatment.icon}"></i>
+                    </div>
+                    <div class="treatment-content">
+                        <h4>${treatment.title}</h4>
+                        <p>${treatment.description}</p>
+                    </div>
+                `;
+          treatmentList.appendChild(listItem);
+        });
+      }
+
+      // Update status indicator based on prediction
+      function updateStatusIndicator(prediction) {
+        const statusIndicator = document.getElementById("status-indicator");
+
+        if (prediction.toLowerCase().includes("healthy")) {
+          statusIndicator.className = "status-indicator status-healthy";
+          statusIndicator.innerHTML =
+            '<i class="fas fa-check-circle"></i><span>Healthy Plant</span>';
+        } else if (
+          prediction.toLowerCase().includes("warning") ||
+          prediction.toLowerCase().includes("mild")
+        ) {
+          statusIndicator.className = "status-indicator status-warning";
+          statusIndicator.innerHTML =
+            '<i class="fas fa-exclamation-triangle"></i><span>Attention Needed</span>';
+        } else {
+          statusIndicator.className = "status-indicator status-diseased";
+          statusIndicator.innerHTML =
+            '<i class="fas fa-exclamation-triangle"></i><span>Disease Detected</span>';
+        }
+      }
+
+      // Image modal functionality
+      const plantImage = document.getElementById("plant-image");
+      const modal = document.getElementById("imageModal");
+      const modalImage = document.getElementById("modalImage");
+      const modalClose = document.getElementById("modalClose");
+
+      plantImage.addEventListener("click", () => {
+        modal.style.display = "block";
+        modalImage.src = plantImage.src;
+      });
+
+      modalClose.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+
+      // Share functionality
+      function shareResults() {
+        if (navigator.share) {
+          navigator.share({
+            title: "Plant Disease Analysis Results",
+            text: "Check out my plant health analysis results from PlantCare AI",
+            url: window.location.href,
+          });
+        } else {
+          const url = window.location.href;
+          navigator.clipboard.writeText(url).then(() => {
+            alert("Link copied to clipboard!");
+          });
+        }
+      }
+
+      // Initialize page
+      document.addEventListener("DOMContentLoaded", () => {
+        const prediction = "{{ prediction }}";
+
+        populateTreatments(prediction);
+        updateStatusIndicator(prediction);
+
+        setTimeout(() => {
+          const confidenceFill = document.getElementById("confidence-fill");
+          confidenceFill.style.width = "87%"; 
+        }, 1000);
+      });
+
+      // Add hover effect to treatment items
+      document.querySelectorAll(".treatment-item").forEach((item) => {
+        item.addEventListener("mouseenter", () => {
+          item.style.transform = "translateX(5px)";
+        });
+
+        item.addEventListener("mouseleave", () => {
+          item.style.transform = "translateX(0)";
+        });
+      });
+    </script>
+  </body>
 </html>

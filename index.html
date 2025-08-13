@@ -1,410 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
+    />
+    <meta
+      name="description"
+      content="AgriTech - Empowering Agriculture Through Technology. Connect farmers, buyers, and suppliers in India's agricultural ecosystem."
+    />
+    <title>AgriTech - Revolutionizing Agriculture with Technology</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="firebase.js" defer type="module"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-  <meta name="description" content="AgriTech - Empowering Agriculture Through Technology. Connect farmers, buyers, and suppliers in India's agricultural ecosystem." />
-  <title>AgriTech - Revolutionizing Agriculture with Technology</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="firebase.js" defer type="module"></script>
-
-  <style>
-    /* Reset some basics */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f0f5f9;
-      color: #222;
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    /* Navbar */
-    .navbar {
-      background-color: #2a7a2a;
-      color: white;
-      padding: 1rem 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      transition: all 0.3s ease;
-    }
-
-    .navbar.scrolled {
-      padding: 0.7rem 5%;
-      background-color: rgba(42, 122, 42, 0.95);
-      backdrop-filter: blur(5px);
-    }
-
-    .logo {
-      font-weight: 600;
-      font-size: 1.8rem;
-      letter-spacing: 1.5px;
-    }
-
-    .nav-buttons {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .nav-buttons a.btn {
-      background-color: #4caf50;
-      color: white;
-      padding: 0.6rem 1.5rem;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.95rem;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 2px solid transparent;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .nav-buttons a.btn:hover,
-    .nav-buttons a.btn:focus {
-      background-color: #3a6f3a;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      outline: none;
-    }
-
-    .nav-buttons a.btn:active {
-      transform: translateY(0);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .nav-buttons a.btn:focus-visible {
-      border-color: #fff;
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
-    }
-
-    /* Hero Section */
-    .hero {
-      background: linear-gradient(135deg, #d4f1c5, #6bbf59);
-      padding: 4rem 2rem;
-      text-align: center;
-      color: #1e2f1e;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .hero-content h2 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-
-    .hero-content p {
-      font-size: 1.2rem;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .hero-content strong {
-      color: #2f622f;
-    }
-
-    /* Carousel Section */
-    .carousel {
-      background-color: white;
-      padding: 2rem 0;
-      overflow: hidden;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-    }
-
-    .slider {
-      overflow: hidden;
-      max-width: 100%;
-      margin: 0 auto;
-    }
-
-    .slide-track {
-      display: flex;
-      width: calc(300px * 6);
-      animation: scroll 20s linear infinite;
-    }
-
-    .slide-track img {
-      width: 300px;
-      height: 180px;
-      object-fit: cover;
-      margin-right: 1rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      user-select: none;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      background-color: #f5f5f5;
-    }
-
-    .slide-track img:hover {
-      transform: scale(1.02);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    /* Add fade-in animation for lazy loaded images */
-    .slide-track img[loading="lazy"] {
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .slide-track img.loaded {
-      opacity: 1;
-    }
-
-    @keyframes scroll {
-      0% {
-        transform: translateX(0);
-      }
-
-      100% {
-        transform: translateX(calc(-300px * 3 - 3rem));
-      }
-    }
-
-    /* Footer */
-    footer {
-      background-color: #2a7a2a;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      font-weight: 500;
-      font-size: 1rem;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 1024px) {
-      .hero-content h2 {
-        font-size: 2.2rem;
-      }
-
-      .navbar {
-        padding: 1rem 1.5rem;
-      }
-
-      .nav-buttons a.btn {
-        padding: 0.5rem 1.2rem;
-        font-size: 0.9rem;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .hero {
-        padding: 3rem 1.5rem;
-      }
-
-      .hero-content h2 {
-        font-size: 2rem;
-      }
-
-      .hero-content p {
-        font-size: 1.1rem;
-      }
-
-      .slide-track img {
-        width: 250px;
-        height: 150px;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .navbar {
-        flex-direction: column;
-        padding: 1rem;
-        text-align: center;
-      }
-
-      .logo {
-        margin-bottom: 1rem;
-        font-size: 1.5rem;
-      }
-
-      .nav-buttons {
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-      }
-
-      .hero-content h2 {
-        font-size: 1.8rem;
-        line-height: 1.3;
-      }
-
-      .hero-content p {
-        font-size: 1rem;
-      }
-
-      .slide-track img {
-        width: 200px;
-        height: 130px;
-      }
-    }
-
-    @media (max-width: 400px) {
-      .hero-content h2 {
-        font-size: 1.6rem;
-      }
-
-      .nav-buttons a.btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.85rem;
-      }
-
-      .slide-track img {
-        width: 180px;
-        height: 110px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <nav class="navbar">
-    <h1 class="logo">AgriTech</h1>
-    <div class="nav-buttons">
-      <a href="about.html" class="btn">About</a>
-      <a href="login.html" class="btn">Login</a>
-      <a href="register.html" class="btn">Register</a>
-    </div>
-  </nav>
-
-  <section class="hero">
-    <div class="hero-content">
-      <h2>Empowering Agriculture Through Technology</h2>
-      <p>
-        AgriTech connects <strong>Farmers</strong>, <strong>Buyers</strong>, <strong>Equipment Suppliers</strong>,
-        and <strong>Grocery Sellers</strong> to revolutionize India's agricultural ecosystem with smart solutions and
-        seamless collaboration.
-      </p>
-    </div>
-  </section>
-
-  <section class="carousel" aria-label="Featured agricultural images">
-    <div class="slider">
-      <div class="slide-track">
-        <img
-          src="images/slide1.jpeg"
-          loading="lazy"
-          alt="Farmers working in a lush green field"
-          width="300"
-          height="180"
-        />
-        <img
-          src="images/slide2.jpeg"
-          loading="lazy"
-          alt="Harvested crops ready for market"
-          width="300"
-          height="180"
-        />
-        <img
-          src="images/slide3.jpeg"
-          loading="lazy"
-          alt="Modern agricultural equipment in use"
-          width="300"
-          height="180"
-        />
-        <!-- Duplicates for infinite effect -->
-        <img
-          src="images/slide1.jpeg"
-          loading="lazy"
-          alt="Farmers working in a lush green field"
-          width="300"
-          height="180"
-        />
-        <img
-          src="images/slide2.jpeg"
-          loading="lazy"
-          alt="Harvested crops ready for market"
-          width="300"
-          height="180"
-        />
-        <img
-          src="images/slide3.jpeg"
-          loading="lazy"
-          alt="Modern agricultural equipment in use"
-          width="300"
-          height="180"
-        />
+  <body>
+    <nav class="navbar">
+      <h1 class="logo">AgriTech</h1>
+      <div class="nav-buttons">
+        <a href="about.html" class="btn">About</a>
+        <a href="login.html" class="btn">Login</a>
+        <a href="register.html" class="btn">Register</a>
       </div>
-    </div>
-  </section>
+    </nav>
 
-  <footer>
-    <p>&copy; 2025 AgriTech | Empowering India's Farming Future</p>
-  </footer>
+    <section class="hero">
+      <div class="hero-content">
+        <h2>Empowering Agriculture Through Technology</h2>
+        <p>
+          AgriTech connects <strong>Farmers</strong>, <strong>Buyers</strong>,
+          <strong>Equipment Suppliers</strong>, and
+          <strong>Grocery Sellers</strong> to revolutionize India's agricultural
+          ecosystem with smart solutions and seamless collaboration.
+        </p>
+      </div>
+    </section>
 
-  <script>
-    // Add loaded class to images when they finish loading
-    document.addEventListener('DOMContentLoaded', function() {
-      // Handle lazy loaded images
-      const lazyImages = document.querySelectorAll('img[loading="lazy"]');
-      
-      const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            img.classList.add('loaded');
-            
-            // If image is already cached, ensure it gets the loaded class
-            if (img.complete) {
-              img.classList.add('loaded');
-            } else {
-              img.addEventListener('load', () => {
-                img.classList.add('loaded');
-              });
-            }
-            
-            observer.unobserve(img);
-          }
-        });
-      });
+    <section class="features loading">
+      <div class="features-container">
+        <h2 class="features-title">Our Platform Benefits</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🌱</div>
+            <h3 class="feature-title">For Farmers</h3>
+            <p class="feature-description">
+              Direct access to buyers, fair pricing, and modern equipment rental
+              services to maximize your harvest potential.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🏪</div>
+            <h3 class="feature-title">For Buyers</h3>
+            <p class="feature-description">
+              Source fresh produce directly from verified farmers with
+              transparent pricing and quality assurance.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🚜</div>
+            <h3 class="feature-title">Equipment Suppliers</h3>
+            <p class="feature-description">
+              Expand your reach and connect with farmers who need modern
+              agricultural equipment and services.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🛒</div>
+            <h3 class="feature-title">Grocery Sellers</h3>
+            <p class="feature-description">
+              Access fresh produce supply chain with competitive rates and
+              reliable delivery systems.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      lazyImages.forEach(img => {
-        imageObserver.observe(img);
-      });
+    <section class="carousel" aria-label="Featured agricultural images">
+      <h2 class="carousel-title">Agriculture in Action</h2>
+      <div class="slider">
+        <div class="slide-track">
+          <img
+            src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=300&h=200&fit=crop"
+            loading="lazy"
+            alt="Farmers working in a lush green field"
+            width="300"
+            height="200"
+          />
+          <img
+            src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=300&h=200&fit=crop"
+            loading="lazy"
+            alt="Harvested crops ready for market"
+            width="300"
+            height="200"
+          />
+          <img
+            src="https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=300&h=200&fit=crop"
+            loading="lazy"
+            alt="Modern agricultural equipment in use"
+            width="300"
+            height="200"
+          />
+          <img
+            src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=300&h=200&fit=crop"
+            loading="lazy"
+            alt="Farmers working in a lush green field"
+            width="300"
+            height="200"
+          />
+          <img
+            src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=300&h=200&fit=crop"
+            loading="lazy"
+            alt="Harvested crops ready for market"
+            width="300"
+            height="200"
+          />
+          <img
+            src="https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=300&h=200&fit=crop"
+            loading="lazy"
+            alt="Modern agricultural equipment in use"
+            width="300"
+            height="200"
+          />
+        </div>
+      </div>
+    </section>
 
-      // Navbar scroll effect
-      const navbar = document.querySelector('.navbar');
-      let lastScrollTop = 0;
-      
-      window.addEventListener('scroll', () => {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
-        if (scrollTop > 50) {
-          navbar.classList.add('scrolled');
-        } else {
-          navbar.classList.remove('scrolled');
-        }
-        
-        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-      });
-      
-      // Initialize - check if page is already scrolled on load
-      if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-      }
-    });
-  </script>
-</body>
+    <section class="cta">
+      <div class="cta-content">
+        <h3>Ready to Transform Agriculture?</h3>
+        <p>
+          Join thousands of farmers, buyers, and suppliers who are already
+          benefiting from our platform.
+        </p>
+        <a href="register.html" class="cta-button">Get Started Today</a>
+      </div>
+    </section>
 
+    <footer>
+      <p>&copy; 2025 AgriTech | Empowering India's Farming Future</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
 </html>

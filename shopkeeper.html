@@ -1,100 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgriTech - Punjab Dealers Directory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="shopkeeper.css">
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgriTech</title>
-  <link rel="stylesheet" href="shopkeeper.css" />
-</head>
+  <body>
+    <!-- Particle Background Canvas -->
+    <canvas id="particles-js"></canvas>
 
-<body>
-  <header>
-    <h1>Punjab Agricultural Dealers Directory</h1>
-    <a href="main.html" class="back-button">Back to Main</a>
-
-  </header>
-
-  <main>
-    <!-- Pesticide & Insecticide Sellers -->
-    <section id="pesticide-sellers">
-      <h2>🐛 Pesticide & Insecticide Sellers</h2>
-      <div class="dealer-grid">
-        <div class="dealer-card">
-          <h3>M/S Gurukirpa Agro Centre</h3>
-          <p><strong>Address:</strong> Kohara, Sahnewal Road, Village Jandiale, Ludhiana</p>
-          <p><strong>Contact:</strong> +91-9XXXXXXX45</p>
-        </div>
-        <div class="dealer-card">
-          <h3>M/S Hicon Pest Control</h3>
-          <p><strong>Address:</strong> SCO 4, 2nd Floor, New Shopping Centre, Ghumar Mandi, Ludhiana</p>
-          <p><strong>Contact:</strong> +91-9XXXXXXX00</p>
-        </div>
-        <!-- Add more pesticide sellers as needed -->
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <h1>Punjab Agricultural Dealers Directory</h1>
+        <p class="header-subtitle">
+          Your comprehensive guide to agricultural solutions across Punjab
+        </p>
+        <a href="main.html" class="back-button"> ← Back to Main </a>
       </div>
-    </section>
+    </header>
 
-    <!-- Tractor Leasing & Dealers -->
-    <section id="tractor-dealers">
-      <h2>🚜 Tractor Leasing & Dealers</h2>
-      <div class="dealer-grid">
-        <div class="dealer-card">
-          <h3>Singla Tractors</h3>
-          <p><strong>Address:</strong> Malout Road, Near 132 KVA Sub Station, Abohar, Fazilka</p>
-        </div>
-        <div class="dealer-card">
-          <h3>GURKIRPA AUTOS</h3>
-          <p><strong>Address:</strong> M.K. Bypass Road, Dhuri, Sangrur</p>
-        </div>
-        <div class="dealer-card">
-          <h3>Majha Agro Traders</h3>
-          <p><strong>Address:</strong> Ground Floor, Ajnala, Amritsar Road, Bhakha Hari Singh, Amritsar - 143102</p>
-          <p><strong>Contact:</strong> +91-9855562888</p>
-        </div>
-        <!-- Add more tractor dealers as needed -->
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Search Container -->
+      <div class="search-container">
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search dealers, locations, or services..."
+          id="searchInput"
+        />
       </div>
-    </section>
 
-    <!-- Harvester Leasing & Dealers -->
-    <section id="harvester-dealers">
-      <h2>🌾 Harvester Leasing & Dealers</h2>
-      <div class="dealer-grid">
-        <div class="dealer-card">
-          <h3>Sonalika Samrat Combine Harvester</h3>
-          <p><strong>Availability:</strong> Through Sonalika dealers across Punjab</p>
-          <p><strong>Contact:</strong> +91-9587886664</p>
+      <!-- Pesticide & Insecticide Sellers -->
+      <section class="section" id="pesticide-sellers">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-icon">🐛</span>
+            Pesticide & Insecticide Sellers
+          </h2>
         </div>
-        <div class="dealer-card">
-          <h3>Kartar Agro Industries Pvt. Ltd.</h3>
-          <p><strong>Address:</strong> [Address not specified]</p>
-          <p><strong>Contact:</strong> [Contact information not provided]</p>
+        <div class="dealer-grid">
+          <div class="dealer-card">
+            <h3 class="dealer-name">M/S Gurukirpa Agro Centre</h3>
+            <p class="dealer-info">
+              <strong>Address:</strong> Kohara, Sahnewal Road, Village Jandiale,
+              Ludhiana
+            </p>
+            <a href="tel:+919XXXXXXX45" class="dealer-contact">
+              📞 Contact Now
+            </a>
+          </div>
+          <div class="dealer-card">
+            <h3 class="dealer-name">M/S Hicon Pest Control</h3>
+            <p class="dealer-info">
+              <strong>Address:</strong> SCO 4, 2nd Floor, New Shopping Centre,
+              Ghumar Mandi, Ludhiana
+            </p>
+            <a href="tel:+919XXXXXXX00" class="dealer-contact">
+              📞 Contact Now
+            </a>
+          </div>
         </div>
-        <!-- Add more harvester dealers as needed -->
+      </section>
+
+      <!-- Tractor Leasing & Dealers -->
+      <section class="section" id="tractor-dealers">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-icon">🚜</span>
+            Tractor Leasing & Dealers
+          </h2>
+        </div>
+        <div class="dealer-grid">
+          <div class="dealer-card">
+            <h3 class="dealer-name">Singla Tractors</h3>
+            <p class="dealer-info">
+              <strong>Address:</strong> Malout Road, Near 132 KVA Sub Station,
+              Abohar, Fazilka
+            </p>
+            <div class="dealer-contact">📍 Visit Location</div>
+          </div>
+          <div class="dealer-card">
+            <h3 class="dealer-name">GURKIRPA AUTOS</h3>
+            <p class="dealer-info">
+              <strong>Address:</strong> M.K. Bypass Road, Dhuri, Sangrur
+            </p>
+            <div class="dealer-contact">📍 Visit Location</div>
+          </div>
+          <div class="dealer-card">
+            <h3 class="dealer-name">Majha Agro Traders</h3>
+            <p class="dealer-info">
+              <strong>Address:</strong> Ground Floor, Ajnala, Amritsar Road,
+              Bhakha Hari Singh, Amritsar - 143102
+            </p>
+            <a href="tel:+919855562888" class="dealer-contact">
+              📞 +91-9855562888
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Harvester Leasing & Dealers -->
+      <section class="section" id="harvester-dealers">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-icon">🌾</span>
+            Harvester Leasing & Dealers
+          </h2>
+        </div>
+        <div class="dealer-grid">
+          <div class="dealer-card">
+            <h3 class="dealer-name">Sonalika Samrat Combine Harvester</h3>
+            <p class="dealer-info">
+              <strong>Availability:</strong> Through Sonalika dealers across
+              Punjab
+            </p>
+            <a href="tel:+919587886664" class="dealer-contact">
+              📞 +91-9587886664
+            </a>
+          </div>
+          <div class="dealer-card">
+            <h3 class="dealer-name">Kartar Agro Industries Pvt. Ltd.</h3>
+            <p class="dealer-info">
+              <strong>Specialization:</strong> Professional harvesting equipment
+              and services
+            </p>
+            <div class="dealer-contact">🌾 Harvester Specialists</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Other Agricultural Equipment Dealers -->
+      <section class="section" id="equipment-dealers">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-icon">⚙️</span>
+            Other Agricultural Equipment Dealers
+          </h2>
+        </div>
+        <div class="dealer-grid">
+          <div class="dealer-card">
+            <h3 class="dealer-name">Bhajan Singh & Bros</h3>
+            <p class="dealer-info">
+              <strong>Address:</strong> 1913/36, Bhagwan Chowk, Janta Nagar,
+              Gill Road, Ludhiana - 141003
+            </p>
+            <a href="tel:+919884395093" class="dealer-contact">
+              📞 +91-9884395093
+            </a>
+          </div>
+          <div class="dealer-card">
+            <h3 class="dealer-name">GPN Machine Tools</h3>
+            <p class="dealer-info">
+              <strong>Address:</strong> 2436/2, Gali No-16, Dashmesh Nagar, Gill
+              Road, Ludhiana - 141003
+            </p>
+            <div class="dealer-contact">🔧 Machine Tools</div>
+          </div>
+          <div class="dealer-card">
+            <h3 class="dealer-name">JRS Farmparts</h3>
+            <p class="dealer-info">
+              <strong>Address:</strong> C-87, Phase 5, Focal Point, Ludhiana -
+              141010
+            </p>
+            <a href="tel:+919779701222" class="dealer-contact">
+              📞 +91-9779701222
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <p class="footer-text">&copy; 2025 AgriTech. All rights reserved.</p>
+        <p class="footer-tagline">Empowering India's Farming Future 🌾</p>
       </div>
-    </section>
+    </footer>
 
-    <!-- Other Agricultural Equipment Dealers -->
-    <section id="equipment-dealers">
-      <h2>⚙️ Other Agricultural Equipment Dealers</h2>
-      <div class="dealer-grid">
-        <div class="dealer-card">
-          <h3>Bhajan Singh & Bros</h3>
-          <p><strong>Address:</strong> 1913/36, Bhagwan Chowk, Janta Nagar, Gill Road, Ludhiana - 141003</p>
-          <p><strong>Contact:</strong> +91-9884395093</p>
-        </div>
-        <div class="dealer-card">
-          <h3>GPN Machine Tools</h3>
-          <p><strong>Address:</strong> 2436/2, Gali No-16, Dashmesh Nagar, Gill Road, Ludhiana - 141003</p>
-        </div>
-        <div class="dealer-card">
-          <h3>JRS Farmparts</h3>
-          <p><strong>Address:</strong> C-87, Phase 5, Focal Point, Ludhiana - 141010</p>
-          <p><strong>Contact:</strong> +91-9779701222</p>
-        </div>
-        <!-- Add more equipment dealers as needed -->
-      </div>
-    </section>
-  </main>
-</body>
-
+    <script src="shopkeeper.js"></script>
+  </body>
 </html>

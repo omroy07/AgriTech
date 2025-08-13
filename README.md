@@ -50,7 +50,7 @@ AgriTech is an innovative web platform designed to empower farmers and agricultu
 
 ## 👥 Team Members & Roles
 
-- **[Om Roy](https://github.com/omroy07)** – Project Lead & Web Developer  
+- **[Om Roy](https://github.com/omroy07)** – Project Lead & Web Developer  & Machine Learning Engineer
 - **[Kanisha Ravindra Sharma](https://github.com/KanishaSharma11)** – Machine Learning Engineer & Backend Developer
 - **[Shubhangi Roy](https://github.com/ShubhangiRoy12)** – Machine Learning Engineer & Backend Developer
 

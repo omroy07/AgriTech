@@ -1,0 +1,166 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+}
+
+header {
+    background: green;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+}
+
+.back-btn {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    color: white;
+    text-decoration: none;
+}
+
+.filter-container {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 20px;
+    text-align: center;
+}
+
+label {
+    font-weight: bold;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+select {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 2px solid #4CAF50;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+select:hover {
+    border-color: #45a049;
+    background-color: #e6ffe6;
+}
+
+select:focus {
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(13, 100px);
+    gap: 2px;
+    overflow-x: auto;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.month, .cell {
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 5px;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.month {
+    color: green;
+    background: linear-gradient(135deg, #e6f9e6, #d0f0d0);
+    font-weight: bold;
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: center;
+    transition: box-shadow 0.3s ease, transform 0.2s ease, color 0.3s ease;
+}
+
+.month:hover {
+    cursor: pointer;
+    box-shadow: 0 0 0 2px green;
+    color: #006400;
+}
+
+.month:active {
+    box-shadow: 0 0 0 3px #228b22;
+    transform: scale(1.01);
+}
+
+/* ✅ Selected state mimics hover */
+.month.selected {
+    box-shadow: 0 0 0 3px green;
+    background-color: #e6ffe6;
+    color: #006400;
+    transform: scale(1.01);
+}
+
+
+.grow {
+    background: lightgreen;
+    cursor: pointer;
+}
+
+.grow:hover {
+    background: #3cb371;
+    color: white;
+}
+
+.crop-name {
+    font-weight: bold;
+    color: #023e0a;
+    gap: 10px;
+    padding: 5px;
+}
+
+.crop-name:hover {
+    color: green;
+    cursor: pointer;
+    transform: scale(1.2);
+}
+
+.crops {
+    border: 1px solid rgb(199, 199, 33);
+}
+
+#cropSelect {
+     
+    position: absolute;
+    background-color: #ffffff;
+    color: #04330a;
+    padding: 4px 15px;
+    border-radius: 8px;
+    border: 2px solid #3cb371;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="green" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+
+#cropSelect:hover {
+    border: solid 1px green;
+    box-shadow: 0 6px 12px rgba(0, 128, 0, 0.2);
+   
+}
+
+#cropSelect:focus {
+    outline: none;
+    border-color: #228b22;
+    box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.4);
+}
+
+option:hover {
+    background-color: #e6ffe6;
+    border: 2px solid green;
+}
+

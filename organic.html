@@ -1,130 +1,415 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>AgriTech – Organic Farming</title>
+    <link rel="stylesheet" href="organic.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="global.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <title>AgriTech – Organic Farming</title>
-  <link rel="stylesheet" href="organic.css" />
-</head>
+  <body>
+    <div id="particles-js"></div>
 
-<body>
-  <header>
-    <h1>Welcome to AgriTech</h1>
-    <a href="#" class="logout-button" onclick="showLogoutConfirmation()">Logout</a>
-  </header>
+    <div class="scroll-indicator">
+      <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
 
-  <nav>
-    <ul>
-      <li><a href="farmer.html">Farmer Connection</a></li>
-      <li><a href="./Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
-      <li><a href="disease.html">Disease Prediction</a></li>
-      <li><a href="organic.html" class="active">Organic Farming</a></li>
-      <li><a href="shopkeeper.html">Shopkeeper Listings</a></li>
-      <li><a href="chat.html">ChatBot</a></li>
-      <li><a href="plantation.html">Plantation</a></li>
-    </ul>
-  </nav>
+    <header>
+      <div class="header-container">
+        <h1>Welcome to AgriTech</h1>
+        <a href="#" class="logout-button" onclick="showLogoutConfirmation()">Logout</a>
+      </div>
+    </header>
 
-  <main>
-    <section id="principles">
-      <h2>🌿 Principles of Organic Farming</h2>
-      <ul>
-        <li><strong>Ecology</strong>: Work with living systems and nutrient cycles.</li>
-        <li><strong>Health</strong>: Sustain soil, ecosystem, climate, human well‑being.</li>
-        <li><strong>Fairness</strong>: Equitable relationships between people & the environment.</li>
-        <li><strong>Care</strong>: Responsible farming to protect future generations.</li>
-      </ul>
-    </section>
+    <nav>
+      <div class="nav-container">
+        <ul>
+          <li><a href="farmer.html">👨‍🌾 Farmer Connection</a></li>
+          <li>
+            <a
+              href="./Crop Yield Prediction/crop_yield_app/templates/index.html"
+              >📊 Yield Prediction</a
+            >
+          </li>
+          <li><a href="disease.html">🔬 Disease Prediction</a></li>
+          <li><a href="organic.html" class="active">🌿 Organic Farming</a></li>
+          <li><a href="shopkeeper.html">🏪 Shopkeeper Listings</a></li>
+          <li><a href="chat.html">🤖 ChatBot</a></li>
+          <li><a href="plantation.html">🌱 Plantation</a></li>
+          <li>
+            <a href="./Crop_Planning/templates/cropplan.html"
+              >📅 Crop Planning</a
+            >
+          </li>
+          <li>
+            <a href="./Labour_Alerts/templates/labour.html">⚠️ Labour Alerts</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-    <section id="step-by-step">
-      <h2>✅ Step-by-Step Organic Farming Process</h2>
+    <div class="main-wrapper">
+      <div class="page-hero">
+        <h1>🌿 Organic Farming Excellence</h1>
+        <p>
+          Discover sustainable agricultural practices that enhance soil health,
+          preserve ecosystems, and produce premium quality crops through
+          time-tested organic methods.
+        </p>
+      </div>
 
-      <h3>1. Site Assessment &amp; Soil Preparation</h3>
-      <ul>
-        <li>Analyze plot: drainage, soil depth, erosion risk.</li>
-        <li>Test soil for pH, nutrients, organic matter.</li>
-        <li>Improve fertility: green manure, compost, farmyard manure; reduce tillage for structure.</li>
-      </ul>
+      <main>
+        <section id="principles" class="animate-in">
+          <h2>🌿 Principles of Organic Farming</h2>
+          <ul>
+            <li>
+              <strong>Ecology</strong>: Work harmoniously with living systems
+              and natural nutrient cycles
+            </li>
+            <li>
+              <strong>Health</strong>: Sustain soil vitality, ecosystem balance,
+              climate stability, and human well‑being
+            </li>
+            <li>
+              <strong>Fairness</strong>: Foster equitable relationships between
+              people and the environment
+            </li>
+            <li>
+              <strong>Care</strong>: Practice responsible farming to protect
+              future generations
+            </li>
+          </ul>
+        </section>
 
-      <h3>2. Crop Planning &amp; Rotation</h3>
-      <ul>
-        <li>Select diverse crops based on microclimate, soil type &amp; market.</li>
-        <li>Design rotation cycle (3–8 years) to interrupt pests & replenish nutrients.</li>
-        <li>Include legumes in rotation to fix nitrogen.</li>
-      </ul>
+        <section id="step-by-step" class="animate-in">
+          <h2>✅ Complete Organic Farming Process</h2>
 
-      <h3>3. Soil &amp; Nutrient Management</h3>
-      <ul>
-        <li>Use cover crops (clover, mustard) to prevent erosion and add biomass.</li>
-        <li>Enrich soil with vermicompost and biofertilizers.</li>
-        <li>Use conservation agriculture for long-term soil health.</li>
-      </ul>
+          <div class="crop-grid">
+            <div class="crop-item">
+              <h3>1. 🔍 Site Assessment & Soil Preparation</h3>
+              <ul>
+                <li>
+                  Analyze plot characteristics: drainage patterns, soil depth,
+                  erosion risk factors
+                </li>
+                <li>
+                  Comprehensive soil testing for pH levels, essential nutrients,
+                  organic matter content
+                </li>
+                <li>
+                  Enhance fertility using green manure, quality compost, and
+                  farmyard manure
+                </li>
+                <li>
+                  Minimize tillage operations to preserve soil structure and
+                  beneficial organisms
+                </li>
+              </ul>
+            </div>
 
-      <h3>4. Pest &amp; Weed Control (IPM)</h3>
-      <ul>
-        <li>Monitor pest populations and set outbreak thresholds.</li>
-        <li>Use cultural controls: crop hygiene, trap crops, mulching.</li>
-        <li>Release beneficial insects; use botanical sprays (neem, garlic).</li>
-      </ul>
+            <div class="crop-item">
+              <h3>2. 🔄 Strategic Crop Planning & Rotation</h3>
+              <ul>
+                <li>
+                  Select diverse crop varieties based on local microclimate and
+                  soil characteristics
+                </li>
+                <li>
+                  Design comprehensive rotation cycles (3–8 years) to break pest
+                  cycles
+                </li>
+                <li>
+                  Integrate nitrogen-fixing legumes to naturally replenish soil
+                  nutrients
+                </li>
+                <li>
+                  Align crop selection with market demands and premium
+                  opportunities
+                </li>
+              </ul>
+            </div>
 
-      <h3>5. Efficient Water Use</h3>
-      <ul>
-        <li>Build rainwater harvesting structures like bunds and trenches.</li>
-        <li>Adopt drip irrigation & maintain soil moisture with mulches.</li>
-        <li>Avoid water logging and salinity issues.</li>
-      </ul>
+            <div class="crop-item">
+              <h3>3. 💧 Soil & Nutrient Management</h3>
+              <ul>
+                <li>
+                  Deploy cover crops like clover and mustard for erosion control
+                </li>
+                <li>
+                  Enrich soil biology with premium vermicompost and
+                  biofertilizers
+                </li>
+                <li>
+                  Implement conservation agriculture for sustainable soil health
+                </li>
+                <li>
+                  Build efficient rainwater harvesting systems and structures
+                </li>
+              </ul>
+            </div>
 
-      <h3>6. Record-Keeping &amp; Certification</h3>
-      <ul>
-        <li>Prepare an Organic System Plan (OSP): methods, materials, buffer zones.</li>
-        <li>Log all inputs, field operations, harvest, and transitions.</li>
-        <li>Explore Participatory Guarantee Systems (PGS) as affordable certification.</li>
-      </ul>
+            <div class="crop-item">
+              <h3>4. 🛡️ Integrated Pest Management (IPM)</h3>
+              <ul>
+                <li>
+                  Monitor pest populations systematically and establish action
+                  thresholds
+                </li>
+                <li>
+                  Apply cultural controls: crop hygiene, strategic trap crops,
+                  organic mulching
+                </li>
+                <li>
+                  Release beneficial insects and implement biological control
+                  methods
+                </li>
+                <li>
+                  Use botanical sprays from neem, garlic, and other natural
+                  sources
+                </li>
+              </ul>
+            </div>
 
-      <h3>7. Marketing &amp; Value Addition</h3>
-      <ul>
-        <li>Target premium buyers: co‑ops, organic stores, export markets.</li>
-        <li>Differentiate produce with transparency, farm visits, storytelling.</li>
-        <li>Explore on-site processing (e.g. cold-pressed oils) to increase margin.</li>
-      </ul>
-    </section>
+            <div class="crop-item">
+              <h3>5. 💧 Efficient Water Management</h3>
+              <ul>
+                <li>
+                  Construct rainwater harvesting bunds, trenches, and retention
+                  structures
+                </li>
+                <li>
+                  Install precision drip irrigation systems for optimal water
+                  efficiency
+                </li>
+                <li>
+                  Maintain soil moisture using organic mulches and ground covers
+                </li>
+                <li>
+                  Prevent waterlogging issues and manage soil salinity
+                  effectively
+                </li>
+              </ul>
+            </div>
 
-    <section id="crop-details">
-      <h2>🌾 Crop-Specific Organic Best Practices</h2>
+            <div class="crop-item">
+              <h3>6. 📋 Documentation & Certification</h3>
+              <ul>
+                <li>
+                  Develop comprehensive Organic System Plan (OSP) with detailed
+                  methods
+                </li>
+                <li>
+                  Maintain meticulous records of inputs, operations, harvests,
+                  and transitions
+                </li>
+                <li>
+                  Explore affordable Participatory Guarantee Systems (PGS)
+                  certification
+                </li>
+                <li>
+                  Establish buffer zones and implement contamination prevention
+                  measures
+                </li>
+              </ul>
+            </div>
 
-      <h3>Rice (SRI Method)</h3>
-      <p>Transplant young seedlings (8–12 days) with wide spacing; intermittent wetting to reduce water use and enhance
-        root growth.</p>
+            <div class="crop-item">
+              <h3>7. 📈 Marketing & Value Addition</h3>
+              <ul>
+                <li>
+                  Target premium market segments: cooperatives, organic stores,
+                  export markets
+                </li>
+                <li>
+                  Differentiate products through transparency, farm visits, and
+                  authentic storytelling
+                </li>
+                <li>
+                  Explore value-added processing like cold-pressed oils to
+                  increase profit margins
+                </li>
+                <li>
+                  Build direct consumer relationships and establish brand
+                  recognition
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
 
-      <h3>Millets</h3>
-      <p>Hardy, low-input crops. Intercrop with legumes to fix nitrogen and improve soil fertility.</p>
+        <section id="crop-details" class="animate-in">
+          <h2>🌾 Crop-Specific Organic Best Practices</h2>
 
-      <h3>Guar (Cluster Bean)</h3>
-      <p>Heat tolerant crop; use FYM (25 t/ha) and biofertilizers at sowing; minimal care needed post‑establishment.</p>
+          <div class="crop-grid">
+            <div class="crop-item">
+              <h3>🍚 Rice (SRI Method)</h3>
+              <p>
+                Transplant young seedlings at 8–12 days with optimized wide
+                spacing. Use intermittent wetting techniques to dramatically
+                reduce water consumption while enhancing robust root development
+                and grain quality.
+              </p>
+            </div>
 
-      <h3>Cotton (Organic)</h3>
-      <p>Include pest-repellent plants; apply biofertilizers. Chhindwara, MP’s organic cotton restored soil and profit.
+            <div class="crop-item">
+              <h3>🌾 Millets</h3>
+              <p>
+                Cultivate these hardy, drought-resistant, low-input crops.
+                Strategically intercrop with nitrogen-fixing legumes to
+                naturally improve soil fertility and create sustainable farming
+                ecosystems.
+              </p>
+            </div>
+
+            <div class="crop-item">
+              <h3>🫘 Guar (Cluster Bean)</h3>
+              <p>
+                Grow this exceptional heat-tolerant crop using farmyard manure
+                (25 tonnes per hectare) combined with beneficial biofertilizers
+                at sowing. Requires minimal post-establishment care.
+              </p>
+            </div>
+
+            <div class="crop-item">
+              <h3>🧵 Organic Cotton</h3>
+              <p>
+                Integrate natural pest-repellent companion plants and apply
+                targeted biofertilizers. Success story from Chhindwara, Madhya
+                Pradesh demonstrates restored soil health and improved
+                profitability.
+              </p>
+            </div>
+
+            <div class="crop-item">
+              <h3>🌱 Multi-Crop Systems</h3>
+              <p>
+                Adopt traditional intercropping systems like 'Barahnaja'
+                (featuring 12+ complementary species) to dramatically boost
+                biodiversity, enhance ecosystem resilience, and optimize land
+                use efficiency.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="case-study" class="animate-in">
+          <h2>📈 Success Story: Organic Wheat Transformation in Punjab</h2>
+          <p>
+            <strong>Sucha Singh Pabla's remarkable journey:</strong>
+            Successfully transitioned 27 acres to certified organic wheat
+            production, achieving exceptional results that demonstrate the
+            commercial viability and environmental benefits of organic
+            agriculture.
+          </p>
+
+          <div
+            class="crop-grid"
+            style="
+              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+              margin-top: 2rem;
+            "
+          >
+            <div class="crop-item" style="border-left-color: #ff9800">
+              <h3>💰 Economic Impact</h3>
+              <p>
+                Premium market price of ₹3,500 per quintal with approximately
+                50% improved profit margins compared to conventional farming
+                methods.
+              </p>
+            </div>
+            <div class="crop-item" style="border-left-color: #4caf50">
+              <h3>🌱 Environmental Benefits</h3>
+              <p>
+                Significantly healthier soil microbiome, improved air quality,
+                elimination of stubble burning practices, and enhanced ecosystem
+                biodiversity.
+              </p>
+            </div>
+            <div class="crop-item" style="border-left-color: #2196f3">
+              <h3>📉 Cost Optimization</h3>
+              <p>
+                Substantial reduction in input costs through elimination of
+                synthetic fertilizers and pesticides, replaced with sustainable
+                organic alternatives.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="learning-media" class="animate-in">
+          <h2>🎥 & 🎮 Interactive Learning Resources</h2>
+          <div style="display: grid; gap: 2rem; margin-top: 1.5rem">
+            <div
+              style="
+                background: rgba(255, 255, 255, 0.6);
+                padding: 2rem;
+                border-radius: 15px;
+                border-left: 4px solid #2196f3;
+              "
+            >
+              <h3
+                style="
+                  background: none;
+                  border: none;
+                  padding: 0;
+                  margin-bottom: 1rem;
+                  color: #1976d2;
+                "
+              >
+                🎥 Educational Video Content
+              </h3>
+              <p>
+                <strong>"Organic Farming – Why & How"</strong> - Comprehensive
+                video series covering fundamental principles, practical
+                implementation strategies, and real-world success stories from
+                organic farming pioneers.
+              </p>
+            </div>
+            <div
+              style="
+                background: rgba(255, 255, 255, 0.6);
+                padding: 2rem;
+                border-radius: 15px;
+                border-left: 4px solid #ff9800;
+              "
+            >
+              <h3
+                style="
+                  background: none;
+                  border: none;
+                  padding: 0;
+                  margin-bottom: 1rem;
+                  color: #f57c00;
+                "
+              >
+                🎮 Interactive Simulation
+              </h3>
+              <p>
+                <strong>"Cornucopia"</strong> - Advanced interactive simulation
+                platform where you can explore complex soil-water-crop dynamics,
+                experiment with different organic practices, and observe their
+                long-term impacts on farm ecosystems.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <footer>
+      <p>
+        &copy; 2025 AgriTech. All rights reserved.
+        Future 🌾
       </p>
+    </footer>
 
-      <h3>Multi-Crop Systems</h3>
-      <p>Adopt traditional intercropping like 'Barahnaja' (12+ species) to boost biodiversity and resilience.</p>
-    </section>
-
-    <section id="case-study">
-      <h2>📌 Case Study: Organic Wheat in Punjab</h2>
-      <p>Sucha Singh Pabla transitioned 27 acres to organic wheat: input costs ↓, premium price ₹3,500/quintal, profit
-        margin ~50%, no stubble burn – healthier soil & air.</p>
-    </section>
-
-    <section id="learning-media">
-      <h2>🎥 &amp; 🕹 Interactive Learning</h2>
-      <p><strong>Video:</strong> “Organic Farming – Why … & How” (intro clip shared in app).</p>
-      <p><strong>Simulation:</strong> Explore “Cornucopia” – learn soil‑water‑crop dynamics interactively.</p>
-    </section>
-  </main>
-  <script>
+    <script src="organic.js"></script>
+    <script>
         function showLogoutConfirmation() {
             Swal.fire({
             title: 'Confirm Logout',
@@ -143,6 +428,5 @@
             });
         }
     </script>
-</body>
-
+  </body>
 </html>

@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-       
     <meta charset="UTF-8" />
-       
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-       
     <title>Crop Planner AI</title>
-       
-    <link rel="stylesheet" href="../static/style.css" />
+    <link rel="stylesheet" href="../static/style.css">
   </head>
   <body>
-    <!-- Navbar added to the top of the body -->
+    <div id="canvas-container">
+      <canvas id="three-canvas"></canvas>
+    </div>
+    
+    <div class="form-progress" id="progress-bar"></div>
+    
     <nav class="navbar">
       <a href="javascript:history.back()" class="back-btn" aria-label="Go back">
-        <!-- SVG for back arrow icon -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -33,168 +33,169 @@
       <h2 class="navbar-title">Crop Planner AI</h2>
     </nav>
 
-    <!-- Wrapper for the main content to add proper spacing below the fixed navbar -->
-    <div class="content-wrapper">
-      <div class="container">
-                   
-        <h1>🌿 Crop Planner AI</h1>
-                   
-        <p>Enter your farm's details to get an AI-powered crop planner.</p>
-                               
-        <form id="crop-form">
-                         
-          <div class="form-grid">
-                               
-            <div class="form-group">
-              <label for="ph">Soil pH</label
-              ><input
-                type="number"
-                id="ph"
-                name="pH"
-                step="0.1"
-                required
-                placeholder="e.g., 6.8"
-              />
-            </div>
-                               
-            <div class="form-group">
-              <label for="temperature">Temperature (°C)</label
-              ><input
-                type="number"
-                id="temperature"
-                name="Temperature"
-                step="0.1"
-                required
-                placeholder="e.g., 28.5"
-              />
-            </div>
-                               
-            <div class="form-group">
-              <label for="rainfall">Rainfall (mm)</label
-              ><input
-                type="number"
-                id="rainfall"
-                name="Rainfall"
-                step="1"
-                required
-                placeholder="e.g., 650"
-              />
-            </div>
-                               
-            <div class="form-group">
-              <label for="soil-type">Soil Type</label
-              ><select id="soil-type" name="Soil_Type" required>
-                <option value="Black">Black</option>
-                <option value="Loamy">Loamy</option>
-                <option value="Clay">Clay</option>
-                <option value="Sandy">Sandy</option>
-              </select>
-            </div>
-                               
-            <div class="form-group">
-              <label for="season">Season</label
-              ><select id="season" name="Season" required>
-                <option value="Monsoon">Monsoon</option>
-                <option value="Winter">Winter</option>
-                <option value="Summer">Summer</option>
-              </select>
-            </div>
-                               
-            <div class="form-group">
-              <label for="market-demand">Market Demand</label
-              ><select id="market-demand" name="Market_Demand" required>
-                <option value="High">High</option>
-                <option value="Medium">Medium</option>
-                <option value="Low">Low</option>
-              </select>
-            </div>
-                               
-            <div class="form-group">
-              <label for="fertilizer">Fertilizer Used</label
-              ><select id="fertilizer" name="Fertilizer_Used" required>
-                <option value="Urea+DAP">Urea+DAP</option>
-                <option value="NPK 10-26-26">NPK 10-26-26</option>
-                <option value="Single Super Phosphate">
-                  Single Super Phosphate
-                </option>
-                <option value="None">None</option>
-              </select>
-            </div>
-                               
-            <div class="form-group">
-              <label for="pest-issue">Pest Issue</label
-              ><select id="pest-issue" name="Pest_Issue" required>
-                <option value="None">None</option>
-                <option value="Bollworm">Bollworm</option>
-                <option value="Stem Borer">Stem Borer</option>
-                <option value="Aphids">Aphids</option>
-              </select>
-            </div>
-                               
-            <div class="form-group">
-              <label for="irrigation">Irrigation Method</label
-              ><select id="irrigation" name="Irrigation_Method" required>
-                <option value="Drip">Drip</option>
-                <option value="Canal">Canal</option>
-                <option value="Rainfed">Rainfed</option>
-                <option value="Sprinkler">Sprinkler</option>
-              </select>
-            </div>
-                           
+    <div class="container">
+      <h1>🌿 Crop Planner AI</h1>
+      <p class="subtitle">Enter your farm's details to get an AI-powered crop planner with comprehensive growing guidelines.</p>
+      
+      <form id="crop-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="ph">Soil pH</label>
+            <input
+              type="number"
+              id="ph"
+              name="pH"
+              step="0.1"
+              min="0"
+              max="14"
+              required
+              placeholder="e.g., 6.8"
+            />
+            <div class="error-message">Please enter a valid pH value (0-14)</div>
           </div>
-                         
-          <button type="submit" class="predict-btn">
-            Get Full Farming Plan
-          </button>
-                     
-        </form>
-                               
-        <div id="result-container" class="hidden">
-                         
-          <h2>Recommended Crop:</h2>
-                         
-          <p id="result-text">...</p>
-                                         
-          <div id="guide-container">
-                               
-            <h3 id="guide-title"></h3>
-                               
-            <div class="guide-grid">
-                                     
-              <div class="guide-item">
-                <h4>🗓️ Timeline (Plant & Harvest)</h4>
-                <p id="guide-timeline"></p>
-              </div>
-                                     
-              <div class="guide-item">
-                <h4>🌱 How to Plant</h4>
-                <p id="guide-how-to-plant"></p>
-              </div>
-                                     
-              <div class="guide-item">
-                <h4>💊 Fertilizer Plan</h4>
-                <p id="guide-fertilizer"></p>
-              </div>
-                                     
-              <div class="guide-item">
-                <h4>🌧️ Ideal Rainfall</h4>
-                <p id="guide-ideal-rainfall"></p>
-              </div>
-                                     
-              <div class="guide-item">
-                <h4>📦 Post-Harvest Plan</h4>
-                <p id="guide-post-harvest"></p>
-              </div>
-                                 
-            </div>
-                           
+
+          <div class="form-group">
+            <label for="temperature">Temperature (°C)</label>
+            <input
+              type="number"
+              id="temperature"
+              name="Temperature"
+              step="0.1"
+              min="-10"
+              max="50"
+              required
+              placeholder="e.g., 28.5"
+            />
+            <div class="error-message">Please enter a valid temperature</div>
           </div>
-                     
+
+          <div class="form-group">
+            <label for="rainfall">Rainfall (mm)</label>
+            <input
+              type="number"
+              id="rainfall"
+              name="Rainfall"
+              step="1"
+              min="0"
+              required
+              placeholder="e.g., 650"
+            />
+            <div class="error-message">Please enter a valid rainfall amount</div>
+          </div>
+
+          <div class="form-group">
+            <label for="soil-type">Soil Type</label>
+            <select id="soil-type" name="Soil_Type" required>
+              <option value="">Select soil type...</option>
+              <option value="Black">Black Soil</option>
+              <option value="Loamy">Loamy Soil</option>
+              <option value="Clay">Clay Soil</option>
+              <option value="Sandy">Sandy Soil</option>
+            </select>
+            <div class="error-message">Please select a soil type</div>
+          </div>
+
+          <div class="form-group">
+            <label for="season">Season</label>
+            <select id="season" name="Season" required>
+              <option value="">Select season...</option>
+              <option value="Monsoon">Monsoon</option>
+              <option value="Winter">Winter</option>
+              <option value="Summer">Summer</option>
+            </select>
+            <div class="error-message">Please select a season</div>
+          </div>
+
+          <div class="form-group">
+            <label for="market-demand">Market Demand</label>
+            <select id="market-demand" name="Market_Demand" required>
+              <option value="">Select demand level...</option>
+              <option value="High">High Demand</option>
+              <option value="Medium">Medium Demand</option>
+              <option value="Low">Low Demand</option>
+            </select>
+            <div class="error-message">Please select market demand level</div>
+          </div>
+
+          <div class="form-group">
+            <label for="fertilizer">Fertilizer Used</label>
+            <select id="fertilizer" name="Fertilizer_Used" required>
+              <option value="">Select fertilizer...</option>
+              <option value="Urea+DAP">Urea + DAP</option>
+              <option value="NPK 10-26-26">NPK 10-26-26</option>
+              <option value="Single Super Phosphate">Single Super Phosphate</option>
+              <option value="None">No Fertilizer</option>
+            </select>
+            <div class="error-message">Please select a fertilizer option</div>
+          </div>
+
+          <div class="form-group">
+            <label for="pest-issue">Pest Issue</label>
+            <select id="pest-issue" name="Pest_Issue" required>
+              <option value="">Select pest status...</option>
+              <option value="None">No Pest Issues</option>
+              <option value="Bollworm">Bollworm</option>
+              <option value="Stem Borer">Stem Borer</option>
+              <option value="Aphids">Aphids</option>
+            </select>
+            <div class="error-message">Please select pest issue status</div>
+          </div>
+
+          <div class="form-group">
+            <label for="irrigation">Irrigation Method</label>
+            <select id="irrigation" name="Irrigation_Method" required>
+              <option value="">Select irrigation method...</option>
+              <option value="Drip">Drip Irrigation</option>
+              <option value="Canal">Canal Irrigation</option>
+              <option value="Rainfed">Rainfed</option>
+              <option value="Sprinkler">Sprinkler Irrigation</option>
+            </select>
+            <div class="error-message">Please select an irrigation method</div>
+          </div>
         </div>
-               
+
+        <button type="submit" class="predict-btn" id="submit-btn">
+          Get Full Farming Plan
+        </button>
+      </form>
+
+      <div id="result-container" class="hidden">
+        <h2>🎯 Recommended Crop:</h2>
+        <p id="result-text">...</p>
+        
+        <div id="guide-container">
+          <h3 id="guide-title"></h3>
+          <div class="guide-grid">
+            <div class="guide-item">
+              <h4>🗓️ Timeline (Plant & Harvest)</h4>
+              <p id="guide-timeline">Optimal planting and harvesting schedule for maximum yield</p>
+            </div>
+            
+            <div class="guide-item">
+              <h4>🌱 How to Plant</h4>
+              <p id="guide-how-to-plant">Step-by-step planting guidelines and best practices</p>
+            </div>
+            
+            <div class="guide-item">
+              <h4>💊 Fertilizer Plan</h4>
+              <p id="guide-fertilizer">Customized fertilization schedule and recommendations</p>
+            </div>
+            
+            <div class="guide-item">
+              <h4>🌧️ Ideal Rainfall</h4>
+              <p id="guide-ideal-rainfall">Water requirements and irrigation guidelines</p>
+            </div>
+            
+            <div class="guide-item">
+              <h4>📦 Post-Harvest Plan</h4>
+              <p id="guide-post-harvest">Storage, processing, and marketing strategies</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-       
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="../static/script.js"></script>
   </body>
 </html>

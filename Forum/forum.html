@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Farmer Forum</title>
+  <link rel="stylesheet" href="farmer.css" />
+  <style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 30px;
+    background-color: #f7f7f7;
+  }
+
+
+  h1, h2 {
+    color: #2c3e50;
+  }
+
+
+  form {
+    margin-bottom: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+  }
+
+
+  button {
+    padding: 10px 20px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+
+  button:hover {
+    background-color: #27ae60;
+  }
+
+
+  .forum-post {
+    background: white;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+  }
+
+
+  .forum-post strong {
+    color: #34495e;
+  }
+</style>
+
+
+</head>
+<body>
+  <h1>Farmer Forum</h1>
+
+  <a href="../main.html" style="text-decoration: none;">
+  <button type="button">Back to Main Page</button>
+</a>
+
+
+  <form id="forumForm">
+    <input type="text" name="name" placeholder="Your Name" required />
+    <textarea name="message" placeholder="Share your experience..." required></textarea>
+    <button type="submit">Post</button>
+  </form>
+
+
+  <h2>Recent Posts</h2>
+  <div id="forumPosts"></div>
+
+
+  <script src="forum.js"></script>
+</body>
+</html>
+
+
+
