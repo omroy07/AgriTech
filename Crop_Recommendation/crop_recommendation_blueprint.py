@@ -32,7 +32,7 @@ def home():
         <style>
             body {
                 font-family: 'Inter', sans-serif;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                background: green;;
                 min-height: 100vh;
                 color: #333;
                 margin: 0;
@@ -254,7 +254,7 @@ def predict():
                 <style>
                     body {{
                         font-family: 'Inter', sans-serif;
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        background: green;;
                         min-height: 100vh;
                         color: #333;
                         margin: 0;

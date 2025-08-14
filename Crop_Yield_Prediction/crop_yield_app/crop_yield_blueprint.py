@@ -36,7 +36,7 @@ def home():
         <style>
             body {
                 font-family: 'Inter', sans-serif;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                background: green;;
                 min-height: 100vh;
                 color: #333;
                 margin: 0;
@@ -172,7 +172,7 @@ def home():
         <div class="container">
             <div class="header">
                 <h1><i class="fas fa-chart-line"></i> Crop Yield Prediction</h1>
-                <p>Predict expected crop yields using machine learning models trained on historical agricultural data.</p>
+                <p></p>
             </div>
             <form method="post" action="/crop-yield/predict">
                 <div class="input-group">
