@@ -137,6 +137,61 @@
     </p>
   </footer>
 
+  <div class="scroll-to-top" id="scrollToTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+  <script>
+    // Scroll to top functionality
+    const scrollToTopBtn = document.getElementById("scrollToTop");
+
+    window.addEventListener("scroll", () => {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add("visible");
+      } else {
+        scrollToTopBtn.classList.remove("visible");
+      }
+    });
+
+    scrollToTopBtn.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+    // Smooth scroll for internal links
+    const serviceItems = document.querySelectorAll(".services-list li");
+    serviceItems.forEach((item) => {
+      item.addEventListener("mouseenter", function () {
+        this.style.transform = "translateY(-8px) scale(1.02)";
+      });
+
+      item.addEventListener("mouseleave", function () {
+        this.style.transform = "translateY(-5px) scale(1)";
+      });
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = "running";
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll("section").forEach((section) => {
+      observer.observe(section);
+    });
+
+    window.addEventListener("load", () => {
+      document.body.style.opacity = "1";
+    });
+  </script>
   <script src="script.js"></script>
 </body>
 
