@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>AgriTech – Organic Farming</title>
     <link rel="stylesheet" href="organic.css" />
     <link
@@ -22,11 +23,10 @@
 
     <header>
       <div class="header-container">
-        <div class="brand">
-          <img src="/AgriTech/images/logo.png" alt="AgriTech logo" class="site-logo">
-          <h1>Welcome to AgriTech</h1>
-        </div>
-        <a href="index.html" class="logout-button">Logout</a>
+        
+        <h1>Welcome to AgriTech</h1>
+        <a href="#" class="logout-button" onclick="showLogoutConfirmation()">Logout</a>
+
       </div>
     </header>
 
@@ -412,5 +412,24 @@
     </footer>
 
     <script src="organic.js"></script>
+    <script>
+        function showLogoutConfirmation() {
+            Swal.fire({
+            title: 'Confirm Logout',
+            text: 'Are you sure you want to logout?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, logout',
+            cancelButtonText: 'No'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect to logout page or homepage
+                window.location.href = 'index.html';  
+            }
+            });
+        }
+    </script>
   </body>
 </html>

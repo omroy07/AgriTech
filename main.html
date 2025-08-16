@@ -93,6 +93,7 @@
         }
     </style>
 </head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>AgriTech Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -118,7 +119,7 @@
           Calendar
         </a>
         <a href="feed-back.html" class="feedback-button">Feedback</a>
-        <a href="index.html" class="logout-button">Logout</a>
+        <a href="#" class="logout-button" onclick="showLogoutConfirmation()">Logout</a>
       </div>
     </header>
     
@@ -436,6 +437,25 @@
   </footer>
   
   <script src="main.js"></script>
+  <script>
+        function showLogoutConfirmation() {
+            Swal.fire({
+            title: 'Confirm Logout',
+            text: 'Are you sure you want to logout?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, logout',
+            cancelButtonText: 'No'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect to logout page or homepage
+                window.location.href = 'index.html';  
+            }
+            });
+        }
+    </script>
 </body>
 
 </html>
