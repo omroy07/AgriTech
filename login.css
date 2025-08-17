@@ -140,6 +140,8 @@ body {
 .input-group {
   position: relative;
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .input-group i {
@@ -162,6 +164,10 @@ body {
   background: rgba(248, 250, 248, 0.8);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   outline: none;
+  line-height: 1.5;
+  vertical-align: middle;
+  box-sizing: border-box;
+  height: 50px;
 }
 
 .form-container input[type="email"]:focus,
@@ -173,9 +179,33 @@ body {
   transform: translateY(-2px);
 }
 
+/* Specific password input styling for better alignment */
+.form-container input[type="password"] {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 0.5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Ensure consistent input sizing across browsers */
+.form-container input[type="email"]::-webkit-input-placeholder,
+.form-container input[type="password"]::-webkit-input-placeholder {
+  line-height: 1.5;
+  vertical-align: middle;
+}
+
+.form-container input[type="email"]::-moz-placeholder,
+.form-container input[type="password"]::-moz-placeholder {
+  line-height: 1.5;
+  vertical-align: middle;
+}
+
 .form-container input::placeholder {
   color: #999;
   font-size: 15px;
+  line-height: 1.5;
+  vertical-align: middle;
 }
 
 /* Password toggle */
@@ -188,9 +218,15 @@ body {
   border: none;
   color: #666;
   cursor: pointer;
-  padding: 5px;
-  border-radius: 4px;
+  padding: 8px;
+  border-radius: 6px;
   transition: all 0.2s ease;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
 }
 
 .password-toggle:hover {

@@ -1,5 +1,5 @@
-from flask import Flask, request, jsonify
-from google import genai
+from flask import Flask, request, jsonify, render_template, send_from_directory
+import google.generativeai as genai
 import traceback
 import os
 from flask_cors import CORS
@@ -9,10 +9,31 @@ CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
 # Initialize Gemini API
 API_KEY = 'YOUR-API-KEY'
-MODEL_ID = 'gemini-2.5-flash'
+MODEL_ID = 'gemini-1.5-flash'
 
 # Configure Gemini Client
-client = genai.Client(api_key=API_KEY)
+genai.configure(api_key=API_KEY)
+
+# Route to serve the main page
+@app.route('/')
+def index():
+    return send_from_directory('.', 'main.html')
+
+# Route to serve other HTML files
+@app.route('/<filename>')
+def serve_file(filename):
+    if filename.endswith('.html'):
+        return send_from_directory('.', filename)
+    elif filename.endswith(('.css', '.js')):
+        return send_from_directory('.', filename)
+    elif filename.endswith(('.png', '.jpg', '.jpeg', '.avif', '.gif')):
+        return send_from_directory('images', filename)
+    return "File not found", 404
+
+# Route to serve images from images directory
+@app.route('/images/<filename>')
+def serve_image(filename):
+    return send_from_directory('images', filename)
 
 
 @app.route('/process-loan', methods=['POST'])
@@ -52,12 +73,12 @@ Do not use "\\n" for newlines. Instead, structure properly.
 Do not add assumptions that are not supported by the data provided.
 """
 
-        response = client.models.generate_content(
+        response = genai.generate_content(
             model=MODEL_ID,
-            contents=[{"parts": [{"text": prompt}]}]
+            contents=prompt
         )
 
-        reply = response.candidates[0].content.parts[0].text
+        reply = response.text
         return jsonify({"status": "success", "message": reply}), 200
 
     except Exception as e:

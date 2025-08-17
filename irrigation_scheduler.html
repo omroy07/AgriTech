@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Irrigation Scheduler - AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
+    <link rel="stylesheet" href="irrigation_scheduler.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="brand">
+                <i class="fas fa-tint"></i>
+                <h1>Smart Irrigation Scheduler</h1>
+            </div>
+            <a href="main.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <section class="input-section">
+                <h2><i class="fas fa-cog"></i> Farm Configuration</h2>
+                <form id="irrigation-form" class="irrigation-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="crop-type">
+                                <i class="fas fa-seedling"></i> Crop Type *
+                            </label>
+                            <select id="crop-type" required>
+                                <option value="">Select Crop</option>
+                                <option value="wheat">Wheat</option>
+                                <option value="rice">Rice</option>
+                                <option value="corn">Corn/Maize</option>
+                                <option value="cotton">Cotton</option>
+                                <option value="sugarcane">Sugarcane</option>
+                                <option value="pulses">Pulses</option>
+                                <option value="vegetables">Vegetables</option>
+                                <option value="fruits">Fruits</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="farm-size">
+                                <i class="fas fa-ruler-combined"></i> Farm Size (Acres) *
+                            </label>
+                            <input type="number" id="farm-size" min="0.1" step="0.1" required placeholder="e.g., 5.0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="irrigation-method">
+                                <i class="fas fa-water"></i> Irrigation Method *
+                            </label>
+                            <select id="irrigation-method" required>
+                                <option value="">Select Method</option>
+                                <option value="drip">Drip Irrigation</option>
+                                <option value="sprinkler">Sprinkler System</option>
+                                <option value="flood">Flood Irrigation</option>
+                                <option value="manual">Manual Watering</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="soil-type">
+                                <i class="fas fa-layer-group"></i> Soil Type
+                            </label>
+                            <select id="soil-type">
+                                <option value="">Select Soil Type</option>
+                                <option value="clay">Clay</option>
+                                <option value="loam">Loam</option>
+                                <option value="sandy">Sandy</option>
+                                <option value="silt">Silt</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="soil-moisture">
+                                <i class="fas fa-tint"></i> Current Soil Moisture (%)
+                            </label>
+                            <input type="range" id="soil-moisture" min="0" max="100" value="50" class="slider">
+                            <span class="moisture-value">50%</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">
+                                <i class="fas fa-map-marker-alt"></i> Location *
+                            </label>
+                            <input type="text" id="location" required placeholder="Enter city or coordinates">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="generate-btn">
+                        <i class="fas fa-magic"></i> Generate Irrigation Schedule
+                    </button>
+                </form>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="results-section" style="display: none;">
+                <h2><i class="fas fa-calendar-alt"></i> Your Irrigation Schedule</h2>
+                
+                <!-- Weather Alert -->
+                <div class="weather-alert" id="weather-alert">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div class="alert-content">
+                        <h3>Weather Alert</h3>
+                        <p id="alert-message">Loading weather information...</p>
+                    </div>
+                </div>
+
+                <!-- Schedule Summary -->
+                <div class="schedule-summary">
+                    <div class="summary-card">
+                        <i class="fas fa-calendar-day"></i>
+                        <h3>Next Irrigation</h3>
+                        <p id="next-irrigation">Calculating...</p>
+                    </div>
+                    <div class="summary-card">
+                        <i class="fas fa-tint"></i>
+                        <h3>Water Required</h3>
+                        <p id="water-required">Calculating...</p>
+                    </div>
+                    <div class="summary-card">
+                        <i class="fas fa-clock"></i>
+                        <h3>Duration</h3>
+                        <p id="irrigation-duration">Calculating...</p>
+                    </div>
+                </div>
+
+                <!-- Weekly Schedule -->
+                <div class="weekly-schedule">
+                    <h3><i class="fas fa-calendar-week"></i> 7-Day Schedule</h3>
+                    <div class="schedule-grid" id="schedule-grid">
+                        <!-- Schedule will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Water Usage Tracker -->
+                <div class="water-tracker">
+                    <h3><i class="fas fa-chart-line"></i> Water Usage Tracker</h3>
+                    <div class="tracker-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">This Week</span>
+                            <span class="stat-value" id="weekly-usage">0 L</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">This Month</span>
+                            <span class="stat-value" id="monthly-usage">0 L</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Water Saved</span>
+                            <span class="stat-value" id="water-saved">0 L</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tips Section -->
+            <section class="tips-section">
+                <h2><i class="fas fa-lightbulb"></i> Smart Irrigation Tips</h2>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <i class="fas fa-sun"></i>
+                        <h3>Best Time to Water</h3>
+                        <p>Water early morning (4-8 AM) to minimize evaporation and fungal growth.</p>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-thermometer-half"></i>
+                        <h3>Temperature Awareness</h3>
+                        <p>Increase watering during heatwaves and reduce during cool, humid periods.</p>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-cloud-rain"></i>
+                        <h3>Rain Check</h3>
+                        <p>Skip irrigation if rain is expected within 24 hours to save water.</p>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-seedling"></i>
+                        <h3>Crop Stage</h3>
+                        <p>Seedling stage needs frequent light watering, mature crops need deep watering.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Loading Modal -->
+    <div class="loading-modal" id="loading-modal">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <h3>Generating Your Irrigation Schedule</h3>
+            <p>Analyzing weather data and crop requirements...</p>
+        </div>
+    </div>
+
+    <script src="irrigation_scheduler.js"></script>
+</body>
+</html>
