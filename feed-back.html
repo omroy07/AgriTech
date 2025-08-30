@@ -1,174 +1,1062 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title>AgriTech - Feedback</title>
+    <title>AgriTech - Share Your Thoughts</title>
     <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
-    <link rel="stylesheet" href="feed-back.css" />
-    <link rel="stylesheet" href="theme.css" />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Light theme variables */
+            --bg-gradient: linear-gradient(135deg, #f0f9f0 0%, #e8f5e8 30%, #f8fff8 70%, #f0f9f0 100%);
+            --bg-primary: rgba(255, 255, 255, 0.9);
+            --bg-secondary: rgba(255, 255, 255, 0.95);
+            --text-primary: #2d5a2d;
+            --text-secondary: #5a7a5a;
+            --text-muted: #81c784;
+            --border-color: rgba(139, 195, 74, 0.2);
+            --input-bg: rgba(255, 255, 255, 0.8);
+            --input-border: rgba(139, 195, 74, 0.2);
+            --shadow-primary: rgba(76, 175, 80, 0.1);
+            --shadow-secondary: rgba(0, 0, 0, 0.05);
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --header-border: rgba(139, 195, 74, 0.2);
+        }
+
+        .dark-theme {
+            /* Dark theme variables */
+            --bg-gradient: linear-gradient(135deg, #0a1a0a 0%, #1a2e1a 30%, #0f2e0f 70%, #0a1a0a 100%);
+            --bg-primary: rgba(40, 40, 40, 0.9);
+            --bg-secondary: rgba(30, 30, 30, 0.95);
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-muted: #66bb6a;
+            --border-color: rgba(102, 187, 106, 0.3);
+            --input-bg: rgba(50, 50, 50, 0.8);
+            --input-border: rgba(102, 187, 106, 0.3);
+            --shadow-primary: rgba(102, 187, 106, 0.2);
+            --shadow-secondary: rgba(0, 0, 0, 0.3);
+            --header-bg: rgba(30, 30, 30, 0.95);
+            --header-border: rgba(102, 187, 106, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(139, 195, 74, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(76, 175, 80, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .dark-theme::before {
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(102, 187, 106, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(76, 175, 80, 0.08) 0%, transparent 50%);
+        }
+
+        .page-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            background: var(--header-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--header-border);
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 20px var(--shadow-primary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .site-logo {
+            height: 45px;
+            width: auto;
+            filter: drop-shadow(0 2px 8px rgba(139, 195, 74, 0.3));
+        }
+
+        header h1 {
+            background: linear-gradient(135deg, #2e7d32, #4caf50, #66bb6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            background: rgba(139, 195, 74, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(139, 195, 74, 0.2);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px var(--shadow-primary);
+        }
+
+        .logout-button {
+            background: linear-gradient(135deg, #ff7043, #ff5722);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(255, 112, 67, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .logout-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 112, 67, 0.35);
+            text-decoration: none;
+            color: white;
+        }
+
+        main {
+            flex: 1;
+            padding: 3rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .feedback-container {
+            max-width: 600px;
+            width: 100%;
+            background: var(--bg-primary);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 
+                0 20px 40px var(--shadow-primary),
+                0 8px 16px var(--shadow-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .feedback-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4caf50, #66bb6a, #81c784);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .feedback-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .feedback-icon {
+            font-size: 2.5rem;
+            color: #4caf50;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .feedback-title {
+            background: linear-gradient(135deg, #2e7d32, #4caf50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .feedback-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .feedback-form {
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .form-row {
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 0.75rem;
+            color: #2e7d32;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .dark-theme .form-group label {
+            color: #66bb6a;
+        }
+
+        .input-icon {
+            color: #66bb6a;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .required {
+            color: #ff7043;
+            font-weight: 600;
+        }
+
+        .optional {
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 0.85rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 1.5px solid var(--input-border);
+            border-radius: 16px;
+            font-size: 1rem;
+            background: var(--input-bg);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+            color: var(--text-primary);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #4caf50;
+            outline: none;
+            background: var(--bg-secondary);
+            box-shadow: 
+                0 0 0 3px rgba(76, 175, 80, 0.1),
+                0 4px 12px rgba(76, 175, 80, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+            max-height: 200px;
+        }
+
+        .character-count {
+            text-align: right;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            opacity: 0.8;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1.25rem;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 8px 24px rgba(76, 175, 80, 0.2);
+            letter-spacing: 0.3px;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(76, 175, 80, 0.3);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .thank-you-section {
+            text-align: center;
+            padding: 2rem;
+            animation: fadeInScale 0.6s ease-out;
+        }
+
+        .success-animation {
+            margin-bottom: 2rem;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: #4caf50;
+            animation: successPulse 1.5s ease-out;
+            filter: drop-shadow(0 4px 8px rgba(76, 175, 80, 0.3));
+        }
+
+        .thank-you-section h3 {
+            color: #2e7d32;
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .dark-theme .thank-you-section h3 {
+            color: #66bb6a;
+        }
+
+        .thank-you-section p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .home-button,
+        .view-button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 140px;
+            justify-content: center;
+        }
+
+        .home-button {
+            background: linear-gradient(135deg, #66bb6a, #4caf50);
+            color: white;
+            box-shadow: 0 6px 16px rgba(102, 187, 106, 0.25);
+        }
+
+        .view-button {
+            background: rgba(139, 195, 74, 0.1);
+            color: #2e7d32;
+            border: 1.5px solid var(--border-color);
+            box-shadow: 0 4px 12px rgba(139, 195, 74, 0.15);
+        }
+
+        .dark-theme .view-button {
+            color: #66bb6a;
+        }
+
+        .home-button:hover,
+        .view-button:hover {
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+
+        .home-button:hover {
+            box-shadow: 0 8px 24px rgba(102, 187, 106, 0.35);
+            color: white;
+        }
+
+        .view-button:hover {
+            background: rgba(139, 195, 74, 0.15);
+            box-shadow: 0 6px 20px rgba(139, 195, 74, 0.2);
+        }
+
+        .feedback-list-section {
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-header i {
+            font-size: 1.4rem;
+            color: #66bb6a;
+            opacity: 0.8;
+        }
+
+        .section-header h3 {
+            color: #2e7d32;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .dark-theme .section-header h3 {
+            color: #66bb6a;
+        }
+
+        .feedbacks-container {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .feedbacks-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .feedbacks-container::-webkit-scrollbar-track {
+            background: rgba(139, 195, 74, 0.1);
+            border-radius: 3px;
+        }
+
+        .feedbacks-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #66bb6a, #4caf50);
+            border-radius: 3px;
+        }
+
+        .feedback-item {
+            background: var(--bg-primary);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 16px var(--shadow-primary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feedback-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            border-radius: 0 2px 2px 0;
+        }
+
+        .feedback-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--shadow-primary);
+        }
+
+        .feedback-item h4 {
+            margin-bottom: 0.5rem;
+            color: #2e7d32;
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dark-theme .feedback-item h4 {
+            color: #66bb6a;
+        }
+
+        .feedback-item p {
+            margin: 0.75rem 0;
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .feedback-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.8;
+        }
+
+        .no-feedback {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .floating-help {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .help-button {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #66bb6a, #4caf50);
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .help-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 28px rgba(76, 175, 80, 0.4);
+        }
+
+        .help-tooltip {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            background: #2e7d32;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 16px rgba(46, 125, 50, 0.3);
+        }
+
+        .help-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 20px;
+            border: 8px solid transparent;
+            border-top-color: #2e7d32;
+        }
+
+        .floating-help:hover .help-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-5px);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #66bb6a, #4caf50);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: auto;
+            transition: all 0.3s ease;
+        }
+
+        .dark-theme footer {
+            background: linear-gradient(135deg, #2e4d2e, #1a3d1a);
+        }
+
+        footer h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        footer p {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1rem;
+        }
+
+        footer a {
+            display: inline-block;
+            margin: 0 0.75rem;
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            padding: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            width: 44px;
+            height: 44px;
+            line-height: 24px;
+        }
+
+        footer a:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px) scale(1.05);
+            text-decoration: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .feedback-container {
+                margin: 1rem;
+                padding: 2rem 1.5rem;
+                border-radius: 20px;
+            }
+
+            .header-content {
+                padding: 0 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            header h1 { 
+                font-size: 1.5rem; 
+            }
+            
+            .feedback-title { 
+                font-size: 1.5rem; 
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .home-button,
+            .view-button {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
     <div class="page-container">
-      <header>
-        <div class="header-content">
-          <div class="logo-section">
-            <img src="/AgriTech/images/logo.png" alt="AgriTech logo" class="site-logo">
-            <h1>AgriTech</h1>
-          </div>
-          <div style="display: flex; gap: 1rem; align-items: center;">
-            <button class="theme-toggle" aria-label="Toggle dark/light mode" style="background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
-              <i class="fas fa-sun sun-icon"></i>
-              <i class="fas fa-moon moon-icon"></i>
-              <span class="theme-text">Light</span>
+        <header>
+            <div class="header-content">
+                <div class="logo-section">
+                    <img src="/images/logo.png" alt="AgriTech logo" class="site-logo">
+                    <h1>AgriTech</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">
+                        <i class="fas fa-sun theme-icon"></i>
+                        <span class="theme-text">Light</span>
+                    </button>
+                    <button class="logout-button" onclick="showLogoutConfirmation()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="feedback-container">
+                <div class="feedback-header">
+                    <div class="feedback-icon">
+                        <i class="fas fa-comment-dots"></i>
+                    </div>
+                    <h2 class="feedback-title">Share Your Experience</h2>
+                    <p class="feedback-subtitle">Your insights help us grow and serve you better</p>
+                </div>
+
+                <form id="feedbackForm" class="feedback-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">
+                                <i class="fas fa-user input-icon"></i>
+                                Name <span class="required">*</span>
+                            </label>
+                            <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">
+                                <i class="fas fa-envelope input-icon"></i>
+                                Email <span class="optional">(optional)</span>
+                            </label>
+                            <input type="email" id="email" name="email" placeholder="your.email@example.com">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="feedback">
+                                <i class="fas fa-message input-icon"></i>
+                                Your Feedback <span class="required">*</span>
+                            </label>
+                            <textarea id="feedback" name="feedback" rows="5" required
+                                placeholder="Share your thoughts, suggestions, or any experiences you'd like us to know about..."></textarea>
+                            <div class="character-count">
+                                <span id="charCount">0</span> characters
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-button">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Share Feedback</span>
+                    </button>
+                </form>
+
+                <div id="thankYouMessage" class="hidden thank-you-section">
+                    <div class="success-animation">
+                        <i class="fas fa-check-circle success-icon"></i>
+                    </div>
+                    <h3>Thank You for Your Feedback!</h3>
+                    <p>We truly appreciate you taking the time to share your thoughts with us. Your feedback helps us create better agricultural solutions for everyone.</p>
+                    <div class="action-buttons">
+                        <a href="main.html" class="home-button">
+                            <i class="fas fa-home"></i>
+                            Back to Home
+                        </a>
+                        <button id="viewFeedbacks" class="view-button" onclick="showAllFeedbacks()">
+                            <i class="fas fa-list"></i>
+                            View All Feedback
+                        </button>
+                    </div>
+                </div>
+
+                <div id="allFeedbacks" class="hidden feedback-list-section">
+                    <div class="section-header">
+                        <i class="fas fa-history"></i>
+                        <h3>All Feedback Submissions</h3>
+                    </div>
+                    <div id="feedbacksList" class="feedbacks-container"></div>
+                    <div class="action-buttons" style="margin-top: 2rem;">
+                        <a href="main.html" class="home-button">
+                            <i class="fas fa-home"></i>
+                            Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="floating-help">
+            <button class="help-button" title="Need help?">
+                <i class="fas fa-question"></i>
             </button>
-            <a href="#" class="logout-button" onclick="showLogoutConfirmation()">Logout</a>
-          </div>
+            <div class="help-tooltip">
+                Need help with feedback? Contact our support team!
+            </div>
         </div>
 
-        <form id="feedbackForm" class="feedback-form">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="name">
-                <i class="fas fa-user input-icon"></i>
-                Name <span class="required">*</span>
-              </label>
-              <input type="text" id="name" name="name" required placeholder="Enter your full name" />
-              <div class="input-underline"></div>
+        <footer>
+            <h3>🌱 Connect With AgriTech</h3>
+            <p>Join our mission to transform agriculture through technology and innovation.</p>
+            <div style="margin: 1rem 0">
+                <a href="https://instagram.com" target="_blank" aria-label="Follow us on Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://github.com/omroy07" target="_blank" aria-label="View our GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank" aria-label="Connect on LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
             </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="email">
-                <i class="fas fa-envelope input-icon"></i>
-                Email <span class="optional">(optional)</span>
-              </label>
-              <input type="email" id="email" name="email" placeholder="your.email@example.com" />
-              <div class="input-underline"></div>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="feedback">
-                <i class="fas fa-comment-dots input-icon"></i>
-                Your Feedback <span class="required">*</span>
-              </label>
-              <textarea id="feedback" name="feedback" rows="5" required
-                placeholder="Tell us about your experience, suggestions for improvement, or any issues you've encountered..."></textarea>
-              <div class="input-underline"></div>
-              <div class="character-count">
-                <span id="charCount">0</span> characters
-              </div>
-            </div>
-          </div>
-
-          <button type="submit" class="submit-button">
-            <i class="fas fa-paper-plane"></i>
-            <span>Submit Feedback</span>
-            <div class="button-ripple"></div>
-          </button>
-        </form>
-
-        <div id="thankYouMessage" class="hidden thank-you-section">
-          <div class="success-animation">
-            <i class="fas fa-check-circle success-icon"></i>
-          </div>
-          <h3>Thank You for Your Feedback!</h3>
-          <p>
-            We appreciate you taking the time to share your thoughts with us.
-            Your feedback helps us create better agricultural solutions.
-          </p>
-          <div class="action-buttons">
-            <a href="main.html" class="home-button">
-              <i class="fas fa-home"></i>
-              Back to Home
-            </a>
-            <button id="viewFeedbacks" class="view-button">
-              <i class="fas fa-list"></i>
-              View All Feedbacks
-            </button>
-          </div>
-        </div>
-
-        <div id="allFeedbacks" class="hidden feedback-list-section">
-          <div class="section-header">
-            <i class="fas fa-history"></i>
-            <h3>All Feedback Submissions</h3>
-          </div>
-          <div id="feedbacksList" class="feedbacks-container"></div>
-          <div class="action-buttons">
-            <a href="main.html" class="home-button">
-              <i class="fas fa-home"></i>
-              Back to Home
-            </a>
-          </div>
-        </div>
-      </div>
-    </main>
-
-    <div class="floating-help">
-      <button class="help-button" title="Need help?">
-        <i class="fas fa-question"></i>
-      </button>
-      <div class="help-tooltip">
-        <p>
-          Having trouble with feedback submission? Contact our support team!
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    <h3>🤝 Connect With Us</h3>
-    <p>
-      If you have any questions or need assistance, feel free to reach out to
-      us through our social media channels:
-    </p>
-
-    <div style="margin: 1rem 0">
-      <a href="https://instagram.com" target="_blank" aria-label="Follow us on Instagram">
-        <i class="fab fa-instagram"></i>
-      </a>
-      <a href="https://github.com/omroy07" target="_blank" aria-label="View our GitHub repositories">
-        <i class="fab fa-github"></i>
-      </a>
-      <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank" aria-label="Connect with us on LinkedIn">
-        <i class="fab fa-linkedin"></i>
-      </a>
+            <p style="margin-top: 1.5rem; opacity: 0.8; font-size: 0.9rem;">
+                &copy; 2025 AgriTech | Empowering India's Farming Future 🇮🇳
+            </p>
+        </footer>
     </div>
 
-    <p style="margin-top: 2rem; opacity: 0.8">
-      &copy; 2025 AgriTech | Empowering India's Farming Future 🇮🇳
-    </p>
-  </footer>
-
-    <script src="feed-back.js"></script>
-    <script src="theme.js"></script>
     <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.querySelector('.theme-icon');
+            const themeText = document.querySelector('.theme-text');
+            
+            if (body.classList.contains('dark-theme')) {
+                body.classList.remove('dark-theme');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                themeText.textContent = 'Light';
+                // Store theme preference in memory
+                window.currentTheme = 'light';
+            } else {
+                body.classList.add('dark-theme');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                themeText.textContent = 'Dark';
+                // Store theme preference in memory
+                window.currentTheme = 'dark';
+            }
+        }
+
+        // Load theme on page load
+        function loadTheme() {
+            const themeIcon = document.querySelector('.theme-icon');
+            const themeText = document.querySelector('.theme-text');
+            
+            if (window.currentTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                themeText.textContent = 'Dark';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load theme
+            loadTheme();
+            
+            const feedbackForm = document.getElementById('feedbackForm');
+            const thankYouMessage = document.getElementById('thankYouMessage');
+            const allFeedbacksSection = document.getElementById('allFeedbacks');
+            const viewFeedbacksBtn = document.getElementById('viewFeedbacks');
+            const feedbacksList = document.getElementById('feedbacksList');
+            const feedbackTextarea = document.getElementById('feedback');
+            const charCountElement = document.getElementById('charCount');
+
+            // Character count
+            if (feedbackTextarea && charCountElement) {
+                feedbackTextarea.addEventListener('input', function() {
+                    const charCount = this.value.length;
+                    charCountElement.textContent = charCount;
+                    
+                    if (charCount > 500) {
+                        charCountElement.style.color = '#ff7043';
+                    } else if (charCount > 300) {
+                        charCountElement.style.color = '#ff9800';
+                    } else {
+                        charCountElement.style.color = '#81c784';
+                    }
+                });
+            }
+
+            // Form submission
+            feedbackForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const feedbackText = document.getElementById('feedback').value.trim();
+                
+                if (!name || !feedbackText) {
+                    Swal.fire({
+                        title: 'Missing Information',
+                        text: 'Please fill in all required fields.',
+                        icon: 'warning',
+                        confirmButtonColor: '#4caf50'
+                    });
+                    return;
+                }
+                
+                const submitButton = this.querySelector('.submit-button');
+                const originalText = submitButton.innerHTML;
+                
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Sending...</span>';
+                submitButton.disabled = true;
+                
+                setTimeout(() => {
+                    const feedbackData = {
+                        name: name,
+                        email: email || 'Not provided',
+                        feedback: feedbackText,
+                        date: new Date().toLocaleString(),
+                        id: Date.now() 
+                    };
+
+                    // Save feedback in memory (using a global variable since localStorage is not available)
+                    if (!window.agritechFeedbacks) {
+                        window.agritechFeedbacks = [];
+                    }
+                    window.agritechFeedbacks.push(feedbackData);
+
+                    // Show success
+                    feedbackForm.classList.add('hidden');
+                    document.querySelector('.feedback-header').classList.add('hidden');
+                    thankYouMessage.classList.remove('hidden');
+                    feedbackForm.reset();
+                    
+                    if (charCountElement) {
+                        charCountElement.textContent = '0';
+                        charCountElement.style.color = '#81c784';
+                    }
+                    
+                    submitButton.innerHTML = originalText;
+                    submitButton.disabled = false;
+                }, 1500);
+            });
+        });
+
+        function showAllFeedbacks() {
+            const thankYouMessage = document.getElementById('thankYouMessage');
+            const allFeedbacksSection = document.getElementById('allFeedbacks');
+            const feedbacksList = document.getElementById('feedbacksList');
+            
+            thankYouMessage.classList.add('hidden');
+            allFeedbacksSection.classList.remove('hidden');
+            
+            const allFeedbacks = window.agritechFeedbacks || [];
+            
+            if (allFeedbacks.length === 0) {
+                feedbacksList.innerHTML = `
+                    <div class="no-feedback">
+                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.6;"></i>
+                        <p style="font-size: 1rem; margin-bottom: 0.5rem;">No feedback submissions yet</p>
+                        <p style="font-size: 0.9rem; opacity: 0.8;">Be the first to share your thoughts!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            allFeedbacks.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            feedbacksList.innerHTML = allFeedbacks.map((fb, index) => `
+                <div class="feedback-item">
+                    <h4><i class="fas fa-user-circle" style="color: #4caf50; margin-right: 8px;"></i>${escapeHtml(fb.name)}</h4>
+                    ${fb.email !== 'Not provided' ? `<p style="color: #81c784; font-size: 0.9rem; margin: 5px 0;"><i class="fas fa-envelope" style="margin-right: 8px;"></i>${escapeHtml(fb.email)}</p>` : ''}
+                    <p style="margin-top: 1rem;"><i class="fas fa-quote-left" style="color: #66bb6a; margin-right: 8px; opacity: 0.6;"></i>${escapeHtml(fb.feedback)}</p>
+                    <div class="feedback-meta">
+                        📝 Submission #${allFeedbacks.length - index} • ${formatDate(fb.date)}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffTime = Math.abs(now - date);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays === 1) return 'Today';
+            if (diffDays === 2) return 'Yesterday';
+            if (diffDays <= 7) return `${diffDays - 1} days ago`;
+            return date.toLocaleDateString();
+        }
+
         function showLogoutConfirmation() {
             Swal.fire({
-            title: 'Confirm Logout',
-            text: 'Are you sure you want to logout?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, logout',
-            cancelButtonText: 'No'
+                title: 'Confirm Logout',
+                text: 'Are you sure you want to logout?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ff7043',
+                cancelButtonColor: '#4caf50',
+                confirmButtonText: 'Yes, logout',
+                cancelButtonText: 'Cancel',
+                customClass: {
+                    popup: 'swal-custom'
+                }
             }).then((result) => {
-            if (result.isConfirmed) {
-                // Redirect to logout page or homepage
-                window.location.href = 'index.html';  
-            }
+                if (result.isConfirmed) {
+                    window.location.href = 'index.html';  
+                }
             });
         }
     </script>
-  </body>
+
+</body>
 </html>
