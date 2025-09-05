@@ -1,3 +1,4 @@
+
 import streamlit as st
 from model import predict_fertilizer
 
@@ -81,7 +82,7 @@ if submitted:
             humidity=humidity,
             moisture=moisture,
             soil_type=soil_type,
-            crop_type=crop_type,
+            crop_type=.crop_type,
             nitrogen=nitrogen,
             potassium=potassium,
             phosphorous=phosphorous
