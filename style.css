@@ -109,9 +109,11 @@
     }
 
     .btn-primary:hover {
-      background: var(--green-hover);
-      transform: translateY(-1px);
+    background: linear-gradient(90deg, #2ecc71, #27ae60);
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
     }
+
 
     .btn-secondary {
       background: transparent;
@@ -120,8 +122,11 @@
     }
 
     .btn-secondary:hover {
-      background: var(--bg-secondary);
-    }
+    background: rgba(46, 204, 113, 0.1); /* soft green tint */
+    border-color: #2ecc71;
+    color: #2ecc71;
+  }
+
 
     /* Theme Toggle */
     .theme-toggle {
