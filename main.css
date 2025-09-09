@@ -420,7 +420,6 @@ main {
   text-decoration: none;
   color: inherit;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   position: relative;
   backdrop-filter: blur(5px);
 }
@@ -438,9 +437,21 @@ main {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
+.grid-item:hover p {
+  color: #e8f5e9; /* light green instead of ivory */
+}
+
+.grid-item:hover h3 {
+  color: #ffffff; /* white is fine for heading */
+}
+.grid-item:hover::before {
+  opacity: 0.15; /* slightly more visible */
+  background: linear-gradient(135deg, rgba(76,175,80,0.1), rgba(102,187,106,0.1));
+}
 
 .grid-item:hover::before {
   opacity: 1;
+  z-index: 1;
 }
 
 .grid-item:hover {
@@ -448,11 +459,25 @@ main {
   box-shadow: 0 12px 30px rgba(76, 175, 80, 0.2);
   border-color: rgba(76, 175, 80, 0.3);
 }
-
+.grid-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg,
+      rgba(76, 175, 80, 0.05),
+      rgba(102, 187, 106, 0.05));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1; 
+}
 .grid-item-content {
   padding: 1.5rem;
   position: relative;
   z-index: 2;
+  transition: color 0.3s ease;
 }
 
 .grid-item img {
@@ -467,18 +492,18 @@ main {
   transform: scale(1.05);
 }
 .grid-item:hover{
-  .arrow-icon{
-    color:white;
-  }
-  .feature-badge{
+  /* .arrow-icon{
+    color:--var(--secondary-green);
+  } */
+  /* .feature-badge{
     background: white;
     color: #4caf50;
-  }
+  } */
   h3{
-    color:white;
+    color:--var(--text-primary);
   }
   p{
-    color:ivory;
+    color:--var(--text-secondary);
   }
 }
 
@@ -522,8 +547,15 @@ main {
 }
 
 .grid-item:hover .arrow-icon {
-  transform: translateX(5px);
+  color: white;
 }
+.grid-item-content h3,
+.grid-item-content p,
+.grid-item-content .feature-badge,
+.grid-item-content .arrow-icon {
+  transition: color 0.3s ease, background 0.3s ease;
+}
+
 
 
 /* Footer */
@@ -847,3 +879,36 @@ nav a {
     font-size: 0.85rem;
   }
 }
+=======
+
+    /* Scroll to Top Button */
+    .scroll-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      background: var(--primary-green);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px var(--shadow-medium);
+      transition: all 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+      z-index: 1000;
+    }
+
+    .scroll-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .scroll-to-top:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px var(--shadow-heavy);
+    }

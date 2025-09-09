@@ -12,7 +12,7 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: var(--bg-secondary, #f8fff8);
   color: var(--text-primary, #333);
-  line-height: 1.6;
+  line-height: 1.8;
   min-height: 100vh;
 }
 
@@ -31,7 +31,9 @@ header {
   color: white;
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(45, 90, 39, 0.3);
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .header-content {
@@ -200,6 +202,7 @@ header > p {
   border-color: #2d5a27;
   background: #e8f5e8;
   transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(45, 90, 39, 0.3);
 }
 
 .upload-icon {

@@ -675,6 +675,7 @@
 
     <!-- JavaScript Files -->
     <script src="main.js"></script>
+Logout-Button
     <script src="theme.js"></script>
     
     <!-- Authentication Manager Script -->
@@ -694,6 +695,39 @@
           } catch (error) {
             console.error('Error loading users:', error);
             return [];
+=======
+  <script src="theme.js"></script>
+
+    <button class="scroll-to-top" id="scrollToTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+  <script>
+  // Scroll to top functionality
+    const scrollToTopBtn = document.getElementById("scrollToTop");
+
+    window.addEventListener("scroll", () => {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add("visible");
+      } else {
+        scrollToTopBtn.classList.remove("visible");
+      }
+    });
+
+    scrollToTopBtn.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+</script>
+
+<!--   <script src="auth.js"></script> -->
+  <script>
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', () => {
+          if (!requireAuth()) {
+            return;
+main
           }
         }
 

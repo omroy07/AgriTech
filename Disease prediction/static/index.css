@@ -42,7 +42,7 @@ body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--bg-secondary, #f8fffe);
   color: var(--text-primary, #333);
-  line-height: 1.7;
+  line-height: 1.8;
   overflow-x: hidden;
   min-height: 100vh;
 }
@@ -116,7 +116,9 @@ body {
   background: var(--gradient-primary);
   padding: 1rem 0;
   box-shadow: var(--shadow-medium);
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .nav-container {
@@ -183,6 +185,18 @@ body {
   box-shadow: 0 20px 60px var(--shadow-heavy, rgba(0, 0, 0, 0.15));
   border: 1px solid rgba(255, 255, 255, 0.3);
   margin-bottom: 2rem;
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .upload-form {
@@ -207,6 +221,7 @@ body {
   border-color: var(--accent-green);
   background: rgba(200, 230, 201, 0.2);
   transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
 }
 
 .file-upload-area.dragover {
@@ -380,6 +395,7 @@ body {
 .feature-card:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-medium);
+  background: var(--surface);
 }
 
 .feature-icon {
@@ -398,6 +414,15 @@ body {
 .feature-description {
   color: var(--text-secondary, #666);
   font-size: 0.9rem;
+}
+
+/* Footer */
+.footer {
+  background-color: #f2f2f2;
+  color: #666;
+  padding: 2rem;
+  text-align: center;
+  margin-top: 3rem;
 }
 
 /* Responsive design */
