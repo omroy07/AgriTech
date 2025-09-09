@@ -573,3 +573,35 @@
     * {
       transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
+
+    /* Floating Chatbot Button */
+#chatbotBtn {
+  position: fixed;
+  bottom: 100px; /* 20px above scroll-to-top button */
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: #4caf50; /* greenish theme */
+  color: #fff;
+  font-size: 28px;
+  text-align: center;
+  line-height: 60px;
+  border-radius: 50%;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  z-index: 1100; /* above scroll-to-top button */
+}
+
+#chatbotBtn:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+  background-color: #43a047; /* slightly darker green on hover */
+}
+
+/* Mobile responsiveness: hide on very small screens */
+@media (max-width: 400px) {
+  #chatbotBtn {
+    display: none;
+  }
+}
