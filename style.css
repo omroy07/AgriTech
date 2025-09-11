@@ -458,7 +458,48 @@
       font-size: 0.875rem;
       opacity: 0.8;
     }
+/* Footer Links Hover Effect - classy visible */
+.footer-links ul li a {
+  position: relative;
+  color: #fff; /* white text */
+  text-decoration: none;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
 
+/* Hover effect: pop + subtle background */
+.footer-links ul li a:hover {
+  background: rgba(255, 255, 255, 0.15); /* semi-transparent white overlay */
+  transform: translateY(-3px) scale(1.05); /* slight pop */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* subtle floating effect */
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.8); /* soft white text glow */
+}
+
+/* Underline animation (optional, subtle) */
+.footer-links ul li a::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+  background-color: #fff;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.footer-links ul li a:hover::after {
+  width: 100%;
+}
+/* Ripple Animation */
+@keyframes ripple {
+  to {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
     .social-media {
       display: flex;
       gap: 1rem;
