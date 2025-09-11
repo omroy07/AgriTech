@@ -191,6 +191,49 @@
 
         document.getElementById('guideText').innerHTML = guideTexts[lang];
     </script>
+    <!-- Theme Toggle Script (Safe, Non-breaking) -->
+    <script>
+      function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        const themeText = document.querySelector('.theme-text');
+        if (themeText) themeText.textContent = theme === 'dark' ? 'Dark' : 'Light';
+      }
+
+      function updateThemeIcons(theme) {
+        const sun = document.querySelector('.sun-icon');
+        const moon = document.querySelector('.moon-icon');
+        if (sun && moon) {
+          if (theme === 'dark') {
+            sun.style.opacity = 0;
+            moon.style.opacity = 1;
+          } else {
+            sun.style.opacity = 1;
+            moon.style.opacity = 0;
+          }
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        // Initial theme load
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+        setTheme(theme);
+        updateThemeIcons(theme);
+
+        // Toggle logic
+        const toggleBtn = document.querySelector('.theme-toggle');
+        if (toggleBtn) {
+          toggleBtn.addEventListener('click', function () {
+            const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+            const next = current === 'dark' ? 'light' : 'dark';
+            setTheme(next);
+            updateThemeIcons(next);
+          });
+        }
+      });
+    </script>
     <script src="../static/script.js"></script>
       <style>
     .site-footer {background: linear-gradient(135deg,#2e7d32,#66bb6a); color:#fff; margin-top:auto; padding: 2rem 1.25rem;}

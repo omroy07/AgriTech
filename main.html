@@ -30,6 +30,9 @@
     rel="stylesheet"
   />
 
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <!-- Inline Styles (can move to CSS file later) -->
   <style>
     body {
@@ -77,7 +80,7 @@
 
     .loan-card {
       background: var(--bg-primary, #fff);
-      border: 2px solid rgba(76, 175, 80, 0.2);
+      border: 2px solid rgba(76, 175, 80, 0.2); /* Light green border */
       border-radius: 12px;
       overflow: hidden;
       text-align: center;
@@ -94,7 +97,7 @@
 
     .loan-card img {
       width: 100%;
-      height: 150px;
+      height: 150px;  /* Fixed height for uniformity */
       object-fit: cover;
       transition: transform 0.3s ease;
     }
@@ -242,7 +245,65 @@
     .container *:not(.btn-green):not(select) {
       color: inherit !important;
     }
-</style>
+
+    /* Auth message styles */
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideOutRight {
+      from {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+    }
+
+    .auth-message {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 10000;
+      padding: 15px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      max-width: 400px;
+    }
+
+    .auth-message-success {
+      background: linear-gradient(135deg, #4caf50, #45a049);
+    }
+
+    .auth-message-error {
+      background: linear-gradient(135deg, #f44336, #e53935);
+    }
+
+    .auth-message-info {
+      background: linear-gradient(135deg, #2196f3, #1976d2);
+    }
+
+    .auth-message-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .auth-message-content i {
+      font-size: 1.2rem;
+    }
+  </style>
 </head>
 
 <body>
@@ -250,7 +311,6 @@
     <header>
       <div class="brand">
         <img src="images/logo.png" alt="AgriTech logo" class="site-logo">
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <h2>Welcome to AgriTech</h2>
       </div>
       <div class="header-buttons">
@@ -552,16 +612,9 @@
           
         </section>
       </div>
-
-      <script>
-        document.getElementById('goLoanGuide').addEventListener('click', function (event) {
-          event.preventDefault();
-          const lang = document.getElementById('languageSelect').value;
-          window.location.href = `smart_loan.html?lang=${lang}`;
-        });
-      </script>
   </main>
 </nav>
+
   <!-- Footer -->
   <style>
     .site-footer {background: linear-gradient(135deg,#2e7d32,#66bb6a); color:#fff; margin-top:auto; padding: 2rem 1.25rem;}
@@ -573,7 +626,6 @@
     .site-footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column}
     .site-footer a{color:#fff;text-decoration:none;opacity:0.9;width:max-content;background-color: none;}
     .site-footer a:hover{opacity:1;text-decoration:underline}
-    /* .footer-bottom{max-width:1200px;margin:1rem auto 0; padding-top:1rem; border-top:1px solid rgba(255, 255, 255, 0); text-align:center; font-size:2rem; opacity:9} */
     .footer-links{display:flex;flex-direction:column;align-items: center;}
     .social-media {display:flex;gap:1rem;margin-top:.5rem}
     .social-media a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:50%;transition:all .3s ease;font-size:1.2rem}
@@ -624,51 +676,210 @@
 <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
   <i class="fas fa-robot"></i>
 </a>
+
+    <!-- JavaScript Files -->
     <script src="main.js"></script>
+Logout-Button
+    <script src="theme.js"></script>
+    
+    <!-- Authentication Manager Script -->
+    <script>
+      // Simple Authentication Manager for AgriTech
+      class AuthManager {
+        constructor() {
+          this.users = this.loadUsers();
+          this.currentUser = this.getCurrentUser();
+        }
+
+        // Load users from localStorage (fallback to empty array if not available)
+        loadUsers() {
+          try {
+            const users = localStorage.getItem('agritech_users');
+            return users ? JSON.parse(users) : [];
+          } catch (error) {
+            console.error('Error loading users:', error);
+            return [];
+=======
   <script src="theme.js"></script>
+
+    <button class="scroll-to-top" id="scrollToTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+  <script>
+  // Scroll to top functionality
+    const scrollToTopBtn = document.getElementById("scrollToTop");
+
+    window.addEventListener("scroll", () => {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add("visible");
+      } else {
+        scrollToTopBtn.classList.remove("visible");
+      }
+    });
+
+    scrollToTopBtn.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+</script>
+
 <!--   <script src="auth.js"></script> -->
   <script>
         // Check authentication on page load
         document.addEventListener('DOMContentLoaded', () => {
           if (!requireAuth()) {
             return;
+main
           }
-          const currentUser = window.authManager.getCurrentUser();
-          if (currentUser) {
-            // Update header to show user name
-            const headerTitle = document.querySelector('header h2');
-            if (headerTitle) {
-              headerTitle.textContent = `Welcome to AgriTech, ${currentUser.fullname}!`;
+        }
+
+        // Save users to localStorage
+        saveUsers() {
+          try {
+            localStorage.setItem('agritech_users', JSON.stringify(this.users));
+          } catch (error) {
+            console.error('Error saving users:', error);
+          }
+        }
+
+        // Get current user session
+        getCurrentUser() {
+          try {
+            const user = localStorage.getItem('agritech_current_user');
+            return user ? JSON.parse(user) : null;
+          } catch (error) {
+            console.error('Error getting current user:', error);
+            return null;
+          }
+        }
+
+        // Check if user is logged in
+        isLoggedIn() {
+          return this.currentUser !== null;
+        }
+
+        // Logout user
+        logout() {
+          try {
+            localStorage.removeItem('agritech_current_user');
+            this.currentUser = null;
+            return { success: true, message: 'Logged out successfully' };
+          } catch (error) {
+            console.error('Error during logout:', error);
+            return { success: false, message: 'Error during logout' };
+          }
+        }
+      }
+
+      // Initialize global auth manager
+      window.authManager = new AuthManager();
+
+      // Utility function to show authentication messages
+      function showAuthMessage(message, type = 'info') {
+        // Remove existing messages
+        const existingMessage = document.querySelector('.auth-message');
+        if (existingMessage) {
+          existingMessage.remove();
+        }
+
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `auth-message auth-message-${type}`;
+        messageDiv.innerHTML = `
+          <div class="auth-message-content">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+            <span>${message}</span>
+          </div>
+        `;
+
+        messageDiv.style.animation = 'slideInRight 0.3s ease-out';
+        document.body.appendChild(messageDiv);
+
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+          if (messageDiv.parentNode) {
+            messageDiv.style.animation = 'slideOutRight 0.3s ease-out';
+            setTimeout(() => {
+              if (messageDiv.parentNode) {
+                messageDiv.remove();
+              }
+            }, 300);
+          }
+        }, 5000);
+      }
+
+      // Check authentication on protected pages
+      function requireAuth() {
+        if (!window.authManager.isLoggedIn()) {
+          showAuthMessage('Please log in to access this page', 'error');
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 2000);
+          return false;
+        }
+        return true;
+      }
+
+      // Logout confirmation function
+      function showLogoutConfirmation() {
+        Swal.fire({
+          title: 'Confirm Logout',
+          text: 'Are you sure you want to logout?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Yes, logout',
+          cancelButtonText: 'Cancel'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const logoutResult = window.authManager.logout();
+            if (logoutResult.success) {
+              Swal.fire({
+                title: 'Logged Out!',
+                text: logoutResult.message,
+                icon: 'success',
+                timer: 2000,
+                showConfirmButton: false
+              }).then(() => {
+                // Redirect to index.html after logout
+                window.location.href = 'index.html';
+              });
+            } else {
+              Swal.fire({
+                title: 'Error!',
+                text: logoutResult.message,
+                icon: 'error'
+              });
             }
           }
         });
-        
-        function showLogoutConfirmation() {
-            Swal.fire({
-            title: 'Confirm Logout',
-            text: 'Are you sure you want to logout?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, logout',
-            cancelButtonText: 'No'
-            }).then((result) => {
-            if (result.isConfirmed) {
-                const logoutResult = window.authManager.logout();
-                if (logoutResult.success) {
-                  showAuthMessage(logoutResult.message, 'success');
-                  setTimeout(() => {
-                    window.location.href = 'index.html';
-                  }, 1000);
-                }
-            }
-            });
-        }
-    </script>
+      }
 
+      // Check authentication and update UI on page load
+      document.addEventListener('DOMContentLoaded', () => {
+        // For now, we'll comment out the authentication requirement
+        // Uncomment the line below if you want to enforce authentication
+        // if (!requireAuth()) return;
+
+        const currentUser = window.authManager.getCurrentUser();
+        if (currentUser) {
+          // Update header to show user name
+          const headerTitle = document.querySelector('header h2');
+          if (headerTitle) {
+            headerTitle.textContent = `Welcome to AgriTech, ${currentUser.fullname}!`;
+          }
+        }
+      });
+
+      // Loan Guide Language Selection
+      document.getElementById('goLoanGuide').addEventListener('click', function (event) {
+        event.preventDefault();
+        const lang = document.getElementById('languageSelect').value;
+        window.location.href = `smart_loan.html?lang=${lang}`;
+      });
+    </script>
 
 </body>
 </html>
-
-

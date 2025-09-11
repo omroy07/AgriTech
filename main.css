@@ -803,3 +803,143 @@ footer a:hover {
     display: none;
   }
 }
+@media (max-width: 768px) {
+  .logout-button {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .logout-button {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.75rem;
+  }
+}
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .brand {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .header-buttons {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .calendar-button,
+  .logout-button,
+  .feedback-button {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+    min-width: 80px;
+    text-align: center;
+  }
+
+  .theme-toggle {
+    padding: 0.6rem;
+    min-width: 60px;
+  }
+
+  /* Ensure logout button is always visible */
+  .logout-button {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+}
+nav a {
+    padding: 0.8rem 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+@media (max-width: 480px) {
+  header {
+    padding: 0.8rem;
+  }
+
+  .brand h2 {
+    font-size: 1.5rem;
+  }
+
+  .header-buttons {
+    gap: 0.3rem;
+  }
+
+  .calendar-button,
+  .logout-button,
+  .feedback-button {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.75rem;
+    min-width: 70px;
+  }
+
+  .theme-toggle {
+    padding: 0.5rem;
+    min-width: 50px;
+  }
+
+  /* Extra small screens - stack buttons if needed */
+  .header-buttons {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  nav ul {
+    gap: 0.6rem;
+  }
+
+  nav a {
+    padding: 0.7rem;
+    font-size: 0.85rem;
+  }
+}
+
+    /* Scroll to Top Button */
+    .scroll-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      background: var(--primary-green);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px var(--shadow-medium);
+      transition: all 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+      z-index: 1000;
+    }
+
+    .scroll-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .scroll-to-top:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px var(--shadow-heavy);
+    }
