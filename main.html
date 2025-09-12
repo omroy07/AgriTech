@@ -702,28 +702,45 @@ Logout-Button
 =======
   <script src="theme.js"></script>
 
-    <button class="scroll-to-top" id="scrollToTop" title="Back to top">
-    <i class="fas fa-arrow-up"></i>
-  </button>
-  <script>
-  // Scroll to top functionality
-    const scrollToTopBtn = document.getElementById("scrollToTop");
+    <!-- Scroll Button -->
+<button class="scroll-btn" id="scrollBtn" title="Scroll">
+  <i class="fas fa-arrow-down" id="scrollIcon"></i>
+</button>
 
-    window.addEventListener("scroll", () => {
-      if (window.pageYOffset > 300) {
-        scrollToTopBtn.classList.add("visible");
-      } else {
-        scrollToTopBtn.classList.remove("visible");
-      }
-    });
+<script>
+  const scrollBtn = document.getElementById("scrollBtn");
+  const scrollIcon = document.getElementById("scrollIcon");
 
-    scrollToTopBtn.addEventListener("click", () => {
+  window.addEventListener("scroll", () => {
+    // If near top, show "scroll down" button
+    if (window.scrollY < 300) {
+      scrollBtn.classList.add("visible");
+      scrollIcon.classList.replace("fa-arrow-up", "fa-arrow-down");
+    } 
+    // If scrolled down, show "scroll up" button
+    else {
+      scrollBtn.classList.add("visible");
+      scrollIcon.classList.replace("fa-arrow-down", "fa-arrow-up");
+    }
+  });
+
+  scrollBtn.addEventListener("click", () => {
+    if (scrollIcon.classList.contains("fa-arrow-down")) {
+      // Scroll to bottom
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth",
+      });
+    } else {
+      // Scroll to top
       window.scrollTo({
         top: 0,
         behavior: "smooth",
       });
-    });
+    }
+  });
 </script>
+
 
 <!--   <script src="auth.js"></script> -->
   <script>
