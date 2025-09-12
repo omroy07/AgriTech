@@ -879,36 +879,35 @@ nav a {
     font-size: 0.85rem;
   }
 }
-=======
 
-    /* Scroll to Top Button */
-    .scroll-to-top {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 50px;
-      height: 50px;
-      background: var(--primary-green);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 15px var(--shadow-medium);
-      transition: all 0.3s ease;
-      opacity: 0;
-      visibility: hidden;
-      z-index: 1000;
-    }
+    /* Scroll Button */
+.scroll-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 50px;
+  height: 50px;
+  background: var(--primary-green);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px var(--shadow-medium);
+  transition: all 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000;
+}
 
-    .scroll-to-top.visible {
-      opacity: 1;
-      visibility: visible;
-    }
+.scroll-btn.visible {
+  opacity: 1;
+  visibility: visible;
+}
 
-    .scroll-to-top:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px var(--shadow-heavy);
-    }
+.scroll-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px var(--shadow-heavy);
+}
