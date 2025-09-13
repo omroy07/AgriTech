@@ -55,6 +55,118 @@
       transition: all 0.3s ease;
     }
 
+     /* Responsive Search bar */
+     .search-container {
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        border: 2px solid transparent;
+        border-radius: 30px;
+        padding: 8px 15px;
+        width: 100%;
+        max-width: 320px;
+        margin-left: auto;
+        margin-right: 20px;
+        box-shadow: 0 4px 15px rgba(56, 142, 60, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .navbar-content.search-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+      .search-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #4caf50, #388e3c);
+        border-radius: 30px;
+        padding: 2px;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .search-container:focus-within::before {
+        opacity: 1;
+      }
+
+      .search-container:focus-within {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(56, 142, 60, 0.2);
+      }
+
+      .search-input {
+        border: none;
+        outline: none;
+        padding: 10px 12px;
+        font-size: 15px;
+        flex: 1;
+        color: #2e7d32;
+        background: transparent;
+        font-family: "Poppins", sans-serif;
+        font-weight: 500;
+      }
+
+      .search-input::placeholder {
+        color: #81c784;
+        font-weight: 400;
+      }
+
+      .search-button {
+        background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        color: white;
+        font-size: 16px;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(56, 142, 60, 0.2);
+      }
+
+      .search-button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 15px rgba(56, 142, 60, 0.4);
+      }
+
+      /* Mobile responsive improvements */
+      @media screen and (max-width: 991.98px) {
+        .navbar {
+          padding: 0.75rem 0;
+        }
+
+        .search-container {
+          max-width: 100%;
+          margin: 1rem 0 0 0;
+          order: 3;
+        }
+      }
+
+      @media screen and (max-width: 600px) {
+        .search-container {
+          max-width: 100%;
+        }
+
+        .search-input {
+          font-size: 14px;
+        }
+      }
+    
+
     /* Header within container */
     .container header h1 {
       color: var(--text-primary, #333) !important;
@@ -318,6 +430,15 @@
           <span class="calendar-icon">📅</span>
           Calendar
         </a>
+
+         <!-- Responsive Search Bar -->
+        <div class="search-container">
+          <input type="text" placeholder="Search..." class="search-input" />
+          <button class="search-button">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+
         <a href="feed-back.html" class="feedback-button">Feedback</a>
         <a href="#" class="logout-button" onclick="showLogoutConfirmation()">Logout</a>
         <button class="theme-toggle" aria-label="Toggle dark/light mode">
