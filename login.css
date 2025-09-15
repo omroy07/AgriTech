@@ -163,6 +163,14 @@ body {
   margin-bottom: 30px;
 }
 
+.loginContainer{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Form elements styling */
 .form-container form {
   display: flex;
@@ -431,11 +439,21 @@ body {
 }
 
 /* Responsive design */
-@media (max-width: 500px) {
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+    min-height: 100vh;
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+
   .form-container {
-    padding: 30px 25px;
-    margin: 20px;
+    padding: 25px 20px;
+    margin: 0;
+    width: 100%;
+    max-width: none;
     border-radius: 16px;
+    min-height: auto;
   }
 
   .brand-icon {
@@ -444,26 +462,124 @@ body {
   }
 
   .brand-icon i {
-    font-size: 24px;
+    font-size: 22px;
   }
 
   .form-container h2 {
     font-size: 24px;
   }
 
-  .form-container input[type="email"],
-  .form-container input[type="password"] {
-    font-size: 16px;
+  .form-subtitle {
+    font-size: 13px;
   }
 }
 
-@media (max-height: 700px) {
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+
   .form-container {
-    margin: 10px;
-    padding: 25px 30px;
+    padding: 20px 15px;
+    border-radius: 12px;
   }
 
   .brand-section {
     margin-bottom: 25px;
+  }
+
+  .brand-icon {
+    width: 45px;
+    height: 45px;
+  }
+
+  .brand-icon i {
+    font-size: 20px;
+  }
+
+  .form-container h2 {
+    font-size: 22px;
+  }
+
+  .form-container input[type="email"],
+  .form-container input[type="password"] {
+    padding: 12px 12px 12px 40px;
+    font-size: 16px;
+  }
+
+  .input-group i {
+    left: 12px;
+    font-size: 14px;
+  }
+
+  .form-container button[type="submit"] {
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .form-container p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  .form-container {
+    padding: 15px 12px;
+  }
+
+  .form-container h2 {
+    font-size: 20px;
+  }
+
+  .form-container input[type="email"],
+  .form-container input[type="password"] {
+    padding: 10px 10px 10px 35px;
+  }
+
+  .input-group i {
+    left: 10px;
+  }
+}
+
+@media (max-height: 700px) {
+  body {
+    align-items: flex-start;
+    padding-top: 15px;
+  }
+
+  .form-container {
+    margin: 0;
+    padding: 20px 25px;
+  }
+
+  .brand-section {
+    margin-bottom: 20px;
+  }
+
+  .input-group {
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-height: 600px) {
+  .brand-section {
+    margin-bottom: 15px;
+  }
+
+  .brand-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand-icon i {
+    font-size: 18px;
+  }
+
+  .form-container h2 {
+    font-size: 20px;
+  }
+
+  .input-group {
+    margin-bottom: 12px;
   }
 }
