@@ -1,356 +1,189 @@
-body{
+/* Global */
+body {
     margin: 0 auto;
     padding: 0;
-    background-image: url("https://www.transparenttextures.com/patterns/clean-textile.png");
+    font-family: "Inter", sans-serif;
+    background: var(--bg);
     display: flex;
     flex-direction: column;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
-.box{
-    background-color: #ceecf7;
-    /* background-image: url("https://img.freepik.com/premium-vector/day-with-clouds-weather-app-screen-mobile-interface-design-forecast-weather-background-time-concept-vector-banner_87946-4137.jpg") ; */
-    opacity: 1;
-    width: 60% ;
-    height: 600px;
-    /* position: relative;
-    top: 18%;
-    left: 20%; */
-    margin: 0 auto;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    margin-left: 22%;
+:root {
+    --bg: #f0f4f9;
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --text: #1e1e1e;
+    --secondary-text: #555;
+    --accent: #2e7d32;
+}
 
+.dark-mode {
+    --bg: #121212;
+    --card-bg: rgba(40, 40, 40, 0.9);
+    --text: #f5f5f5;
+    --secondary-text: #bbb;
+    --accent: #66bb6a;
+}
+
+/* Box Container */
+.box {
+    background-color: var(--card-bg);
+    width: 70%;
+    height: auto;
+    margin: 50px auto;
     border-radius: 20px;
-    /* border: 2px solid rgb(0, 0, 0); */
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.389);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: row;
-    backdrop-filter: blur(10px); /* Adjust the blur intensity */
-    background-color: rgba(255, 255, 255, 0.5); /* Optional: Add transparency */
+    backdrop-filter: blur(12px);
+    overflow: hidden;
+    animation: fadeIn 0.8s ease-in-out;
 }
 
-
-.box .left{
+/* Left Section */
+.box .left {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    width: 400px;
-    height: 100%;
+    width: 35%;
+    padding: 20px;
+    background: linear-gradient(160deg, var(--accent), #81c784);
+    color: white;
+    border-radius: 20px 0 0 20px;
 }
 
-.box .left .main{
+.box .left .main {
     text-align: center;
 }
-.box .left .main input{
+.box .left .main input {
     width: 75%;
     height: 15px;
     border-radius: 20px;
-    border: 2px solid #aeadad;
-    background-color: rgb(255, 255, 255) ;
+    border: none;
+    background-color: white;
     padding: 12px;
+    font-size: 14px;
 }
-.box .left .main button{
-    width: 30%;
-    height: 30px;
+.box .left .main button {
+    width: 40%;
+    height: 35px;
     margin-top: 20px;
     border-radius: 20px;
-    border: 2px solid #aeadad;
+    border: none;
     background-color: white;
+    color: var(--accent);
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.4s ease;
-    overflow: hidden;
+    transition: all 0.3s ease;
 }
-.box .left .main button:hover { 
-    /* background: #b4bdc0;  */
-    transform: translateY(-5px) scale(1.05); 
-    border-radius: 8px; 
-}
-
-
-
-.box .left .general{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /* width: 80%; */
-    /* margin-left: 20%; */
-    padding: 30px;
-}     
-.box .left .general h3 {
-    font-size: 35px;
-    margin-top: 10px;
-    margin-bottom: 0;
-    font-family: "Tinos", serif;
+.box .left .main button:hover {
+    background: var(--accent);
+    color: white;
+    transform: translateY(-3px);
 }
 
-.box .left .general h4 {
-    margin-top: 5px;
-    margin-bottom: 0;
-}
-
-.box .left .general h5 {
-    margin-top: 5px;
-    margin-bottom: 0;
-}
-
-.box .left .general h6 {
-    font-size: 20px;
-    margin-top: 5px;
-    margin-bottom: 0;
-}
-
-.box .left .general p {
-    font-size: 50px;
-    margin-top: 5px;
-    margin-bottom: 0;
-    font-family: "Libre Caslon Display", serif;
-    font-weight: 200;
-    color: black;
-}
-
-.box .left .general p img {
-    /* image added dynamically */
-    width: 60px;
-    height: 60px;
-    position: relative;
-    top: 20%;
-    left: 5%;
-    opacity: 1;
-}
-    
-
-.box .right{
-    display: flex;
-    flex-direction: column ;
-    justify-content: space-evenly;
+.box .left .general {
+    text-align: center;
     padding: 20px;
-    width: 60%;
-    margin-right: 10px;
-    margin-bottom: 10px;
 }
-
-/* Hourly forecast */
-
-.box .right .hourly{
-    display: flex;
-    flex-direction: column;
-    height: 250px;
-    margin-bottom: 20px;
-    border-radius: 12px;
-}
-.box .right .hourly div p{
-    font-size: 18px ;
+.box .left .general p {
+    font-size: 55px;
+    margin: 10px 0;
     font-weight: bold;
 }
-.box .right .hourly .hour{
-    display: flex;
-    flex-direction: row;
-
-    overflow: auto;
-    overflow-x: scroll;
-    /* overflow: hidden; */
-    scrollbar-width: 2px;
-
-    height: 200px;
-    border: 1px solid #aeadad;
-    padding: 10px;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0
-}
-#hour::-webkit-scrollbar-track{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #F5F5F5;
-    border-radius: 20px;
-    height: 200px;
-}
-#hour::-webkit-scrollbar{
-    height: 4px;
-	background-color: #F5F5F5;
-    border-radius: 30px;
-}
-#hour::-webkit-scrollbar-thumb{
-	background-color: #a5a5a5;
-	border: 1px solid #9b9b9b;
+.box .left .general img {
+    width: 60px;
+    height: 60px;
 }
 
-.box .right .hourly .hour div{
+/* Right Section */
+.box .right {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    margin-right: 20px;
+    justify-content: space-between;
+    padding: 20px;
+    width: 65%;
 }
-.box .right .hourly .hour div p{
-    font-size: 15px;
+
+/* Hourly Forecast */
+.box .right .hourly {
+    margin-bottom: 20px;
+}
+.box .right .hourly > p {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+}
+.box .right .hourly .hour {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding: 15px;
+    background: var(--card-bg);
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.box .right .hourly .hour div {
+    min-width: 80px;
     text-align: center;
+    background: white;
+    background: var(--card-bg);
+    padding: 12px;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.box .right .hourly .hour div img{
+.box .right .hourly .hour div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+.box .right .hourly .hour div img {
     width: 40px;
     height: 40px;
 }
 
-/* 10 days forecast */
-
-.box .right .daywise{
+/* Daily Forecast */
+.box .right .daywise > p {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+}
+.box .right .daywise .day {
     display: flex;
     flex-direction: column;
-    margin-bottom: 15px;
-}
-.box .right .daywise div p{
-    font-size: 18px ;
-    font-weight: bold;
-
-}
-.box .right .daywise .day{
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
-    /* overflow: hidden; */
-    scrollbar-width: 2px;
-    scroll-behavior: smooth;
-    scrollbar-color: white;
-    height: 200px;
-    border: 1px solid #aeadad;
+    gap: 12px;
+    max-height: 220px;
+    overflow-y: auto;
     padding: 10px;
-    background-color: white;
-    /* border-radius:top-left top-right bottom-right bottom-left */
-    border-radius: 12px 12px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0
+    background: var(--card-bg);
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-#day::-webkit-scrollbar-track{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #F5F5F5;
-    border-radius: 20px;
-    height: 200px;
-}
-#day::-webkit-scrollbar{
-    width: 4px;
-	background-color: #F5F5F5;
-    border-radius: 30px;
-}
-#day::-webkit-scrollbar-thumb{
-	background-color: #a5a5a5;
-	border: 1px solid #9b9b9b;
-}
-
-.box .right .daywise .day div{
+.box .right .daywise .day div {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: white ;
-    padding: 10px;
-    padding-bottom: 0;
+    background: var(--card-bg);
+    padding: 10px 15px;
+    border-radius: 10px;
+    transition: background 0.3s ease;
 }
-.box .right .daywise .day div p{
-    font-size: 15px;
-    text-align: center;
+.box .right .daywise .day div:hover {
+    background: rgba(0, 0, 0, 0.05);
 }
-.box .right .daywise .day div img{
+.box .right .daywise .day div img {
     width: 40px;
     height: 40px;
 }
 
 /* Footer */
-
-footer{
-    position: relative;
-    bottom: 0;
-    width: 100%;
+footer {
+    margin-top: auto;
 }
 
-.site-footer {
-    background: linear-gradient(135deg, #2e7d32, #66bb6a);
-    color: #fff;
-    padding: 2rem 1.25rem;
-}
-
-.site-footer .footer-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    align-items: flex-start;
-}
-
-.footer-brand {
-    display: flex;
-    flex-direction: column;
-    gap: .5rem
-}
-
-.footer-logo {
-    width: 48px;
-    height: 48px;
-    border-radius: 8px;
-    object-fit: cover;
-    background: #fff;
-    padding: 4px
-}
-
-.site-footer h3,
-.site-footer h4 {
-    margin: 0 0 .5rem 0
-}
-
-.site-footer p {
-    margin: 0;
-    opacity: .9
-}
-
-.site-footer ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: .4rem
-}
-
-.site-footer a {
-    color: #fff;
-    text-decoration: none;
-    opacity: .9;
-    transition: opacity .2s
-}
-
-.site-footer a:hover {
-    opacity: 1;
-    text-decoration: underline
-}
-
-.footer-bottom {
-    max-width: 1200px;
-    margin: 1rem auto 0;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, .25);
-    text-align: center;
-    font-size: .9rem;
-    opacity: .9
-}
-
-.social-media {
-    display: flex;
-    gap: 1rem;
-    margin-top: .5rem
-}
-
-.social-media a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, .1);
-    border-radius: 50%;
-    transition: all .3s ease;
-    font-size: 1.2rem
-}
-
-.social-media a:hover {
-    background: rgba(255, 255, 255, .2);
-    transform: translateY(-2px)
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }

@@ -1,99 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="weather.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-      rel="stylesheet">
-    <title>Weather Check System</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Forecast</title>
+  <link rel="stylesheet" href="weather.css">
 </head>
 <body>
-    <div class="box weather-box">
-    
-      <div class="left general-data">
-        <div class="main">
-          <input type="text" id="cityInput" placeholder="Enter a city (by default, New Delhi)">
-          <br />
-          <button id="search">Search</button>
-        </div>
-        <div class="general">
-          <h3 id="city">City</h3>
-          <h4 id="region">Region</h4>
-          <h5 id="country">Country</h5>
-          <br />
-          <br />
-          <h6 id="description">mostly ---</h6>
-          <p id="temperature">40</p>
-          <!-- image is added in "p" dynamically -->
-        </div>
+
+  <!-- Weather Container -->
+  <div class="box">
+
+    <!-- Left Section (Search + Current Weather) -->
+    <div class="left">
+      <div class="main">
+        <h2>Search City</h2>
+        <input type="text" id="cityInput" placeholder="Enter city name">
+        <button id="searchBtn">Search</button>
       </div>
-    
-      <div class="right predictions-data">
-        <div class="hourly">
-          <div>
-            <p>Hourly forecast</p>
-          </div>
-          <div class="hour" id="hour">
-            <!-- cards are entered dynamically -->
-          </div>
-        </div>
-        <div class="daywise">
-          <div>
-            <p>10 days forecast</p>
-          </div>
-          <div class="day" id="day">
-            <!-- cards are entered dynamically -->
-          </div>
-        </div>
+
+      <div class="general">
+        <h3 id="cityName">Bengaluru</h3>
+        <h4 id="date">Mon, 15 Sep 2025</h4>
+        <p id="temperature">28°C <img id="weatherIcon" src="" alt="Weather icon"></p>
+        <h6 id="condition">Sunny</h6>
       </div>
-    
     </div>
-    
-    <!-- Footer -->
-    <footer class="site-footer">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
-          <h3>AgriTech</h3>
-          <p>Empowering India's Farming Future</p>
-          <div class="social-media">
-            <a href="https://instagram.com" target="_blank" aria-label="Follow us on Instagram">
-              <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://github.com/omroy07" target="_blank" aria-label="View our GitHub repositories">
-              <i class="fab fa-github"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank"
-              aria-label="Connect with us on LinkedIn">
-              <i class="fab fa-linkedin"></i>
-            </a>
+
+    <!-- Right Section (Forecasts) -->
+    <div class="right">
+
+      <!-- Hourly Forecast -->
+      <section class="hourly">
+        <p>Hourly Forecast</p>
+        <div class="hour" id="hour">
+          <!-- Example Hourly Cards -->
+          <div>
+            <p>10 AM</p>
+            <img src="https://cdn-icons-png.flaticon.com/512/869/869869.png" alt="cloudy">
+            <p>27°C</p>
+          </div>
+          <div>
+            <p>11 AM</p>
+            <img src="https://cdn-icons-png.flaticon.com/512/869/869869.png" alt="cloudy">
+            <p>29°C</p>
+          </div>
+          <div>
+            <p>12 PM</p>
+            <img src="https://cdn-icons-png.flaticon.com/512/869/869869.png" alt="cloudy">
+            <p>30°C</p>
           </div>
         </div>
-        <div class="footer-links">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="main.html">Dashboard</a></li>
-            <li><a href="feed-back.html">Feedback</a></li>
-            <li><a href="chat.html">AI Assistant</a></li>
-          </ul>
+      </section>
+
+      <!-- Daily Forecast -->
+      <section class="daywise">
+        <p>10-Day Forecast</p>
+        <div class="day" id="day">
+          <!-- Example Daily Cards -->
+          <div>
+            <p>Tue</p>
+            <img src="https://cdn-icons-png.flaticon.com/512/869/869869.png" alt="sunny">
+            <p>32°C / 22°C</p>
+          </div>
+          <div>
+            <p>Wed</p>
+            <img src="https://cdn-icons-png.flaticon.com/512/1146/1146869.png" alt="rain">
+            <p>28°C / 20°C</p>
+          </div>
+          <div>
+            <p>Thu</p>
+            <img src="https://cdn-icons-png.flaticon.com/512/1163/1163661.png" alt="storm">
+            <p>26°C / 19°C</p>
+          </div>
         </div>
-        <div class="footer-links">
-          <h4>Tools</h4>
-          <ul>
-            <li><a href="Crop Recommendation/templates/index.html">Crop Recommendation</a></li>
-            <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
-            <li><a href="Disease prediction/template/index.html">Disease Detector</a></li>
-            <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
-          </ul>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="logo.png" alt="Logo" class="footer-logo">
+        <h3>WeatherNow</h3>
+        <p>Stay updated with real-time forecasts.</p>
+      </div>
+
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="weather.html">Weather</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Follow Us</h4>
+        <div class="social-media">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
-      <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div>
-    </footer>
-    
-    <script src="weather.js"></script>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 WeatherNow. All rights reserved.</p>
+      <button id="toggleDark">Toggle Dark Mode 🌙</button>
+    </div>
+  </footer>
+
+  <!-- FontAwesome for Icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <!-- Dark Mode Script -->
+  <script>
+    document.getElementById("toggleDark").addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+    });
+  </script>
+
 </body>
 </html>
