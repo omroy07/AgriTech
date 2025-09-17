@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriTech Blog</title>
+    <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+    <section class="agritech-blog">
+        <div class="blog-container">
+            <!-- Blog Header -->
+            <div class="blog-header">
+                <h1 class="blog-title">🌱 AgriTech Blog — Farming Tips & Insights</h1>
+                <p class="blog-subtitle">Stay updated with the latest in agriculture, technology, and sustainability.</p>
+            </div>
+
+            <!-- Search and Filter Section -->
+            <div class="search-filter-section">
+                <input type="text" class="search-bar" placeholder="Search blog posts..." id="searchInput">
+                
+                <div class="category-filters">
+                    <button class="filter-btn active" data-category="all">All Posts</button>
+                    <button class="filter-btn" data-category="farming-tips">Farming Tips</button>
+                    <button class="filter-btn" data-category="technology">Technology</button>
+                    <button class="filter-btn" data-category="market-trends">Market Trends</button>
+                    <button class="filter-btn" data-category="sustainability">Sustainability</button>
+                    <button class="filter-btn" data-category="business">Business</button>
+                </div>
+            </div>
+
+            <!-- Blog Grid -->
+            <div class="blog-grid" id="blogGrid">
+                <!-- Blog cards will be populated by JavaScript -->
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more-container">
+                <button class="load-more-btn" id="loadMoreBtn">Load More Posts</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for Blog Post -->
+    <div id="blogModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <span class="modal-category" id="modalCategory"></span>
+            </div>
+            <div class="modal-body">
+                <img class="modal-image" id="modalImage" alt="Blog post image">
+                <div class="modal-text" id="modalContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="blog.js"></script>
+</body>
+</html>
