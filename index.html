@@ -25,11 +25,6 @@
         <a href="#" class="logo">AgriTech</a>
       </div>
       <div class="nav-buttons">
-        <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
-          <i class="fas fa-sun sun-icon"></i>
-          <i class="fas fa-moon moon-icon"></i>
-          <span class="theme-text">Light</span>
-        </button>
 
          <!-- Responsive Search Bar -->
         <div class="search-container">
@@ -38,6 +33,12 @@
             <i class="fas fa-search"></i>
           </button>
         </div>
+
+        <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
+          <i class="fas fa-sun sun-icon"></i>
+          <i class="fas fa-moon moon-icon"></i>
+          <span class="theme-text">Dark</span>
+        </button>
 
         <a href="about.html" class="btn btn-secondary">About</a>
         <a href="login.html" class="btn btn-secondary">Login</a>
@@ -224,17 +225,17 @@
     const themeText = document.querySelector('.theme-text');
 
     // Check for saved theme preference
-    const currentTheme = localStorage.getItem('theme') || 'light';
+    const currentTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', currentTheme);
-    themeText.textContent = currentTheme === 'dark' ? 'Dark' : 'Light';
+    themeText.textContent = currentTheme === 'dark' ? 'Light' : 'Dark';
 
     themeToggle.addEventListener('click', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
       
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
-      themeText.textContent = newTheme === 'dark' ? 'Dark' : 'Light';
+      themeText.textContent = newTheme === 'dark' ? 'Light' : 'Dark';
     });
 
 
