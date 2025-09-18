@@ -110,25 +110,27 @@ body {
 }
 
 .theme-toggle .sun-icon {
-  opacity: 1;
-  transform: rotate(0deg);
-}
-
-.theme-toggle .moon-icon {
   opacity: 0;
   transform: rotate(180deg);
   position: absolute;
   left: 12px;
 }
 
+.theme-toggle .moon-icon {
+  opacity: 1;
+  transform: rotate(0deg);
+  
+}
+
 [data-theme="dark"] .theme-toggle .sun-icon {
-  opacity: 0;
-  transform: rotate(180deg);
+  opacity: 1;
+  transform: rotate(0deg);
 }
 
 [data-theme="dark"] .theme-toggle .moon-icon {
-  opacity: 1;
-  transform: rotate(0deg);
+  opacity: 0;
+  transform: rotate(180deg);
+  
 }
 
 /* Apply theme colors to common elements */
