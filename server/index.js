@@ -39,3 +39,13 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+sendEmail = require("./Utils/email.js");
+// Test email sending on server start
+(async () => {
+  const emailSent = await sendEmail(
+    "pidugubunny534@gmail.com",
+    "Test Email from AgriTech",
+    "<h1>This is a test email</h1><p>If you received this, email setup is working!</p>"
+  );
+  console.log("Test email sent:", emailSent);
+})();
