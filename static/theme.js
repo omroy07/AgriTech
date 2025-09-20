@@ -1,7 +1,7 @@
 // Theme Management System
 class ThemeManager {
   constructor() {
-    this.currentTheme = this.getStoredTheme() || 'light';
+    this.currentTheme = this.getStoredTheme() || 'dark';
     this.init();
   }
 
@@ -65,7 +65,7 @@ class ThemeManager {
       toggleButton.innerHTML = `
         <i class="fas fa-sun sun-icon"></i>
         <i class="fas fa-moon moon-icon"></i>
-        <span class="theme-text">Light</span>
+        <span class="theme-text">Dark</span>
       `;
       
       // Find the best place to insert the toggle
@@ -131,7 +131,7 @@ class ThemeManager {
     const themeText = toggleButton?.querySelector('.theme-text');
     
     if (toggleButton && themeText) {
-      themeText.textContent = this.currentTheme === 'light' ? 'Light' : 'Dark';
+      themeText.textContent = this.currentTheme === 'light' ? 'Dark' : 'Light';
     }
   }
 
