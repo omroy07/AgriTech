@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <link rel="icon" type="image/png" href="images/logo.png">
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plant Disease Detection - AI Powered Diagnosis</title>
-  <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
-  <link rel="stylesheet" href="/static/disease.css">
-  <link rel="stylesheet" href="/static/theme.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-</head>
-
-<body>
-  <div class="container">
-    <header class="header">
-      <div class="header-content">
-        <a href="main.html" class="back-button"> ← Back to Main </a>
-        <div>
-          <h1>🌱 Plant Disease Detection</h1>
-          <p>AI-Powered Plant Health Diagnosis System</p>
+  <head>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plant Disease Detection - AI Powered Diagnosis</title>
+    <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
+    <link rel="stylesheet" href="/static/disease.css">
+    <link rel="stylesheet" href="/static/theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="header-content">
+          <a href="main.html" class="back-button"> ← Back to Main </a>
+          <div>
+            <h1>🌱 Plant Disease Detection</h1>
+            <p>AI-Powered Plant Health Diagnosis System</p>
+          </div>
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <button class="theme-toggle" aria-label="Toggle dark/light mode">
+              <i class="fas fa-sun sun-icon"></i>
+              <i class="fas fa-moon moon-icon"></i>
+              <span class="theme-text">Light</span>
+            </button>
+            
+          </div>
         </div>
         <div style="display: flex; gap: 1rem; align-items: center;">
           <button class="theme-toggle" aria-label="Toggle dark/light mode">
@@ -265,207 +272,22 @@
     </div>
   </div>
 
-  <div id="plantsModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('plantsModal')">&times;</span>
-      <h2>🌿 Supported Plant Types</h2>
-      <div class="modal-section">
-        <h3>Comprehensive Plant Database</h3>
-        <p>
-          Our AI system has been trained to identify diseases across a wide
-          variety of plant species, with particular expertise in common crops
-          and garden plants.
-        </p>
-      </div>
-      <div class="modal-section">
-        <h3>Supported Plants & Common Diseases</h3>
-        <div class="plant-list">
-          <div class="plant-item">
-            <h4>🍅 Tomatoes</h4>
-            <p>
-              Early blight, late blight, bacterial spot, leaf mold, mosaic
-              virus, septoria leaf spot
-            </p>
-          </div>
-          <div class="plant-item">
-            <h4>🥔 Potatoes</h4>
-            <p>
-              Late blight, early blight, black scurf, common scab, bacterial
-              soft rot
-            </p>
-          </div>
-          <div class="plant-item">
-            <h4>🌽 Corn</h4>
-            <p>
-              Northern leaf blight, gray leaf spot, southern rust, common rust
-            </p>
-          </div>
-          <div class="plant-item">
-            <h4>🍎 Apple Trees</h4>
-            <p>
-              Apple scab, fire blight, cedar apple rust, powdery mildew, black
-              rot
-            </p>
-          </div>
-          <div class="plant-item">
-            <h4>🍇 Grapes</h4>
-            <p>
-              Downy mildew, powdery mildew, black rot, anthracnose, botrytis
-            </p>
-          </div>
-          <div class="plant-item">
-            <h4>🥒 Cucumbers</h4>
-            <p>
-              Bacterial wilt, downy mildew, powdery mildew, anthracnose,
-              cucumber mosaic
-            </p>
-          </div>
-          <div class="plant-item">
-            <h4>🌶️ Peppers</h4>
-            <p>
-              Bacterial spot, phytophthora blight, tobacco mosaic virus,
-              pepper mild mottle
-            </p>
-          </div>
-          <div class="plant-item">
-            <h4>🥬 Leafy Greens</h4>
-            <p>Downy mildew, bacterial leaf spot, white rust, clubroot</p>
-          </div>
-          <div class="plant-item">
-            <h4>🌻 Sunflowers</h4>
-            <p>
-              Sclerotinia head rot, downy mildew, rust, bacterial head rot
-            </p>
-          </div>
-          <div class="plant-item">
-            <h4>🥕 Carrots</h4>
-            <p>
-              Alternaria leaf blight, cercospora leaf spot, bacterial blight
-            </p>
-          </div>
-          <div class="plant-item">
-            <h4>🫘 Beans</h4>
-            <p>Common bacterial blight, anthracnose, rust, white mold</p>
-          </div>
-          <div class="plant-item">
-            <h4>🍓 Strawberries</h4>
-            <p>Gray mold, leaf spot, powdery mildew, verticillium wilt</p>
-          </div>
-        </div>
-      </div>
-      <div class="modal-section">
-        <h3>Detection Capabilities</h3>
-        <p>
-          <strong>Disease Types:</strong> Fungal infections, bacterial
-          diseases, viral infections, and pest-related damage<br />
-          <strong>Growth Stages:</strong> Seedling, vegetative, flowering, and
-          fruiting stages<br />
-          <strong>Symptoms:</strong> Leaf spots, wilting, discoloration,
-          abnormal growth patterns, fruit defects<br />
-          <strong>Severity Levels:</strong> Early detection for preventive
-          treatment and advanced stage diagnosis
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <script src="/static/disease.js"></script>
-  <script src="/static/theme.js"></script>
-  <style>
-    .site-footer {
-      background: linear-gradient(135deg, #2e7d32, #66bb6a);
-      color: #fff;
-      margin-top: auto;
-      padding: 2rem 1.25rem;
-    }
-
-    .site-footer .footer-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-      align-items: flex-start;
-    }
-
-    .footer-brand {
-      display: flex;
-      flex-direction: column;
-      gap: .5rem
-    }
-
-    .footer-logo {
-      width: 48px;
-      height: 48px;
-      border-radius: 8px;
-      object-fit: cover;
-      background: #fff;
-      padding: 4px
-    }
-
-    .site-footer h3,
-    .site-footer h4 {
-      margin: 0 0 .5rem 0
-    }
-
-    .site-footer p {
-      margin: 0;
-      opacity: .9
-    }
-
-    .site-footer ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: .4rem
-    }
-
-    .site-footer a {
-      color: #fff;
-      text-decoration: none;
-      opacity: .9;
-      transition: opacity .2s
-    }
-
-    .site-footer a:hover {
-      opacity: 1;
-      text-decoration: underline
-    }
-
-    .footer-bottom {
-      max-width: 1200px;
-      margin: 1rem auto 0;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, .25);
-      text-align: center;
-      font-size: .9rem;
-      opacity: .9
-    }
-
-    .social-media {
-      display: flex;
-      gap: 1rem;
-      margin-top: .5rem
-    }
-
-    .social-media a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, .1);
-      border-radius: 50%;
-      transition: all .3s ease;
-      font-size: 1.2rem
-    }
-
-    .social-media a:hover {
-      background: rgba(255, 255, 255, .2);
-      transform: translateY(-2px)
-    }
+    <script src="/static/disease.js"></script>
+    <script src="/static/theme.js"></script>
+      <style>
+    .site-footer {background: linear-gradient(135deg,#2e7d32,#66bb6a); color:#fff; margin-top:auto; padding: 2rem 1.25rem;}
+    .site-footer .footer-inner {max-width:1200px;margin:0 auto; display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1.5rem; align-items:flex-start;}
+    .footer-brand {display:flex;flex-direction:column;gap:.5rem}
+    .footer-logo {width:48px;height:48px;border-radius:8px;object-fit:cover;background:#fff;padding:4px}
+    .site-footer h3,.site-footer h4{margin:0 0 .5rem 0}
+    .site-footer p {margin:0;opacity:.9}
+    .site-footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.4rem}
+    .site-footer a{color:#fff;text-decoration:none;opacity:.9;transition:opacity .2s}
+    .site-footer a:hover{opacity:1;text-decoration:underline}
+    .footer-bottom{max-width:1200px;margin:1rem auto 0; padding-top:1rem; border-top:1px solid rgba(255,255,255,.25); text-align:center; font-size:.9rem; opacity:.9}
+    .social-media {display:flex;gap:1rem;margin-top:.5rem}
+    .social-media a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:50%;transition:all .3s ease;font-size:1.2rem}
+    .social-media a:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
   </style>
   <footer class="site-footer">
     <div class="footer-inner">
@@ -489,10 +311,10 @@
       <div class="footer-links">
         <h4>Quick Links</h4>
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="main.html">Dashboard</a></li>
-          <li><a href="feed-back.html">Feedback</a></li>
-          <li><a href="chat.html">AI Assistant</a></li>
+          <li><a href="/templates/index.html">Home</a></li>
+          <li><a href="/templates/main.html">Dashboard</a></li>
+          <li><a href="/templates/feed-back.html">Feedback</a></li>
+          <li><a href="/templates/feed-back.html">AI Assistant</a></li>
         </ul>
       </div>
       <div class="footer-links">
