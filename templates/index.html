@@ -12,10 +12,11 @@
   <link rel="icon" type="image/png" href="images/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
     rel="stylesheet" />
   <link href="/static/style.css" rel="stylesheet" />
-  
+
 </head>
 
 <body>
@@ -31,7 +32,7 @@
           <span class="theme-text">Light</span>
         </button>
 
-         <!-- Responsive Search Bar -->
+        <!-- Responsive Search Bar -->
         <div class="search-container">
           <input type="text" placeholder="Search..." class="search-input" />
           <button class="search-button">
@@ -136,7 +137,8 @@
       <div class="footer-brand">
         <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
         <h3 class="serif">AgriTech</h3>
-        <p>Empowering India's Farming Future with innovative technology solutions that connect every stakeholder in the agricultural ecosystem.</p>
+        <p>Empowering India's Farming Future with innovative technology solutions that connect every stakeholder in the
+          agricultural ecosystem.</p>
         <div class="social-media">
           <a href="https://instagram.com" target="_blank" aria-label="Follow us on Instagram">
             <i class="fab fa-instagram"></i>
@@ -144,7 +146,8 @@
           <a href="https://github.com/omroy07" target="_blank" aria-label="View our GitHub repositories">
             <i class="fab fa-github"></i>
           </a>
-          <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank" aria-label="Connect with us on LinkedIn">
+          <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank"
+            aria-label="Connect with us on LinkedIn">
             <i class="fab fa-linkedin"></i>
           </a>
         </div>
@@ -172,50 +175,50 @@
     <div class="footer-bottom">© 2025 AgriTech - <a href="terms-and-service.html">Terms of Service</a></div>
   </footer>
 
-  
-<!-- Floating Chatbot Button -->
-<a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
-  <i class="fas fa-robot"></i>
-</a>
- 
-<!-- Scroll Button -->
-<button class="scroll-btn" id="scrollBtn" title="Scroll">
-  <i class="fas fa-arrow-down" id="scrollIcon"></i>
-</button>
 
-<script>
-  const scrollBtn = document.getElementById("scrollBtn");
-  const scrollIcon = document.getElementById("scrollIcon");
+  <!-- Floating Chatbot Button -->
+  <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
+    <i class="fas fa-robot"></i>
+  </a>
 
-  window.addEventListener("scroll", () => {
-    // If near top, show "scroll down" button
-    if (window.scrollY < 300) {
-      scrollBtn.classList.add("visible");
-      scrollIcon.classList.replace("fa-arrow-up", "fa-arrow-down");
-    } 
-    // If scrolled down, show "scroll up" button
-    else {
-      scrollBtn.classList.add("visible");
-      scrollIcon.classList.replace("fa-arrow-down", "fa-arrow-up");
-    }
-  });
+  <!-- Scroll Button -->
+  <button class="scroll-btn" id="scrollBtn" title="Scroll">
+    <i class="fas fa-arrow-down" id="scrollIcon"></i>
+  </button>
 
-  scrollBtn.addEventListener("click", () => {
-    if (scrollIcon.classList.contains("fa-arrow-down")) {
-      // Scroll to bottom
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: "smooth",
-      });
-    } else {
-      // Scroll to top
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }
-  });
-</script>
+  <script>
+    const scrollBtn = document.getElementById("scrollBtn");
+    const scrollIcon = document.getElementById("scrollIcon");
+
+    window.addEventListener("scroll", () => {
+      // If near top, show "scroll down" button
+      if (window.scrollY < 300) {
+        scrollBtn.classList.add("visible");
+        scrollIcon.classList.replace("fa-arrow-up", "fa-arrow-down");
+      }
+      // If scrolled down, show "scroll up" button
+      else {
+        scrollBtn.classList.add("visible");
+        scrollIcon.classList.replace("fa-arrow-down", "fa-arrow-up");
+      }
+    });
+
+    scrollBtn.addEventListener("click", () => {
+      if (scrollIcon.classList.contains("fa-arrow-down")) {
+        // Scroll to bottom
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      } else {
+        // Scroll to top
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+    });
+  </script>
 
 
   <script>
@@ -231,7 +234,7 @@
     themeToggle.addEventListener('click', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme');
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      
+
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
       themeText.textContent = newTheme === 'dark' ? 'Dark' : 'Light';
