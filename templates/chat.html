@@ -2,17 +2,19 @@
 <html lang="en">
 
 <head>
+  <link rel="icon" type="image/png" href="images/logo.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Content-Security-Policy"
     content="default-src 'self'; script-src 'self' 'unsafe-inline' https://generativelanguage.googleapis.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://generativelanguage.googleapis.com;" />
   <title>AgriTech Assistant - Smart Farming Solutions</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='chat.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='theme.css') }}" />
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <link rel="stylesheet" href="/static/chat.css" />
+  <link rel="stylesheet" href="/static/theme.css" />
   <style>
     /* Added styles for light green color on specified text */
+
     .chat-header h2 {
       color: var(--light-green);
       /* Light green */
@@ -22,7 +24,67 @@
       color: var(--light-green);
       /* Light green for AgriBot */
     }
+  </style>
+</head>
 
+<body>
+  <header>
+    <div class="header-content">
+      <div class="logo">
+        <i class="fas fa-seedling"></i>
+        <h1>AgriBot</h1>
+      </div>
+      <div style="display: flex; gap: 1rem; align-items: center;">
+        <button class="theme-toggle" aria-label="Toggle dark/light mode">
+          <i class="fas fa-sun sun-icon"></i>
+          <i class="fas fa-moon moon-icon"></i>
+          <span class="theme-text">Light</span>
+        </button>
+        <a href="/main.html" class="nav-back">
+          <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div id="chat-container">
+      <div class="chat-header">
+        <i class="fas fa-robot"></i>
+        <h2>Ask me anything about agriculture, crops, or farming techniques</h2>
+      </div>
+
+      <div id="chat-window">
+        <div class="welcome-message">
+          <h3><i class="fas fa-leaf"></i> Welcome to AgriTech Assistant!</h3>
+          <p>
+            I'm powered by Google Gemini AI to help with all your farming
+            questions.
+          </p>
+
+          <div class="suggestions">
+            <div class="suggestion">Best crops for this season?</div>
+            <div class="suggestion">Organic pest control methods</div>
+            <div class="suggestion">Water conservation techniques</div>
+            <div class="suggestion">Soil health improvement</div>
+          </div>
+        </div>
+      </div>
+
+      <form id="chat-form">
+        <div class="input-container">
+          <input type="text" id="chat-input" placeholder="Ask about crops, weather, fertilizers..."
+            aria-label="Chat input" autofocus required />
+        </div>
+        <button type="submit" id="send-button">
+          <i class="fas fa-paper-plane"></i> Send
+        </button>
+      </form>
+    </div>
+  </main>
+  <script src="/static/chat.js"></script>
+  <script src="/static/theme.js"></script>
+  <style>
     .site-footer {
       background: linear-gradient(135deg, #2e7d32, #66bb6a);
       color: #fff;
@@ -118,65 +180,10 @@
       transform: translateY(-2px);
     }
   </style>
-</head>
-
-<body>
-  <header>
-    <div class="header-content">
-      <div class="logo">
-        <i class="fas fa-seedling"></i>
-        <h1>AgriBot</h1>
-      </div>
-      <div style="display: flex; gap: 1rem; align-items: center;">
-        <button class="theme-toggle" aria-label="Toggle dark/light mode">
-          <i class="fas fa-sun sun-icon"></i>
-          <i class="fas fa-moon moon-icon"></i>
-          <span class="theme-text">Light</span>
-        </button>
-        <a href="{{ url_for('main') }}" class="nav-back">
-          <i class="fas fa-arrow-left"></i> Back to Home
-        </a>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <div id="chat-container">
-      <div class="chat-header">
-        <i class="fas fa-robot"></i>
-        <h2>Ask me anything about agriculture, crops, or farming techniques</h2>
-      </div>
-
-      <div id="chat-window">
-        <div class="welcome-message">
-          <h3><i class="fas fa-leaf"></i> Welcome to AgriTech Assistant!</h3>
-          <p>
-            I'm powered by Google Gemini AI to help with all your farming
-            questions.
-          </p>
-
-          <div class="suggestions">
-            <div class="suggestion">Best crops for this season?</div>
-            <div class="suggestion">Organic pest control methods</div>
-            <div class="suggestion">Water conservation techniques</div>
-            <div class="suggestion">Soil health improvement</div>
-          </div>
-        </div>
-      </div>
-
-      <form id="chat-form">
-        <textarea id="user-input" placeholder="Type your message here..." required></textarea>
-        <button type="submit" id="send-button">
-          <i class="fas fa-paper-plane"></i> Send
-        </button>
-      </form>
-    </div>
-  </main>
-
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="AgriTech logo" class="footer-logo" />
+        <img src="images/logo.png" alt="AgriTech logo" class="footer-logo" />
         <h3>AgriTech</h3>
         <p>Empowering India's Farming Future</p>
         <div class="social-media">
@@ -191,35 +198,32 @@
       <div class="footer-links">
         <h4>Quick Links</h4>
         <ul>
-          <li><a href="{{ url_for('index') }}">Home</a></li>
-          <li><a href="{{ url_for('main') }}">Dashboard</a></li>
-          <li><a href="{{ url_for('feedback') }}">Feedback</a></li>
-          <li><a href="{{ url_for('chat') }}">AI Assistant</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="main.html">Dashboard</a></li>
+          <li><a href="feed-back.html">Feedback</a></li>
+          <li><a href="chat.html">AI Assistant</a></li>
         </ul>
       </div>
       <div class="footer-links">
         <h4>Tools</h4>
         <ul>
           <li>
-            <a href="#">Crop Recommendation</a>
+            <a href="Crop Recommendation/templates/index.html">Crop Recommendation</a>
           </li>
           <li>
-            <a href="#">Yield Prediction</a>
+            <a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a>
           </li>
           <li>
-            <a href="#">Disease Detector</a>
+            <a href="Disease prediction/template/index.html">Disease Detector</a>
           </li>
           <li>
-            <a href="#">Crop Planner</a>
+            <a href="Crop_Planning/templates/cropplan.html">Crop Planner</a>
           </li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div>
   </footer>
-
-  <script src="{{ url_for('static', filename='chat.js') }}"></script>
-  <script src="{{ url_for('static', filename='theme.js') }}"></script>
 </body>
 
 </html>

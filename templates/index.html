@@ -140,10 +140,8 @@
         <div class="brand-header">
         <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
         <h3 class="serif">AgriTech</h3>
-        </div>
-        <div class="mission-statement">
-          <p>Empowering India's Farming Future with innovative <span class="no-break">technology</span> solutions that connect every stakeholder in the <span class="no-break">agricultural</span> ecosystem</p>
-        </div>
+        <p>Empowering India's Farming Future with innovative technology solutions that connect every stakeholder in the
+          agricultural ecosystem.</p>
         <div class="social-media">
           <a href="https://instagram.com" target="_blank" aria-label="Follow us on Instagram">
             <i class="fab fa-instagram"></i>
@@ -253,8 +251,8 @@
 
     themeToggle.addEventListener('click', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
       themeText.textContent = newTheme === 'dark' ? 'Light' : 'Dark';
