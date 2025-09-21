@@ -448,3 +448,6 @@ function filterPosts() {
     blogGrid.innerHTML = '';
     displayPostsWithAnimation();
 }
+
+
+// Thats All Folks!
