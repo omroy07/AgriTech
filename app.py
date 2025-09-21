@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from google import genai  # type: ignore
+from google import genai
 import traceback
 import os
 import re
