@@ -121,6 +121,75 @@
     </div>
   </section>
 
+  <section class="faq">
+    <div class="faq-container">
+      <h2 class="faq-title serif">Frequently Asked Questions</h2>
+      <p class="faq-subtitle">Find answers to common questions about our AgriTech platform</p>
+      
+      <div class="faq-grid">
+        <div class="faq-item" role="button" tabindex="0" aria-expanded="false" aria-controls="faq-answer-1">
+          <div class="faq-question">
+            <h3 id="faq-question-1">How does AgriTech connect farmers with buyers?</h3>
+            <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
+          </div>
+          <div class="faq-answer" id="faq-answer-1" aria-labelledby="faq-question-1">
+            <p>Our platform provides a direct marketplace where farmers can list their produce and buyers can browse and purchase directly. We verify all participants and ensure transparent pricing and quality standards.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" role="button" tabindex="0" aria-expanded="false" aria-controls="faq-answer-2">
+          <div class="faq-question">
+            <h3 id="faq-question-2">What equipment rental services are available?</h3>
+            <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
+          </div>
+          <div class="faq-answer" id="faq-answer-2" aria-labelledby="faq-question-2">
+            <p>We offer a wide range of modern agricultural equipment including tractors, harvesters, irrigation systems, and specialized farming tools. All equipment is maintained and operated by certified professionals.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" role="button" tabindex="0" aria-expanded="false" aria-controls="faq-answer-3">
+          <div class="faq-question">
+            <h3 id="faq-question-3">How do you ensure fair pricing for farmers?</h3>
+            <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
+          </div>
+          <div class="faq-answer" id="faq-answer-3" aria-labelledby="faq-question-3">
+            <p>We use real-time market data and transparent pricing algorithms. Farmers can see current market rates and set competitive prices. Our platform eliminates middlemen, ensuring farmers get better profits.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" role="button" tabindex="0" aria-expanded="false" aria-controls="faq-answer-4">
+          <div class="faq-question">
+            <h3 id="faq-question-4">What support do you provide to new users?</h3>
+            <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
+          </div>
+          <div class="faq-answer" id="faq-answer-4" aria-labelledby="faq-question-4">
+            <p>We offer comprehensive onboarding, 24/7 customer support, training materials, and dedicated account managers. Our AI assistant is also available to help with common questions and platform navigation.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" role="button" tabindex="0" aria-expanded="false" aria-controls="faq-answer-5">
+          <div class="faq-question">
+            <h3 id="faq-question-5">Is the platform available in multiple languages?</h3>
+            <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
+          </div>
+          <div class="faq-answer" id="faq-answer-5" aria-labelledby="faq-question-5">
+            <p>Yes, our platform supports multiple Indian languages including Hindi, Telugu, Tamil, Bengali, and more. We're continuously adding support for additional regional languages.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" role="button" tabindex="0" aria-expanded="false" aria-controls="faq-answer-6">
+          <div class="faq-question">
+            <h3 id="faq-question-6">How secure are transactions on AgriTech?</h3>
+            <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
+          </div>
+          <div class="faq-answer" id="faq-answer-6" aria-labelledby="faq-question-6">
+            <p>We use bank-grade encryption and secure payment gateways. All transactions are protected with multiple verification layers, and we offer dispute resolution services for added security.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="cta">
     <div class="cta-content">
       <h3 class="serif">Ready to Transform Agriculture?</h3>
@@ -259,6 +328,86 @@
 
     window.addEventListener("load", () => {
       document.body.style.opacity = "1";
+    });
+
+    // FAQ Accordion functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const faqItems = document.querySelectorAll('.faq-item');
+      
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        
+        // Handle click events
+        question.addEventListener('click', () => {
+          toggleFAQ(item);
+        });
+        
+        // Handle keyboard events
+        item.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleFAQ(item);
+          }
+        });
+        
+        // Add focus styling
+        item.addEventListener('focus', () => {
+          item.style.outline = '2px solid var(--primary-green)';
+          item.style.outlineOffset = '2px';
+        });
+        
+        item.addEventListener('blur', () => {
+          item.style.outline = 'none';
+        });
+      });
+      
+      function toggleFAQ(item) {
+        const isActive = item.classList.contains('active');
+        const answer = item.querySelector('.faq-answer');
+        
+        // Close all other FAQ items
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+            otherItem.setAttribute('aria-expanded', 'false');
+          }
+        });
+        
+        // Toggle current item
+        if (isActive) {
+          item.classList.remove('active');
+          item.setAttribute('aria-expanded', 'false');
+        } else {
+          item.classList.add('active');
+          item.setAttribute('aria-expanded', 'true');
+          
+          // Smooth scroll into view
+          setTimeout(() => {
+            item.scrollIntoView({
+              behavior: 'smooth',
+              block: 'nearest'
+            });
+          }, 100);
+        }
+      }
+      
+      // Add stagger animation on scroll
+      const faqObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = 'running';
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
+      
+      // Observe FAQ items
+      faqItems.forEach(item => {
+        faqObserver.observe(item);
+      });
     });
   </script>
 </body>
