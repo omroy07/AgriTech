@@ -289,6 +289,35 @@ nav a:hover, .navbar a:hover {
   background-color: var(--bg-secondary);
 }
 
+#chat-container {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+}
+
+.input-container {
+  background-color: transparent;
+  border: none;
+}
+
+.input-container:focus-within {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+[data-theme="dark"] .input-container:focus-within {
+  box-shadow: none;
+}
+
+#chat-input {
+  background: transparent;
+  color: var(--text-primary);
+}
+
+#chat-input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
 .message {
   background-color: var(--bg-primary);
   border: 1px solid var(--border-color);
@@ -302,11 +331,61 @@ nav a:hover, .navbar a:hover {
   background-color: var(--primary-green);
   color: white;
   margin-left: 2rem;
+  border: none;
 }
 
 .message.bot {
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-primary);
   margin-right: 2rem;
+}
+
+.message.bot::before {
+  border-right-color: var(--bg-primary);
+}
+
+.typing-indicator {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.suggestion {
+  background-color: var(--light-green);
+  color: var(--primary-green);
+  border: 1px solid var(--border-color);
+}
+
+.suggestion:hover {
+  background-color: var(--primary-green);
+  color: white;
+}
+
+[data-theme="dark"] .suggestion {
+  background-color: var(--bg-tertiary);
+  color: var(--accent-green);
+}
+
+[data-theme="dark"] .suggestion:hover {
+  background-color: var(--primary-green);
+  color: white;
+}
+
+.chat-header {
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.chat-header h2 {
+  color: var(--primary-green);
+}
+
+.chat-header i {
+  color: var(--primary-green);
+}
+
+#chat-form {
+  background-color: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
 }
 
 /* Cards and containers */

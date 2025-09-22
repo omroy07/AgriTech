@@ -111,9 +111,10 @@ main {
 }
 
 #chat-container {
-  background-color: var(--bg-primary, #fff);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px var(--shadow-medium);
   display: flex;
   flex-direction: column;
   height: calc(100vh - 200px);
@@ -123,8 +124,8 @@ main {
 
 .chat-header {
   padding: 1.2rem;
-  background-color: var(--bg-secondary, #e8f5e9);
-  border-bottom: 1px solid #c8e6c9;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   gap: 12px;
@@ -175,7 +176,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  background-color: var(--bg-secondary, #fafafa);
+  background-color: var(--bg-secondary);
   position: relative;
 }
 
@@ -184,11 +185,11 @@ main {
 }
 
 #chat-window::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--bg-primary);
 }
 
 #chat-window::-webkit-scrollbar-thumb {
-  background: var(--border-light);
+  background: var(--border-color);
   border-radius: 3px;
 }
 
@@ -225,12 +226,12 @@ main {
 }
 
 .bot {
-  background-color: var(--bg-primary, white);
-  border: 1px solid #e0e0e0;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
   align-self: flex-start;
   border-bottom-left-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  color: var(--text-primary, #333);
+  box-shadow: 0 2px 5px var(--shadow-light);
+  color: var(--text-primary);
 }
 
 .bot::before {
@@ -242,7 +243,7 @@ main {
   height: 0;
   border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
-  border-right: 8px solid white;
+  border-right: 8px solid var(--bg-primary);
 }
 
 .message-header {
@@ -251,6 +252,7 @@ main {
   margin-bottom: 10px;
   font-weight: 600;
   font-size: 0.9rem;
+  color: var(--text-primary);
 }
 
 .user .message-header {
@@ -258,7 +260,7 @@ main {
 }
 
 .bot .message-header {
-  color: #4caf50;
+  color: var(--primary-green);
 }
 
 .message-header i {
@@ -271,36 +273,51 @@ main {
   opacity: 0.7;
   margin-top: 6px;
   text-align: right;
+  color: var(--text-secondary);
+}
+
+.user .timestamp {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 #chat-form {
   display: flex;
   padding: 1.2rem;
-  background-color: var(--bg-primary, white);
-  border-top: 1px solid #eeeeee;
+  background-color: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+  gap: 12px;
 }
 
 .input-container {
   display: flex;
   flex: 1;
-  background: #f5f5f5;
+  background-color: transparent;
+  border: none;
   border-radius: 30px;
-  padding: 0 15px;
+  padding: 0 20px;
   align-items: center;
+  transition: all 0.3s ease;
+}
+
+.input-container:focus-within {
+  border-color: transparent;
+  box-shadow: none;
 }
 
 #chat-input {
   flex: 1;
-  padding: 0.9rem 0.5rem;
+  padding: 1rem 0.5rem;
   font-size: 1rem;
   border: none;
   background: transparent;
   outline: none;
   color: var(--text-primary);
+  font-family: inherit;
 }
 
 #chat-input::placeholder {
   color: var(--text-secondary);
+  opacity: 0.7;
 }
 
 #send-button {
@@ -338,10 +355,10 @@ main {
   display: flex;
   align-items: center;
   padding: 12px 16px;
-  background-color: white;
+  background-color: var(--bg-primary);
   border-radius: 18px;
   align-self: flex-start;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border-color);
   margin-top: 8px;
   gap: 6px;
 }
@@ -391,25 +408,6 @@ main {
 }
 
 .welcome-message h3 {
-  color: #4caf50;
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-}
-
-.welcome-message h3 i {
-  animation: gentle-bounce 3s ease-in-out infinite;
-}
-
-.welcome-message p {
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
-  color: var(--text-primary);
-  opacity: 0.8;
   color: var(--primary-green);
   margin-bottom: 1rem;
   font-size: 1.5rem;
@@ -441,19 +439,21 @@ main {
 }
 
 .suggestion {
-  background-color: #e8f5e9;
-  color: #2e7d32;
+  background-color: var(--light-green);
+  color: var(--primary-green);
   padding: 0.6rem 1.2rem;
   border-radius: 20px;
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  border: 1px solid #c8e6c9;
+  border: 1px solid var(--border-color);
 }
 
 .suggestion:hover {
-  background-color: #c8e6c9;
+  background-color: var(--primary-green);
+  color: white;
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-light);
 }
 
 @media (max-width: 768px) {
@@ -499,12 +499,15 @@ main {
   }
 
   .input-container {
-    padding: 0 15px;
+    padding: 0 20px;
+    background-color: transparent;
+    border: none;
   }
 
   #send-button {
     padding: 0.8rem 1.2rem;
     min-width: 80px;
+    font-size: 0.9rem;
   }
 
   .suggestions {
@@ -549,6 +552,40 @@ main {
 
 .message-text {
   animation: fadeInText 0.5s ease 0.2s both;
+  word-wrap: break-word;
+  line-height: 1.5;
+  color: inherit;
+}
+
+.message-text strong {
+  font-weight: 600;
+  color: inherit;
+}
+
+.message-text em {
+  font-style: italic;
+  color: inherit;
+}
+
+.message-text code {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+.user .message-text code {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="dark"] .message-text code {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .user .message-text code {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 @keyframes fadeInText {
@@ -576,10 +613,36 @@ main {
   outline-offset: 2px;
   border-radius: 30px;
 }
-.chat-header h2 {
-  color: var(--light-green); /* Light green */
+
+#send-button:focus {
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+}
+/* Dark mode specific improvements */
+[data-theme="dark"] #chat-container {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-.logo h1 {
-  color: var(--light-green); /* Light green for AgriBot */
+[data-theme="dark"] .input-container {
+  background-color: transparent;
+}
+
+[data-theme="dark"] #chat-input {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] #chat-input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+
+[data-theme="dark"] .message.bot::before {
+  border-right-color: var(--bg-primary);
+}
+
+[data-theme="dark"] .typing-indicator div {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .welcome-message p {
+  color: var(--text-secondary);
 }
