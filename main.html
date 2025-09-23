@@ -415,6 +415,78 @@
     .auth-message-content i {
       font-size: 1.2rem;
     }
+    /* Services Menu Styles */
+.services-menu-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #4caf50, #388e3c);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 1rem auto 0 auto;
+  transition: background 0.3s;
+}
+.services-menu-toggle:hover {
+  background: linear-gradient(135deg, #388e3c, #4caf50);
+}
+
+/* Overlay Services Menu Styles */
+.services-menu {
+  display: none;
+  position: absolute;
+  top: 120px; /* Adjust as needed to appear below header */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 260px;
+  max-width: 90vw;
+  background: var(--bg-primary, #fff);
+  box-shadow: 0 8px 32px rgba(76,175,80,0.18);
+  list-style: none;
+  overflow: hidden;
+  border: 1px solid green;
+  background-color: #afd4af !important;
+  border-radius: 12px;
+}
+.services-menu.active {
+  display: flex;
+}
+.services-menu li {
+  border-bottom: 1px solid green;
+}
+.services-menu li:last-child {
+  border-bottom: none;
+}
+.services-menu a {
+  display: block;
+  padding: 14px 28px;
+  color: var(--text-primary, #333);
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.services-menu a:hover {
+  background: #f1f8e9;
+  color: #388e3c;
+}
+@media (max-width: 600px) {
+  .services-menu {
+    left: 5vw;
+    right: 5vw;
+    min-width: unset;
+    max-width: 90vw;
+    transform: none;
+  }
+}
   </style>
 </head>
 
@@ -448,35 +520,27 @@
         </button>
       </div>
     </header>
-
-    <nav>
-      <ul>
-        <li>
-          <a href="/Crop Recommendation/templates/index.html">🌱 Crop Recommendation</a>
-        </li>
-        <li>
-          <a href="/Crop Yield Prediction/crop_yield_app/templates/index.html">📊 Yield Prediction</a>
-        </li>
-        <li><a href="disease.html">🔬 Disease Prediction</a></li>
-        <li><a href="organic.html">🌿 Organic Farming</a></li>
-        <li><a href="farmer.html">👥 Farmer Network</a></li>
-        <li><a href="weather.html">⛅ Weather Check</a></li>
-        <li><a href="shopkeeper.html">🏪 Shopkeeper Listings</a></li>
-        <li><a href="chat.html">🤖 ChatBot</a></li>
-        <li><a href="plantation.html">🌳 Plantation</a></li>
-        <li>
-          <a href="./Crop_Planning/templates/cropplan.html">📅 Crop Planning</a>
-        </li>
-        <li>
-          <a href="./Labour_Alerts/templates/labour.html">⚠ Labour Alerts</a>
-        </li>
-      </ul>
-    </nav>
   </div>
 
   <!-- Main Section -->
    <nav>
   <main>
+    <button id="servicesMenuToggle" class="services-menu-toggle" aria-label="Show Services Menu">
+  <i class="fas fa-bars"></i> Services
+</button>
+<ul id="servicesMenu" class="services-menu">
+  <li><a href="Crop Recommendation/templates/index.html">🌱 Crop Recommendation</a></li>
+  <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">📈 Yield Prediction</a></li>
+  <li><a href="disease.html">🐞 Disease Prediction</a></li>
+  <li><a href="organic.html">🌾 Organic Farming</a></li>
+  <li><a href="farmer.html">📶 Farmer Network</a></li>
+  <li><a href="weather.html">🌩 Weather Check</a></li>
+  <li><a href="shopkeeper.html">📝 Shopkeeper Listings</a></li>
+  <li><a href="chat.html">🤖 AI ChatBot</a></li>
+  <li><a href="plantation.html">🌴 Plantation</a></li>
+  <li><a href="Crop_Planning/templates/cropplan.html">🎋 Crop Planning</a></li>
+  <li><a href="Labour_Alerts/templates/labour.html">🚨Labour Alerts</a></li>
+</ul>
     <div class="section-title">
       <h2>Comprehensive Agricultural Solutions</h2>
       <p>
@@ -799,6 +863,12 @@
 </a>
 
     <!-- JavaScript Files -->
+     <script>
+      // Toggle Services Menu
+document.getElementById('servicesMenuToggle').addEventListener('click', function () {
+  document.getElementById('servicesMenu').classList.toggle('active');
+});
+     </script>
     <script src="main.js"></script>
 Logout-Button
     <script src="theme.js"></script>
@@ -820,56 +890,6 @@ Logout-Button
           } catch (error) {
             console.error('Error loading users:', error);
             return [];
-=======
-  <script src="theme.js"></script>
-
-    <!-- Scroll Button -->
-<button class="scroll-btn" id="scrollBtn" title="Scroll">
-  <i class="fas fa-arrow-down" id="scrollIcon"></i>
-</button>
-
-<script>
-  const scrollBtn = document.getElementById("scrollBtn");
-  const scrollIcon = document.getElementById("scrollIcon");
-
-  window.addEventListener("scroll", () => {
-    // If near top, show "scroll down" button
-    if (window.scrollY < 300) {
-      scrollBtn.classList.add("visible");
-      scrollIcon.classList.replace("fa-arrow-up", "fa-arrow-down");
-    } 
-    // If scrolled down, show "scroll up" button
-    else {
-      scrollBtn.classList.add("visible");
-      scrollIcon.classList.replace("fa-arrow-down", "fa-arrow-up");
-    }
-  });
-
-  scrollBtn.addEventListener("click", () => {
-    if (scrollIcon.classList.contains("fa-arrow-down")) {
-      // Scroll to bottom
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: "smooth",
-      });
-    } else {
-      // Scroll to top
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }
-  });
-</script>
-
-
-<!--   <script src="auth.js"></script> -->
-  <script>
-        // Check authentication on page load
-        document.addEventListener('DOMContentLoaded', () => {
-          if (!requireAuth()) {
-            return;
-main
           }
         }
 
