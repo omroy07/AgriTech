@@ -4,8 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const chatInput = document.getElementById('chat-input');
   const sendBtn = document.getElementById('send-button');
 
+  // Initialize JSON-based chatbot
+  const jsonChatbot = new JSONChatbot();
+  
+  // Gemini AI fallback configuration
   const API_KEY = 'GEMINI_API_KEY'; // get api key from https://ai.google.dev/
   const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${API_KEY}`;
+  const USE_AI_FALLBACK = false; // Set to true if you want to use Gemini AI as fallback
   
   const systemMsg = {
     role: "user",
@@ -79,39 +84,55 @@ document.addEventListener('DOMContentLoaded', () => {
     chatInput.value = '';
     const typing = showTyping();
     toggleInput(true);
-    history.push({ role: "user", parts: [{ text: input }] });
 
     try {
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: history,
-          generationConfig: { 
-            temperature: 0.7, 
-            maxOutputTokens: 1000,
-            topP: 0.8,
-            topK: 40
-          }
-        })
-      });
-
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-
-      const data = await res.json();
-      console.log('API Response:', data);
+      // Try JSON chatbot first
+      let reply = await jsonChatbot.getResponse(input);
       
-      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "⚠️ I didn't receive a proper response. Please try again.";
-      displayMessage(reply, 'bot');
-      history.push({ role: "model", parts: [{ text: reply }] });
+      // If JSON chatbot returns a fallback and AI is enabled, try Gemini AI
+      if (USE_AI_FALLBACK && reply.includes("Sorry, I didn't understand")) {
+        console.log('Falling back to Gemini AI...');
+        history.push({ role: "user", parts: [{ text: input }] });
+        
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: history,
+            generationConfig: { 
+              temperature: 0.7, 
+              maxOutputTokens: 1000,
+              topP: 0.8,
+              topK: 40
+            }
+          })
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          const aiReply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (aiReply) {
+            reply = aiReply;
+            history.push({ role: "model", parts: [{ text: reply }] });
+          }
+        }
+      }
+      
+      // Add smooth animation delay for more natural feel
+      setTimeout(() => {
+        displayMessage(reply, 'bot');
+      }, Math.random() * 800 + 400); // Random delay between 400-1200ms
+      
     } catch (error) {
-      console.error('Error:', error);
-      displayMessage("⚠️ I'm having trouble connecting right now. Please check your internet connection and try again.", 'bot');
+      console.error('Chatbot Error:', error);
+      setTimeout(() => {
+        displayMessage("⚠️ I'm having trouble right now. Please try asking your question again!", 'bot');
+      }, 500);
     } finally {
-      typing.remove();
-      toggleInput(false);
+      setTimeout(() => {
+        typing.remove();
+        toggleInput(false);
+      }, Math.random() * 800 + 600); // Remove typing indicator after response
     }
   });
 
@@ -140,8 +161,13 @@ document.addEventListener('DOMContentLoaded', () => {
        .replace(/\*(.*?)\*/g, '<em>$1</em>')
        .replace(/`(.*?)`/g, '<code>$1</code>');
 
-  setTimeout(() => {
-    displayMessage('Hello! 🌱 I\'m AgriBot, your agricultural assistant. I can help you with farming questions, crop management, soil health, pest control, and more. How can I assist you today?', 'bot');
+  // Initialize chatbot with welcome message
+  setTimeout(async () => {
+    await jsonChatbot.getResponse('hello').then(welcomeMsg => {
+      displayMessage(welcomeMsg, 'bot');
+    }).catch(() => {
+      displayMessage('Hello! 🌱 I\'m AgriBot, your agricultural assistant. I can help you with farming questions, crop management, soil health, pest control, and more. How can I assist you today?', 'bot');
+    });
   }, 500);
 
   chatInput.focus();

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - AgriTech</title>
+  <link rel="stylesheet" href="contact.css">
+  <!-- our new fix styles -->
+  <!-- <link rel="stylesheet" href="contact.css"> -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-content">
+        <div class="logo">
+          <i class="fas fa-seedling"></i>
+          <span>AgriTech</span>
+        </div>
+        <button class="theme-toggle" id="themeToggle">
+          <i class="fas fa-sun"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Get in Touch</h1>
+        <p>Have questions about our AI-powered agricultural solutions? We're here to help farmers, agricultural professionals, and communities grow smarter and more sustainably.</p>
+      </div>
+      <div class="hero-decoration">
+        <i class="fas fa-tractor"></i>
+      </div>
+    </section>
+
+    <!-- CONTACT METHODS -->
+    <section class="contact-methods">
+      <div class="method-card">
+        <div class="method-icon">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <h3>Email Support</h3>
+        <p>Get detailed assistance with technical questions</p>
+        <a href="mailto:support@agritech.com">support@agritech.com</a>
+      </div>
+
+      <div class="method-card">
+        <div class="method-icon">
+          <i class="fas fa-phone"></i>
+        </div>
+        <h3>Phone Support</h3>
+        <p>Speak directly with our agricultural experts</p>
+        <a href="tel:+1234567890">+1 (234) 567-890</a>
+      </div>
+
+      <div class="method-card">
+        <div class="method-icon">
+          <i class="fas fa-comments"></i>
+        </div>
+        <h3>Community Chat</h3>
+        <p>Join our farmer community for peer support</p>
+        <a href="#community">Join Community</a>
+      </div>
+    </section>
+
+    <!-- CONTACT FORM -->
+    <section class="contact-form-section">
+      <div class="form-container">
+        <div class="form-header">
+          <h2>Send us a Message</h2>
+          <p>Whether you're a farmer seeking guidance, a researcher interested in collaboration, or someone with questions about our AI-powered tools, we'd love to hear from you.</p>
+        </div>
+
+        <form class="contact-form" id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name *</label>
+              <input type="text" id="firstName" name="firstName" required placeholder="Enter first name">
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name *</label>
+              <input type="text" id="lastName" name="lastName" required placeholder="Enter last name">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" required placeholder="Enter email address">
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="Enter phone number">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="userType">I am a...</label>
+            <select id="userType" name="userType">
+              <option value="">Select your role</option>
+              <option value="farmer">Farmer</option>
+              <option value="researcher">Agricultural Researcher</option>
+              <option value="student">Student</option>
+              <option value="business">Agribusiness Professional</option>
+              <option value="developer">Developer/Contributor</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Subject *</label>
+            <select id="subject" name="subject" required>
+              <option value="">Select a topic</option>
+              <option value="crop-recommendation">Crop Recommendation</option>
+              <option value="yield-prediction">Yield Prediction</option>
+              <option value="disease-detection">Disease Detection</option>
+              <option value="technical-support">Technical Support</option>
+              <option value="collaboration">Partnership/Collaboration</option>
+              <option value="feedback">Feedback/Suggestions</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" rows="6" placeholder="Please describe your question, issue, or how we can help you..." required></textarea>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="newsletter" name="newsletter">
+            <label for="newsletter">I'd like to receive updates about new features and agricultural insights</label>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            <i class="fas fa-paper-plane"></i>
+            Send Message
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- TEAM MEMBERS -->
+    <section class="team-section">
+      <h2>Meet Our Team</h2>
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="member-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3>Om Roy</h3>
+          <p>Project Lead & ML Engineer</p>
+          <div class="social-links">
+            <a href="https://github.com/omroy07"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+
+        <div class="team-member">
+          <div class="member-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3>Kanisha Sharma</h3>
+          <p>ML Engineer & Backend Developer</p>
+          <div class="social-links">
+            <a href="https://github.com/KanishaSharma11"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+
+        <div class="team-member">
+          <div class="member-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3>Shubhangi Roy</h3>
+          <p>ML Engineer & Backend Developer</p>
+          <div class="social-links">
+            <a href="https://github.com/ShubhangiRoy12"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h3>How accurate are the crop recommendations?</h3>
+          <p>Our AI models are trained on extensive agricultural data and provide recommendations with high accuracy based on your soil conditions and local weather patterns.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Is AgriTech suitable for small-scale farmers?</h3>
+          <p>Absolutely! AgriTech is designed to be accessible and valuable for farmers of all scales, from small family farms to large agricultural operations.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>How do I join the farmer community?</h3>
+          <p>Simply create an account on our platform and you'll have access to our community chat features where you can connect with fellow farmers and share experiences.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Do you offer training on using the platform?</h3>
+          <p>Yes! We provide comprehensive guides, video tutorials, and offer support sessions to help you get the most out of all AgriTech features.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+      const icon = themeToggle.querySelector('i');
+
+      if (body.classList.contains('dark-mode')) {
+        icon.className = 'fas fa-moon';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        icon.className = 'fas fa-sun';
+        localStorage.setItem('theme', 'light');
+      }
+    });
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      body.classList.add('dark-mode');
+      themeToggle.querySelector('i').className = 'fas fa-moon';
+    }
+
+    // Form submission
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Thank you for your message! We\'ll get back to you soon.');
+      this.reset();
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
