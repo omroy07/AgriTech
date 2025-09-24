@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainable Farming Guidance - AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Dark Theme Variables */
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --shadow-light: rgba(0, 0, 0, 0.3);
+            --shadow-medium: rgba(0, 0, 0, 0.4);
+            --shadow-heavy: rgba(0, 0, 0, 0.6);
+            --accent-primary: #00b894;
+            --accent-secondary: #00cec9;
+            --accent-success: #22c55e;
+            --accent-warning: #f59e0b;
+            --accent-danger: #ef4444;
+        }
+
+        [data-theme="light"] {
+            /* Light Theme Variables */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #e2e8f0;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --shadow-heavy: rgba(0, 0, 0, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="light"] body {
+            background: linear-gradient(135deg, #ecfdf5 0%, #f0fdfa 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-back {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            padding: 10px 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .nav-back:hover {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .theme-toggle {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px var(--shadow-medium);
+        }
+
+        .header {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 8px 25px var(--shadow-medium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 184, 148, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-family: 'Libertinus Serif', serif;
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .sustainability-metrics,
+        .eco-impact,
+        .tips-section,
+        .assessment-tool,
+        .cta-section {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px var(--shadow-light);
+        }
+
+        .metrics-header,
+        .impact-header,
+        .tips-header,
+        .tool-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .metrics-header h2,
+        .impact-header h2,
+        .tips-header h2,
+        .tool-header h2 {
+            font-family: 'Libertinus Serif', serif;
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .metrics-header p,
+        .impact-header p,
+        .tips-header p,
+        .tool-header p {
+            color: var(--text-secondary);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .metric-card:hover::before {
+            opacity: 1;
+            animation: shine 0.6s ease;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .metric-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px var(--shadow-medium);
+        }
+
+        .metric-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .practices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .practice-card {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px var(--shadow-light);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .practice-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 184, 148, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .practice-card:hover::before {
+            left: 100%;
+        }
+
+        .practice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px var(--shadow-medium);
+            border-color: var(--accent-primary);
+        }
+
+        .practice-icon {
+            font-size: 3rem;
+            color: var(--accent-primary);
+            margin-bottom: 20px;
+        }
+
+        .practice-card h3 {
+            font-family: 'Libertinus Serif', serif;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+
+        .practice-card p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .practice-benefits {
+            list-style: none;
+            padding: 0;
+        }
+
+        .practice-benefits li {
+            padding: 8px 0;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+        }
+
+        .practice-benefits li::before {
+            content: "🌱";
+            margin-right: 10px;
+        }
+
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .impact-stat {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            border-left: 5px solid var(--accent-primary);
+            transition: all 0.3s ease;
+        }
+
+        .impact-stat:hover {
+            background: var(--bg-tertiary);
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px var(--shadow-light);
+        }
+
+        .impact-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 10px;
+        }
+
+        .impact-description {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .tips-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .tip-card {
+            background: linear-gradient(135deg, rgba(0, 184, 148, 0.1), rgba(0, 206, 201, 0.1));
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid var(--accent-primary);
+            transition: all 0.3s ease;
+        }
+
+        .tip-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,184,148,0.2);
+            border-left-width: 8px;
+        }
+
+        .tip-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tip-title i {
+            margin-right: 10px;
+            color: var(--accent-primary);
+        }
+
+        .tip-card p {
+            color: var(--text-secondary);
+        }
+
+        .assessment-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-group select,
+        .form-group input[type="range"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .range-value {
+            text-align: center;
+            margin-top: 5px;
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        .assess-button {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .assess-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,184,148,0.3);
+        }
+
+        .results-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(0, 184, 148, 0.1);
+            border: 1px solid var(--accent-primary);
+            border-radius: 12px;
+            display: none;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .results-section h3 {
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+
+        .score-progress {
+            width: 100%;
+            height: 20px;
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .score-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            width: 0%;
+            transition: width 2s ease;
+            border-radius: 10px;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
+        }
+
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--accent-success);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px var(--shadow-medium);
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.warning {
+            background: var(--accent-warning);
+        }
+
+        .notification.danger {
+            background: var(--accent-danger);
+        }
+
+        .notification.info {
+            background: var(--accent-primary);
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .loading-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--accent-secondary);
+            border-top: 4px solid var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .floating-tips {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--accent-primary);
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            max-width: 300px;
+            box-shadow: 0 4px 15px var(--shadow-medium);
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .floating-tips.show {
+            transform: translateX(0);
+        }
+
+        .floating-tips h4 {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-tip {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .practices-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .top-nav {
+                position: static;
+                margin-bottom: 1rem;
+            }
+
+            .floating-tips {
+                width: 90vw;
+                right: 5vw;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <a href="index.html" class="nav-back">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+            <div>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-sun" id="themeIcon"></i>
+                    <span id="themeText">Light</span>
+                </button>
+            </div>
+        </nav>
+
+        <div class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-leaf"></i> Sustainable Farming Guidance</h1>
+                <p>Eco-friendly farming practices for a greener future and sustainable agriculture</p>
+            </div>
+        </div>
+
+        <div class="sustainability-metrics">
+            <div class="metrics-header">
+                <h2><i class="fas fa-chart-pie"></i> Sustainability Impact</h2>
+                <p>See the positive environmental impact of sustainable practices</p>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <div class="metric-value" id="waterSaved">35</div>
+                    <div class="metric-label">Water Saved (%)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="metric-value" id="carbonReduced">42</div>
+                    <div class="metric-label">Carbon Reduced (%)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="metric-value" id="soilHealth">89</div>
+                    <div class="metric-label">Soil Health (%)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="metric-value" id="costSavings">28</div>
+                    <div class="metric-label">Cost Savings (%)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="practices-grid">
+            <div class="practice-card">
+                <div class="practice-icon">
+                    <i class="fas fa-recycle"></i>
+                </div>
+                <h3>Organic Farming</h3>
+                <p>Chemical-free farming methods that enhance soil fertility and crop quality</p>
+                <ul class="practice-benefits">
+                    <li>Natural pest control methods</li>
+                    <li>Organic fertilizer recommendations</li>
+                    <li>Crop rotation strategies</li>
+                    <li>Composting techniques</li>
+                    <li>Certification guidance</li>
+                </ul>
+            </div>
+
+            <div class="practice-card">
+                <div class="practice-icon">
+                    <i class="fas fa-tint"></i>
+                </div>
+                <h3>Water Conservation</h3>
+                <p>Efficient water management techniques for sustainable irrigation</p>
+                <ul class="practice-benefits">
+                    <li>Drip irrigation systems</li>
+                    <li>Rainwater harvesting</li>
+                    <li>Soil moisture monitoring</li>
+                    <li>Watershed management</li>
+                    <li>Drought-resistant crops</li>
+                </ul>
+            </div>
+
+            <div class="practice-card">
+                <div class="practice-icon">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <h3>Soil Health Management</h3>
+                <p>Practices to maintain and improve soil fertility naturally</p>
+                <ul class="practice-benefits">
+                    <li>Cover cropping techniques</li>
+                    <li>Minimal tillage methods</li>
+                    <li>Soil testing and analysis</li>
+                    <li>Nutrient management</li>
+                    <li>Erosion prevention</li>
+                </ul>
+            </div>
+
+            <div class="practice-card">
+                <div class="practice-icon">
+                    <i class="fas fa-wind"></i>
+                </div>
+                <h3>Climate-Smart Agriculture</h3>
+                <p>Adaptive practices for climate change resilience</p>
+                <ul class="practice-benefits">
+                    <li>Climate-resilient varieties</li>
+                    <li>Weather forecasting tools</li>
+                    <li>Carbon sequestration</li>
+                    <li>Greenhouse gas reduction</li>
+                    <li>Adaptive crop planning</li>
+                </ul>
+            </div>
+
+            <div class="practice-card">
+                <div class="practice-icon">
+                    <i class="fas fa-bug"></i>
+                </div>
+                <h3>Integrated Pest Management</h3>
+                <p>Eco-friendly pest control reducing chemical dependency</p>
+                <ul class="practice-benefits">
+                    <li>Biological pest control</li>
+                    <li>Beneficial insect habitats</li>
+                    <li>Natural repellents</li>
+                    <li>Crop companion planting</li>
+                    <li>Monitoring and scouting</li>
+                </ul>
+            </div>
+
+            <div class="practice-card">
+                <div class="practice-icon">
+                    <i class="fas fa-solar-panel"></i>
+                </div>
+                <h3>Renewable Energy</h3>
+                <p>Clean energy solutions for agricultural operations</p>
+                <ul class="practice-benefits">
+                    <li>Solar-powered irrigation</li>
+                    <li>Biogas from farm waste</li>
+                    <li>Wind energy systems</li>
+                    <li>Energy-efficient equipment</li>
+                    <li>Carbon footprint reduction</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="eco-impact">
+            <div class="impact-header">
+                <h2><i class="fas fa-globe-americas"></i> Environmental Impact</h2>
+                <p>Quantified benefits of sustainable farming practices</p>
+            </div>
+            <div class="impact-stats">
+                <div class="impact-stat">
+                    <div class="impact-number" id="waterSavedLiters">2.5M</div>
+                    <div class="impact-description">Liters of water saved annually</div>
+                </div>
+                <div class="impact-stat">
+                    <div class="impact-number" id="co2Reduced">1,200</div>
+                    <div class="impact-description">Tons of CO2 reduced</div>
+                </div>
+                <div class="impact-stat">
+                    <div class="impact-number" id="chemicalReduction">85</div>
+                    <div class="impact-description">% Reduction in chemical usage</div>
+                </div>
+                <div class="impact-stat">
+                    <div class="impact-number" id="speciesProtected">150</div>
+                    <div class="impact-description">+ Species protected</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tips-section">
+            <div class="tips-header">
+                <h2><i class="fas fa-lightbulb"></i> Daily Sustainability Tips</h2>
+                <p>Simple practices you can implement today</p>
+            </div>
+            <div class="tips-container">
+                <div class="tip-card">
+                    <div class="tip-title">
+                        <i class="fas fa-clock"></i>
+                        Morning Routine
+                    </div>
+                    <p>Check soil moisture levels before irrigation. Use the finger test or install moisture sensors for accurate readings.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-title">
+                        <i class="fas fa-leaf"></i>
+                        Composting
+                    </div>
+                    <p>Turn your organic waste into nutrient-rich compost. Mix green and brown materials in a 3:1 ratio for optimal results.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-title">
+                        <i class="fas fa-bug"></i>
+                        Natural Pest Control
+                    </div>
+                    <p>Plant marigolds, basil, and mint around your crops. These natural repellents keep harmful insects away.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-title">
+                        <i class="fas fa-recycle"></i>
+                        Waste Reduction
+                    </div>
+                    <p>Reuse plastic containers for seedling trays and water collection. Every small action contributes to sustainability.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-title">
+                        <i class="fas fa-sun"></i>
+                        Solar Energy
+                    </div>
+                    <p>Consider solar panels for irrigation pumps. Initial investment pays off through reduced electricity bills.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-title">
+                        <i class="fas fa-chart-line"></i>
+                        Data Tracking
+                    </div>
+                    <p>Keep records of your sustainable practices. Track water usage, soil health, and cost savings over time.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="assessment-tool">
+            <div class="tool-header">
+                <h2><i class="fas fa-clipboard-check"></i> Sustainability Assessment</h2>
+                <p>Evaluate your current farming practices and get personalized recommendations</p>
+            </div>
+            <form class="assessment-form" id="sustainabilityForm">
+                <div class="form-group">
+                    <label for="farmSize">Farm Size (acres):</label>
+                    <select id="farmSize" name="farmSize">
+                        <option value="small">1-10 acres</option>
+                        <option value="medium">11-50 acres</option>
+                        <option value="large">51-200 acres</option>
+                        <option value="xlarge">200+ acres</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="currentPractices">Current Sustainable Practices (0-10):</label>
+                    <input type="range" id="currentPractices" name="currentPractices" min="0" max="10" value="5">
+                    <div class="range-value" id="practicesValue">5</div>
+                </div>
+                <div class="form-group">
+                    <label for="waterUsage">Water Conservation Efforts (0-10):</label>
+                    <input type="range" id="waterUsage" name="waterUsage" min="0" max="10" value="5">
+                    <div class="range-value" id="waterValue">5</div>
+                </div>
+                <div class="form-group">
+                    <label for="organicUse">Organic Methods Usage (0-10):</label>
+                    <input type="range" id="organicUse" name="organicUse" min="0" max="10" value="5">
+                    <div class="range-value" id="organicValue">5</div>
+                </div>
+                <div class="form-group">
+                    <label for="energyEfficiency">Energy Efficiency (0-10):</label>
+                    <input type="range" id="energyEfficiency" name="energyEfficiency" min="0" max="10" value="5">
+                    <div class="range-value" id="energyValue">5</div>
+                </div>
+                <button type="button" class="assess-button" onclick="calculateSustainability()">
+                    <i class="fas fa-calculator"></i> Assess My Sustainability
+                </button>
+            </form>
+            <div class="results-section" id="assessmentResults">
+                <h3>Your Sustainability Score: <span id="scoreValue"></span>/100</h3>
+                <div class="score-progress">
+                    <div class="score-fill" id="scoreFill"></div>
+                </div>
+                <p id="scoreDescription"></p>
+                <div id="recommendations"></div>
+                <div style="margin-top: 20px; text-align: center;">
+                    <button class="cta-button" onclick="generateReport()">
+                        <i class="fas fa-file-pdf"></i> Generate Detailed Report
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2 style="color: var(--text-primary); margin-bottom: 20px;">Start Your Sustainable Journey Today</h2>
+            <p style="margin-bottom: 30px; color: var(--text-secondary);">Join thousands of farmers creating a more sustainable future</p>
+            <button class="cta-button" onclick="showNotification('Consultation booked!', 'success')">
+                <i class="fas fa-user-md"></i> Get Consultation
+            </button>
+            <button class="cta-button" onclick="downloadGuide()">
+                <i class="fas fa-download"></i> Download Guide
+            </button>
+            <button class="cta-button" onclick="showNotification('Welcome to the community!', 'success')">
+                <i class="fas fa-users"></i> Join Community
+            </button>
+        </div>
+    </div>
+
+    <!-- Floating Tips -->
+    <div class="floating-tips" id="floatingTips">
+        <h4>
+            <i class="fas fa-lightbulb"></i>
+            Daily Tip
+            <button class="close-tip" onclick="closeTip()">
+                <i class="fas fa-times"></i>
+            </button>
+        </h4>
+        <p id="currentTip">Use companion planting to naturally reduce pests and improve soil health</p>
+    </div>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+
+        // Check for saved theme
+        const savedTheme = localStorage.getItem('sustainableTheme') || 'dark';
+        document.body.setAttribute('data-theme', savedTheme);
+        updateThemeButton(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('sustainableTheme', newTheme);
+            updateThemeButton(newTheme);
+            showNotification(`Switched to ${newTheme} theme`, 'info');
+        });
+
+        function updateThemeButton(theme) {
+            if (theme === 'dark') {
+                themeIcon.className = 'fas fa-sun';
+                themeText.textContent = 'Light';
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                themeText.textContent = 'Dark';
+            }
+        }
+
+        // Update range slider values
+        ['currentPractices', 'waterUsage', 'organicUse', 'energyEfficiency'].forEach(id => {
+            const slider = document.getElementById(id);
+            const valueDisplay = document.getElementById(id.replace(/([A-Z])/g, '$1').toLowerCase().replace(/^(.)/, '$1').replace(' ', '') + 'Value');
+            
+            slider.addEventListener('input', function() {
+                valueDisplay.textContent = this.value;
+            });
+        });
+
+        // Calculate sustainability score
+        function calculateSustainability() {
+            showLoading();
+            
+            setTimeout(() => {
+                const farmSize = document.getElementById('farmSize').value;
+                const practices = parseInt(document.getElementById('currentPractices').value);
+                const water = parseInt(document.getElementById('waterUsage').value);
+                const organic = parseInt(document.getElementById('organicUse').value);
+                const energy = parseInt(document.getElementById('energyEfficiency').value);
+                
+                // Calculate base score
+                let score = ((practices + water + organic + energy) / 4) * 10;
+                
+                // Adjust for farm size
+                const sizeMultiplier = {
+                    'small': 1.1,
+                    'medium': 1.0,
+                    'large': 0.95,
+                    'xlarge': 0.9
+                };
+                
+                score = Math.round(score * sizeMultiplier[farmSize]);
+                
+                // Show results
+                const resultsSection = document.getElementById('assessmentResults');
+                const scoreValue = document.getElementById('scoreValue');
+                const scoreFill = document.getElementById('scoreFill');
+                const scoreDescription = document.getElementById('scoreDescription');
+                const recommendations = document.getElementById('recommendations');
+                
+                scoreValue.textContent = score;
+                
+                // Animate score bar
+                setTimeout(() => {
+                    scoreFill.style.width = score + '%';
+                }, 100);
+                
+                let description, recs, color;
+                if (score >= 80) {
+                    description = "Excellent! You're a sustainability champion with outstanding eco-friendly practices.";
+                    recs = "Continue your excellent work and consider becoming a sustainability mentor in your community.";
+                    color = '#22c55e';
+                } else if (score >= 60) {
+                    description = "Great progress! You have a solid foundation in sustainable farming with room to excel.";
+                    recs = "Focus on expanding renewable energy usage and advanced water conservation techniques.";
+                    color = '#10b981';
+                } else if (score >= 40) {
+                    description = "Good start! You're on the right path with significant opportunities for improvement.";
+                    recs = "Implement composting systems, drip irrigation, and begin transitioning to organic methods.";
+                    color = '#f59e0b';
+                } else {
+                    description = "Great potential ahead! Every journey toward sustainability starts with the first step.";
+                    recs = "Start with basic practices: soil testing, water conservation, and reducing chemical inputs.";
+                    color = '#ef4444';
+                }
+                
+                scoreFill.style.background = `linear-gradient(90deg, ${color}, #00cec9)`;
+                scoreDescription.textContent = description;
+                recommendations.innerHTML = `<strong style="color: var(--accent-primary);">Recommendations:</strong> ${recs}`;
+                
+                resultsSection.style.display = 'block';
+                hideLoading();
+                showNotification(`Assessment complete! Score: ${score}/100`, 'success');
+                
+                setTimeout(() => {
+                    resultsSection.scrollIntoView({ behavior: 'smooth' });
+                }, 500);
+            }, 2000);
+        }
+
+        // Generate report
+        function generateReport() {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                showNotification('Detailed sustainability report generated and downloaded!', 'success');
+            }, 2000);
+        }
+
+        // Download guide
+        function downloadGuide() {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                showNotification('Sustainable farming guide downloaded successfully!', 'success');
+            }, 1500);
+        }
+
+        // Simulate real-time metrics updates
+        function updateMetrics() {
+            const metrics = [
+                { id: 'waterSaved', base: 35, range: 10 },
+                { id: 'carbonReduced', base: 42, range: 8 },
+                { id: 'soilHealth', base: 89, range: 5 },
+                { id: 'costSavings', base: 28, range: 12 }
+            ];
+
+            metrics.forEach(metric => {
+                const element = document.getElementById(metric.id);
+                const variation = Math.floor(Math.random() * metric.range) - metric.range/2;
+                const newValue = Math.max(0, Math.min(100, metric.base + variation));
+                
+                // Animate number change
+                animateValue(element, parseInt(element.textContent), newValue, 1000);
+            });
+        }
+
+        // Update impact statistics
+        function updateImpactStats() {
+            const stats = [
+                { id: 'waterSavedLiters', base: 2.5, suffix: 'M' },
+                { id: 'co2Reduced', base: 1200, suffix: '' },
+                { id: 'chemicalReduction', base: 85, suffix: '' },
+                { id: 'speciesProtected', base: 150, suffix: '+' }
+            ];
+
+            stats.forEach(stat => {
+                const element = document.getElementById(stat.id);
+                const variation = Math.random() * 0.2 - 0.1; // ±10% variation
+                const newValue = stat.base * (1 + variation);
+                
+                let displayValue;
+                if (stat.suffix === 'M') {
+                    displayValue = newValue.toFixed(1) + 'M';
+                } else if (stat.suffix === '+') {
+                    displayValue = Math.floor(newValue) + '+';
+                } else {
+                    displayValue = Math.floor(newValue).toString();
+                }
+                
+                element.textContent = displayValue;
+            });
+        }
+
+        // Animate number changes
+        function animateValue(element, start, end, duration) {
+            const startTimestamp = performance.now();
+            
+            function step(timestamp) {
+                const elapsed = timestamp - startTimestamp;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                const current = Math.floor(start + (end - start) * progress);
+                element.textContent = current;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                }
+            }
+            
+            requestAnimationFrame(step);
+        }
+
+        // Rotating tips functionality
+        const tips = [
+            "Use companion planting to naturally reduce pests and improve soil health",
+            "Collect rainwater during monsoons for use during dry spells",
+            "Rotate crops annually to prevent soil depletion and pest buildup",
+            "Plant cover crops during off-seasons to improve soil fertility",
+            "Use natural mulches to retain soil moisture and suppress weeds",
+            "Install solar panels to power irrigation systems sustainably",
+            "Create wildlife corridors to support beneficial insects and birds",
+            "Practice minimal tillage to preserve soil structure and microorganisms"
+        ];
+
+        let currentTipIndex = 0;
+
+        function rotateTips() {
+            currentTipIndex = (currentTipIndex + 1) % tips.length;
+            document.getElementById('currentTip').textContent = tips[currentTipIndex];
+            showNotification('New sustainability tip available!', 'info');
+        }
+
+        function closeTip() {
+            document.getElementById('floatingTips').classList.remove('show');
+        }
+
+        // Loading functions
+        function showLoading() {
+            document.getElementById('loadingOverlay').classList.add('show');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.remove('show');
+        }
+
+        // Notification System
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            const icons = {
+                success: 'fa-check-circle',
+                warning: 'fa-exclamation-triangle',
+                danger: 'fa-exclamation-circle',
+                info: 'fa-info-circle'
+            };
+            
+            notification.innerHTML = `
+                <i class="fas ${icons[type]}"></i>
+                <span style="margin-left: 10px;">${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            showNotification('Sustainable Farming Guidance loaded!', 'success');
+            
+            // Show floating tips after 3 seconds
+            setTimeout(() => {
+                document.getElementById('floatingTips').classList.add('show');
+            }, 3000);
+            
+            // Set up auto-updates
+            setInterval(updateMetrics, 12000);
+            setInterval(updateImpactStats, 18000);
+            setInterval(rotateTips, 15000);
+
+            // Add entrance animations
+            const cards = document.querySelectorAll('.practice-card, .metric-card, .tip-card, .impact-stat');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 50);
+            });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 'a':
+                        e.preventDefault();
+                        document.getElementById('sustainabilityForm').scrollIntoView({ behavior: 'smooth' });
+                        break;
+                    case 't':
+                        e.preventDefault();
+                        document.querySelector('.tips-section').scrollIntoView({ behavior: 'smooth' });
+                        break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

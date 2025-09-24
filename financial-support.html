@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <meta name="description" content="AgriTech Financial Support - Comprehensive financial solutions for farmers including loans, insurance, and investment opportunities." />
+  <title>Financial Support - AgriTech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet" />
+  
+  <style>
+    :root {
+      /* Dark Theme Variables */
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --shadow-light: rgba(0, 0, 0, 0.3);
+      --shadow-medium: rgba(0, 0, 0, 0.4);
+      --shadow-heavy: rgba(0, 0, 0, 0.6);
+      --accent-primary: #3b82f6;
+      --accent-secondary: #10b981;
+      --accent-warning: #f59e0b;
+      --accent-danger: #ef4444;
+    }
+
+    [data-theme="light"] {
+      /* Light Theme Variables */
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --bg-tertiary: #e2e8f0;
+      --text-primary: #1e293b;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --shadow-light: rgba(0, 0, 0, 0.1);
+      --shadow-medium: rgba(0, 0, 0, 0.15);
+      --shadow-heavy: rgba(0, 0, 0, 0.25);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: all 0.3s ease;
+    }
+
+    .serif {
+      font-family: 'Libertinus Serif', serif;
+    }
+
+    /* Navigation */
+    .navbar {
+      background-color: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 0;
+      box-shadow: 0 2px 10px var(--shadow-light);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .theme-toggle {
+      background: var(--accent-primary);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px var(--shadow-medium);
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #2563eb;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-tertiary);
+      color: var(--text-secondary);
+    }
+
+    .btn-secondary:hover {
+      background-color: #475569;
+      color: var(--text-primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+      padding: 4rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.1;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1s ease 0.2s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Loan Calculator */
+    .loan-calculator {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 8px 25px var(--shadow-light);
+    }
+
+    .calculator-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--text-primary);
+    }
+
+    .calculator-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select {
+      padding: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 1rem;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .calculator-result {
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: white;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      text-align: center;
+      margin-top: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+    }
+
+    .calculator-result.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Progress Tracker */
+    .progress-tracker {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .progress-steps {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .progress-line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--border-color);
+      z-index: 1;
+    }
+
+    .progress-line-fill {
+      height: 100%;
+      background: var(--accent-secondary);
+      width: 0%;
+      transition: width 1s ease;
+    }
+
+    .step {
+      background: var(--bg-primary);
+      border: 2px solid var(--border-color);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--text-muted);
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+
+    .step.active {
+      background: var(--accent-primary);
+      border-color: var(--accent-primary);
+      color: white;
+    }
+
+    .step.completed {
+      background: var(--accent-secondary);
+      border-color: var(--accent-secondary);
+      color: white;
+    }
+
+    /* Chat Widget */
+    .chat-widget {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 350px;
+      max-height: 500px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px var(--shadow-medium);
+      z-index: 1000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .chat-widget.open {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .chat-toggle {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--accent-primary);
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 15px var(--shadow-medium);
+      z-index: 1001;
+      transition: all 0.3s ease;
+    }
+
+    .chat-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    .chat-header {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-messages {
+      padding: 1rem;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .message {
+      margin-bottom: 1rem;
+      padding: 0.75rem;
+      border-radius: 1rem;
+      max-width: 80%;
+    }
+
+    .message.bot {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      margin-right: auto;
+    }
+
+    .message.user {
+      background: var(--accent-primary);
+      color: white;
+      margin-left: auto;
+    }
+
+    .chat-input {
+      padding: 1rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    .chat-input button {
+      background: var(--accent-primary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+
+    /* Main Content */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .section {
+      margin-bottom: 4rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 3rem;
+    }
+
+    /* Service Cards */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .service-card {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 0.75rem;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px var(--shadow-light);
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px var(--shadow-medium);
+      border-color: var(--accent-primary);
+    }
+
+    .service-icon {
+      font-size: 2.5rem;
+      color: var(--accent-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .service-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .service-description {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .service-features {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-features li {
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .service-features i {
+      color: var(--accent-secondary);
+      width: 16px;
+    }
+
+    /* Process Steps */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .process-step {
+      text-align: center;
+      background-color: var(--bg-secondary);
+      padding: 2rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .process-step:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px var(--shadow-medium);
+    }
+
+    .step-number {
+      width: 60px;
+      height: 60px;
+      background-color: var(--accent-primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 auto 1rem;
+    }
+
+    .step-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .step-description {
+      color: var(--text-muted);
+    }
+
+    /* Statistics */
+    .stats-section {
+      background-color: var(--bg-secondary);
+      padding: 3rem 2rem;
+      border-radius: 1rem;
+      margin: 4rem 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent-secondary);
+      margin-bottom: 0.5rem;
+      counter-reset: stat-counter;
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+      padding: 4rem 2rem;
+      border-radius: 1rem;
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    .cta-title {
+      font-size: 2rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .cta-description {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+    }
+
+    .cta-button {
+      background-color: white;
+      color: var(--accent-primary);
+      padding: 1rem 2rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      padding: 3rem 2rem 1rem;
+      margin-top: 4rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-primary);
+    }
+
+    .copyright {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border-color);
+      padding-top: 2rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .navbar-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .footer-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .chat-widget {
+        width: 90vw;
+        right: 5vw;
+      }
+    }
+
+    /* Loading Animation */
+    .loading {
+      opacity: 0;
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    /* Notification */
+    .notification {
+      position: fixed;
+      top: 100px;
+      right: 2rem;
+      background: var(--accent-secondary);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 15px var(--shadow-medium);
+      z-index: 1000;
+      transform: translateX(400px);
+      transition: transform 0.3s ease;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar-content">
+      <a href="index.html" class="logo">AgriTech</a>
+      <div class="nav-buttons">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+          <i class="fas fa-moon" id="themeIcon"></i>
+          <span id="themeText">Light</span>
+        </button>
+        <a href="index.html" class="btn btn-secondary">Home</a>
+        <a href="about.html" class="btn btn-secondary">About</a>
+        <a href="login.html" class="btn btn-secondary">Login</a>
+        <a href="register.html" class="btn btn-primary">Register</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="serif">Financial Support & Insurance</h1>
+      <p>Comprehensive financial solutions designed specifically for farmers and agricultural businesses. Access loans, insurance, and investment opportunities to grow your farming enterprise.</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Loan Calculator -->
+    <section class="loan-calculator loading">
+      <h3 class="calculator-title serif">Agricultural Loan Calculator</h3>
+      <div class="calculator-form">
+        <div class="form-group">
+          <label for="loanAmount">Loan Amount (₹)</label>
+          <input type="number" id="loanAmount" placeholder="500000" min="50000" max="5000000">
+        </div>
+        <div class="form-group">
+          <label for="interestRate">Interest Rate (%)</label>
+          <input type="number" id="interestRate" placeholder="8.5" min="5" max="20" step="0.1">
+        </div>
+        <div class="form-group">
+          <label for="loanTerm">Loan Term (Years)</label>
+          <select id="loanTerm">
+            <option value="3">3 Years</option>
+            <option value="5" selected>5 Years</option>
+            <option value="7">7 Years</option>
+            <option value="10">10 Years</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" onclick="calculateLoan()" style="margin-top: 1.8rem;">Calculate EMI</button>
+        </div>
+      </div>
+      <div class="calculator-result" id="calculatorResult">
+        <h4>Monthly EMI: ₹<span id="emiAmount">0</span></h4>
+        <p>Total Amount: ₹<span id="totalAmount">0</span> | Total Interest: ₹<span id="totalInterest">0</span></p>
+      </div>
+    </section>
+
+    <!-- Application Progress Tracker -->
+    <section class="progress-tracker loading">
+      <h3 class="section-title serif">Application Progress</h3>
+      <div class="progress-steps">
+        <div class="progress-line">
+          <div class="progress-line-fill" id="progressFill"></div>
+        </div>
+        <div class="step active" id="step1">1</div>
+        <div class="step" id="step2">2</div>
+        <div class="step" id="step3">3</div>
+        <div class="step" id="step4">4</div>
+      </div>
+      <div style="text-align: center; margin-top: 1rem;">
+        <button class="btn btn-primary" onclick="nextStep()">Next Step</button>
+        <button class="btn btn-secondary" onclick="resetProgress()">Reset</button>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section loading">
+      <h2 class="section-title serif">Our Financial Services</h2>
+      <p class="section-subtitle">Empowering farmers with tailored financial solutions for sustainable growth</p>
+      
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-coins"></i>
+          </div>
+          <h3 class="service-title serif">Agricultural Loans</h3>
+          <p class="service-description">Flexible loan options for equipment purchase, crop production, and farm expansion with competitive interest rates.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Low interest rates starting from 8.5%</li>
+            <li><i class="fas fa-check"></i> Flexible repayment schedules</li>
+            <li><i class="fas fa-check"></i> Quick approval process</li>
+            <li><i class="fas fa-check"></i> Loan amounts up to ₹50 lakhs</li>
+          </ul>
+          <a href="#" class="btn btn-primary" onclick="showNotification('Application form opened!')">Apply Now</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3 class="service-title serif">Crop Insurance</h3>
+          <p class="service-description">Comprehensive crop insurance coverage protecting against weather-related losses, pests, and diseases.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Weather-based coverage</li>
+            <li><i class="fas fa-check"></i> Disease & pest protection</li>
+            <li><i class="fas fa-check"></i> Quick claim settlement</li>
+            <li><i class="fas fa-check"></i> Premium support available</li>
+          </ul>
+          <a href="#" class="btn btn-primary" onclick="showNotification('Insurance quote generated!')">Get Quote</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3 class="service-title serif">Investment Plans</h3>
+          <p class="service-description">Smart investment opportunities in agricultural technology, equipment, and sustainable farming practices.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Technology investments</li>
+            <li><i class="fas fa-check"></i> Equipment financing</li>
+            <li><i class="fas fa-check"></i> Sustainable farming funds</li>
+            <li><i class="fas fa-check"></i> Expert advisory services</li>
+          </ul>
+          <a href="#" class="btn btn-primary" onclick="showNotification('Investment plans loaded!')">Explore Plans</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-university"></i>
+          </div>
+          <h3 class="service-title serif">Government Schemes</h3>
+          <p class="service-description">Access government subsidies, grants, and schemes designed to support farmers and agricultural development.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Subsidy applications</li>
+            <li><i class="fas fa-check"></i> Grant assistance</li>
+            <li><i class="fas fa-check"></i> Documentation support</li>
+            <li><i class="fas fa-check"></i> Expert guidance</li>
+          </ul>
+          <a href="#" class="btn btn-primary" onclick="showNotification('Government schemes accessed!')">View Schemes</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-credit-card"></i>
+          </div>
+          <h3 class="service-title serif">Credit Facilities</h3>
+          <p class="service-description">Flexible credit lines and working capital solutions for day-to-day farming operations and seasonal needs.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Working capital loans</li>
+            <li><i class="fas fa-check"></i> Seasonal credit facilities</li>
+            <li><i class="fas fa-check"></i> Equipment finance</li>
+            <li><i class="fas fa-check"></i> Trade finance solutions</li>
+          </ul>
+          <a href="#" class="btn btn-primary" onclick="showNotification('Credit application started!')">Apply Today</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-calculator"></i>
+          </div>
+          <h3 class="service-title serif">Financial Planning</h3>
+          <p class="service-description">Expert financial advice and planning services to help optimize your farm's profitability and growth potential.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Cash flow management</li>
+            <li><i class="fas fa-check"></i> Risk assessment</li>
+            <li><i class="fas fa-check"></i> Tax optimization</li>
+            <li><i class="fas fa-check"></i> Retirement planning</li>
+          </ul>
+          <a href="#" class="btn btn-primary" onclick="showNotification('Expert consultation booked!')">Consult Expert</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section loading">
+      <h2 class="section-title serif">How It Works</h2>
+      <p class="section-subtitle">Simple steps to access financial support for your farming needs</p>
+      
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-number">1</div>
+          <h3 class="step-title">Apply Online</h3>
+          <p class="step-description">Complete our simple online application form with your farming details and financial requirements.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-number">2</div>
+          <h3 class="step-title">Document Verification</h3>
+          <p class="step-description">Submit required documents through our secure portal for quick verification and processing.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-number">3</div>
+          <h3 class="step-title">Expert Review</h3>
+          <p class="step-description">Our agricultural finance experts review your application and provide personalized recommendations.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-number">4</div>
+          <h3 class="step-title">Approval & Funding</h3>
+          <p class="step-description">Receive approval notification and get funded quickly to support your agricultural activities.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Statistics -->
+    <section class="stats-section loading">
+      <h2 class="section-title serif">Our Impact</h2>
+      <div class="stats-grid">
+        <div class="stat">
+          <div class="stat-number" data-target="500">0</div>
+          <div class="stat-label">Crores Funded (₹)</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number" data-target="25000">0</div>
+          <div class="stat-label">Farmers Supported</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number" data-target="98">0</div>
+          <div class="stat-label">Approval Rate (%)</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number" data-target="72">0</div>
+          <div class="stat-label">Avg Approval (hrs)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section loading">
+      <h2 class="cta-title serif">Ready to Grow Your Farm?</h2>
+      <p class="cta-description">Join thousands of farmers who have transformed their agricultural business with our financial support. Get started today and unlock your farm's potential.</p>
+      <a href="register.html" class="cta-button">Start Your Application</a>
+    </section>
+  </div>
+
+  <!-- Chat Widget -->
+  <div class="chat-widget" id="chatWidget">
+    <div class="chat-header">
+      <h4>Financial Assistant</h4>
+      <button onclick="toggleChat()" style="background: none; border: none; color: var(--text-primary);">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="message bot">
+        <p>Hello! I'm here to help with your financial needs. How can I assist you today?</p>
+      </div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Ask about loans, insurance...">
+      <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <button class="chat-toggle" id="chatToggle" onclick="toggleChat()">
+    <i class="fas fa-comments"></i>
+  </button>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="terms-and-service.html">Terms</a>
+        <a href="privacy-policy.html">Privacy</a>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 AgriTech. All rights reserved. Empowering agriculture through technology.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+
+    // Check for saved theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeButton(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeButton(newTheme);
+    });
+
+    function updateThemeButton(theme) {
+      if (theme === 'dark') {
+        themeIcon.className = 'fas fa-sun';
+        themeText.textContent = 'Light';
+      } else {
+        themeIcon.className = 'fas fa-moon';
+        themeText.textContent = 'Dark';
+      }
+    }
+
+    // Loan Calculator
+    function calculateLoan() {
+      const amount = parseFloat(document.getElementById('loanAmount').value) || 500000;
+      const rate = parseFloat(document.getElementById('interestRate').value) || 8.5;
+      const term = parseFloat(document.getElementById('loanTerm').value) || 5;
+      
+      const monthlyRate = (rate / 100) / 12;
+      const totalPayments = term * 12;
+      
+      const emi = (amount * monthlyRate * Math.pow(1 + monthlyRate, totalPayments)) / 
+                  (Math.pow(1 + monthlyRate, totalPayments) - 1);
+      
+      const totalAmount = emi * totalPayments;
+      const totalInterest = totalAmount - amount;
+      
+      document.getElementById('emiAmount').textContent = Math.round(emi).toLocaleString();
+      document.getElementById('totalAmount').textContent = Math.round(totalAmount).toLocaleString();
+      document.getElementById('totalInterest').textContent = Math.round(totalInterest).toLocaleString();
+      
+      const resultDiv = document.getElementById('calculatorResult');
+      resultDiv.classList.add('show');
+    }
+
+    // Progress Tracker
+    let currentStep = 1;
+    const totalSteps = 4;
+
+    function nextStep() {
+      if (currentStep < totalSteps) {
+        document.getElementById(`step${currentStep}`).classList.add('completed');
+        currentStep++;
+        document.getElementById(`step${currentStep}`).classList.add('active');
+        
+        const progressFill = document.getElementById('progressFill');
+        progressFill.style.width = `${((currentStep - 1) / (totalSteps - 1)) * 100}%`;
+        
+        if (currentStep === totalSteps) {
+          showNotification('Application completed successfully!');
+        }
+      }
+    }
+
+    function resetProgress() {
+      currentStep = 1;
+      for (let i = 1; i <= totalSteps; i++) {
+        const step = document.getElementById(`step${i}`);
+        step.classList.remove('active', 'completed');
+      }
+      document.getElementById('step1').classList.add('active');
+      document.getElementById('progressFill').style.width = '0%';
+    }
+
+    // Chat Widget
+    let chatOpen = false;
+
+    function toggleChat() {
+      const chatWidget = document.getElementById('chatWidget');
+      const chatToggle = document.getElementById('chatToggle');
+      
+      chatOpen = !chatOpen;
+      
+      if (chatOpen) {
+        chatWidget.classList.add('open');
+        chatToggle.style.display = 'none';
+      } else {
+        chatWidget.classList.remove('open');
+        chatToggle.style.display = 'flex';
+      }
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const message = input.value.trim();
+      
+      if (message) {
+        addMessage(message, 'user');
+        input.value = '';
+        
+        // Simulate bot response
+        setTimeout(() => {
+          const responses = [
+            "Thank you for your question! Our loan specialist will contact you shortly.",
+            "For agricultural loans, we offer rates starting from 8.5%. Would you like to calculate your EMI?",
+            "We have crop insurance plans covering weather damage and pest attacks. Shall I show you the options?",
+            "Our government scheme assistance can help you access subsidies. Let me connect you with an expert.",
+            "I can help you understand our investment plans. What type of farming equipment are you interested in?"
+          ];
+          const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+          addMessage(randomResponse, 'bot');
+        }, 1000);
+      }
+    }
+
+    function addMessage(text, sender) {
+      const messagesContainer = document.getElementById('chatMessages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${sender}`;
+      messageDiv.innerHTML = `<p>${text}</p>`;
+      messagesContainer.appendChild(messageDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    // Enter key for chat
+    document.getElementById('chatInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+
+    // Counter Animation
+    function animateCounters() {
+      const counters = document.querySelectorAll('.stat-number');
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const increment = target / 100;
+        let current = 0;
+        
+        const updateCounter = () => {
+          if (current < target) {
+            current += increment;
+            counter.textContent = Math.ceil(current).toLocaleString();
+            requestAnimationFrame(updateCounter);
+          } else {
+            counter.textContent = target.toLocaleString();
+          }
+        };
+        
+        updateCounter();
+      });
+    }
+
+    // Notification System
+    function showNotification(message, type = 'success') {
+      const notification = document.createElement('div');
+      notification.className = 'notification';
+      notification.innerHTML = `
+        <i class="fas fa-check-circle"></i>
+        <span>${message}</span>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.classList.add('show');
+      }, 100);
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+      }, 3000);
+    }
+
+    // Intersection Observer for animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (entry.target.classList.contains('stats-section')) {
+            animateCounters();
+          }
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Observe loading elements
+    document.querySelectorAll('.loading').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'all 0.6s ease';
+      observer.observe(el);
+    });
+
+    // Auto-calculate EMI on input change
+    ['loanAmount', 'interestRate', 'loanTerm'].forEach(id => {
+      document.getElementById(id).addEventListener('input', calculateLoan);
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      calculateLoan();
+      showNotification('Welcome to AgriTech Financial Services!');
+    });
+  </script>
+</body>
+
+</html>
