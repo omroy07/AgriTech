@@ -5,7 +5,7 @@ const blogPosts = [
         title: "How to Grow Organic Tomatoes: Step-by-Step Guide",
         category: "farming-tips",
         description: "Learn the complete process of growing healthy organic tomatoes from seed to harvest with expert tips and techniques.",
-        image: "https://images.unsplash.com/photo-1592841200221-23d2d1aaa22d?w=400&h=250&fit=crop",
+        image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=250&fit=crop",
         content: `
             <h3>Getting Started with Organic Tomatoes</h3>
             <p>Growing organic tomatoes is one of the most rewarding experiences for any farmer or gardener. This comprehensive guide will walk you through every step of the process.</p>
@@ -451,3 +451,35 @@ function filterPosts() {
 
 
 // Thats All Folks!
+
+
+
+// Theme toggle functionality
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const themeText = document.getElementById('themeText');
+let isDarkMode = false;
+
+themeToggle.addEventListener('click', toggleTheme);
+
+function toggleTheme() {
+    isDarkMode = !isDarkMode;
+    
+    if (isDarkMode) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'Light Mode';
+        localStorage.setItem('theme', 'dark');
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'Dark Mode';
+        localStorage.setItem('theme', 'light');
+    }
+}
+
+// Check for saved theme preference
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+    toggleTheme();
+}
