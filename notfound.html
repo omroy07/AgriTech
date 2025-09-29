@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Not Found | AgriTech</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, \#f2f5f2 0%, #e8f5e9 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      font-family: 'Open Sans', sans-serif;
+    }
+    .notfound-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.95);
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(76, 175, 80, 0.12);
+      padding: 48px 32px 40px 32px;
+      max-width: 420px;
+      width: 100%;
+      animation: fadeInUp 0.8s cubic-bezier(.23,1.01,.32,1) both;
+    }
+    .notfound-anim {
+      margin-bottom: 18px;
+    }
+    .notfound-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #15803d;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+    .notfound-desc {
+      color: #388e3c;
+      font-size: 1.15rem;
+      text-align: center;
+      opacity: 0.85;
+      margin-bottom: 24px;
+    }
+    .notfound-btn {
+      background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 32px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(56, 142, 60, 0.12);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .notfound-btn:hover {
+      background: #15803d;
+      transform: translateY(-2px) scale(1.04);
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="notfound-container">
+    <div class="notfound-anim">
+      <svg width="100" height="100" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="36" stroke="#4caf50" stroke-width="4" fill="#f0fdf4"/>
+        <path d="M28 52C32 44 48 44 52 52" stroke="#4caf50" stroke-width="3" stroke-linecap="round"/>
+        <ellipse cx="32" cy="34" rx="3" ry="4" fill="#4caf50"/>
+        <ellipse cx="48" cy="34" rx="3" ry="4" fill="#4caf50"/>
+        <circle cx="40" cy="40" r="36" stroke="#4caf50" stroke-width="4" fill="none" style="animation: pulse 1.2s infinite alternate;"/>
+      </svg>
+    </div>
+    <div class="notfound-title">No Results Found</div>
+    <div class="notfound-desc">Sorry, we couldn't find anything matching your search.<br>Try a different keyword or return to the homepage.</div>
+    <button class="notfound-btn" onclick="window.location.href='index.html'">Go to Homepage</button>
+  </div>
+</body>
+</html>
