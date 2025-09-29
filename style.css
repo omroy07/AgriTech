@@ -1,3 +1,259 @@
+/* Live Google-style Suggestions Dropdown */
+.live-suggest-list {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 1.5px solid #4caf50;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(76, 175, 80, 0.10);
+  z-index: 200;
+  padding: 0.5rem 0;
+  color: #256029;
+  font-size: 1rem;
+  margin-top: 2px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+.live-suggest-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #15803d;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.18s;
+  font-weight: 500;
+}
+.live-suggest-item:hover, .live-suggest-item:focus {
+  background: #e8f5e9;
+  outline: none;
+}
+.live-suggest-item i {
+  color: #4caf50;
+  font-size: 1.1em;
+}
+/* Google-style Related Searches (No Results) */
+.related-searches-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 18px;
+  justify-content: center;
+}
+.related-searches-label {
+  width: 100%;
+  text-align: center;
+  color: #388e3c;
+  font-weight: 600;
+  margin-bottom: 2px;
+  font-size: 1.05rem;
+}
+.related-search-item {
+  background: #e8f5e9;
+  color: #15803d;
+  border-radius: 16px;
+  padding: 5px 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  border: 1.2px solid #4caf50;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+.related-search-item:hover, .related-search-item:focus {
+  background: #4caf50;
+  color: #fff;
+}
+.related-search-item i {
+  color: #4caf50;
+  font-size: 1.1em;
+}
+/* Suggestive Keyword Row for Search */
+.search-suggest-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0 0.5rem 0;
+  font-size: 1rem;
+  flex-wrap: wrap;
+  padding-left: 8px;
+}
+.suggest-label {
+  color: #388e3c;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+.suggest-keyword {
+  background: #e8f5e9;
+  color: #15803d;
+  border-radius: 16px;
+  padding: 4px 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  border: 1.2px solid #4caf50;
+  margin-right: 2px;
+  margin-bottom: 2px;
+}
+.suggest-keyword:hover {
+  background: #4caf50;
+  color: #fff;
+}
+/* Animated No Results Overlay */
+.search-no-results-overlay {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  min-height: 220px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #e8f5e9 100%);
+  border: 2px solid #4caf50;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(76, 175, 80, 0.12);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  animation: fadeInUp 0.7s cubic-bezier(.23,1.01,.32,1) both;
+  margin-top: 8px;
+  padding: 32px 16px 24px 16px;
+}
+.search-no-results-overlay.show {
+  display: flex;
+}
+.no-results-anim svg {
+  margin-bottom: 12px;
+  animation: pulse 1.2s infinite alternate;
+}
+.no-results-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #15803d;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+.no-results-desc {
+  color: #388e3c;
+  font-size: 1.05rem;
+  text-align: center;
+  opacity: 0.85;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+/* Live Search Suggestions Dropdown */
+.search-suggestions {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 1.5px solid #4caf50;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(76, 175, 80, 0.10);
+  z-index: 150;
+  padding: 0.5rem 0;
+  color: #256029;
+  font-size: 1rem;
+  margin-top: 2px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+.search-suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #15803d;
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.18s;
+  font-weight: 500;
+}
+.search-suggestion-item:hover, .search-suggestion-item:focus {
+  background: #e8f5e9;
+  outline: none;
+}
+.search-suggestion-item i {
+  color: #4caf50;
+  font-size: 1.1em;
+}
+/* Search Suggestions, Loading, No Results, and Highlight */
+.search-suggestions {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(56, 142, 60, 0.08);
+  z-index: 100;
+  padding: 10px 15px;
+  color: #256029;
+  font-size: 1rem;
+  margin-top: 2px;
+}
+.search-suggestion-link {
+  display: block;
+  color: #15803d;
+  text-decoration: none;
+  padding: 4px 0;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+.search-suggestion-link:hover, .search-suggestion-link:focus {
+  background: #e8f5e9;
+  outline: none;
+}
+.search-loading {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background: #fffbe7;
+  color: #b59f3b;
+  border: 1px solid #ffe082;
+  border-radius: 8px;
+  padding: 8px 15px;
+  font-size: 1rem;
+  z-index: 101;
+  margin-top: 2px;
+}
+.search-no-results {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background: #fff0f0;
+  color: #b71c1c;
+  border: 1px solid #ffcdd2;
+  border-radius: 8px;
+  padding: 8px 15px;
+  font-size: 1rem;
+  z-index: 101;
+  margin-top: 2px;
+}
+.search-highlight {
+  background: #d1fae5;
+  color: #065f46;
+  border-radius: 3px;
+  padding: 0 2px;
+}
 /* Theme System - Dark/Light Mode */
 @import url('footer.css');
 
@@ -129,7 +385,7 @@
      .search-container {
         display: flex;
         align-items: center;
-        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  background: linear-gradient(135deg, #f8fdfc 0%, #f3f8f6 100%);
         border: 2px solid transparent;
         border-radius: 30px;
         padding: 8px 15px;
@@ -182,7 +438,7 @@
         font-size: 15px;
         flex: 1;
         color: #2e7d32;
-        background: transparent;
+  background: #f8fdfc;
         font-family: "Poppins", sans-serif;
         font-weight: 500;
       }
