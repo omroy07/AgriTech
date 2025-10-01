@@ -172,60 +172,96 @@ header h1 {
   box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4);
 }
 
-/* Enhanced Navigation */
-nav {
-  top: 100px; 
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-  padding: 1rem 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding-top: 2rem;
-  padding-bottom: 1.5rem;
-}
-
-nav ul {
-  list-style: none;
+.nav {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  padding: 0 1rem;
+  border-bottom: none;
 }
 
-nav a {
+.dropdown {
+  position: relative;
+}
+
+.dropdown > a {
+  cursor: pointer;
   text-decoration: none;
-  color: #2e7d32;
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
+  margin: 3rem auto 0 auto;
+  background: linear-gradient(135deg, #4caf50, #388e3c);
+  color: #fff !important;
+  font-weight: 600;
+  border-radius: 25px;
+  padding: 0.6rem 1.2rem;
+  box-shadow: 0 3px 8px rgba(76, 175, 80, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   transition: all 0.3s ease;
-  background: rgba(76, 175, 80, 0.1);
-  border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+.dropdown > a:hover {
+  background: linear-gradient(135deg, #388e3c, #4caf50);
+  box-shadow: 0 5px 12px rgba(56, 142, 60, 0.4);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  background: #92ca9c;
+  box-shadow: 0 10px 30px var(--shadow-medium, rgba(0, 0, 0, 0.15));
+  border: 1px solid green;
+  border-radius: 12px;
+  padding: 1rem 2rem;
+  z-index: 1000;
+  gap: 2rem;
+}
+
+/* Category Styling */
+.dropdown-category {
+  min-width: 180px;
+}
+
+.dropdown-category h4 {
   font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: green;
+  border-bottom: 1px solid green;
+  padding-bottom: 0.25rem;
 }
 
-nav a:hover {
-  background: linear-gradient(135deg, #4caf50, #66bb6a);
-  color: #ffffff;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+.dropdown-category a {
+  display: block;
+  text-decoration: none;
+  margin: 0.3rem 0;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
-.nav-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
+.dropdown-category a:hover {
+  background: #e8f5e9;
+  color: #2e7d32;
 }
 
-nav a.active {
-  background: var(--secondary-green);
-  color: var(--white);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
-  border-color: var(--accent-green);
+[data-theme="dark"] .dropdown-content {
+  background: #60a06c;
+  border: 1px solid green;
+}
+
+/* Responsive for small screens */
+@media (max-width: 768px) {
+  .dropdown-content {
+    flex-direction: column;  /* stack vertically */
+    padding: 1rem;
+  }
+  .dropdown-category {
+    min-width: 100%;
+  }
 }
 
 .brand {
@@ -236,7 +272,9 @@ nav a.active {
 
 .brand h1 {
   margin: 0;
-  font-size: 2.5rem;
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
   color: #fff;
 }
 
@@ -252,7 +290,7 @@ nav a.active {
 .main-wrapper {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding: 1rem 2rem 4rem 2rem;
 }
 
 .page-hero {
@@ -284,6 +322,7 @@ main {
   gap: 2.5rem;
   margin: 0;
   padding: 0;
+  position: relative;
 }
 
 /* Footer */
@@ -308,6 +347,7 @@ section {
   box-shadow: 0 10px 30px var(--shadow-medium, rgba(0, 0, 0, 0.15));
   transition: var(--transition);
   position: relative;
+  z-index: -10;
   overflow: hidden;
   border: 1px solid rgba(76, 175, 80, 0.1);
 }
@@ -418,8 +458,12 @@ section strong {
 
 /* Special Sections */
 #principles {
-  background: linear-gradient(135deg, #f8fff8 0%, #f0f8f0 100%);
+  background: var(--bg-primary);
   border: 2px solid var(--accent-green);
+}
+
+[data-theme="dark"] #principles {
+  border: 1px solid rgba(76, 175, 80, 0.1);
 }
 
 #step-by-step {
@@ -543,11 +587,11 @@ p {
     font-size: 2rem;
   }
 
-  nav ul {
+  /* nav ul {
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-  }
+  } */
 
   .page-hero h1 {
     font-size: 2.2rem;

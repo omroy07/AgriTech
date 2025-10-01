@@ -57,3 +57,24 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const dropdown = document.querySelector(".dropdown > a");
+  const menu = document.querySelector(".dropdown-content");
+
+  dropdown.addEventListener("click", (e) => {
+    e.preventDefault();
+    // toggle visibility
+    if (menu.style.display === "flex") {
+      menu.style.display = "none";
+    } else {
+      menu.style.display = "flex";
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!dropdown.parentElement.contains(e.target)) {
+      menu.style.display = "none";
+    }
+  });
+});
