@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,11 +12,9 @@
   <!-- Stylesheets -->
   <link rel="stylesheet" href="cropCalendar.css" />
   <link rel="stylesheet" href="theme.css" />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
+
 <body>
   <!-- Header -->
   <header>
@@ -51,7 +50,147 @@
       </select>
     </div>
 
-    <div class="calendar" id="calendar"></div>
+    <div class="legend">
+      <span class="legend-item sow"><span>🌱</span> Sowing</span>
+      <span class="legend-item grow"><span>🌿</span> Growing</span>
+      <span class="legend-item harvest"><span>🌾</span> Harvesting</span>
+    </div>
+
+    <div class="calendar-wrapper">
+      <div class="calendar" id="calendar"></div>
+    </div>
   </main>
 
-  <script src="croCalendar.js"></script> <script src="theme.js"></script> <style> .site-footer {background: linear-gradient(135deg,#2e7d32,#66bb6a); color:#fff; margin-top:auto; padding: 2rem 1.25rem;} .site-footer .footer-inner {max-width:1200px;margin:0 auto; display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1.5rem; align-items:flex-start;} .footer-brand {display:flex;flex-direction:column;gap:.5rem} .footer-logo {width:48px;height:48px;border-radius:8px;object-fit:cover;background:#fff;padding:4px} .site-footer h3,.site-footer h4{margin:0 0 .5rem 0} .site-footer p {margin:0;opacity:.9} .site-footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.4rem} .site-footer a{color:#fff;text-decoration:none;opacity:.9;transition:opacity .2s} .site-footer a:hover{opacity:1;text-decoration:underline} .footer-bottom{max-width:1200px;margin:1rem auto 0; padding-top:1rem; border-top:1px solid rgba(255,255,255,.25); text-align:center; font-size:.9rem; opacity:.9} .social-media {display:flex;gap:1rem;margin-top:.5rem} .social-media a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:50%;transition:all .3s ease;font-size:1.2rem} .social-media a:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)} </style> <footer class="site-footer"> <div class="footer-inner"> <div class="footer-brand"> <img src="images/logo.png" alt="AgriTech logo" class="footer-logo"> <h3>AgriTech</h3> <p>Empowering India's Farming Future</p> <div class="social-media"> <a href="https://instagram.com" target="_blank" aria-label="Follow us on Instagram"> <i class="fab fa-instagram"></i> </a> <a href="https://github.com/omroy07" target="_blank" aria-label="View our GitHub repositories"> <i class="fab fa-github"></i> </a> <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank" aria-label="Connect with us on LinkedIn"> <i class="fab fa-linkedin"></i> </a> </div> </div> <div class="footer-links"> <h4>Quick Links</h4> <ul> <li><a href="index.html">Home</a></li> <li><a href="main.html">Dashboard</a></li> <li><a href="feed-back.html">Feedback</a></li> <li><a href="chat.html">AI Assistant</a></li> </ul> </div> <div class="footer-links"> <h4>Tools</h4> <ul> <li><a href="Crop Recommendation/templates/index.html">Crop Recommendation</a></li> <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li> <li><a href="Disease prediction/template/index.html">Disease Detector</a></li> <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li> </ul> </div> </div> <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div> </footer> </body> </html>
+  <script src="cropCalendar.js"></script>
+  <script src="theme.js"></script>
+  <style>
+    .site-footer {
+      background: linear-gradient(135deg, #2e7d32, #66bb6a);
+      color: #fff;
+      margin-top: auto;
+      padding: 2rem 1.25rem;
+    }
+
+    .site-footer .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem
+    }
+
+    .footer-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #fff;
+      padding: 4px
+    }
+
+    .site-footer h3,
+    .site-footer h4 {
+      margin: 0 0 .5rem 0
+    }
+
+    .site-footer p {
+      margin: 0;
+      opacity: .9
+    }
+
+    .site-footer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem
+    }
+
+    .site-footer a {
+      color: #fff;
+      text-decoration: none;
+      opacity: .9;
+      transition: opacity .2s
+    }
+
+    .site-footer a:hover {
+      opacity: 1;
+      text-decoration: underline
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 1rem auto 0;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, .25);
+      text-align: center;
+      font-size: .9rem;
+      opacity: .9
+    }
+
+    .social-media {
+      display: flex;
+      gap: 1rem;
+      margin-top: .5rem
+    }
+
+    .social-media a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, .1);
+      border-radius: 50%;
+      transition: all .3s ease;
+      font-size: 1.2rem
+    }
+
+    .social-media a:hover {
+      background: rgba(255, 255, 255, .2);
+      transform: translateY(-2px)
+    }
+  </style>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand"> <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
+        <h3>AgriTech</h3>
+        <p>Empowering India's Farming Future</p>
+        <div class="social-media"> <a href="https://instagram.com" target="_blank" aria-label="Follow us on Instagram">
+            <i class="fab fa-instagram"></i> </a> <a href="https://github.com/omroy07" target="_blank"
+            aria-label="View our GitHub repositories"> <i class="fab fa-github"></i> </a> <a
+            href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank"
+            aria-label="Connect with us on LinkedIn"> <i class="fab fa-linkedin"></i> </a> </div>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="main.html">Dashboard</a></li>
+          <li><a href="feed-back.html">Feedback</a></li>
+          <li><a href="chat.html">AI Assistant</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="Crop Recommendation/templates/index.html">Crop Recommendation</a></li>
+          <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
+          <li><a href="Disease prediction/template/index.html">Disease Detector</a></li>
+          <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div>
+  </footer>
+</body>
+
+</html>

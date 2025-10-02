@@ -10,6 +10,11 @@ body {
   transition: background 0.3s ease, color 0.3s ease;
 }
 
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
 /* Header */
 header {
   background: linear-gradient(135deg, var(--primary-green, #2e7d32), var(--secondary-green, #66bb6a));
@@ -21,6 +26,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
 }
 
 header h1 {
@@ -85,14 +91,54 @@ header h1 {
   font-size: 1rem;
 }
 
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1rem 0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  color: black;
+}
+
+.legend-item.sow { 
+  background: #c8e6c9; 
+}
+
+.legend-item.grow { 
+  background: #fff9c4; 
+}
+
+.legend-item.harvest { 
+  background: #ffccbc; 
+}
+
+/* Container around calendar to enable horizontal scroll on small screens */
+.calendar-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.5rem;
+  box-sizing: border-box;
+}
+
 /* Calendar Grid */
 .calendar {
   display: grid;
-  grid-template-columns: repeat(13, 1fr);
+  grid-template-columns: 150px repeat(12, minmax(60px, 1fr));
   gap: 0.5rem;
   padding: 1.5rem;
   max-width: 95%;
   margin: auto;
+  box-sizing: border-box;
+  min-width: 900px;
 }
 
 .calendar div {
@@ -105,6 +151,9 @@ header h1 {
 
 /* Header months */
 .month {
+  position: sticky;
+  top: 5px;
+  z-index: 5;
   font-weight: bold;
   background: var(--light-green, #e8f5e9);
   animation: fadeInUp 0.4s ease forwards;
@@ -121,9 +170,11 @@ header h1 {
 .month-cell.sow {
   background: #c8e6c9;
 }
+
 .month-cell.grow {
   background: #fff9c4;
 }
+
 .month-cell.harvest {
   background: #ffccbc;
 }
@@ -133,6 +184,7 @@ header h1 {
   font-size: 1.2rem;
   display: block;
 }
+
 .tooltip {
   visibility: hidden;
   opacity: 0;
@@ -148,6 +200,7 @@ header h1 {
   transition: opacity 0.3s ease;
   z-index: 20;
 }
+
 .month-cell:hover .tooltip {
   visibility: visible;
   opacity: 1;
@@ -158,6 +211,7 @@ header h1 {
   text-align: center;
   padding: 2rem;
 }
+
 .loading-spinner {
   border: 4px solid #ddd;
   border-top: 4px solid #4caf50;
@@ -167,6 +221,7 @@ header h1 {
   margin: auto;
   animation: spin 1s linear infinite;
 }
+
 .loading-text {
   margin-top: 1rem;
   font-size: 1rem;
@@ -184,8 +239,209 @@ header h1 {
     transform: translateY(0);
   }
 }
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* Responsive adjustments */
+
+/* Large screens (desktops) */
+@media (min-width: 1025px) {
+  .calendar {
+    grid-template-columns: repeat(13, 1fr);
+    max-width: 1200px;
+    margin: 1rem auto;
+    padding: 1.5rem 2rem;
+    overflow-x: visible;
+  }
+  
+  .calendar div {
+    font-size: 0.95rem;
+    padding: 0.75rem;
+  }
+  
+  .month {
+    font-size: 1.1rem;
+  }
+  
+  .crop-name {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 900px) {
+  header {
+    padding: 1.2rem 1.5rem;
+  }
+  
+  header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .header-actions {
+    right: 1.5rem;
+    gap: 0.8rem;
+  }
+  
+  .theme-toggle, .back-btn {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .calendar {
+    min-width: 700px;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 800px) {
+  header {
+    padding: 1rem 1rem 0.5rem;
+    min-height: auto;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  header h1 {
+    font-size: 1.5rem;
+    line-height: 1.2;
+    margin: 0;
+    order: 1;
+    width: 100%;
+  }
+
+  .header-actions {
+    position: static;
+    transform: none;
+    right: auto;
+    top: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+    width: 100%;
+    order: 2;
+    margin: 0;
+    padding: 0.25rem 0;
+  }
+  
+  .theme-toggle {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+    min-width: 45px;
+    order: 1;
+    flex-shrink: 0;
+  }
+  
+  .theme-toggle i {
+    font-size: 0.9rem;
+  }
+
+  .back-btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    order: 2;
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+  
+  .header-actions > * {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .calendar {
+    gap: 0.4rem;
+    padding: 0.75rem;
+    max-width: 100%;
+    min-width: 300px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .legend {
+    gap: 1rem;
+  }
+
+  .legend-item {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 375px) {
+  header {
+    padding: 0.8rem 0.8rem 0.4rem;
+    gap: 0.4rem;
+  }
+  
+  header h1 {
+    font-size: 1.3rem;
+  }
+  
+  .header-actions {
+    gap: 0.6rem;
+  }
+  
+  .theme-toggle, .back-btn {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.75rem;
+    min-width: 40px;
+  }
+  
+  .theme-toggle i {
+    font-size: 0.8rem;
+  }
+  
+  .back-btn {
+    min-width: 35px;
+    text-align: center;
+  }
+
+  .back-btn::before {
+    content: "← ";
+  }
+
+  .legend {
+    gap: 0.5rem;
+  }
+
+  .legend-item {
+    font-size: 0.8rem;
+  }
+}
+
+/* Enhanced loading state for better visibility */
+.calendar-loading {
+  text-align: center;
+  padding: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  grid-column: 1 / -1;
+  min-height: 200px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .calendar-loading {
+    padding: 1rem;
+    min-height: 150px;
+  }
+  
+  /* Temporarily adjust calendar during loading to fit screen */
+  .calendar.loading {
+    min-width: auto !important;
+    grid-template-columns: 1fr;
+    padding: 1rem;
   }
 }
