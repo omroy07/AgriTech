@@ -200,6 +200,8 @@
     box-shadow: none;
 }
 
+
+
 /* Modal Styles */
 .modal {
     display: none;
@@ -373,5 +375,191 @@
     
     .modal-body {
         padding: 1.5rem;
+    }
+}
+
+/* Dark Mode Styles - Add this to your existing CSS */
+/* Dark mode variables */
+[data-theme="dark"] {
+    --bg-primary: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
+    --bg-secondary: #2d3748;
+    --text-primary: #f7fafc;
+    --text-secondary: #e2e8f0;
+    --text-tertiary: #a0aec0;
+    --green-primary: #68d391;
+    --green-secondary: #48bb78;
+    --green-dark: #38a169;
+    --border-color: #4a5568;
+    --shadow-light: rgba(0,0,0,0.3);
+    --shadow-medium: rgba(0,0,0,0.5);
+    --card-bg: #2d3748;
+    --modal-bg: #2d3748;
+    --search-bg: #4a5568;
+}
+
+/* Dark mode theme toggle button */
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+
+}
+
+.theme-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Dark mode overrides */
+[data-theme="dark"] .agritech-blog {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
+}
+
+[data-theme="dark"] .blog-title {
+    color: #38a169;
+}
+
+[data-theme="dark"] .blog-subtitle {
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] .search-filter-section {
+    background: #2d3748;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+[data-theme="dark"] .search-bar {
+    background: #2d3748;
+    color: #f7fafc;
+    border-color: #4a5568;
+}
+
+[data-theme="dark"] .search-bar::placeholder {
+    color: #a0aec0;
+}
+
+[data-theme="dark"] .search-bar:focus {
+    border-color: #68d391;
+}
+
+[data-theme="dark"] .filter-btn {
+    background: #4a5568;
+    color: #f7fafc;
+    border-color: #4a5568;
+}
+
+[data-theme="dark"] .filter-btn:hover,
+[data-theme="dark"] .filter-btn.active {
+    background: #68d391;
+    border-color: #68d391;
+}
+
+[data-theme="dark"] .blog-card {
+    background: #2d3748;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+[data-theme="dark"] .blog-card:hover {
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+}
+
+[data-theme="dark"] .card-category {
+    background: #68d391;
+}
+
+[data-theme="dark"] .card-title {
+    color: #f7fafc;
+}
+
+[data-theme="dark"] .card-description {
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] .read-more-btn {
+    background: linear-gradient(45deg, #68d391, #48bb78);
+}
+
+[data-theme="dark"] .load-more-btn {
+    background: linear-gradient(45deg, #38a169, #68d391);
+}
+
+[data-theme="dark"] .modal-content {
+    background-color: #2d3748;
+}
+
+[data-theme="dark"] .modal-header {
+    background: #2d3748;
+    border-bottom: 1px solid #4a5568;
+}
+
+[data-theme="dark"] .modal-title {
+    color: #38a169;
+}
+
+[data-theme="dark"] .modal-category {
+    background: #68d391;
+}
+
+[data-theme="dark"] .modal-text {
+    color: #f7fafc;
+}
+
+[data-theme="dark"] .modal-text h3 {
+    color: #38a169;
+}
+
+[data-theme="dark"] .close {
+    color: #a0aec0;
+}
+
+[data-theme="dark"] .close:hover,
+[data-theme="dark"] .close:focus {
+    color: #38a169;
+}
+
+[data-theme="dark"] .theme-toggle {
+    background: #2d3748;
+    color: #f7fafc;
+    border-color: #4a5568;
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Add transition for smooth theme switching */
+.agritech-blog,
+.search-filter-section,
+.blog-card,
+.modal-content,
+.modal-header,
+.search-bar,
+.filter-btn,
+.theme-toggle {
+    transition: all 0.3s ease;
+}
+
+/* Responsive adjustments for dark mode */
+@media (max-width: 768px) {
+    .theme-toggle {
+        position: static;
+        margin: 0 auto 1rem auto;
+    }
+    
+    .blog-header {
+        position: relative;
     }
 }

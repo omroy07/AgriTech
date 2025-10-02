@@ -1181,10 +1181,11 @@ p {
   }
 
   .nav-buttons {
+    display: flex;
     width: 100%;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 1rem;
   }
 
   .btn {
@@ -1723,10 +1724,10 @@ p {
   }
 
   .nav-buttons {
-    width: auto;
-    flex-direction: row;
-    gap: 0.5rem;
-  }
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
 
   main {
     padding: 1.5rem 3%;
@@ -2319,3 +2320,22 @@ p {
     }
 }
 
+/* About Page Footer Fix - Black Text */
+.site-footer,
+.site-footer * {
+  color: #000000 !important; /* make all footer text black */
+}
+
+.site-footer a {
+  color: #000000 !important;
+  opacity: 1 !important; /* ensure text is solid */
+}
+
+.site-footer a:hover {
+  color: #15803d !important; /* optional: green hover to match your theme */
+}
+
+/* Optional: remove text shadow if previously added */
+.site-footer {
+  text-shadow: none !important;
+}

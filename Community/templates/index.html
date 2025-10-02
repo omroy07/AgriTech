@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Agritech Community Chat</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <script src="https://cdn.socket.io/4.7.0/socket.io.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Agritech Farmer Community Chat</h1>
+    <!-- Login & State selection -->
+    <div id="loginDiv">
+      <input id="username" placeholder="Your name" />
+      <select id="stateSelect">
+        <option value="" disabled selected>Select your state</option>
+        <option>Andhra Pradesh</option>
+        <option>Arunachal Pradesh</option>
+        <option>Assam</option>
+        <option>Bihar</option>
+        <option>Chhattisgarh</option>
+        <option>Goa</option>
+        <option>Gujarat</option>
+        <option>Haryana</option>
+        <option>Himachal Pradesh</option>
+        <option>Jharkhand</option>
+        <option>Karnataka</option>
+        <option>Kerala</option>
+        <option>Madhya Pradesh</option>
+        <option>Maharashtra</option>
+        <option>Manipur</option>
+        <option>Meghalaya</option>
+        <option>Mizoram</option>
+        <option>Nagaland</option>
+        <option>Odisha</option>
+        <option>Punjab</option>
+        <option>Rajasthan</option>
+        <option>Sikkim</option>
+        <option>Tamil Nadu</option>
+        <option>Telangana</option>
+        <option>Tripura</option>
+        <option>Uttar Pradesh</option>
+        <option>Uttarakhand</option>
+        <option>West Bengal</option>
+        <option>Delhi</option>
+        <option>Puducherry</option>
+        <option>Others</option>
+      </select>
+      <button onclick="proceedToCommunities()">Continue</button>
+      <a href="javascript:history.back()" class="back-button">Back</a>
+    </div>
+
+    <!-- Community choosers and chat -->
+    <div id="communityDiv" style="display:none;">
+      <div>
+        <b>Welcome, <span id="greetName"></span>!</b>
+        <br> State: <span id="greetState"></span>
+      </div>
+      <input id="newCommunityName" placeholder="New community name (e.g., Rice Farm, Organic, etc.)" />
+      <button onclick="addCommunity()">Add Community</button>
+      <ul id="communitiesList"></ul>
+      <button id="quickJoinBtn" onclick="joinCommunity(selectedState)" style="margin-top:10px;">Join your State
+        Group</button>
+    </div>
+    <div id="chatDiv" style="display:none;">
+      <button onclick="leaveCommunity()">Leave Community</button>
+      <button id="deleteBtn" onclick="deleteCommunity()" style="display:none;">Delete This Community</button>
+      <h3 id="currentCommunity"></h3>
+      <div id="chatWindow"></div>
+      <input id="chatInput" placeholder="Type your message..." autocomplete="off" />
+      <button onclick="sendMessage()">Send</button>
+      <a href="javascript:history.back()" class="back-button">Back</a>
+      <div id="userListContainer">
+        <h4>Active Farmers:</h4>
+        <ul id="userList"></ul>
+      </div>
+    </div>
+  </div>
+  <script>
+    let username = "";
+    let selectedState = "";
+    let currentCommunity = "";
+    const socket = io();
+
+    // After user enters name and picks state
+    function proceedToCommunities() {
+      username = document.getElementById('username').value.trim();
+      selectedState = document.getElementById('stateSelect').value;
+      if (!username) { alert("Enter your name"); return; }
+      if (!selectedState) { alert("Select your state"); return; }
+      document.getElementById('loginDiv').style.display = 'none';
+      document.getElementById('communityDiv').style.display = 'block';
+      document.getElementById('greetName').innerText = username;
+      document.getElementById('greetState').innerText = selectedState;
+      fetchCommunities();
+    }
+
+    function fetchCommunities() {
+      fetch("/communities")
+        .then(res => res.json())
+        .then(communities => {
+          const list = document.getElementById('communitiesList');
+          list.innerHTML = "";
+          communities.forEach(comm => {
+            let li = document.createElement("li");
+            li.textContent = comm;
+            li.onclick = () => joinCommunity(comm);
+            list.appendChild(li);
+          });
+        });
+    }
+
+    function addCommunity() {
+      const room = document.getElementById('newCommunityName').value.trim();
+      if (!room) return;
+      fetch("/add_community", {
+        method: "POST",
+        headers: { 'Content-Type': "application/json" },
+        body: JSON.stringify({ room })
+      })
+        .then(res => res.json())
+        .then(d => {
+          fetchCommunities();
+          document.getElementById('newCommunityName').value = "";
+        });
+    }
+
+    function deleteCommunity() {
+      if (!currentCommunity) return;
+      fetch("/delete_community", {
+        method: "POST",
+        headers: { 'Content-Type': "application/json" },
+        body: JSON.stringify({ room: currentCommunity })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            alert("Community deleted!");
+          } else {
+            alert("Community not deleted (may not be empty)! " + (data.error || ""));
+          }
+          leaveCommunity();
+          fetchCommunities();
+        });
+    }
+
+    function joinCommunity(room) {
+      if (!username) { alert("Enter your name and state first"); return; }
+      if (!room) { alert("Pick a community"); return; }
+      if (currentCommunity) {
+        socket.emit('leave', { username, room: currentCommunity });
+      }
+      document.getElementById('chatWindow').innerHTML = "";
+      document.getElementById('communityDiv').style.display = 'none';
+      document.getElementById('chatDiv').style.display = 'block';
+      document.getElementById('currentCommunity').textContent = "Community: " + room;
+      currentCommunity = room;
+      socket.emit('join', { username, room });
+      document.getElementById('deleteBtn').style.display = "block";
+    }
+
+    function leaveCommunity() {
+      if (!currentCommunity) return;
+      socket.emit('leave', { username, room: currentCommunity });
+      document.getElementById('chatDiv').style.display = 'none';
+      document.getElementById('communityDiv').style.display = 'block';
+      currentCommunity = "";
+      document.getElementById('userList').innerHTML = "";
+    }
+
+    function sendMessage() {
+      const msgInput = document.getElementById('chatInput');
+      const msg = msgInput.value.trim();
+      if (msg && currentCommunity) {
+        socket.emit('message', { username, room: currentCommunity, msg });
+        msgInput.value = "";
+      }
+    }
+
+    socket.on('message', data => {
+      const chatWindow = document.getElementById('chatWindow');
+      let msgDiv = document.createElement('div');
+      msgDiv.textContent = data.msg;
+      chatWindow.appendChild(msgDiv);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    });
+
+    socket.on('user_list', users => {
+      const userList = document.getElementById('userList');
+      userList.innerHTML = '';
+      users.forEach(user => {
+        const li = document.createElement('li');
+        li.textContent = user;
+        userList.appendChild(li);
+      });
+    });
+
+    window.onload = fetchCommunities;
+  </script>
+</body>
+
+</html>

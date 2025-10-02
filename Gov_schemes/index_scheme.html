@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Sponsored Agricultural Schemes Portal</title>
+    <link rel="stylesheet" href="styles_scheme.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <h1>🌾 Government Agricultural Schemes</h1>
+            <p>Your complete directory of central and state-backed agriculture schemes</p>
+            <div class="header-actions">
+                <button onclick="toggleTheme()" class="theme-btn">
+                    <span class="theme-icon">🌞</span> Light Mode
+                </button>
+                <a href="../main.html" class="back-btn">← Back to Main</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Search and Filters Section -->
+        <section class="filter-section">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="🔍 Search schemes, locations, or services...">
+            </div>
+
+            <div class="filters-container">
+                <select id="categoryFilter">
+                    <option value="">All Categories</option>
+                    <option value="credit">Credit & Finance</option>
+                    <option value="subsidy">Subsidy Schemes</option>
+                    <option value="insurance">Insurance</option>
+                    <option value="technology">Technology & Equipment</option>
+                    <option value="training">Training & Skill Development</option>
+                    <option value="women">Women Specific</option>
+                    <option value="youth">Youth & Startup</option>
+                    <option value="organic">Organic Farming</option>
+                </select>
+
+                <select id="stateFilter">
+                    <option value="">All States</option>
+                    <option value="national">National Schemes</option>
+                    <option value="andhra-pradesh">Andhra Pradesh</option>
+                    <option value="assam">Assam</option>
+                    <option value="bihar">Bihar</option>
+                    <option value="chhattisgarh">Chhattisgarh</option>
+                    <option value="gujarat">Gujarat</option>
+                    <option value="haryana">Haryana</option>
+                    <option value="karnataka">Karnataka</option>
+                    <option value="kerala">Kerala</option>
+                    <option value="madhya-pradesh">Madhya Pradesh</option>
+                    <option value="maharashtra">Maharashtra</option>
+                    <option value="odisha">Odisha</option>
+                    <option value="punjab">Punjab</option>
+                    <option value="rajasthan">Rajasthan</option>
+                    <option value="tamil-nadu">Tamil Nadu</option>
+                    <option value="telangana">Telangana</option>
+                    <option value="uttar-pradesh">Uttar Pradesh</option>
+                    <option value="west-bengal">West Bengal</option>
+                </select>
+
+                <select id="sortFilter">
+                    <option value="name">Name (A-Z)</option>
+                    <option value="category">Category</option>
+                    <option value="state">State</option>
+                </select>
+
+                <button class="reset-btn" onclick="resetFilters()">Reset All</button>
+            </div>
+        </section>
+
+        <!-- Gender Filter Buttons -->
+        <section class="gender-section">
+            <h3>Filter by Beneficiary Type</h3>
+            <div class="gender-buttons">
+                <button class="gender-btn male-btn active" data-gender="all" onclick="filterByGender('all')">
+                    <div class="gender-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2M21 9V7L15 8L13.5 7.5C13.1 7.4 12.6 7.5 12.3 7.8L10 10.3V16H8.5V14H7V20H8.5V18.5H10V16.5H12L12.5 16V14C12.5 13.6 12.5 13.3 12.3 13L14 11L16.5 9.5L21 9Z" />
+                        </svg>
+                    </div>
+                    <span>All Schemes</span>
+                </button>
+
+                <button class="gender-btn male-btn" data-gender="male" onclick="filterByGender('male')">
+                    <div class="gender-icon male-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M9,9C10.29,8.75 11.25,7.62 11.25,6.25C11.25,4.73 10.02,3.5 8.5,3.5C6.98,3.5 5.75,4.73 5.75,6.25C5.75,7.62 6.71,8.75 8,9C5.83,9.26 4.18,11.04 4,13.25H2.75C2.34,13.25 2,13.59 2,14C2,14.41 2.34,14.75 2.75,14.75H4.09C4.65,17.18 6.71,19 9.25,19C11.79,19 13.85,17.18 14.41,14.75H15.75C16.16,14.75 16.5,14.41 16.5,14C16.5,13.59 16.16,13.25 15.75,13.25H14.5C14.32,11.04 12.67,9.26 10.5,9C10.15,9 9.83,9 9.5,9H9M21.75,2H18.5C18.09,2 17.75,2.34 17.75,2.75C17.75,3.16 18.09,3.5 18.5,3.5H20.44L15.97,7.97C15.68,7.68 15.34,7.5 15,7.5C13.9,7.5 13,8.4 13,9.5C13,10.6 13.9,11.5 15,11.5C16.1,11.5 17,10.6 17,9.5C17,9.16 16.82,8.82 16.53,8.53L21,4.06V6C21,6.41 21.34,6.75 21.75,6.75C22.16,6.75 22.5,6.41 22.5,6V2.75C22.5,2.34 22.16,2 21.75,2Z" />
+                        </svg>
+                    </div>
+                    <span>Male Farmers</span>
+                </button>
+
+                <button class="gender-btn female-btn" data-gender="female" onclick="filterByGender('female')">
+                    <div class="gender-icon female-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                        </svg>
+                    </div>
+                    <span>Women Farmers</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Schemes Display Section -->
+        <section class="schemes-section">
+            <div class="results-header">
+                <h2>Available Schemes <span id="schemeCount">(Loading...)</span></h2>
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="card" onclick="toggleView('card')">📋 Cards</button>
+                    <button class="view-btn" data-view="list" onclick="toggleView('list')">📄 List</button>
+                </div>
+            </div>
+
+            <div id="schemesContainer" class="schemes-container card-view">
+                <!-- Schemes will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Loading schemes...</p>
+        </div>
+
+        <!-- No Results State -->
+        <div id="noResults" class="no-results" style="display: none;">
+            <div class="no-results-icon">🔍</div>
+            <h3>No schemes found</h3>
+            <p>Try adjusting your filters or search terms</p>
+            <button onclick="resetFilters()" class="reset-btn">Reset Filters</button>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Government of India - Agricultural Schemes Portal</p>
+            <p>Last updated: <span id="lastUpdated"></span></p>
+        </div>
+    </footer>
+
+    <script src="app_scheme.js"></script>
+</body>
+
+</html>

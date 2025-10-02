@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace Services - AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/logo.png">
+    
+    <style>
+        :root {
+            /* Dark Theme Variables */
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --shadow-light: rgba(0, 0, 0, 0.3);
+            --shadow-medium: rgba(0, 0, 0, 0.4);
+            --shadow-heavy: rgba(0, 0, 0, 0.6);
+            --accent-primary: #fd79a8;
+            --accent-secondary: #fdcb6e;
+            --accent-success: #00b894;
+            --accent-warning: #f39c12;
+            --accent-danger: #e74c3c;
+        }
+
+        [data-theme="light"] {
+            /* Light Theme Variables */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #e2e8f0;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --shadow-heavy: rgba(0, 0, 0, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="light"] body {
+            background: linear-gradient(135deg, #fef3f2 0%, #fef7ed 100%);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-back {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            padding: 10px 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .nav-back:hover {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .theme-toggle {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px var(--shadow-medium);
+        }
+
+        .header {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 8px 25px var(--shadow-medium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(253, 121, 168, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-family: 'Libertinus Serif', serif;
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .marketplace-controls {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px var(--shadow-light);
+        }
+
+        .controls-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 2;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            font-size: 16px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 10px rgba(253,121,168,0.2);
+        }
+
+        .search-box .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-box .search-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .filter-select {
+            padding: 10px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            font-size: 14px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .sort-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .sort-btn {
+            padding: 8px 15px;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .sort-btn.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .marketplace-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+            animation: shine 0.6s ease;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .stat-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(253,121,168,0.3);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .products-section,
+        .categories-section,
+        .price-tracker {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px var(--shadow-light);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-header h2 {
+            font-family: 'Libertinus Serif', serif;
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 20px 0;
+        }
+
+        .product-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px var(--shadow-light);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .product-card:hover::before {
+            left: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px var(--shadow-medium);
+            border-color: var(--accent-primary);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            position: relative;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-success);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .product-badge.premium {
+            background: var(--accent-secondary);
+            color: var(--text-primary);
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .product-seller {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .seller-rating {
+            color: var(--accent-secondary);
+            margin-left: 10px;
+        }
+
+        .product-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .product-quantity {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(253,121,168,0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 2px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-danger);
+            border-color: var(--accent-danger);
+            color: white;
+        }
+
+        .btn-secondary.liked {
+            background: var(--accent-danger);
+            border-color: var(--accent-danger);
+            color: white;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .category-card {
+            background: linear-gradient(135deg, #e17055, var(--accent-secondary));
+            color: white;
+            padding: 30px 20px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            opacity: 0;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .category-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(225,112,85,0.3);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .category-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .category-count {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .price-chart {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .price-trends {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .trend-item {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .trend-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--shadow-light);
+        }
+
+        .trend-icon {
+            font-size: 2rem;
+            color: var(--accent-primary);
+        }
+
+        .trend-info h4 {
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .trend-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        .trend-change {
+            font-size: 0.9rem;
+            color: var(--accent-success);
+        }
+
+        .trend-change.negative {
+            color: var(--accent-danger);
+        }
+
+        .cta-section {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: 0 8px 25px var(--shadow-light);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
+        }
+
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--accent-success);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px var(--shadow-medium);
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.warning {
+            background: var(--accent-warning);
+        }
+
+        .notification.danger {
+            background: var(--accent-danger);
+        }
+
+        .notification.info {
+            background: var(--accent-primary);
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .loading-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--accent-secondary);
+            border-top: 4px solid var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .cart-widget {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--accent-primary);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px var(--shadow-medium);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .cart-widget:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--accent-danger);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .controls-row {
+                flex-direction: column;
+            }
+            
+            .search-box {
+                min-width: 100%;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .top-nav {
+                position: static;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <a href="index.html" class="nav-back">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+            <div>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-sun" id="themeIcon"></i>
+                    <span id="themeText">Light</span>
+                </button>
+            </div>
+        </nav>
+
+        <div class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-store"></i> Marketplace Services</h1>
+                <p>Connect directly with farmers and buyers for the best agricultural products and prices</p>
+            </div>
+        </div>
+
+        <div class="marketplace-controls">
+            <div class="controls-row">
+                <div class="search-box">
+                    <input type="text" placeholder="Search for products, sellers, or locations..." id="searchInput">
+                    <button class="search-btn" onclick="searchProducts()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <select class="filter-select" id="categoryFilter" onchange="filterProducts()">
+                    <option value="">All Categories</option>
+                    <option value="vegetables">Vegetables</option>
+                    <option value="fruits">Fruits</option>
+                    <option value="grains">Grains</option>
+                    <option value="spices">Spices</option>
+                    <option value="dairy">Dairy</option>
+                    <option value="pulses">Pulses</option>
+                </select>
+                <select class="filter-select" id="locationFilter" onchange="filterProducts()">
+                    <option value="">All Locations</option>
+                    <option value="punjab">Punjab</option>
+                    <option value="maharashtra">Maharashtra</option>
+                    <option value="gujarat">Gujarat</option>
+                    <option value="rajasthan">Rajasthan</option>
+                    <option value="haryana">Haryana</option>
+                </select>
+                <div class="sort-buttons">
+                    <button class="sort-btn active" onclick="sortProducts('price')">Price</button>
+                    <button class="sort-btn" onclick="sortProducts('rating')">Rating</button>
+                    <button class="sort-btn" onclick="sortProducts('distance')">Distance</button>
+                    <button class="sort-btn" onclick="sortProducts('newest')">Newest</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="marketplace-stats">
+            <div class="stat-card">
+                <div class="stat-value" id="totalProducts">2,847</div>
+                <div class="stat-label">Active Products</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalSellers">456</div>
+                <div class="stat-label">Verified Sellers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="todayDeals">89</div>
+                <div class="stat-label">Deals Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgRating">4.6</div>
+                <div class="stat-label">Avg Rating</div>
+            </div>
+        </div>
+
+        <div class="categories-section">
+            <div class="section-header">
+                <h2><i class="fas fa-th-large"></i> Browse Categories</h2>
+                <p>Explore our wide range of agricultural products</p>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card" onclick="filterByCategory('vegetables')">
+                    <div class="category-icon">🥬</div>
+                    <div class="category-title">Fresh Vegetables</div>
+                    <div class="category-count" id="vegCount">847 products</div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('fruits')">
+                    <div class="category-icon">🍎</div>
+                    <div class="category-title">Seasonal Fruits</div>
+                    <div class="category-count" id="fruitCount">623 products</div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('grains')">
+                    <div class="category-icon">🌾</div>
+                    <div class="category-title">Grains & Cereals</div>
+                    <div class="category-count" id="grainCount">456 products</div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('spices')">
+                    <div class="category-icon">🌶️</div>
+                    <div class="category-title">Spices & Herbs</div>
+                    <div class="category-count" id="spiceCount">321 products</div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('dairy')">
+                    <div class="category-icon">🥛</div>
+                    <div class="category-title">Dairy Products</div>
+                    <div class="category-count" id="dairyCount">234 products</div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('pulses')">
+                    <div class="category-icon">🫘</div>
+                    <div class="category-title">Pulses & Legumes</div>
+                    <div class="category-count" id="pulseCount">366 products</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="products-section">
+            <div class="section-header">
+                <h2><i class="fas fa-shopping-cart"></i> Featured Products</h2>
+                <p>High-quality products from verified sellers</p>
+            </div>
+            <div class="products-grid" id="productsGrid">
+                <div class="product-card" data-category="vegetables" data-location="punjab" data-price="45" data-rating="4.8">
+                    <div class="product-image">🥕</div>
+                    <div class="product-badge">Organic</div>
+                    <div class="product-info">
+                        <div class="product-title">Fresh Organic Carrots</div>
+                        <div class="product-seller">
+                            <i class="fas fa-user"></i> Kumar Farms, Punjab
+                            <div class="seller-rating">
+                                <i class="fas fa-star"></i> 4.8
+                            </div>
+                        </div>
+                        <div class="product-description">Premium quality organic carrots, freshly harvested. Rich in vitamins and perfect for cooking.</div>
+                        <div class="product-details">
+                            <div class="product-price">₹45/kg</div>
+                            <div class="product-quantity">Min: 10kg</div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-primary" onclick="contactSeller('Kumar Farms')">Contact Seller</button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="fruits" data-location="kashmir" data-price="180" data-rating="4.9">
+                    <div class="product-image">🍎</div>
+                    <div class="product-badge premium">Premium</div>
+                    <div class="product-info">
+                        <div class="product-title">Kashmiri Red Apples</div>
+                        <div class="product-seller">
+                            <i class="fas fa-user"></i> Mountain Fresh, Kashmir
+                            <div class="seller-rating">
+                                <i class="fas fa-star"></i> 4.9
+                            </div>
+                        </div>
+                        <div class="product-description">Sweet and crispy Kashmiri apples, directly from the orchards. Grade A quality with natural freshness.</div>
+                        <div class="product-details">
+                            <div class="product-price">₹180/kg</div>
+                            <div class="product-quantity">Min: 5kg</div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-primary" onclick="contactSeller('Mountain Fresh')">Contact Seller</button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="grains" data-location="haryana" data-price="120" data-rating="4.7">
+                    <div class="product-image">🌾</div>
+                    <div class="product-badge">Certified</div>
+                    <div class="product-info">
+                        <div class="product-title">Basmati Rice Premium</div>
+                        <div class="product-seller">
+                            <i class="fas fa-user"></i> Golden Grain Co., Haryana
+                            <div class="seller-rating">
+                                <i class="fas fa-star"></i> 4.7
+                            </div>
+                        </div>
+                        <div class="product-description">Authentic Basmati rice with long grains and aromatic fragrance. Perfect for biryanis and special dishes.</div>
+                        <div class="product-details">
+                            <div class="product-price">₹120/kg</div>
+                            <div class="product-quantity">Min: 25kg</div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-primary" onclick="contactSeller('Golden Grain Co.')">Contact Seller</button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="vegetables" data-location="gujarat" data-price="25" data-rating="4.5">
+                    <div class="product-image">🥔</div>
+                    <div class="product-badge">Fresh</div>
+                    <div class="product-info">
+                        <div class="product-title">Farm Fresh Potatoes</div>
+                        <div class="product-seller">
+                            <i class="fas fa-user"></i> Patel Vegetables, Gujarat
+                            <div class="seller-rating">
+                                <i class="fas fa-star"></i> 4.5
+                            </div>
+                        </div>
+                        <div class="product-description">High-quality potatoes, perfect for all cooking needs. Freshly harvested and properly stored.</div>
+                        <div class="product-details">
+                            <div class="product-price">₹25/kg</div>
+                            <div class="product-quantity">Min: 20kg</div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-primary" onclick="contactSeller('Patel Vegetables')">Contact Seller</button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="spices" data-location="rajasthan" data-price="350" data-rating="4.8">
+                    <div class="product-image">🌶️</div>
+                    <div class="product-badge">Spicy</div>
+                    <div class="product-info">
+                        <div class="product-title">Red Chili Powder</div>
+                        <div class="product-seller">
+                            <i class="fas fa-user"></i> Spice Master, Rajasthan
+                            <div class="seller-rating">
+                                <i class="fas fa-star"></i> 4.8
+                            </div>
+                        </div>
+                        <div class="product-description">Pure red chili powder made from premium quality chilies. Perfect heat and flavor for Indian cuisine.</div>
+                        <div class="product-details">
+                            <div class="product-price">₹350/kg</div>
+                            <div class="product-quantity">Min: 2kg</div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-primary" onclick="contactSeller('Spice Master')">Contact Seller</button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="dairy" data-location="maharashtra" data-price="55" data-rating="4.9">
+                    <div class="product-image">🥛</div>
+                    <div class="product-badge">Pure</div>
+                    <div class="product-info">
+                        <div class="product-title">Fresh Cow Milk</div>
+                        <div class="product-seller">
+                            <i class="fas fa-user"></i> Dairy Fresh, Maharashtra
+                            <div class="seller-rating">
+                                <i class="fas fa-star"></i> 4.9
+                            </div>
+                        </div>
+                        <div class="product-description">Pure and fresh cow milk from free-range cows. Rich in nutrients and delivered fresh daily.</div>
+                        <div class="product-details">
+                            <div class="product-price">₹55/liter</div>
+                            <div class="product-quantity">Min: 5 liters</div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-primary" onclick="contactSeller('Dairy Fresh')">Contact Seller</button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="price-tracker">
+            <div class="section-header">
+                <h2><i class="fas fa-chart-line"></i> Market Price Trends</h2>
+                <p>Live price tracking and market analysis</p>
+            </div>
+            <div class="price-chart">
+                <i class="fas fa-chart-area" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 20px;"></i>
+                <p style="color: var(--text-muted);">Interactive price charts and market trends would be displayed here</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Real-time data visualization of commodity prices across different markets</p>
+            </div>
+            <div class="price-trends">
+                <div class="trend-item">
+                    <div class="trend-icon">🥕</div>
+                    <div class="trend-info">
+                        <h4>Carrots</h4>
+                        <div class="trend-price" id="carrotPrice">₹45/kg</div>
+                        <div class="trend-change" id="carrotChange">+5% this week</div>
+                    </div>
+                </div>
+                <div class="trend-item">
+                    <div class="trend-icon">🍎</div>
+                    <div class="trend-info">
+                        <h4>Apples</h4>
+                        <div class="trend-price" id="applePrice">₹180/kg</div>
+                        <div class="trend-change negative" id="appleChange">-2% this week</div>
+                    </div>
+                </div>
+                <div class="trend-item">
+                    <div class="trend-icon">🌾</div>
+                    <div class="trend-info">
+                        <h4>Rice</h4>
+                        <div class="trend-price" id="ricePrice">₹120/kg</div>
+                        <div class="trend-change" id="riceChange">+3% this week</div>
+                    </div>
+                </div>
+                <div class="trend-item">
+                    <div class="trend-icon">🥔</div>
+                    <div class="trend-info">
+                        <h4>Potatoes</h4>
+                        <div class="trend-price" id="potatoPrice">₹25/kg</div>
+                        <div class="trend-change" id="potatoChange">No change</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2 style="color: var(--text-primary); margin-bottom: 20px;">Start Trading Today</h2>
+            <p style="margin-bottom: 30px; color: var(--text-secondary);">Join thousands of farmers and buyers in our marketplace</p>
+            <button class="cta-button" onclick="showNotification('Product listing started!', 'success')">List Your Products</button>
+            <button class="cta-button" onclick="showNotification('Supplier search initiated!', 'info')">Find Suppliers</button>
+            <button class="cta-button" onclick="showNotification('Premium access activated!', 'success')">Get Premium Access</button>
+        </div>
+    </div>
+
+    <!-- Cart Widget -->
+    <div class="cart-widget" id="cartWidget" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <div class="cart-count" id="cartCount">0</div>
+    </div>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+
+        // Check for saved theme
+        const savedTheme = localStorage.getItem('marketplaceTheme') || 'dark';
+        document.body.setAttribute('data-theme', savedTheme);
+        updateThemeButton(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('marketplaceTheme', newTheme);
+            updateThemeButton(newTheme);
+            showNotification(`Switched to ${newTheme} theme`, 'info');
+        });
+
+        function updateThemeButton(theme) {
+            if (theme === 'dark') {
+                themeIcon.className = 'fas fa-sun';
+                themeText.textContent = 'Light';
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                themeText.textContent = 'Dark';
+            }
+        }
+
+        // Sample product data
+        let allProducts = [];
+        let filteredProducts = [];
+        let cartItems = 0;
+
+        // Initialize products data
+        function initializeProducts() {
+            const productCards = document.querySelectorAll('.product-card');
+            allProducts = Array.from(productCards).map(card => ({
+                element: card,
+                category: card.getAttribute('data-category'),
+                location: card.getAttribute('data-location'),
+                price: parseInt(card.getAttribute('data-price')),
+                rating: parseFloat(card.getAttribute('data-rating')),
+                title: card.querySelector('.product-title').textContent
+            }));
+            filteredProducts = [...allProducts];
+        }
+
+        // Search functionality
+        function searchProducts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            showLoading();
+            
+            setTimeout(() => {
+                if (searchTerm) {
+                    filteredProducts = allProducts.filter(product => 
+                        product.title.toLowerCase().includes(searchTerm) ||
+                        product.category.includes(searchTerm) ||
+                        product.location.includes(searchTerm)
+                    );
+                } else {
+                    filteredProducts = [...allProducts];
+                }
+                displayProducts();
+                hideLoading();
+                showNotification(`Found ${filteredProducts.length} products matching "${searchTerm}"`, 'info');
+            }, 1000);
+        }
+
+        // Filter functionality
+        function filterProducts() {
+            const category = document.getElementById('categoryFilter').value;
+            const location = document.getElementById('locationFilter').value;
+            
+            showLoading();
+            
+            setTimeout(() => {
+                filteredProducts = allProducts.filter(product => {
+                    const categoryMatch = !category || product.category === category;
+                    const locationMatch = !location || product.location === location;
+                    return categoryMatch && locationMatch;
+                });
+                
+                displayProducts();
+                hideLoading();
+                showNotification(`Filtered to ${filteredProducts.length} products`, 'success');
+            }, 800);
+        }
+
+        // Sort functionality
+        function sortProducts(sortBy) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            showLoading();
+            
+            setTimeout(() => {
+                switch(sortBy) {
+                    case 'price':
+                        filteredProducts.sort((a, b) => a.price - b.price);
+                        break;
+                    case 'rating':
+                        filteredProducts.sort((a, b) => b.rating - a.rating);
+                        break;
+                    case 'distance':
+                        // Random sort for demo
+                        filteredProducts.sort(() => Math.random() - 0.5);
+                        break;
+                    case 'newest':
+                        // Random sort for demo
+                        filteredProducts.sort(() => Math.random() - 0.5);
+                        break;
+                }
+                
+                displayProducts();
+                hideLoading();
+                showNotification(`Sorted by ${sortBy}`, 'success');
+            }, 600);
+        }
+
+        // Display products
+        function displayProducts() {
+            const productsGrid = document.getElementById('productsGrid');
+            
+            // Hide all products
+            allProducts.forEach(product => {
+                product.element.style.display = 'none';
+            });
+            
+            // Show filtered products
+            filteredProducts.forEach((product, index) => {
+                product.element.style.display = 'block';
+                product.element.style.order = index;
+            });
+        }
+
+        // Category filter
+        function filterByCategory(category) {
+            document.getElementById('categoryFilter').value = category;
+            filterProducts();
+        }
+
+        // Contact seller
+        function contactSeller(sellerName) {
+            showNotification(`Contacting ${sellerName}...`, 'info');
+            setTimeout(() => {
+                showNotification(`Connected with ${sellerName}! Check your messages.`, 'success');
+            }, 2000);
+        }
+
+        // Toggle like
+        function toggleLike(btn) {
+            const icon = btn.querySelector('i');
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                btn.classList.add('liked');
+                showNotification('Added to favorites!', 'success');
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                btn.classList.remove('liked');
+                showNotification('Removed from favorites!', 'info');
+            }
+        }
+
+        // Cart functionality
+        function toggleCart() {
+            cartItems++;
+            document.getElementById('cartCount').textContent = cartItems;
+            showNotification(`Added to cart! Total items: ${cartItems}`, 'success');
+        }
+
+        // Update marketplace stats
+        function updateStats() {
+            document.getElementById('totalProducts').textContent = 
+                Math.floor(Math.random() * 500 + 2500);
+            
+            document.getElementById('totalSellers').textContent = 
+                Math.floor(Math.random() * 100 + 400);
+            
+            document.getElementById('todayDeals').textContent = 
+                Math.floor(Math.random() * 50 + 70);
+            
+            document.getElementById('avgRating').textContent = 
+                (Math.random() * 0.5 + 4.3).toFixed(1);
+        }
+
+        // Update category counts
+        function updateCategoryCounts() {
+            const categories = ['veg', 'fruit', 'grain', 'spice', 'dairy', 'pulse'];
+            categories.forEach(cat => {
+                const element = document.getElementById(`${cat}Count`);
+                if (element) {
+                    const count = Math.floor(Math.random() * 200 + 300);
+                    element.textContent = `${count} products`;
+                }
+            });
+        }
+
+        // Update price trends
+        function updatePrices() {
+            const priceElements = [
+                { id: 'carrotPrice', base: 45, change: 'carrotChange' },
+                { id: 'applePrice', base: 180, change: 'appleChange' },
+                { id: 'ricePrice', base: 120, change: 'riceChange' },
+                { id: 'potatoPrice', base: 25, change: 'potatoChange' }
+            ];
+
+            priceElements.forEach(item => {
+                const priceEl = document.getElementById(item.id);
+                const changeEl = document.getElementById(item.change);
+                
+                const variation = Math.floor(Math.random() * 10) - 5;
+                const newPrice = Math.max(1, item.base + variation);
+                const changePercent = Math.floor(Math.random() * 10) - 3;
+                
+                priceEl.textContent = `₹${newPrice}/kg`;
+                
+                if (changePercent > 0) {
+                    changeEl.textContent = `+${changePercent}% this week`;
+                    changeEl.className = 'trend-change';
+                } else if (changePercent < 0) {
+                    changeEl.textContent = `${changePercent}% this week`;
+                    changeEl.className = 'trend-change negative';
+                } else {
+                    changeEl.textContent = 'No change';
+                    changeEl.className = 'trend-change';
+                }
+            });
+        }
+
+        // Loading functions
+        function showLoading() {
+            document.getElementById('loadingOverlay').classList.add('show');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.remove('show');
+        }
+
+        // Notification System
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            const icons = {
+                success: 'fa-check-circle',
+                warning: 'fa-exclamation-triangle',
+                danger: 'fa-exclamation-circle',
+                info: 'fa-info-circle'
+            };
+            
+            notification.innerHTML = `
+                <i class="fas ${icons[type]}"></i>
+                <span style="margin-left: 10px;">${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeProducts();
+            showNotification('Marketplace loaded successfully!', 'success');
+            
+            // Set up auto-updates
+            setInterval(updateStats, 15000);
+            setInterval(updateCategoryCounts, 25000);
+            setInterval(updatePrices, 20000);
+
+            // Add entrance animations
+            const cards = document.querySelectorAll('.product-card, .category-card, .stat-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 50);
+            });
+
+            // Search on Enter key
+            document.getElementById('searchInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    searchProducts();
+                }
+            });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 'f':
+                        e.preventDefault();
+                        document.getElementById('searchInput').focus();
+                        break;
+                    case 'r':
+                        e.preventDefault();
+                        location.reload();
+                        break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
