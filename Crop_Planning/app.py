@@ -1,5 +1,6 @@
 # app.py
 from flask import Flask, request, jsonify, render_template
+from auth_utils import token_required, roles_required
 import google.generativeai as genai
 import json
 from flask_cors import CORS
@@ -97,6 +98,8 @@ def home():
     return render_template('cropplan.html')
 
 @app.route('/predict', methods=['POST'])
+@token_required
+@roles_required('farmer', 'admin')
 @validate_required_fields(['data'])
 def predict():
     try:
