@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from flask_socketio import SocketIO, join_room, leave_room, send, emit
+from auth_utils import token_required, roles_required
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secretkey'
@@ -13,10 +14,13 @@ def index():
     return render_template('index.html')
 
 @app.route("/communities", methods=['GET'])
+@token_required
 def get_communities():
     return jsonify(list(communities.keys()))
 
 @app.route("/add_community", methods=['POST'])
+@token_required
+@roles_required('admin')
 def add_community():
     room = request.json.get('room')
     if room and room not in communities:
@@ -25,6 +29,8 @@ def add_community():
     return jsonify({"success": False, "communities": list(communities.keys())})
 
 @app.route("/delete_community", methods=['POST'])
+@token_required
+@roles_required('admin')
 def delete_community():
     room = request.json.get('room')
     if room in communities and len(communities[room]) == 0:
