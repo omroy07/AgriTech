@@ -30,8 +30,10 @@ function renderCalendar(filter = "all") {
 }
 
 function showLoadingState(calendar) {
+    calendar.classList.add("loading");
+    
     calendar.innerHTML = `
-        <div class="calendar-loading" style="grid-column: 1 / -1;">
+        <div class="calendar-loading">
             <div class="loading-spinner"></div>
             <div class="loading-text">Loading crop calendar...</div>
         </div>
@@ -42,7 +44,8 @@ function renderCalendarContent(filter = "all") {
     const calendar = document.getElementById("calendar");
     calendar.innerHTML = "";
     
-    // Header Row with staggered animation
+    calendar.classList.remove("loading");
+    
     months.forEach((month, index) => {
         const div = document.createElement("div");
         div.className = "month";
@@ -189,4 +192,60 @@ document.addEventListener("DOMContentLoaded", function() {
     setTimeout(() => {
         renderCalendar();
     }, 500);
+});
+
+function enableTooltipToggleOnTouch() {
+  const isTouchDevice = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+  if (!isTouchDevice) return; // Only apply on touch devices
+
+  const calendar = document.getElementById("calendar");
+
+  // Track currently open tooltip
+  let activeTooltipCell = null;
+
+  calendar.addEventListener("click", (e) => {
+    const cell = e.target.closest(".month-cell");
+    if (!cell) return;
+
+    const tooltip = cell.querySelector(".tooltip");
+    if (!tooltip) return;
+
+    // If clicking the same cell, toggle tooltip
+    if (activeTooltipCell === cell) {
+      tooltip.style.visibility = "hidden";
+      tooltip.style.opacity = "0";
+      activeTooltipCell = null;
+    } else {
+      // Hide previously active tooltip
+      if (activeTooltipCell) {
+        const prevTooltip = activeTooltipCell.querySelector(".tooltip");
+        if (prevTooltip) {
+          prevTooltip.style.visibility = "hidden";
+          prevTooltip.style.opacity = "0";
+        }
+      }
+      // Show current tooltip
+      tooltip.style.visibility = "visible";
+      tooltip.style.opacity = "1";
+      activeTooltipCell = cell;
+    }
+  });
+
+  // Hide tooltip if clicking outside calendar cells
+  document.addEventListener("click", (e) => {
+    if (!calendar.contains(e.target)) {
+      if (activeTooltipCell) {
+        const tooltip = activeTooltipCell.querySelector(".tooltip");
+        if (tooltip) {
+          tooltip.style.visibility = "hidden";
+          tooltip.style.opacity = "0";
+        }
+        activeTooltipCell = null;
+      }
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  enableTooltipToggleOnTouch();
 });

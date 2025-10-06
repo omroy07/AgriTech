@@ -1,228 +1,163 @@
-let lastScrollTop = 0;
-const wrapper = document.querySelector(".header-nav-wrapper");
-
-window.addEventListener("scroll", () => {
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-  if (scrollTop > lastScrollTop && scrollTop > 100) {
-    wrapper.style.transform = "translateY(-100%)";
-  } else {
-    wrapper.style.transform = "translateY(0)";
-  }
-
-  lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-});
-
-// DOM Content Loaded
 document.addEventListener("DOMContentLoaded", function () {
-  const images = document.querySelectorAll('img[loading="lazy"]');
-  const imageObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const img = entry.target;
-        if (img.src && img.complete) {
-          img.style.opacity = "1";
-        } else {
-          img.addEventListener("load", () => {
-            img.style.opacity = "1";
-          });
+  // --- Homepage Search Functionality ---
+  const liveSuggestList = document.querySelector('.live-suggest-list');
+  const searchInput = document.querySelector('.search-input');
+  const searchButton = document.querySelector('.search-button');
+  const featureCards = document.querySelectorAll('.feature-card');
+  const heroContent = document.querySelector('.hero-content');
+  const ctaContent = document.querySelector('.cta-content');
+  const sitePages = [
+    { name: 'About', keywords: ['about', 'team', 'mission', 'info', 'company', 'us', 'who', 'profile', 'history', 'vision', 'values'], url: 'about.html' },
+    { name: 'Blog', keywords: ['blog', 'news', 'articles', 'updates', 'stories', 'events', 'announcements', 'tips', 'insights'], url: 'blog.html' },
+    { name: 'FAQ', keywords: ['faq', 'questions', 'help', 'support', 'answers', 'common', 'doubts', 'info', 'guide'], url: 'faq.html' },
+    { name: 'Login', keywords: ['login', 'signin', 'sign in', 'account', 'dashboard', 'access', 'enter', 'user', 'portal'], url: 'login.html' },
+    { name: 'Register', keywords: ['register', 'signup', 'sign up', 'create account', 'join', 'new user', 'enroll', 'start'], url: 'register.html' },
+     { name: 'Crop Monitoring', keywords: ['crop', 'monitoring', 'smart crop', 'calendar', 'plan', 'field', 'growth', 'season', 'timing', 'date', 'schedule', 'observe', 'track', 'yield', 'harvest', 'product', 'products', 'technology', 'tech', 'tools', 'equipment', 'sensor', 'sensors', 'iot', 'device', 'devices', 'monitor', 'detect'], url: 'crop.html' },
+  { name: 'Crop Calendar', keywords: ['calendar', 'crop', 'season', 'schedule', 'timing', 'date', 'month', 'year', 'timeline', 'planting', 'harvest', 'cycle', 'product', 'products'], url: 'cropCalendar.html' },
+     { name: 'Farmer', keywords: ['farmer', 'farmers', 'farming', 'grower', 'agriculture', 'seed', 'plant', 'producer', 'rural', 'village', 'community', 'product', 'products', 'technology', 'tech', 'tools', 'equipment', 'sensor', 'sensors', 'iot', 'device', 'devices', 'monitor', 'detect'], url: 'farmer.html' },
+  { name: 'Supply Chain', keywords: ['supply', 'chain', 'distribution', 'logistics', 'transport', 'delivery', 'network', 'route', 'shipment', 'product', 'products', 'technology', 'tech', 'tools', 'equipment'], url: 'supply-chain.html' },
+     { name: 'Supply Chain', keywords: ['supply', 'chain', 'distribution', 'logistics', 'transport', 'delivery', 'network', 'route', 'shipment', 'product', 'products', 'technology', 'tech', 'tools', 'equipment', 'sensor', 'sensors', 'iot', 'device', 'devices', 'monitor', 'detect'], url: 'supply-chain.html' },
+  { name: 'Sustainable Farming', keywords: ['sustainable', 'farming', 'eco', 'green', 'organic', 'environment', 'nature', 'earth', 'friendly', 'renewable', 'technology', 'tech', 'innovation'], url: 'sustainable-farming.html' },
+  { name: 'Marketplace', keywords: ['market', 'marketplace', 'store', 'buy', 'sell', 'shop', 'purchase', 'trade', 'exchange', 'commerce', 'product', 'products', 'technology', 'tech', 'tools', 'equipment'], url: 'marketplace.html' },
+    { name: 'Financial Support', keywords: ['financial', 'insurance', 'support', 'loan', 'money', 'fund', 'grant', 'aid', 'credit', 'finance'], url: 'financial-support.html' },
+    { name: 'AI Assistant', keywords: ['chat', 'ai', 'assistant', 'bot', 'help', 'virtual', 'support', 'question', 'ask', 'guide'], url: 'chat.html' },
+    { name: 'Contact', keywords: ['contact', 'email', 'help', 'reach', 'connect', 'call', 'message', 'query', 'inquiry'], url: 'contact.html' },
+    // Add more as needed
+  ];
+
+  function normalize(text) {
+    return text.toLowerCase().replace(/\s+/g, ' ').trim();
+  }
+
+  function showLiveSuggestions(query) {
+    if (!query) {
+      liveSuggestList.style.display = 'none';
+      liveSuggestList.innerHTML = '';
+      return;
+    }
+    const normQuery = normalize(query);
+    // Fuzzy match: allow partials anywhere in name or keywords
+    const suggestions = sitePages.filter(page => {
+      const nameNorm = page.name.toLowerCase();
+      if (nameNorm.includes(normQuery) || normQuery.includes(nameNorm)) return true;
+      // Fuzzy: match if all query letters appear in order in name (e.g. agr -> agriculture)
+      let i = 0, j = 0;
+      while (i < normQuery.length && j < nameNorm.length) {
+        if (normQuery[i] === nameNorm[j]) i++;
+        j++;
+      }
+      if (i === normQuery.length) return true;
+      // Also check keywords
+      return page.keywords.some(k => {
+        const kNorm = k.toLowerCase();
+        if (kNorm.includes(normQuery) || normQuery.includes(kNorm)) return true;
+        // Fuzzy in keyword
+        let ki = 0, kj = 0;
+        while (ki < normQuery.length && kj < kNorm.length) {
+          if (normQuery[ki] === kNorm[kj]) ki++;
+          kj++;
         }
-        observer.unobserve(img);
+        return ki === normQuery.length;
+      });
+    }).slice(0, 6);
+    if (suggestions.length === 0) {
+      liveSuggestList.innerHTML = `<div class="live-suggest-item" style="color:#888;cursor:default;">No results found</div>`;
+      liveSuggestList.style.display = 'block';
+      return;
+    }
+    liveSuggestList.innerHTML = suggestions.map(s => `<div class="live-suggest-item" data-url="${s.url}"><i class="fas fa-search"></i> ${s.name}</div>`).join('');
+    liveSuggestList.style.display = 'block';
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function(e) {
+      showLiveSuggestions(searchInput.value.trim());
+    });
+    searchInput.addEventListener('focus', function() {
+      showLiveSuggestions(searchInput.value.trim());
+    });
+    searchInput.addEventListener('blur', function() {
+      setTimeout(() => {
+        liveSuggestList.style.display = 'none';
+      }, 120);
+    });
+    liveSuggestList.addEventListener('mousedown', function(e) {
+      const item = e.target.closest('.live-suggest-item');
+      if (item && item.dataset.url) {
+        window.location.href = item.dataset.url;
       }
     });
-  });
-
-  images.forEach((img) => {
-    img.style.opacity = "0";
-    img.style.transition = "opacity 0.3s ease";
-    imageObserver.observe(img);
-  });
-
-  document.querySelectorAll('nav a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute("href"));
-      if (target) {
-        target.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
+    searchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        const query = searchInput.value.trim();
+        const normQuery = normalize(query);
+        // Fuzzy match: allow partials anywhere in name or keywords
+        const suggestions = sitePages.filter(page => {
+          const nameNorm = page.name.toLowerCase();
+          if (nameNorm.includes(normQuery) || normQuery.includes(nameNorm)) return true;
+          // Fuzzy: match if all query letters appear in order in name (e.g. agr -> agriculture)
+          let i = 0, j = 0;
+          while (i < normQuery.length && j < nameNorm.length) {
+            if (normQuery[i] === nameNorm[j]) i++;
+            j++;
+          }
+          if (i === normQuery.length) return true;
+          // Also check keywords
+          return page.keywords.some(k => {
+            const kNorm = k.toLowerCase();
+            if (kNorm.includes(normQuery) || normQuery.includes(kNorm)) return true;
+            let ki = 0, kj = 0;
+            while (ki < normQuery.length && kj < kNorm.length) {
+              if (normQuery[ki] === kNorm[kj]) ki++;
+              kj++;
+            }
+            return ki === normQuery.length;
+          });
         });
+        if (suggestions.length > 0) {
+          window.location.href = suggestions[0].url;
+        } else {
+          window.location.href = 'notfound.html';
+        }
       }
-    });
-  });
-
-  document.querySelectorAll(".grid-item").forEach((item) => {
-    item.addEventListener("click", function (e) {
-      const ripple = document.createElement("div");
-      const rect = this.getBoundingClientRect();
-      const size = Math.max(rect.width, rect.height);
-      const x = e.clientX - rect.left - size / 2;
-      const y = e.clientY - rect.top - size / 2;
-      
-      ripple.style.cssText = `
-        position: absolute;
-        width: ${size}px;
-        height: ${size}px;
-        left: ${x}px;
-        top: ${y}px;
-        background: rgba(76, 175, 80, 0.3);
-        border-radius: 50%;
-        transform: scale(0);
-        animation: ripple 0.6s ease-out;
-        pointer-events: none;
-        z-index: 1;
-      `;
-      
-      this.appendChild(ripple);
-      
-      setTimeout(() => {
-        ripple.remove();
-      }, 600);
-    });
-  });
-
-  const buttons = document.querySelectorAll('.calendar-button, .feedback-button, .logout-button');
-  buttons.forEach(button => {
-    button.addEventListener('mouseenter', function() {
-      this.style.transform = 'translateY(-2px) scale(1.05)';
-    });
-    
-    button.addEventListener('mouseleave', function() {
-      this.style.transform = 'translateY(0) scale(1)';
-    });
-  });
-
-  const gridItems = document.querySelectorAll('.grid-item');
-  const gridObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }, index * 100);
-        gridObserver.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  });
-
-  gridItems.forEach(item => {
-    item.style.opacity = '0';
-    item.style.transform = 'translateY(20px)';
-    item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    gridObserver.observe(item);
-  });
-
-  // Header button click effects
-  const headerButtons = document.querySelectorAll('.header-buttons a');
-  headerButtons.forEach(button => {
-    button.addEventListener('click', function(e) {
-      this.style.transform = 'scale(0.95)';
-      setTimeout(() => {
-        this.style.transform = 'scale(1)';
-      }, 150);
-    });
-  });
-
-  // Add loading states for navigation
-  const navLinks = document.querySelectorAll('nav a');
-
-  const navbarLogo = document.querySelector('.navbar .logo');
-  if (navbarLogo) {
-    navbarLogo.style.cursor = 'pointer';
-    navbarLogo.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
-  navLinks.forEach(link => {
-    link.addEventListener('click', function() {
-      if (!this.href.includes('#')) {
-        const loadingText = this.innerHTML;
-        this.innerHTML = '<span style="opacity: 0.7;">Loading...</span>';
-        
-        setTimeout(() => {
-          this.innerHTML = loadingText;
-        }, 3000);
-      }
-    });
-  });
-
-  window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const header = document.querySelector('header');
-    if (header) {
-      header.style.transform = `translateY(${scrolled * 0.5}px)`;
+  function handleSearch(e) {
+    e.preventDefault();
+    const query = searchInput.value.trim();
+    if (!query) {
+      featureCards.forEach(card => card.style.display = '');
+      if (heroContent) heroContent.style.display = '';
+      if (ctaContent) ctaContent.style.display = '';
+      return;
     }
-  });
-
-  const header = document.querySelector('header h1');
-  const currentHour = new Date().getHours();
-  let greeting = 'Welcome to AgriTech';
-  
-  if (currentHour >= 5 && currentHour < 12) {
-    greeting = 'Good Morning, AgriTech Farmers';
-  } else if (currentHour >= 12 && currentHour < 17) {
-    greeting = 'Good Afternoon, AgriTech Community';
-  } else if (currentHour >= 17 && currentHour < 21) {
-    greeting = 'Good Evening, Agricultural Innovators';
-  } else {
-    greeting = 'Welcome to AgriTech';
-  }
-  
-  if (header) {
-    header.textContent = greeting;
-  }
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Tab') {
-      document.body.classList.add('keyboard-navigation');
+    const normQuery = normalize(query);
+    // Fuzzy match for related pages
+    const suggestions = sitePages.filter(page => {
+      const nameNorm = page.name.toLowerCase();
+      if (nameNorm.includes(normQuery) || normQuery.includes(nameNorm)) return true;
+      let i = 0, j = 0;
+      while (i < normQuery.length && j < nameNorm.length) {
+        if (normQuery[i] === nameNorm[j]) i++;
+        j++;
+      }
+      if (i === normQuery.length) return true;
+      return page.keywords.some(k => {
+        const kNorm = k.toLowerCase();
+        if (kNorm.includes(normQuery) || normQuery.includes(kNorm)) return true;
+        let ki = 0, kj = 0;
+        while (ki < normQuery.length && kj < kNorm.length) {
+          if (normQuery[ki] === kNorm[kj]) ki++;
+          kj++;
+        }
+        return ki === normQuery.length;
+      });
+    });
+    if (suggestions.length > 0) {
+      window.location.href = suggestions[0].url;
+      return;
     }
-  });
-
-  document.addEventListener('mousedown', function() {
-    document.body.classList.remove('keyboard-navigation');
-  });
-
-  function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
-  }
-
-  const debouncedScroll = debounce(() => {
-    console.log('Scroll event optimized');
-  }, 10);
-
-  window.addEventListener('scroll', debouncedScroll);
-});
-
-document.addEventListener('error', function(e) {
-  if (e.target.tagName === 'IMG') {
-    e.target.style.background = 'linear-gradient(135deg, #f0f9f0, #e8f5e8)';
-    e.target.style.display = 'flex';
-    e.target.style.alignItems = 'center';
-    e.target.style.justifyContent = 'center';
-    e.target.innerHTML = '<span style="color: #666; font-size: 0.9rem;">🌱 Image Loading...</span>';
-  }
-}, true);
-
-document.addEventListener('mouseover', function(e) {
-  if (e.target.closest('.grid-item') || e.target.closest('nav a') || e.target.closest('.header-buttons a')) {
-    document.body.style.cursor = 'pointer';
-  }
-});
-
-document.addEventListener('mouseout', function(e) {
-  if (!e.relatedTarget || (!e.relatedTarget.closest('.grid-item') && !e.relatedTarget.closest('nav a') && !e.relatedTarget.closest('.header-buttons a'))) {
-    document.body.style.cursor = 'default';
+    window.location.href = 'notfound.html';
   }
 });

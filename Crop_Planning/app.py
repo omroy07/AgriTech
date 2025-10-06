@@ -1,5 +1,6 @@
 # app.py
 from flask import Flask, request, jsonify, render_template
+from auth_utils import token_required, roles_required
 import google.generativeai as genai
 import json
 from flask_cors import CORS
@@ -97,49 +98,89 @@ def home():
     return render_template('cropplan.html')
 
 @app.route('/predict', methods=['POST'])
+@token_required
+@roles_required('farmer', 'admin')
 @validate_required_fields(['data'])
 def predict():
     try:
         # Validate content type
         if not request.is_json:
-            return jsonify({'error': 'Content-Type must be application/json'}), 400
-        
+            return jsonify({
+                'error': True,
+                'message': 'Content-Type must be application/json',
+                'code': 400
+            }), 400
+
         json_data = request.get_json()
         user_input_data = json_data['data']
-        
+
         # Validate user data
         is_valid, message = validate_user_data(user_input_data)
         if not is_valid:
-            return jsonify({'error': message}), 400
-        
+            return jsonify({
+                'error': True,
+                'message': message,
+                'code': 400
+            }), 400
+
         # Sanitize user data
         sanitized_data = {k: sanitize_input(v, 100) for k, v in user_input_data.items()}
-        
+
         raw_ai_response = get_ai_prediction_and_guide(sanitized_data)
         cleaned_json_string = clean_ai_response(raw_ai_response)
 
         try:
             ai_response_data = json.loads(cleaned_json_string)
             return jsonify({
+                'error': False,
                 'crop': ai_response_data.get('predicted_crop', 'Unknown'),
-                'guide_json_string': cleaned_json_string
+                'guide_json_string': cleaned_json_string,
+                'code': 200
             })
         except json.JSONDecodeError:
-            return jsonify({'error': 'The AI returned an invalid response. Please try again.'}), 500
+            app.logger.error('AI returned invalid response: %s', cleaned_json_string)
+            return jsonify({
+                'error': True,
+                'message': 'The AI returned an invalid response. Please try again.',
+                'code': 500
+            }), 500
 
     except Exception as e:
         app.logger.error(f"Prediction error: {str(e)}")
-        return jsonify({'error': 'Prediction failed'}), 500
+        return jsonify({
+            'error': True,
+            'message': 'Prediction failed',
+            'code': 500
+        }), 500
 
-# Global error handlers
+
+# Global error handlers (centralized)
 @app.errorhandler(400)
 def bad_request(error):
-    return jsonify({'error': 'Bad request'}), 400
+    app.logger.warning(f"400 Bad Request: {str(error)}")
+    return jsonify({
+        'error': True,
+        'message': 'Bad request',
+        'code': 400
+    }), 400
+
+@app.errorhandler(404)
+def not_found(error):
+    app.logger.warning(f"404 Not Found: {str(error)}")
+    return jsonify({
+        'error': True,
+        'message': 'Resource not found',
+        'code': 404
+    }), 404
 
 @app.errorhandler(500)
 def internal_error(error):
-    app.logger.error(f"Internal error: {str(error)}")
-    return jsonify({'error': 'Internal server error'}), 500
+    app.logger.error(f"500 Internal Server Error: {str(error)}")
+    return jsonify({
+        'error': True,
+        'message': 'Internal server error',
+        'code': 500
+    }), 500
 
 if __name__ == '__main__':
     app.run(port=5003, debug=True)
