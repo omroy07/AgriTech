@@ -4,6 +4,7 @@ import joblib
 import numpy as np
 import re
 from functools import wraps
+from auth_utils import token_required, roles_required
 
 app = Flask(__name__)
 
@@ -62,6 +63,8 @@ def index():
     return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
+@token_required
+@roles_required('farmer', 'admin')
 @validate_required_fields(['crop', 'year', 'season', 'state', 'area', 'production', 'rainfall'])
 def predict():
     try:

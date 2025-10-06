@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, send_file, jsonify
+from auth_utils import token_required, roles_required
 import joblib
 import numpy as np
 import re
@@ -51,6 +52,8 @@ def home():
     return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
+@token_required
+@roles_required('farmer', 'admin')
 @validate_required_fields(['N', 'P', 'K', 'temperature', 'humidity', 'ph', 'rainfall'])
 def predict():
     try:
@@ -88,6 +91,8 @@ def predict():
 
 # PDF download route
 @app.route('/download_report', methods=['POST'])
+@token_required
+@roles_required('farmer', 'admin')
 @validate_required_fields(['crop', 'N', 'P', 'K', 'temperature', 'humidity', 'ph', 'rainfall'])
 def download_report():
     try:
