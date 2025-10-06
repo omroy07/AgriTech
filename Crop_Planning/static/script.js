@@ -57,16 +57,15 @@ document.addEventListener("DOMContentLoaded", () => {
       // Check for valid response structure
       if (result && result.crop && result.guide) {
         displayResultAndGuide(result.crop, result.guide);
+        showFeedback('Crop guide generated successfully!', 'success');
       } else {
-        displayError(
-          "Failed to get a valid response from the AI. Please try again."
-        );
+        showFeedback('Failed to get a valid response from the AI. Please try again.', 'error');
+        displayError('Failed to get a valid response from the AI. Please try again.');
       }
     } catch (error) {
       console.error("Error calling Gemini API:", error);
-      displayError(
-        "Could not connect to the AI service. Please check your network connection."
-      );
+      showFeedback('Could not connect to the AI service. Please check your network connection.', 'error');
+      displayError('Could not connect to the AI service. Please check your network connection.');
     }
   });
 
@@ -159,6 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
     resultContainer.classList.remove("hidden");
     resultText.textContent = message;
     guideContainer.classList.add("hidden");
+    showFeedback(message, 'error');
   }
 
   /**
