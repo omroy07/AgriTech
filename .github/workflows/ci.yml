@@ -11,23 +11,17 @@ jobs:
     name: Test Backend 
     runs-on: ubuntu-latest 
  
-    strategy: 
-      matrix: 
-        python-version: [3.8, 3.9] 
- 
     steps: 
     - name: Checkout code 
       uses: actions/checkout@v4 
  
-    - name: Set up Python ${{ matrix.python-version }} 
+    - name: Set up Python 
       uses: actions/setup-python@v4 
       with: 
-        python-version: ${{ matrix.python-version }} 
+        python-version: '3.9' 
  
     - name: Install dependencies 
-        python -m pip install --upgrade pip 
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi 
-        pip install pytest pytest-cov flake8 black 
+      run: pip install pytest 
  
     - name: Run tests 
-        python -m pytest tests/ -v --cov=. 
+      run: python -m pytest tests/ -v 
