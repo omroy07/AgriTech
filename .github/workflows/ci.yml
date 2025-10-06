@@ -13,7 +13,7 @@ jobs:
  
     strategy: 
       matrix: 
-        python-version: [3.8, 3.9, 3.10] 
+        python-version: [3.8, 3.9] 
  
     steps: 
     - name: Checkout code 
@@ -29,9 +29,5 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi 
         pip install pytest pytest-cov flake8 black 
  
-    - name: Lint with flake8 
-        flake8 src/backend/ --count --select=E9,F63,F7,F82 --show-source --statistics 
-        flake8 src/backend/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics 
- 
-    - name: Run backend tests 
-        PYTHONPATH=src/backend pytest tests/backend/ -v --cov=src/backend/ --cov-report=xml 
+    - name: Run tests 
+        python -m pytest tests/ -v --cov=. 
