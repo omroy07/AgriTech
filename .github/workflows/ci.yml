@@ -1,0 +1,37 @@
+name: CI 
+ 
+on: 
+  push: 
+    branches: [ main, develop ] 
+  pull_request: 
+    branches: [ main, develop ] 
+ 
+jobs: 
+  test-backend: 
+    name: Test Backend 
+    runs-on: ubuntu-latest 
+ 
+    strategy: 
+      matrix: 
+        python-version: [3.8, 3.9, 3.10] 
+ 
+    steps: 
+    - name: Checkout code 
+      uses: actions/checkout@v4 
+ 
+    - name: Set up Python ${{ matrix.python-version }} 
+      uses: actions/setup-python@v4 
+      with: 
+        python-version: ${{ matrix.python-version }} 
+ 
+    - name: Install dependencies 
+        python -m pip install --upgrade pip 
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi 
+        pip install pytest pytest-cov flake8 black 
+ 
+    - name: Lint with flake8 
+        flake8 src/backend/ --count --select=E9,F63,F7,F82 --show-source --statistics 
+        flake8 src/backend/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics 
+ 
+    - name: Run backend tests 
+        PYTHONPATH=src/backend pytest tests/backend/ -v --cov=src/backend/ --cov-report=xml 
