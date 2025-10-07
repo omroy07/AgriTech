@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://generativelanguage.googleapis.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://generativelanguage.googleapis.com;"
+    />
+    <title>AgriTech Assistant - Smart Farming Solutions</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="stylesheet" href="chat.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <style>
+      /* Added styles for light green color on specified text */
+
+      .chat-header h2 {
+        color: var(--light-green); /* Light green */
+      }
+
+      .logo h1 {
+        color: var(--light-green); /* Light green for AgriBot */
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <div class="logo">
+          <i class="fas fa-seedling"></i>
+          <h1>AgriBot</h1>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <button class="theme-toggle" aria-label="Toggle dark/light mode">
+            <i class="fas fa-sun sun-icon"></i>
+            <i class="fas fa-moon moon-icon"></i>
+            <span class="theme-text">Light</span>
+          </button>
+
+          <a href="index.html" class="nav-back">
+            <i class="fas fa-arrow-left"></i> Back to Home
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div id="chat-container">
+        <div class="chat-header">
+          <i class="fas fa-robot"></i>
+          <h2>Ask me anything about agriculture, crops, or farming techniques</h2>
+        </div>
+
+        <div id="chat-window">
+          <div class="welcome-message">
+            <h3><i class="fas fa-leaf"></i> Welcome to AgriTech Assistant!</h3>
+            <p>
+              I'm powered by Google Gemini AI to help with all your farming
+              questions.
+            </p>
+
+            <div class="suggestions">
+              <div class="suggestion">Best crops for this season?</div>
+              <div class="suggestion">Organic pest control methods</div>
+              <div class="suggestion">Water conservation techniques</div>
+              <div class="suggestion">Soil health improvement</div>
+            </div>
+          </div>
+        </div>
+
+        <form id="chat-form">
+          <div class="input-container">
+            <input
+              type="text"
+              id="chat-input"
+              placeholder="Ask about crops, weather, fertilizers..."
+              aria-label="Chat input"
+              autofocus
+              required
+            />
+          </div>
+          <button type="submit" id="send-button">
+            <i class="fas fa-paper-plane"></i> Send
+          </button>
+        </form>
+      </div>
+    </main>
+    <script src="json-chatbot.js"></script>
+    <script src="chat.js"></script>
+    <script src="theme.js"></script>
+    <style>
+      .site-footer {
+        background: linear-gradient(135deg, #2e7d32, #66bb6a);
+        color: #fff;
+        margin-top: auto;
+        padding: 2rem 1.25rem;
+      }
+      .site-footer .footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+        align-items: flex-start;
+      }
+      .footer-brand {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .footer-logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        object-fit: cover;
+        background: #fff;
+        padding: 4px;
+      }
+      .site-footer h3,
+      .site-footer h4 {
+        margin: 0 0 0.5rem 0;
+      }
+      .site-footer p {
+        margin: 0;
+        opacity: 0.9;
+      }
+      .site-footer ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .site-footer a {
+        color: #fff;
+        text-decoration: none;
+        opacity: 0.9;
+        transition: opacity 0.2s;
+      }
+      .site-footer a:hover {
+        opacity: 1;
+        text-decoration: underline;
+      }
+      .footer-bottom {
+        max-width: 1200px;
+        margin: 1rem auto 0;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.25);
+        text-align: center;
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+      .social-media {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.5rem;
+      }
+      .social-media a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        font-size: 1.2rem;
+      }
+      .social-media a:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+    </style>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <img src="images/logo.png" alt="AgriTech logo" class="footer-logo" />
+          <h3>AgriTech</h3>
+          <p>Empowering India's Farming Future</p>
+          <div class="social-media">
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Follow us on Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a
+              href="https://github.com/omroy07"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View our GitHub repositories"
+              ><i class="fab fa-github"></i
+            ></a>
+            <a
+              href="https://www.linkedin.com/in/om-roy-3b809628a/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Connect with us on LinkedIn"
+              ><i class="fab fa-linkedin"></i
+            ></a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="main.html">Dashboard</a></li>
+            <li><a href="feed-back.html">Feedback</a></li>
+            <li><a href="chat.html">AI Assistant</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Tools</h4>
+          <ul>
+            <li>
+              <a href="Crop Recommendation/templates/index.html"
+                >Crop Recommendation</a
+              >
+            </li>
+            <li>
+              <a href="Crop Yield Prediction/crop_yield_app/templates/index.html"
+                >Yield Prediction</a
+              >
+            </li>
+            <li>
+              <a href="Disease prediction/template/index.html"
+                >Disease Detector</a
+              >
+            </li>
+            <li>
+              <a href="Crop_Planning/templates/cropplan.html">Crop Planner</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div>
+    </footer>
+  </body>
+</html>
+

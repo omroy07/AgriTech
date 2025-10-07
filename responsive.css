@@ -1,0 +1,64 @@
+/* Tablet Styles */ 
+@media (min-width: 768px) { 
+  body { 
+    font-size: 16px; 
+  } 
+  .container { 
+    max-width: 720px; 
+    padding: 0 20px; 
+  } 
+  .grid { 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px; 
+  } 
+  .btn { 
+    width: auto; 
+    padding: 12px 30px; 
+    min-height: auto; 
+  } 
+  .mobile-nav { 
+    display: none; 
+  } 
+  .desktop-only { 
+    display: block; 
+  } 
+  .mobile-only { 
+    display: none; 
+  } 
+} 
+/* Desktop Styles */ 
+@media (min-width: 1024px) { 
+  .container { 
+    max-width: 1200px; 
+  } 
+  .grid { 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 25px; 
+  } 
+  body { 
+    font-size: 16px; 
+  } 
+} 
+/* Large Desktop */ 
+@media (min-width: 1440px) { 
+  .container { 
+    max-width: 1400px; 
+  } 
+  .grid { 
+    grid-template-columns: repeat(4, 1fr); 
+  } 
+} 
+/* Mobile Landscape */ 
+@media (max-height: 500px) AND (orientation: landscape) { 
+  .mobile-nav { 
+    position: relative; 
+    box-shadow: none; 
+    border-top: 1px solid #ddd; 
+  } 
+} 
+/* Prevent zoom on input focus for iOS */ 
+@media (max-width: 768px) { 
+  input, select, textarea { 
+    font-size: 16px; 
+  } 
+} 

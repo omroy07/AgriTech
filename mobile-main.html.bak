@@ -1,0 +1,124 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <title>AgriTech - Farmer's Dashboard</title> 
+    <link rel="stylesheet" href="mobile-base.css"> 
+    <link rel="stylesheet" href="responsive.css"> 
+    <link rel="stylesheet" href="mobile-main.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> 
+</head> 
+<body> 
+    <!-- Hero Section --> 
+    <section class="hero-section"> 
+        <div class="container"> 
+            <h1 class="hero-title">AgriTech Farmer</h1> 
+            <p class="hero-subtitle">Smart farming solutions at your fingertips</p> 
+        </div> 
+    </section> 
+ 
+    <!-- Quick Actions --> 
+    <section class="quick-actions"> 
+        <div class="container"> 
+            <h2 class="action-title">Quick Actions</h2> 
+            <div class="grid"> 
+                <a href="crop.html" class="btn"> 
+                    <i class="fas fa-seedling"></i> Crop Recommendation 
+                </a> 
+                <a href="disease.html" class="btn btn-secondary"> 
+                    <i class="fas fa-bug"></i> Disease Detection 
+                </a> 
+                <a href="weather.html" class="btn btn-outline"> 
+                    <i class="fas fa-cloud-sun"></i> Weather 
+                </a> 
+                <a href="marketplace.html" class="btn btn-outline"> 
+                    <i class="fas fa-shopping-cart"></i> Marketplace 
+                </a> 
+            </div> 
+        </div> 
+    </section> 
+ 
+    <!-- Features Grid --> 
+    <section class="container"> 
+        <div class="feature-grid"> 
+            <a href="crop.html" class="feature-card"> 
+                <div class="feature-icon"> 
+                    <i class="fas fa-seedling"></i> 
+                </div> 
+                <h3 class="feature-title">Crop Recommend</h3> 
+                <p class="feature-desc">Get best crops for your soil</p> 
+            </a> 
+            <a href="disease.html" class="feature-card"> 
+                <div class="feature-icon"> 
+                    <i class="fas fa-bug"></i> 
+                </div> 
+                <h3 class="feature-title">Disease Detect</h3> 
+                <p class="feature-desc">Identify plant diseases</p> 
+            </a> 
+            <a href="yield-prediction.html" class="feature-card"> 
+                <div class="feature-icon"> 
+                    <i class="fas fa-chart-line"></i> 
+                </div> 
+                <h3 class="feature-title">Yield Predict</h3> 
+                <p class="feature-desc">Estimate your harvest</p> 
+            </a> 
+            <a href="plantation.html" class="feature-card"> 
+                <div class="feature-icon"> 
+                    <i class="fas fa-calendar-alt"></i> 
+                </div> 
+                <h3 class="feature-title">Crop Calendar</h3> 
+                <p class="feature-desc">Plan your farming</p> 
+            </a> 
+            <a href="chat.html" class="feature-card"> 
+                <div class="feature-icon"> 
+                    <i class="fas fa-comments"></i> 
+                </div> 
+                <h3 class="feature-title">Community</h3> 
+                <p class="feature-desc">Connect with farmers</p> 
+            </a> 
+            <a href="marketplace.html" class="feature-card"> 
+                <div class="feature-icon"> 
+                    <i class="fas fa-store"></i> 
+                </div> 
+                <h3 class="feature-title">Marketplace</h3> 
+                <p class="feature-desc">Buy & sell produce</p> 
+            </a> 
+        </div> 
+    </section> 
+ 
+    <!-- Mobile Bottom Navigation --> 
+    <div class="mobile-nav-placeholder"></div> 
+    <nav class="mobile-nav"> 
+        <a href="main.html" class="nav-item active"> 
+            <i class="fas fa-home nav-icon"></i> 
+            <span>Home</span> 
+        </a> 
+        <a href="crop.html" class="nav-item"> 
+            <i class="fas fa-seedling nav-icon"></i> 
+            <span>Crops</span> 
+        </a> 
+        <a href="disease.html" class="nav-item"> 
+            <i class="fas fa-bug nav-icon"></i> 
+            <span>Disease</span> 
+        </a> 
+        <a href="chat.html" class="nav-item"> 
+            <i class="fas fa-comments nav-icon"></i> 
+            <span>Community</span> 
+        </a> 
+            <i class="fas fa-user nav-icon"></i> 
+            <span>Profile</span> 
+        </a> 
+    </nav> 
+ 
+    <script> 
+        document.querySelectorAll('.nav-item').forEach(item =
+            item.addEventListener('click', function() { 
+                document.querySelectorAll('.nav-item').forEach(i =
+                this.classList.add('active'); 
+            }); 
+        }); 
+    </script> 
+</body> 
+</html> 

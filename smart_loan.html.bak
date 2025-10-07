@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" href="images/logo.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Loan Eligibility Guide</title>
+    <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
+    <link rel="stylesheet" href="../static/style.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-secondary, #f6f9f6);
+            color: var(--text-primary, #333);
+            margin: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 20px;
+            background: var(--bg-primary, white);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px var(--shadow-medium, rgba(0, 0, 0, 0.1));
+            position: relative;
+            border: 1px solid var(--border-color, transparent);
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--primary-green, #2e7d32);
+            margin-bottom: 20px;
+        }
+
+        .guide-box {
+            background: var(--light-green, #e8f5e9);
+            border-left: 5px solid var(--primary-green, #2e7d32);
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+            color: var(--text-primary, #333);
+        }
+
+        .guide-box h3 {
+            margin-top: 0;
+            color: var(--text-primary, #333);
+        }
+
+        .guide-box ol, .guide-box li {
+            color: var(--text-primary, #333);
+        }
+
+        form label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: var(--text-primary, #333);
+        }
+
+        form input,
+        form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color, #ccc);
+            background-color: var(--bg-primary, white);
+            color: var(--text-primary, #333);
+            box-sizing: border-box;
+        }
+
+        form input:focus,
+        form select:focus {
+            outline: none;
+            border-color: var(--primary-green, #2e7d32);
+            box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+        }
+
+        form button {
+            background-color: var(--primary-green, #388e3c);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: var(--green-hover, #2e7d32);
+        }
+
+        .loan-result-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--light-green, #f1f8e9);
+            border-left: 4px solid var(--accent-green, #81c784);
+            border-radius: 4px;
+            color: var(--text-primary, #333);
+            display: none;
+        }
+
+        /* Dark mode specific styles */
+        [data-theme="dark"] .guide-box {
+            background: #1a2e1a;
+            color: #e0ffe0;
+        }
+
+        [data-theme="dark"] .guide-box h3,
+        [data-theme="dark"] .guide-box ol,
+        [data-theme="dark"] .guide-box li {
+            color: #b6eab6;
+        }
+
+        [data-theme="dark"] .loan-result-box {
+            background-color: #1a2e1a;
+            color: #e0ffe0;
+        }
+
+        [data-theme="dark"] form input::placeholder,
+        [data-theme="dark"] form select::placeholder {
+            color: var(--text-muted, #94a3b8);
+        }
+
+        /* Note text styling for better visibility */
+        .loan-result-box p {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .loan-result-box strong {
+            font-weight: 600;
+        }
+
+        [data-theme="dark"] .loan-result-box p,
+        [data-theme="dark"] .loan-result-box strong {
+            color: #e0ffe0;
+        }
+        /* Floating Chatbot Button */
+#chatbotBtn {
+  position: fixed;
+  bottom: 100px; /* 20px above scroll-to-top button */
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: #4caf50; /* greenish theme */
+  color: #fff;
+  font-size: 28px;
+  text-align: center;
+  line-height: 60px;
+  border-radius: 50%;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  z-index: 1100; /* above scroll-to-top button */
+}
+
+#chatbotBtn:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+  background-color: #43a047; /* slightly darker green on hover */
+}
+
+/* Mobile responsiveness: hide on very small screens */
+@media (max-width: 400px) {
+  #chatbotBtn {
+    display: none;
+  }
+}
+    </style>
+</head>
+<!-- Floating Chatbot Button -->
+<a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
+  <i class="fas fa-robot"></i>
+</a>
+<body>
+    <div class="container">
+        <div style="position: absolute; top: 20px; right: 20px; z-index: 1000;">
+            <button class="theme-toggle" aria-label="Toggle dark/light mode" style="background: rgba(46, 125, 50, 0.1); border: 1px solid rgba(46, 125, 50, 0.3); color: #2e7d32;">
+                <i class="fas fa-sun sun-icon"></i>
+                <i class="fas fa-moon moon-icon"></i>
+                <span class="theme-text">Light</span>
+            </button>
+        </div>
+        
+        <h2>Smart Loan Eligibility Guide</h2>
+
+        <div class="guide-box" id="guideText">
+            <!-- Content will be injected based on language -->
+        </div>
+
+        <form id="loanForm">
+            <label for="loanType">Loan Type</label>
+            <select id="loanType" name="loanType" required>
+                <option value="">Select a loan type</option>
+                <option value="crop">Crop Cultivation</option>
+                <option value="equipment">Farm Equipment</option>
+                <option value="water">Water Resources</option>
+                <option value="land">Land Purchase</option>
+            </select>
+
+            <label for="loanAmount">Loan Amount (₹)</label>
+            <input type="number" id="loanAmount" name="loanAmount" required>
+
+            <label for="income">Annual Income (₹)</label>
+            <input type="number" id="income" name="income" required>
+
+            <label for="experience">Farming Experience (Years)</label>
+            <input type="number" id="experience" name="experience" required>
+
+            <button type="submit">Check Eligibility</button>
+        </form>
+
+        <div id="loanResult" class="loan-result-box"></div>
+    </div>
+
+    <script>
+        const lang = new URLSearchParams(window.location.search).get('lang') || 'en';
+
+        const guideTexts = {
+            en: `
+                <h3>📋 How to Apply (Step-by-Step)</h3>
+                <ol>
+                    <li>Select your loan type from the form below.</li>
+                    <li>Enter your required loan amount, annual income, and years of farming experience.</li>
+                    <li>Click "Check Eligibility" to get advice on your chances and required improvements.</li>
+                    <li>Review the suggested government schemes and bank loan options.</li>
+                    <li>Contact your nearest bank branch to start the application.</li>
+                </ol>
+            `,
+            hi: `
+                <h3>📋 आवेदन कैसे करें (चरण-दर-चरण)</h3>
+                <ol>
+                    <li>नीचे दिए गए फॉर्म में अपना ऋण प्रकार चुनें।</li>
+                    <li>ऋण राशि, वार्षिक आय और खेती का अनुभव भरें।</li>
+                    <li>"पात्रता जांचें" पर क्लिक करें और अपने अवसर एवं सुधार के सुझाव देखें।</li>
+                    <li>सरकारी योजनाओं और बैंक ऋण विकल्पों की समीक्षा करें।</li>
+                    <li>आवेदन करने के लिए अपने नजदीकी बैंक शाखा से संपर्क करें।</li>
+                </ol>
+            `
+        };
+
+        document.getElementById('guideText').innerHTML = guideTexts[lang];
+
+        // Loan eligibility form handler
+        document.getElementById('loanForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const loanType = document.getElementById('loanType').value;
+            const loanAmount = parseInt(document.getElementById('loanAmount').value);
+            const income = parseInt(document.getElementById('income').value);
+            const experience = parseInt(document.getElementById('experience').value);
+            
+            const resultDiv = document.getElementById('loanResult');
+            
+            // Simple eligibility calculation
+            let eligible = false;
+            let message = '';
+            let suggestions = [];
+            
+            // Basic eligibility criteria
+            const maxLoanRatio = income * 5; // Maximum loan should be 5x annual income
+            const minExperience = 2; // Minimum 2 years farming experience
+            
+            if (experience >= minExperience && loanAmount <= maxLoanRatio) {
+                eligible = true;
+                message = lang === 'hi' ? 
+                    `🎉 बधाई! आप ${loanType} ऋण के लिए पात्र हैं।` :
+                    `🎉 Congratulations! You are eligible for the ${loanType} loan.`;
+                
+                suggestions = lang === 'hi' ? [
+                    'अपने नजदीकी बैंक शाखा से संपर्क करें',
+                    'आवश्यक दस्तावेज तैयार करें (आधार, पैन, भूमि के कागजात)',
+                    'PM-KISAN योजना के लिए भी आवेदन करें'
+                ] : [
+                    'Contact your nearest bank branch',
+                    'Prepare required documents (Aadhar, PAN, land documents)',
+                    'Also apply for PM-KISAN scheme'
+                ];
+            } else {
+                message = lang === 'hi' ? 
+                    '❌ वर्तमान में आप इस ऋण के लिए पात्र नहीं हैं।' :
+                    '❌ Currently, you are not eligible for this loan.';
+                
+                if (experience < minExperience) {
+                    suggestions.push(lang === 'hi' ? 
+                        `कम से कम ${minExperience} साल का खेती का अनुभव चाहिए` :
+                        `Minimum ${minExperience} years farming experience required`);
+                }
+                
+                if (loanAmount > maxLoanRatio) {
+                    suggestions.push(lang === 'hi' ? 
+                        `ऋण राशि आपकी आय से अधिक है। सुझावित राशि: ₹${maxLoanRatio.toLocaleString()}` :
+                        `Loan amount exceeds your income capacity. Suggested amount: ₹${maxLoanRatio.toLocaleString()}`);
+                }
+                
+                suggestions.push(lang === 'hi' ? 
+                    'वैकल्पिक सरकारी योजनाओं की जांच करें' :
+                    'Check alternative government schemes');
+            }
+            
+            // Display result
+            resultDiv.innerHTML = `
+                <div style="margin-bottom: 15px;">
+                    <h4>${message}</h4>
+                </div>
+                <div>
+                    <h5>${lang === 'hi' ? '💡 सुझाव:' : '💡 Suggestions:'}</h5>
+                    <ul>
+                        ${suggestions.map(suggestion => `<li>${suggestion}</li>`).join('')}
+                    </ul>
+                </div>
+                <div style="margin-top: 15px; padding: 12px; background: ${eligible ? 'var(--light-green, #e8f5e9)' : '#fef3c7'}; border-radius: 6px; border-left: 3px solid ${eligible ? 'var(--primary-green, #2e7d32)' : '#f59e0b'};">
+                    <p style="margin: 0; font-size: 14px; color: var(--text-primary, #333); line-height: 1.4;">
+                        <strong style="color: var(--text-primary, #333);">${lang === 'hi' ? 'नोट:' : 'Note:'}</strong> 
+                        ${lang === 'hi' ? 
+                            'यह केवल एक प्रारंभिक मूल्यांकन है। वास्तविक पात्रता बैंक की नीतियों पर निर्भर करती है।' :
+                            'This is only a preliminary assessment. Actual eligibility depends on bank policies.'}
+                    </p>
+                </div>
+            `;
+            
+            resultDiv.style.display = 'block';
+        });
+    </script>
+    <!-- Theme Toggle Script (Safe, Non-breaking) -->
+    <script>
+      function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        const themeText = document.querySelector('.theme-text');
+        if (themeText) themeText.textContent = theme === 'dark' ? 'Dark' : 'Light';
+      }
+
+      function updateThemeIcons(theme) {
+        const sun = document.querySelector('.sun-icon');
+        const moon = document.querySelector('.moon-icon');
+        if (sun && moon) {
+          if (theme === 'dark') {
+            sun.style.opacity = 0;
+            moon.style.opacity = 1;
+          } else {
+            sun.style.opacity = 1;
+            moon.style.opacity = 0;
+          }
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        // Initial theme load
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+        setTheme(theme);
+        updateThemeIcons(theme);
+
+        // Toggle logic
+        const toggleBtn = document.querySelector('.theme-toggle');
+        if (toggleBtn) {
+          toggleBtn.addEventListener('click', function () {
+            const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+            const next = current === 'dark' ? 'light' : 'dark';
+            setTheme(next);
+            updateThemeIcons(next);
+          });
+        }
+      });
+    </script>
+    <script src="../static/script.js"></script>
+      <style>
+    .site-footer {background: linear-gradient(135deg,#2e7d32,#66bb6a); color:#fff; margin-top:auto; padding: 2rem 1.25rem;}
+    .site-footer .footer-inner {max-width:1200px;margin:0 auto; display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1.5rem; align-items:flex-start;}
+    .footer-brand {display:flex;flex-direction:column;gap:.5rem}
+    .footer-logo {width:48px;height:48px;border-radius:8px;object-fit:cover;background:#fff;padding:4px}
+    .site-footer h3,.site-footer h4{margin:0 0 .5rem 0}
+    .site-footer p {margin:0;opacity:.9}
+    .site-footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.4rem}
+    .site-footer a{color:#fff;text-decoration:none;opacity:.9;transition:opacity .2s}
+    .site-footer a:hover{opacity:1;text-decoration:underline}
+    .footer-bottom{max-width:1200px;margin:1rem auto 0; padding-top:1rem; border-top:1px solid rgba(255,255,255,.25); text-align:center; font-size:.9rem; opacity:.9}
+    .social-media {display:flex;gap:1rem;margin-top:.5rem}
+    .social-media a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:50%;transition:all .3s ease;font-size:1.2rem}
+    .social-media a:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+  </style>
+    <footer class="site-footer" role="contentinfo">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
+          <h3>AgriTech</h3>
+          <p>Empowering India's Farming Future</p>
+          <div class="social-media">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
+              <i class="fab fa-instagram" aria-hidden="true"></i>
+            </a>
+            <a href="https://github.com/omroy07" target="_blank" rel="noopener noreferrer" aria-label="View our GitHub repositories">
+              <i class="fab fa-github" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank" rel="noopener noreferrer" aria-label="Connect with us on LinkedIn">
+              <i class="fab fa-linkedin" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="main.html">Dashboard</a></li>
+            <li><a href="feed-back.html">Feedback</a></li>
+            <li><a href="chat.html">AI Assistant</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="Crop Recommendation/templates/index.html">Crop Recommendation</a></li>
+            <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
+            <li><a href="Disease prediction/template/index.html">Disease Detector</a></li>
+            <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">© <span id="year"></span> AgriTech • Made for farmers</div>
+    </footer>
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+
+</body>
+
+</html>
