@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>AgriTech – Organic Farming</title>
+    <link rel="stylesheet" href="organic.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
+    <link rel="stylesheet" href="global.css" />
+    <link rel="stylesheet" href="theme.css" />
+  </head>
+<!-- Floating Chatbot Button -->
+<a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
+  <i class="fas fa-robot"></i>
+</a>
+  <body>
+    <div id="particles-js"></div>
+
+    <div class="scroll-indicator">
+      <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <header>
+      <div class="header-container">
+        <div class="brand">
+          <img src="images/logo.png" alt="AgriTech logo" class="site-logo">
+          <h1>Welcome to AgriTech</h1>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <button class="theme-toggle" aria-label="Toggle dark/light mode">
+            <i class="fas fa-sun sun-icon"></i>
+            <i class="fas fa-moon moon-icon"></i>
+            <span class="theme-text">Light</span>
+          </button>
+          <a href="#" class="logout-button" onclick="showLogoutConfirmation()">Logout</a>
+        </div>
+      </div>
+    </header>
+
+    <nav class="nav">
+      <div class="nav-container">
+        <ul>
+          <li class="dropdown">
+            <a href="#"><i class="fas fa-bars"></i> Services</a>
+            <div class="dropdown-content">
+              <div class="dropdown-category">
+                <h4>🌱 Farming Tools</h4>
+                <a href="crop_yield.html">📊 Yield Prediction</a>
+                <a href="disease.html">🔬 Disease Prediction</a>
+                <a href="plantation.html">🌱 Plantation</a>
+                <a href="cropplan.html">📅 Crop Planning</a>
+              </div>
+              <div class="dropdown-category">
+                <h4>🌍 Ecosystem</h4>
+                <a href="farmer.html">👨‍🌾 Farmer Connection</a>
+                <a href="shopkeeper.html">🏪 Shopkeeper Listings</a>
+                <a href="chat.html">🤖 ChatBot</a>
+                <a href="labour.html">⚠️ Labour Alerts</a>
+                <a href="organic.html">🌿 Organic Farming</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="main-wrapper">
+      <div class="page-hero">
+        <h1>🌿 Organic Farming Excellence</h1>
+        <p>
+          Discover sustainable agricultural practices that enhance soil health,
+          preserve ecosystems, and produce premium quality crops through
+          time-tested organic methods.
+        </p>
+      </div>
+
+      <main>
+        <section id="principles" class="animate-in">
+          <h2>🌿 Principles of Organic Farming</h2>
+          <ul>
+            <li>
+              <strong>Ecology</strong>: Work harmoniously with living systems
+              and natural nutrient cycles
+            </li>
+            <li>
+              <strong>Health</strong>: Sustain soil vitality, ecosystem balance,
+              climate stability, and human well‑being
+            </li>
+            <li>
+              <strong>Fairness</strong>: Foster equitable relationships between
+              people and the environment
+            </li>
+            <li>
+              <strong>Care</strong>: Practice responsible farming to protect
+              future generations
+            </li>
+          </ul>
+        </section>
+
+        <section id="step-by-step" class="animate-in">
+          <h2>✅ Complete Organic Farming Process</h2>
+
+          <div class="crop-grid">
+            <div class="crop-item">
+              <h3>1. 🔍 Site Assessment & Soil Preparation</h3>
+              <ul>
+                <li>
+                  Analyze plot characteristics: drainage patterns, soil depth,
+                  erosion risk factors
+                </li>
+                <li>
+                  Comprehensive soil testing for pH levels, essential nutrients,
+                  organic matter content
+                </li>
+                <li>
+                  Enhance fertility using green manure, quality compost, and
+                  farmyard manure
+                </li>
+                <li>
+                  Minimize tillage operations to preserve soil structure and
+                  beneficial organisms
+                </li>
+              </ul>
+            </div>
+
+            <div class="crop-item">
+              <h3>2. 🔄 Strategic Crop Planning & Rotation</h3>
+              <ul>
+                <li>
+                  Select diverse crop varieties based on local microclimate and
+                  soil characteristics
+                </li>
+                <li>
+                  Design comprehensive rotation cycles (3–8 years) to break pest
+                  cycles
+                </li>
+                <li>
+                  Integrate nitrogen-fixing legumes to naturally replenish soil
+                  nutrients
+                </li>
+                <li>
+                  Align crop selection with market demands and premium
+                  opportunities
+                </li>
+              </ul>
+            </div>
+
+            <div class="crop-item">
+              <h3>3. 💧 Soil & Nutrient Management</h3>
+              <ul>
+                <li>
+                  Deploy cover crops like clover and mustard for erosion control
+                </li>
+                <li>
+                  Enrich soil biology with premium vermicompost and
+                  biofertilizers
+                </li>
+                <li>
+                  Implement conservation agriculture for sustainable soil health
+                </li>
+                <li>
+                  Build efficient rainwater harvesting systems and structures
+                </li>
+              </ul>
+            </div>
+
+            <div class="crop-item">
+              <h3>4. 🛡️ Integrated Pest Management (IPM)</h3>
+              <ul>
+                <li>
+                  Monitor pest populations systematically and establish action
+                  thresholds
+                </li>
+                <li>
+                  Apply cultural controls: crop hygiene, strategic trap crops,
+                  organic mulching
+                </li>
+                <li>
+                  Release beneficial insects and implement biological control
+                  methods
+                </li>
+                <li>
+                  Use botanical sprays from neem, garlic, and other natural
+                  sources
+                </li>
+              </ul>
+            </div>
+
+            <div class="crop-item">
+              <h3>5. 💧 Efficient Water Management</h3>
+              <ul>
+                <li>
+                  Construct rainwater harvesting bunds, trenches, and retention
+                  structures
+                </li>
+                <li>
+                  Install precision drip irrigation systems for optimal water
+                  efficiency
+                </li>
+                <li>
+                  Maintain soil moisture using organic mulches and ground covers
+                </li>
+                <li>
+                  Prevent waterlogging issues and manage soil salinity
+                  effectively
+                </li>
+              </ul>
+            </div>
+
+            <div class="crop-item">
+              <h3>6. 📋 Documentation & Certification</h3>
+              <ul>
+                <li>
+                  Develop comprehensive Organic System Plan (OSP) with detailed
+                  methods
+                </li>
+                <li>
+                  Maintain meticulous records of inputs, operations, harvests,
+                  and transitions
+                </li>
+                <li>
+                  Explore affordable Participatory Guarantee Systems (PGS)
+                  certification
+                </li>
+                <li>
+                  Establish buffer zones and implement contamination prevention
+                  measures
+                </li>
+              </ul>
+            </div>
+
+            <div class="crop-item">
+              <h3>7. 📈 Marketing & Value Addition</h3>
+              <ul>
+                <li>
+                  Target premium market segments: cooperatives, organic stores,
+                  export markets
+                </li>
+                <li>
+                  Differentiate products through transparency, farm visits, and
+                  authentic storytelling
+                </li>
+                <li>
+                  Explore value-added processing like cold-pressed oils to
+                  increase profit margins
+                </li>
+                <li>
+                  Build direct consumer relationships and establish brand
+                  recognition
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="crop-details" class="animate-in">
+          <h2>🌾 Crop-Specific Organic Best Practices</h2>
+
+          <div class="crop-grid">
+            <div class="crop-item">
+              <h3>🍚 Rice (SRI Method)</h3>
+              <p>
+                Transplant young seedlings at 8–12 days with optimized wide
+                spacing. Use intermittent wetting techniques to dramatically
+                reduce water consumption while enhancing robust root development
+                and grain quality.
+              </p>
+            </div>
+
+            <div class="crop-item">
+              <h3>🌾 Millets</h3>
+              <p>
+                Cultivate these hardy, drought-resistant, low-input crops.
+                Strategically intercrop with nitrogen-fixing legumes to
+                naturally improve soil fertility and create sustainable farming
+                ecosystems.
+              </p>
+            </div>
+
+            <div class="crop-item">
+              <h3>🫘 Guar (Cluster Bean)</h3>
+              <p>
+                Grow this exceptional heat-tolerant crop using farmyard manure
+                (25 tonnes per hectare) combined with beneficial biofertilizers
+                at sowing. Requires minimal post-establishment care.
+              </p>
+            </div>
+
+            <div class="crop-item">
+              <h3>🧵 Organic Cotton</h3>
+              <p>
+                Integrate natural pest-repellent companion plants and apply
+                targeted biofertilizers. Success story from Chhindwara, Madhya
+                Pradesh demonstrates restored soil health and improved
+                profitability.
+              </p>
+            </div>
+
+            <div class="crop-item">
+              <h3>🌱 Multi-Crop Systems</h3>
+              <p>
+                Adopt traditional intercropping systems like 'Barahnaja'
+                (featuring 12+ complementary species) to dramatically boost
+                biodiversity, enhance ecosystem resilience, and optimize land
+                use efficiency.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="case-study" class="animate-in">
+          <h2>📈 Success Story: Organic Wheat Transformation in Punjab</h2>
+          <p>
+            <strong>Sucha Singh Pabla's remarkable journey:</strong>
+            Successfully transitioned 27 acres to certified organic wheat
+            production, achieving exceptional results that demonstrate the
+            commercial viability and environmental benefits of organic
+            agriculture.
+          </p>
+
+          <div
+            class="crop-grid"
+            style="
+              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+              margin-top: 2rem;
+            "
+          >
+            <div class="crop-item" style="border-left-color: #ff9800">
+              <h3>💰 Economic Impact</h3>
+              <p>
+                Premium market price of ₹3,500 per quintal with approximately
+                50% improved profit margins compared to conventional farming
+                methods.
+              </p>
+            </div>
+            <div class="crop-item" style="border-left-color: #4caf50">
+              <h3>🌱 Environmental Benefits</h3>
+              <p>
+                Significantly healthier soil microbiome, improved air quality,
+                elimination of stubble burning practices, and enhanced ecosystem
+                biodiversity.
+              </p>
+            </div>
+            <div class="crop-item" style="border-left-color: #2196f3">
+              <h3>📉 Cost Optimization</h3>
+              <p>
+                Substantial reduction in input costs through elimination of
+                synthetic fertilizers and pesticides, replaced with sustainable
+                organic alternatives.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="learning-media" class="animate-in">
+          <h2>🎥 & 🎮 Interactive Learning Resources</h2>
+          <div style="display: grid; gap: 2rem; margin-top: 1.5rem">
+            <div
+              style="
+                background: rgba(255, 255, 255, 0.6);
+                padding: 2rem;
+                border-radius: 15px;
+                border-left: 4px solid #2196f3;
+              "
+            >
+              <h3
+                style="
+                  background: none;
+                  border: none;
+                  padding: 0;
+                  margin-bottom: 1rem;
+                  color: #1976d2;
+                "
+              >
+                🎥 Educational Video Content
+              </h3>
+              <p>
+                <strong>"Organic Farming – Why & How"</strong> - Comprehensive
+                video series covering fundamental principles, practical
+                implementation strategies, and real-world success stories from
+                organic farming pioneers.
+              </p>
+            </div>
+            <div
+              style="
+                background: rgba(255, 255, 255, 0.6);
+                padding: 2rem;
+                border-radius: 15px;
+                border-left: 4px solid #ff9800;
+              "
+            >
+              <h3
+                style="
+                  background: none;
+                  border: none;
+                  padding: 0;
+                  margin-bottom: 1rem;
+                  color: #f57c00;
+                "
+              >
+                🎮 Interactive Simulation
+              </h3>
+              <p>
+                <strong>"Cornucopia"</strong> - Advanced interactive simulation
+                platform where you can explore complex soil-water-crop dynamics,
+                experiment with different organic practices, and observe their
+                long-term impacts on farm ecosystems.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+      <style>
+    .site-footer {background: linear-gradient(135deg,#2e7d32,#66bb6a); color:#fff; margin-top:auto; padding: 2rem 1.25rem;}
+    .site-footer .footer-inner {max-width:1200px;margin:0 auto; display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1.5rem; align-items:flex-start;}
+    .footer-brand {display:flex;flex-direction:column;gap:.5rem}
+    .footer-logo {width:48px;height:48px;border-radius:8px;object-fit:cover;background:#fff;padding:4px}
+    .site-footer h3,.site-footer h4{margin:0 0 .5rem 0}
+    .site-footer p {margin:0;opacity:.9}
+    .site-footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.4rem}
+    .site-footer a{color:#fff;text-decoration:none;opacity:.9;transition:opacity .2s}
+    .site-footer a:hover{opacity:1;text-decoration:underline}
+    .footer-bottom{max-width:1200px;margin:1rem auto 0; padding-top:1rem; border-top:1px solid rgba(255,255,255,.25); text-align:center; font-size:.9rem; opacity:.9}
+    .social-media {display:flex;gap:1rem;margin-top:.5rem}
+    .social-media a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:50%;transition:all .3s ease;font-size:1.2rem}
+    .social-media a:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+  </style>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+                      <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
+          <h3>AgriTech</h3>
+          <p>Empowering India's Farming Future</p>
+          <div class="social-media">
+            <a href="https://instagram.com" target="_blank" aria-label="Follow us on Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://github.com/omroy07" target="_blank" aria-label="View our GitHub repositories">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank" aria-label="Connect with us on LinkedIn">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </div>
+        </div>
+                  <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="main.html">Dashboard</a></li>
+              <li><a href="feed-back.html">Feedback</a></li>
+              <li><a href="chat.html">AI Assistant</a></li>
+            </ul>
+          </div>
+                  <div class="footer-links">
+            <h4>Tools</h4>
+            <ul>
+              <li><a href="Crop Recommendation/templates/index.html">Crop Recommendation</a></li>
+              <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
+              <li><a href="Disease prediction/template/index.html">Disease Detector</a></li>
+              <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
+            </ul>
+          </div>
+      </div>
+      <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div>
+    </footer>
+
+    <script src="organic.js"></script>
+    <script src="theme.js"></script>
+    <script>
+        function showLogoutConfirmation() {
+            Swal.fire({
+            title: 'Confirm Logout',
+            text: 'Are you sure you want to logout?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, logout',
+            cancelButtonText: 'No'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect to logout page or homepage
+                window.location.href = 'index.html';  
+            }
+            });
+        }
+    </script>
+  </body>
+</html>
