@@ -176,10 +176,6 @@ def sanitize_sql_input(value):
         r'(\b(and|or)\b\s+\d+\s*=\s*\d+)',
         r'(\b(and|or)\b\s+\'\w+\'\s*=\s*\'\w+\')',
         r'(\b(and|or)\b\s+\w+\s*=\s*\w+)',
-        r'(\b(union|select|insert|update|delete|drop|create|alter|exec|execute)\b)',
-        r'(\b(and|or)\b\s+\d+\s*=\s*\d+)',
-        r'(\b(and|or)\b\s+\'\w+\'\s*=\s*\'\w+\')',
-        r'(\b(and|or)\b\s+\w+\s*=\s*\w+)',
     ]
     
     cleaned = value
