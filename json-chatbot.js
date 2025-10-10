@@ -147,8 +147,12 @@ class JSONChatbot {
 
   /**
    * Get a random fallback response
+   * (Fixed: Handles empty or undefined fallbackResponses gracefully)
    */
   getRandomFallback() {
+    if (!Array.isArray(this.fallbackResponses) || this.fallbackResponses.length === 0) {
+      return "Sorry, I didn't understand that.";
+    }
     const randomIndex = Math.floor(Math.random() * this.fallbackResponses.length);
     return this.fallbackResponses[randomIndex];
   }
