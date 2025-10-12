@@ -326,6 +326,7 @@
       z-index: 100;
       padding: 1rem 2rem;
       transition: all 0.3s ease;
+      animation: slideDown 0.5s ease-out forwards;
     }
 
     .navbar-content {
@@ -334,6 +335,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      opacity: 0; /* Start hidden */
+      animation: fadeIn 0.5s ease-out 0.3s forwards; 
     }
 
     .brand .logo {
@@ -342,7 +345,12 @@
       font-weight: 600;
       color: var(--primary-green);
       text-decoration: none;
+      transition: transform 0.3s ease, color 0.3s ease;
     }
+    brand .logo:hover {
+   transform: scale(1.03);
+   color: var(--green-hover);
+   }
 
     .nav-buttons {
       display: flex;
@@ -360,27 +368,37 @@
       border: none;
       cursor: pointer;
     }
-
+.btn:active {
+  transition: all 0.1s ease; /* Make the press effect fast */
+  transform: translateY(0) scale(0.97); /* Presses down slightly */
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Flatter shadow */
+}
     .btn-primary {
       background: var(--primary-green);
       color: white;
+      box-shadow: 0 2px 8px rgba(56, 142, 60, 0);
+       animation: pulseGlow 2.5s infinite ease-in-out;
     }
 
     .btn-primary:hover {
-      background: var(--green-hover);
-      transform: translateY(-1px);
-    }
-
+    background: var(--green-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(56, 142, 60, 0.3);
+    animation: none;
+   }
     .btn-secondary {
       background: transparent;
       color: var(--text-primary);
       border: 1px solid var(--border-color);
+      transition: all 0.2s ease;
     }
 
     .btn-secondary:hover {
-      background: var(--bg-secondary);
+    background: var(--bg-secondary);
+    transform: translateY(-2px);     
+    border-color: var(--primary-green); 
+    color: var(--primary-green);
     }
-
     /* Responsive Search bar */
      .search-container {
         display: flex;
@@ -399,13 +417,7 @@
         overflow: hidden;
       }
 
-      .navbar-content.search-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+     
 
       .search-container::before {
         content: "";
@@ -514,6 +526,7 @@
 
     .theme-toggle:hover {
       background: var(--bg-tertiary);
+      color: var(--primary-green);
     }
 
     .theme-toggle i {
@@ -2448,4 +2461,32 @@
 .scroll-btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 20px var(--shadow-heavy);
+}
+/* --- New: Animation Definitions --- */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(56, 142, 60, 0.3);
+  }
+  50% {
+    box-shadow: 0 6px 25px rgba(56, 142, 60, 0.4);
+  }
 }
