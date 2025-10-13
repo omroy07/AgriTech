@@ -220,10 +220,10 @@
       const icon = themeToggle.querySelector('i');
 
       if (body.classList.contains('dark-mode')) {
-        icon.className = 'fas fa-moon';
+        icon.className = 'fas fa-sun';
         localStorage.setItem('theme', 'dark');
       } else {
-        icon.className = 'fas fa-sun';
+        icon.className = 'fas fa-moon';
         localStorage.setItem('theme', 'light');
       }
     });
@@ -232,7 +232,7 @@
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
       body.classList.add('dark-mode');
-      themeToggle.querySelector('i').className = 'fas fa-moon';
+      themeToggle.querySelector('i').className = 'fas fa-sun';
     }
 
     // Form submission
