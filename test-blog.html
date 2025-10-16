@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriTech Blog</title>
+    <link rel="stylesheet" href="blog.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Add favorite styles directly */
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .favorites-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .favorite-count {
+            background: white;
+            color: #e74c3c;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .favorite-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #ccc;
+            transition: all 0.3s ease;
+        }
+
+        .favorite-btn.active {
+            color: #e74c3c;
+        }
+
+        .modal-favorite-btn {
+            position: absolute;
+            top: 20px;
+            right: 60px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #ccc;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+        }
+
+        .modal-favorite-btn.active {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <section class="agritech-blog">
+        <div class="blog-container">
+            <!-- Blog Header with Favorites -->
+            <div class="blog-header">
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle">
+                        <span id="themeIcon">🌙</span>
+                        <span id="themeText">Dark Mode</span>
+                    </button>
+                    <a href="favorites.html" class="favorites-link">
+                        <i class="fas fa-heart"></i>
+                        <span>My Favorites</span>
+                        <span class="favorite-count">0</span>
+                    </a>
+                </div>
+                <h1 class="blog-title">🌱 AgriTech Blog — Farming Tips & Insights</h1>
+                <p class="blog-subtitle">Stay updated with the latest in agriculture, technology, and sustainability.</p>
+            </div>
+
+            <!-- Rest of your content... -->
+            <div class="search-filter-section">
+                <input type="text" class="search-bar" placeholder="Search blog posts..." id="searchInput">
+                
+                <div class="category-filters">
+                    <button class="filter-btn active" data-category="all">All Posts</button>
+                    <button class="filter-btn" data-category="farming-tips">Farming Tips</button>
+                    <button class="filter-btn" data-category="technology">Technology</button>
+                    <button class="filter-btn" data-category="market-trends">Market Trends</button>
+                    <button class="filter-btn" data-category="sustainability">Sustainability</button>
+                    <button class="filter-btn" data-category="business">Business</button>
+                </div>
+            </div>
+
+            <div class="blog-grid" id="blogGrid">
+                <!-- Blog cards will be populated by JavaScript -->
+            </div>
+
+            <div class="load-more-container">
+                <button class="load-more-btn" id="loadMoreBtn">Load More Posts</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal with Favorite Button -->
+    <div id="blogModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <button class="modal-favorite-btn" id="modalFavoriteBtn">
+                    <i class="far fa-heart"></i>
+                </button>
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <span class="modal-category" id="modalCategory"></span>
+            </div>
+            <div class="modal-body">
+                <img class="modal-image" id="modalImage" alt="Blog post image">
+                <div class="modal-text" id="modalContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include favorites.js directly -->
+    <script>
+        // Simple Favorites Manager
+        class FavoritesManager {
+            constructor() {
+                this.storageKey = 'agritech_favorite_blogs';
+                this.favorites = JSON.parse(localStorage.getItem(this.storageKey)) || [];
+                window.favoritesManager = this;
+                console.log('FavoritesManager ready!');
+            }
+
+            isFavorite(blogId) {
+                return this.favorites.some(blog => blog.id === blogId);
+            }
+
+            addToFavorites(blogData) {
+                if (this.isFavorite(blogData.id)) return false;
+                blogData.addedAt = new Date().toISOString();
+                this.favorites.push(blogData);
+                localStorage.setItem(this.storageKey, JSON.stringify(this.favorites));
+                
+                // Show notification
+                const notification = document.createElement('div');
+                notification.textContent = `Added to favorites: ${blogData.title}`;
+                notification.style.cssText = 'position:fixed;top:20px;right:20px;background:#2c5f2d;color:white;padding:10px;border-radius:5px;z-index:10000;';
+                document.body.appendChild(notification);
+                setTimeout(() => notification.remove(), 2000);
+                
+                return true;
+            }
+
+            removeFromFavorites(blogId) {
+                this.favorites = this.favorites.filter(blog => blog.id !== blogId);
+                localStorage.setItem(this.storageKey, JSON.stringify(this.favorites));
+                return true;
+            }
+
+            getFavorites() {
+                return this.favorites;
+            }
+        }
+
+        // Initialize immediately
+        new FavoritesManager();
+    </script>
+
+    <!-- Your blog.js content -->
+    <script>
+        // Your existing blog.js code here...
+        const blogPosts = [
+            {
+                id: 'sustainable-farming-2025',
+                title: "Sustainable Farming Practices for 2025",
+                category: "sustainability",
+                description: "Discover innovative sustainable farming techniques.",
+                image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&h=250&fit=crop",
+                content: `<p>Sustainable farming content...</p>`,
+                author: "Dr. Sarah Green",
+                date: "2025-01-10"
+            },
+            {
+                id: 'ai-agriculture-revolution',
+                title: "AI in Agriculture: The Next Revolution", 
+                category: "technology",
+                description: "How AI is transforming farming.",
+                image: "https://images.unsplash.com/photo-1555255707-c07966088b7b?w=400&h=250&fit=crop",
+                content: `<p>AI farming content...</p>`,
+                author: "Tech Farm Review",
+                date: "2025-01-08"
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Blog loaded!');
+            displayPosts();
+            setupEventListeners();
+            updateFavoriteCounter();
+        });
+
+        function displayPosts() {
+            const blogGrid = document.getElementById('blogGrid');
+            blogGrid.innerHTML = '';
+            
+            blogPosts.forEach(post => {
+                const isFavorite = window.favoritesManager.isFavorite(post.id);
+                const postElement = document.createElement('div');
+                postElement.className = 'blog-card';
+                postElement.innerHTML = `
+                    <img src="${post.image}" alt="${post.title}">
+                    <button class="favorite-btn ${isFavorite ? 'active' : ''}" data-blog-id="${post.id}">
+                        <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
+                    </button>
+                    <div class="card-content">
+                        <span class="card-category">${post.category}</span>
+                        <h3 class="card-title">${post.title}</h3>
+                        <p class="card-description">${post.description}</p>
+                        <button class="read-more-btn" onclick="openModal('${post.id}')">Read More</button>
+                    </div>
+                `;
+                blogGrid.appendChild(postElement);
+            });
+        }
+
+        function setupEventListeners() {
+            // Favorite buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.favorite-btn')) {
+                    const button = e.target.closest('.favorite-btn');
+                    const blogId = button.getAttribute('data-blog-id');
+                    console.log('Favorite clicked:', blogId);
+                    toggleFavorite(blogId);
+                }
+            });
+
+            // Your other event listeners...
+        }
+
+        function toggleFavorite(blogId) {
+            const post = blogPosts.find(p => p.id === blogId);
+            if (!post) return;
+
+            const isFavorite = window.favoritesManager.isFavorite(blogId);
+            
+            if (isFavorite) {
+                window.favoritesManager.removeFromFavorites(blogId);
+            } else {
+                window.favoritesManager.addToFavorites({
+                    id: blogId,
+                    title: post.title,
+                    description: post.description,
+                    category: post.category,
+                    image: post.image,
+                    author: post.author,
+                    date: post.date,
+                    content: post.content
+                });
+            }
+
+            // Update button appearance
+            const buttons = document.querySelectorAll(`.favorite-btn[data-blog-id="${blogId}"]`);
+            buttons.forEach(button => {
+                const icon = button.querySelector('i');
+                const isNowFavorite = window.favoritesManager.isFavorite(blogId);
+                button.classList.toggle('active', isNowFavorite);
+                icon.className = isNowFavorite ? 'fas fa-heart' : 'far fa-heart';
+            });
+
+            updateFavoriteCounter();
+        }
+
+        function updateFavoriteCounter() {
+            const count = window.favoritesManager.getFavorites().length;
+            document.querySelector('.favorite-count').textContent = count;
+        }
+
+        function openModal(postId) {
+            const post = blogPosts.find(p => p.id === postId);
+            if (!post) return;
+
+            document.getElementById('modalTitle').textContent = post.title;
+            document.getElementById('modalImage').src = post.image;
+            document.getElementById('modalContent').innerHTML = post.content;
+            document.getElementById('blogModal').style.display = 'block';
+        }
+
+        // Close modal
+        document.querySelector('.close').addEventListener('click', function() {
+            document.getElementById('blogModal').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
