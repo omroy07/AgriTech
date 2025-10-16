@@ -1,37 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=5.0, user-scalable=yes" />
   <meta name="description"
     content="AgriTech - Empowering Agriculture Through Technology. Connect farmers, buyers, and suppliers in India's agricultural ecosystem." />
   <title>AgriTech - Revolutionizing Agriculture with Technology</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-
   <link rel="icon" type="image/png" href="images/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
     rel="stylesheet" />
   <link href="style.css" rel="stylesheet" />
-  
+
   <style>
-    /* Services Toggle Styles */
+    /* HERO SECTION WITH BACKGROUND IMAGE SLIDER */
+    .hero {
+      position: relative;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .hero-bg-slider {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    .hero-bg-image {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .hero-bg-image.active {
+      opacity: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.45);
+      padding: 3rem 2rem;
+      border-radius: 1.2rem;
+      max-width: 700px;
+      margin: auto;
+    }
+    .hero h2 {
+      font-size: 2rem;
+      font-family: 'Libertinus Serif', serif;
+    }
+    .hero p {
+      color: #f1f5f9;
+      font-size: 1.05rem;
+    }
+    @media (max-width: 768px) {
+      .hero {
+        min-height: 300px;
+      }
+      .hero-content {
+        padding: 1.5rem;
+        border-radius: 0.8rem;
+      }
+      .hero h2 {
+        font-size: 1.4rem;
+      }
+      .hero p {
+        font-size: 0.95rem;
+      }
+    }
+
+    /* Services Dropdown Styles (unchanged) */
     .services-toggle-container {
       position: relative;
       display: inline-block;
     }
-
     .services-toggle {
       display: flex;
       align-items: center;
       gap: 0.5rem;
       padding: 0.5rem 1rem;
-      background: var(--button-bg, #1e293b);
-      color: var(--button-text, white);
+      background: #1e293b;
+      color: #fff;
       border: none;
       border-radius: 0.375rem;
       cursor: pointer;
@@ -39,122 +99,58 @@
       font-size: 0.875rem;
       white-space: nowrap;
     }
-
     .services-toggle:hover {
-      background: var(--button-hover-bg, #1e293b);
-      transform: translateY(-1px);
+      background: #334155;
     }
-
     .services-arrow {
       transition: transform 0.3s ease;
       font-size: 0.75rem;
     }
-
     .services-arrow.rotated {
       transform: rotate(180deg);
     }
-
     .services-dropdown {
       position: absolute;
       top: 100%;
       left: 0;
-      background: var(--dropdown-bg, white);
-      border: 1px solid var(--border-color, #e5e7eb);
+      background: white;
+      border: 1px solid #e5e7eb;
       border-radius: 0.5rem;
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
       opacity: 0;
       visibility: hidden;
       transform: translateY(-10px);
       transition: all 0.3s ease;
       z-index: 1000;
-      min-width: 250px;
+      min-width: 240px;
       margin-top: 0.5rem;
     }
-
     .services-dropdown.active {
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
     }
-
     .services-list {
       list-style: none;
       padding: 0.5rem 0;
       margin: 0;
     }
-
-    .services-list li {
-      margin: 0;
-    }
-
     .services-list a {
       display: flex;
       align-items: center;
       gap: 0.75rem;
       padding: 0.75rem 1rem;
-      color: var(--text-color, #374151);
+      color: #374151;
       text-decoration: none;
       transition: all 0.2s ease;
       border-radius: 0.25rem;
-      margin: 0 0.5rem;
     }
-
     .services-list a:hover {
-      background: var(--hover-bg, #f3f4f6);
-      color: var(--primary-color, #2563eb);
+      background: #f3f4f6;
+      color: #2563eb;
       transform: translateX(4px);
-    }
-
-    .services-list i {
-      width: 16px;
-      text-align: center;
-      color: var(--icon-color, #6b7280);
-    }
-
-    .services-list a:hover i {
-      color: var(--primary-color, #2563eb);
-    }
-
-    /* Dark theme support */
-    [data-theme="dark"] .services-dropdown {
-      --dropdown-bg: #1f2937;
-      --border-color: #374151;
-      --text-color: #d1d5db;
-      --hover-bg: #374151;
-      --icon-color: #9ca3af;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      .services-toggle {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.8rem;
-      }
-      
-      .services-text {
-        display: none;
-      }
-      
-      .services-dropdown {
-        min-width: 200px;
-        right: 0;
-        left: auto;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .services-dropdown {
-        min-width: 180px;
-      }
-      
-      .services-list a {
-        padding: 0.6rem 0.8rem;
-        font-size: 0.85rem;
-      }
     }
   </style>
 </head>
-
 
 <body>
   <nav class="navbar">
@@ -163,18 +159,12 @@
         <a href="#" class="logo">AgriTech</a>
       </div>
       <div class="nav-buttons">
-
-
-         <!-- Responsive Search Bar -->
         <div class="search-container">
           <input type="text" placeholder="Search..." class="search-input" autocomplete="off" />
-          <button class="search-button">
-            <i class="fas fa-search"></i>
-          </button>
+          <button class="search-button"><i class="fas fa-search"></i></button>
           <div class="live-suggest-list" style="display:none;"></div>
         </div>
 
-        <!-- Services Toggle -->
         <div class="services-toggle-container">
           <button class="services-toggle btn" aria-label="Toggle services menu">
             <i class="fas fa-cogs"></i>
@@ -192,13 +182,11 @@
           </div>
         </div>
 
-
         <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
           <i class="fas fa-sun sun-icon"></i>
           <i class="fas fa-moon moon-icon"></i>
           <span class="theme-text">Dark</span>
         </button>
-
 
         <a href="about.html" class="btn btn-secondary">About</a>
         <a href="blog.html" class="btn btn-secondary">Blog</a>
@@ -209,19 +197,20 @@
     </div>
   </nav>
 
-
   <section class="hero">
+    <div class="hero-bg-slider">
+      <div class="hero-bg-image active" style="background-image: url('images/farm2.jpg');"></div>
+      <div class="hero-bg-image" style="background-image: url('images/farm3.jpg');"></div>
+      <div class="hero-bg-image" style="background-image: url('images/farm5.png');"></div>
+      <div class="hero-bg-image" style="background-image: url('images/farm4.png');"></div>
+    </div>
     <div class="hero-content">
       <h2 class="serif">Empowering Agriculture Through Technology</h2>
-      <p>
-        AgriTech connects <strong>Farmers</strong>, <strong>Buyers</strong>,
-        <strong>Equipment Suppliers</strong>, and
-        <strong>Grocery Sellers</strong> to revolutionize India's agricultural
-        ecosystem with smart solutions and seamless collaboration.
-      </p>
+      <p>AgriTech connects <strong>Farmers</strong>, <strong>Buyers</strong>,
+        <strong>Equipment Suppliers</strong>, and <strong>Grocery Sellers</strong> 
+        to revolutionize India's agricultural ecosystem through smart solutions and seamless collaboration.</p>
     </div>
   </section>
-
 
   <section class="features loading">
     <div class="features-container">
@@ -230,74 +219,26 @@
         <div class="feature-card">
           <div class="feature-icon">🌱</div>
           <h3 class="feature-title serif">For Farmers</h3>
-          <p class="feature-description">
-            Direct access to buyers, fair pricing, and modern equipment rental
-            services to maximize your harvest potential.
-          </p>
+          <p class="feature-description">Direct access to buyers, fair pricing, and equipment rental services to maximize harvest potential.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">🏪</div>
           <h3 class="feature-title serif">For Buyers</h3>
-          <p class="feature-description">
-            Source fresh produce directly from verified farmers with
-            transparent pricing and quality assurance.
-          </p>
+          <p class="feature-description">Source fresh produce directly from verified farmers with transparent pricing and quality assurance.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">🚜</div>
           <h3 class="feature-title serif">Equipment Suppliers</h3>
-          <p class="feature-description">
-            Expand your reach and connect with farmers who need modern
-            agricultural equipment and services.
-          </p>
+          <p class="feature-description">Expand your reach and connect with farmers needing modern agricultural equipment.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">🛒</div>
           <h3 class="feature-title serif">Grocery Sellers</h3>
-          <p class="feature-description">
-            Access fresh produce supply chain with competitive rates and
-            reliable delivery systems.
-          </p>
+          <p class="feature-description">Access fresh produce with reliable supply chain and competitive costs.</p>
         </div>
       </div>
     </div>
   </section>
-
-
-  <section class="carousel" aria-label="Featured agricultural images">
-    <h2 class="carousel-title serif">Agriculture in Action</h2>
-    <div class="slider">
-      <div class="slide-track">
-        <!-- Original 6 images -->
-        <img src="images/AgriActImg1.jpeg" alt="Farmers working in a lush green field" />
-        <img src="images/AgriActImg2.jpeg" alt="Harvested crops ready for market" />
-        <img src="images/AgriActImg3.jpeg" alt="Modern agricultural equipment in use" />
-        <img src="images/AgriActImg1.jpeg" alt="Farmers working in a lush green field" />
-        <img src="images/AgriActImg2.jpeg" alt="Harvested crops ready for market" />
-        <img src="images/AgriActImg3.jpeg" alt="Modern agricultural equipment in use" />
-        <!-- Duplicate the same 6 images again -->
-        <img src="images/AgriActImg1.jpeg" alt="Farmers working in a lush green field" />
-        <img src="images/AgriActImg2.jpeg" alt="Harvested crops ready for market" />
-        <img src="images/AgriActImg3.jpeg" alt="Modern agricultural equipment in use" />
-        <img src="images/AgriActImg1.jpeg" alt="Farmers working in a lush green field" />
-        <img src="images/AgriActImg2.jpeg" alt="Harvested crops ready for market" />
-        <img src="images/AgriActImg3.jpeg" alt="Modern agricultural equipment in use" />
-      </div>
-    </div>
-  </section>
-
-
-  <section class="cta">
-    <div class="cta-content">
-      <h3 class="serif">Ready to Transform Agriculture?</h3>
-      <p>
-        Join thousands of farmers, buyers, and suppliers who are already
-        benefiting from our platform.
-      </p>
-      <a href="register.html" class="cta-button">Get Started Today</a>
-    </div>
-  </section>
-
 
   <footer class="site-footer">
     <div class="footer-inner">
@@ -306,132 +247,63 @@
           <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
           <h3 class="serif">AgriTech</h3>
         </div>
-        <div class="mission-statement">
-          <p>Empowering India's Farming Future with innovative <span class="no-break">technology</span> solutions that connect every stakeholder in the <span class="no-break">agricultural</span> ecosystem</p>
-        </div>
+        <p>Empowering India's Farming Future with innovative technology connecting every stakeholder.</p>
       </div>
       <div class="footer-links">
         <h4 class="serif">Quick Links</h4>
-        <nav aria-label="Footer navigation">
         <ul>
           <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-          <li><a href="login.html" title="Login first to access dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+          <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
           <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
           <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
           <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
         </ul>
-        </nav>
-      </div>
-      <div class="footer-links">
-        <h4 class="serif">About AgriTech</h4>
-        <nav aria-label="About navigation">
-        <ul>
-          <li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li>
-          <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
-          <li><a href="team.html"><i class="fas fa-users"></i> Our Team</a></li>
-          <li><a href="mission.html"><i class="fas fa-bullseye"></i> Our Mission</a></li>
-          <li><a href="careers.html"><i class="fas fa-briefcase"></i> Careers</a></li>
-        </ul>
-        </nav>
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="footer-bottom-content">
-        <p class="copyright">© 2025 AgriTech. All rights reserved.</p>
-        <div class="footer-bottom-links">
-          <a href="terms-and-service.html">Terms of Service</a>
-          <span class="separator">•</span>
-          <a href="privacy-policy.html">Privacy Policy</a>
-          <span class="separator">•</span>
-          <a href="contact.html">Contact Us</a>
-        </div>
-      </div>
+      <p>© 2025 AgriTech. All rights reserved.</p>
     </div>
   </footer>
 
+  <!-- Floating chatbot -->
+  <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant"><i class="fas fa-robot"></i></a>
 
-  
-<!-- Floating Chatbot Button -->
-<a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
-  <i class="fas fa-robot"></i>
-</a>
- 
-<!-- Scroll Button -->
-<button class="scroll-btn" id="scrollBtn" title="Scroll">
-  <i class="fas fa-arrow-down" id="scrollIcon"></i>
-</button>
-
-
-<script>
-  const scrollBtn = document.getElementById("scrollBtn");
-  const scrollIcon = document.getElementById("scrollIcon");
-
-
-  window.addEventListener("scroll", () => {
-    // If near top, show "scroll down" button
-    if (window.scrollY < 300) {
-      scrollBtn.classList.add("visible");
-      scrollIcon.classList.replace("fa-arrow-up", "fa-arrow-down");
-    } 
-    // If scrolled down, show "scroll up" button
-    else {
-      scrollBtn.classList.add("visible");
-      scrollIcon.classList.replace("fa-arrow-down", "fa-arrow-up");
-    }
-  });
-
-
-  scrollBtn.addEventListener("click", () => {
-    if (scrollIcon.classList.contains("fa-arrow-down")) {
-      // Scroll to bottom
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: "smooth",
-      });
-    } else {
-      // Scroll to top
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }
-  });
-</script>
-
-
+  <!-- Scroll button -->
+  <button class="scroll-btn" id="scrollBtn" title="Scroll">
+    <i class="fas fa-arrow-down" id="scrollIcon"></i>
+  </button>
 
   <script>
-    // Theme toggle functionality
+    // HERO BACKGROUND SLIDER
+    const heroImages = document.querySelectorAll('.hero-bg-image');
+    let currentHero = 0;
+    setInterval(() => {
+      heroImages[currentHero].classList.remove('active');
+      currentHero = (currentHero + 1) % heroImages.length;
+      heroImages[currentHero].classList.add('active');
+    }, 4000); // switch every 4 seconds
+
+    // THEME + DROPDOWN LOGIC
     const themeToggle = document.querySelector('.theme-toggle');
     const themeText = document.querySelector('.theme-text');
-
-
-    // Check for saved theme preference
-    const currentTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    themeText.textContent = currentTheme === 'dark' ? 'Light' : 'Dark';
-
-
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeText.textContent = savedTheme === 'dark' ? 'Light' : 'Dark';
     themeToggle.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      themeText.textContent = newTheme === 'dark' ? 'Light' : 'Dark';
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      themeText.textContent = next === 'dark' ? 'Light' : 'Dark';
     });
 
-    // Services toggle functionality
     const servicesToggle = document.querySelector('.services-toggle');
     const servicesDropdown = document.querySelector('.services-dropdown');
     const servicesArrow = document.querySelector('.services-arrow');
-
     servicesToggle.addEventListener('click', () => {
       servicesDropdown.classList.toggle('active');
       servicesArrow.classList.toggle('rotated');
     });
-
-    // Close services dropdown when clicking outside
     document.addEventListener('click', (e) => {
       if (!servicesToggle.contains(e.target) && !servicesDropdown.contains(e.target)) {
         servicesDropdown.classList.remove('active');
@@ -439,36 +311,25 @@
       }
     });
 
-
-
-    // Intersection Observer for animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px",
-    };
-
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.style.animationPlayState = "running";
-        }
-      });
-    }, observerOptions);
-
-
-    document.querySelectorAll("section").forEach((section) => {
-      observer.observe(section);
+    // SCROLL BUTTON
+    const scrollBtn = document.getElementById("scrollBtn");
+    const scrollIcon = document.getElementById("scrollIcon");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY < 300) {
+        scrollBtn.classList.add("visible");
+        scrollIcon.classList.replace("fa-arrow-up", "fa-arrow-down");
+      } else {
+        scrollBtn.classList.add("visible");
+        scrollIcon.classList.replace("fa-arrow-down", "fa-arrow-up");
+      }
     });
-
-
-    window.addEventListener("load", () => {
-      document.body.style.opacity = "1";
+    scrollBtn.addEventListener("click", () => {
+      if (scrollIcon.classList.contains("fa-arrow-down")) {
+        window.scrollTo({top: document.body.scrollHeight, behavior: "smooth"});
+      } else {
+        window.scrollTo({top: 0, behavior: "smooth"});
+      }
     });
   </script>
 </body>
-</body>
-<script src="script.js" defer></script>
-
-
 </html>
