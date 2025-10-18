@@ -12,164 +12,117 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
     rel="stylesheet" />
-  <link href="style.css" rel="stylesheet" />
-
   <style>
-    /* HERO SECTION WITH BACKGROUND IMAGE SLIDER */
-    .hero {
-      position: relative;
-      min-height: 520px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: #fff;
-      overflow: hidden;
+    /* MOST AGGRESSIVE OVERRIDE FIX:
+       Resets properties known to cause stacking context issues
+       on html and body, ensuring the z-index works.
+    */
+    html, body {
+      transform: none !important;
+      filter: none !important;
+      perspective: none !important;
+      clip-path: none !important;
+      mask: none !important;
+      mask-image: none !important;
+      mask-border: none !important;
+      backdrop-filter: none !important;
+      opacity: 1 !important;
+      mix-blend-mode: normal !important;
+      isolation: auto !important;
+      will-change: auto !important;
+      contain: none !important;
+      /* position: static !important; -- Removing this */
+      z-index: auto !important;
+      overflow: visible !important; /* Prevent overflow hidden */
+      margin: 0; /* Basic reset */
+      padding: 0; /* Basic reset */
+    }
+
+    /* Keep body background color */
+    body {
+      background-color: #030712; /* Fallback */
+      font-family: 'Open Sans', sans-serif;
+      color: white; /* Basic text color */
+      line-height: 1.6;
+    }
+
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: -1; /* Puts it behind all content */
+    }
+
+    /* Make sections stack on top of the background */
+    /* Ensure these have relative positioning to establish stacking */
+    .navbar,
+    .hero,
+    .features,
+    .site-footer {
+      position: relative; /* Essential for z-index stacking */
       z-index: 1;
     }
-    .hero-bg-slider {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-    }
-    .hero-bg-image {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
-    .hero-bg-image.active {
-      opacity: 1;
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      background: rgba(0, 0, 0, 0.45);
-      padding: 3rem 2rem;
-      border-radius: 1.2rem;
-      max-width: 700px;
-      margin: auto;
-    }
-    .hero h2 {
-      font-size: 2rem;
-      font-family: 'Libertinus Serif', serif;
-    }
-    .hero p {
-      color: #f1f5f9;
-      font-size: 1.05rem;
-    }
-    @media (max-width: 768px) {
-      .hero {
-        min-height: 300px;
-      }
-      .hero-content {
-        padding: 1.5rem;
-        border-radius: 0.8rem;
-      }
-      .hero h2 {
-        font-size: 1.4rem;
-      }
-      .hero p {
-        font-size: 0.95rem;
-      }
-    }
 
-    /* Services Dropdown Styles (unchanged) */
-    .services-toggle-container {
-      position: relative;
-      display: inline-block;
-    }
-    .services-toggle {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1rem;
-      background: #1e293b;
-      color: #fff;
-      border: none;
-      border-radius: 0.375rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 0.875rem;
-      white-space: nowrap;
-    }
-    .services-toggle:hover {
-      background: #334155;
-    }
-    .services-arrow {
-      transition: transform 0.3s ease;
-      font-size: 0.75rem;
-    }
-    .services-arrow.rotated {
-      transform: rotate(180deg);
-    }
-    .services-dropdown {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 0.5rem;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-10px);
-      transition: all 0.3s ease;
-      z-index: 1000;
-      min-width: 240px;
-      margin-top: 0.5rem;
-    }
-    .services-dropdown.active {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-    .services-list {
-      list-style: none;
-      padding: 0.5rem 0;
-      margin: 0;
-    }
-    .services-list a {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.75rem 1rem;
-      color: #374151;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      border-radius: 0.25rem;
-    }
-    .services-list a:hover {
-      background: #f3f4f6;
-      color: #2563eb;
-      transform: translateX(4px);
-    }
+    /* Basic styling to ensure content visibility */
+     .navbar { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); padding: 1rem; border-bottom: 1px solid #334155;}
+     .navbar-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: auto; }
+     .brand a { color: #22c55e; text-decoration: none; font-size: 1.5rem; font-weight: bold; }
+     .nav-buttons { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+     .hero { min-height: 300px; padding: 2rem; display: flex; align-items: center; justify-content: center; text-align: center; }
+     .hero-content { background: rgba(0,0,0,0.5); padding: 1.5rem; border-radius: 8px; max-width: 700px; margin: auto; position: relative; z-index: 2; }
+     .features { padding: 2rem; background: rgba(30, 41, 59, 0.7); text-align: center; }
+     .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; max-width: 1200px; margin: 2rem auto; }
+     .feature-card { background: rgba(15, 23, 42, 0.5); padding: 1.5rem; border-radius: 8px; border: 1px solid #334155; }
+     .site-footer { padding: 2rem; background: rgba(15, 23, 42, 0.9); text-align: center; }
+     .footer-inner { display: flex; justify-content: space-around; max-width: 1000px; margin: auto; padding-bottom: 1rem; flex-wrap: wrap; }
+     .footer-links ul { list-style: none; padding: 0; }
+     .footer-links a { color: #cbd5e1; text-decoration: none; display: block; padding: 0.2rem 0;}
+     .footer-links a:hover { color: white; }
+     .footer-bottom { border-top: 1px solid #334155; padding-top: 1rem; margin-top: 1rem; font-size: 0.9rem; color: #94a3b8; }
+     #chatbotBtn, .scroll-btn { position: fixed; right: 20px; bottom: 20px; width: 50px; height: 50px; border-radius: 50%; background: #16a34a; color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+     #chatbotBtn { bottom: 80px; opacity: 1; visibility: visible; } /* Keep chatbot visible */
+     .scroll-btn.visible { opacity: 1; visibility: visible; }
+     .serif { font-family: 'Libertinus Serif', serif; }
+     .btn { padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 500; font-size: 0.875rem; transition: all 0.2s ease; border: none; cursor: pointer; display: inline-block; margin: 0 0.25rem; background: #334155; color: white;}
+     .btn-primary { background: #16a34a; }
+     .btn-secondary { background: transparent; border: 1px solid #4a5568; }
+
+
+    /* --- Styles below might be duplicated if style.css is re-enabled --- */
+    /* Minimal Services Dropdown Styles for visibility */
+    .services-toggle-container { position: relative; display: inline-block; }
+    .services-dropdown { position: absolute; top: 100%; left: 0; background: #1e293b; border: 1px solid #334155; border-radius: 0.5rem; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1000; min-width: 200px; margin-top: 0.5rem; padding: 0.5rem; }
+    .services-dropdown.active { opacity: 1; visibility: visible; }
+    .services-list { list-style: none; padding: 0; margin: 0; }
+    .services-list a { color: #cbd5e1; text-decoration: none; display: block; padding: 0.5rem; border-radius: 4px; }
+    .services-list a:hover { background: #334155; color: white; }
+
   </style>
 </head>
 
 <body>
+
+  <canvas id="bg-canvas"></canvas>
+
   <nav class="navbar">
     <div class="navbar-content">
       <div class="brand">
         <a href="#" class="logo">AgriTech</a>
       </div>
       <div class="nav-buttons">
-        <div class="search-container">
-          <input type="text" placeholder="Search..." class="search-input" autocomplete="off" />
-          <button class="search-button"><i class="fas fa-search"></i></button>
-          <div class="live-suggest-list" style="display:none;"></div>
-        </div>
+         <div class="search-container" style="position: relative; display: inline-block;">
+             <input type="text" placeholder="Search..." class="search-input" style="padding: 0.5rem; border-radius: 4px; border: 1px solid #555; background: #333; color: white;" autocomplete="off" />
+             <button class="search-button" style="padding: 0.5rem; background: #22c55e; border: none; border-radius: 4px; color: white; cursor: pointer;"><i class="fas fa-search"></i></button>
+             <div class="live-suggest-list" style="display:none; position: absolute; top: 100%; left: 0; background: white; border: 1px solid #ccc; z-index: 10;"></div>
+         </div>
 
         <div class="services-toggle-container">
           <button class="services-toggle btn" aria-label="Toggle services menu">
             <i class="fas fa-cogs"></i>
             <span class="services-text">Services</span>
-            <i class="fas fa-chevron-down services-arrow"></i>
+            <i class="fas fa-chevron-down services-arrow" style="transition: transform 0.3s;"></i>
           </button>
           <div class="services-dropdown">
             <ul class="services-list">
@@ -183,7 +136,7 @@
         </div>
 
         <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
-          <i class="fas fa-sun sun-icon"></i>
+          <i class="fas fa-sun sun-icon" style="display: none;"></i>
           <i class="fas fa-moon moon-icon"></i>
           <span class="theme-text">Dark</span>
         </button>
@@ -191,23 +144,18 @@
         <a href="about.html" class="btn btn-secondary">About</a>
         <a href="blog.html" class="btn btn-secondary">Blog</a>
         <a href="login.html" class="btn btn-secondary">Login</a>
-        <a href="faq.html" class="btn btn-secondary">FAQ</a> 
+        <a href="faq.html" class="btn btn-secondary">FAQ</a>
         <a href="register.html" class="btn btn-primary">Register</a>
       </div>
     </div>
   </nav>
 
   <section class="hero">
-    <div class="hero-bg-slider">
-      <div class="hero-bg-image active" style="background-image: url('images/farm2.jpg');"></div>
-      <div class="hero-bg-image" style="background-image: url('images/farm3.jpg');"></div>
-      <div class="hero-bg-image" style="background-image: url('images/farm5.png');"></div>
-      <div class="hero-bg-image" style="background-image: url('images/farm4.png');"></div>
-    </div>
+
     <div class="hero-content">
       <h2 class="serif">Empowering Agriculture Through Technology</h2>
       <p>AgriTech connects <strong>Farmers</strong>, <strong>Buyers</strong>,
-        <strong>Equipment Suppliers</strong>, and <strong>Grocery Sellers</strong> 
+        <strong>Equipment Suppliers</strong>, and <strong>Grocery Sellers</strong>
         to revolutionize India's agricultural ecosystem through smart solutions and seamless collaboration.</p>
     </div>
   </section>
@@ -244,8 +192,7 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <div class="brand-header">
-          <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
-          <h3 class="serif">AgriTech</h3>
+          <img src="images/logo.png" alt="AgriTech logo" class="footer-logo" style="width: 50px; height: 50px; background: white; padding: 5px; border-radius: 8px;"> <h3 class="serif">AgriTech</h3>
         </div>
         <p>Empowering India's Farming Future with innovative technology connecting every stakeholder.</p>
       </div>
@@ -259,77 +206,211 @@
           <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
         </ul>
       </div>
+       <div class="footer-links"> <h4 class="serif">Contact</h4>
+         <ul>
+           <li><a href="#"><i class="fas fa-envelope"></i> Email Us</a></li>
+           <li><a href="#"><i class="fas fa-phone"></i> Call Us</a></li>
+         </ul>
+       </div>
     </div>
     <div class="footer-bottom">
       <p>© 2025 AgriTech. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- Floating chatbot -->
   <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant"><i class="fas fa-robot"></i></a>
 
-  <!-- Scroll button -->
   <button class="scroll-btn" id="scrollBtn" title="Scroll">
     <i class="fas fa-arrow-down" id="scrollIcon"></i>
   </button>
 
-  <script>
-    // HERO BACKGROUND SLIDER
-    const heroImages = document.querySelectorAll('.hero-bg-image');
-    let currentHero = 0;
-    setInterval(() => {
-      heroImages[currentHero].classList.remove('active');
-      currentHero = (currentHero + 1) % heroImages.length;
-      heroImages[currentHero].classList.add('active');
-    }, 4000); // switch every 4 seconds
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.158.0/build/three.module.js"
+      }
+    }
+  </script>
 
+  <script type="module">
+    import * as THREE from 'three';
+
+    // 1. Setup
+    // --------------------------------
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 3, 10); // Set camera position
+
+    const renderer = new THREE.WebGLRenderer({
+        canvas: document.querySelector('#bg-canvas'),
+        alpha: true // Make canvas background transparent
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Added for sharpness
+
+    // 2. Create the Grid
+    // --------------------------------
+    const geometry = new THREE.PlaneGeometry(20, 20, 40, 40); // 20x20 units, 40x40 segments
+    const material = new THREE.MeshBasicMaterial({
+        color: 0x22c55e, // AgriTech green
+        wireframe: true
+    });
+    const plane = new THREE.Mesh(geometry, material);
+    plane.rotation.x = -Math.PI / 2; // Rotate plane to be horizontal
+    scene.add(plane);
+
+    // Store the original vertex positions
+    const originalPositions = plane.geometry.attributes.position.array.slice();
+    const clock = new THREE.Clock();
+
+    // 3. Handle Mouse Movement
+    // --------------------------------
+    const mouse = new THREE.Vector2(0, 0); // Initialize mouse coordinates
+    const targetMouse = new THREE.Vector2(0, 0); // Target for smoother movement
+
+    window.addEventListener('mousemove', (event) => {
+        // Normalize mouse position (-1 to 1) for target
+        targetMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        targetMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    });
+
+    // 4. Animation Loop
+    // --------------------------------
+    function animate() {
+        const t = clock.getElapsedTime();
+
+        // Smoothly interpolate mouse position towards the target
+        mouse.x += (targetMouse.x - mouse.x) * 0.05;
+        mouse.y += (targetMouse.y - mouse.y) * 0.05;
+
+        const positions = plane.geometry.attributes.position.array;
+
+        // Map smoothed mouse's -1 to 1 range to our grid's 20x20 world-space
+        const mouseWorld = new THREE.Vector2(mouse.x * 10, mouse.y * 10);
+
+        // Loop through all vertices
+        for (let i = 0; i < positions.length; i += 3) {
+            const x = originalPositions[i];
+            const y = originalPositions[i + 1];
+
+            // 1. Base wave
+            const baseWave = Math.sin(x * 0.5 + t * 0.5) * 0.1 +
+                             Math.sin(y * 0.5 + t * 0.5) * 0.1;
+
+            // 2. Cursor ripple
+            const dist = new THREE.Vector2(x, y).distanceTo(mouseWorld);
+            const influence = Math.max(0, 1 - dist / 5); // Radius of 5
+            const ripple = Math.sin(dist * 2 - t * 2) * influence * 0.3;
+
+            // 3. Apply both waves to the z-position (index i + 2)
+            positions[i + 2] = baseWave + ripple;
+        }
+
+        // Tell Three.js the geometry has been updated
+        plane.geometry.attributes.position.needsUpdate = true;
+
+        // Render the scene
+        renderer.render(scene, camera);
+
+        // Call animate again on the next frame
+        requestAnimationFrame(animate);
+    }
+
+    // 5. Handle Window Resizing
+    // --------------------------------
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Update pixel ratio on resize
+    });
+
+    // Start the animation!
+    animate();
+  </script>
+  <script>
     // THEME + DROPDOWN LOGIC
     const themeToggle = document.querySelector('.theme-toggle');
     const themeText = document.querySelector('.theme-text');
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    themeText.textContent = savedTheme === 'dark' ? 'Light' : 'Dark';
+    const sunIcon = document.querySelector('.sun-icon');
+    const moonIcon = document.querySelector('.moon-icon');
+
+    const applyTheme = (theme) => {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        if (theme === 'dark') {
+            themeText.textContent = 'Light';
+            moonIcon.style.display = 'none';
+            sunIcon.style.display = 'inline-block';
+        } else {
+            themeText.textContent = 'Dark';
+            moonIcon.style.display = 'inline-block';
+            sunIcon.style.display = 'none';
+        }
+    };
+
+    const savedTheme = localStorage.getItem('theme') || 'dark'; // Default to dark if nothing saved
+    applyTheme(savedTheme);
+
     themeToggle.addEventListener('click', () => {
       const current = document.documentElement.getAttribute('data-theme');
       const next = current === 'light' ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      themeText.textContent = next === 'dark' ? 'Light' : 'Dark';
+      applyTheme(next);
     });
 
     const servicesToggle = document.querySelector('.services-toggle');
     const servicesDropdown = document.querySelector('.services-dropdown');
     const servicesArrow = document.querySelector('.services-arrow');
-    servicesToggle.addEventListener('click', () => {
-      servicesDropdown.classList.toggle('active');
-      servicesArrow.classList.toggle('rotated');
-    });
-    document.addEventListener('click', (e) => {
-      if (!servicesToggle.contains(e.target) && !servicesDropdown.contains(e.target)) {
-        servicesDropdown.classList.remove('active');
-        servicesArrow.classList.remove('rotated');
-      }
-    });
+
+    if (servicesToggle && servicesDropdown && servicesArrow) { // Add checks
+        servicesToggle.addEventListener('click', (event) => {
+          event.stopPropagation(); // Prevent click from closing immediately
+          servicesDropdown.classList.toggle('active');
+          servicesArrow.classList.toggle('rotated');
+        });
+
+        // Close dropdown if clicking outside
+        document.addEventListener('click', (e) => {
+          const container = document.querySelector('.services-toggle-container');
+          // Check if dropdown exists and is active before trying to remove class
+          if (container && !container.contains(e.target) && servicesDropdown.classList.contains('active')) {
+             servicesDropdown.classList.remove('active');
+             servicesArrow.classList.remove('rotated');
+          }
+        });
+    } else {
+        console.error("Could not find all elements for services dropdown.");
+    }
 
     // SCROLL BUTTON
     const scrollBtn = document.getElementById("scrollBtn");
     const scrollIcon = document.getElementById("scrollIcon");
-    window.addEventListener("scroll", () => {
-      if (window.scrollY < 300) {
-        scrollBtn.classList.add("visible");
-        scrollIcon.classList.replace("fa-arrow-up", "fa-arrow-down");
-      } else {
-        scrollBtn.classList.add("visible");
-        scrollIcon.classList.replace("fa-arrow-down", "fa-arrow-up");
-      }
-    });
-    scrollBtn.addEventListener("click", () => {
-      if (scrollIcon.classList.contains("fa-arrow-down")) {
-        window.scrollTo({top: document.body.scrollHeight, behavior: "smooth"});
-      } else {
-        window.scrollTo({top: 0, behavior: "smooth"});
-      }
-    });
+
+    if (scrollBtn && scrollIcon) { // Add checks
+        window.addEventListener("scroll", () => {
+          // Show button only when scrolled down
+          if (window.scrollY > 300) {
+            scrollBtn.style.opacity = '1';
+            scrollBtn.style.visibility = 'visible';
+            scrollIcon.classList.remove("fa-arrow-down"); // More robust class change
+            scrollIcon.classList.add("fa-arrow-up");
+          } else {
+            // Option 1: Hide completely when near top
+            scrollBtn.style.opacity = '0';
+            scrollBtn.style.visibility = 'hidden';
+            // Ensure icon is down arrow when hidden/at top
+            scrollIcon.classList.remove("fa-arrow-up");
+            scrollIcon.classList.add("fa-arrow-down");
+          }
+        });
+        scrollBtn.addEventListener("click", () => {
+          if (scrollIcon.classList.contains("fa-arrow-up")) {
+            window.scrollTo({top: 0, behavior: "smooth"});
+          }
+        });
+    } else {
+        console.error("Could not find scroll button or icon elements.");
+    }
   </script>
 </body>
 </html>
