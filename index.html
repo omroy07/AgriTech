@@ -57,16 +57,26 @@
 
     /* Make sections stack on top of the background */
     /* Ensure these have relative positioning to establish stacking */
-    .navbar,
+    
     .hero,
     .features,
     .site-footer {
       position: relative; /* Essential for z-index stacking */
       z-index: 1;
     }
+    .navbar { 
+    /* Must be higher than the page content */
+    z-index: 100; 
+    /* ... existing background/padding styles ... */
+    background: rgba(15, 23, 42, 0.8); 
+    backdrop-filter: blur(10px); 
+    padding: 1rem; 
+    border-bottom: 1px solid #334155;
+    /* REQUIRED: Keep position: relative if it's not fixed/sticky */
+    position: relative; 
+}
 
     /* Basic styling to ensure content visibility */
-     .navbar { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); padding: 1rem; border-bottom: 1px solid #334155;}
      .navbar-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: auto; }
      .brand a { color: #22c55e; text-decoration: none; font-size: 1.5rem; font-weight: bold; }
      .nav-buttons { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
@@ -93,8 +103,8 @@
     /* --- Styles below might be duplicated if style.css is re-enabled --- */
     /* Minimal Services Dropdown Styles for visibility */
     .services-toggle-container { position: relative; display: inline-block; }
-    .services-dropdown { position: absolute; top: 100%; left: 0; background: #1e293b; border: 1px solid #334155; border-radius: 0.5rem; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1000; min-width: 200px; margin-top: 0.5rem; padding: 0.5rem; }
-    .services-dropdown.active { opacity: 1; visibility: visible; }
+    .services-dropdown { position: absolute; top: 100%; left: 0; background: #1e293b; z-index: 1000;border: 1px solid #334155; border-radius: 0.5rem; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1000; min-width: 200px; margin-top: 0.5rem; padding: 0.5rem; }
+    .services-dropdown.active { opacity: 1; visibility: visible; z-index: 1000; }
     .services-list { list-style: none; padding: 0; margin: 0; }
     .services-list a { color: #cbd5e1; text-decoration: none; display: block; padding: 0.5rem; border-radius: 4px; }
     .services-list a:hover { background: #334155; color: white; }
@@ -108,15 +118,16 @@
 
   <nav class="navbar">
     <div class="navbar-content">
-      <div class="brand">
-        <a href="#" class="logo">AgriTech</a>
+      <div class="brand" style="display: flex; align-items: center; gap: 10px;">
+        <img src="images/logo.png" alt="AgriTech logo" class="footer-logo" style="width: 45px; height: 45px; background: white; padding: 5px; border-radius: 8px;">
+        <a href="#" class="logo" style="font-size: 1.5rem; font-weight: bold; text-decoration: none; color: inherit;">AgriTech</a>
       </div>
       <div class="nav-buttons">
-         <div class="search-container" style="position: relative; display: inline-block;">
-             <input type="text" placeholder="Search..." class="search-input" style="padding: 0.5rem; border-radius: 4px; border: 1px solid #555; background: #333; color: white;" autocomplete="off" />
-             <button class="search-button" style="padding: 0.5rem; background: #22c55e; border: none; border-radius: 4px; color: white; cursor: pointer;"><i class="fas fa-search"></i></button>
-             <div class="live-suggest-list" style="display:none; position: absolute; top: 100%; left: 0; background: white; border: 1px solid #ccc; z-index: 10;"></div>
-         </div>
+          <div class="search-container" style="position: relative; display: inline-block;">
+               <input type="text" placeholder="Search..." class="search-input" style="padding: 0.5rem; border-radius: 4px; border: 1px solid #555; background: #333; color: white;" autocomplete="off" />
+               <button class="search-button" style="padding: 0.5rem; background: #22c55e; border: none; border-radius: 4px; color: white; cursor: pointer;"><i class="fas fa-search"></i></button>
+               <div class="live-suggest-list" style="display:none; position: absolute; top: 100%; left: 0; background: white; border: 1px solid #ccc; z-index: 10;"></div>
+          </div>
 
         <div class="services-toggle-container">
           <button class="services-toggle btn" aria-label="Toggle services menu">
