@@ -57,16 +57,26 @@
 
     /* Make sections stack on top of the background */
     /* Ensure these have relative positioning to establish stacking */
-    .navbar,
+    
     .hero,
     .features,
     .site-footer {
       position: relative; /* Essential for z-index stacking */
       z-index: 1;
     }
+    .navbar { 
+    /* Must be higher than the page content */
+    z-index: 100; 
+    /* ... existing background/padding styles ... */
+    background: rgba(15, 23, 42, 0.8); 
+    backdrop-filter: blur(10px); 
+    padding: 1rem; 
+    border-bottom: 1px solid #334155;
+    /* REQUIRED: Keep position: relative if it's not fixed/sticky */
+    position: relative; 
+}
 
     /* Basic styling to ensure content visibility */
-     .navbar { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); padding: 1rem; border-bottom: 1px solid #334155;}
      .navbar-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: auto; }
      .brand a { color: #22c55e; text-decoration: none; font-size: 1.5rem; font-weight: bold; }
      .nav-buttons { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
@@ -93,8 +103,8 @@
     /* --- Styles below might be duplicated if style.css is re-enabled --- */
     /* Minimal Services Dropdown Styles for visibility */
     .services-toggle-container { position: relative; display: inline-block; }
-    .services-dropdown { position: absolute; top: 100%; left: 0; background: #1e293b; border: 1px solid #334155; border-radius: 0.5rem; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1000; min-width: 200px; margin-top: 0.5rem; padding: 0.5rem; }
-    .services-dropdown.active { opacity: 1; visibility: visible; }
+    .services-dropdown { position: absolute; top: 100%; left: 0; background: #1e293b; z-index: 1000;border: 1px solid #334155; border-radius: 0.5rem; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1000; min-width: 200px; margin-top: 0.5rem; padding: 0.5rem; }
+    .services-dropdown.active { opacity: 1; visibility: visible; z-index: 1000; }
     .services-list { list-style: none; padding: 0; margin: 0; }
     .services-list a { color: #cbd5e1; text-decoration: none; display: block; padding: 0.5rem; border-radius: 4px; }
     .services-list a:hover { background: #334155; color: white; }
