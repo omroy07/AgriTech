@@ -201,6 +201,32 @@ const diseaseDatabase = {
   },
 };
 
+let mobilenetModel;
+
+async function loadMobilenetModel() {
+  try {
+    mobilenetModel = await mobilenet.load();
+  } catch (error) {
+    console.error("Failed to load MobileNet model:", error);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadMobilenetModel);
+
+async function isPlantImage(imgElement) {
+  if(!mobilenetModel) {
+    console.warn("Model still loading...");
+    return true;
+  }
+
+  const predictions = await mobilenetModel.classify(imgElement);
+  console.log(predictions);
+  const topLabel = predictions[0].className.toLowerCase();
+
+  const plantKeywords = ["plant", "tree", "leaf", "flower", "crop", "vegetable", "fruit"]
+  return plantKeywords.some((word) => topLabel.includes(word));
+}
+
 // Mock AI analysis function - simulates disease detection
 function simulateAIAnalysis(imageFile) {
   return new Promise((resolve) => {
@@ -289,6 +315,24 @@ analyzeBtn.addEventListener("click", async () => {
   analyzeBtn.disabled = true;
 
   try {
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(selectedFile);
+    await new Promise((resolve) => (img.onload = resolve));
+
+    const validPlant = await isPlantImage(img);
+
+    if(!validPlant) {
+      loading.style.display = "none";
+      analyzeBtn.disabled = false;
+      resultsDiv.innerHTML = `
+        <div class="result-card" style="border-left-color: #ffc107;">
+          <div class="disease-name" style="color: #ffc107;">⚠️ Invalid Image</div>
+          <div class="description">Please upload a valid plant image.</div>
+        </div>`;
+      return;
+    }
+
+    // Proceed if valid plant image
     const result = await simulateAIAnalysis(selectedFile);
 
     loading.style.display = "none";
