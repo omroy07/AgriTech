@@ -425,6 +425,7 @@ Add to an /images or /gifs folder in your repo
 
 
 ## ✨ Contributors
+wahide
 
 #### Thanks to all the wonderful contributors 💖
 
