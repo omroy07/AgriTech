@@ -2,48 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=5.0, user-scalable=yes" />
-  <meta name="description"
-    content="AgriTech - Empowering Agriculture Through Technology. Connect farmers, buyers, and suppliers in India's agricultural ecosystem." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="AgriTech - Empowering Agriculture Through Technology. Connect farmers, buyers, and suppliers in India's agricultural ecosystem." />
   <title>AgriTech - Revolutionizing Agriculture with Technology</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="icon" type="image/png" href="images/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    /* MOST AGGRESSIVE OVERRIDE FIX:
-       Resets properties known to cause stacking context issues
-       on html and body, ensuring the z-index works.
-    */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     html, body {
       transform: none !important;
       filter: none !important;
       perspective: none !important;
       clip-path: none !important;
       mask: none !important;
-      mask-image: none !important;
-      mask-border: none !important;
       backdrop-filter: none !important;
       opacity: 1 !important;
       mix-blend-mode: normal !important;
       isolation: auto !important;
       will-change: auto !important;
       contain: none !important;
-      /* position: static !important; -- Removing this */
       z-index: auto !important;
-      overflow: visible !important; /* Prevent overflow hidden */
-      margin: 0; /* Basic reset */
-      padding: 0; /* Basic reset */
     }
 
-    /* Keep body background color */
     body {
-      background-color: #030712; /* Fallback */
+      background-color: #030712;
       font-family: 'Open Sans', sans-serif;
-      color: white; /* Basic text color */
+      color: white;
       line-height: 1.6;
+      overflow-x: hidden;
+      touch-action: pan-y;
+      -ms-touch-action: pan-y;
     }
 
     #bg-canvas {
@@ -52,88 +47,604 @@
       left: 0;
       width: 100%;
       height: 100vh;
-      z-index: -1; /* Puts it behind all content */
+      z-index: -1;
     }
 
-    /* Make sections stack on top of the background */
-    /* Ensure these have relative positioning to establish stacking */
-    
-    .hero,
-    .features,
-    .site-footer {
-      position: relative; /* Essential for z-index stacking */
+    .serif {
+      font-family: 'Libertinus Serif', serif;
+    }
+
+    /* NAVBAR STYLES */
+    .navbar {
+      position: relative;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 1rem;
+      border-bottom: 1px solid #334155;
+    }
+
+    .navbar-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand img {
+      width: 45px;
+      height: 45px;
+      background: white;
+      padding: 5px;
+      border-radius: 8px;
+    }
+
+    .brand a {
+      color: #22c55e;
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* Search Container */
+    .search-container {
+      position: relative;
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .search-input {
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #555;
+      background: #333;
+      color: white;
+      min-width: 120px;
+    }
+
+    .search-button {
+      padding: 0.5rem 0.75rem;
+      background: #22c55e;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* Services Dropdown */
+    .services-toggle-container {
+      position: relative;
+    }
+
+    .services-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .services-arrow {
+      transition: transform 0.3s;
+    }
+
+    .services-arrow.rotated {
+      transform: rotate(180deg);
+    }
+
+    .services-dropdown {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      left: 0;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 0.5rem;
+      min-width: 250px;
+      padding: 0.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .services-dropdown.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .services-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .services-list li {
+      margin: 0.25rem 0;
+    }
+
+    .services-list a {
+      color: #cbd5e1;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .services-list a:hover {
+      background: #334155;
+      color: white;
+    }
+
+    .services-list i {
+      width: 20px;
+    }
+
+    /* Button Styles */
+    .btn {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+      background: #334155;
+      color: white;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-primary {
+      background: #16a34a;
+    }
+
+    .btn-primary:hover {
+      background: #15803d;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid #4a5568;
+    }
+
+    .btn-secondary:hover {
+      border-color: #22c55e;
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    /* HERO SECTION */
+    .hero {
+      position: relative;
       z-index: 1;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1rem;
     }
-    .navbar { 
-    /* Must be higher than the page content */
-    z-index: 100; 
-    /* ... existing background/padding styles ... */
-    background: rgba(15, 23, 42, 0.8); 
-    backdrop-filter: blur(10px); 
-    padding: 1rem; 
-    border-bottom: 1px solid #334155;
-    /* REQUIRED: Keep position: relative if it's not fixed/sticky */
-    position: relative; 
-}
 
-    /* Basic styling to ensure content visibility */
-     .navbar-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: auto; }
-     .brand a { color: #22c55e; text-decoration: none; font-size: 1.5rem; font-weight: bold; }
-     .nav-buttons { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-     .hero { min-height: 300px; padding: 2rem; display: flex; align-items: center; justify-content: center; text-align: center; }
-     .hero-content { background: rgba(0,0,0,0.5); padding: 1.5rem; border-radius: 8px; max-width: 700px; margin: auto; position: relative; z-index: 2; }
-     .features { padding: 2rem; background: rgba(30, 41, 59, 0.7); text-align: center; }
-     .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; max-width: 1200px; margin: 2rem auto; }
-     .feature-card { background: rgba(15, 23, 42, 0.5); padding: 1.5rem; border-radius: 8px; border: 1px solid #334155; }
-     .site-footer { padding: 2rem; background: rgba(15, 23, 42, 0.9); text-align: center; }
-     .footer-inner { display: flex; justify-content: space-around; max-width: 1000px; margin: auto; padding-bottom: 1rem; flex-wrap: wrap; }
-     .footer-links ul { list-style: none; padding: 0; }
-     .footer-links a { color: #cbd5e1; text-decoration: none; display: block; padding: 0.2rem 0;}
-     .footer-links a:hover { color: white; }
-     .footer-bottom { border-top: 1px solid #334155; padding-top: 1rem; margin-top: 1rem; font-size: 0.9rem; color: #94a3b8; }
-     #chatbotBtn, .scroll-btn { position: fixed; right: 20px; bottom: 20px; width: 50px; height: 50px; border-radius: 50%; background: #16a34a; color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
-     #chatbotBtn { bottom: 80px; opacity: 1; visibility: visible; } /* Keep chatbot visible */
-     .scroll-btn.visible { opacity: 1; visibility: visible; }
-     .serif { font-family: 'Libertinus Serif', serif; }
-     .btn { padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 500; font-size: 0.875rem; transition: all 0.2s ease; border: none; cursor: pointer; display: inline-block; margin: 0 0.25rem; background: #334155; color: white;}
-     .btn-primary { background: #16a34a; }
-     .btn-secondary { background: transparent; border: 1px solid #4a5568; }
+    .hero-content {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 800px;
+      margin: 0 auto;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
+    .hero-content h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #22c55e;
+    }
 
-    /* --- Styles below might be duplicated if style.css is re-enabled --- */
-    /* Minimal Services Dropdown Styles for visibility */
-    .services-toggle-container { position: relative; display: inline-block; }
-    .services-dropdown { position: absolute; top: 100%; left: 0; background: #1e293b; z-index: 1000;border: 1px solid #334155; border-radius: 0.5rem; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1000; min-width: 200px; margin-top: 0.5rem; padding: 0.5rem; }
-    .services-dropdown.active { opacity: 1; visibility: visible; z-index: 1000; }
-    .services-list { list-style: none; padding: 0; margin: 0; }
-    .services-list a { color: #cbd5e1; text-decoration: none; display: block; padding: 0.5rem; border-radius: 4px; }
-    .services-list a:hover { background: #334155; color: white; }
+    .hero-content p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
 
+    /* FEATURES SECTION */
+    .features {
+      position: relative;
+      z-index: 1;
+      padding: 4rem 1rem;
+      background: rgba(30, 41, 59, 0.7);
+    }
+
+    .features-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .features-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      color: #22c55e;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: rgba(15, 23, 42, 0.8);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: #22c55e;
+      box-shadow: 0 8px 24px rgba(34, 197, 94, 0.2);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #22c55e;
+    }
+
+    .feature-description {
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+
+    /* FOOTER */
+    .site-footer {
+      position: relative;
+      z-index: 1;
+      padding: 3rem 1rem;
+      background: rgba(15, 23, 42, 0.9);
+      border-top: 1px solid #334155;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-around;
+      max-width: 1200px;
+      margin: 0 auto 2rem;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .footer-brand {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .brand-header img {
+      width: 50px;
+      height: 50px;
+      background: white;
+      padding: 5px;
+      border-radius: 8px;
+    }
+
+    .brand-header h3 {
+      color: #22c55e;
+    }
+
+    .footer-links {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .footer-links h4 {
+      color: #22c55e;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links ul {
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: #cbd5e1;
+      text-decoration: none;
+      display: block;
+      padding: 0.4rem 0;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #334155;
+      padding-top: 1rem;
+      text-align: center;
+      color: #94a3b8;
+    }
+
+    /* FLOATING BUTTONS */
+    #chatbotBtn, .scroll-btn {
+      position: fixed;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #16a34a;
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    #chatbotBtn {
+      bottom: 80px;
+    }
+
+    #chatbotBtn:hover, .scroll-btn:hover {
+      transform: scale(1.1);
+      background: #15803d;
+    }
+
+    .scroll-btn {
+      bottom: 20px;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .scroll-btn.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* MOBILE RESPONSIVE - Better alignment */
+    @media (max-width: 1024px) {
+      .navbar-content {
+        justify-content: center;
+      }
+
+      .brand {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .nav-buttons {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0.75rem;
+      }
+
+      .navbar-content {
+        gap: 0.75rem;
+      }
+
+      .brand img {
+        width: 40px;
+        height: 40px;
+      }
+
+      .brand a {
+        font-size: 1.3rem;
+      }
+
+      .nav-buttons {
+        gap: 0.4rem;
+      }
+
+      .btn {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.8rem;
+      }
+
+      .search-input {
+        min-width: 100px;
+        padding: 0.4rem;
+        font-size: 0.85rem;
+      }
+
+      .search-button {
+        padding: 0.4rem 0.6rem;
+      }
+
+      .services-dropdown {
+        left: 50%;
+        transform: translateX(-50%) translateY(-10px);
+        width: 90vw;
+        max-width: 300px;
+      }
+
+      .services-dropdown.active {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      .hero-content {
+        padding: 1.5rem;
+      }
+
+      .hero-content h2 {
+        font-size: 1.8rem;
+      }
+
+      .hero-content p {
+        font-size: 1rem;
+      }
+
+      .features {
+        padding: 3rem 1rem;
+      }
+
+      .features-title {
+        font-size: 2rem;
+      }
+
+      .features-grid {
+        gap: 1.5rem;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-brand,
+      .footer-links {
+        min-width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .brand img {
+        width: 35px;
+        height: 35px;
+      }
+
+      .brand a {
+        font-size: 1.1rem;
+      }
+
+      .nav-buttons {
+        gap: 0.3rem;
+      }
+
+      .btn {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.75rem;
+      }
+
+      .search-input {
+        min-width: 80px;
+        font-size: 0.8rem;
+      }
+
+      .hero-content {
+        padding: 1.25rem;
+      }
+
+      .hero-content h2 {
+        font-size: 1.5rem;
+      }
+
+      .hero-content p {
+        font-size: 0.95rem;
+      }
+
+      .features-title {
+        font-size: 1.75rem;
+      }
+
+      .feature-card {
+        padding: 1.5rem;
+      }
+
+      #chatbotBtn, .scroll-btn {
+        width: 45px;
+        height: 45px;
+        right: 15px;
+      }
+
+      #chatbotBtn {
+        bottom: 70px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .nav-buttons {
+        gap: 0.25rem;
+      }
+
+      .btn {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.7rem;
+      }
+
+      .search-input {
+        min-width: 70px;
+        padding: 0.35rem;
+      }
+
+      .search-button {
+        padding: 0.35rem 0.5rem;
+      }
+    }
   </style>
 </head>
-
 <body>
 
   <canvas id="bg-canvas"></canvas>
 
   <nav class="navbar">
     <div class="navbar-content">
-      <div class="brand" style="display: flex; align-items: center; gap: 10px;">
-        <img src="images/logo.png" alt="AgriTech logo" class="footer-logo" style="width: 45px; height: 45px; background: white; padding: 5px; border-radius: 8px;">
-        <a href="#" class="logo" style="font-size: 1.5rem; font-weight: bold; text-decoration: none; color: inherit;">AgriTech</a>
+      <div class="brand">
+        <img src="images/logo.png" alt="AgriTech logo">
+        <a href="#">AgriTech</a>
       </div>
+
       <div class="nav-buttons">
-          <div class="search-container" style="position: relative; display: inline-block;">
-               <input type="text" placeholder="Search..." class="search-input" style="padding: 0.5rem; border-radius: 4px; border: 1px solid #555; background: #333; color: white;" autocomplete="off" />
-               <button class="search-button" style="padding: 0.5rem; background: #22c55e; border: none; border-radius: 4px; color: white; cursor: pointer;"><i class="fas fa-search"></i></button>
-               <div class="live-suggest-list" style="display:none; position: absolute; top: 100%; left: 0; background: white; border: 1px solid #ccc; z-index: 10;"></div>
-          </div>
+        <div class="search-container">
+          <input type="text" placeholder="Search..." class="search-input" autocomplete="off" />
+          <button class="search-button" aria-label="Search">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
 
         <div class="services-toggle-container">
           <button class="services-toggle btn" aria-label="Toggle services menu">
             <i class="fas fa-cogs"></i>
             <span class="services-text">Services</span>
-            <i class="fas fa-chevron-down services-arrow" style="transition: transform 0.3s;"></i>
+            <i class="fas fa-chevron-down services-arrow"></i>
           </button>
           <div class="services-dropdown">
             <ul class="services-list">
@@ -146,7 +657,7 @@
           </div>
         </div>
 
-        <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
+        <button class="theme-toggle btn" aria-label="Toggle theme">
           <i class="fas fa-sun sun-icon" style="display: none;"></i>
           <i class="fas fa-moon moon-icon"></i>
           <span class="theme-text">Dark</span>
@@ -162,7 +673,6 @@
   </nav>
 
   <section class="hero">
-
     <div class="hero-content">
       <h2 class="serif">Empowering Agriculture Through Technology</h2>
       <p>AgriTech connects <strong>Farmers</strong>, <strong>Buyers</strong>,
@@ -171,7 +681,7 @@
     </div>
   </section>
 
-  <section class="features loading">
+  <section class="features">
     <div class="features-container">
       <h2 class="features-title serif">Our Platform Benefits</h2>
       <div class="features-grid">
@@ -203,7 +713,8 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <div class="brand-header">
-          <img src="images/logo.png" alt="AgriTech logo" class="footer-logo" style="width: 50px; height: 50px; background: white; padding: 5px; border-radius: 8px;"> <h3 class="serif">AgriTech</h3>
+          <img src="images/logo.png" alt="AgriTech logo">
+          <h3 class="serif">AgriTech</h3>
         </div>
         <p>Empowering India's Farming Future with innovative technology connecting every stakeholder.</p>
       </div>
@@ -217,19 +728,22 @@
           <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
         </ul>
       </div>
-       <div class="footer-links"> <h4 class="serif">Contact</h4>
-         <ul>
-           <li><a href="#"><i class="fas fa-envelope"></i> Email Us</a></li>
-           <li><a href="#"><i class="fas fa-phone"></i> Call Us</a></li>
-         </ul>
-       </div>
+      <div class="footer-links">
+        <h4 class="serif">Contact</h4>
+        <ul>
+          <li><a href="#"><i class="fas fa-envelope"></i> Email Us</a></li>
+          <li><a href="#"><i class="fas fa-phone"></i> Call Us</a></li>
+        </ul>
+      </div>
     </div>
     <div class="footer-bottom">
       <p>© 2025 AgriTech. All rights reserved.</p>
     </div>
   </footer>
 
-  <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant"><i class="fas fa-robot"></i></a>
+  <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
+    <i class="fas fa-robot"></i>
+  </a>
 
   <button class="scroll-btn" id="scrollBtn" title="Scroll">
     <i class="fas fa-arrow-down" id="scrollIcon"></i>
@@ -246,101 +760,71 @@
   <script type="module">
     import * as THREE from 'three';
 
-    // 1. Setup
-    // --------------------------------
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 3, 10); // Set camera position
+    camera.position.set(0, 3, 10);
 
     const renderer = new THREE.WebGLRenderer({
         canvas: document.querySelector('#bg-canvas'),
-        alpha: true // Make canvas background transparent
+        alpha: true
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Added for sharpness
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // 2. Create the Grid
-    // --------------------------------
-    const geometry = new THREE.PlaneGeometry(20, 20, 40, 40); // 20x20 units, 40x40 segments
+    const geometry = new THREE.PlaneGeometry(20, 20, 40, 40);
     const material = new THREE.MeshBasicMaterial({
-        color: 0x22c55e, // AgriTech green
+        color: 0x22c55e,
         wireframe: true
     });
     const plane = new THREE.Mesh(geometry, material);
-    plane.rotation.x = -Math.PI / 2; // Rotate plane to be horizontal
+    plane.rotation.x = -Math.PI / 2;
     scene.add(plane);
 
-    // Store the original vertex positions
     const originalPositions = plane.geometry.attributes.position.array.slice();
     const clock = new THREE.Clock();
 
-    // 3. Handle Mouse Movement
-    // --------------------------------
-    const mouse = new THREE.Vector2(0, 0); // Initialize mouse coordinates
-    const targetMouse = new THREE.Vector2(0, 0); // Target for smoother movement
+    const mouse = new THREE.Vector2(0, 0);
+    const targetMouse = new THREE.Vector2(0, 0);
 
     window.addEventListener('mousemove', (event) => {
-        // Normalize mouse position (-1 to 1) for target
         targetMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         targetMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     });
 
-    // 4. Animation Loop
-    // --------------------------------
     function animate() {
         const t = clock.getElapsedTime();
-
-        // Smoothly interpolate mouse position towards the target
         mouse.x += (targetMouse.x - mouse.x) * 0.05;
         mouse.y += (targetMouse.y - mouse.y) * 0.05;
 
         const positions = plane.geometry.attributes.position.array;
-
-        // Map smoothed mouse's -1 to 1 range to our grid's 20x20 world-space
         const mouseWorld = new THREE.Vector2(mouse.x * 10, mouse.y * 10);
 
-        // Loop through all vertices
         for (let i = 0; i < positions.length; i += 3) {
             const x = originalPositions[i];
             const y = originalPositions[i + 1];
-
-            // 1. Base wave
-            const baseWave = Math.sin(x * 0.5 + t * 0.5) * 0.1 +
-                             Math.sin(y * 0.5 + t * 0.5) * 0.1;
-
-            // 2. Cursor ripple
+            const baseWave = Math.sin(x * 0.5 + t * 0.5) * 0.1 + Math.sin(y * 0.5 + t * 0.5) * 0.1;
             const dist = new THREE.Vector2(x, y).distanceTo(mouseWorld);
-            const influence = Math.max(0, 1 - dist / 5); // Radius of 5
+            const influence = Math.max(0, 1 - dist / 5);
             const ripple = Math.sin(dist * 2 - t * 2) * influence * 0.3;
-
-            // 3. Apply both waves to the z-position (index i + 2)
             positions[i + 2] = baseWave + ripple;
         }
 
-        // Tell Three.js the geometry has been updated
         plane.geometry.attributes.position.needsUpdate = true;
-
-        // Render the scene
         renderer.render(scene, camera);
-
-        // Call animate again on the next frame
         requestAnimationFrame(animate);
     }
 
-    // 5. Handle Window Resizing
-    // --------------------------------
     window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Update pixel ratio on resize
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     });
 
-    // Start the animation!
     animate();
   </script>
+
   <script>
-    // THEME + DROPDOWN LOGIC
     const themeToggle = document.querySelector('.theme-toggle');
     const themeText = document.querySelector('.theme-text');
     const sunIcon = document.querySelector('.sun-icon');
@@ -360,7 +844,7 @@
         }
     };
 
-    const savedTheme = localStorage.getItem('theme') || 'dark'; // Default to dark if nothing saved
+    const savedTheme = localStorage.getItem('theme') || 'dark';
     applyTheme(savedTheme);
 
     themeToggle.addEventListener('click', () => {
@@ -373,54 +857,43 @@
     const servicesDropdown = document.querySelector('.services-dropdown');
     const servicesArrow = document.querySelector('.services-arrow');
 
-    if (servicesToggle && servicesDropdown && servicesArrow) { // Add checks
+    if (servicesToggle && servicesDropdown && servicesArrow) {
         servicesToggle.addEventListener('click', (event) => {
-          event.stopPropagation(); // Prevent click from closing immediately
+          event.stopPropagation();
           servicesDropdown.classList.toggle('active');
           servicesArrow.classList.toggle('rotated');
         });
 
-        // Close dropdown if clicking outside
         document.addEventListener('click', (e) => {
           const container = document.querySelector('.services-toggle-container');
-          // Check if dropdown exists and is active before trying to remove class
           if (container && !container.contains(e.target) && servicesDropdown.classList.contains('active')) {
              servicesDropdown.classList.remove('active');
              servicesArrow.classList.remove('rotated');
           }
         });
-    } else {
-        console.error("Could not find all elements for services dropdown.");
     }
 
-    // SCROLL BUTTON
     const scrollBtn = document.getElementById("scrollBtn");
     const scrollIcon = document.getElementById("scrollIcon");
 
-    if (scrollBtn && scrollIcon) { // Add checks
+    if (scrollBtn && scrollIcon) {
         window.addEventListener("scroll", () => {
-          // Show button only when scrolled down
           if (window.scrollY > 300) {
-            scrollBtn.style.opacity = '1';
-            scrollBtn.style.visibility = 'visible';
-            scrollIcon.classList.remove("fa-arrow-down"); // More robust class change
+            scrollBtn.classList.add('visible');
+            scrollIcon.classList.remove("fa-arrow-down");
             scrollIcon.classList.add("fa-arrow-up");
           } else {
-            // Option 1: Hide completely when near top
-            scrollBtn.style.opacity = '0';
-            scrollBtn.style.visibility = 'hidden';
-            // Ensure icon is down arrow when hidden/at top
+            scrollBtn.classList.remove('visible');
             scrollIcon.classList.remove("fa-arrow-up");
             scrollIcon.classList.add("fa-arrow-down");
           }
         });
+
         scrollBtn.addEventListener("click", () => {
           if (scrollIcon.classList.contains("fa-arrow-up")) {
             window.scrollTo({top: 0, behavior: "smooth"});
           }
         });
-    } else {
-        console.error("Could not find scroll button or icon elements.");
     }
   </script>
 </body>
