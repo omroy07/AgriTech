@@ -126,7 +126,7 @@
         }
 
         .header {
-            background: rgba(30, 41, 59, 0.95);
+            background: var(--bg-secondary);
             backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
             border-radius: 15px;
@@ -212,7 +212,7 @@
         }
 
         .feature-card {
-            background: rgba(30, 41, 59, 0.95);
+            background: var(--bg-secondary);
             backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
             border-radius: 15px;
@@ -282,7 +282,8 @@
         }
 
         .monitoring-dashboard {
-            background: rgba(30, 41, 59, 0.95);
+
+            background: var(--bg-secondary);
             backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
             border-radius: 15px;
@@ -839,6 +840,10 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        [data-theme="dark"] .header::before {
+    opacity: 0.3;
+        }
+
     </style>
 </head>
 <body data-theme="dark">
@@ -890,6 +895,7 @@
             </button>
             <button class="control-btn" onclick="exportData()">
                 <i class="fas fa-download"></i> Export
+                
             </button>
             <button class="control-btn" onclick="refreshData()">
                 <i class="fas fa-sync-alt"></i> Refresh
