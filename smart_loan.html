@@ -334,7 +334,7 @@
     <script>
       function setTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
+        localStorage.setItem('agritech-theme', theme);
         const themeText = document.querySelector('.theme-text');
         if (themeText) themeText.textContent = theme === 'dark' ? 'Dark' : 'Light';
       }
@@ -355,7 +355,7 @@
 
       document.addEventListener('DOMContentLoaded', function () {
         // Initial theme load
-        const savedTheme = localStorage.getItem('theme');
+        const savedTheme = localStorage.getItem('agritech-theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const theme = savedTheme || (prefersDark ? 'dark' : 'light');
         setTheme(theme);
@@ -434,6 +434,7 @@
     <script>
       document.getElementById('year').textContent = new Date().getFullYear();
     </script>
+    <script src="theme.js"></script>
 
 </body>
 

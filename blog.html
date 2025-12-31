@@ -73,6 +73,7 @@
 
     <!-- JavaScript Files -->
     <script src="js/features/favorites.js"></script>
+    <script src="theme.js"></script>
     <script>
         // Simple Favorites Manager - Include it directly to ensure it loads
         if (!window.favoritesManager) {
@@ -395,22 +396,45 @@
             }
         }
 
-        // Theme toggle
+        // Theme toggle with localStorage persistence
         document.getElementById('themeToggle').addEventListener('click', function() {
-            const isDark = document.documentElement.hasAttribute('data-theme');
+            const currentTheme = localStorage.getItem('agritech-theme') || 'dark';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('agritech-theme', newTheme);
+            
             const icon = document.getElementById('themeIcon');
             const text = document.getElementById('themeText');
             
-            if (isDark) {
-                document.documentElement.removeAttribute('data-theme');
-                icon.textContent = '🌙';
-                text.textContent = 'Dark Mode';
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
+            if (newTheme === 'dark') {
                 icon.textContent = '☀️';
                 text.textContent = 'Light Mode';
+            } else {
+                icon.textContent = '🌙';
+                text.textContent = 'Dark Mode';
             }
         });
+        
+        // Apply saved theme on page load
+        function applySavedTheme() {
+            const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            const icon = document.getElementById('themeIcon');
+            const text = document.getElementById('themeText');
+            
+            if (savedTheme === 'dark') {
+                icon.textContent = '☀️';
+                text.textContent = 'Light Mode';
+            } else {
+                icon.textContent = '🌙';
+                text.textContent = 'Dark Mode';
+            }
+        }
+        
+        // Apply theme immediately when script loads
+        applySavedTheme();
 
         // Listen for favorite changes
         document.addEventListener('favoriteToggle', function(event) {

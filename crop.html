@@ -1296,8 +1296,9 @@
         const themeText = document.getElementById('themeText');
 
         // Check for saved theme
-        const savedTheme = localStorage.getItem('cropMonitorTheme') || 'dark';
+        const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
         document.body.setAttribute('data-theme', savedTheme);
+        document.documentElement.setAttribute('data-theme', savedTheme);
         updateThemeButton(savedTheme);
 
         themeToggle.addEventListener('click', () => {
@@ -1305,7 +1306,8 @@
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             
             document.body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('cropMonitorTheme', newTheme);
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('agritech-theme', newTheme);
             updateThemeButton(newTheme);
             showNotification(`Switched to ${newTheme} theme`, 'info');
         });
@@ -1621,5 +1623,6 @@
             }
         });
     </script>
+    <script src="theme.js"></script>
 </body>
 </html>
