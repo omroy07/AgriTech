@@ -69,7 +69,7 @@ git push origin feature/your-feature-name
 
 If you have questions:
 
-- Open an [issue](https://github.com/omroy07/AgriTech/issues)
+- Open an [issue](https://github.com/omroy07/AgriTech/issues)  (ALSO MENTION SWOC & ECWOC clearly)
 - Tag a maintainer in the discussion
 
 We’re happy to assist you!
