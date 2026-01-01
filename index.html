@@ -10,6 +10,42 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    /* 1. DEFINE VARIABLES FOR THEMES */
+    :root {
+      /* DARK MODE DEFAULTS */
+      --bg-color: #030712;
+      --text-color: #ffffff;
+      --text-muted: #cbd5e1;
+      --surface-color: rgba(15, 23, 42, 0.9);
+      --section-bg: rgba(30, 41, 59, 0.7);
+      --border-color: #334155;
+      --accent-color: #22c55e;
+      --input-bg: #333333;
+      --input-border: #555555;
+      --btn-bg: #334155;
+      --btn-text: #ffffff;
+      --btn-hover: #475569;
+      --shadow-color: rgba(0, 0, 0, 0.3);
+    }
+
+    [data-theme="light"] {
+      /* LIGHT MODE OVERRIDES */
+      --bg-color: #f8fafc;        /* Light Gray Background */
+      --text-color: #0f172a;      /* Dark Text */
+      --text-muted: #475569;      /* Gray Text */
+      --surface-color: rgba(255, 255, 255, 0.95); /* White Cards */
+      --section-bg: rgba(241, 245, 249, 0.8); /* Light Gray Sections */
+      --border-color: #cbd5e1;    /* Light Borders */
+      --accent-color: #16a34a;    /* Green */
+      --input-bg: #ffffff;        /* White Inputs */
+      --input-border: #94a3b8;
+      --btn-bg: #e2e8f0;          /* Light Button Bg */
+      --btn-text: #0f172a;        /* Dark Button Text */
+      --btn-hover: #cbd5e1;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /* 2. RESET & BASE STYLES */
     * {
       margin: 0;
       padding: 0;
@@ -32,13 +68,14 @@
     }
 
     body {
-      background-color: #030712;
+      background-color: var(--bg-color); /* Uses Variable */
       font-family: 'Open Sans', sans-serif;
-      color: white;
+      color: var(--text-color);          /* Uses Variable */
       line-height: 1.6;
       overflow-x: hidden;
       touch-action: pan-y;
       -ms-touch-action: pan-y;
+      transition: background-color 0.3s ease, color 0.3s ease; /* Smooth Theme Transition */
     }
 
     #bg-canvas {
@@ -54,14 +91,15 @@
       font-family: 'Libertinus Serif', serif;
     }
 
-    /* NAVBAR STYLES */
+    /* 3. NAVBAR STYLES */
     .navbar {
       position: relative;
       z-index: 100;
-      background: rgba(15, 23, 42, 0.8);
+      background: var(--surface-color); /* Uses Variable */
       backdrop-filter: blur(10px);
       padding: 1rem;
-      border-bottom: 1px solid #334155;
+      border-bottom: 1px solid var(--border-color); /* Uses Variable */
+      transition: background 0.3s ease, border-color 0.3s ease;
     }
 
     .navbar-content {
@@ -89,7 +127,7 @@
     }
 
     .brand a {
-      color: #22c55e;
+      color: var(--accent-color); /* Uses Variable */
       text-decoration: none;
       font-size: 1.5rem;
       font-weight: bold;
@@ -113,15 +151,16 @@
     .search-input {
       padding: 0.5rem;
       border-radius: 4px;
-      border: 1px solid #555;
-      background: #333;
-      color: white;
+      border: 1px solid var(--input-border); /* Uses Variable */
+      background: var(--input-bg);           /* Uses Variable */
+      color: var(--text-color);              /* Uses Variable */
       min-width: 120px;
+      transition: all 0.3s ease;
     }
 
     .search-button {
       padding: 0.5rem 0.75rem;
-      background: #22c55e;
+      background: var(--accent-color);
       border: none;
       border-radius: 4px;
       color: white;
@@ -151,8 +190,8 @@
       position: absolute;
       top: calc(100% + 0.5rem);
       left: 0;
-      background: #1e293b;
-      border: 1px solid #334155;
+      background: var(--surface-color); /* Uses Variable */
+      border: 1px solid var(--border-color); /* Uses Variable */
       border-radius: 0.5rem;
       min-width: 250px;
       padding: 0.5rem;
@@ -161,6 +200,7 @@
       transform: translateY(-10px);
       transition: all 0.3s ease;
       z-index: 1000;
+      box-shadow: 0 4px 12px var(--shadow-color);
     }
 
     .services-dropdown.active {
@@ -180,7 +220,7 @@
     }
 
     .services-list a {
-      color: #cbd5e1;
+      color: var(--text-muted); /* Uses Variable */
       text-decoration: none;
       display: flex;
       align-items: center;
@@ -191,8 +231,8 @@
     }
 
     .services-list a:hover {
-      background: #334155;
-      color: white;
+      background: var(--btn-bg); /* Uses Variable */
+      color: var(--text-color);
     }
 
     .services-list i {
@@ -213,17 +253,19 @@
       align-items: center;
       gap: 0.5rem;
       white-space: nowrap;
-      background: #334155;
-      color: white;
+      background: var(--btn-bg);     /* Uses Variable */
+      color: var(--btn-text);        /* Uses Variable */
     }
 
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 12px var(--shadow-color);
+      background: var(--btn-hover);
     }
 
     .btn-primary {
-      background: #16a34a;
+      background: var(--accent-color);
+      color: white;
     }
 
     .btn-primary:hover {
@@ -232,15 +274,16 @@
 
     .btn-secondary {
       background: transparent;
-      border: 1px solid #4a5568;
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
     }
 
     .btn-secondary:hover {
-      border-color: #22c55e;
+      border-color: var(--accent-color);
       background: rgba(34, 197, 94, 0.1);
     }
 
-    /* HERO SECTION */
+    /* 4. HERO SECTION */
     .hero {
       position: relative;
       z-index: 1;
@@ -253,32 +296,35 @@
     }
 
     .hero-content {
-      background: rgba(0, 0, 0, 0.5);
+      background: var(--surface-color); /* Uses Variable */
       padding: 2rem;
       border-radius: 12px;
       max-width: 800px;
       margin: 0 auto;
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border-color); /* Uses Variable */
+      transition: background 0.3s ease;
     }
 
     .hero-content h2 {
       font-size: 2.5rem;
       margin-bottom: 1rem;
-      color: #22c55e;
+      color: var(--accent-color);
     }
 
     .hero-content p {
       font-size: 1.1rem;
       line-height: 1.8;
+      color: var(--text-color);
     }
 
-    /* FEATURES SECTION */
+    /* 5. FEATURES SECTION */
     .features {
       position: relative;
       z-index: 1;
       padding: 4rem 1rem;
-      background: rgba(30, 41, 59, 0.7);
+      background: var(--section-bg); /* Uses Variable */
+      transition: background 0.3s ease;
     }
 
     .features-container {
@@ -290,7 +336,7 @@
       text-align: center;
       font-size: 2.5rem;
       margin-bottom: 3rem;
-      color: #22c55e;
+      color: var(--accent-color);
     }
 
     .features-grid {
@@ -300,43 +346,45 @@
     }
 
     .feature-card {
-      background: rgba(15, 23, 42, 0.8);
+      background: var(--surface-color); /* Uses Variable */
       padding: 2rem;
       border-radius: 12px;
-      border: 1px solid #334155;
+      border: 1px solid var(--border-color); /* Uses Variable */
       transition: all 0.3s ease;
       text-align: center;
     }
 
     .feature-card:hover {
       transform: translateY(-5px);
-      border-color: #22c55e;
+      border-color: var(--accent-color);
       box-shadow: 0 8px 24px rgba(34, 197, 94, 0.2);
     }
 
     .feature-icon {
       font-size: 3rem;
       margin-bottom: 1rem;
+      color: var(--text-color);
     }
 
     .feature-title {
       font-size: 1.5rem;
       margin-bottom: 1rem;
-      color: #22c55e;
+      color: var(--accent-color);
     }
 
     .feature-description {
-      color: #cbd5e1;
+      color: var(--text-muted); /* Uses Variable */
       line-height: 1.6;
     }
 
-    /* FOOTER */
+    /* 6. FOOTER */
     .site-footer {
       position: relative;
       z-index: 1;
       padding: 3rem 1rem;
-      background: rgba(15, 23, 42, 0.9);
-      border-top: 1px solid #334155;
+      background: var(--surface-color); /* Uses Variable */
+      border-top: 1px solid var(--border-color); /* Uses Variable */
+      transition: background 0.3s ease;
     }
 
     .footer-inner {
@@ -369,7 +417,7 @@
     }
 
     .brand-header h3 {
-      color: #22c55e;
+      color: var(--accent-color);
     }
 
     .footer-links {
@@ -378,7 +426,7 @@
     }
 
     .footer-links h4 {
-      color: #22c55e;
+      color: var(--accent-color);
       margin-bottom: 1rem;
     }
 
@@ -387,7 +435,7 @@
     }
 
     .footer-links a {
-      color: #cbd5e1;
+      color: var(--text-muted); /* Uses Variable */
       text-decoration: none;
       display: block;
       padding: 0.4rem 0;
@@ -395,14 +443,14 @@
     }
 
     .footer-links a:hover {
-      color: white;
+      color: var(--text-color);
     }
 
     .footer-bottom {
-      border-top: 1px solid #334155;
+      border-top: 1px solid var(--border-color); /* Uses Variable */
       padding-top: 1rem;
       text-align: center;
-      color: #94a3b8;
+      color: var(--text-muted);
     }
 
     /* FLOATING BUTTONS */
@@ -444,7 +492,7 @@
       visibility: visible;
     }
 
-    /* MOBILE RESPONSIVE - Better alignment */
+    /* MOBILE RESPONSIVE */
     @media (max-width: 1024px) {
       .navbar-content {
         justify-content: center;
