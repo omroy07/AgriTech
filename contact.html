@@ -211,28 +211,36 @@
   </div>
 
   <script>
-    // Theme toggle functionality
+    // Theme toggle functionality with localStorage persistence
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
 
     themeToggle.addEventListener('click', () => {
-      body.classList.toggle('dark-mode');
-      const icon = themeToggle.querySelector('i');
-
-      if (body.classList.contains('dark-mode')) {
-        icon.className = 'fas fa-sun';
-        localStorage.setItem('theme', 'dark');
+      const currentTheme = localStorage.getItem('agritech-theme') || 'dark';
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      
+      if (newTheme === 'dark') {
+        body.classList.add('dark-mode');
+        themeToggle.querySelector('i').className = 'fas fa-sun';
       } else {
-        icon.className = 'fas fa-moon';
-        localStorage.setItem('theme', 'light');
+        body.classList.remove('dark-mode');
+        themeToggle.querySelector('i').className = 'fas fa-moon';
       }
+      
+      localStorage.setItem('agritech-theme', newTheme);
+      document.documentElement.setAttribute('data-theme', newTheme);
     });
 
     // Load saved theme
-    const savedTheme = localStorage.getItem('theme');
+    const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
     if (savedTheme === 'dark') {
       body.classList.add('dark-mode');
+      document.documentElement.setAttribute('data-theme', 'dark');
       themeToggle.querySelector('i').className = 'fas fa-sun';
+    } else {
+      body.classList.remove('dark-mode');
+      document.documentElement.setAttribute('data-theme', 'light');
+      themeToggle.querySelector('i').className = 'fas fa-moon';
     }
 
     // Form submission
@@ -255,5 +263,6 @@
       });
     });
   </script>
+  <script src="theme.js"></script>
 </body>
 </html>

@@ -881,7 +881,7 @@
 
     const applyTheme = (theme) => {
         document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
+        localStorage.setItem('agritech-theme', theme);
         if (theme === 'dark') {
             themeText.textContent = 'Light';
             moonIcon.style.display = 'none';
@@ -893,7 +893,7 @@
         }
     };
 
-    const savedTheme = localStorage.getItem('theme') || 'dark';
+    const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
     applyTheme(savedTheme);
 
     themeToggle.addEventListener('click', () => {
@@ -945,5 +945,6 @@
         });
     }
   </script>
+  <script src="theme.js"></script>
 </body>
 </html>

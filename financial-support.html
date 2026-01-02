@@ -1010,7 +1010,7 @@
     const themeText = document.getElementById('themeText');
 
     // Check for saved theme
-    const savedTheme = localStorage.getItem('theme') || 'dark';
+    const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeButton(savedTheme);
 
@@ -1019,7 +1019,7 @@
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
       
       document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
+      localStorage.setItem('agritech-theme', newTheme);
       updateThemeButton(newTheme);
     });
 
@@ -1217,6 +1217,7 @@
       showNotification('Welcome to AgriTech Financial Services!');
     });
   </script>
+  <script src="theme.js"></script>
 </body>
 
 </html>
