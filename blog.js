@@ -1,4 +1,4 @@
-// Sample blog data
+// Sample blog data - UPDATED with full content for "Read More" functionality
 const blogPosts = [
     {
         id: 'sustainable-farming-2025',
@@ -6,7 +6,18 @@ const blogPosts = [
         category: "sustainability",
         description: "Discover innovative sustainable farming techniques that are revolutionizing agriculture.",
         image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&h=250&fit=crop",
-        content: `<p>Sustainable farming practices for modern agriculture.</p>`,
+        // ADDED: Full article content
+        content: `
+            <p><strong>Sustainability is no longer a choice; it's a necessity.</strong> As we move into 2025, modern agriculture is seeing a massive shift towards eco-friendly practices that not only protect the environment but also improve long-term yield.</p>
+            
+            <h4>1. Precision Irrigation</h4>
+            <p>Water scarcity is a major concern. New drip irrigation systems powered by IoT sensors can reduce water usage by up to 40% by delivering water directly to the root zone only when moisture levels drop.</p>
+
+            <h4>2. Regenerative Agriculture</h4>
+            <p>Farmers are moving away from heavy tilling. No-till farming helps maintain soil structure, retain water, and sequester carbon. Cover crops like clover and rye are being used extensively to restore soil nutrients naturally.</p>
+            
+            <p>By adopting these methods, farmers can lower their input costs while ensuring their land remains fertile for generations to come.</p>
+        `,
         author: "Dr. Sarah Green",
         date: "2025-01-10"
     },
@@ -16,7 +27,18 @@ const blogPosts = [
         category: "technology",
         description: "How artificial intelligence is transforming farming operations.",
         image: "https://images.unsplash.com/photo-1555255707-c07966088b7b?w=400&h=250&fit=crop",
-        content: `<p>AI applications in modern farming.</p>`,
+        // ADDED: Full article content
+        content: `
+            <p>Artificial Intelligence is not just for tech companies—it is revolutionizing the farm. From predictive analytics to autonomous tractors, AI is helping farmers make smarter decisions.</p>
+
+            <h4>Predictive Analytics</h4>
+            <p>Using historical weather data and soil conditions, AI models can now predict crop yields with over 90% accuracy. This allows farmers to plan their supply chain logistics weeks in advance.</p>
+
+            <h4>Drone Technology</h4>
+            <p>Drones equipped with multispectral cameras can scan fields to detect early signs of pest infestations or nutrient deficiencies. This "precision spraying" means chemicals are only used exactly where needed, reducing cost and environmental impact.</p>
+
+            <p>The future of farming is data-driven, and AI is the engine driving this change.</p>
+        `,
         author: "Tech Farm Review",
         date: "2025-01-08"
     },
@@ -26,7 +48,18 @@ const blogPosts = [
         category: "sustainability",
         description: "Natural ways to protect crops from pests without chemicals.",
         image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&h=250&fit=crop",
-        content: `<p>Organic pest control methods.</p>`,
+        // ADDED: Full article content
+        content: `
+            <p>Chemical pesticides have long been the standard, but they come with heavy costs to biodiversity and soil health. Organic pest control is proving to be a powerful alternative.</p>
+
+            <h4>Beneficial Insects</h4>
+            <p>Introducing predators like Ladybugs and Lacewings can naturally control aphid populations. This biological warfare creates a balanced ecosystem where pests are managed without toxic sprays.</p>
+
+            <h4>Neem Oil & Natural Sprays</h4>
+            <p>Neem oil acts as a powerful repellent for over 200 species of chewing or sucking insects. Unlike synthetic chemicals, it is biodegradable and non-toxic to birds and mammals.</p>
+
+            <p>Transitioning to organic control takes time, but the premium price of organic produce makes it a worthy investment.</p>
+        `,
         author: "Organic Farming Association", 
         date: "2025-01-05"
     }
@@ -75,6 +108,7 @@ function setupEventListeners() {
         button.addEventListener('click', function() {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
+            this.classList.add('active');
             currentCategory = this.dataset.category;
             filterPosts();
         });
@@ -88,7 +122,10 @@ function setupEventListeners() {
     window.addEventListener('click', (e) => e.target === modal && closeModal());
 
     // Modal favorite button
-    document.getElementById('modalFavoriteBtn').addEventListener('click', toggleModalFavorite);
+    const modalFavBtn = document.getElementById('modalFavoriteBtn');
+    if (modalFavBtn) {
+        modalFavBtn.addEventListener('click', toggleModalFavorite);
+    }
 
     // Event delegation for favorite buttons
     document.addEventListener('click', function(e) {
@@ -214,23 +251,51 @@ function loadMorePosts() {
     displayPosts();
 }
 
+// === FIX APPLIED HERE ===
 function openModal(postId) {
     const post = blogPosts.find(p => p.id === postId);
     if (!post) return;
 
     currentModalPostId = postId;
-    document.getElementById('modalTitle').textContent = post.title;
-    document.getElementById('modalCategory').textContent = post.category.replace('-', ' ');
-    document.getElementById('modalImage').src = post.image;
-    document.getElementById('modalContent').innerHTML = post.content;
+    
+    // 1. Basic Info
+    const titleEl = document.getElementById('modalTitle');
+    if (titleEl) titleEl.textContent = post.title;
+
+    const catEl = document.getElementById('modalCategory');
+    if (catEl) catEl.textContent = post.category.replace('-', ' ');
+
+    const imgEl = document.getElementById('modalImage');
+    if (imgEl) imgEl.src = post.image;
+
+    // 2. Full Content (This now works because we updated the data above)
+    const contentEl = document.getElementById('modalContent');
+    if (contentEl) contentEl.innerHTML = post.content;
+
+    // 3. NEW: Author and Date Logic
+    // We add checks (if/else) just in case the HTML IDs don't exist yet
+    const authorEl = document.getElementById('modalAuthor');
+    if (authorEl) {
+        authorEl.textContent = `By ${post.author}`;
+    }
+
+    const dateEl = document.getElementById('modalDate');
+    if (dateEl) {
+        dateEl.textContent = post.date;
+    }
 
     updateModalFavoriteButton();
-    document.getElementById('blogModal').style.display = 'block';
-    document.body.style.overflow = 'hidden';
+    
+    const modal = document.getElementById('blogModal');
+    if (modal) {
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
 }
 
 function closeModal() {
-    document.getElementById('blogModal').style.display = 'none';
+    const modal = document.getElementById('blogModal');
+    if (modal) modal.style.display = 'none';
     document.body.style.overflow = 'auto';
     currentModalPostId = null;
 }
@@ -240,10 +305,12 @@ function updateModalFavoriteButton() {
     
     const isFavorite = window.favoritesManager.isFavorite(currentModalPostId);
     const button = document.getElementById('modalFavoriteBtn');
-    const icon = button.querySelector('i');
     
-    button.classList.toggle('active', isFavorite);
-    icon.className = isFavorite ? 'fas fa-heart' : 'far fa-heart';
+    if (button) {
+        const icon = button.querySelector('i');
+        button.classList.toggle('active', isFavorite);
+        icon.className = isFavorite ? 'fas fa-heart' : 'far fa-heart';
+    }
 }
 
 function toggleModalFavorite() {
@@ -253,21 +320,24 @@ function toggleModalFavorite() {
 }
 
 // Theme toggle
-document.getElementById('themeToggle').addEventListener('click', function() {
-    const isDark = document.documentElement.hasAttribute('data-theme');
-    const icon = document.getElementById('themeIcon');
-    const text = document.getElementById('themeText');
-    
-    if (isDark) {
-        document.documentElement.removeAttribute('data-theme');
-        icon.textContent = '🌙';
-        text.textContent = 'Dark Mode';
-    } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        icon.textContent = '☀️';
-        text.textContent = 'Light Mode';
-    }
-});
+const themeToggleBtn = document.getElementById('themeToggle');
+if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', function() {
+        const isDark = document.documentElement.hasAttribute('data-theme');
+        const icon = document.getElementById('themeIcon');
+        const text = document.getElementById('themeText');
+        
+        if (isDark) {
+            document.documentElement.removeAttribute('data-theme');
+            if(icon) icon.textContent = '🌙';
+            if(text) text.textContent = 'Dark Mode';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            if(icon) icon.textContent = '☀️';
+            if(text) text.textContent = 'Light Mode';
+        }
+    });
+}
 
 // Listen for favorite changes
 document.addEventListener('favoriteToggle', function(event) {
