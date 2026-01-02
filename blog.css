@@ -319,19 +319,21 @@
     width: 90%;
     max-width: 800px;
     max-height: 90vh;
-    overflow-y: auto;
+    /* overflow-y: auto;  <-- REMOVED THIS to let .modal-body handle scrolling */
     position: relative;
     animation: slideIn 0.3s ease;
+    display: flex; /* NEW: Helps with scrolling layout */
+    flex-direction: column;
 }
 
 .modal-header {
     padding: 2rem;
     border-bottom: 1px solid #eee;
-    position: sticky;
-    top: 0;
+    position: relative; /* Changed from sticky to relative for better layout */
     background: white;
     z-index: 10;
     border-radius: 15px 15px 0 0;
+    flex-shrink: 0; /* Prevents header from squishing */
 }
 
 .modal-title {
@@ -352,10 +354,6 @@
     text-transform: capitalize;
 }
 
-.modal-body {
-    padding: 2rem;
-}
-
 .modal-image {
     width: 100%;
     height: 300px;
@@ -364,6 +362,7 @@
     margin-bottom: 2rem;
 }
 
+/* Typography for Article Content */
 .modal-text {
     color: #333;
     line-height: 1.8;
@@ -765,4 +764,67 @@
         width: 100%;
         justify-content: center;
     }
+}
+
+
+/* =========================================
+   NEW FIXES: Modal & Metadata Styling
+   ========================================= */
+
+/* Metadata Row (Author & Date) */
+.modal-meta {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 0.9rem;
+    color: #94a3b8; /* Slate-400 for dark mode contrast */
+    margin-top: 5px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.modal-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.modal-meta i {
+    color: #4CAF50; /* Green accent */
+}
+
+/* Scrollable Body Fix */
+.modal-body {
+    padding: 2rem;
+    max-height: 65vh; /* Prevents modal from being taller than screen */
+    overflow-y: auto; /* Adds scrollbar inside the modal if text is long */
+}
+
+/* Custom Scrollbar */
+.modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+/* Dark Mode Updates for New Elements */
+[data-theme="dark"] .modal-meta {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #a0aec0;
+}
+
+[data-theme="dark"] .modal-body::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .modal-body::-webkit-scrollbar-thumb {
+    background: #4a5568;
 }

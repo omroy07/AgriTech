@@ -1,4 +1,90 @@
-// Sample blog data
+/* =========================================
+   FAVORITES MANAGER
+   (Restored logic to make the Heart buttons work)
+   ========================================= */
+class FavoritesManager {
+    constructor() {
+        this.storageKey = 'agritech_favorite_blogs';
+        this.favorites = JSON.parse(localStorage.getItem(this.storageKey)) || [];
+        window.favoritesManager = this;
+        console.log('✅ FavoritesManager initialized');
+    }
+
+    isFavorite(blogId) {
+        return this.favorites.some(blog => blog.id === blogId);
+    }
+
+    addToFavorites(blogData) {
+        if (this.isFavorite(blogData.id)) return false;
+        
+        // Add timestamp
+        blogData.addedAt = new Date().toISOString();
+        this.favorites.push(blogData);
+        this.save();
+        
+        this.showNotification(`Added to favorites: ${blogData.title}`, 'success');
+        this.dispatchEvent(blogData.id, true);
+        return true;
+    }
+
+    removeFromFavorites(blogId) {
+        this.favorites = this.favorites.filter(blog => blog.id !== blogId);
+        this.save();
+        
+        this.showNotification('Removed from favorites', 'error');
+        this.dispatchEvent(blogId, false);
+        return true;
+    }
+
+    getFavorites() {
+        return this.favorites;
+    }
+
+    save() {
+        localStorage.setItem(this.storageKey, JSON.stringify(this.favorites));
+    }
+
+    dispatchEvent(blogId, isFavorite) {
+        const event = new CustomEvent('favoriteToggle', {
+            detail: { blogId, isFavorite }
+        });
+        document.dispatchEvent(event);
+    }
+
+    showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.textContent = message;
+        notification.className = `favorite-notification favorite-notification-${type}`;
+        
+        // Minimal inline styles for notification to ensure it works
+        Object.assign(notification.style, {
+            position: 'fixed',
+            top: '20px',
+            right: '20px',
+            padding: '12px 20px',
+            borderRadius: '8px',
+            color: 'white',
+            fontWeight: '500',
+            zIndex: '10000',
+            background: type === 'success' ? '#2c5f2d' : '#e74c3c',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
+        });
+
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 3000);
+    }
+}
+
+// Initialize immediately so it's ready before the page loads
+if (!window.favoritesManager) {
+    new FavoritesManager();
+}
+
+/* =========================================
+   BLOG LOGIC & DATA
+   ========================================= */
+
+// Sample blog data - UPDATED with full content for "Read More" functionality
 const blogPosts = [
     {
         id: 'sustainable-farming-2025',
@@ -6,7 +92,17 @@ const blogPosts = [
         category: "sustainability",
         description: "Discover innovative sustainable farming techniques that are revolutionizing agriculture.",
         image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&h=250&fit=crop",
-        content: `<p>Sustainable farming practices for modern agriculture.</p>`,
+        content: `
+            <p><strong>Sustainability is no longer a choice; it's a necessity.</strong> As we move into 2025, modern agriculture is seeing a massive shift towards eco-friendly practices that not only protect the environment but also improve long-term yield.</p>
+            
+            <h4>1. Precision Irrigation</h4>
+            <p>Water scarcity is a major concern. New drip irrigation systems powered by IoT sensors can reduce water usage by up to 40% by delivering water directly to the root zone only when moisture levels drop.</p>
+
+            <h4>2. Regenerative Agriculture</h4>
+            <p>Farmers are moving away from heavy tilling. No-till farming helps maintain soil structure, retain water, and sequester carbon. Cover crops like clover and rye are being used extensively to restore soil nutrients naturally.</p>
+            
+            <p>By adopting these methods, farmers can lower their input costs while ensuring their land remains fertile for generations to come.</p>
+        `,
         author: "Dr. Sarah Green",
         date: "2025-01-10"
     },
@@ -16,7 +112,17 @@ const blogPosts = [
         category: "technology",
         description: "How artificial intelligence is transforming farming operations.",
         image: "https://images.unsplash.com/photo-1555255707-c07966088b7b?w=400&h=250&fit=crop",
-        content: `<p>AI applications in modern farming.</p>`,
+        content: `
+            <p>Artificial Intelligence is not just for tech companies—it is revolutionizing the farm. From predictive analytics to autonomous tractors, AI is helping farmers make smarter decisions.</p>
+
+            <h4>Predictive Analytics</h4>
+            <p>Using historical weather data and soil conditions, AI models can now predict crop yields with over 90% accuracy. This allows farmers to plan their supply chain logistics weeks in advance.</p>
+
+            <h4>Drone Technology</h4>
+            <p>Drones equipped with multispectral cameras can scan fields to detect early signs of pest infestations or nutrient deficiencies. This "precision spraying" means chemicals are only used exactly where needed, reducing cost and environmental impact.</p>
+
+            <p>The future of farming is data-driven, and AI is the engine driving this change.</p>
+        `,
         author: "Tech Farm Review",
         date: "2025-01-08"
     },
@@ -26,7 +132,17 @@ const blogPosts = [
         category: "sustainability",
         description: "Natural ways to protect crops from pests without chemicals.",
         image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&h=250&fit=crop",
-        content: `<p>Organic pest control methods.</p>`,
+        content: `
+            <p>Chemical pesticides have long been the standard, but they come with heavy costs to biodiversity and soil health. Organic pest control is proving to be a powerful alternative.</p>
+
+            <h4>Beneficial Insects</h4>
+            <p>Introducing predators like Ladybugs and Lacewings can naturally control aphid populations. This biological warfare creates a balanced ecosystem where pests are managed without toxic sprays.</p>
+
+            <h4>Neem Oil & Natural Sprays</h4>
+            <p>Neem oil acts as a powerful repellent for over 200 species of chewing or sucking insects. Unlike synthetic chemicals, it is biodegradable and non-toxic to birds and mammals.</p>
+
+            <p>Transitioning to organic control takes time, but the premium price of organic produce makes it a worthy investment.</p>
+        `,
         author: "Organic Farming Association", 
         date: "2025-01-05"
     }
@@ -44,31 +160,28 @@ let currentModalPostId = null;
 document.addEventListener('DOMContentLoaded', function() {
     console.log('📄 DOM loaded, initializing blog...');
     
-    // Wait a bit for FavoritesManager to initialize
+    // Slight delay to ensure FavoritesManager is attached if it wasn't already
     setTimeout(() => {
         if (!window.favoritesManager) {
-            console.error('❌ FavoritesManager not found! Check file paths.');
-            // Create a fallback
-            window.favoritesManager = {
-                isFavorite: () => false,
-                addToFavorites: () => console.log('Favorites not available'),
-                removeFromFavorites: () => console.log('Favorites not available'),
-                getFavorites: () => []
-            };
+            console.error('⚠️ FavoritesManager missing, creating fallback...');
+            window.favoritesManager = new FavoritesManager();
         }
         
         displayPosts();
         setupEventListeners();
         updateFavoriteCounter();
-    }, 100);
+    }, 50);
 });
 
 function setupEventListeners() {
     // Search
-    document.getElementById('searchInput').addEventListener('input', function() {
-        searchQuery = this.value.toLowerCase();
-        filterPosts();
-    });
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            searchQuery = this.value.toLowerCase();
+            filterPosts();
+        });
+    }
 
     // Filters
     document.querySelectorAll('.filter-btn').forEach(button => {
@@ -81,16 +194,29 @@ function setupEventListeners() {
     });
 
     // Load more
-    document.getElementById('loadMoreBtn').addEventListener('click', loadMorePosts);
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', loadMorePosts);
+    }
 
-    // Modal
-    document.querySelector('.close').addEventListener('click', closeModal);
-    window.addEventListener('click', (e) => e.target === modal && closeModal());
+    // Modal Close
+    const closeBtn = document.querySelector('.close');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+    }
+    
+    const modal = document.getElementById('blogModal');
+    if (modal) {
+        window.addEventListener('click', (e) => e.target === modal && closeModal());
+    }
 
     // Modal favorite button
-    document.getElementById('modalFavoriteBtn').addEventListener('click', toggleModalFavorite);
+    const modalFavBtn = document.getElementById('modalFavoriteBtn');
+    if (modalFavBtn) {
+        modalFavBtn.addEventListener('click', toggleModalFavorite);
+    }
 
-    // Event delegation for favorite buttons
+    // Event delegation for favorite buttons on cards
     document.addEventListener('click', function(e) {
         if (e.target.closest('.favorite-btn')) {
             const button = e.target.closest('.favorite-btn');
@@ -117,23 +243,30 @@ function filterPosts() {
     });
 
     currentPage = 0;
-    document.getElementById('blogGrid').innerHTML = '';
-    displayPosts();
+    const blogGrid = document.getElementById('blogGrid');
+    if (blogGrid) {
+        blogGrid.innerHTML = '';
+        displayPosts();
+    }
 }
 
 function displayPosts() {
     const blogGrid = document.getElementById('blogGrid');
+    if (!blogGrid) return;
+
     const startIndex = currentPage * postsPerPage;
     const postsToShow = filteredPosts.slice(startIndex, startIndex + postsPerPage);
 
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+
     if (postsToShow.length === 0) {
         blogGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem;">No posts found.</div>';
-        document.getElementById('loadMoreBtn').style.display = 'none';
+        if (loadMoreBtn) loadMoreBtn.style.display = 'none';
         return;
     }
 
     postsToShow.forEach(post => {
-        const isFavorite = window.favoritesManager.isFavorite(post.id);
+        const isFavorite = window.favoritesManager ? window.favoritesManager.isFavorite(post.id) : false;
         const postElement = document.createElement('div');
         postElement.className = 'blog-card';
         postElement.innerHTML = `
@@ -155,16 +288,16 @@ function displayPosts() {
         blogGrid.appendChild(postElement);
     });
 
-    document.getElementById('loadMoreBtn').style.display = 
-        (currentPage + 1) * postsPerPage >= filteredPosts.length ? 'none' : 'inline-block';
+    if (loadMoreBtn) {
+        loadMoreBtn.style.display = 
+            (currentPage + 1) * postsPerPage >= filteredPosts.length ? 'none' : 'inline-block';
+    }
 }
 
 function toggleFavorite(blogId) {
-    console.log('🔄 Toggling favorite for:', blogId);
-    
     if (!window.favoritesManager) {
-        alert('❌ Favorites feature not loaded. Check browser console for errors.');
-        return;
+        // Fallback re-init
+        window.favoritesManager = new FavoritesManager();
     }
 
     const post = blogPosts.find(p => p.id === blogId);
@@ -200,8 +333,10 @@ function updateFavoriteButtons(blogId) {
     
     buttons.forEach(button => {
         const icon = button.querySelector('i');
-        button.classList.toggle('active', isFavorite);
-        icon.className = isFavorite ? 'fas fa-heart' : 'far fa-heart';
+        if (icon) {
+            button.classList.toggle('active', isFavorite);
+            icon.className = isFavorite ? 'fas fa-heart' : 'far fa-heart';
+        }
     });
 
     if (currentModalPostId === blogId) {
@@ -219,18 +354,44 @@ function openModal(postId) {
     if (!post) return;
 
     currentModalPostId = postId;
-    document.getElementById('modalTitle').textContent = post.title;
-    document.getElementById('modalCategory').textContent = post.category.replace('-', ' ');
-    document.getElementById('modalImage').src = post.image;
-    document.getElementById('modalContent').innerHTML = post.content;
+    
+    // 1. Basic Info
+    const titleEl = document.getElementById('modalTitle');
+    if (titleEl) titleEl.textContent = post.title;
+
+    const catEl = document.getElementById('modalCategory');
+    if (catEl) catEl.textContent = post.category.replace('-', ' ');
+
+    const imgEl = document.getElementById('modalImage');
+    if (imgEl) imgEl.src = post.image;
+
+    // 2. Full Content
+    const contentEl = document.getElementById('modalContent');
+    if (contentEl) contentEl.innerHTML = post.content;
+
+    // 3. Metadata (Author/Date)
+    const authorEl = document.getElementById('modalAuthor');
+    if (authorEl) {
+        authorEl.innerHTML = `<i class="fas fa-user"></i> By ${post.author}`;
+    }
+
+    const dateEl = document.getElementById('modalDate');
+    if (dateEl) {
+        dateEl.innerHTML = `<i class="far fa-calendar-alt"></i> ${post.date}`;
+    }
 
     updateModalFavoriteButton();
-    document.getElementById('blogModal').style.display = 'block';
-    document.body.style.overflow = 'hidden';
+    
+    const modal = document.getElementById('blogModal');
+    if (modal) {
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
 }
 
 function closeModal() {
-    document.getElementById('blogModal').style.display = 'none';
+    const modal = document.getElementById('blogModal');
+    if (modal) modal.style.display = 'none';
     document.body.style.overflow = 'auto';
     currentModalPostId = null;
 }
@@ -240,10 +401,12 @@ function updateModalFavoriteButton() {
     
     const isFavorite = window.favoritesManager.isFavorite(currentModalPostId);
     const button = document.getElementById('modalFavoriteBtn');
-    const icon = button.querySelector('i');
     
-    button.classList.toggle('active', isFavorite);
-    icon.className = isFavorite ? 'fas fa-heart' : 'far fa-heart';
+    if (button) {
+        const icon = button.querySelector('i');
+        button.classList.toggle('active', isFavorite);
+        icon.className = isFavorite ? 'fas fa-heart' : 'far fa-heart';
+    }
 }
 
 function toggleModalFavorite() {
@@ -252,33 +415,49 @@ function toggleModalFavorite() {
     }
 }
 
-// Theme toggle
-document.getElementById('themeToggle').addEventListener('click', function() {
-    const isDark = document.documentElement.hasAttribute('data-theme');
-    const icon = document.getElementById('themeIcon');
-    const text = document.getElementById('themeText');
-    
-    if (isDark) {
-        document.documentElement.removeAttribute('data-theme');
-        icon.textContent = '🌙';
-        text.textContent = 'Dark Mode';
-    } else {
+/* =========================================
+   THEME TOGGLE (With Memory)
+   ========================================= */
+
+const themeToggleBtn = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const themeText = document.getElementById('themeText');
+
+// 1. Function to Apply Theme
+function applyTheme(theme) {
+    // Set the attribute on the HTML tag
+    if (theme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
-        icon.textContent = '☀️';
-        text.textContent = 'Light Mode';
+        if (themeIcon) themeIcon.textContent = '☀️';
+        if (themeText) themeText.textContent = 'Light Mode';
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+        if (themeIcon) themeIcon.textContent = '🌙';
+        if (themeText) themeText.textContent = 'Dark Mode';
+    }
+}
+
+// 2. Check for saved preference on load
+const savedTheme = localStorage.getItem('agritech-theme') || 'dark'; // Default to dark
+applyTheme(savedTheme);
+
+// 3. Toggle Logic
+if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', function() {
+        const isDark = document.documentElement.hasAttribute('data-theme');
+        const newTheme = isDark ? 'light' : 'dark';
+        
+        applyTheme(newTheme);
+        
+        // Save to browser memory
+        localStorage.setItem('agritech-theme', newTheme);
+    });
+}
+
+// Listen for favorite changes from other components
+document.addEventListener('favoriteToggle', function(event) {
+    if (event.detail) {
+        updateFavoriteButtons(event.detail.blogId);
+        updateFavoriteCounter();
     }
 });
-
-// Listen for favorite changes
-document.addEventListener('favoriteToggle', function(event) {
-    console.log('📢 Favorite event received:', event.detail);
-    updateFavoriteButtons(event.detail.blogId);
-    updateFavoriteCounter();
-});
-
-// Debug function
-window.debugFavorites = function() {
-    console.log('=== DEBUG INFO ===');
-    console.log('FavoritesManager:', window.favoritesManager);
-    console.log('Favorites:', window.favoritesManager?.getFavorites());
-};
