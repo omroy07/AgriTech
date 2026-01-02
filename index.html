@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/png" href="images/logo.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="description" content="AgriTech - Empowering Agriculture Through Technology. Connect farmers, buyers, and suppliers in India's agricultural ecosystem." />
@@ -240,8 +241,16 @@
       <div class="footer-links">
         <h4 class="serif">Contact</h4>
         <ul>
-          <li><a href="#"><i class="fas fa-envelope"></i> Email Us</a></li>
-          <li><a href="#"><i class="fas fa-phone"></i> Call Us</a></li>
+          <li>
+            <a href="mailto:contact@agritech.com">
+              <i class="fas fa-envelope"></i> Email Us
+            </a>
+          </li>
+          <li>
+            <a href="tel:+910000000000">
+              <i class="fas fa-phone"></i> Call Us
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -333,6 +342,82 @@
     animate();
   </script>
 
+
   <script src="index.js"></script>
+=======
+  <script>
+    const themeToggle = document.querySelector('.theme-toggle');
+    const themeText = document.querySelector('.theme-text');
+    const sunIcon = document.querySelector('.sun-icon');
+    const moonIcon = document.querySelector('.moon-icon');
+
+    const applyTheme = (theme) => {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('agritech-theme', theme);
+        if (theme === 'dark') {
+            themeText.textContent = 'Light';
+            moonIcon.style.display = 'none';
+            sunIcon.style.display = 'inline-block';
+        } else {
+            themeText.textContent = 'Dark';
+            moonIcon.style.display = 'inline-block';
+            sunIcon.style.display = 'none';
+        }
+    };
+
+    const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
+    applyTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      applyTheme(next);
+    });
+
+    const servicesToggle = document.querySelector('.services-toggle');
+    const servicesDropdown = document.querySelector('.services-dropdown');
+    const servicesArrow = document.querySelector('.services-arrow');
+
+    if (servicesToggle && servicesDropdown && servicesArrow) {
+        servicesToggle.addEventListener('click', (event) => {
+          event.stopPropagation();
+          servicesDropdown.classList.toggle('active');
+          servicesArrow.classList.toggle('rotated');
+        });
+
+        document.addEventListener('click', (e) => {
+          const container = document.querySelector('.services-toggle-container');
+          if (container && !container.contains(e.target) && servicesDropdown.classList.contains('active')) {
+             servicesDropdown.classList.remove('active');
+             servicesArrow.classList.remove('rotated');
+          }
+        });
+    }
+
+    const scrollBtn = document.getElementById("scrollBtn");
+    const scrollIcon = document.getElementById("scrollIcon");
+
+    if (scrollBtn && scrollIcon) {
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 300) {
+            scrollBtn.classList.add('visible');
+            scrollIcon.classList.remove("fa-arrow-down");
+            scrollIcon.classList.add("fa-arrow-up");
+          } else {
+            scrollBtn.classList.remove('visible');
+            scrollIcon.classList.remove("fa-arrow-up");
+            scrollIcon.classList.add("fa-arrow-down");
+          }
+        });
+
+        scrollBtn.addEventListener("click", () => {
+          if (scrollIcon.classList.contains("fa-arrow-up")) {
+            window.scrollTo({top: 0, behavior: "smooth"});
+          }
+        });
+    }
+  </script>
+  <script src="theme.js"></script>
+
 </body>
 </html>
