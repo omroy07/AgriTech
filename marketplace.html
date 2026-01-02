@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
+        rel="stylesheet">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/logo.png">
-    
+
     <style>
         :root {
             /* Dark Theme Variables */
@@ -149,8 +152,13 @@
         }
 
         @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .header-content {
@@ -207,7 +215,7 @@
         .search-box input:focus {
             outline: none;
             border-color: var(--accent-primary);
-            box-shadow: 0 0 10px rgba(253,121,168,0.2);
+            box-shadow: 0 0 10px rgba(253, 121, 168, 0.2);
         }
 
         .search-box .search-btn {
@@ -291,7 +299,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             transform: rotate(45deg);
             transition: all 0.6s ease;
             opacity: 0;
@@ -303,13 +311,18 @@
         }
 
         @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
         }
 
         .stat-card:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(253,121,168,0.3);
+            box-shadow: 0 8px 25px rgba(253, 121, 168, 0.3);
         }
 
         .stat-value {
@@ -375,7 +388,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             transition: left 0.5s;
         }
 
@@ -415,8 +428,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
         }
 
         .product-badge.premium {
@@ -492,7 +512,7 @@
 
         .btn-primary:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(253,121,168,0.3);
+            box-shadow: 0 4px 15px rgba(253, 121, 168, 0.3);
         }
 
         .btn-secondary {
@@ -543,14 +563,14 @@
             right: -50%;
             width: 100%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
             opacity: 0;
             animation: pulse 3s ease-in-out infinite;
         }
 
         .category-card:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(225,112,85,0.3);
+            box-shadow: 0 8px 25px rgba(225, 112, 85, 0.3);
         }
 
         .category-icon {
@@ -723,8 +743,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .cart-widget {
@@ -769,15 +794,15 @@
             .container {
                 padding: 10px;
             }
-            
+
             .controls-row {
                 flex-direction: column;
             }
-            
+
             .search-box {
                 min-width: 100%;
             }
-            
+
             .products-grid {
                 grid-template-columns: 1fr;
             }
@@ -789,6 +814,7 @@
         }
     </style>
 </head>
+
 <body data-theme="dark">
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
@@ -916,7 +942,8 @@
                 <p>High-quality products from verified sellers</p>
             </div>
             <div class="products-grid" id="productsGrid">
-                <div class="product-card" data-category="vegetables" data-location="punjab" data-price="45" data-rating="4.8">
+                <div class="product-card" data-category="vegetables" data-location="punjab" data-price="45"
+                    data-rating="4.8">
                     <div class="product-image">🥕</div>
                     <div class="product-badge">Organic</div>
                     <div class="product-info">
@@ -927,19 +954,22 @@
                                 <i class="fas fa-star"></i> 4.8
                             </div>
                         </div>
-                        <div class="product-description">Premium quality organic carrots, freshly harvested. Rich in vitamins and perfect for cooking.</div>
+                        <div class="product-description">Premium quality organic carrots, freshly harvested. Rich in
+                            vitamins and perfect for cooking.</div>
                         <div class="product-details">
                             <div class="product-price">₹45/kg</div>
                             <div class="product-quantity">Min: 10kg</div>
                         </div>
                         <div class="product-actions">
                             <button class="btn-primary" onclick="contactSeller('Kumar Farms')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"><i
+                                    class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="fruits" data-location="kashmir" data-price="180" data-rating="4.9">
+                <div class="product-card" data-category="fruits" data-location="kashmir" data-price="180"
+                    data-rating="4.9">
                     <div class="product-image">🍎</div>
                     <div class="product-badge premium">Premium</div>
                     <div class="product-info">
@@ -950,19 +980,23 @@
                                 <i class="fas fa-star"></i> 4.9
                             </div>
                         </div>
-                        <div class="product-description">Sweet and crispy Kashmiri apples, directly from the orchards. Grade A quality with natural freshness.</div>
+                        <div class="product-description">Sweet and crispy Kashmiri apples, directly from the orchards.
+                            Grade A quality with natural freshness.</div>
                         <div class="product-details">
                             <div class="product-price">₹180/kg</div>
                             <div class="product-quantity">Min: 5kg</div>
                         </div>
                         <div class="product-actions">
-                            <button class="btn-primary" onclick="contactSeller('Mountain Fresh')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-primary" onclick="contactSeller('Mountain Fresh')">Contact
+                                Seller</button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"><i
+                                    class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="grains" data-location="haryana" data-price="120" data-rating="4.7">
+                <div class="product-card" data-category="grains" data-location="haryana" data-price="120"
+                    data-rating="4.7">
                     <div class="product-image">🌾</div>
                     <div class="product-badge">Certified</div>
                     <div class="product-info">
@@ -973,19 +1007,23 @@
                                 <i class="fas fa-star"></i> 4.7
                             </div>
                         </div>
-                        <div class="product-description">Authentic Basmati rice with long grains and aromatic fragrance. Perfect for biryanis and special dishes.</div>
+                        <div class="product-description">Authentic Basmati rice with long grains and aromatic fragrance.
+                            Perfect for biryanis and special dishes.</div>
                         <div class="product-details">
                             <div class="product-price">₹120/kg</div>
                             <div class="product-quantity">Min: 25kg</div>
                         </div>
                         <div class="product-actions">
-                            <button class="btn-primary" onclick="contactSeller('Golden Grain Co.')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-primary" onclick="contactSeller('Golden Grain Co.')">Contact
+                                Seller</button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"><i
+                                    class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="vegetables" data-location="gujarat" data-price="25" data-rating="4.5">
+                <div class="product-card" data-category="vegetables" data-location="gujarat" data-price="25"
+                    data-rating="4.5">
                     <div class="product-image">🥔</div>
                     <div class="product-badge">Fresh</div>
                     <div class="product-info">
@@ -996,19 +1034,23 @@
                                 <i class="fas fa-star"></i> 4.5
                             </div>
                         </div>
-                        <div class="product-description">High-quality potatoes, perfect for all cooking needs. Freshly harvested and properly stored.</div>
+                        <div class="product-description">High-quality potatoes, perfect for all cooking needs. Freshly
+                            harvested and properly stored.</div>
                         <div class="product-details">
                             <div class="product-price">₹25/kg</div>
                             <div class="product-quantity">Min: 20kg</div>
                         </div>
                         <div class="product-actions">
-                            <button class="btn-primary" onclick="contactSeller('Patel Vegetables')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-primary" onclick="contactSeller('Patel Vegetables')">Contact
+                                Seller</button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"><i
+                                    class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="spices" data-location="rajasthan" data-price="350" data-rating="4.8">
+                <div class="product-card" data-category="spices" data-location="rajasthan" data-price="350"
+                    data-rating="4.8">
                     <div class="product-image">🌶️</div>
                     <div class="product-badge">Spicy</div>
                     <div class="product-info">
@@ -1019,19 +1061,22 @@
                                 <i class="fas fa-star"></i> 4.8
                             </div>
                         </div>
-                        <div class="product-description">Pure red chili powder made from premium quality chilies. Perfect heat and flavor for Indian cuisine.</div>
+                        <div class="product-description">Pure red chili powder made from premium quality chilies.
+                            Perfect heat and flavor for Indian cuisine.</div>
                         <div class="product-details">
                             <div class="product-price">₹350/kg</div>
                             <div class="product-quantity">Min: 2kg</div>
                         </div>
                         <div class="product-actions">
                             <button class="btn-primary" onclick="contactSeller('Spice Master')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"><i
+                                    class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="dairy" data-location="maharashtra" data-price="55" data-rating="4.9">
+                <div class="product-card" data-category="dairy" data-location="maharashtra" data-price="55"
+                    data-rating="4.9">
                     <div class="product-image">🥛</div>
                     <div class="product-badge">Pure</div>
                     <div class="product-info">
@@ -1042,73 +1087,118 @@
                                 <i class="fas fa-star"></i> 4.9
                             </div>
                         </div>
-                        <div class="product-description">Pure and fresh cow milk from free-range cows. Rich in nutrients and delivered fresh daily.</div>
+                        <div class="product-description">Pure and fresh cow milk from free-range cows. Rich in nutrients
+                            and delivered fresh daily.</div>
                         <div class="product-details">
                             <div class="product-price">₹55/liter</div>
                             <div class="product-quantity">Min: 5 liters</div>
                         </div>
                         <div class="product-actions">
                             <button class="btn-primary" onclick="contactSeller('Dairy Fresh')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"><i
+                                    class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="price-tracker">
-            <div class="section-header">
-                <h2><i class="fas fa-chart-line"></i> Market Price Trends</h2>
-                <p>Live price tracking and market analysis</p>
+            <!-- Load More Section -->
+            <div id="loadMoreSection" style="text-align: center; margin: 30px 0;">
+                <button id="loadMoreBtn" class="cta-button" onclick="loadMoreProducts()">
+                    <i class="fas fa-plus-circle"></i> Load More Products
+                </button>
+                <p style="color: var(--text-muted); margin-top: 15px; font-size: 0.9rem;">
+                    Showing <span id="showingCount">6</span> of <span id="totalCount">2847</span> products
+                </p>
             </div>
-            <div class="price-chart">
-                <i class="fas fa-chart-area" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 20px;"></i>
-                <p style="color: var(--text-muted);">Interactive price charts and market trends would be displayed here</p>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Real-time data visualization of commodity prices across different markets</p>
-            </div>
-            <div class="price-trends">
-                <div class="trend-item">
-                    <div class="trend-icon">🥕</div>
-                    <div class="trend-info">
-                        <h4>Carrots</h4>
-                        <div class="trend-price" id="carrotPrice">₹45/kg</div>
-                        <div class="trend-change" id="carrotChange">+5% this week</div>
-                    </div>
+
+            <!-- Pagination Section -->
+            <div id="paginationSection" style="display: none; text-align: center; margin: 30px 0;">
+                <div
+                    style="display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <button class="sort-btn" onclick="goToPage(currentPage - 1)" id="prevBtn">
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+
+                    <div id="pageNumbers" style="display: flex; gap: 5px; flex-wrap: wrap;"></div>
+
+                    <button class="sort-btn" onclick="goToPage(currentPage + 1)" id="nextBtn">
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
-                <div class="trend-item">
-                    <div class="trend-icon">🍎</div>
-                    <div class="trend-info">
-                        <h4>Apples</h4>
-                        <div class="trend-price" id="applePrice">₹180/kg</div>
-                        <div class="trend-change negative" id="appleChange">-2% this week</div>
-                    </div>
-                </div>
-                <div class="trend-item">
-                    <div class="trend-icon">🌾</div>
-                    <div class="trend-info">
-                        <h4>Rice</h4>
-                        <div class="trend-price" id="ricePrice">₹120/kg</div>
-                        <div class="trend-change" id="riceChange">+3% this week</div>
-                    </div>
-                </div>
-                <div class="trend-item">
-                    <div class="trend-icon">🥔</div>
-                    <div class="trend-info">
-                        <h4>Potatoes</h4>
-                        <div class="trend-price" id="potatoPrice">₹25/kg</div>
-                        <div class="trend-change" id="potatoChange">No change</div>
-                    </div>
-                </div>
+
+                <select class="filter-select" onchange="jumpToPage(this.value)" id="pageJump">
+                    <option value="">Jump to page...</option>
+                </select>
+
+                <p style="color: var(--text-muted); margin-top: 10px; font-size: 0.9rem;">
+                    Page <span id="currentPageDisplay">1</span> of <span id="totalPagesDisplay">158</span>
+                </p>
             </div>
         </div>
 
-        <div class="cta-section">
-            <h2 style="color: var(--text-primary); margin-bottom: 20px;">Start Trading Today</h2>
-            <p style="margin-bottom: 30px; color: var(--text-secondary);">Join thousands of farmers and buyers in our marketplace</p>
-            <button class="cta-button" onclick="showNotification('Product listing started!', 'success')">List Your Products</button>
-            <button class="cta-button" onclick="showNotification('Supplier search initiated!', 'info')">Find Suppliers</button>
-            <button class="cta-button" onclick="showNotification('Premium access activated!', 'success')">Get Premium Access</button>
+
+    </div>
+
+    <div class="price-tracker">
+        <div class="section-header">
+            <h2><i class="fas fa-chart-line"></i> Market Price Trends</h2>
+            <p>Live price tracking and market analysis</p>
         </div>
+        <div class="price-chart">
+            <i class="fas fa-chart-area"
+                style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 20px;"></i>
+            <p style="color: var(--text-muted);">Interactive price charts and market trends would be displayed here</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Real-time data visualization of commodity prices
+                across different markets</p>
+        </div>
+        <div class="price-trends">
+            <div class="trend-item">
+                <div class="trend-icon">🥕</div>
+                <div class="trend-info">
+                    <h4>Carrots</h4>
+                    <div class="trend-price" id="carrotPrice">₹45/kg</div>
+                    <div class="trend-change" id="carrotChange">+5% this week</div>
+                </div>
+            </div>
+            <div class="trend-item">
+                <div class="trend-icon">🍎</div>
+                <div class="trend-info">
+                    <h4>Apples</h4>
+                    <div class="trend-price" id="applePrice">₹180/kg</div>
+                    <div class="trend-change negative" id="appleChange">-2% this week</div>
+                </div>
+            </div>
+            <div class="trend-item">
+                <div class="trend-icon">🌾</div>
+                <div class="trend-info">
+                    <h4>Rice</h4>
+                    <div class="trend-price" id="ricePrice">₹120/kg</div>
+                    <div class="trend-change" id="riceChange">+3% this week</div>
+                </div>
+            </div>
+            <div class="trend-item">
+                <div class="trend-icon">🥔</div>
+                <div class="trend-info">
+                    <h4>Potatoes</h4>
+                    <div class="trend-price" id="potatoPrice">₹25/kg</div>
+                    <div class="trend-change" id="potatoChange">No change</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cta-section">
+        <h2 style="color: var(--text-primary); margin-bottom: 20px;">Start Trading Today</h2>
+        <p style="margin-bottom: 30px; color: var(--text-secondary);">Join thousands of farmers and buyers in our
+            marketplace</p>
+        <button class="cta-button" onclick="showNotification('Product listing started!', 'success')">List Your
+            Products</button>
+        <button class="cta-button" onclick="showNotification('Supplier search initiated!', 'info')">Find
+            Suppliers</button>
+        <button class="cta-button" onclick="showNotification('Premium access activated!', 'success')">Get Premium
+            Access</button>
+    </div>
     </div>
 
     <!-- Cart Widget -->
@@ -1131,7 +1221,7 @@
         themeToggle.addEventListener('click', () => {
             const currentTheme = document.body.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
+
             document.body.setAttribute('data-theme', newTheme);
             localStorage.setItem('marketplaceTheme', newTheme);
             updateThemeButton(newTheme);
@@ -1153,6 +1243,15 @@
         let filteredProducts = [];
         let cartItems = 0;
 
+        // Pagination variables
+        const PRODUCTS_PER_LOAD = 12;
+        const PRODUCTS_PER_PAGE = 18;
+        const LOAD_MORE_LIMIT = 48;
+        let visibleCount = 6;
+        let currentPage = 1;
+        let usePagination = false;
+
+
         // Initialize products data
         function initializeProducts() {
             const productCards = document.querySelectorAll('.product-card');
@@ -1168,7 +1267,7 @@
         }
 
         // Search functionality
-        function searchProducts() {
+                function searchProducts() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             showLoading();
             
@@ -1182,31 +1281,46 @@
                 } else {
                     filteredProducts = [...allProducts];
                 }
+                
+                visibleCount = 6;
+                currentPage = 1;
+                usePagination = false;
+                document.getElementById('loadMoreSection').style.display = 'block';
+                document.getElementById('paginationSection').style.display = 'none';
+                
                 displayProducts();
                 hideLoading();
                 showNotification(`Found ${filteredProducts.length} products matching "${searchTerm}"`, 'info');
             }, 1000);
         }
 
+
         // Filter functionality
         function filterProducts() {
             const category = document.getElementById('categoryFilter').value;
             const location = document.getElementById('locationFilter').value;
-            
+
             showLoading();
-            
+
             setTimeout(() => {
                 filteredProducts = allProducts.filter(product => {
                     const categoryMatch = !category || product.category === category;
                     const locationMatch = !location || product.location === location;
                     return categoryMatch && locationMatch;
                 });
-                
+
+                visibleCount = 6;
+                currentPage = 1;
+                usePagination = false;
+                document.getElementById('loadMoreSection').style.display = 'block';
+                document.getElementById('paginationSection').style.display = 'none';
+
                 displayProducts();
                 hideLoading();
                 showNotification(`Filtered to ${filteredProducts.length} products`, 'success');
             }, 800);
         }
+
 
         // Sort functionality
         function sortProducts(sortBy) {
@@ -1214,11 +1328,11 @@
             document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
             // Add active class to clicked button
             event.target.classList.add('active');
-            
+
             showLoading();
-            
+
             setTimeout(() => {
-                switch(sortBy) {
+                switch (sortBy) {
                     case 'price':
                         filteredProducts.sort((a, b) => a.price - b.price);
                         break;
@@ -1234,7 +1348,7 @@
                         filteredProducts.sort(() => Math.random() - 0.5);
                         break;
                 }
-                
+
                 displayProducts();
                 hideLoading();
                 showNotification(`Sorted by ${sortBy}`, 'success');
@@ -1244,18 +1358,170 @@
         // Display products
         function displayProducts() {
             const productsGrid = document.getElementById('productsGrid');
-            
+
             // Hide all products
             allProducts.forEach(product => {
                 product.element.style.display = 'none';
             });
-            
-            // Show filtered products
-            filteredProducts.forEach((product, index) => {
+
+            let productsToShow;
+
+            if (usePagination) {
+                // Pagination mode
+                const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+                const endIndex = startIndex + PRODUCTS_PER_PAGE;
+                productsToShow = filteredProducts.slice(startIndex, endIndex);
+            } else {
+                // Load More mode
+                productsToShow = filteredProducts.slice(0, visibleCount);
+            }
+
+            // Show products
+            productsToShow.forEach((product, index) => {
                 product.element.style.display = 'block';
                 product.element.style.order = index;
             });
+
+            updateUI();
         }
+
+        // Load More functionality
+        function loadMoreProducts() {
+            showLoading();
+
+            setTimeout(() => {
+                visibleCount += PRODUCTS_PER_LOAD;
+
+                if (visibleCount >= LOAD_MORE_LIMIT) {
+                    switchToPagination();
+                } else {
+                    displayProducts();
+
+                    const newProductIndex = visibleCount - PRODUCTS_PER_LOAD;
+                    if (filteredProducts[newProductIndex]) {
+                        filteredProducts[newProductIndex].element.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                    }
+                }
+
+                hideLoading();
+                const loaded = Math.min(PRODUCTS_PER_LOAD, filteredProducts.length - (visibleCount - PRODUCTS_PER_LOAD));
+                showNotification(`Loaded ${loaded} more products`, 'success');
+            }, 600);
+        }
+
+        function switchToPagination() {
+            usePagination = true;
+            currentPage = Math.ceil(visibleCount / PRODUCTS_PER_PAGE);
+
+            document.getElementById('loadMoreSection').style.display = 'none';
+            document.getElementById('paginationSection').style.display = 'block';
+
+            initializePagination();
+            displayProducts();
+
+            showNotification('Switched to page navigation', 'info');
+        }
+
+        function initializePagination() {
+            const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+            const pageNumbers = document.getElementById('pageNumbers');
+            const pageJump = document.getElementById('pageJump');
+
+            pageNumbers.innerHTML = '';
+            pageJump.innerHTML = '<option value="">Jump to page...</option>';
+
+            const maxButtons = 7;
+            let startPage = Math.max(1, currentPage - 3);
+            let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+
+            if (endPage - startPage < maxButtons - 1) {
+                startPage = Math.max(1, endPage - maxButtons + 1);
+            }
+
+            if (startPage > 1) {
+                pageNumbers.innerHTML += `<button class="sort-btn" onclick="goToPage(1)">1</button>`;
+                if (startPage > 2) {
+                    pageNumbers.innerHTML += `<span style="padding: 8px; color: var(--text-muted);">...</span>`;
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const activeClass = i === currentPage ? 'active' : '';
+                pageNumbers.innerHTML += `<button class="sort-btn ${activeClass}" onclick="goToPage(${i})">${i}</button>`;
+            }
+
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    pageNumbers.innerHTML += `<span style="padding: 8px; color: var(--text-muted);">...</span>`;
+                }
+                pageNumbers.innerHTML += `<button class="sort-btn" onclick="goToPage(${totalPages})">${totalPages}</button>`;
+            }
+
+            for (let i = 1; i <= totalPages; i++) {
+                pageJump.innerHTML += `<option value="${i}">Page ${i}</option>`;
+            }
+
+            document.getElementById('totalPagesDisplay').textContent = totalPages;
+        }
+
+        function goToPage(pageNum) {
+            const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+
+            if (pageNum < 1 || pageNum > totalPages) return;
+
+            showLoading();
+            currentPage = pageNum;
+
+            setTimeout(() => {
+                displayProducts();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                hideLoading();
+            }, 400);
+        }
+
+        function jumpToPage(pageNum) {
+            if (pageNum) {
+                goToPage(parseInt(pageNum));
+                document.getElementById('pageJump').value = '';
+            }
+        }
+
+        function updateUI() {
+            const showingCount = usePagination ?
+                Math.min(currentPage * PRODUCTS_PER_PAGE, filteredProducts.length) :
+                Math.min(visibleCount, filteredProducts.length);
+
+            document.getElementById('showingCount').textContent = showingCount;
+            document.getElementById('totalCount').textContent = filteredProducts.length;
+
+            if (usePagination) {
+                document.getElementById('currentPageDisplay').textContent = currentPage;
+                initializePagination();
+
+                const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                prevBtn.disabled = currentPage === 1;
+                nextBtn.disabled = currentPage === totalPages;
+                prevBtn.style.opacity = currentPage === 1 ? '0.5' : '1';
+                nextBtn.style.opacity = currentPage === totalPages ? '0.5' : '1';
+            } else {
+                const remaining = filteredProducts.length - visibleCount;
+                const loadMoreBtn = document.getElementById('loadMoreBtn');
+
+                if (remaining <= 0) {
+                    loadMoreBtn.style.display = 'none';
+                } else {
+                    loadMoreBtn.style.display = 'block';
+                    const toLoad = Math.min(PRODUCTS_PER_LOAD, remaining);
+                    loadMoreBtn.innerHTML = `<i class="fas fa-plus-circle"></i> Load More (${toLoad} more)`;
+                }
+            }
+        }
+
 
         // Category filter
         function filterByCategory(category) {
@@ -1296,16 +1562,16 @@
 
         // Update marketplace stats
         function updateStats() {
-            document.getElementById('totalProducts').textContent = 
+            document.getElementById('totalProducts').textContent =
                 Math.floor(Math.random() * 500 + 2500);
-            
-            document.getElementById('totalSellers').textContent = 
+
+            document.getElementById('totalSellers').textContent =
                 Math.floor(Math.random() * 100 + 400);
-            
-            document.getElementById('todayDeals').textContent = 
+
+            document.getElementById('todayDeals').textContent =
                 Math.floor(Math.random() * 50 + 70);
-            
-            document.getElementById('avgRating').textContent = 
+
+            document.getElementById('avgRating').textContent =
                 (Math.random() * 0.5 + 4.3).toFixed(1);
         }
 
@@ -1333,13 +1599,13 @@
             priceElements.forEach(item => {
                 const priceEl = document.getElementById(item.id);
                 const changeEl = document.getElementById(item.change);
-                
+
                 const variation = Math.floor(Math.random() * 10) - 5;
                 const newPrice = Math.max(1, item.base + variation);
                 const changePercent = Math.floor(Math.random() * 10) - 3;
-                
+
                 priceEl.textContent = `₹${newPrice}/kg`;
-                
+
                 if (changePercent > 0) {
                     changeEl.textContent = `+${changePercent}% this week`;
                     changeEl.className = 'trend-change';
@@ -1366,25 +1632,25 @@
         function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
-            
+
             const icons = {
                 success: 'fa-check-circle',
                 warning: 'fa-exclamation-triangle',
                 danger: 'fa-exclamation-circle',
                 info: 'fa-info-circle'
             };
-            
+
             notification.innerHTML = `
                 <i class="fas ${icons[type]}"></i>
                 <span style="margin-left: 10px;">${message}</span>
             `;
-            
+
             document.body.appendChild(notification);
-            
+
             setTimeout(() => {
                 notification.classList.add('show');
             }, 100);
-            
+
             setTimeout(() => {
                 notification.classList.remove('show');
                 setTimeout(() => notification.remove(), 300);
@@ -1392,10 +1658,11 @@
         }
 
         // Initialize everything
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             initializeProducts();
+            updateUI();
             showNotification('Marketplace loaded successfully!', 'success');
-            
+
             // Set up auto-updates
             setInterval(updateStats, 15000);
             setInterval(updateCategoryCounts, 25000);
@@ -1406,7 +1673,7 @@
             cards.forEach((card, index) => {
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(30px)';
-                
+
                 setTimeout(() => {
                     card.style.transition = 'all 0.6s ease';
                     card.style.opacity = '1';
@@ -1423,9 +1690,9 @@
         });
 
         // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.ctrlKey || e.metaKey) {
-                switch(e.key) {
+                switch (e.key) {
                     case 'f':
                         e.preventDefault();
                         document.getElementById('searchInput').focus();
@@ -1440,4 +1707,5 @@
     </script>
     <script src="theme.js"></script>
 </body>
+
 </html>
