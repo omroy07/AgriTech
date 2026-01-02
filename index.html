@@ -22,21 +22,15 @@
         <a href="#">AgriTech</a>
       </div>
 
-      <!-- Desktop Navigation -->
-      <div class="nav-buttons">
-        <div class="search-container">
-          <input type="text" placeholder="Search..." class="search-input" autocomplete="off" />
-          <button class="search-button" aria-label="Search">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-
+      <!-- Left Navigation Links -->
+      <div class="left-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="blog.html" class="nav-link">Blog</a>
         <div class="services-toggle-container">
-          <button class="services-toggle btn" aria-label="Toggle services menu">
-            <i class="fas fa-cogs"></i>
-            <span class="services-text">Services</span>
-            <i class="fas fa-chevron-down services-arrow"></i>
-          </button>
+          <a href="#" class="nav-link services-toggle">
+            Services <i class="fas fa-chevron-down services-arrow"></i>
+          </a>
           <div class="services-dropdown">
             <ul class="services-list">
               <li><a href="crop.html"><i class="fas fa-seedling"></i> Smart Crop Monitoring</a></li>
@@ -47,6 +41,17 @@
             </ul>
           </div>
         </div>
+      </div>
+
+      <!-- Right Side Navigation -->
+      <div class="nav-buttons">
+        <!-- Search with icon inside -->
+        <div class="search-container">
+          <input type="text" placeholder="Search..." class="search-input" autocomplete="off" />
+          <button class="search-button" aria-label="Search">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
 
         <button class="theme-toggle btn" aria-label="Toggle theme">
           <i class="fas fa-sun sun-icon" style="display: none;"></i>
@@ -54,19 +59,17 @@
           <span class="theme-text">Dark</span>
         </button>
 
-        <a href="about.html" class="btn btn-secondary">About</a>
-        <a href="blog.html" class="btn btn-secondary">Blog</a>
         <a href="login.html" class="btn btn-secondary">Login</a>
         <a href="faq.html" class="btn btn-secondary">FAQ</a>
         <a href="register.html" class="btn btn-primary">Register</a>
       </div>
 
-      <!-- Hamburger Menu Button -->
+      <!-- Hamburger Menu Button for Mobile -->
       <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
         <span class="hamburger-icon">
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
+          <span class="bar bar1"></span>
+          <span class="bar bar2"></span>
+          <span class="bar bar3"></span>
         </span>
       </button>
     </div>
@@ -76,41 +79,104 @@
   <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
   <!-- Mobile Menu (Hidden by default) -->
-  <div class="mobile-menu">
+  <div class="mobile-menu" id="mobileMenu">
+    <!-- REMOVED THE LOGO FROM HERE - Keep only the close button -->
+    <div class="mobile-menu-header">
+      <button class="mobile-close-btn" id="mobileCloseBtn" aria-label="Close menu">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
     <div class="mobile-menu-content">
       <div class="mobile-search">
         <input type="text" placeholder="Search..." class="mobile-search-input" autocomplete="off" />
+        <button class="mobile-search-btn" aria-label="Search">
+          <i class="fas fa-search"></i>
+        </button>
       </div>
       
       <div class="mobile-buttons">
-        <button class="theme-toggle btn" id="mobileThemeToggle" aria-label="Toggle theme" style="width: 100%; justify-content: center;">
-          <i class="fas fa-sun sun-icon" style="display: none;"></i>
-          <i class="fas fa-moon moon-icon"></i>
-          <span class="theme-text">Dark</span>
+        <button class="mobile-theme-toggle btn" id="mobileThemeToggle" aria-label="Toggle theme">
+          <i class="fas fa-sun mobile-sun-icon" style="display: none;"></i>
+          <i class="fas fa-moon mobile-moon-icon"></i>
+          <span class="mobile-theme-text">Dark Mode</span>
         </button>
         
         <div class="mobile-links">
-          <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
-          <a href="blog.html"><i class="fas fa-blog"></i> Blog</a>
-          <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
-          <a href="faq.html"><i class="fas fa-question-circle"></i> FAQ</a>
-          <a href="register.html" style="background: var(--accent-color); color: white;">
-            <i class="fas fa-user-plus"></i> Register
+          <a href="index.html" class="mobile-link">
+            <i class="fas fa-home"></i> 
+            <span>Home</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
+          <a href="about.html" class="mobile-link">
+            <i class="fas fa-info-circle"></i> 
+            <span>About</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
+          <a href="blog.html" class="mobile-link">
+            <i class="fas fa-blog"></i> 
+            <span>Blog</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
+          <a href="login.html" class="mobile-link">
+            <i class="fas fa-sign-in-alt"></i> 
+            <span>Login</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
+          <a href="faq.html" class="mobile-link">
+            <i class="fas fa-question-circle"></i> 
+            <span>FAQ</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
+          <a href="register.html" class="mobile-link mobile-register">
+            <i class="fas fa-user-plus"></i> 
+            <span>Register</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
           </a>
           
           <!-- Mobile Services Dropdown -->
-          <a href="#" class="mobile-services-toggle" id="mobileServicesToggle">
-            <i class="fas fa-cogs"></i> Services
-            <i class="fas fa-chevron-down services-arrow" style="margin-left: auto;"></i>
-          </a>
-          <div class="mobile-services-list" id="mobileServicesList">
-            <a href="crop.html"><i class="fas fa-seedling"></i> Smart Crop Monitoring</a>
-            <a href="supply-chain.html"><i class="fas fa-truck"></i> Supply Chain Support</a>
-            <a href="sustainable-farming.html"><i class="fas fa-leaf"></i> Sustainable Farming Guidance</a>
-            <a href="marketplace.html"><i class="fas fa-store"></i> Marketplace Services</a>
-            <a href="financial-support.html"><i class="fas fa-dollar-sign"></i> Financial & Insurance Support</a>
+          <div class="mobile-services-section">
+            <a href="#" class="mobile-link mobile-services-toggle" id="mobileServicesToggle">
+              <i class="fas fa-cogs"></i> 
+              <span>Services</span>
+              <i class="fas fa-chevron-down services-arrow" id="mobileServicesArrow"></i>
+            </a>
+            <div class="mobile-services-list" id="mobileServicesList">
+              <a href="crop.html" class="mobile-sublink">
+                <i class="fas fa-seedling"></i> 
+                <span>Smart Crop Monitoring</span>
+              </a>
+              <a href="supply-chain.html" class="mobile-sublink">
+                <i class="fas fa-truck"></i> 
+                <span>Supply Chain Support</span>
+              </a>
+              <a href="sustainable-farming.html" class="mobile-sublink">
+                <i class="fas fa-leaf"></i> 
+                <span>Sustainable Farming Guidance</span>
+              </a>
+              <a href="marketplace.html" class="mobile-sublink">
+                <i class="fas fa-store"></i> 
+                <span>Marketplace Services</span>
+              </a>
+              <a href="financial-support.html" class="mobile-sublink">
+                <i class="fas fa-dollar-sign"></i> 
+                <span>Financial & Insurance Support</span>
+              </a>
+            </div>
           </div>
         </div>
+      </div>
+      
+      <div class="mobile-footer-links">
+        <a href="terms-and-service.html" class="mobile-footer-link">
+          <i class="fas fa-file-contract"></i> Terms & Service
+        </a>
+        <a href="feed-back.html" class="mobile-footer-link">
+          <i class="fas fa-comment-dots"></i> Feedback
+        </a>
+        <a href="chat.html" class="mobile-footer-link">
+          <i class="fas fa-robot"></i> AI Assistant
+        </a>
       </div>
     </div>
   </div>
