@@ -152,11 +152,18 @@
     .search-input {
       padding: 0.5rem;
       border-radius: 4px;
-      border: 1px solid var(--input-border); /* Uses Variable */
-      background: var(--input-bg);           /* Uses Variable */
-      color: var(--text-color);              /* Uses Variable */
-      min-width: 120px;
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text-color);
+      min-width: 120px; /* Default for mobile */
       transition: all 0.3s ease;
+    }
+
+    /* FIX #472: Make search bar wider on laptops/desktops */
+    @media (min-width: 1024px) {
+      .search-input {
+        min-width: 550px; /* Expands to 300px on large screens */
+      }
     }
 
     .search-button {
