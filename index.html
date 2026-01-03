@@ -10,665 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    /* 1. DEFINE VARIABLES FOR THEMES */
-    :root {
-      /* DARK MODE DEFAULTS */
-      --bg-color: #030712;
-      --text-color: #ffffff;
-      --text-muted: #cbd5e1;
-      --surface-color: rgba(15, 23, 42, 0.9);
-      --section-bg: rgba(30, 41, 59, 0.7);
-      --border-color: #334155;
-      --accent-color: #22c55e;
-      --input-bg: #333333;
-      --input-border: #555555;
-      --btn-bg: #334155;
-      --btn-text: #ffffff;
-      --btn-hover: #475569;
-      --shadow-color: rgba(0, 0, 0, 0.3);
-    }
-
-    [data-theme="light"] {
-      /* LIGHT MODE OVERRIDES */
-      --bg-color: #f8fafc;        /* Light Gray Background */
-      --text-color: #0f172a;      /* Dark Text */
-      --text-muted: #475569;      /* Gray Text */
-      --surface-color: rgba(255, 255, 255, 0.95); /* White Cards */
-      --section-bg: rgba(241, 245, 249, 0.8); /* Light Gray Sections */
-      --border-color: #cbd5e1;    /* Light Borders */
-      --accent-color: #16a34a;    /* Green */
-      --input-bg: #ffffff;        /* White Inputs */
-      --input-border: #94a3b8;
-      --btn-bg: #e2e8f0;          /* Light Button Bg */
-      --btn-text: #0f172a;        /* Dark Button Text */
-      --btn-hover: #cbd5e1;
-      --shadow-color: rgba(0, 0, 0, 0.1);
-    }
-
-    /* 2. RESET & BASE STYLES */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      transform: none !important;
-      filter: none !important;
-      perspective: none !important;
-      clip-path: none !important;
-      mask: none !important;
-      backdrop-filter: none !important;
-      opacity: 1 !important;
-      mix-blend-mode: normal !important;
-      isolation: auto !important;
-      will-change: auto !important;
-      contain: none !important;
-      z-index: auto !important;
-    }
-
-    body {
-      background-color: var(--bg-color); /* Uses Variable */
-      font-family: 'Open Sans', sans-serif;
-      color: var(--text-color);          /* Uses Variable */
-      line-height: 1.6;
-      overflow-x: hidden;
-      touch-action: pan-y;
-      -ms-touch-action: pan-y;
-      transition: background-color 0.3s ease, color 0.3s ease; /* Smooth Theme Transition */
-    }
-
-    #bg-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      z-index: -1;
-    }
-
-    .serif {
-      font-family: 'Libertinus Serif', serif;
-    }
-
-    /* 3. NAVBAR STYLES */
-    .navbar {
-      position: relative;
-      z-index: 100;
-      background: var(--surface-color); /* Uses Variable */
-      backdrop-filter: blur(10px);
-      padding: 1rem;
-      border-bottom: 1px solid var(--border-color); /* Uses Variable */
-      transition: background 0.3s ease, border-color 0.3s ease;
-    }
-
-    .navbar-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1400px;
-      margin: 0 auto;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .brand img {
-      width: 45px;
-      height: 45px;
-      background: white;
-      padding: 5px;
-      border-radius: 8px;
-    }
-
-    .brand a {
-      color: var(--accent-color); /* Uses Variable */
-      text-decoration: none;
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-
-    .nav-buttons {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    /* Search Container */
-    .search-container {
-      position: relative;
-      display: flex;
-      gap: 0.25rem;
-    }
-
-    .search-input {
-      padding: 0.5rem;
-      border-radius: 4px;
-      border: 1px solid var(--input-border); /* Uses Variable */
-      background: var(--input-bg);           /* Uses Variable */
-      color: var(--text-color);              /* Uses Variable */
-      min-width: 120px;
-      transition: all 0.3s ease;
-    }
-
-    .search-button {
-      padding: 0.5rem 0.75rem;
-      background: var(--accent-color);
-      border: none;
-      border-radius: 4px;
-      color: white;
-      cursor: pointer;
-    }
-
-    /* Services Dropdown */
-    .services-toggle-container {
-      position: relative;
-    }
-
-    .services-toggle {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .services-arrow {
-      transition: transform 0.3s;
-    }
-
-    .services-arrow.rotated {
-      transform: rotate(180deg);
-    }
-
-    .services-dropdown {
-      position: absolute;
-      top: calc(100% + 0.5rem);
-      left: 0;
-      background: var(--surface-color); /* Uses Variable */
-      border: 1px solid var(--border-color); /* Uses Variable */
-      border-radius: 0.5rem;
-      min-width: 250px;
-      padding: 0.5rem;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-10px);
-      transition: all 0.3s ease;
-      z-index: 1000;
-      box-shadow: 0 4px 12px var(--shadow-color);
-    }
-
-    .services-dropdown.active {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-
-    .services-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .services-list li {
-      margin: 0.25rem 0;
-    }
-
-    .services-list a {
-      color: var(--text-muted); /* Uses Variable */
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem;
-      border-radius: 4px;
-      transition: all 0.2s;
-    }
-
-    .services-list a:hover {
-      background: var(--btn-bg); /* Uses Variable */
-      color: var(--text-color);
-    }
-
-    .services-list i {
-      width: 20px;
-    }
-
-    /* Button Styles */
-    .btn {
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.875rem;
-      transition: all 0.2s ease;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      white-space: nowrap;
-      background: var(--btn-bg);     /* Uses Variable */
-      color: var(--btn-text);        /* Uses Variable */
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px var(--shadow-color);
-      background: var(--btn-hover);
-    }
-
-    .btn-primary {
-      background: var(--accent-color);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: #15803d;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid var(--border-color);
-      color: var(--text-color);
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--accent-color);
-      background: rgba(34, 197, 94, 0.1);
-    }
-
-    /* 4. HERO SECTION */
-    .hero {
-      position: relative;
-      z-index: 1;
-      min-height: 60vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem 1rem;
-    }
-
-    .hero-content {
-      background: var(--surface-color); /* Uses Variable */
-      padding: 2rem;
-      border-radius: 12px;
-      max-width: 800px;
-      margin: 0 auto;
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border-color); /* Uses Variable */
-      transition: background 0.3s ease;
-    }
-
-    .hero-content h2 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      color: var(--accent-color);
-    }
-
-    .hero-content p {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      color: var(--text-color);
-    }
-
-    /* 5. FEATURES SECTION */
-    .features {
-      position: relative;
-      z-index: 1;
-      padding: 4rem 1rem;
-      background: var(--section-bg); /* Uses Variable */
-      transition: background 0.3s ease;
-    }
-
-    .features-container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .features-title {
-      text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 3rem;
-      color: var(--accent-color);
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-    }
-
-    .feature-card {
-      background: var(--surface-color); /* Uses Variable */
-      padding: 2rem;
-      border-radius: 12px;
-      border: 1px solid var(--border-color); /* Uses Variable */
-      transition: all 0.3s ease;
-      text-align: center;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--accent-color);
-      box-shadow: 0 8px 24px rgba(34, 197, 94, 0.2);
-    }
-
-    .feature-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      color: var(--text-color);
-    }
-
-    .feature-title {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: var(--accent-color);
-    }
-
-    .feature-description {
-      color: var(--text-muted); /* Uses Variable */
-      line-height: 1.6;
-    }
-
-    /* 6. FOOTER */
-    .site-footer {
-      position: relative;
-      z-index: 1;
-      padding: 3rem 1rem;
-      background: var(--surface-color); /* Uses Variable */
-      border-top: 1px solid var(--border-color); /* Uses Variable */
-      transition: background 0.3s ease;
-    }
-
-    .footer-inner {
-      display: flex;
-      justify-content: space-around;
-      max-width: 1200px;
-      margin: 0 auto 2rem;
-      flex-wrap: wrap;
-      gap: 2rem;
-    }
-
-    .footer-brand {
-      flex: 1;
-      min-width: 250px;
-    }
-
-    .brand-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 1rem;
-    }
-
-    .brand-header img {
-      width: 50px;
-      height: 50px;
-      background: white;
-      padding: 5px;
-      border-radius: 8px;
-    }
-
-    .brand-header h3 {
-      color: var(--accent-color);
-    }
-
-    .footer-links {
-      flex: 1;
-      min-width: 200px;
-    }
-
-    .footer-links h4 {
-      color: var(--accent-color);
-      margin-bottom: 1rem;
-    }
-
-    .footer-links ul {
-      list-style: none;
-    }
-
-    .footer-links a {
-      color: var(--text-muted); /* Uses Variable */
-      text-decoration: none;
-      display: block;
-      padding: 0.4rem 0;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover {
-      color: var(--text-color);
-    }
-
-    .footer-bottom {
-      border-top: 1px solid var(--border-color); /* Uses Variable */
-      padding-top: 1rem;
-      text-align: center;
-      color: var(--text-muted);
-    }
-
-    /* FLOATING BUTTONS */
-    #chatbotBtn, .scroll-btn {
-      position: fixed;
-      right: 20px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: #16a34a;
-      color: white;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      transition: all 0.3s;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    #chatbotBtn {
-      bottom: 80px;
-    }
-
-    #chatbotBtn:hover, .scroll-btn:hover {
-      transform: scale(1.1);
-      background: #15803d;
-    }
-
-    .scroll-btn {
-      bottom: 20px;
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    .scroll-btn.visible {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    /* MOBILE RESPONSIVE */
-    @media (max-width: 1024px) {
-      .navbar-content {
-        justify-content: center;
-      }
-
-      .brand {
-        width: 100%;
-        justify-content: center;
-        margin-bottom: 0.5rem;
-      }
-
-      .nav-buttons {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .navbar {
-        padding: 0.75rem;
-      }
-
-      .navbar-content {
-        gap: 0.75rem;
-      }
-
-      .brand img {
-        width: 40px;
-        height: 40px;
-      }
-
-      .brand a {
-        font-size: 1.3rem;
-      }
-
-      .nav-buttons {
-        gap: 0.4rem;
-      }
-
-      .btn {
-        padding: 0.4rem 0.75rem;
-        font-size: 0.8rem;
-      }
-
-      .search-input {
-        min-width: 100px;
-        padding: 0.4rem;
-        font-size: 0.85rem;
-      }
-
-      .search-button {
-        padding: 0.4rem 0.6rem;
-      }
-
-      .services-dropdown {
-        left: 50%;
-        transform: translateX(-50%) translateY(-10px);
-        width: 90vw;
-        max-width: 300px;
-      }
-
-      .services-dropdown.active {
-        transform: translateX(-50%) translateY(0);
-      }
-
-      .hero-content {
-        padding: 1.5rem;
-      }
-
-      .hero-content h2 {
-        font-size: 1.8rem;
-      }
-
-      .hero-content p {
-        font-size: 1rem;
-      }
-
-      .features {
-        padding: 3rem 1rem;
-      }
-
-      .features-title {
-        font-size: 2rem;
-      }
-
-      .features-grid {
-        gap: 1.5rem;
-      }
-
-      .footer-inner {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .footer-brand,
-      .footer-links {
-        min-width: 100%;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .brand img {
-        width: 35px;
-        height: 35px;
-      }
-
-      .brand a {
-        font-size: 1.1rem;
-      }
-
-      .nav-buttons {
-        gap: 0.3rem;
-      }
-
-      .btn {
-        padding: 0.35rem 0.6rem;
-        font-size: 0.75rem;
-      }
-
-      .search-input {
-        min-width: 80px;
-        font-size: 0.8rem;
-      }
-
-      .hero-content {
-        padding: 1.25rem;
-      }
-
-      .hero-content h2 {
-        font-size: 1.5rem;
-      }
-
-      .hero-content p {
-        font-size: 0.95rem;
-      }
-
-      .features-title {
-        font-size: 1.75rem;
-      }
-
-      .feature-card {
-        padding: 1.5rem;
-      }
-
-      #chatbotBtn, .scroll-btn {
-        width: 45px;
-        height: 45px;
-        right: 15px;
-      }
-
-      #chatbotBtn {
-        bottom: 70px;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .nav-buttons {
-        gap: 0.25rem;
-      }
-
-      .btn {
-        padding: 0.3rem 0.5rem;
-        font-size: 0.7rem;
-      }
-
-      .search-input {
-        min-width: 70px;
-        padding: 0.35rem;
-      }
-
-      .search-button {
-        padding: 0.35rem 0.5rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="index.css" />
 </head>
 <body>
 
@@ -681,20 +23,15 @@
         <a href="#">AgriTech</a>
       </div>
 
-      <div class="nav-buttons">
-        <div class="search-container">
-          <input type="text" placeholder="Search..." class="search-input" autocomplete="off" />
-          <button class="search-button" aria-label="Search">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-
+      <!-- Left Navigation Links -->
+      <div class="left-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="blog.html" class="nav-link">Blog</a>
         <div class="services-toggle-container">
-          <button class="services-toggle btn" aria-label="Toggle services menu">
-            <i class="fas fa-cogs"></i>
-            <span class="services-text">Services</span>
-            <i class="fas fa-chevron-down services-arrow"></i>
-          </button>
+          <a href="#" class="nav-link services-toggle">
+            Services <i class="fas fa-chevron-down services-arrow"></i>
+          </a>
           <div class="services-dropdown">
             <ul class="services-list">
               <li><a href="crop.html"><i class="fas fa-seedling"></i> Smart Crop Monitoring</a></li>
@@ -705,6 +42,17 @@
             </ul>
           </div>
         </div>
+      </div>
+
+      <!-- Right Side Navigation -->
+      <div class="nav-buttons">
+        <!-- Search with icon inside -->
+        <div class="search-container">
+          <input type="text" placeholder="Search..." class="search-input" autocomplete="off" />
+          <button class="search-button" aria-label="Search">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
 
         <button class="theme-toggle btn" aria-label="Toggle theme">
           <i class="fas fa-sun sun-icon" style="display: none;"></i>
@@ -712,14 +60,127 @@
           <span class="theme-text">Dark</span>
         </button>
 
-        <a href="about.html" class="btn btn-secondary">About</a>
-        <a href="blog.html" class="btn btn-secondary">Blog</a>
         <a href="login.html" class="btn btn-secondary">Login</a>
         <a href="faq.html" class="btn btn-secondary">FAQ</a>
         <a href="register.html" class="btn btn-primary">Register</a>
       </div>
+
+      <!-- Hamburger Menu Button for Mobile -->
+      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+        <span class="hamburger-icon">
+          <span class="bar bar1"></span>
+          <span class="bar bar2"></span>
+          <span class="bar bar3"></span>
+        </span>
+      </button>
     </div>
   </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+  <!-- Mobile Menu (Hidden by default) -->
+  <div class="mobile-menu" id="mobileMenu">
+    <!-- REMOVED THE LOGO FROM HERE - Keep only the close button -->
+    <div class="mobile-menu-header">
+      <button class="mobile-close-btn" id="mobileCloseBtn" aria-label="Close menu">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div class="mobile-menu-content">
+      <div class="mobile-search">
+        <input type="text" placeholder="Search..." class="mobile-search-input" autocomplete="off" />
+        <button class="mobile-search-btn" aria-label="Search">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+      
+      <div class="mobile-buttons">
+        <button class="mobile-theme-toggle btn" id="mobileThemeToggle" aria-label="Toggle theme">
+          <i class="fas fa-sun mobile-sun-icon" style="display: none;"></i>
+          <i class="fas fa-moon mobile-moon-icon"></i>
+          <span class="mobile-theme-text">Dark Mode</span>
+        </button>
+        
+        <div class="mobile-links">
+          <a href="index.html" class="mobile-link">
+            <i class="fas fa-home"></i> 
+            <span>Home</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
+          <a href="about.html" class="mobile-link">
+            <i class="fas fa-info-circle"></i> 
+            <span>About</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
+          <a href="blog.html" class="mobile-link">
+            <i class="fas fa-blog"></i> 
+            <span>Blog</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
+          <a href="login.html" class="mobile-link">
+            <i class="fas fa-sign-in-alt"></i> 
+            <span>Login</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
+          <a href="faq.html" class="mobile-link">
+            <i class="fas fa-question-circle"></i> 
+            <span>FAQ</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
+          <a href="register.html" class="mobile-link mobile-register">
+            <i class="fas fa-user-plus"></i> 
+            <span>Register</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
+          
+          <!-- Mobile Services Dropdown -->
+          <div class="mobile-services-section">
+            <a href="#" class="mobile-link mobile-services-toggle" id="mobileServicesToggle">
+              <i class="fas fa-cogs"></i> 
+              <span>Services</span>
+              <i class="fas fa-chevron-down services-arrow" id="mobileServicesArrow"></i>
+            </a>
+            <div class="mobile-services-list" id="mobileServicesList">
+              <a href="crop.html" class="mobile-sublink">
+                <i class="fas fa-seedling"></i> 
+                <span>Smart Crop Monitoring</span>
+              </a>
+              <a href="supply-chain.html" class="mobile-sublink">
+                <i class="fas fa-truck"></i> 
+                <span>Supply Chain Support</span>
+              </a>
+              <a href="sustainable-farming.html" class="mobile-sublink">
+                <i class="fas fa-leaf"></i> 
+                <span>Sustainable Farming Guidance</span>
+              </a>
+              <a href="marketplace.html" class="mobile-sublink">
+                <i class="fas fa-store"></i> 
+                <span>Marketplace Services</span>
+              </a>
+              <a href="financial-support.html" class="mobile-sublink">
+                <i class="fas fa-dollar-sign"></i> 
+                <span>Financial & Insurance Support</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mobile-footer-links">
+        <a href="terms-and-service.html" class="mobile-footer-link">
+          <i class="fas fa-file-contract"></i> Terms & Service
+        </a>
+        <a href="feed-back.html" class="mobile-footer-link">
+          <i class="fas fa-comment-dots"></i> Feedback
+        </a>
+        <a href="chat.html" class="mobile-footer-link">
+          <i class="fas fa-robot"></i> AI Assistant
+        </a>
+      </div>
+    </div>
+  </div>
 
   <section class="hero">
     <div class="hero-content">
@@ -881,6 +342,9 @@
     animate();
   </script>
 
+
+  <script src="index.js"></script>
+=======
   <script>
     const themeToggle = document.querySelector('.theme-toggle');
     const themeText = document.querySelector('.theme-text');
@@ -954,5 +418,6 @@
     }
   </script>
   <script src="theme.js"></script>
+
 </body>
 </html>
