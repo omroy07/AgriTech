@@ -10,8 +10,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/logo.png">
-    
+
     <style>
+        .supply-page,
+.supply-page * {
+    transition: background-color 0.3s ease,
+                color 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
         * {
             margin: 0;
             padding: 0;
@@ -343,25 +350,130 @@
             .flow-steps {
                 flex-direction: column;
             }
-            
+
             .flow-step::after {
                 content: '↓';
                 right: 50%;
                 top: 100%;
                 transform: translateX(50%);
             }
-            
+
             .flow-step:last-child::after {
                 display: none;
             }
-            
+
             .services-grid {
                 grid-template-columns: 1fr;
             }
         }
+        .theme-toggle {
+    background: transparent;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    margin-top: 15px;
+    color: #2c3e50;
+}
+
+
+.supply-page.dark .header,
+.supply-page.dark .supply-chain-flow,
+.supply-page.dark .service-card,
+.supply-page.dark .tracking-dashboard,
+.supply-page.dark .cta-section {
+    background: rgba(20, 25, 40, 0.95);
+    color: #e5e7eb;
+}
+
+.supply-page.dark h1,
+.supply-page.dark h2,
+.supply-page.dark h3 {
+    color: #e5e7eb;
+}
+
+.supply-page.dark p,
+.supply-page.dark li {
+    color: #cbd5e1;
+}
+
+.supply-page.dark .shipment-card {
+    background: #111827;
+    border-left-color: #38bdf8;
+}
+
+.supply-page.dark .theme-toggle {
+    color: #e5e7eb;
+}
+.supply-page.dark {
+    background: #0b1220;
+}
+
+
+.cta-section h2 {
+    color: #2c3e50;
+}
+
+.supply-page.dark .cta-section h2 {
+    color: #e5e7eb;
+}
+
+.supply-page.dark .cta-section p {
+    color: #cbd5e1;
+}
+.theme-toggle i {
+    transition: transform 0.3s ease;
+}
+
+.supply-page.dark .theme-toggle i {
+    transform: rotate(180deg);
+}
+.supply-page.dark .service-card:hover,
+.supply-page.dark .shipment-card:hover {
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+}
+html {
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+.header,
+.service-card,
+.shipment-card,
+.tracking-metric {
+  transition: background-color 0.35s ease,
+              color 0.35s ease,
+              box-shadow 0.35s ease;
+}
+.theme-toggle i {
+  transition: transform 0.3s ease;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+    .service-card,
+    .shipment-card {
+        transform: none !important;
+        opacity: 1 !important;
+    }
+}
+.supply-page.dark .status-pending {
+    background: rgba(253, 203, 110, 0.2);
+    color: #fde68a;
+}
+
+.supply-page.dark .status-in-transit {
+    background: rgba(56, 189, 248, 0.25);
+    color: #bae6fd;
+}
+
     </style>
 </head>
 <body>
+<div class="supply-page">
     <a href="index.html" class="nav-back">
         <i class="fas fa-arrow-left"></i> Back to Home
     </a>
@@ -370,6 +482,9 @@
         <div class="header">
             <h1><i class="fas fa-truck"></i> Supply Chain Support</h1>
             <p>Comprehensive logistics and supply chain management for seamless agricultural product distribution</p>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
         </div>
 
         <div class="supply-chain-flow">
@@ -443,7 +558,7 @@
                     <li>Compliance tracking</li>
                 </ul>
             </div>
-<!-- 
+<!--
             <div class="service-card">
                 <div class="service-icon">
                     <i class="fas fa-chart-network"></i>
@@ -545,8 +660,8 @@
         </div>
 
         <div class="cta-section">
-            <h2 style="color: #2c3e50; margin-bottom: 20px;">Optimize Your Supply Chain Today</h2>
-            <p style="margin-bottom: 30px; color: #666;">Join thousands of farmers and distributors using our platform</p>
+            <h2 >Optimize Your Supply Chain Today</h2>
+            <p >Join thousands of farmers and distributors using our platform</p>
             <a href="#" class="cta-button">Get Started</a>
             <a href="#" class="cta-button">Request Quote</a>
             <a href="#" class="cta-button">Contact Support</a>
@@ -556,16 +671,16 @@
     <script>
         // Simulate real-time updates
         function updateMetrics() {
-            document.getElementById('activeShipments').textContent = 
+            document.getElementById('activeShipments').textContent =
                 Math.floor(Math.random() * 50 + 150);
-            
-            document.getElementById('deliveredToday').textContent = 
+
+            document.getElementById('deliveredToday').textContent =
                 Math.floor(Math.random() * 20 + 20);
-            
-            document.getElementById('onTimeRate').textContent = 
+
+            document.getElementById('onTimeRate').textContent =
                 Math.floor(Math.random() * 10 + 90) + '%';
-            
-            document.getElementById('avgDeliveryTime').textContent = 
+
+            document.getElementById('avgDeliveryTime').textContent =
                 (Math.random() * 1 + 2).toFixed(1);
         }
 
@@ -588,7 +703,7 @@
             cards.forEach((card, index) => {
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(30px)';
-                
+
                 setTimeout(() => {
                     card.style.transition = 'all 0.6s ease';
                     card.style.opacity = '1';
@@ -603,7 +718,7 @@
             const randomShipment = shipments[Math.floor(Math.random() * shipments.length)];
             const progressBar = randomShipment.querySelector('.progress-fill');
             const currentWidth = parseInt(progressBar.style.width);
-            
+
             if (currentWidth < 100) {
                 progressBar.style.width = Math.min(100, currentWidth + Math.floor(Math.random() * 10 + 5)) + '%';
             }
@@ -611,7 +726,47 @@
 
         // Update shipments every 15 seconds
         setInterval(simulateShipmentUpdate, 15000);
+
+        const page = document.querySelector('.supply-page');
+const toggleBtn = document.getElementById('themeToggle');
+const savedTheme = localStorage.getItem('supply-theme');
+toggleBtn.setAttribute('role', 'switch');
+toggleBtn.setAttribute('tabindex', '0');
+
+function updateAria(isDark) {
+    toggleBtn.setAttribute('aria-checked', isDark);
+}
+
+if (savedTheme === 'dark') {
+    page.classList.add('dark');
+    toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+    updateAria(true);
+}
+
+toggleBtn.addEventListener('click', () => {
+    const isDark = page.classList.toggle('dark');
+
+    toggleBtn.innerHTML = isDark
+        ? '<i class="fas fa-sun"></i>'
+        : '<i class="fas fa-moon"></i>';
+
+    localStorage.setItem('supply-theme', isDark ? 'dark' : 'light');
+    updateAria(isDark);
+});
+
+toggleBtn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleBtn.click();
+    }
+});
+
+
+
+
+
     </script>
+</div>
 </body>
 </html>
 
