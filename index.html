@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <link rel="icon" type="image/png" href="images/logo.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="description" content="AgriTech - Empowering Agriculture Through Technology. Connect farmers, buyers, and suppliers in India's agricultural ecosystem." />
+  <meta name="description"
+    content="AgriTech - Empowering Agriculture Through Technology. Connect farmers, buyers, and suppliers in India's agricultural ecosystem." />
   <title>AgriTech - Revolutionizing Agriculture with Technology</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
+    rel="stylesheet" />
   <style>
     /* 1. DEFINE VARIABLES FOR THEMES */
     :root {
@@ -31,17 +35,27 @@
 
     [data-theme="light"] {
       /* LIGHT MODE OVERRIDES */
-      --bg-color: #f8fafc;        /* Light Gray Background */
-      --text-color: #0f172a;      /* Dark Text */
-      --text-muted: #475569;      /* Gray Text */
-      --surface-color: rgba(255, 255, 255, 0.95); /* White Cards */
-      --section-bg: rgba(241, 245, 249, 0.8); /* Light Gray Sections */
-      --border-color: #cbd5e1;    /* Light Borders */
-      --accent-color: #16a34a;    /* Green */
-      --input-bg: #ffffff;        /* White Inputs */
+      --bg-color: #f8fafc;
+      /* Light Gray Background */
+      --text-color: #0f172a;
+      /* Dark Text */
+      --text-muted: #475569;
+      /* Gray Text */
+      --surface-color: rgba(255, 255, 255, 0.95);
+      /* White Cards */
+      --section-bg: rgba(241, 245, 249, 0.8);
+      /* Light Gray Sections */
+      --border-color: #cbd5e1;
+      /* Light Borders */
+      --accent-color: #16a34a;
+      /* Green */
+      --input-bg: #ffffff;
+      /* White Inputs */
       --input-border: #94a3b8;
-      --btn-bg: #e2e8f0;          /* Light Button Bg */
-      --btn-text: #0f172a;        /* Dark Button Text */
+      --btn-bg: #e2e8f0;
+      /* Light Button Bg */
+      --btn-text: #0f172a;
+      /* Dark Button Text */
       --btn-hover: #cbd5e1;
       --shadow-color: rgba(0, 0, 0, 0.1);
     }
@@ -53,7 +67,8 @@
       box-sizing: border-box;
     }
 
-    html, body {
+    html,
+    body {
       transform: none !important;
       filter: none !important;
       perspective: none !important;
@@ -69,14 +84,17 @@
     }
 
     body {
-      background-color: var(--bg-color); /* Uses Variable */
+      background-color: var(--bg-color);
+      /* Uses Variable */
       font-family: 'Open Sans', sans-serif;
-      color: var(--text-color);          /* Uses Variable */
+      color: var(--text-color);
+      /* Uses Variable */
       line-height: 1.6;
       overflow-x: hidden;
       touch-action: pan-y;
       -ms-touch-action: pan-y;
-      transition: background-color 0.3s ease, color 0.3s ease; /* Smooth Theme Transition */
+      transition: background-color 0.3s ease, color 0.3s ease;
+      /* Smooth Theme Transition */
     }
 
     #bg-canvas {
@@ -96,29 +114,137 @@
     .navbar {
       position: relative;
       z-index: 100;
-      background: var(--surface-color); /* Uses Variable */
+      background: var(--surface-color);
+      /* Uses Variable */
       backdrop-filter: blur(10px);
       padding: 1rem;
-      border-bottom: 1px solid var(--border-color); /* Uses Variable */
+      border-bottom: 1px solid var(--border-color);
+      /* Uses Variable */
       transition: background 0.3s ease, border-color 0.3s ease;
     }
 
     .navbar-content {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1400px;
-      margin: 0 auto;
-      gap: 1rem;
-      flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 1rem;
+      
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    /* ---------- Hamburger Button ---------- */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: end;
+      gap: 6px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
     }
 
+    .hamburger span {
+      width: 26px;
+      height: 3px;
+      background: var(--text-color);
+      border-radius: 2px;
+      transition: 0.3s ease;
+    }
+
+    /* ---------- Mobile Navbar ---------- */
+   @media (max-width: 1060px) {
+
+  .hamburger {
+    display: flex;
+    margin-left: auto;
+  }
+ 
+  /* Hide full search bar */
+  .search-container {
+    display: none;
+  }
+  
+
+  .nav-buttons {
+     display: none;                /* ← THIS SOLVES EVERYTHING */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+
+    background: var(--surface-color);
+    border-top: 1px solid var(--border-color);
+
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+    gap: 0.8rem;
+    z-index: 1000;
+   
+  }
+  /* FORCE HIDE MENU */
+  .nav-buttons {
+    display: none !important;
+  }
+
+  /* SHOW ONLY WHEN HAMBURGER IS CLICKED */
+  .nav-buttons.active {
+    display: flex !important;
+  }
+
+  .nav-buttons.active {
+    display: flex;
+  }
+
+  .nav-buttons a,
+  .nav-buttons button {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  /* Services inside menu */
+ .search-container {
+    display: none;
+  }
+
+  .services-toggle-container {
+    width: 100%;
+  }
+
+  .services-dropdown {
+    position: static;
+    width: 100%;
+  }
+}
+.navbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+
+    /* ---------- Hamburger Animation ---------- */
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: auto;
+}
     .brand img {
       width: 45px;
       height: 45px;
@@ -128,7 +254,8 @@
     }
 
     .brand a {
-      color: var(--accent-color); /* Uses Variable */
+      color: var(--accent-color);
+      /* Uses Variable */
       text-decoration: none;
       font-size: 1.5rem;
       font-weight: bold;
@@ -152,9 +279,12 @@
     .search-input {
       padding: 0.5rem;
       border-radius: 4px;
-      border: 1px solid var(--input-border); /* Uses Variable */
-      background: var(--input-bg);           /* Uses Variable */
-      color: var(--text-color);              /* Uses Variable */
+      border: 1px solid var(--input-border);
+      /* Uses Variable */
+      background: var(--input-bg);
+      /* Uses Variable */
+      color: var(--text-color);
+      /* Uses Variable */
       min-width: 120px;
       transition: all 0.3s ease;
     }
@@ -191,8 +321,10 @@
       position: absolute;
       top: calc(100% + 0.5rem);
       left: 0;
-      background: var(--surface-color); /* Uses Variable */
-      border: 1px solid var(--border-color); /* Uses Variable */
+      background: var(--surface-color);
+      /* Uses Variable */
+      border: 1px solid var(--border-color);
+      /* Uses Variable */
       border-radius: 0.5rem;
       min-width: 250px;
       padding: 0.5rem;
@@ -221,7 +353,8 @@
     }
 
     .services-list a {
-      color: var(--text-muted); /* Uses Variable */
+      color: var(--text-muted);
+      /* Uses Variable */
       text-decoration: none;
       display: flex;
       align-items: center;
@@ -232,7 +365,8 @@
     }
 
     .services-list a:hover {
-      background: var(--btn-bg); /* Uses Variable */
+      background: var(--btn-bg);
+      /* Uses Variable */
       color: var(--text-color);
     }
 
@@ -254,8 +388,10 @@
       align-items: center;
       gap: 0.5rem;
       white-space: nowrap;
-      background: var(--btn-bg);     /* Uses Variable */
-      color: var(--btn-text);        /* Uses Variable */
+      background: var(--btn-bg);
+      /* Uses Variable */
+      color: var(--btn-text);
+      /* Uses Variable */
     }
 
     .btn:hover {
@@ -297,13 +433,15 @@
     }
 
     .hero-content {
-      background: var(--surface-color); /* Uses Variable */
+      background: var(--surface-color);
+      /* Uses Variable */
       padding: 2rem;
       border-radius: 12px;
       max-width: 800px;
       margin: 0 auto;
       backdrop-filter: blur(10px);
-      border: 1px solid var(--border-color); /* Uses Variable */
+      border: 1px solid var(--border-color);
+      /* Uses Variable */
       transition: background 0.3s ease;
     }
 
@@ -324,7 +462,8 @@
       position: relative;
       z-index: 1;
       padding: 4rem 1rem;
-      background: var(--section-bg); /* Uses Variable */
+      background: var(--section-bg);
+      /* Uses Variable */
       transition: background 0.3s ease;
     }
 
@@ -347,10 +486,12 @@
     }
 
     .feature-card {
-      background: var(--surface-color); /* Uses Variable */
+      background: var(--surface-color);
+      /* Uses Variable */
       padding: 2rem;
       border-radius: 12px;
-      border: 1px solid var(--border-color); /* Uses Variable */
+      border: 1px solid var(--border-color);
+      /* Uses Variable */
       transition: all 0.3s ease;
       text-align: center;
     }
@@ -374,7 +515,8 @@
     }
 
     .feature-description {
-      color: var(--text-muted); /* Uses Variable */
+      color: var(--text-muted);
+      /* Uses Variable */
       line-height: 1.6;
     }
 
@@ -383,8 +525,10 @@
       position: relative;
       z-index: 1;
       padding: 3rem 1rem;
-      background: var(--surface-color); /* Uses Variable */
-      border-top: 1px solid var(--border-color); /* Uses Variable */
+      background: var(--surface-color);
+      /* Uses Variable */
+      border-top: 1px solid var(--border-color);
+      /* Uses Variable */
       transition: background 0.3s ease;
     }
 
@@ -436,7 +580,8 @@
     }
 
     .footer-links a {
-      color: var(--text-muted); /* Uses Variable */
+      color: var(--text-muted);
+      /* Uses Variable */
       text-decoration: none;
       display: block;
       padding: 0.4rem 0;
@@ -448,14 +593,16 @@
     }
 
     .footer-bottom {
-      border-top: 1px solid var(--border-color); /* Uses Variable */
+      border-top: 1px solid var(--border-color);
+      /* Uses Variable */
       padding-top: 1rem;
       text-align: center;
       color: var(--text-muted);
     }
 
     /* FLOATING BUTTONS */
-    #chatbotBtn, .scroll-btn {
+    #chatbotBtn,
+    .scroll-btn {
       position: fixed;
       right: 20px;
       width: 50px;
@@ -477,7 +624,8 @@
       bottom: 80px;
     }
 
-    #chatbotBtn:hover, .scroll-btn:hover {
+    #chatbotBtn:hover,
+    .scroll-btn:hover {
       transform: scale(1.1);
       background: #15803d;
     }
@@ -638,7 +786,8 @@
         padding: 1.5rem;
       }
 
-      #chatbotBtn, .scroll-btn {
+      #chatbotBtn,
+      .scroll-btn {
         width: 45px;
         height: 45px;
         right: 15px;
@@ -670,6 +819,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <canvas id="bg-canvas"></canvas>
@@ -680,6 +830,12 @@
         <img src="images/logo.png" alt="AgriTech logo">
         <a href="#">AgriTech</a>
       </div>
+      <button class="hamburger" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
 
       <div class="nav-buttons">
         <div class="search-container">
@@ -701,10 +857,13 @@
               <li><a href="supply-chain.html"><i class="fas fa-truck"></i> Supply Chain Support</a></li>
               <li><a href="sustainable-farming.html"><i class="fas fa-leaf"></i> Sustainable Farming Guidance</a></li>
               <li><a href="marketplace.html"><i class="fas fa-store"></i> Marketplace Services</a></li>
-              <li><a href="financial-support.html"><i class="fas fa-dollar-sign"></i> Financial & Insurance Support</a></li>
+              <li><a href="financial-support.html"><i class="fas fa-dollar-sign"></i> Financial & Insurance Support</a>
+              </li>
             </ul>
           </div>
         </div>
+
+
 
         <button class="theme-toggle btn" aria-label="Toggle theme">
           <i class="fas fa-sun sun-icon" style="display: none;"></i>
@@ -726,7 +885,8 @@
       <h2 class="serif">Empowering Agriculture Through Technology</h2>
       <p>AgriTech connects <strong>Farmers</strong>, <strong>Buyers</strong>,
         <strong>Equipment Suppliers</strong>, and <strong>Grocery Sellers</strong>
-        to revolutionize India's agricultural ecosystem through smart solutions and seamless collaboration.</p>
+        to revolutionize India's agricultural ecosystem through smart solutions and seamless collaboration.
+      </p>
     </div>
   </section>
 
@@ -737,17 +897,20 @@
         <div class="feature-card">
           <div class="feature-icon">🌱</div>
           <h3 class="feature-title serif">For Farmers</h3>
-          <p class="feature-description">Direct access to buyers, fair pricing, and equipment rental services to maximize harvest potential.</p>
+          <p class="feature-description">Direct access to buyers, fair pricing, and equipment rental services to
+            maximize harvest potential.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">🏪</div>
           <h3 class="feature-title serif">For Buyers</h3>
-          <p class="feature-description">Source fresh produce directly from verified farmers with transparent pricing and quality assurance.</p>
+          <p class="feature-description">Source fresh produce directly from verified farmers with transparent pricing
+            and quality assurance.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">🚜</div>
           <h3 class="feature-title serif">Equipment Suppliers</h3>
-          <p class="feature-description">Expand your reach and connect with farmers needing modern agricultural equipment.</p>
+          <p class="feature-description">Expand your reach and connect with farmers needing modern agricultural
+            equipment.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">🛒</div>
@@ -822,16 +985,16 @@
     camera.position.set(0, 3, 10);
 
     const renderer = new THREE.WebGLRenderer({
-        canvas: document.querySelector('#bg-canvas'),
-        alpha: true
+      canvas: document.querySelector('#bg-canvas'),
+      alpha: true
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     const geometry = new THREE.PlaneGeometry(20, 20, 40, 40);
     const material = new THREE.MeshBasicMaterial({
-        color: 0x22c55e,
-        wireframe: true
+      color: 0x22c55e,
+      wireframe: true
     });
     const plane = new THREE.Mesh(geometry, material);
     plane.rotation.x = -Math.PI / 2;
@@ -844,38 +1007,38 @@
     const targetMouse = new THREE.Vector2(0, 0);
 
     window.addEventListener('mousemove', (event) => {
-        targetMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        targetMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      targetMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      targetMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     });
 
     function animate() {
-        const t = clock.getElapsedTime();
-        mouse.x += (targetMouse.x - mouse.x) * 0.05;
-        mouse.y += (targetMouse.y - mouse.y) * 0.05;
+      const t = clock.getElapsedTime();
+      mouse.x += (targetMouse.x - mouse.x) * 0.05;
+      mouse.y += (targetMouse.y - mouse.y) * 0.05;
 
-        const positions = plane.geometry.attributes.position.array;
-        const mouseWorld = new THREE.Vector2(mouse.x * 10, mouse.y * 10);
+      const positions = plane.geometry.attributes.position.array;
+      const mouseWorld = new THREE.Vector2(mouse.x * 10, mouse.y * 10);
 
-        for (let i = 0; i < positions.length; i += 3) {
-            const x = originalPositions[i];
-            const y = originalPositions[i + 1];
-            const baseWave = Math.sin(x * 0.5 + t * 0.5) * 0.1 + Math.sin(y * 0.5 + t * 0.5) * 0.1;
-            const dist = new THREE.Vector2(x, y).distanceTo(mouseWorld);
-            const influence = Math.max(0, 1 - dist / 5);
-            const ripple = Math.sin(dist * 2 - t * 2) * influence * 0.3;
-            positions[i + 2] = baseWave + ripple;
-        }
+      for (let i = 0; i < positions.length; i += 3) {
+        const x = originalPositions[i];
+        const y = originalPositions[i + 1];
+        const baseWave = Math.sin(x * 0.5 + t * 0.5) * 0.1 + Math.sin(y * 0.5 + t * 0.5) * 0.1;
+        const dist = new THREE.Vector2(x, y).distanceTo(mouseWorld);
+        const influence = Math.max(0, 1 - dist / 5);
+        const ripple = Math.sin(dist * 2 - t * 2) * influence * 0.3;
+        positions[i + 2] = baseWave + ripple;
+      }
 
-        plane.geometry.attributes.position.needsUpdate = true;
-        renderer.render(scene, camera);
-        requestAnimationFrame(animate);
+      plane.geometry.attributes.position.needsUpdate = true;
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
     }
 
     window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     });
 
     animate();
@@ -888,17 +1051,17 @@
     const moonIcon = document.querySelector('.moon-icon');
 
     const applyTheme = (theme) => {
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('agritech-theme', theme);
-        if (theme === 'dark') {
-            themeText.textContent = 'Light';
-            moonIcon.style.display = 'none';
-            sunIcon.style.display = 'inline-block';
-        } else {
-            themeText.textContent = 'Dark';
-            moonIcon.style.display = 'inline-block';
-            sunIcon.style.display = 'none';
-        }
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('agritech-theme', theme);
+      if (theme === 'dark') {
+        themeText.textContent = 'Light';
+        moonIcon.style.display = 'none';
+        sunIcon.style.display = 'inline-block';
+      } else {
+        themeText.textContent = 'Dark';
+        moonIcon.style.display = 'inline-block';
+        sunIcon.style.display = 'none';
+      }
     };
 
     const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
@@ -915,44 +1078,52 @@
     const servicesArrow = document.querySelector('.services-arrow');
 
     if (servicesToggle && servicesDropdown && servicesArrow) {
-        servicesToggle.addEventListener('click', (event) => {
-          event.stopPropagation();
-          servicesDropdown.classList.toggle('active');
-          servicesArrow.classList.toggle('rotated');
-        });
+      servicesToggle.addEventListener('click', (event) => {
+        event.stopPropagation();
+        servicesDropdown.classList.toggle('active');
+        servicesArrow.classList.toggle('rotated');
+      });
 
-        document.addEventListener('click', (e) => {
-          const container = document.querySelector('.services-toggle-container');
-          if (container && !container.contains(e.target) && servicesDropdown.classList.contains('active')) {
-             servicesDropdown.classList.remove('active');
-             servicesArrow.classList.remove('rotated');
-          }
-        });
+      document.addEventListener('click', (e) => {
+        const container = document.querySelector('.services-toggle-container');
+        if (container && !container.contains(e.target) && servicesDropdown.classList.contains('active')) {
+          servicesDropdown.classList.remove('active');
+          servicesArrow.classList.remove('rotated');
+        }
+      });
     }
 
     const scrollBtn = document.getElementById("scrollBtn");
     const scrollIcon = document.getElementById("scrollIcon");
 
     if (scrollBtn && scrollIcon) {
-        window.addEventListener("scroll", () => {
-          if (window.scrollY > 300) {
-            scrollBtn.classList.add('visible');
-            scrollIcon.classList.remove("fa-arrow-down");
-            scrollIcon.classList.add("fa-arrow-up");
-          } else {
-            scrollBtn.classList.remove('visible');
-            scrollIcon.classList.remove("fa-arrow-up");
-            scrollIcon.classList.add("fa-arrow-down");
-          }
-        });
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+          scrollBtn.classList.add('visible');
+          scrollIcon.classList.remove("fa-arrow-down");
+          scrollIcon.classList.add("fa-arrow-up");
+        } else {
+          scrollBtn.classList.remove('visible');
+          scrollIcon.classList.remove("fa-arrow-up");
+          scrollIcon.classList.add("fa-arrow-down");
+        }
+      });
 
-        scrollBtn.addEventListener("click", () => {
-          if (scrollIcon.classList.contains("fa-arrow-up")) {
-            window.scrollTo({top: 0, behavior: "smooth"});
-          }
-        });
+      scrollBtn.addEventListener("click", () => {
+        if (scrollIcon.classList.contains("fa-arrow-up")) {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      });
     }
+    const hamburger = document.querySelector(".hamburger");
+    const navButtons = document.querySelector(".nav-buttons");
+
+    hamburger.addEventListener("click", () => {
+      hamburger.classList.toggle("active");
+      navButtons.classList.toggle("active");
+    });
   </script>
   <script src="theme.js"></script>
 </body>
+
 </html>
