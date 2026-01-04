@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from google import genai
 import traceback
 import os
@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
 # Input validation and sanitization functions
@@ -127,6 +127,44 @@ Do not add assumptions that are not supported by the data provided.
         print(f"Unexpected Error: {e}")
         traceback.print_exc()
         return jsonify({"status": "error", "message": str(e)}), 500
+
+
+# Serve HTML pages
+@app.route('/')
+def index():
+    return send_from_directory('.', 'index.html')
+
+@app.route('/farmer')
+def farmer():
+    return send_from_directory('.', 'farmer.html')
+
+@app.route('/shopkeeper')
+def shopkeeper():
+    return send_from_directory('.', 'shopkeeper.html')
+
+@app.route('/main')
+def main():
+    return send_from_directory('.', 'main.html')
+
+@app.route('/about')
+def about():
+    return send_from_directory('.', 'about.html')
+
+@app.route('/blog')
+def blog():
+    return send_from_directory('.', 'blog.html')
+
+@app.route('/contact')
+def contact():
+    return send_from_directory('.', 'contact.html')
+
+@app.route('/chat')
+def chat():
+    return send_from_directory('.', 'chat.html')
+
+@app.route('/<path:filename>')
+def serve_static(filename):
+    return send_from_directory('.', filename)
 
 
 if __name__ == '__main__':
