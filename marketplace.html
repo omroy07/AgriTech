@@ -200,7 +200,6 @@
         .category-icon { font-size: 3.5rem; margin-bottom: 15px; }
         .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px;}
 
-
         /* --- Notifications & Widgets --- */
         .notification {
             position: fixed; top: 100px; right: 20px; background: var(--bg-secondary);
@@ -496,6 +495,38 @@
             </div>
         </div>
 
+        <!-- LOAD MORE + PAGINATION UI (ONLY ADDITION) -->
+        <div id="loadMoreSection" style="text-align: center; margin: 30px 0;">
+            <button id="loadMoreBtn" onclick="loadMoreProducts()" style="background: var(--accent-gradient); color: white; border: none; padding: 14px 26px; border-radius: 999px; font-weight: 700; cursor: pointer;">
+                <i class="fas fa-plus-circle"></i> Load More Products
+            </button>
+            <p style="color: var(--text-muted); margin-top: 15px; font-size: 0.9rem;">
+                Showing <span id="showingCount">6</span> of <span id="totalCount">2847</span> products
+            </p>
+        </div>
+
+        <div id="paginationSection" style="display: none; text-align: center; margin: 30px 0;">
+            <div style="display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+                <button class="sort-btn" onclick="goToPage(currentPage - 1)" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                
+                <div id="pageNumbers" style="display: flex; gap: 5px; flex-wrap: wrap;"></div>
+                
+                <button class="sort-btn" onclick="goToPage(currentPage + 1)" id="nextBtn">
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            
+            <select class="filter-select" onchange="jumpToPage(this.value)" id="pageJump">
+                <option value="">Jump to page...</option>
+            </select>
+            
+            <p style="color: var(--text-muted); margin-top: 10px; font-size: 0.9rem;">
+                Page <span id="currentPageDisplay">1</span> of <span id="totalPagesDisplay">158</span>
+            </p>
+        </div>
+
         <div class="price-tracker" style="background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 40px; border-radius: 32px; margin: 40px 0;">
             <div class="section-header" style="text-align: center; margin-bottom: 40px;">
                 <h2 style="font-size: 2.2rem; font-weight: 800;"><i class="fas fa-chart-line" style="color: var(--accent-primary);"></i> Market Price Trends</h2>
@@ -561,16 +592,22 @@
         let currentSortKey = 'price';
         let currentSortDirection = 'asc'; // 'asc' for ascending, 'desc' for descending
 
+        // PAGINATION STATE (ONLY ADDITION)
+        const PRODUCTS_PER_LOAD = 12;
+        const PRODUCTS_PER_PAGE = 18;
+        const LOAD_MORE_LIMIT = 48;
+        let visibleCount = 6;
+        let currentPage = 1;
+        let usePagination = false;
+
         // --- Theme Toggle Logic (FIXED) ---
         themeToggle.addEventListener('click', () => {
             const currentTheme = document.body.getAttribute('data-theme');
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
             
-            // 1. Apply new theme
             document.body.setAttribute('data-theme', newTheme);
             localStorage.setItem('marketplaceTheme', newTheme);
             
-            // 2. Update button appearance immediately
             updateThemeButton(newTheme);
             
             showNotification(`Switched to ${newTheme} theme`, 'info');
@@ -578,11 +615,9 @@
 
         function updateThemeButton(theme) {
             if (theme === 'dark') {
-                // Currently Dark: Button shows option to switch TO Light
                 themeIcon.className = 'fas fa-sun';
                 themeText.textContent = 'Dark';
             } else {
-                // Currently Light: Button shows option to switch TO Dark
                 themeIcon.className = 'fas fa-moon';
                 themeText.textContent = 'Light';
             }
@@ -602,7 +637,6 @@
                 title: card.querySelector('.product-title').textContent
             }));
             
-            // Set initial filter/sort state
             filterProducts();
         }
 
@@ -626,11 +660,18 @@
                 return matchesSearch && matchesCategory && matchesLocation;
             });
             
-            // Re-sort the filtered list
-            sortAndDisplay(currentSortKey, false); // Keep current direction
+            // RESET PAGINATION WHEN FILTER CHANGES (ONLY ADDITION)
+            visibleCount = 6;
+            currentPage = 1;
+            usePagination = false;
+            const loadMoreSection = document.getElementById('loadMoreSection');
+            const paginationSection = document.getElementById('paginationSection');
+            if (loadMoreSection) loadMoreSection.style.display = 'block';
+            if (paginationSection) paginationSection.style.display = 'none';
+
+            sortAndDisplay(currentSortKey, false);
         }
         
-        // Used by category cards to set filter and call filterProducts
         function setFilterAndDisplay(filterType, value) {
             if (filterType === 'category') {
                 document.getElementById('categoryFilter').value = value;
@@ -647,18 +688,14 @@
         }
 
         function sortProducts(key, clickedButton) {
-            // Update the active button class
             document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
             clickedButton.classList.add('active');
 
-            // Determine if direction should be flipped
             let flipDirection = currentSortKey === key;
             
-            // Reset direction if a new key is clicked
             if (!flipDirection) {
                 currentSortDirection = 'asc';
             } else {
-                // If same key is clicked, flip the direction
                 currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
             }
 
@@ -668,8 +705,6 @@
         }
 
         function sortAndDisplay(key, updateDirection) {
-            
-            // Default sort: Price Ascending
             let direction = currentSortDirection === 'asc' ? 1 : -1;
 
             filteredProducts.sort((a, b) => {
@@ -684,19 +719,146 @@
             displayProducts();
         }
 
-
+        // UPDATED DISPLAY WITH PAGINATION (ONLY CHANGE)
         function displayProducts() {
-            // Clear existing grid order
-            productsGrid.innerHTML = ''; 
+            allProducts.forEach(p => { p.element.style.display = 'none'; });
 
-            // Append sorted/filtered elements
-            filteredProducts.forEach(p => {
+            let productsToShow;
+            if (usePagination) {
+                const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+                const endIndex = startIndex + PRODUCTS_PER_PAGE;
+                productsToShow = filteredProducts.slice(startIndex, endIndex);
+            } else {
+                productsToShow = filteredProducts.slice(0, visibleCount);
+            }
+
+            productsGrid.innerHTML = '';
+            productsToShow.forEach((p, index) => {
                 p.element.style.display = 'block';
+                p.element.style.order = index;
                 productsGrid.appendChild(p.element);
             });
-            
-            // Hide elements that are filtered out
-            allProducts.filter(p => !filteredProducts.includes(p)).forEach(p => p.element.style.display = 'none');
+
+            updateUI();
+        }
+
+        // LOAD-MORE + PAGINATION HELPERS (ONLY ADDITION)
+        function loadMoreProducts() {
+            visibleCount += PRODUCTS_PER_LOAD;
+            if (visibleCount >= LOAD_MORE_LIMIT) {
+                switchToPagination();
+            } else {
+                displayProducts();
+            }
+        }
+
+        function switchToPagination() {
+            usePagination = true;
+            currentPage = Math.ceil(visibleCount / PRODUCTS_PER_PAGE);
+            document.getElementById('loadMoreSection').style.display = 'none';
+            document.getElementById('paginationSection').style.display = 'block';
+            initializePagination();
+            displayProducts();
+        }
+
+        function initializePagination() {
+            const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+            const pageNumbers = document.getElementById('pageNumbers');
+            const pageJump = document.getElementById('pageJump');
+            if (!pageNumbers || !pageJump) return;
+
+            pageNumbers.innerHTML = '';
+            pageJump.innerHTML = '<option value="">Jump to page...</option>';
+
+            const maxButtons = 7;
+            let startPage = Math.max(1, currentPage - 3);
+            let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+            if (endPage - startPage < maxButtons - 1) {
+                startPage = Math.max(1, endPage - maxButtons + 1);
+            }
+
+            if (startPage > 1) {
+                pageNumbers.innerHTML += `<button class="sort-btn" onclick="goToPage(1)">1</button>`;
+                if (startPage > 2) {
+                    pageNumbers.innerHTML += `<span style="padding: 8px; color: var(--text-muted);">...</span>`;
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const activeClass = i === currentPage ? 'active' : '';
+                pageNumbers.innerHTML += `<button class="sort-btn ${activeClass}" onclick="goToPage(${i})">${i}</button>`;
+            }
+
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    pageNumbers.innerHTML += `<span style="padding: 8px; color: var(--text-muted);">...</span>`;
+                }
+                pageNumbers.innerHTML += `<button class="sort-btn" onclick="goToPage(${totalPages})">${totalPages}</button>`;
+            }
+
+            for (let i = 1; i <= totalPages; i++) {
+                pageJump.innerHTML += `<option value="${i}">Page ${i}</option>`;
+            }
+
+            const totalPagesDisplay = document.getElementById('totalPagesDisplay');
+            if (totalPagesDisplay) totalPagesDisplay.textContent = totalPages;
+        }
+
+        function goToPage(pageNum) {
+            const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+            if (pageNum < 1 || pageNum > totalPages) return;
+            currentPage = pageNum;
+            displayProducts();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function jumpToPage(pageNum) {
+            if (pageNum) {
+                goToPage(parseInt(pageNum));
+                document.getElementById('pageJump').value = '';
+            }
+        }
+
+        function updateUI() {
+            const showingCount = usePagination
+                ? Math.min(currentPage * PRODUCTS_PER_PAGE, filteredProducts.length)
+                : Math.min(visibleCount, filteredProducts.length);
+            const total = filteredProducts.length;
+
+            const showingSpan = document.getElementById('showingCount');
+            const totalSpan = document.getElementById('totalCount');
+            if (showingSpan && totalSpan) {
+                showingSpan.textContent = showingCount;
+                totalSpan.textContent = total;
+            }
+
+            if (usePagination) {
+                const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+                const currentPageDisplay = document.getElementById('currentPageDisplay');
+                if (currentPageDisplay) currentPageDisplay.textContent = currentPage;
+                initializePagination();
+
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                if (prevBtn && nextBtn) {
+                    prevBtn.disabled = currentPage === 1;
+                    nextBtn.disabled = currentPage === totalPages;
+                    prevBtn.style.opacity = currentPage === 1 ? '0.5' : '1';
+                    nextBtn.style.opacity = currentPage === totalPages ? '0.5' : '1';
+                }
+            } else {
+                const remaining = filteredProducts.length - visibleCount;
+                const loadMoreBtn = document.getElementById('loadMoreBtn');
+                if (loadMoreBtn) {
+                    if (remaining <= 0) {
+                        loadMoreBtn.style.display = 'none';
+                    } else {
+                        loadMoreBtn.style.display = 'inline-flex';
+                        const toLoad = Math.min(PRODUCTS_PER_LOAD, remaining);
+                        loadMoreBtn.innerHTML = `<i class="fas fa-plus-circle"></i> Load More (${toLoad} more)`;
+                    }
+                }
+            }
         }
 
         // --- Utility Functions ---
@@ -713,19 +875,16 @@
             notification.className = `notification ${type}`;
             notification.innerHTML = `${iconHtml} <span>${message}</span>`;
             
-            // Use the main body to position the container if it doesn't exist
             if (!notificationContainer) {
                 document.body.appendChild(document.createElement('div')).id = 'notificationContainer';
             }
             document.getElementById('notificationContainer').appendChild(notification);
             
-            // Delay to allow CSS transition
             setTimeout(() => notification.classList.add('show'), 50);
             
-            // Auto-hide
             setTimeout(() => {
                 notification.classList.remove('show');
-                setTimeout(() => notification.remove(), 400); // Wait for transition
+                setTimeout(() => notification.remove(), 400);
             }, 3000);
         }
 
@@ -736,7 +895,6 @@
             icon.classList.toggle('far', isLiked);
             icon.classList.toggle('fas', !isLiked);
             
-            // Use accent danger color for liked state
             btn.style.color = !isLiked ? 'var(--accent-danger)' : 'var(--text-primary)';
             showNotification(!isLiked ? 'Added to favorites' : 'Removed from favorites');
         }
@@ -746,7 +904,6 @@
             const cartCountElement = document.getElementById('cartCount');
             cartCountElement.textContent = cartItems;
             
-            // Simple bounce animation on cart icon
             const cartWidget = document.getElementById('cartWidget');
             cartWidget.style.transform = 'scale(1.2)';
             setTimeout(() => cartWidget.style.transform = 'scale(1)', 150);
@@ -758,7 +915,6 @@
             showNotification(`Initiating contact with ${name}...`, 'info');
         }
 
-        // Initial setup on load
         document.addEventListener('DOMContentLoaded', initializeProducts);
     </script>
 </body>
