@@ -26,9 +26,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Libertinus+Serif:wght@400;600;700&display=swap" rel="stylesheet">
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="about.css" />
@@ -48,10 +47,10 @@
         <span class="theme-text">Light</span>
       </button>
       <a href="index.html" class="btn btn-secondary">Home</a>
-        <a href="blog.html" class="btn btn-secondary">Blog</a>
-        <a href="login.html" class="btn btn-secondary">Login</a>
-        <a href="faq.html" class="btn btn-secondary">FAQ</a> 
-        <a href="register.html" class="btn btn-primary" style="color:white">Register</a>
+      <a href="blog.html" class="btn btn-secondary">Blog</a>
+      <a href="login.html" class="btn btn-secondary">Login</a>
+      <a href="faq.html" class="btn btn-secondary">FAQ</a>
+      <a href="register.html" class="btn btn-primary" style="color:white">Register</a>
     </div>
   </nav>
 
@@ -136,116 +135,103 @@
     </section>
   </main>
 
+  <!-- FOOTER - Exact same as index.html -->
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-brand">
         <div class="brand-header">
-          <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
+          <img src="images/logo.png" alt="AgriTech logo">
           <h3 class="serif">AgriTech</h3>
         </div>
-        <div class="mission-statement">
-          <p>Empowering India's Farming Future with innovative <span class="no-break">technology</span> solutions that connect every stakeholder in the <span class="no-break">agricultural</span> ecosystem</p>
-        </div>
+        <p>Empowering India's Farming Future with innovative technology connecting every stakeholder.</p>
       </div>
       <div class="footer-links">
         <h4 class="serif">Quick Links</h4>
-        <nav aria-label="Footer navigation">
         <ul>
           <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-          <li><a href="login.html" title="Login first to access dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+          <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
           <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
           <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
           <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
         </ul>
-        </nav>
       </div>
       <div class="footer-links">
-        <h4 class="serif">About AgriTech</h4>
-        <nav aria-label="About navigation">
+        <h4 class="serif">Contact</h4>
         <ul>
-          <li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li>
-          <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
-          <li><a href="team.html"><i class="fas fa-users"></i> Our Team</a></li>
-          <li><a href="mission.html"><i class="fas fa-bullseye"></i> Our Mission</a></li>
-          <li><a href="careers.html"><i class="fas fa-briefcase"></i> Careers</a></li>
+          <li><a href="#"><i class="fas fa-envelope"></i> Email Us</a></li>
+          <li><a href="#"><i class="fas fa-phone"></i> Call Us</a></li>
         </ul>
-        </nav>
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="footer-bottom-content">
-        <p class="copyright">© 2025 AgriTech. All rights reserved.</p>
-        <div class="footer-bottom-links">
-          <a href="terms-and-service.html">Terms of Service</a>
-          <span class="separator">•</span>
-          <a href="privacy-policy.html">Privacy Policy</a>
-          <span class="separator">•</span>
-          <a href="contact.html">Contact Us</a>
-        </div>
-      </div>
+      <p>© 2025 AgriTech. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- Scroll to Top -->
-  <div class="scroll-to-top" id="scrollToTop" title="Back to top" aria-label="Scroll to top">
-    <i class="fas fa-arrow-up"></i>
-  </div>
+  <!-- Floating Chatbot Button - Same as index.html -->
+  <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
+    <i class="fas fa-robot"></i>
+  </a>
+
+  <!-- Scroll Button - Same as index.html -->
+  <button class="scroll-btn" id="scrollBtn" title="Scroll">
+    <i class="fas fa-arrow-down" id="scrollIcon"></i>
+  </button>
 
   <!-- Scripts -->
   <script>
-    const scrollToTopBtn = document.getElementById("scrollToTop");
-    window.addEventListener("scroll", () => {
-      scrollToTopBtn.classList.toggle("visible", window.scrollY > 300);
+    // Theme toggle functionality
+    const themeToggle = document.querySelector('.theme-toggle');
+    const themeText = document.querySelector('.theme-text');
+    const sunIcon = document.querySelector('.sun-icon');
+    const moonIcon = document.querySelector('.moon-icon');
+
+    const applyTheme = (theme) => {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        if (theme === 'dark') {
+            themeText.textContent = 'Light';
+            moonIcon.style.display = 'none';
+            sunIcon.style.display = 'inline-block';
+        } else {
+            themeText.textContent = 'Dark';
+            moonIcon.style.display = 'inline-block';
+            sunIcon.style.display = 'none';
+        }
+    };
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    applyTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      applyTheme(next);
     });
-    scrollToTopBtn.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+
+    // Scroll Button functionality - Same as index.html
+    const scrollBtn = document.getElementById("scrollBtn");
+    const scrollIcon = document.getElementById("scrollIcon");
+
+    if (scrollBtn && scrollIcon) {
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 300) {
+            scrollBtn.classList.add('visible');
+            scrollIcon.classList.remove("fa-arrow-down");
+            scrollIcon.classList.add("fa-arrow-up");
+          } else {
+            scrollBtn.classList.remove('visible');
+            scrollIcon.classList.remove("fa-arrow-up");
+            scrollIcon.classList.add("fa-arrow-down");
+          }
+        });
+
+        scrollBtn.addEventListener("click", () => {
+          if (scrollIcon.classList.contains("fa-arrow-up")) {
+            window.scrollTo({top: 0, behavior: "smooth"});
+          }
+        });
+    }
   </script>
-  <script src="theme.js"></script>
-  
-<!-- Floating Chatbot Button -->
-<a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
-  <i class="fas fa-robot"></i>
-</a>
- 
-<!-- Scroll Button -->
-<button class="scroll-btn" id="scrollBtn" title="Scroll">
-  <i class="fas fa-arrow-down" id="scrollIcon"></i>
-</button>
-
-<script>
-  const scrollBtn = document.getElementById("scrollBtn");
-  const scrollIcon = document.getElementById("scrollIcon");
-
-  window.addEventListener("scroll", () => {
-    // If near top, show "scroll down" button
-    if (window.scrollY < 300) {
-      scrollBtn.classList.add("visible");
-      scrollIcon.classList.replace("fa-arrow-up", "fa-arrow-down");
-    } 
-    // If scrolled down, show "scroll up" button
-    else {
-      scrollBtn.classList.add("visible");
-      scrollIcon.classList.replace("fa-arrow-down", "fa-arrow-up");
-    }
-  });
-
-  scrollBtn.addEventListener("click", () => {
-    if (scrollIcon.classList.contains("fa-arrow-down")) {
-      // Scroll to bottom
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: "smooth",
-      });
-    } else {
-      // Scroll to top
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }
-  });
-</script>
 </body>
-
 </html>
