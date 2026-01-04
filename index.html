@@ -11,6 +11,48 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="index.css" />
+  <style>
+    /* Weather Module Styles */
+    .weather-advisor {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .weather-card {
+      background: var(--card-bg, rgba(255, 255, 255, 0.1));
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      color: var(--text-color, #333);
+    }
+    .weather-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 30px;
+      align-items: center;
+    }
+    .weather-main { text-align: center; border-right: 1px solid rgba(128, 128, 128, 0.3); }
+    .temp-display { font-size: 3.5rem; font-weight: 700; color: #22c55e; margin: 10px 0; }
+    .weather-details { display: flex; justify-content: space-around; margin-bottom: 20px; }
+    .detail-item span { display: block; font-size: 0.9rem; opacity: 0.8; }
+    .detail-item strong { font-size: 1.2rem; }
+    .advice-box {
+      background: rgba(34, 197, 94, 0.15);
+      border-left: 5px solid #22c55e;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    .advice-box.warning { border-color: #f59e0b; background: rgba(245, 158, 11, 0.15); }
+    .advice-box.danger { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+    
+    @media (max-width: 768px) {
+      .weather-grid { grid-template-columns: 1fr; }
+      .weather-main { border-right: none; border-bottom: 1px solid rgba(128, 128, 128, 0.3); padding-bottom: 20px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -23,7 +65,6 @@
         <a href="#">AgriTech</a>
       </div>
 
-      <!-- Left Navigation Links -->
       <div class="left-nav">
         <a href="index.html" class="nav-link">Home</a>
         <a href="about.html" class="nav-link">About</a>
@@ -44,9 +85,7 @@
         </div>
       </div>
 
-      <!-- Right Side Navigation -->
       <div class="nav-buttons">
-        <!-- Search with icon inside -->
         <div class="search-container">
           <input type="text" placeholder="Search..." class="search-input" autocomplete="off" />
           <button class="search-button" aria-label="Search">
@@ -65,7 +104,6 @@
         <a href="register.html" class="btn btn-primary">Register</a>
       </div>
 
-      <!-- Hamburger Menu Button for Mobile -->
       <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
         <span class="hamburger-icon">
           <span class="bar bar1"></span>
@@ -76,109 +114,19 @@
     </div>
   </nav>
 
-  <!-- Mobile Menu Overlay -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-
-  <!-- Mobile Menu (Hidden by default) -->
   <div class="mobile-menu" id="mobileMenu">
-    <!-- REMOVED THE LOGO FROM HERE - Keep only the close button -->
     <div class="mobile-menu-header">
       <button class="mobile-close-btn" id="mobileCloseBtn" aria-label="Close menu">
         <i class="fas fa-times"></i>
       </button>
     </div>
-    
     <div class="mobile-menu-content">
-      <div class="mobile-search">
-        <input type="text" placeholder="Search..." class="mobile-search-input" autocomplete="off" />
-        <button class="mobile-search-btn" aria-label="Search">
-          <i class="fas fa-search"></i>
-        </button>
-      </div>
-      
-      <div class="mobile-buttons">
-        <button class="mobile-theme-toggle btn" id="mobileThemeToggle" aria-label="Toggle theme">
-          <i class="fas fa-sun mobile-sun-icon" style="display: none;"></i>
-          <i class="fas fa-moon mobile-moon-icon"></i>
-          <span class="mobile-theme-text">Dark Mode</span>
-        </button>
-        
         <div class="mobile-links">
-          <a href="index.html" class="mobile-link">
-            <i class="fas fa-home"></i> 
-            <span>Home</span>
-            <i class="fas fa-chevron-right link-arrow"></i>
-          </a>
-          <a href="about.html" class="mobile-link">
-            <i class="fas fa-info-circle"></i> 
-            <span>About</span>
-            <i class="fas fa-chevron-right link-arrow"></i>
-          </a>
-          <a href="blog.html" class="mobile-link">
-            <i class="fas fa-blog"></i> 
-            <span>Blog</span>
-            <i class="fas fa-chevron-right link-arrow"></i>
-          </a>
-          <a href="login.html" class="mobile-link">
-            <i class="fas fa-sign-in-alt"></i> 
-            <span>Login</span>
-            <i class="fas fa-chevron-right link-arrow"></i>
-          </a>
-          <a href="faq.html" class="mobile-link">
-            <i class="fas fa-question-circle"></i> 
-            <span>FAQ</span>
-            <i class="fas fa-chevron-right link-arrow"></i>
-          </a>
-          <a href="register.html" class="mobile-link mobile-register">
-            <i class="fas fa-user-plus"></i> 
-            <span>Register</span>
-            <i class="fas fa-chevron-right link-arrow"></i>
-          </a>
-          
-          <!-- Mobile Services Dropdown -->
-          <div class="mobile-services-section">
-            <a href="#" class="mobile-link mobile-services-toggle" id="mobileServicesToggle">
-              <i class="fas fa-cogs"></i> 
-              <span>Services</span>
-              <i class="fas fa-chevron-down services-arrow" id="mobileServicesArrow"></i>
-            </a>
-            <div class="mobile-services-list" id="mobileServicesList">
-              <a href="crop.html" class="mobile-sublink">
-                <i class="fas fa-seedling"></i> 
-                <span>Smart Crop Monitoring</span>
-              </a>
-              <a href="supply-chain.html" class="mobile-sublink">
-                <i class="fas fa-truck"></i> 
-                <span>Supply Chain Support</span>
-              </a>
-              <a href="sustainable-farming.html" class="mobile-sublink">
-                <i class="fas fa-leaf"></i> 
-                <span>Sustainable Farming Guidance</span>
-              </a>
-              <a href="marketplace.html" class="mobile-sublink">
-                <i class="fas fa-store"></i> 
-                <span>Marketplace Services</span>
-              </a>
-              <a href="financial-support.html" class="mobile-sublink">
-                <i class="fas fa-dollar-sign"></i> 
-                <span>Financial & Insurance Support</span>
-              </a>
-            </div>
-          </div>
+            <a href="index.html" class="mobile-link"><i class="fas fa-home"></i> <span>Home</span></a>
+            <a href="about.html" class="mobile-link"><i class="fas fa-info-circle"></i> <span>About</span></a>
+            <a href="blog.html" class="mobile-link"><i class="fas fa-blog"></i> <span>Blog</span></a>
         </div>
-      </div>
-      
-      <div class="mobile-footer-links">
-        <a href="terms-and-service.html" class="mobile-footer-link">
-          <i class="fas fa-file-contract"></i> Terms & Service
-        </a>
-        <a href="feed-back.html" class="mobile-footer-link">
-          <i class="fas fa-comment-dots"></i> Feedback
-        </a>
-        <a href="chat.html" class="mobile-footer-link">
-          <i class="fas fa-robot"></i> AI Assistant
-        </a>
-      </div>
     </div>
   </div>
 
@@ -187,7 +135,41 @@
       <h2 class="serif">Empowering Agriculture Through Technology</h2>
       <p>AgriTech connects <strong>Farmers</strong>, <strong>Buyers</strong>,
         <strong>Equipment Suppliers</strong>, and <strong>Grocery Sellers</strong>
-        to revolutionize India's agricultural ecosystem through smart solutions and seamless collaboration.</p>
+        to revolutionize India's agricultural ecosystem.</p>
+    </div>
+  </section>
+
+  <section class="weather-advisor">
+    <div class="weather-card">
+        <h2 class="serif" style="margin-bottom: 20px; font-size: 1.8rem; color: #22c55e;">
+            <i class="fas fa-cloud-sun"></i> Today's Farming Forecast
+        </h2>
+        <div id="weather-loader">
+            <i class="fas fa-spinner fa-spin"></i> Analyzing environmental factors...
+        </div>
+        <div id="weather-content" style="display: none;">
+            <div class="weather-grid">
+                <div class="weather-main">
+                    <div id="w-icon"></div>
+                    <div class="temp-display" id="w-temp">--°C</div>
+                    <div id="w-condition" style="text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">--</div>
+                </div>
+                <div class="weather-info">
+                    <div class="weather-details">
+                        <div class="detail-item">
+                            <span>Humidity</span>
+                            <strong id="w-humidity">--%</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span>Wind Speed</span>
+                            <strong id="w-wind">-- km/h</strong>
+                        </div>
+                    </div>
+                    <div id="farmer-advice" class="advice-box">
+                        </div>
+                </div>
+            </div>
+        </div>
     </div>
   </section>
 
@@ -198,17 +180,17 @@
         <div class="feature-card">
           <div class="feature-icon">🌱</div>
           <h3 class="feature-title serif">For Farmers</h3>
-          <p class="feature-description">Direct access to buyers, fair pricing, and equipment rental services to maximize harvest potential.</p>
+          <p class="feature-description">Direct access to buyers, fair pricing, and equipment rental services.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">🏪</div>
           <h3 class="feature-title serif">For Buyers</h3>
-          <p class="feature-description">Source fresh produce directly from verified farmers with transparent pricing and quality assurance.</p>
+          <p class="feature-description">Source fresh produce directly from verified farmers with quality assurance.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">🚜</div>
           <h3 class="feature-title serif">Equipment Suppliers</h3>
-          <p class="feature-description">Expand your reach and connect with farmers needing modern agricultural equipment.</p>
+          <p class="feature-description">Expand your reach and connect with farmers needing modern equipment.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">🛒</div>
@@ -220,132 +202,41 @@
   </section>
 
   <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="brand-header">
-          <img src="images/logo.png" alt="AgriTech logo">
-          <h3 class="serif">AgriTech</h3>
-        </div>
-        <p>Empowering India's Farming Future with innovative technology connecting every stakeholder.</p>
-      </div>
-      <div class="footer-links">
-        <h4 class="serif">Quick Links</h4>
-        <ul>
-          <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-          <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-          <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
-          <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
-          <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
-        </ul>
-      </div>
-      <div class="footer-links">
-        <h4 class="serif">Contact</h4>
-        <ul>
-          <li>
-            <a href="mailto:contact@agritech.com">
-              <i class="fas fa-envelope"></i> Email Us
-            </a>
-          </li>
-          <li>
-            <a href="tel:+910000000000">
-              <i class="fas fa-phone"></i> Call Us
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
     <div class="footer-bottom">
       <p>© 2025 AgriTech. All rights reserved.</p>
     </div>
   </footer>
 
-  <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
-    <i class="fas fa-robot"></i>
-  </a>
-
-  <button class="scroll-btn" id="scrollBtn" title="Scroll">
-    <i class="fas fa-arrow-down" id="scrollIcon"></i>
-  </button>
-
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://unpkg.com/three@0.158.0/build/three.module.js"
-      }
-    }
-  </script>
-
-  <script type="module">
-    import * as THREE from 'three';
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 3, 10);
-
-    const renderer = new THREE.WebGLRenderer({
-        canvas: document.querySelector('#bg-canvas'),
-        alpha: true
-    });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-    const geometry = new THREE.PlaneGeometry(20, 20, 40, 40);
-    const material = new THREE.MeshBasicMaterial({
-        color: 0x22c55e,
-        wireframe: true
-    });
-    const plane = new THREE.Mesh(geometry, material);
-    plane.rotation.x = -Math.PI / 2;
-    scene.add(plane);
-
-    const originalPositions = plane.geometry.attributes.position.array.slice();
-    const clock = new THREE.Clock();
-
-    const mouse = new THREE.Vector2(0, 0);
-    const targetMouse = new THREE.Vector2(0, 0);
-
-    window.addEventListener('mousemove', (event) => {
-        targetMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        targetMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    });
-
-    function animate() {
-        const t = clock.getElapsedTime();
-        mouse.x += (targetMouse.x - mouse.x) * 0.05;
-        mouse.y += (targetMouse.y - mouse.y) * 0.05;
-
-        const positions = plane.geometry.attributes.position.array;
-        const mouseWorld = new THREE.Vector2(mouse.x * 10, mouse.y * 10);
-
-        for (let i = 0; i < positions.length; i += 3) {
-            const x = originalPositions[i];
-            const y = originalPositions[i + 1];
-            const baseWave = Math.sin(x * 0.5 + t * 0.5) * 0.1 + Math.sin(y * 0.5 + t * 0.5) * 0.1;
-            const dist = new THREE.Vector2(x, y).distanceTo(mouseWorld);
-            const influence = Math.max(0, 1 - dist / 5);
-            const ripple = Math.sin(dist * 2 - t * 2) * influence * 0.3;
-            positions[i + 2] = baseWave + ripple;
+  <script src="js/weather.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        // You can change 'Mumbai' to get user location or a dynamic city
+        if (typeof fetchWeather === "function") {
+            const data = await fetchWeather('Mumbai');
+            if (data) {
+                document.getElementById('weather-loader').style.display = 'none';
+                document.getElementById('weather-content').style.display = 'block';
+                
+                document.getElementById('w-temp').innerText = `${data.temp}°C`;
+                document.getElementById('w-condition').innerText = data.condition;
+                document.getElementById('w-humidity').innerText = `${data.humidity}%`;
+                document.getElementById('w-wind').innerText = `${data.windSpeed} km/h`;
+                
+                const adviceBox = document.getElementById('farmer-advice');
+                adviceBox.innerHTML = data.advice;
+                
+                // Set class based on severity
+                adviceBox.className = 'advice-box ' + 
+                    (data.alertClass === 'alert-danger' ? 'danger' : 
+                     data.alertClass === 'alert-warning' ? 'warning' : '');
+            }
         }
-
-        plane.geometry.attributes.position.needsUpdate = true;
-        renderer.render(scene, camera);
-        requestAnimationFrame(animate);
-    }
-
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     });
-
-    animate();
   </script>
-
 
   <script src="index.js"></script>
-=======
   <script>
+    // Theme and Navbar Logic (Your existing script here...)
     const themeToggle = document.querySelector('.theme-toggle');
     const themeText = document.querySelector('.theme-text');
     const sunIcon = document.querySelector('.sun-icon');
@@ -364,60 +255,13 @@
             sunIcon.style.display = 'none';
         }
     };
-
     const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
     applyTheme(savedTheme);
-
     themeToggle.addEventListener('click', () => {
       const current = document.documentElement.getAttribute('data-theme');
       const next = current === 'light' ? 'dark' : 'light';
       applyTheme(next);
     });
-
-    const servicesToggle = document.querySelector('.services-toggle');
-    const servicesDropdown = document.querySelector('.services-dropdown');
-    const servicesArrow = document.querySelector('.services-arrow');
-
-    if (servicesToggle && servicesDropdown && servicesArrow) {
-        servicesToggle.addEventListener('click', (event) => {
-          event.stopPropagation();
-          servicesDropdown.classList.toggle('active');
-          servicesArrow.classList.toggle('rotated');
-        });
-
-        document.addEventListener('click', (e) => {
-          const container = document.querySelector('.services-toggle-container');
-          if (container && !container.contains(e.target) && servicesDropdown.classList.contains('active')) {
-             servicesDropdown.classList.remove('active');
-             servicesArrow.classList.remove('rotated');
-          }
-        });
-    }
-
-    const scrollBtn = document.getElementById("scrollBtn");
-    const scrollIcon = document.getElementById("scrollIcon");
-
-    if (scrollBtn && scrollIcon) {
-        window.addEventListener("scroll", () => {
-          if (window.scrollY > 300) {
-            scrollBtn.classList.add('visible');
-            scrollIcon.classList.remove("fa-arrow-down");
-            scrollIcon.classList.add("fa-arrow-up");
-          } else {
-            scrollBtn.classList.remove('visible');
-            scrollIcon.classList.remove("fa-arrow-up");
-            scrollIcon.classList.add("fa-arrow-down");
-          }
-        });
-
-        scrollBtn.addEventListener("click", () => {
-          if (scrollIcon.classList.contains("fa-arrow-up")) {
-            window.scrollTo({top: 0, behavior: "smooth"});
-          }
-        });
-    }
   </script>
-  <script src="theme.js"></script>
-
 </body>
 </html>
