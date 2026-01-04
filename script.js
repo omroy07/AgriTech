@@ -161,3 +161,25 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.href = 'notfound.html';
   }
 });
+// Theme Toggle Logic
+document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('theme-toggle');
+    const htmlElement = document.documentElement;
+
+    // 1. Load the saved theme from the browser's memory
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    htmlElement.setAttribute('data-theme', savedTheme);
+
+    // 2. Listen for clicks on the toggle button
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            // Apply new theme
+            htmlElement.setAttribute('data-theme', newTheme);
+            // Save to localStorage
+            localStorage.setItem('theme', newTheme);
+        });
+    }
+});
