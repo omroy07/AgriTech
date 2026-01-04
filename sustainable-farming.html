@@ -64,6 +64,65 @@
             background: linear-gradient(135deg, #ecfdf5 0%, #f0fdfa 100%);
         }
 
+        /* Light theme container overrides */
+        body[data-theme="light"] .top-nav,
+        body[data-theme="light"] .header,
+        body[data-theme="light"] .sustainability-metrics,
+        body[data-theme="light"] .eco-impact,
+        body[data-theme="light"] .tips-section,
+        body[data-theme="light"] .assessment-tool,
+        body[data-theme="light"] .cta-section,
+        body[data-theme="light"] .practice-card {
+            background: rgba(248, 250, 252, 0.95);
+            border-color: var(--border-color);
+            box-shadow: 0 8px 25px var(--shadow-light);
+        }
+
+        /* Ensure text uses design tokens in light mode */
+        body[data-theme="light"] .header h1,
+        body[data-theme="light"] .metrics-header h2,
+        body[data-theme="light"] .impact-header h2,
+        body[data-theme="light"] .tips-header h2,
+        body[data-theme="light"] .tool-header h2,
+        body[data-theme="light"] .cta-section h2,
+        body[data-theme="light"] .practice-card h3 {
+            color: var(--text-primary);
+        }
+
+        body[data-theme="light"] p,
+        body[data-theme="light"] .metrics-header p,
+        body[data-theme="light"] .impact-header p,
+        body[data-theme="light"] .tips-header p,
+        body[data-theme="light"] .tool-header p,
+        body[data-theme="light"] .cta-section p,
+        body[data-theme="light"] .practice-card p,
+        body[data-theme="light"] .practice-benefits li,
+        body[data-theme="light"] .tip-card p,
+        body[data-theme="light"] .impact-description,
+        body[data-theme="light"] .form-group label,
+        body[data-theme="light"] .range-value,
+        body[data-theme="light"] .tip-title {
+            color: var(--text-secondary);
+        }
+
+        /* Fix assessment and impact blocks in light mode */
+        body[data-theme="light"] .impact-stat {
+            background: var(--bg-secondary);
+            border-color: var(--border-color);
+        }
+
+        body[data-theme="light"] .results-section {
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        body[data-theme="light"] .score-progress {
+            background: var(--bg-tertiary);
+        }
+
+        body[data-theme="light"] .tip-card {
+            background: linear-gradient(135deg, rgba(0, 184, 148, 0.05), rgba(0, 206, 201, 0.05));
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
