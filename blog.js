@@ -145,6 +145,33 @@ const blogPosts = [
         `,
         author: "Organic Farming Association", 
         date: "2025-01-05"
+    } ,
+    {
+        id: 4,
+        title: "Maximize Yield with Crop Rotation",
+        category: "farming-tips", // Matches the button data-category="farming-tips"
+        author: "Dr. R.K. Singh",
+        date: "March 15, 2025",
+        image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=800&q=80",
+        content: "Crop rotation is the practice of planting different crops sequentially on the same plot of land to improve soil health, optimize nutrients in the soil, and combat pest and weed pressure..."
+    },
+    {
+        id: 5,
+        title: "Agri-Market Trends: Wheat Prices Soar",
+        category: "market-trends", // Matches the button data-category="market-trends"
+        author: "Market Watch Team",
+        date: "March 18, 2025",
+        image: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&w=800&q=80",
+        content: "The global wheat market is experiencing a significant upturn this quarter due to changing climate patterns in major export zones. Farmers in India are seeing a 15% increase in MSP..."
+    },
+    {
+        id: 6,
+        title: "Starting an Organic Fertilizer Business",
+        category: "business", // Matches the button data-category="business"
+        author: "Amit Patel",
+        date: "March 20, 2025",
+        image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?auto=format&fit=crop&w=800&q=80",
+        content: "Turning farm waste into gold! Vermicomposting is one of the most profitable low-investment agri-businesses today. Here is a step-by-step guide to setting up your own unit..."
     }
 ];
 
@@ -282,7 +309,7 @@ function displayPosts() {
                     <span class="card-author">By ${post.author}</span>
                     <span class="card-date">${post.date}</span>
                 </div>
-                <button class="read-more-btn" onclick="openModal('${post.id}')">Read More</button>
+                <button class="read-more-btn" style="margin-top:16px"onclick="openModal('${post.id}')">Read More</button>
             </div>
         `;
         blogGrid.appendChild(postElement);

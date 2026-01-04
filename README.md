@@ -112,6 +112,18 @@ cd src/frontend
 python -m http.server 8000
 # The application will be live at http://localhost:8000
 ```
+## 🛣 Roadmap
+
+- [ ] Cloud deployment
+- [ ] Mobile app integration
+- [ ] Real-time weather API
+- [ ] AI chatbot for farmers
+- [ ] Regional language support
+
+## 🔄 Contribution Flow
+
+Fork → Clone → Branch → Code → Commit → Push → Pull Request → Review → Merge
+
 
 ---
 
