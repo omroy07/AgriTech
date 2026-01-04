@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Farmer Registration - AgriTech Assistant</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #334155;
+      margin: 0;
+    }
+
+    /* Header styling */
+    header {
+      background: #1e293b;
+      color: #94a3b8;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .logo h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #fff;
+    }
+    .header-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+    .nav-back {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .nav-back:hover {
+      text-decoration: underline;
+    }
+
+    /* Form styling */
+    form {
+      max-width: 700px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #3c83f6;
+      margin-bottom: 1rem;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      background: #3c83f6;
+      color: #fff;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #3c83f6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <h1>AgriBot</h1>
+    </div>
+    <div class="header-actions">
+      <button class="theme-toggle" aria-label="Toggle dark/light mode">
+        <i class="fas fa-sun"></i>
+      </button>
+      <a href="financial-support.html" class="nav-back">
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </a>
+    </div>
+  </header>
+
+  <!-- Farmer Form -->
+  <form id="farmer-form">
+    <h2>Farmer Information Form</h2>
+
+    <!-- Farmer Profile -->
+    <div class="form-group">
+      <label for="name">Farmer Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name"/>
+    </div>
+
+    <div class="form-group">
+      <label for="farmer-type">Farmer Type</label>
+      <select id="farmer-type" name="farmer-type">
+        <option value="small">Small</option>
+        <option value="marginal">Marginal</option>
+        <option value="medium">Medium</option>
+        <option value="large">Large</option>
+      </select>
+    </div>
+
+    <!-- Location -->
+    <div class="form-group">
+      <label for="state">State</label>
+      <input type="text" id="state" name="state" placeholder="Enter your state"/>
+    </div>
+
+    <div class="form-group">
+      <label for="district">District</label>
+      <input type="text" id="district" name="district" placeholder="Enter your district"/>
+    </div>
+
+    <!-- Land & Crop Details -->
+    <div class="form-group">
+      <label for="land-size">Landholding Size (in acres)</label>
+      <input type="number" id="land-size" name="land-size" placeholder="e.g. 2"/>
+    </div>
+
+    <div class="form-group">
+      <label for="crops">Crops Grown</label>
+      <input type="text" id="crops" name="crops" placeholder="e.g. Wheat, Rice"/>
+    </div>
+
+    <div class="form-group">
+      <label for="farming-method">Farming Method</label>
+      <select id="farming-method" name="farming-method">
+        <option value="traditional">Traditional</option>
+        <option value="organic">Organic</option>
+        <option value="modern">Modern</option>
+      </select>
+    </div>
+
+    <!-- Financial & Resources -->
+    <div class="form-group">
+      <label for="income">Annual Income (₹)</label>
+      <input type="number" id="income" name="income" placeholder="Enter annual income"/>
+    </div>
+
+    <div class="form-group">
+      <label for="irrigation">Irrigation Facility</label>
+      <select id="irrigation" name="irrigation">
+        <option value="rainfed">Rain-fed</option>
+        <option value="canal">Canal</option>
+        <option value="borewell">Borewell</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <!-- KYC & Bank Details -->
+    <div class="form-group">
+      <label for="kyc">KYC Status</label>
+      <select id="kyc" name="kyc">
+        <option value="completed">Completed</option>
+        <option value="not-completed">Not Completed</option>
+        <option value="pending">Pending</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="bank-name">Bank Name</label>
+      <input type="text" id="bank-name" name="bank-name" placeholder="Enter bank name"/>
+    </div>
+
+    <div class="form-group">
+      <label for="account-type">Account Type</label>
+      <select id="account-type" name="account-type">
+        <option value="savings">Savings</option>
+        <option value="current">Current</option>
+        <option value="jandhan">Jan Dhan</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="aadhaar-linked">Aadhaar Linked?</label>
+      <select id="aadhaar-linked" name="aadhaar-linked">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit">Submit</button>
+  </form>
+<script src="json-chatbot.js"></script>
+    <script src="finance.js"></script>
+</body>
+</html>

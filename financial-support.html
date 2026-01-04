@@ -25,7 +25,7 @@
       --shadow-light: rgba(0, 0, 0, 0.3);
       --shadow-medium: rgba(0, 0, 0, 0.4);
       --shadow-heavy: rgba(0, 0, 0, 0.6);
-      --accent-primary: #3b82f6;
+      --accent-primary: oklch(62.55% 0.18669 259.706);
       --accent-secondary: #10b981;
       --accent-warning: #f59e0b;
       --accent-danger: #ef4444;
@@ -983,8 +983,10 @@
     </div>
   </div>
 
-  <button class="chat-toggle" id="chatToggle" onclick="toggleChat()">
-    <i class="fas fa-comments"></i>
+  <button class="chat-toggle" id="chatToggle">
+    <a href="finance_bot.html">
+      <i class="fas fa-comments"></i>
+    </a>
   </button>
 
   <!-- Footer -->
@@ -1218,6 +1220,7 @@
     });
   </script>
   <script src="theme.js"></script>
+
 </body>
 
 </html>
