@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
+        rel="stylesheet">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/logo.png">
-    
+
     <style>
         :root {
             /* Dark Theme Variables */
@@ -149,8 +152,13 @@
         }
 
         @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .header-content {
@@ -207,7 +215,7 @@
         .search-box input:focus {
             outline: none;
             border-color: var(--accent-primary);
-            box-shadow: 0 0 10px rgba(253,121,168,0.2);
+            box-shadow: 0 0 10px rgba(253, 121, 168, 0.2);
         }
 
         .search-box .search-btn {
@@ -291,7 +299,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             transform: rotate(45deg);
             transition: all 0.6s ease;
             opacity: 0;
@@ -303,13 +311,18 @@
         }
 
         @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
         }
 
         .stat-card:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(253,121,168,0.3);
+            box-shadow: 0 8px 25px rgba(253, 121, 168, 0.3);
         }
 
         .stat-value {
@@ -375,7 +388,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             transition: left 0.5s;
         }
 
@@ -415,8 +428,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
         }
 
         .product-badge.premium {
@@ -492,7 +512,7 @@
 
         .btn-primary:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(253,121,168,0.3);
+            box-shadow: 0 4px 15px rgba(253, 121, 168, 0.3);
         }
 
         .btn-secondary {
@@ -543,14 +563,14 @@
             right: -50%;
             width: 100%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
             opacity: 0;
             animation: pulse 3s ease-in-out infinite;
         }
 
         .category-card:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(225,112,85,0.3);
+            box-shadow: 0 8px 25px rgba(225, 112, 85, 0.3);
         }
 
         .category-icon {
@@ -723,8 +743,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .cart-widget {
@@ -769,15 +794,15 @@
             .container {
                 padding: 10px;
             }
-            
+
             .controls-row {
                 flex-direction: column;
             }
-            
+
             .search-box {
                 min-width: 100%;
             }
-            
+
             .products-grid {
                 grid-template-columns: 1fr;
             }
@@ -789,6 +814,7 @@
         }
     </style>
 </head>
+
 <body data-theme="dark">
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
@@ -826,6 +852,7 @@
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
+
                 <select class="filter-select" id="categoryFilter" onchange="filterProducts()">
                     <option value="">All Categories</option>
                     <option value="vegetables">Vegetables</option>
@@ -835,6 +862,7 @@
                     <option value="dairy">Dairy</option>
                     <option value="pulses">Pulses</option>
                 </select>
+
                 <select class="filter-select" id="locationFilter" onchange="filterProducts()">
                     <option value="">All Locations</option>
                     <option value="punjab">Punjab</option>
@@ -843,12 +871,18 @@
                     <option value="rajasthan">Rajasthan</option>
                     <option value="haryana">Haryana</option>
                 </select>
-                <div class="sort-buttons">
+
+                <div class="sort-buttons" style="display: flex; gap: 10px; margin-left: auto;">
                     <button class="sort-btn active" onclick="sortProducts('price')">Price</button>
                     <button class="sort-btn" onclick="sortProducts('rating')">Rating</button>
                     <button class="sort-btn" onclick="sortProducts('distance')">Distance</button>
                     <button class="sort-btn" onclick="sortProducts('newest')">Newest</button>
                 </div>
+
+                <button class="filter-select" id="favouritesToggle" onclick="toggleFavouritesView()"
+                    style="background: var(--accent-danger); color: white; border: none; cursor: pointer; font-weight: 600; white-space: nowrap;">
+                    <i class="fas fa-heart"></i> Favourites (<span id="favouriteCount">0</span>)
+                </button>
             </div>
         </div>
 
@@ -916,7 +950,8 @@
                 <p>High-quality products from verified sellers</p>
             </div>
             <div class="products-grid" id="productsGrid">
-                <div class="product-card" data-category="vegetables" data-location="punjab" data-price="45" data-rating="4.8">
+                <div class="product-card" data-category="vegetables" data-location="punjab" data-price="45"
+                    data-rating="4.8">
                     <div class="product-image">🥕</div>
                     <div class="product-badge">Organic</div>
                     <div class="product-info">
@@ -927,19 +962,22 @@
                                 <i class="fas fa-star"></i> 4.8
                             </div>
                         </div>
-                        <div class="product-description">Premium quality organic carrots, freshly harvested. Rich in vitamins and perfect for cooking.</div>
+                        <div class="product-description">Premium quality organic carrots, freshly harvested. Rich in
+                            vitamins and perfect for cooking.</div>
                         <div class="product-details">
                             <div class="product-price">₹45/kg</div>
                             <div class="product-quantity">Min: 10kg</div>
                         </div>
                         <div class="product-actions">
                             <button class="btn-primary" onclick="contactSeller('Kumar Farms')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"><i
+                                    class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="fruits" data-location="kashmir" data-price="180" data-rating="4.9">
+                <div class="product-card" data-category="fruits" data-location="kashmir" data-price="180"
+                    data-rating="4.9">
                     <div class="product-image">🍎</div>
                     <div class="product-badge premium">Premium</div>
                     <div class="product-info">
@@ -950,19 +988,23 @@
                                 <i class="fas fa-star"></i> 4.9
                             </div>
                         </div>
-                        <div class="product-description">Sweet and crispy Kashmiri apples, directly from the orchards. Grade A quality with natural freshness.</div>
+                        <div class="product-description">Sweet and crispy Kashmiri apples, directly from the orchards.
+                            Grade A quality with natural freshness.</div>
                         <div class="product-details">
                             <div class="product-price">₹180/kg</div>
                             <div class="product-quantity">Min: 5kg</div>
                         </div>
                         <div class="product-actions">
-                            <button class="btn-primary" onclick="contactSeller('Mountain Fresh')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-primary" onclick="contactSeller('Mountain Fresh')">Contact
+                                Seller</button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"><i
+                                    class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="grains" data-location="haryana" data-price="120" data-rating="4.7">
+                <div class="product-card" data-category="grains" data-location="haryana" data-price="120"
+                    data-rating="4.7">
                     <div class="product-image">🌾</div>
                     <div class="product-badge">Certified</div>
                     <div class="product-info">
@@ -973,19 +1015,23 @@
                                 <i class="fas fa-star"></i> 4.7
                             </div>
                         </div>
-                        <div class="product-description">Authentic Basmati rice with long grains and aromatic fragrance. Perfect for biryanis and special dishes.</div>
+                        <div class="product-description">Authentic Basmati rice with long grains and aromatic fragrance.
+                            Perfect for biryanis and special dishes.</div>
                         <div class="product-details">
                             <div class="product-price">₹120/kg</div>
                             <div class="product-quantity">Min: 25kg</div>
                         </div>
                         <div class="product-actions">
-                            <button class="btn-primary" onclick="contactSeller('Golden Grain Co.')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-primary" onclick="contactSeller('Golden Grain Co.')">Contact
+                                Seller</button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"><i
+                                    class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="vegetables" data-location="gujarat" data-price="25" data-rating="4.5">
+                <div class="product-card" data-category="vegetables" data-location="gujarat" data-price="25"
+                    data-rating="4.5">
                     <div class="product-image">🥔</div>
                     <div class="product-badge">Fresh</div>
                     <div class="product-info">
@@ -996,19 +1042,23 @@
                                 <i class="fas fa-star"></i> 4.5
                             </div>
                         </div>
-                        <div class="product-description">High-quality potatoes, perfect for all cooking needs. Freshly harvested and properly stored.</div>
+                        <div class="product-description">High-quality potatoes, perfect for all cooking needs. Freshly
+                            harvested and properly stored.</div>
                         <div class="product-details">
                             <div class="product-price">₹25/kg</div>
                             <div class="product-quantity">Min: 20kg</div>
                         </div>
                         <div class="product-actions">
-                            <button class="btn-primary" onclick="contactSeller('Patel Vegetables')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-primary" onclick="contactSeller('Patel Vegetables')">Contact
+                                Seller</button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"><i
+                                    class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="spices" data-location="rajasthan" data-price="350" data-rating="4.8">
+                <div class="product-card" data-category="spices" data-location="rajasthan" data-price="350"
+                    data-rating="4.8">
                     <div class="product-image">🌶️</div>
                     <div class="product-badge">Spicy</div>
                     <div class="product-info">
@@ -1019,19 +1069,22 @@
                                 <i class="fas fa-star"></i> 4.8
                             </div>
                         </div>
-                        <div class="product-description">Pure red chili powder made from premium quality chilies. Perfect heat and flavor for Indian cuisine.</div>
+                        <div class="product-description">Pure red chili powder made from premium quality chilies.
+                            Perfect heat and flavor for Indian cuisine.</div>
                         <div class="product-details">
                             <div class="product-price">₹350/kg</div>
                             <div class="product-quantity">Min: 2kg</div>
                         </div>
                         <div class="product-actions">
                             <button class="btn-primary" onclick="contactSeller('Spice Master')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"><i
+                                    class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="dairy" data-location="maharashtra" data-price="55" data-rating="4.9">
+                <div class="product-card" data-category="dairy" data-location="maharashtra" data-price="55"
+                    data-rating="4.9">
                     <div class="product-image">🥛</div>
                     <div class="product-badge">Pure</div>
                     <div class="product-info">
@@ -1042,14 +1095,16 @@
                                 <i class="fas fa-star"></i> 4.9
                             </div>
                         </div>
-                        <div class="product-description">Pure and fresh cow milk from free-range cows. Rich in nutrients and delivered fresh daily.</div>
+                        <div class="product-description">Pure and fresh cow milk from free-range cows. Rich in nutrients
+                            and delivered fresh daily.</div>
                         <div class="product-details">
                             <div class="product-price">₹55/liter</div>
                             <div class="product-quantity">Min: 5 liters</div>
                         </div>
                         <div class="product-actions">
                             <button class="btn-primary" onclick="contactSeller('Dairy Fresh')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)"><i class="far fa-heart"></i></button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"><i
+                                    class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
@@ -1062,9 +1117,12 @@
                 <p>Live price tracking and market analysis</p>
             </div>
             <div class="price-chart">
-                <i class="fas fa-chart-area" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 20px;"></i>
-                <p style="color: var(--text-muted);">Interactive price charts and market trends would be displayed here</p>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Real-time data visualization of commodity prices across different markets</p>
+                <i class="fas fa-chart-area"
+                    style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 20px;"></i>
+                <p style="color: var(--text-muted);">Interactive price charts and market trends would be displayed here
+                </p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Real-time data visualization of commodity prices
+                    across different markets</p>
             </div>
             <div class="price-trends">
                 <div class="trend-item">
@@ -1104,10 +1162,14 @@
 
         <div class="cta-section">
             <h2 style="color: var(--text-primary); margin-bottom: 20px;">Start Trading Today</h2>
-            <p style="margin-bottom: 30px; color: var(--text-secondary);">Join thousands of farmers and buyers in our marketplace</p>
-            <button class="cta-button" onclick="showNotification('Product listing started!', 'success')">List Your Products</button>
-            <button class="cta-button" onclick="showNotification('Supplier search initiated!', 'info')">Find Suppliers</button>
-            <button class="cta-button" onclick="showNotification('Premium access activated!', 'success')">Get Premium Access</button>
+            <p style="margin-bottom: 30px; color: var(--text-secondary);">Join thousands of farmers and buyers in our
+                marketplace</p>
+            <button class="cta-button" onclick="showNotification('Product listing started!', 'success')">List Your
+                Products</button>
+            <button class="cta-button" onclick="showNotification('Supplier search initiated!', 'info')">Find
+                Suppliers</button>
+            <button class="cta-button" onclick="showNotification('Premium access activated!', 'success')">Get Premium
+                Access</button>
         </div>
     </div>
 
@@ -1117,309 +1179,397 @@
         <div class="cart-count" id="cartCount">0</div>
     </div>
 
-    <script>
-        // Theme Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const themeText = document.getElementById('themeText');
+<script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
 
-        // Check for saved theme
-        const savedTheme = localStorage.getItem('marketplaceTheme') || 'dark';
-        document.body.setAttribute('data-theme', savedTheme);
-        updateThemeButton(savedTheme);
+    // Check for saved theme
+    const savedTheme = localStorage.getItem('marketplaceTheme') || 'dark';
+    document.body.setAttribute('data-theme', savedTheme);
+    updateThemeButton(savedTheme);
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            document.body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('marketplaceTheme', newTheme);
-            updateThemeButton(newTheme);
-            showNotification(`Switched to ${newTheme} theme`, 'info');
-        });
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('marketplaceTheme', newTheme);
+        updateThemeButton(newTheme);
+        showNotification(`Switched to ${newTheme} theme`, 'info');
+    });
 
-        function updateThemeButton(theme) {
-            if (theme === 'dark') {
-                themeIcon.className = 'fas fa-sun';
-                themeText.textContent = 'Light';
-            } else {
-                themeIcon.className = 'fas fa-moon';
-                themeText.textContent = 'Dark';
+    function updateThemeButton(theme) {
+        if (theme === 'dark') {
+            themeIcon.className = 'fas fa-sun';
+            themeText.textContent = 'Light';
+        } else {
+            themeIcon.className = 'fas fa-moon';
+            themeText.textContent = 'Dark';
+        }
+    }
+
+    // Sample product data
+    let allProducts = [];
+    let filteredProducts = [];
+    let cartItems = 0;
+    let favouriteProducts = JSON.parse(localStorage.getItem('favouriteProducts')) || [];
+    let showingFavourites = false;
+
+    // Initialize products data
+    function initializeProducts() {
+        const productCards = document.querySelectorAll('.product-card');
+        allProducts = Array.from(productCards).map(card => ({
+            element: card,
+            category: card.getAttribute('data-category'),
+            location: card.getAttribute('data-location'),
+            price: parseInt(card.getAttribute('data-price')),
+            rating: parseFloat(card.getAttribute('data-rating')),
+            title: card.querySelector('.product-title').textContent
+        }));
+        filteredProducts = [...allProducts];
+        
+        // Restore favourite states from localStorage
+        allProducts.forEach(product => {
+            if (favouriteProducts.includes(product.title)) {
+                const btn = product.element.querySelector('.btn-secondary');
+                const icon = btn.querySelector('i');
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                btn.classList.add('liked');
             }
-        }
+        });
+        
+        updateFavouriteCount();
+    }
 
-        // Sample product data
-        let allProducts = [];
-        let filteredProducts = [];
-        let cartItems = 0;
+    // Search functionality
+    function searchProducts() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        showLoading();
 
-        // Initialize products data
-        function initializeProducts() {
-            const productCards = document.querySelectorAll('.product-card');
-            allProducts = Array.from(productCards).map(card => ({
-                element: card,
-                category: card.getAttribute('data-category'),
-                location: card.getAttribute('data-location'),
-                price: parseInt(card.getAttribute('data-price')),
-                rating: parseFloat(card.getAttribute('data-rating')),
-                title: card.querySelector('.product-title').textContent
-            }));
-            filteredProducts = [...allProducts];
-        }
-
-        // Search functionality
-        function searchProducts() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            showLoading();
-            
-            setTimeout(() => {
-                if (searchTerm) {
+        setTimeout(() => {
+            if (searchTerm) {
+                if (showingFavourites) {
+                    // If showing favourites, search within favourites only
+                    filteredProducts = allProducts.filter(product => 
+                        favouriteProducts.includes(product.title) &&
+                        (product.title.toLowerCase().includes(searchTerm) ||
+                        product.category.includes(searchTerm) ||
+                        product.location.includes(searchTerm))
+                    );
+                } else {
                     filteredProducts = allProducts.filter(product => 
                         product.title.toLowerCase().includes(searchTerm) ||
                         product.category.includes(searchTerm) ||
                         product.location.includes(searchTerm)
                     );
+                }
+            } else {
+                if (showingFavourites) {
+                    filteredProducts = allProducts.filter(product => 
+                        favouriteProducts.includes(product.title)
+                    );
                 } else {
                     filteredProducts = [...allProducts];
                 }
-                displayProducts();
-                hideLoading();
-                showNotification(`Found ${filteredProducts.length} products matching "${searchTerm}"`, 'info');
-            }, 1000);
-        }
+            }
+            displayProducts();
+            hideLoading();
+            showNotification(`Found ${filteredProducts.length} products matching "${searchTerm}"`, 'info');
+        }, 1000);
+    }
 
-        // Filter functionality
-        function filterProducts() {
-            const category = document.getElementById('categoryFilter').value;
-            const location = document.getElementById('locationFilter').value;
-            
+    // Filter functionality
+    function filterProducts() {
+        const category = document.getElementById('categoryFilter').value;
+        const location = document.getElementById('locationFilter').value;
+        showLoading();
+
+        setTimeout(() => {
+            filteredProducts = allProducts.filter(product => {
+                const categoryMatch = !category || product.category === category;
+                const locationMatch = !location || product.location === location;
+                const favouriteMatch = !showingFavourites || favouriteProducts.includes(product.title);
+                return categoryMatch && locationMatch && favouriteMatch;
+            });
+
+            displayProducts();
+            hideLoading();
+            showNotification(`Filtered to ${filteredProducts.length} products`, 'success');
+        }, 800);
+    }
+
+    // Toggle Favourites View
+    function toggleFavouritesView() {
+        showingFavourites = !showingFavourites;
+        const btn = document.getElementById('favouritesToggle');
+        
+        if (showingFavourites) {
+            // Show only favourites
             showLoading();
-            
             setTimeout(() => {
+                // Apply existing filters but only to favourites
+                const category = document.getElementById('categoryFilter').value;
+                const location = document.getElementById('locationFilter').value;
+                
                 filteredProducts = allProducts.filter(product => {
+                    const isFavourite = favouriteProducts.includes(product.title);
                     const categoryMatch = !category || product.category === category;
                     const locationMatch = !location || product.location === location;
-                    return categoryMatch && locationMatch;
+                    return isFavourite && categoryMatch && locationMatch;
                 });
                 
                 displayProducts();
                 hideLoading();
-                showNotification(`Filtered to ${filteredProducts.length} products`, 'success');
-            }, 800);
-        }
-
-        // Sort functionality
-        function sortProducts(sortBy) {
-            // Remove active class from all buttons
-            document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
-            // Add active class to clicked button
-            event.target.classList.add('active');
-            
-            showLoading();
-            
-            setTimeout(() => {
-                switch(sortBy) {
-                    case 'price':
-                        filteredProducts.sort((a, b) => a.price - b.price);
-                        break;
-                    case 'rating':
-                        filteredProducts.sort((a, b) => b.rating - a.rating);
-                        break;
-                    case 'distance':
-                        // Random sort for demo
-                        filteredProducts.sort(() => Math.random() - 0.5);
-                        break;
-                    case 'newest':
-                        // Random sort for demo
-                        filteredProducts.sort(() => Math.random() - 0.5);
-                        break;
-                }
+                btn.style.background = 'var(--accent-primary)';
+                btn.innerHTML = '<i class="fas fa-times"></i> Clear Favourites Filter';
                 
-                displayProducts();
-                hideLoading();
-                showNotification(`Sorted by ${sortBy}`, 'success');
-            }, 600);
+                if (filteredProducts.length === 0) {
+                    showNotification('No favourites found! Start adding products to favourites.', 'info');
+                } else {
+                    showNotification(`Showing ${filteredProducts.length} favourite products`, 'success');
+                }
+            }, 500);
+        } else {
+            // Show all products
+            filterProducts(); // Reapply existing filters
+            btn.style.background = 'var(--accent-danger)';
+            btn.innerHTML = `<i class="fas fa-heart"></i> Favourites (<span id="favouriteCount">${favouriteProducts.length}</span>)`;
+            showNotification('Showing all products', 'info');
         }
+    }
 
-        // Display products
-        function displayProducts() {
-            const productsGrid = document.getElementById('productsGrid');
+    // Update favourite count
+    function updateFavouriteCount() {
+        const countEl = document.getElementById('favouriteCount');
+        if (countEl) {
+            countEl.textContent = favouriteProducts.length;
+        }
+    }
+
+    // Sort functionality
+    function sortProducts(sortBy) {
+        // Remove active class from all buttons
+        document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
+        // Add active class to clicked button
+        event.target.classList.add('active');
+
+        showLoading();
+        setTimeout(() => {
+            switch(sortBy) {
+                case 'price':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'rating':
+                    filteredProducts.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'distance':
+                    // Random sort for demo
+                    filteredProducts.sort(() => Math.random() - 0.5);
+                    break;
+                case 'newest':
+                    // Random sort for demo
+                    filteredProducts.sort(() => Math.random() - 0.5);
+                    break;
+            }
+            displayProducts();
+            hideLoading();
+            showNotification(`Sorted by ${sortBy}`, 'success');
+        }, 600);
+    }
+
+    // Display products
+    function displayProducts() {
+        const productsGrid = document.getElementById('productsGrid');
+        
+        // Hide all products
+        allProducts.forEach(product => {
+            product.element.style.display = 'none';
+        });
+
+        // Show filtered products
+        filteredProducts.forEach((product, index) => {
+            product.element.style.display = 'block';
+            product.element.style.order = index;
+        });
+    }
+
+    // Category filter
+    function filterByCategory(category) {
+        document.getElementById('categoryFilter').value = category;
+        filterProducts();
+    }
+
+    // Contact seller
+    function contactSeller(sellerName) {
+        showNotification(`Contacting ${sellerName}...`, 'info');
+        setTimeout(() => {
+            showNotification(`Connected with ${sellerName}! Check your messages.`, 'success');
+        }, 2000);
+    }
+
+    // Toggle like
+    function toggleLike(btn) {
+        const icon = btn.querySelector('i');
+        const productCard = btn.closest('.product-card');
+        const productTitle = productCard.querySelector('.product-title').textContent;
+        
+        if (icon.classList.contains('far')) {
+            icon.classList.remove('far');
+            icon.classList.add('fas');
+            btn.classList.add('liked');
             
-            // Hide all products
-            allProducts.forEach(product => {
-                product.element.style.display = 'none';
-            });
+            // Add to favourites
+            if (!favouriteProducts.includes(productTitle)) {
+                favouriteProducts.push(productTitle);
+                localStorage.setItem('favouriteProducts', JSON.stringify(favouriteProducts));
+            }
             
-            // Show filtered products
-            filteredProducts.forEach((product, index) => {
-                product.element.style.display = 'block';
-                product.element.style.order = index;
-            });
-        }
-
-        // Category filter
-        function filterByCategory(category) {
-            document.getElementById('categoryFilter').value = category;
-            filterProducts();
-        }
-
-        // Contact seller
-        function contactSeller(sellerName) {
-            showNotification(`Contacting ${sellerName}...`, 'info');
-            setTimeout(() => {
-                showNotification(`Connected with ${sellerName}! Check your messages.`, 'success');
-            }, 2000);
-        }
-
-        // Toggle like
-        function toggleLike(btn) {
-            const icon = btn.querySelector('i');
-            if (icon.classList.contains('far')) {
-                icon.classList.remove('far');
-                icon.classList.add('fas');
-                btn.classList.add('liked');
-                showNotification('Added to favorites!', 'success');
-            } else {
-                icon.classList.remove('fas');
-                icon.classList.add('far');
-                btn.classList.remove('liked');
-                showNotification('Removed from favorites!', 'info');
+            showNotification('Added to favorites!', 'success');
+        } else {
+            icon.classList.remove('fas');
+            icon.classList.add('far');
+            btn.classList.remove('liked');
+            
+            // Remove from favourites
+            favouriteProducts = favouriteProducts.filter(item => item !== productTitle);
+            localStorage.setItem('favouriteProducts', JSON.stringify(favouriteProducts));
+            
+            showNotification('Removed from favorites!', 'info');
+            
+            // If currently viewing favourites, refresh the view
+            if (showingFavourites) {
+                setTimeout(() => {
+                    toggleFavouritesView();
+                    toggleFavouritesView();
+                }, 500);
             }
         }
+        
+        updateFavouriteCount();
+    }
 
-        // Cart functionality
-        function toggleCart() {
-            cartItems++;
-            document.getElementById('cartCount').textContent = cartItems;
-            showNotification(`Added to cart! Total items: ${cartItems}`, 'success');
-        }
+    // Cart functionality
+    function toggleCart() {
+        cartItems++;
+        document.getElementById('cartCount').textContent = cartItems;
+        showNotification(`Added to cart! Total items: ${cartItems}`, 'success');
+    }
 
-        // Update marketplace stats
-        function updateStats() {
-            document.getElementById('totalProducts').textContent = 
-                Math.floor(Math.random() * 500 + 2500);
-            
-            document.getElementById('totalSellers').textContent = 
-                Math.floor(Math.random() * 100 + 400);
-            
-            document.getElementById('todayDeals').textContent = 
-                Math.floor(Math.random() * 50 + 70);
-            
-            document.getElementById('avgRating').textContent = 
-                (Math.random() * 0.5 + 4.3).toFixed(1);
-        }
+    // Update marketplace stats
+    function updateStats() {
+        document.getElementById('totalProducts').textContent = Math.floor(Math.random() * 500 + 2500);
+        document.getElementById('totalSellers').textContent = Math.floor(Math.random() * 100 + 400);
+        document.getElementById('todayDeals').textContent = Math.floor(Math.random() * 50 + 70);
+        document.getElementById('avgRating').textContent = (Math.random() * 0.5 + 4.3).toFixed(1);
+    }
 
-        // Update category counts
-        function updateCategoryCounts() {
-            const categories = ['veg', 'fruit', 'grain', 'spice', 'dairy', 'pulse'];
-            categories.forEach(cat => {
-                const element = document.getElementById(`${cat}Count`);
-                if (element) {
-                    const count = Math.floor(Math.random() * 200 + 300);
-                    element.textContent = `${count} products`;
-                }
-            });
-        }
+    // Update category counts
+    function updateCategoryCounts() {
+        const categories = ['veg', 'fruit', 'grain', 'spice', 'dairy', 'pulse'];
+        categories.forEach(cat => {
+            const element = document.getElementById(`${cat}Count`);
+            if (element) {
+                const count = Math.floor(Math.random() * 200 + 300);
+                element.textContent = `${count} products`;
+            }
+        });
+    }
 
-        // Update price trends
-        function updatePrices() {
-            const priceElements = [
-                { id: 'carrotPrice', base: 45, change: 'carrotChange' },
-                { id: 'applePrice', base: 180, change: 'appleChange' },
-                { id: 'ricePrice', base: 120, change: 'riceChange' },
-                { id: 'potatoPrice', base: 25, change: 'potatoChange' }
-            ];
+    // Update price trends
+    function updatePrices() {
+        const priceElements = [
+            { id: 'carrotPrice', base: 45, change: 'carrotChange' },
+            { id: 'applePrice', base: 180, change: 'appleChange' },
+            { id: 'ricePrice', base: 120, change: 'riceChange' },
+            { id: 'potatoPrice', base: 25, change: 'potatoChange' }
+        ];
 
-            priceElements.forEach(item => {
-                const priceEl = document.getElementById(item.id);
-                const changeEl = document.getElementById(item.change);
-                
-                const variation = Math.floor(Math.random() * 10) - 5;
-                const newPrice = Math.max(1, item.base + variation);
-                const changePercent = Math.floor(Math.random() * 10) - 3;
-                
-                priceEl.textContent = `₹${newPrice}/kg`;
-                
-                if (changePercent > 0) {
-                    changeEl.textContent = `+${changePercent}% this week`;
-                    changeEl.className = 'trend-change';
-                } else if (changePercent < 0) {
-                    changeEl.textContent = `${changePercent}% this week`;
-                    changeEl.className = 'trend-change negative';
-                } else {
-                    changeEl.textContent = 'No change';
-                    changeEl.className = 'trend-change';
-                }
-            });
-        }
+        priceElements.forEach(item => {
+            const priceEl = document.getElementById(item.id);
+            const changeEl = document.getElementById(item.change);
+            const variation = Math.floor(Math.random() * 10 - 5);
+            const newPrice = Math.max(1, item.base + variation);
+            const changePercent = Math.floor(Math.random() * 10 - 3);
 
-        // Loading functions
-        function showLoading() {
-            document.getElementById('loadingOverlay').classList.add('show');
-        }
+            priceEl.textContent = `₹${newPrice}/kg`;
 
-        function hideLoading() {
-            document.getElementById('loadingOverlay').classList.remove('show');
-        }
+            if (changePercent > 0) {
+                changeEl.textContent = `+${changePercent}% this week`;
+                changeEl.className = 'trend-change';
+            } else if (changePercent < 0) {
+                changeEl.textContent = `${changePercent}% this week`;
+                changeEl.className = 'trend-change negative';
+            } else {
+                changeEl.textContent = 'No change';
+                changeEl.className = 'trend-change';
+            }
+        });
+    }
 
-        // Notification System
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            
-            const icons = {
-                success: 'fa-check-circle',
-                warning: 'fa-exclamation-triangle',
-                danger: 'fa-exclamation-circle',
-                info: 'fa-info-circle'
-            };
-            
-            notification.innerHTML = `
-                <i class="fas ${icons[type]}"></i>
-                <span style="margin-left: 10px;">${message}</span>
-            `;
-            
-            document.body.appendChild(notification);
-            
+    // Loading functions
+    function showLoading() {
+        document.getElementById('loadingOverlay').classList.add('show');
+    }
+
+    function hideLoading() {
+        document.getElementById('loadingOverlay').classList.remove('show');
+    }
+
+    // Notification System
+    function showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        
+        const icons = {
+            success: 'fa-check-circle',
+            warning: 'fa-exclamation-triangle',
+            danger: 'fa-exclamation-circle',
+            info: 'fa-info-circle'
+        };
+
+        notification.innerHTML = `
+            <i class="fas ${icons[type]}"></i>
+            <span style="margin-left: 10px">${message}</span>
+        `;
+
+        document.body.appendChild(notification);
+        setTimeout(() => notification.classList.add('show'), 100);
+
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, 4000);
+    }
+
+    // Initialize everything
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeProducts();
+        showNotification('Marketplace loaded successfully!', 'success');
+
+        // Set up auto-updates
+        setInterval(updateStats, 15000);
+        setInterval(updateCategoryCounts, 25000);
+        setInterval(updatePrices, 20000);
+
+        // Add entrance animations
+        const cards = document.querySelectorAll('.product-card, .category-card, .stat-card');
+        cards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
             setTimeout(() => {
-                notification.classList.add('show');
-            }, 100);
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => notification.remove(), 300);
-            }, 4000);
-        }
+                card.style.transition = 'all 0.6s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 50);
+        });
 
-        // Initialize everything
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeProducts();
-            showNotification('Marketplace loaded successfully!', 'success');
-            
-            // Set up auto-updates
-            setInterval(updateStats, 15000);
-            setInterval(updateCategoryCounts, 25000);
-            setInterval(updatePrices, 20000);
-
-            // Add entrance animations
-            const cards = document.querySelectorAll('.product-card, .category-card, .stat-card');
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px)';
-                
-                setTimeout(() => {
-                    card.style.transition = 'all 0.6s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 50);
-            });
-
-            // Search on Enter key
-            document.getElementById('searchInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    searchProducts();
-                }
-            });
+        // Search on Enter key
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchProducts();
+            }
         });
 
         // Keyboard shortcuts
@@ -1437,7 +1587,10 @@
                 }
             }
         });
-    </script>
+    });
+</script>
+
     <script src="theme.js"></script>
 </body>
+
 </html>
