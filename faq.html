@@ -14,6 +14,23 @@
   <link href="style.css" rel="stylesheet" />
   
   <style>
+    /* FIX #476: Remove footer link stroke/underline animations */
+    .site-footer .footer-links a::before,
+    .site-footer .footer-links a::after,
+    .footer-links ul li a::after, 
+    .site-footer .footer-links a:hover::before {
+      display: none !important;
+      width: 0 !important;
+      content: none !important;
+    }
+
+    /* Optional: Keep a simple color change on hover so it's not boring */
+    .site-footer .footer-links a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(5px); /* Simple movement instead of stroke */
+      text-decoration: none !important;
+    }
+
     /* FAQ Specific Styles */
     .faq-hero {
       background: linear-gradient(135deg, var(--light-green) 0%, var(--bg-secondary) 100%);
@@ -560,7 +577,7 @@
           <p>Empowering India's Farming Future with innovative <span class="no-break">technology</span> solutions that connect every stakeholder in the <span class="no-break">agricultural</span> ecosystem</p>
         </div>
         <div class="social-media">
-          <a href="https://instagram.com" target="_blank" aria-label="Follow us on Instagram">
+          <a href="https://www.instagram.com/omroy_2005?igsh=eGZqZWZ6MDJqZjdz" target="_blank" aria-label="Follow us on Instagram">
             <i class="fab fa-instagram"></i>
           </a>
           <a href="https://github.com/omroy07" target="_blank" aria-label="View our GitHub repositories">
