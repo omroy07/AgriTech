@@ -282,7 +282,7 @@ function displayPosts() {
                     <span class="card-author">By ${post.author}</span>
                     <span class="card-date">${post.date}</span>
                 </div>
-                <button class="read-more-btn" onclick="openModal('${post.id}')">Read More</button>
+                <button class="read-more-btn" style="margin-top:16px"onclick="openModal('${post.id}')">Read More</button>
             </div>
         `;
         blogGrid.appendChild(postElement);
