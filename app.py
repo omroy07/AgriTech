@@ -55,6 +55,7 @@ if not API_KEY:
 client = genai.Client(api_key=API_KEY)
 
 
+
 @app.route('/api/firebase-config')
 def get_firebase_config():
     """Secure endpoint to provide Firebase configuration to client"""
