@@ -944,18 +944,6 @@ body {
   visibility: visible;
 }
 
-/* MOBILE RESPONSIVE */
-@media (max-width: 1100px) {
-  .left-nav {
-    gap: 1.5rem;
-    margin-left: 1.5rem;
-  }
-  
-  .nav-buttons {
-    gap: 0.5rem;
-  }
-}
-
 @media (max-width: 1024px) {
   .left-nav {
     display: none;
@@ -1103,4 +1091,53 @@ body {
     padding: 0.3rem 0.5rem;
     font-size: 0.7rem;
   }
+}
+
+@media (min-width: 993px) {
+  .mobile-menu,
+  .mobile-menu-overlay {
+    display: none !important;
+  }
+}
+
+/* ===== FINAL MOBILE NAVBAR FIX ===== */
+@media (max-width: 1024px) {
+
+  /* Hide desktop nav completely */
+  .left-nav,
+  .nav-buttons {
+    display: none !important;
+  }
+
+  /* Navbar layout */
+  .navbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Logo stays left */
+  .brand {
+    margin-right: auto;
+  }
+
+  /* Show hamburger */
+  .hamburger-btn {
+    display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand a {
+    font-size: 1.1rem;
+  }
+
+  .brand img {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+.navbar {
+  min-height: 72px;
 }

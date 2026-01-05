@@ -565,25 +565,6 @@
       opacity: 1;
       visibility: visible;
     }
-
-    /* MOBILE RESPONSIVE */
-    @media (max-width: 1024px) {
-      .navbar-content {
-        justify-content: center;
-      }
-
-      .brand {
-        width: 100%;
-        justify-content: center;
-        margin-bottom: 0.5rem;
-      }
-
-      .nav-buttons {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-
     @media (max-width: 768px) {
       .navbar {
         padding: 0.75rem;
@@ -1233,82 +1214,7 @@
 
     animate();
   </script>
-
-
   <script src="index.js"></script>
-=======
-  <script>
-    const themeToggle = document.querySelector('.theme-toggle');
-    const themeText = document.querySelector('.theme-text');
-    const sunIcon = document.querySelector('.sun-icon');
-    const moonIcon = document.querySelector('.moon-icon');
-
-    const applyTheme = (theme) => {
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('agritech-theme', theme);
-        if (theme === 'dark') {
-            themeText.textContent = 'Light';
-            moonIcon.style.display = 'none';
-            sunIcon.style.display = 'inline-block';
-        } else {
-            themeText.textContent = 'Dark';
-            moonIcon.style.display = 'inline-block';
-            sunIcon.style.display = 'none';
-        }
-    };
-
-    const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
-    applyTheme(savedTheme);
-
-    themeToggle.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'light' ? 'dark' : 'light';
-      applyTheme(next);
-    });
-
-    const servicesToggle = document.querySelector('.services-toggle');
-    const servicesDropdown = document.querySelector('.services-dropdown');
-    const servicesArrow = document.querySelector('.services-arrow');
-
-    if (servicesToggle && servicesDropdown && servicesArrow) {
-        servicesToggle.addEventListener('click', (event) => {
-          event.stopPropagation();
-          servicesDropdown.classList.toggle('active');
-          servicesArrow.classList.toggle('rotated');
-        });
-
-        document.addEventListener('click', (e) => {
-          const container = document.querySelector('.services-toggle-container');
-          if (container && !container.contains(e.target) && servicesDropdown.classList.contains('active')) {
-             servicesDropdown.classList.remove('active');
-             servicesArrow.classList.remove('rotated');
-          }
-        });
-    }
-
-    const scrollBtn = document.getElementById("scrollBtn");
-    const scrollIcon = document.getElementById("scrollIcon");
-
-    if (scrollBtn && scrollIcon) {
-        window.addEventListener("scroll", () => {
-          if (window.scrollY > 300) {
-            scrollBtn.classList.add('visible');
-            scrollIcon.classList.remove("fa-arrow-down");
-            scrollIcon.classList.add("fa-arrow-up");
-          } else {
-            scrollBtn.classList.remove('visible');
-            scrollIcon.classList.remove("fa-arrow-up");
-            scrollIcon.classList.add("fa-arrow-down");
-          }
-        });
-
-        scrollBtn.addEventListener("click", () => {
-          if (scrollIcon.classList.contains("fa-arrow-up")) {
-            window.scrollTo({top: 0, behavior: "smooth"});
-          }
-        });
-    }
-  </script>
   <script src="theme.js"></script>
 
 </body>
