@@ -384,82 +384,148 @@
       color: var(--text-muted); /* Uses Variable */
       line-height: 1.6;
     }
+    /* ===============================
+   AGRI FOOTER – LIGHT & CLEAN
+   =============================== */
 
-    /* 6. FOOTER */
-    .site-footer {
-      position: relative;
-      z-index: 1;
-      padding: 3rem 1rem;
-      background: var(--surface-color); /* Uses Variable */
-      border-top: 1px solid var(--border-color); /* Uses Variable */
-      transition: background 0.3s ease;
-    }
+.site-footer {
+  background: #f9fdf7; /* soft agri white */
+  color: #374151;
+  position: relative;
+  font-size: 0.95rem;
+  border-top: 1px solid #e5f2e0;
+}
 
-    .footer-inner {
-      display: flex;
-      justify-content: space-around;
-      max-width: 1200px;
-      margin: 0 auto 2rem;
-      flex-wrap: wrap;
-      gap: 2rem;
-    }
+/* Top accent */
+.footer-top-accent {
+  height: 4px;
+  background: linear-gradient(90deg, #16a34a, #22c55e);
+}
 
-    .footer-brand {
-      flex: 1;
-      min-width: 250px;
-    }
+/* Layout */
+.footer-inner-content {
+  max-width: 1200px;
+  margin: auto;
+  padding: 3rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
 
-    .brand-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 1rem;
-    }
+/* Brand */
+.footer-brand {
+  flex: 1 1 280px;
+}
 
-    .brand-header img {
-      width: 50px;
-      height: 50px;
-      background: white;
-      padding: 5px;
-      border-radius: 8px;
-    }
+.brand-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
 
-    .brand-header h3 {
-      color: var(--accent-color);
-    }
+.brand-logo {
+  width: 42px;
+}
 
-    .footer-links {
-      flex: 1;
-      min-width: 200px;
-    }
+.footer-brand h3 {
+  color: #14532d;
+  font-size: 1.3rem;
+}
 
-    .footer-links h4 {
-      color: var(--accent-color);
-      margin-bottom: 1rem;
-    }
+.tagline {
+  margin: 0.8rem 0 1.2rem;
+  line-height: 1.6;
+  color: #4b5563;
+}
 
-    .footer-links ul {
-      list-style: none;
-    }
+/* Social icons */
+.social-icons {
+  display: flex;
+  gap: 0.7rem;
+}
 
-    .footer-links a {
-      color: var(--text-muted); /* Uses Variable */
-      text-decoration: none;
-      display: block;
-      padding: 0.4rem 0;
-      transition: color 0.2s;
-    }
+.social-icons a {
+  width: 36px;
+  height: 36px;
+  background: #e6f4ea;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #15803d;
+  transition: all 0.25s ease;
+}
 
-    .footer-links a:hover {
-      color: var(--text-color);
-    }
+.social-icons a:hover {
+  background: #22c55e;
+  color: #fff;
+}
 
-    .footer-bottom {
-      border-top: 1px solid var(--border-color); /* Uses Variable */
-      padding-top: 1rem;
-      text-align: center;
-      color: var(--text-muted);
-    }
+/* Links group */
+.footer-group-links {
+  display: flex;
+  gap: 3rem;
+  flex: 1 1 320px;
+}
+
+.footer-section h4 {
+  color: #14532d;
+  margin-bottom: 0.9rem;
+  font-size: 1rem;
+}
+
+/* List links */
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.6rem;
+}
+
+.footer-section ul a {
+  color: #374151;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.25s ease;
+}
+
+.footer-section ul a:hover {
+  color: #16a34a;
+}
+
+/* Bottom */
+.footer-bottom {
+  text-align: center;
+  padding: 1rem;
+  background: #f1f8ed;
+  color: #4b5563;
+  font-size: 0.85rem;
+}
+
+/* Remove heavy wave */
+.footer-wave-overlay {
+  display: none;
+}
+
+/* ===============================
+   MOBILE
+   =============================== */
+
+@media (max-width: 768px) {
+  .footer-inner-content {
+    flex-direction: column;
+  }
+
+  .footer-group-links {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
 
     /* FLOATING BUTTONS */
     #chatbotBtn, .scroll-btn {
@@ -675,6 +741,148 @@
         padding: 0.35rem 0.5rem;
       }
     }
+    /* ===== ABSOLUTE ONE-ROW NAVBAR FIX ===== */
+
+.navbar {
+  width: 100%;
+}
+
+.navbar-content {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;        /* ❗ prevents breaking */
+  white-space: nowrap;     /* ❗ forces single line */
+}
+
+/* Brand */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* Left navigation */
+.left-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  flex-shrink: 0;
+}
+
+/* Right navigation */
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-shrink: 0;           /* ❗ prevents Register from wrapping */
+}
+
+/* Search */
+.search-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 4px 10px;
+  flex-shrink: 0;
+}
+
+.search-input {
+  width: 120px;             /* keep compact */
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.85rem;
+}
+
+/* Buttons stay inline */
+.nav-buttons .btn,
+.nav-buttons a {
+  flex-shrink: 0;           /* ❗ KEY LINE */
+}
+
+/* Clean links */
+.nav-link {
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: #333;
+}
+
+/* Hover underline */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #2ecc71;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+/* ===============================
+   MOBILE MENU FIX (HIDE BY DEFAULT)
+   =============================== */
+
+/* Hide mobile menu & overlay initially */
+.mobile-menu,
+.mobile-menu-overlay {
+  display: none;
+}
+
+/* Show only on small screens */
+@media (max-width: 992px) {
+
+  /* Enable mobile menu system */
+  .mobile-menu-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 998;
+  }
+
+  .mobile-menu {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100vh;
+    background: #fff;
+    transform: translateX(100%);
+    transition: transform 0.35s ease;
+    z-index: 999;
+    overflow-y: auto;
+  }
+
+  /* When menu is OPEN */
+  .mobile-menu.active {
+    transform: translateX(0);
+  }
+
+  .mobile-menu-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Desktop: ensure mobile menu never shows */
+@media (min-width: 993px) {
+  .mobile-menu,
+  .mobile-menu-overlay {
+    display: none !important;
+  }
+}
+
   </style>
 </head>
 <body>
