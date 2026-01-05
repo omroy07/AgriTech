@@ -1,267 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <link rel="icon" type="image/png" href="images/logo.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="description" content="AgriTech - Empowering Agriculture Through Technology. Connect farmers, buyers, and suppliers in India's agricultural ecosystem." />
+  <meta name="description"
+    content="AgriTech - Empowering Agriculture Through Technology. Connect farmers, buyers, and suppliers in India's agricultural ecosystem." />
+
   <title>AgriTech - Revolutionizing Agriculture with Technology</title>
+
+  <!-- Fonts & Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
+    rel="stylesheet" />
+
   <link rel="stylesheet" href="index.css" />
+
   <style>
-    /* Weather Module Styles */
+    /* ================= THEME VARIABLES ================= */
+    :root {
+      --bg-color: #030712;
+      --text-color: #ffffff;
+      --text-muted: #cbd5e1;
+      --surface-color: rgba(15, 23, 42, 0.9);
+      --section-bg: rgba(30, 41, 59, 0.7);
+      --border-color: #334155;
+      --accent-color: #22c55e;
+      --input-bg: #333;
+      --input-border: #555;
+      --btn-bg: #334155;
+      --btn-text: #ffffff;
+      --btn-hover: #475569;
+      --shadow-color: rgba(0, 0, 0, 0.3);
+    }
+
+    [data-theme="light"] {
+      --bg-color: #f8fafc;
+      --text-color: #0f172a;
+      --text-muted: #475569;
+      --surface-color: rgba(255, 255, 255, 0.95);
+      --section-bg: rgba(241, 245, 249, 0.8);
+      --border-color: #cbd5e1;
+      --accent-color: #16a34a;
+      --input-bg: #ffffff;
+      --input-border: #94a3b8;
+      --btn-bg: #e2e8f0;
+      --btn-text: #0f172a;
+      --btn-hover: #cbd5e1;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Open Sans', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .serif {
+      font-family: 'Libertinus Serif', serif;
+    }
+
+    /* ================= WEATHER ADVISOR ================= */
     .weather-advisor {
       padding: 40px 20px;
       max-width: 1200px;
-      margin: 0 auto;
+      margin: auto;
     }
+
     .weather-card {
-      background: var(--card-bg, rgba(255, 255, 255, 0.1));
+      background: var(--surface-color);
       backdrop-filter: blur(10px);
       border-radius: 20px;
       padding: 30px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-      color: var(--text-color, #333);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     }
+
     .weather-grid {
       display: grid;
       grid-template-columns: 1fr 2fr;
       gap: 30px;
-      align-items: center;
     }
-    .weather-main { text-align: center; border-right: 1px solid rgba(128, 128, 128, 0.3); }
-    .temp-display { font-size: 3.5rem; font-weight: 700; color: #22c55e; margin: 10px 0; }
-    .weather-details { display: flex; justify-content: space-around; margin-bottom: 20px; }
-    .detail-item span { display: block; font-size: 0.9rem; opacity: 0.8; }
-    .detail-item strong { font-size: 1.2rem; }
+
+    .weather-main {
+      text-align: center;
+      border-right: 1px solid var(--border-color);
+    }
+
+    .temp-display {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--accent-color);
+    }
+
+    .weather-details {
+      display: flex;
+      justify-content: space-around;
+    }
+
     .advice-box {
-      background: rgba(34, 197, 94, 0.15);
-      border-left: 5px solid #22c55e;
+      margin-top: 15px;
       padding: 15px;
       border-radius: 8px;
-      font-size: 1rem;
+      background: rgba(34, 197, 94, 0.15);
+      border-left: 5px solid var(--accent-color);
     }
-    .advice-box.warning { border-color: #f59e0b; background: rgba(245, 158, 11, 0.15); }
-    .advice-box.danger { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
-    
+
+    .advice-box.warning {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.15);
+    }
+
+    .advice-box.danger {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.15);
+    }
+
     @media (max-width: 768px) {
-      .weather-grid { grid-template-columns: 1fr; }
-      .weather-main { border-right: none; border-bottom: 1px solid rgba(128, 128, 128, 0.3); padding-bottom: 20px; }
+      .weather-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .weather-main {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 20px;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <canvas id="bg-canvas"></canvas>
 
-  <nav class="navbar">
-    <div class="navbar-content">
-      <div class="brand">
-        <img src="images/logo.png" alt="AgriTech logo">
-        <a href="#">AgriTech</a>
-      </div>
-
-      <div class="left-nav">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="about.html" class="nav-link">About</a>
-        <a href="blog.html" class="nav-link">Blog</a>
-        <div class="services-toggle-container">
-          <a href="#" class="nav-link services-toggle">
-            Services <i class="fas fa-chevron-down services-arrow"></i>
-          </a>
-          <div class="services-dropdown">
-            <ul class="services-list">
-              <li><a href="crop.html"><i class="fas fa-seedling"></i> Smart Crop Monitoring</a></li>
-              <li><a href="supply-chain.html"><i class="fas fa-truck"></i> Supply Chain Support</a></li>
-              <li><a href="sustainable-farming.html"><i class="fas fa-leaf"></i> Sustainable Farming Guidance</a></li>
-              <li><a href="marketplace.html"><i class="fas fa-store"></i> Marketplace Services</a></li>
-              <li><a href="financial-support.html"><i class="fas fa-dollar-sign"></i> Financial & Insurance Support</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="nav-buttons">
-        <div class="search-container">
-          <input type="text" placeholder="Search..." class="search-input" autocomplete="off" />
-          <button class="search-button" aria-label="Search">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-
-        <button class="theme-toggle btn" aria-label="Toggle theme">
-          <i class="fas fa-sun sun-icon" style="display: none;"></i>
-          <i class="fas fa-moon moon-icon"></i>
-          <span class="theme-text">Dark</span>
-        </button>
-
-        <a href="login.html" class="btn btn-secondary">Login</a>
-        <a href="faq.html" class="btn btn-secondary">FAQ</a>
-        <a href="register.html" class="btn btn-primary">Register</a>
-      </div>
-
-      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
-        <span class="hamburger-icon">
-          <span class="bar bar1"></span>
-          <span class="bar bar2"></span>
-          <span class="bar bar3"></span>
-        </span>
-      </button>
-    </div>
-  </nav>
-
-  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-  <div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-menu-header">
-      <button class="mobile-close-btn" id="mobileCloseBtn" aria-label="Close menu">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    <div class="mobile-menu-content">
-        <div class="mobile-links">
-            <a href="index.html" class="mobile-link"><i class="fas fa-home"></i> <span>Home</span></a>
-            <a href="about.html" class="mobile-link"><i class="fas fa-info-circle"></i> <span>About</span></a>
-            <a href="blog.html" class="mobile-link"><i class="fas fa-blog"></i> <span>Blog</span></a>
-        </div>
-    </div>
-  </div>
-
+  <!-- ================= HERO ================= -->
   <section class="hero">
     <div class="hero-content">
       <h2 class="serif">Empowering Agriculture Through Technology</h2>
-      <p>AgriTech connects <strong>Farmers</strong>, <strong>Buyers</strong>,
+      <p>
+        AgriTech connects <strong>Farmers</strong>, <strong>Buyers</strong>,
         <strong>Equipment Suppliers</strong>, and <strong>Grocery Sellers</strong>
-        to revolutionize India's agricultural ecosystem.</p>
+        to revolutionize India's agricultural ecosystem through smart solutions.
+      </p>
     </div>
   </section>
 
+  <!-- ================= WEATHER ================= -->
   <section class="weather-advisor">
     <div class="weather-card">
-        <h2 class="serif" style="margin-bottom: 20px; font-size: 1.8rem; color: #22c55e;">
-            <i class="fas fa-cloud-sun"></i> Today's Farming Forecast
-        </h2>
-        <div id="weather-loader">
-            <i class="fas fa-spinner fa-spin"></i> Analyzing environmental factors...
-        </div>
-        <div id="weather-content" style="display: none;">
-            <div class="weather-grid">
-                <div class="weather-main">
-                    <div id="w-icon"></div>
-                    <div class="temp-display" id="w-temp">--°C</div>
-                    <div id="w-condition" style="text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">--</div>
-                </div>
-                <div class="weather-info">
-                    <div class="weather-details">
-                        <div class="detail-item">
-                            <span>Humidity</span>
-                            <strong id="w-humidity">--%</strong>
-                        </div>
-                        <div class="detail-item">
-                            <span>Wind Speed</span>
-                            <strong id="w-wind">-- km/h</strong>
-                        </div>
-                    </div>
-                    <div id="farmer-advice" class="advice-box">
-                        </div>
-                </div>
-            </div>
-        </div>
-    </div>
-  </section>
+      <h2 class="serif"><i class="fas fa-cloud-sun"></i> Today's Farming Forecast</h2>
 
-  <section class="features">
-    <div class="features-container">
-      <h2 class="features-title serif">Our Platform Benefits</h2>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">🌱</div>
-          <h3 class="feature-title serif">For Farmers</h3>
-          <p class="feature-description">Direct access to buyers, fair pricing, and equipment rental services.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">🏪</div>
-          <h3 class="feature-title serif">For Buyers</h3>
-          <p class="feature-description">Source fresh produce directly from verified farmers with quality assurance.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">🚜</div>
-          <h3 class="feature-title serif">Equipment Suppliers</h3>
-          <p class="feature-description">Expand your reach and connect with farmers needing modern equipment.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">🛒</div>
-          <h3 class="feature-title serif">Grocery Sellers</h3>
-          <p class="feature-description">Access fresh produce with reliable supply chain and competitive costs.</p>
+      <div id="weather-loader">
+        <i class="fas fa-spinner fa-spin"></i> Analyzing environmental factors...
+      </div>
+
+      <div id="weather-content" style="display:none;">
+        <div class="weather-grid">
+          <div class="weather-main">
+            <div id="w-icon"></div>
+            <div class="temp-display" id="w-temp">--°C</div>
+            <div id="w-condition">--</div>
+          </div>
+
+          <div>
+            <div class="weather-details">
+              <div><span>Humidity</span><strong id="w-humidity">--%</strong></div>
+              <div><span>Wind</span><strong id="w-wind">-- km/h</strong></div>
+            </div>
+            <div id="farmer-advice" class="advice-box"></div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ================= FOOTER ================= -->
   <footer class="site-footer">
     <div class="footer-bottom">
       <p>© 2025 AgriTech. All rights reserved.</p>
     </div>
   </footer>
 
+  <!-- ================= SCRIPTS ================= -->
   <script src="js/weather.js"></script>
+
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
-        // You can change 'Mumbai' to get user location or a dynamic city
-        if (typeof fetchWeather === "function") {
-            const data = await fetchWeather('Mumbai');
-            if (data) {
-                document.getElementById('weather-loader').style.display = 'none';
-                document.getElementById('weather-content').style.display = 'block';
-                
-                document.getElementById('w-temp').innerText = `${data.temp}°C`;
-                document.getElementById('w-condition').innerText = data.condition;
-                document.getElementById('w-humidity').innerText = `${data.humidity}%`;
-                document.getElementById('w-wind').innerText = `${data.windSpeed} km/h`;
-                
-                const adviceBox = document.getElementById('farmer-advice');
-                adviceBox.innerHTML = data.advice;
-                
-                // Set class based on severity
-                adviceBox.className = 'advice-box ' + 
-                    (data.alertClass === 'alert-danger' ? 'danger' : 
-                     data.alertClass === 'alert-warning' ? 'warning' : '');
-            }
-        }
+      if (typeof fetchWeather === "function") {
+        const data = await fetchWeather('Mumbai');
+        if (!data) return;
+
+        document.getElementById('weather-loader').style.display = 'none';
+        document.getElementById('weather-content').style.display = 'block';
+
+        document.getElementById('w-temp').innerText = `${data.temp}°C`;
+        document.getElementById('w-condition').innerText = data.condition;
+        document.getElementById('w-humidity').innerText = `${data.humidity}%`;
+        document.getElementById('w-wind').innerText = `${data.windSpeed} km/h`;
+
+        const adviceBox = document.getElementById('farmer-advice');
+        adviceBox.innerHTML = data.advice;
+        adviceBox.classList.add(data.alertClass === 'alert-danger'
+          ? 'danger'
+          : data.alertClass === 'alert-warning'
+            ? 'warning'
+            : '');
+      }
     });
   </script>
 
   <script src="index.js"></script>
-  <script>
-    // Theme and Navbar Logic (Your existing script here...)
-    const themeToggle = document.querySelector('.theme-toggle');
-    const themeText = document.querySelector('.theme-text');
-    const sunIcon = document.querySelector('.sun-icon');
-    const moonIcon = document.querySelector('.moon-icon');
 
-    const applyTheme = (theme) => {
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('agritech-theme', theme);
-        if (theme === 'dark') {
-            themeText.textContent = 'Light';
-            moonIcon.style.display = 'none';
-            sunIcon.style.display = 'inline-block';
-        } else {
-            themeText.textContent = 'Dark';
-            moonIcon.style.display = 'inline-block';
-            sunIcon.style.display = 'none';
-        }
-    };
-    const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
-    applyTheme(savedTheme);
-    themeToggle.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'light' ? 'dark' : 'light';
-      applyTheme(next);
-    });
-  </script>
 </body>
+
 </html>
