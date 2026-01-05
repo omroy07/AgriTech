@@ -45,8 +45,11 @@ def validate_input(data):
     return True, "Valid input"
 
 # Initialize Gemini API
-API_KEY = os.environ.get('GEMINI_API_KEY', 'YOUR-API-KEY')
+API_KEY = os.environ.get('GEMINI_API_KEY')
 MODEL_ID = 'gemini-2.5-flash'
+
+if not API_KEY:
+    raise RuntimeError("GEMINI_API_KEY is not set in environment variables")
 
 # Configure Gemini Client
 client = genai.Client(api_key=API_KEY)
