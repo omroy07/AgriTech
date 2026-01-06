@@ -1,6 +1,18 @@
-# 🌾 AgriTech Web Application
+# 🌱 AgriTech: Smart Farming Solutions
 
-AgriTech is an innovative web platform designed to empower farmers and agricultural communities with AI-powered tools, real-time insights, and interactive collaboration features.
+[![SWoC 2026](https://img.shields.io/badge/SWoC-2026-blue?style=for-the-badge)](https://swoc.tech)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](CONTRIBUTING.md)
+
+**AgriTech** is an innovative AI-powered platform designed to empower farmers and agricultural communities with real-time insights, disease detection, and interactive collaboration tools to ensure a sustainable future.
+
+---
+
+## 🚀 Quick Start (TL;DR)
+1. **Clone:** `git clone https://github.com/omroy07/AgriTech.git`
+2. **Backend:** `pip install -r requirements.txt && python src/backend/app.py`
+3. **Frontend:** Open `http://localhost:8000` after running a local server in `src/frontend/`.
+4. **Goal:** Get accurate soil analysis and plant health reports instantly.
 
 ---
 
@@ -9,427 +21,151 @@ AgriTech is an innovative web platform designed to empower farmers and agricultu
 ### Dashboard Overview
 ![AgriTech Dashboard](https://github.com/omroy07/AgriTech/blob/main/image/Screenshot%202025-06-03%20111019.png)
 
-### Key Features in Action
+### 📸 Key Features in Action
+
 | Crop Recommendation | Disease Detection | Community Chat |
-|:-------------------:|:-----------------:|:--------------:|
-| ![Crop Recommendation GIF](link-to-crop-recommendation.gif) | ![Disease Detection GIF](link-to-disease-detection.gif) | ![Community Chat GIF](link-to-community-chat.gif) |
+| :---: | :---: | :---: |
+| ![Crop Recommendation](https://github.com/omroy07/AgriTech/raw/main/images/gifs/crop-recommendation.gif) | ![Disease Detection](https://github.com/omroy07/AgriTech/raw/main/images/gifs/disease-detection.gif) | ![Community Chat](https://github.com/omroy07/AgriTech/raw/main/images/gifs/community-chat.gif) |
 
 ---
 
-## 🚀 Getting Started
+## 🏗 System Architecture & Flow
 
-### Prerequisites
-- Web browser (Chrome, Firefox, Safari, or Edge)
-- Local server (for full functionality)
+1. **User Input:** Farmers upload soil data or plant images via the Dashboard.
+2. **Processing:** The Flask backend routes data to specific AI/ML models.
+3. **ML Inference:**
+    - **CNN Models:** Detect plant diseases from images.
+    - **Random Forest/XGBoost:** Suggest crops based on soil NPK levels.
+4. **Output:** Results are displayed with preventive measures and yield predictions.
 
-### Quick Setup
-1. *Clone the repository*
-   ```bash
-   git clone https://github.com/omroy07/AgriTech.git
-   cd AgriTech
-Run the application
+---
 
-Option A: Simple HTML Preview
+## 🌟 Core Features
+- 🌾 **Crop Recommendation:** AI suggestions based on soil and weather.
+- 📉 **Yield Prediction:** Advanced models to forecast seasonal harvest.
+- 🔬 **Disease Prediction:** Early detection of plant diseases with treatment steps.
+- 🤝 **Farmer Connection:** A community hub to share resources and advice.
+- 🛒 **Shopkeeper Listings:** Local directory for agricultural products.
 
+---
+
+## 🛠 Tech Stack
+- **Frontend:** HTML5, CSS3, JavaScript (ES6+)
+- **Backend:** Flask (Python) / Node.js
+- **Machine Learning:** TensorFlow, Scikit-Learn, OpenCV
+- **Database:** MySQL / MongoDB
+- **DevOps:** Docker, GitHub Actions (CI/CD)
+
+---
+
+## 📂 Project Structure (Simplified)
+```text
+AGRITECH/
+├── 📁 src/
+│   ├── 📁 frontend/      # UI logic: HTML, CSS, and Client-side JS
+│   │   ├── 📁 pages/     # HTML files for Dashboard, Crop, & Disease pages
+│   │   └── 📁 assets/    # Local icons and data samples
+│   ├── 📁 backend/       # Flask API: Routes and Server-side logic
+│   │   ├── app.py        # Main entry point for the Backend
+│   │   └── 📁 routes/    # Specific API endpoints (Crop, User, etc.)
+│   └── 📁 ml_models/     # The "Brain" of AgriTech: AI/ML model files
+│       ├── model.h5      # Pre-trained Deep Learning models
+│       └── model.pkl     # Pre-trained Scikit-Learn models
+├── 📁 images/            # Screenshots, GIFs, and Logos used in README
+├── 📄 requirements.txt   # Python dependencies (Must install for ML)
+└── 📄 README.md          # Main Documentation
+```
+
+---
+
+## 🛡️ Security & Reliability
+
+* **Data Sanitization:** All user-uploaded images are processed via **OpenCV** filters to ensure data integrity and prevent malicious file injections during the ML inference phase.
+* **Environment Safety:** Sensitive information, including API keys, database credentials, and secret tokens, are strictly managed via `.env` files to prevent accidental exposure in the version control system.
+* **Model Validation:** We implement continuous testing and cross-validation of our ML models (CNNs & Random Forest) to ensure a prediction accuracy threshold of **90% or above** before deployment.
+
+---
+
+## 🏁 Getting Started 
+
+### 📋 Prerequisites
+* **Python 3.9+**
+* **Node.js 18+**
+* **Local Server** (Live Server extension or Python `http.server`)
+
+### ⚙️ Installation
 ```bash
-# Open index.html in your browser
-open index.html 
+git clone [https://github.com/omroy07/AgriTech.git](https://github.com/omroy07/AgriTech.git)
+cd AgriTech
 ```
-Option B: Local Server (Recommended)
 
+### 🐍 Running Backend
 ```bash
-# Using Python
-python -m http.server 8000
-Then visit http://localhost:8000
-```
-
-# Using Node.js
-```npx serve
-# Or install live-server: npm install -g live-server
-```
-- live-server
-- Access the application
-
-- Open your web browser
-```
-Navigate to http://localhost:8000 (or the port shown in terminal)
-```
-
-- Start exploring AgriTech features!
-
-# For Development & Contribution
-See our Contributing Guide for detailed setup instructions, coding standards, and pull request process.
-
-🌟 Features
-- Crop Recommendation
-Get suggestions for the best crops to cultivate based on soil and weather conditions.
-
-- Yield Prediction
-Predict expected yields using advanced AI models tailored to different crop types.
-
-- Disease Prediction
-Early detection of plant diseases along with treatment and preventive measures.
-
-- Farmer Connection
-Connect with fellow farmers to share experiences, resources, and advice.
-
-- Shopkeeper Listings
-Discover local agricultural product and service providers.
-
-# File Structure
-AgriTech/\
-├── 📁 docs/                        # Documentation files\ \
-│   ├── CONTRIBUTING.md\
-│   ├── TROUBLESHOOTING.md\
-│   ├── API_DOCUMENTATION.md\
-│   └── SETUP_GUIDE.md\
-│
-├── 📁 images/                        # All images and visual assets\
-│   ├── screenshots/\
-│   │   ├── dashboard.png\
-│   │   ├── crop-recommendation.png\
-│   │   ├── disease-detection.png\
-│   │   └── community-chat.png\
-│   │
-│   ├── gifs/                         # Preview GIFs for README\
-│   │   ├── crop-recommendation.gif\
-│   │   ├── community-chat.gif\
-│   │   └── yield-prediction.gif\
-│   │
-│   ├── icons/\
-│   │   ├── favicon.ico\
-│   │   ├── logo.png\
-│   │   └── apple-touch-icon.png\
-│   │
-│   └── mockups/\
-│       ├── mobile-view.png\
-│       └── tablet-view.png\
-│
-├── 📁 src/                           # Main source code\
-│   ├── 📁 frontend/\
-│   │   ├── index.html                # Main entry point\
-│   │   ├── 📁 css/\
-│   │   │   ├── style.css\
-│   │   │   ├── components/\
-│   │   │   │   ├── navbar.css\
-│   │   │   │   ├── sidebar.css\
-│   │   │   │   ├── cards.css\
-│   │   │   │   └── forms.css\
-│   │   │   ├── pages/\
-│   │   │   │   ├── dashboard.css\
-│   │   │   │   ├── crop-recommendation.css\
-│   │   │   │   ├── disease-detection.css\
-│   │   │   │   └── community.css\
-│   │   │   └── responsive.css\
-│   │   │
-│   │   ├── 📁 js/\
-│   │   │   ├── app.js                # Main application logic\
-│   │   │   ├── 📁 modules/\
-│   │   │   │   ├── auth.js\
-│   │   │   │   ├── utils.js\
-│   │   │   │   └── animations.js\
-│   │   │   ├── 📁 features/\
-│   │   │   │   ├── crop-recommendation.js\
-│   │   │   │   ├── yield-prediction.js\
-│   │   │   │   ├── disease-detection.js\
-│   │   │   │   └── community-chat.js\
-│   │   │   └── 📁 components/\
-│   │   │       ├── navbar.js\
-│   │   │       ├── modal.js\
-│   │   │       └── charts.js\
-│   │   │
-│   │   ├── 📁 assets/\
-│   │   │   ├── 📁 fonts/\
-│   │   │   ├── 📁 icons/             # SVG icons\
-│   │   │   └── 📁 data/              # Sample data for demos\
-│   │   │
-│   │   └── 📁 pages/                 # HTML pages for different features\
-│   │       ├── dashboard.html\
-│   │       ├── crop-recommendation.html\
-│   │       ├── yield-prediction.html\
-│   │       ├── disease-detection.html\
-│   │       ├── community.html\
-│   │       ├── shopkeepers.html\
-│   │       └── plantation-guide.html\
-│   │
-│   ├── 📁 backend/                   # Backend server code\
-│   │   ├── app.py                   # Flask main application\
-│   │   ├── requirements.txt\
-│   │   ├── 📁 routes/\
-│   │   │   ├── auth_routes.py\
-│   │   │   ├── crop_routes.py\
-│   │   │   ├── disease_routes.py\
-│   │   │   ├── yield_routes.py\
-│   │   │   └── community_routes.py\
-│   │   ├── 📁 models/\
-│   │   │   ├── user_model.py\
-│   │   │   ├── crop_model.py\
-│   │   │   ├── disease_model.py\
-│   │   │   └── database.py\
-│   │   ├── 📁 ml_models/             # AI/ML model files\
-│   │   │   ├── crop_recommendation/\
-│   │   │   │   ├── model.pkl\
-│   │   │   │   ├── train_model.py\
-│   │   │   │   └── preprocessing.py\
-│   │   │   ├── yield_prediction/\
-│   │   │   │   ├── model.h5\
-│   │   │   │   ├── train_model.py\
-│   │   │   │   └── data_processing.py\
-│   │   │   └── disease_detection/\
-│   │   │       ├── model.h5\
-│   │   │       ├── train_model.py\
-│   │   │       └── image_processing.py\
-│   │   ├── 📁 utils/\
-│   │   │   ├── helpers.py\
-│   │   │   ├── validators.py\
-│   │   │   └── constants.py\
-│   │   └── 📁 config/\
-│   │       ├── database.py\
-│   │       └── settings.py\
-│   │
-│   └── 📁 database/                  # Database related files\
-│       ├── schema.sql\
-│       ├── sample_data.sql\
-│       └── migrations/\
-│
-├── 📁 tests/                         # Test files\
-│   ├── 📁 frontend/\
-│   │   ├── unit/\
-│   │   └── integration/\
-│   ├── 📁 backend/\
-│   │   ├── unit/\
-│   │   └── integration/\
-│   └── 📁 ml_models/\
-│       ├── test_crop_model.py\
-│       ├── test_yield_model.py\
-│       └── test_disease_model.py\
-│
-├── 📁 scripts/                       # Utility scripts\
-│   ├── setup.sh                      # Quick setup script\
-│   ├── deploy.sh\
-│   ├── backup_database.sh\
-│   └── generate_gifs.py              # Script to create preview GIFs\
-│
-├── 📁 config/                        # Configuration files\
-│   ├── environment.yml\
-│   ├── nginx.conf\
-│   └── gunicorn.conf.py\
-│
-├── 📁 .github/                       # GitHub workflows and templates\
-│   ├── workflows/\
-│   │   ├── ci-cd.yml\
-│   │   └── deploy.yml\
-│   ├── ISSUE_TEMPLATE/\
-│   │   ├── bug_report.md\
-│   │   └── feature_request.md\
-│   └── PULL_REQUEST_TEMPLATE.md\
-│
-├── 📁 data/                          # Datasets and training data\
-│   ├── 📁 crop_data/\
-│   ├── 📁 disease_images/\
-│   └── 📁 yield_data/\
-│
-├── 📁 logs/                          # Application logs\
-│   ├── app.log\
-│   ├── error.log\
-│   └── access.log\
-│
-├── 📄 .env.example                   # Environment variables template\
-├── 📄 .gitignore\
-├── 📄 README.md                      # Main documentation\
-├── 📄 package.json                   # Node.js dependencies (if using Node)\
-├── 📄 requirements.txt               # Python dependencies\
-├── 📄 Dockerfile                    # Container configuration\
-├── 📄 docker-compose.yml             # Multi-container setup\
-└── 📄 LICENSE                        # Project license\
-
-# Community Chat
-Collaborate and discuss challenges, share solutions, and keep up with the latest in agriculture.
-
-Plantation Guidance
-Access helpful plantation techniques and strategies for better crop growth.
-
-Crop Planning
-Plan your season with confidence and unlock your farm's true potential for a more profitable and sustainable future.
-
-# 🛠 Technologies Used
-- Frontend: HTML, CSS, JavaScript
-
-- Backend: Flask / Node.js
-
-- AI/ML Models: For prediction modules (Crop, Yield, Disease)
-
-- Database: MySQL / MongoDB
-
-- Hosting: Localhost (127.0.0.1), with option for cloud deployment
-
-# 👥 Team Members & Roles
-- Om Roy – Project Lead & Web Developer & Machine Learning Engineer
-
-- Kanisha Ravindra Sharma – Machine Learning Engineer & Backend Developer
-
-- Shubhangi Roy – Machine Learning Engineer & Backend Developer
-
-# 🤝 Contributing
-We welcome contributions! Please read our Contributing Guide to get started. It includes:
-
-Setting up the development environment
-
-Code style guidelines
-
-How to submit pull requests
-
-Reporting issues
-
-# First time contributing? Check out our Good First Issues!
-
-🌐 Future Scope
-☁ Cloud deployment (e.g., Vercel, Heroku)
-
-📱 Mobile app integration
-
-🌦 Real-time weather API
-
-🤖 AI chatbot for agriculture support
-
-🗣 Support for regional languages
-
-📞 Support
-If you encounter any issues:
-
-Check the Troubleshooting Guide
-
-Search existing Issues
-
-Create a new issue with details about your problem
-
-📄 License
-This project is licensed under the MIT License.
-
-text
-
-## Additional Files to Create
-
-### 1. CONTRIBUTING.md
-markdown
-# Contributing to AgriTech
-
-Thank you for your interest in contributing to AgriTech! Here's how you can help:
-
-## Development Setup
-
-1. *Fork the repository*
-2. *Clone your fork*
-   ```bash
-   git clone https://github.com/your-username/AgriTech.git
-   cd AgriTech
-   ```
-Set up development environment
-
-```bash
-# Install dependencies (if any)
-npm install
-# or
+cd src/backend
 pip install -r requirements.txt
-Start development server
-```
-
-```bash
-npm run dev
-# or
 python app.py
-Making Changes
-Create a new branch:
 ```
 
+### 🌐 Running Frontend
 ```bash
-git checkout -b feature/your-feature-name
-Make your changes and test thoroughly
-
-Commit your changes:
+cd src/frontend
+python -m http.server 8000
+# The application will be live at http://localhost:8000
 ```
+## 🛣 Roadmap
 
-```bash
-git commit -m "Add: description of your changes"
-Push to your fork:
-```
+- [ ] Cloud deployment
+- [ ] Mobile app integration
+- [ ] Real-time weather API
+- [ ] AI chatbot for farmers
+- [ ] Regional language support
 
-```bash
-git push origin feature/your-feature-name
-Create a Pull Request
-```
+## 🔄 Contribution Flow
 
-# Code Style
-- Use meaningful variable names
+Fork → Clone → Branch → Code → Commit → Push → Pull Request → Review → Merge
 
-- Comment complex logic
 
-- Follow existing code formatting
+---
 
-- Test your changes across different browsers
+## 🔮 Future Scope
 
-# Need Help?
-- Join our discussions in Issues
+- **Cloud Deployment:** Migration to AWS/Heroku for global high-availability.
+- **Mobile Integration:** Native Android application for on-field utility.
+- **IoT Support:** Integration with real-time soil moisture and NPK sensors.
+- **Multilingual Support:** Adding regional Indian languages to improve accessibility for farmers.
 
-- Contact maintainers for guidance
+---
 
-- text
+## 👥 Team Members
 
-### 2. TROUBLESHOOTING.md
-markdown
-# Troubleshooting Guide
+| Name | Role |
+| :--- | :--- |
+| **Om Roy** | Project Lead | Web Developer | ML Engineer |
+| **Kanisha Ravindra Sharma** | ML Engineer | Backend Developer |
+| **Shubhangi Roy** | ML Engineer | Backend Developer |
 
-## Common Issues
+---
 
-### Page not loading?
-- Ensure you're running a local server, not just opening HTML files directly
-- Check if port 8000 is available, try a different port if needed
+---
 
-### Features not working?
-- Check browser console for errors (F12 → Console)
-- Ensure all dependencies are installed
-- Verify your browser supports ES6+ features
+## 🤝 Contributing & Support
 
-### Images/GIFs not loading?
-- Check file paths are correct
-- Ensure images are in the correct directory
-- Verify file permissions
+We love contributions! Please read our **[CONTRIBUTING.md](./CONTRIBUTING.md)** to get started with **SWoC 2026** tasks. Whether it's fixing bugs, adding features, or improving documentation, your help is always welcome!
 
-## Getting Help
-1. Check this guide
-2. Search existing issues
-3. Create a new issue with:
-   - Your browser and version
-   - Error messages from console
-   - Steps to reproduce the issue
-For Creating Preview GIFs
-You can create the suggested GIFs using:
-
-# Screen recording tools:
-
-Windows: ScreenToGif, OBS Studio
-
-Mac: QuickTime Player, GIPHY Capture
-
-Linux: Peek, OBS Studio
-
-Recommended workflow:
-
-Record 5-10 second clips of key features
-
-Optimize file size (keep under 5MB)
-
-Show the most valuable interactions
-
-Add to an /images or /gifs folder in your repo
-
+---
 
 ## ✨ Contributors
 
-#### Thanks to all the wonderful contributors 💖
+#### Thanks to all the wonderful people contributing to this project! 💖
 
 <a href="https://github.com/omroy07/AgriTech/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=omroy07/AgriTech" />
 </a>
 
-#### See full list of contributor contribution [Contribution Graph](https://github.com/omroy07/AgriTech/graphs/contributors)  
+#### [View full contribution graph](https://github.com/omroy07/AgriTech/graphs/contributors)
+
+---
+
+<div align="center">
+  <b>Made with ❤️ by the AgriTech Community. Part of SWoC 2026.</b>
+</div>
