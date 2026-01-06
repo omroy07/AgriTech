@@ -96,7 +96,7 @@ body {
   flex-direction: column;
 }
 
-/* Header/Navbar - Updated to match */
+/* Header/Navbar - Untouched */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -127,7 +127,7 @@ body {
   flex-wrap: wrap;
 }
 
-/* Buttons - Updated to match */
+/* Buttons - Untouched */
 .btn {
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -173,7 +173,7 @@ body {
   color: var(--text-primary);
 }
 
-/* Main content sections - Updated to match */
+/* Main content sections - Untouched */
 main {
   flex: 1;
   padding: 3rem 2rem;
@@ -197,7 +197,7 @@ section:hover {
   box-shadow: 0 15px 40px var(--shadow-medium);
 }
 
-/* Headings - Updated to match */
+/* Headings - Untouched */
 h2 {
   font-family: 'Poppins', sans-serif;
   font-size: 2rem;
@@ -226,7 +226,7 @@ p {
   margin-bottom: 1.5rem;
 }
 
-/* Services list - Updated to match */
+/* Services list - Untouched */
 .services-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -260,7 +260,7 @@ p {
   font-size: 1.1rem;
 }
 
-/* Why it matters section - Updated to match */
+/* Why it matters section - Untouched */
 .why-it-matters-section ul {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -290,102 +290,136 @@ p {
 }
 
 /* ============================================
-   FOOTER STYLES - EXACT SAME AS INDEX.HTML
+   RE-DESIGNED FOOTER STYLES (4-COLUMN GRID)
    ============================================ */
 .site-footer {
   position: relative;
   z-index: 1;
-  padding: 3rem 1rem;
-  background: var(--surface-color);
+  padding: 4rem 2rem 2rem;
+  background: var(--bg-primary);
   border-top: 1px solid var(--border-color);
   transition: background 0.3s ease;
+  margin-top: 4rem;
 }
 
-.footer-inner {
-  display: flex;
-  justify-content: space-around;
+.footer-container {
   max-width: 1200px;
-  margin: 0 auto 2rem;
-  flex-wrap: wrap;
-  gap: 2rem;
+  margin: 0 auto;
 }
 
-.footer-brand {
-  flex: 1;
-  min-width: 250px;
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr; /* Optimized column balance */
+  gap: 3rem;
+  margin-bottom: 3rem;
 }
 
-.brand-header {
+.footer-brand-header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 1rem;
+  gap: 12px;
+  margin-bottom: 1.5rem;
 }
 
-.brand-header img {
+.footer-brand-header img {
   width: 50px;
   height: 50px;
   background: white;
   padding: 5px;
   border-radius: 8px;
+  border: 1px solid var(--border-color);
 }
 
-.brand-header h3 {
-  color: var(--accent-color);
+.footer-brand-header h3 {
+  color: var(--primary-green);
   font-family: 'Libertinus Serif', serif;
   font-size: 1.5rem;
 }
 
-.site-footer p {
+.brand-text {
   color: var(--text-muted);
   font-size: 0.95rem;
   line-height: 1.6;
 }
 
-.footer-links {
-  flex: 1;
-  min-width: 200px;
+.footer-col h4 {
+  color: var(--primary-green);
+  margin-bottom: 1.5rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
-.footer-links h4 {
-  color: var(--accent-color);
-  margin-bottom: 1rem;
-  font-family: 'Libertinus Serif', serif;
-  font-size: 1.2rem;
-}
-
-.footer-links ul {
+.footer-ul {
   list-style: none;
   padding: 0;
-  margin: 0;
 }
 
-.footer-links li {
-  margin-bottom: 0.5rem;
+.footer-ul li {
+  margin-bottom: 0.8rem;
 }
 
-.footer-links a {
+.footer-ul li a {
   color: var(--text-muted);
   text-decoration: none;
   display: block;
-  padding: 0.4rem 0;
-  transition: color 0.2s;
+  transition: all 0.3s ease;
   font-size: 0.95rem;
 }
 
-.footer-links a:hover {
-  color: var(--text-color);
+.footer-ul li a i {
+  margin-right: 8px;
+  color: var(--primary-green);
+}
+
+.footer-ul li a:hover {
+  color: var(--primary-green);
+  transform: translateX(5px);
+}
+
+/* Modern Social Links */
+.social-links {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 1.5rem;
+}
+
+.social-links a {
+  width: 40px;
+  height: 40px;
+  background: var(--bg-secondary);
+  color: var(--primary-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.social-links a:hover {
+  background: var(--primary-green);
+  color: white;
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(46, 125, 50, 0.2);
+}
+
+.footer-contact-info p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
 }
 
 .footer-bottom {
   border-top: 1px solid var(--border-color);
-  padding-top: 1rem;
+  padding-top: 2rem;
   text-align: center;
   color: var(--text-muted);
+  font-size: 0.9rem;
 }
 
 /* ============================================
-   FLOATING BUTTONS - SAME AS INDEX.HTML
+   FLOATING BUTTONS - Untouched
    ============================================ */
 #chatbotBtn, .scroll-btn {
   position: fixed;
@@ -432,14 +466,16 @@ p {
   background: var(--btn-hover);
 }
 
-/* Remove the fancy scroll-to-top button if you want exact index.html style */
-.scroll-to-top {
-  display: none;
-}
-
 /* ============================================
    RESPONSIVE STYLES
    ============================================ */
+@media (max-width: 992px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
@@ -463,22 +499,6 @@ p {
     font-size: 1.75rem;
   }
   
-  /* Footer Responsive */
-  .footer-inner {
-    flex-direction: column;
-    text-align: center;
-    gap: 2.5rem;
-  }
-  
-  .footer-brand,
-  .footer-links {
-    min-width: 100%;
-  }
-  
-  .brand-header {
-    justify-content: center;
-  }
-  
   #chatbotBtn, .scroll-btn {
     width: 45px;
     height: 45px;
@@ -487,6 +507,17 @@ p {
   
   #chatbotBtn {
     bottom: 70px;
+  }
+}
+
+@media (max-width: 550px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .footer-brand-header, .social-links {
+    justify-content: center;
   }
 }
 
