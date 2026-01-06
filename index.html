@@ -10,7 +10,880 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="index.css" />
+  <style>
+    /* 1. DEFINE VARIABLES FOR THEMES */
+    :root {
+      /* DARK MODE DEFAULTS */
+      --bg-color: #030712;
+      --text-color: #ffffff;
+      --text-muted: #cbd5e1;
+      --surface-color: rgba(15, 23, 42, 0.9);
+      --section-bg: rgba(30, 41, 59, 0.7);
+      --border-color: #334155;
+      --accent-color: #22c55e;
+      --input-bg: #333333;
+      --input-border: #555555;
+      --btn-bg: #334155;
+      --btn-text: #ffffff;
+      --btn-hover: #475569;
+      --shadow-color: rgba(0, 0, 0, 0.3);
+    }
+
+    [data-theme="light"] {
+      /* LIGHT MODE OVERRIDES */
+      --bg-color: #f8fafc;        /* Light Gray Background */
+      --text-color: #0f172a;      /* Dark Text */
+      --text-muted: #475569;      /* Gray Text */
+      --surface-color: rgba(255, 255, 255, 0.95); /* White Cards */
+      --section-bg: rgba(241, 245, 249, 0.8); /* Light Gray Sections */
+      --border-color: #cbd5e1;    /* Light Borders */
+      --accent-color: #16a34a;    /* Green */
+      --input-bg: #ffffff;        /* White Inputs */
+      --input-border: #94a3b8;
+      --btn-bg: #e2e8f0;          /* Light Button Bg */
+      --btn-text: #0f172a;        /* Dark Button Text */
+      --btn-hover: #cbd5e1;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /* 2. RESET & BASE STYLES */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      transform: none !important;
+      filter: none !important;
+      perspective: none !important;
+      clip-path: none !important;
+      mask: none !important;
+      backdrop-filter: none !important;
+      opacity: 1 !important;
+      mix-blend-mode: normal !important;
+      isolation: auto !important;
+      will-change: auto !important;
+      contain: none !important;
+      z-index: auto !important;
+    }
+
+    body {
+      background-color: var(--bg-color); /* Uses Variable */
+      font-family: 'Open Sans', sans-serif;
+      color: var(--text-color);          /* Uses Variable */
+      line-height: 1.6;
+      overflow-x: hidden;
+      touch-action: pan-y;
+      -ms-touch-action: pan-y;
+      transition: background-color 0.3s ease, color 0.3s ease; /* Smooth Theme Transition */
+    }
+
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: -1;
+    }
+
+    .serif {
+      font-family: 'Libertinus Serif', serif;
+    }
+
+    /* 3. NAVBAR STYLES */
+    .navbar {
+      position: relative;
+      z-index: 100;
+      background: var(--surface-color); /* Uses Variable */
+      backdrop-filter: blur(10px);
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-color); /* Uses Variable */
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .navbar-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand img {
+      width: 45px;
+      height: 45px;
+      background: white;
+      padding: 5px;
+      border-radius: 8px;
+    }
+
+    .brand a {
+      color: var(--accent-color); /* Uses Variable */
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* Search Container */
+    .search-container {
+      position: relative;
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .search-input {
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text-color);
+      min-width: 120px; /* Default for mobile */
+      transition: all 0.3s ease;
+    }
+
+    /* FIX #472: Make search bar wider on laptops/desktops */
+    @media (min-width: 1024px) {
+      .search-input {
+        min-width: 550px; /* Expands to 300px on large screens */
+      }
+    }
+
+    .search-button {
+      padding: 0.5rem 0.75rem;
+      background: var(--accent-color);
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* Services Dropdown */
+    .services-toggle-container {
+      position: relative;
+    }
+
+    .services-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .services-arrow {
+      transition: transform 0.3s;
+    }
+
+    .services-arrow.rotated {
+      transform: rotate(180deg);
+    }
+
+    .services-dropdown {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      left: 0;
+      background: var(--surface-color); /* Uses Variable */
+      border: 1px solid var(--border-color); /* Uses Variable */
+      border-radius: 0.5rem;
+      min-width: 250px;
+      padding: 0.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      box-shadow: 0 4px 12px var(--shadow-color);
+    }
+
+    .services-dropdown.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .services-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .services-list li {
+      margin: 0.25rem 0;
+    }
+
+    .services-list a {
+      color: var(--text-muted); /* Uses Variable */
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .services-list a:hover {
+      background: var(--btn-bg); /* Uses Variable */
+      color: var(--text-color);
+    }
+
+    .services-list i {
+      width: 20px;
+    }
+
+    /* Button Styles */
+    .btn {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+      background: var(--btn-bg);     /* Uses Variable */
+      color: var(--btn-text);        /* Uses Variable */
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px var(--shadow-color);
+      background: var(--btn-hover);
+    }
+
+    .btn-primary {
+      background: var(--accent-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #15803d;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent-color);
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    /* 4. HERO SECTION */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .hero-content {
+      background: var(--surface-color); /* Uses Variable */
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 800px;
+      margin: 0 auto;
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color); /* Uses Variable */
+      transition: background 0.3s ease;
+    }
+
+    .hero-content h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent-color);
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--text-color);
+    }
+
+    /* 5. FEATURES SECTION */
+    .features {
+      position: relative;
+      z-index: 1;
+      padding: 4rem 1rem;
+      background: var(--section-bg); /* Uses Variable */
+      transition: background 0.3s ease;
+    }
+
+    .features-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .features-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      color: var(--accent-color);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: var(--surface-color); /* Uses Variable */
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color); /* Uses Variable */
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-color);
+      box-shadow: 0 8px 24px rgba(34, 197, 94, 0.2);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--text-color);
+    }
+
+    .feature-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent-color);
+    }
+
+    .feature-description {
+      color: var(--text-muted); /* Uses Variable */
+      line-height: 1.6;
+    }
+    /* ===============================
+   AGRI FOOTER – LIGHT & CLEAN
+   =============================== */
+
+.site-footer {
+  background: #f9fdf7; /* soft agri white */
+  color: #374151;
+  position: relative;
+  font-size: 0.95rem;
+  border-top: 1px solid #e5f2e0;
+}
+
+/* Top accent */
+.footer-top-accent {
+  height: 4px;
+  background: linear-gradient(90deg, #16a34a, #22c55e);
+}
+
+/* Layout */
+.footer-inner-content {
+  max-width: 1200px;
+  margin: auto;
+  padding: 3rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+/* Brand */
+.footer-brand {
+  flex: 1 1 280px;
+}
+
+.brand-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.brand-logo {
+  width: 42px;
+}
+
+.footer-brand h3 {
+  color: #14532d;
+  font-size: 1.3rem;
+}
+
+.tagline {
+  margin: 0.8rem 0 1.2rem;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+/* Social icons */
+.social-icons {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.social-icons a {
+  width: 36px;
+  height: 36px;
+  background: #e6f4ea;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #15803d;
+  transition: all 0.25s ease;
+}
+
+.social-icons a:hover {
+  background: #22c55e;
+  color: #fff;
+}
+
+/* Links group */
+.footer-group-links {
+  display: flex;
+  gap: 3rem;
+  flex: 1 1 320px;
+}
+
+.footer-section h4 {
+  color: #14532d;
+  margin-bottom: 0.9rem;
+  font-size: 1rem;
+}
+
+/* List links */
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.6rem;
+}
+
+.footer-section ul a {
+  color: #374151;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.25s ease;
+}
+
+.footer-section ul a:hover {
+  color: #16a34a;
+}
+
+/* Bottom */
+.footer-bottom {
+  text-align: center;
+  padding: 1rem;
+  background: #f1f8ed;
+  color: #4b5563;
+  font-size: 0.85rem;
+}
+
+/* Remove heavy wave */
+.footer-wave-overlay {
+  display: none;
+}
+
+/* ===============================
+   MOBILE
+   =============================== */
+
+@media (max-width: 768px) {
+  .footer-inner-content {
+    flex-direction: column;
+  }
+
+  .footer-group-links {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+    /* FLOATING BUTTONS */
+    #chatbotBtn, .scroll-btn {
+      position: fixed;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #16a34a;
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    #chatbotBtn {
+      bottom: 80px;
+    }
+
+    #chatbotBtn:hover, .scroll-btn:hover {
+      transform: scale(1.1);
+      background: #15803d;
+    }
+
+    .scroll-btn {
+      bottom: 20px;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .scroll-btn.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* MOBILE RESPONSIVE */
+    @media (max-width: 1024px) {
+      .navbar-content {
+        justify-content: center;
+      }
+
+      .brand {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .nav-buttons {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0.75rem;
+      }
+
+      .navbar-content {
+        gap: 0.75rem;
+      }
+
+      .brand img {
+        width: 40px;
+        height: 40px;
+      }
+
+      .brand a {
+        font-size: 1.3rem;
+      }
+
+      .nav-buttons {
+        gap: 0.4rem;
+      }
+
+      .btn {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.8rem;
+      }
+
+      .search-input {
+        min-width: 100px;
+        padding: 0.4rem;
+        font-size: 0.85rem;
+      }
+
+      .search-button {
+        padding: 0.4rem 0.6rem;
+      }
+
+      .services-dropdown {
+        left: 50%;
+        transform: translateX(-50%) translateY(-10px);
+        width: 90vw;
+        max-width: 300px;
+      }
+
+      .services-dropdown.active {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      .hero-content {
+        padding: 1.5rem;
+      }
+
+      .hero-content h2 {
+        font-size: 1.8rem;
+      }
+
+      .hero-content p {
+        font-size: 1rem;
+      }
+
+      .features {
+        padding: 3rem 1rem;
+      }
+
+      .features-title {
+        font-size: 2rem;
+      }
+
+      .features-grid {
+        gap: 1.5rem;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-brand,
+      .footer-links {
+        min-width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .brand img {
+        width: 35px;
+        height: 35px;
+      }
+
+      .brand a {
+        font-size: 1.1rem;
+      }
+
+      .nav-buttons {
+        gap: 0.3rem;
+      }
+
+      .btn {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.75rem;
+      }
+
+      .search-input {
+        min-width: 80px;
+        font-size: 0.8rem;
+      }
+
+      .hero-content {
+        padding: 1.25rem;
+      }
+
+      .hero-content h2 {
+        font-size: 1.5rem;
+      }
+
+      .hero-content p {
+        font-size: 0.95rem;
+      }
+
+      .features-title {
+        font-size: 1.75rem;
+      }
+
+      .feature-card {
+        padding: 1.5rem;
+      }
+
+      #chatbotBtn, .scroll-btn {
+        width: 45px;
+        height: 45px;
+        right: 15px;
+      }
+
+      #chatbotBtn {
+        bottom: 70px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .nav-buttons {
+        gap: 0.25rem;
+      }
+
+      .btn {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.7rem;
+      }
+
+      .search-input {
+        min-width: 70px;
+        padding: 0.35rem;
+      }
+
+      .search-button {
+        padding: 0.35rem 0.5rem;
+      }
+    }
+    /* ===== ABSOLUTE ONE-ROW NAVBAR FIX ===== */
+
+.navbar {
+  width: 100%;
+}
+
+.navbar-content {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;        /* ❗ prevents breaking */
+  white-space: nowrap;     /* ❗ forces single line */
+}
+
+/* Brand */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* Left navigation */
+.left-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  flex-shrink: 0;
+}
+
+/* Right navigation */
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-shrink: 0;           /* ❗ prevents Register from wrapping */
+}
+
+/* Search */
+.search-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 4px 10px;
+  flex-shrink: 0;
+}
+
+.search-input {
+  width: 120px;             /* keep compact */
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.85rem;
+}
+
+/* Buttons stay inline */
+.nav-buttons .btn,
+.nav-buttons a {
+  flex-shrink: 0;           /* ❗ KEY LINE */
+}
+
+/* Clean links */
+.nav-link {
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: #333;
+}
+
+/* Hover underline */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #2ecc71;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+/* ===============================
+   MOBILE MENU FIX (HIDE BY DEFAULT)
+   =============================== */
+
+/* Hide mobile menu & overlay initially */
+.mobile-menu,
+.mobile-menu-overlay {
+  display: none;
+}
+
+/* Show only on small screens */
+@media (max-width: 992px) {
+
+  /* Enable mobile menu system */
+  .mobile-menu-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 998;
+  }
+
+  .mobile-menu {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100vh;
+    background: #fff;
+    transform: translateX(100%);
+    transition: transform 0.35s ease;
+    z-index: 999;
+    overflow-y: auto;
+  }
+
+  /* When menu is OPEN */
+  .mobile-menu.active {
+    transform: translateX(0);
+  }
+
+  .mobile-menu-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Desktop: ensure mobile menu never shows */
+@media (min-width: 993px) {
+  .mobile-menu,
+  .mobile-menu-overlay {
+    display: none !important;
+  }
+}
+
+  </style>
 </head>
 <body>
 
@@ -218,46 +1091,65 @@
       </div>
     </div>
   </section>
+<footer class="site-footer tech-dark-theme final-match">
+    <div class="footer-top-accent"></div>
+    
+    <div class="footer-inner-content">
 
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="brand-header">
-          <img src="images/logo.png" alt="AgriTech logo">
-          <h3 class="serif">AgriTech</h3>
+        <div class="footer-section footer-brand">
+            <div class="brand-header">
+                <img src="images/logo.png" alt="AgriTech logo" class="brand-logo">
+                <h3>AgriTech</h3>
+            </div>
+            <p class="tagline">Empowering India's Farming Future with innovative technology connecting every stakeholder.</p>
+            
+            <div class="social-icons">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
         </div>
-        <p>Empowering India's Farming Future with innovative technology connecting every stakeholder.</p>
-      </div>
-      <div class="footer-links">
-        <h4 class="serif">Quick Links</h4>
-        <ul>
-          <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-          <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-          <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
-          <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
-          <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
-        </ul>
-      </div>
-      <div class="footer-links">
-        <h4 class="serif">Contact</h4>
-        <ul>
-          <li>
-            <a href="mailto:contact@agritech.com">
-              <i class="fas fa-envelope"></i> Email Us
-            </a>
-          </li>
-          <li>
-            <a href="tel:+910000000000">
-              <i class="fas fa-phone"></i> Call Us
-            </a>
-          </li>
-        </ul>
-      </div>
+
+        <div class="footer-group-links"> 
+            
+            <div class="footer-section footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+                    <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
+                    <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section footer-contact">
+                <h4>Contact</h4>
+                <ul>
+                    <li>
+                        <a href="mailto:contact@agritech.com">
+                            <i class="fas fa-envelope"></i> Email Us
+                        </a>
+                    </li>
+                    <li>
+                        <a href="tel:+910000000000">
+                            <i class="fas fa-phone"></i> Call Us
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+        
     </div>
+
     <div class="footer-bottom">
-      <p>© 2025 AgriTech. All rights reserved.</p>
+        <p>© 2025 AgriTech. All rights reserved.</p>
     </div>
-  </footer>
+    
+    <div class="footer-wave-overlay"></div> 
+</footer>
 
   <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
     <i class="fas fa-robot"></i>

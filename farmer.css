@@ -517,7 +517,31 @@ footer {
   box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
 }
 
+.error-message {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: slideInError 0.5s ease-out;
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+}
+
 @keyframes slideInSuccess {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInError {
   from {
     transform: translateY(-20px);
     opacity: 0;

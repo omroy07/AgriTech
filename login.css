@@ -253,18 +253,35 @@ body {
 .forgot-password {
   text-align: right;
   margin-bottom: 25px;
+  font-size: 14px;
 }
 
 .forgot-password a {
   color: #2e7d32;
   text-decoration: none;
-  font-size: 14px;
+  font-weight: 500;
   transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .forgot-password a:hover {
   color: #1b5e20;
   text-decoration: underline;
+}
+
+.forgot-password a:active {
+  transform: translateY(1px);
+}
+
+/* Optional: Add an icon before the forgot password link */
+.forgot-password a::before {
+  content: "\f059"; /* Font Awesome question circle icon */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 400;
+  font-size: 12px;
+  margin-right: 5px;
 }
 
 /* Button styling */
@@ -282,6 +299,7 @@ body {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
   margin-bottom: 25px;
+  margin-top: 5px;
 }
 
 .form-container button[type="submit"]:hover {
@@ -472,6 +490,11 @@ body {
   .form-subtitle {
     font-size: 13px;
   }
+
+  .forgot-password {
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -512,6 +535,11 @@ body {
     font-size: 14px;
   }
 
+  .forgot-password {
+    margin-bottom: 15px;
+    font-size: 12px;
+  }
+
   .form-container button[type="submit"] {
     padding: 14px;
     font-size: 15px;
@@ -539,6 +567,10 @@ body {
   .input-group i {
     left: 10px;
   }
+
+  .forgot-password {
+    font-size: 11px;
+  }
 }
 
 @media (max-height: 700px) {
@@ -558,6 +590,10 @@ body {
 
   .input-group {
     margin-bottom: 15px;
+  }
+
+  .forgot-password {
+    margin-bottom: 20px;
   }
 }
 
@@ -581,5 +617,9 @@ body {
 
   .input-group {
     margin-bottom: 12px;
+  }
+
+  .forgot-password {
+    margin-bottom: 15px;
   }
 }
