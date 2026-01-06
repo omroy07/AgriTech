@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission | AgriTech</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Optional: Add meta description for SEO -->
+    <meta name="description" content="Learn about AgriTech's mission to empower farmers through sustainable agricultural technology.">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="brand">
+            <a href="index.html" class="logo">AgriTech</a>
+        </div>
+        <!-- Optional: Add navigation links -->
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="mission.html" class="active">Mission</a>
+            <a href="career.html">Careers</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="nav-buttons">
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark/light mode">
+                <i class="fa-solid fa-sun sun-icon"></i>
+                <i class="fa-solid fa-moon moon-icon"></i>
+                <span class="theme-text">Mode</span>
+            </button>
+            <a href="#" class="btn-logout">Logout</a>
+        </div>
+    </nav>
+
+    <main class="hero">
+        <div class="hero-content">
+            <h1 class="serif">About Our Mission</h1>
+            
+            <div class="mission-statement card">
+                <!-- Added more content for better visual balance -->
+                <h2>Our Vision</h2>
+                <p>
+                    <strong>Empowering farmers</strong> through smart, sustainable agricultural technology.
+                    We strive to create innovative solutions that boost productivity, reduce environmental impact,
+                    and ensure food security for future generations.
+                </p>
+                
+                <div class="mission-highlights">
+                    <div class="highlight">
+                        <i class="fa-solid fa-leaf"></i>
+                        <h3>Sustainability</h3>
+                        <p>Promoting eco-friendly farming practices</p>
+                    </div>
+                    <div class="highlight">
+                        <i class="fa-solid fa-microchip"></i>
+                        <h3>Innovation</h3>
+                        <p>Leveraging cutting-edge technology</p>
+                    </div>
+                    <div class="highlight">
+                        <i class="fa-solid fa-handshake"></i>
+                        <h3>Community</h3>
+                        <p>Supporting farming communities worldwide</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mission-stats">
+                <div class="stat-item card">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Farms Joined</span>
+                    <p class="stat-description">Across 25 countries</p>
+                </div>
+                <div class="stat-item card">
+                    <span class="stat-number">20k</span>
+                    <span class="stat-label">Hectares Protected</span>
+                    <p class="stat-description">Using sustainable methods</p>
+                </div>
+                <!-- Added third stat for better balance -->
+                <div class="stat-item card">
+                    <span class="stat-number">40%</span>
+                    <span class="stat-label">Yield Increase</span>
+                    <p class="stat-description">Average improvement</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!--  Add footer -->
+    <footer class="footer">
+        <p>&copy; 2024 AgriTech. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Load saved theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('agritech-theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        });
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('agritech-theme', newTheme);
+            
+            //  Add visual feedback
+            const themeBtn = document.querySelector('.theme-toggle');
+            themeBtn.classList.add('theme-changed');
+            setTimeout(() => themeBtn.classList.remove('theme-changed'), 300);
+        }
+    </script>
+</body>
+</html>
