@@ -641,7 +641,6 @@
             box-shadow: 0 8px 25px var(--shadow-light);
         }
 
-        /* --- UPDATED: ANIMATED CTA BUTTONS --- */
         .cta-button {
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             color: white;
@@ -653,7 +652,7 @@
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy Easing */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             margin: 10px;
             position: relative;
             overflow: hidden;
@@ -662,12 +661,11 @@
         }
 
         .cta-button:hover {
-            transform: translateY(-6px) scale(1.08); /* Stronger lift and scale */
-            box-shadow: 0 12px 30px rgba(253, 121, 168, 0.45), 0 0 20px rgba(253, 121, 168, 0.25); /* Glow Effect */
+            transform: translateY(-6px) scale(1.08);
+            box-shadow: 0 12px 30px rgba(253, 121, 168, 0.45), 0 0 20px rgba(253, 121, 168, 0.25);
             filter: brightness(1.1);
         }
 
-        /* Shine sweep effect */
         .cta-button::after {
             content: '';
             position: absolute;
@@ -684,10 +682,49 @@
             left: 100%;
         }
 
-        /* Animated click feel */
         .cta-button:active {
             transform: translateY(-2px) scale(0.96);
             box-shadow: 0 5px 15px rgba(253, 121, 168, 0.3);
+        }
+
+        /* --- ADDED: SCROLL TO TOP BUTTON STYLES --- */
+        .scroll-top-btn {
+            position: fixed;
+            bottom: 90px; 
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 15px var(--shadow-medium);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .scroll-top-btn.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .scroll-top-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 25px var(--shadow-heavy);
+            filter: brightness(1.1);
+        }
+
+        .scroll-top-btn:active {
+            transform: scale(0.9);
         }
 
         .notification {
@@ -1143,6 +1180,10 @@
         <div class="cart-count" id="cartCount">0</div>
     </div>
 
+    <button id="scrollToTop" class="scroll-top-btn" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <script>
         // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
@@ -1173,6 +1214,26 @@
                 themeText.textContent = 'Dark';
             }
         }
+
+        // --- ADDED: SCROLL TO TOP LOGIC ---
+        const scrollBtn = document.getElementById("scrollToTop");
+
+        window.addEventListener("scroll", () => {
+            // Button appears after scrolling 300px
+            if (window.pageYOffset > 300) {
+                scrollBtn.classList.add("visible");
+            } else {
+                scrollBtn.classList.remove("visible");
+            }
+        });
+
+        scrollBtn.addEventListener("click", () => {
+            // Smoothly scroll to the very top
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
 
         // Sample product data
         let allProducts = [];
