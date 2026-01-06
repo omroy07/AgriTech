@@ -1,171 +1,127 @@
-from flask import Flask, request, jsonify, send_from_directory
-from google import genai
-import traceback
 import os
-import re
-from flask_cors import CORS
-from dotenv import load_dotenv
+import cv2
+import numpy as np
+from flask import Flask, request, jsonify, render_template
+from tensorflow.keras.models import load_model
+from keras_facenet import FaceNet
+from numpy.linalg import norm
+from werkzeug.utils import secure_filename
 
-# Load environment variables
-load_dotenv()
+app = Flask(__name__)
 
-app = Flask(__name__, static_folder='.', static_url_path='')
-CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Input validation and sanitization functions
-def sanitize_input(text):
-    """Sanitize user input to prevent XSS and injection attacks"""
-    if not text or not isinstance(text, str):
-        return ""
-    
-    # Remove HTML tags
-    text = re.sub(r'<[^>]+>', '', text)
-    
-    # Escape special characters
-    text = text.replace('&', '&amp;')
-    text = text.replace('<', '&lt;')
-    text = text.replace('>', '&gt;')
-    text = text.replace('"', '&quot;')
-    text = text.replace("'", '&#x27;')
-    
-    # Limit length
-    if len(text) > 1000:
-        text = text[:1000]
-    
-    return text.strip()
+UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
+KNOWN_DIR = os.path.join(BASE_DIR, "known_faces")
+MODEL_DIR = os.path.join(BASE_DIR, "models")
 
-def validate_input(data):
-    """Validate input data structure and content"""
-    if not data:
-        return False, "No data provided"
-    
-    # Check for required fields if needed
-    # Add specific validation rules here
-    
-    return True, "Valid input"
-
-# Initialize Gemini API
-API_KEY = os.environ.get('GEMINI_API_KEY', 'YOUR-API-KEY')
-MODEL_ID = 'gemini-2.5-flash'
-
-# Configure Gemini Client
-client = genai.Client(api_key=API_KEY)
+os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
-@app.route('/api/firebase-config')
-def get_firebase_config():
-    """Secure endpoint to provide Firebase configuration to client"""
+face_nonface_model = load_model(
+    os.path.join(MODEL_DIR, "face_vs_nonface_model.h5"),
+    compile=False
+)
+
+embedder = FaceNet()
+
+face_cascade = cv2.CascadeClassifier(
+    cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+)
+
+
+def cosine_distance(a, b):
+    return 1 - np.dot(a, b) / (norm(a) * norm(b))
+
+def get_embedding(face):
+    face = cv2.resize(face, (160, 160))
+    face = face.astype("float32")
+    face = np.expand_dims(face, axis=0)
+    return embedder.embeddings(face)[0]
+
+
+known_embeddings = {}
+
+for file in os.listdir(KNOWN_DIR):
+    path = os.path.join(KNOWN_DIR, file)
+    img = cv2.imread(path)
+    if img is None:
+        continue
+
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    faces = face_cascade.detectMultiScale(gray, 1.1, 4)
+
+    if len(faces) == 0:
+        continue
+
+    x, y, w, h = faces[0]
+    face = img[y:y+h, x:x+w]
+
+    name = os.path.splitext(file)[0]
+    known_embeddings[name] = get_embedding(face)
+
+print("FINAL loaded identities:", known_embeddings.keys())
+
+
+def recognize_face(face):
+    emb = get_embedding(face)
+    min_dist = 999
+    identity = "Unknown"
+
+    for name, known_emb in known_embeddings.items():
+        dist = cosine_distance(emb, known_emb)
+        if dist < min_dist:
+            min_dist = dist
+            identity = name
+
+    if min_dist > 0.6:
+        identity = "Unknown"
+
+    return identity, float(min_dist)
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+@app.route("/recognize", methods=["POST"])
+def recognize():
+    if "image" not in request.files:
+        return jsonify({"face_detected": False})
+
+    file = request.files["image"]
+    filename = secure_filename(file.filename)
+    path = os.path.join(UPLOAD_DIR, filename)
+    file.save(path)
+
+    img = cv2.imread(path)
+    if img is None:
+        return jsonify({"face_detected": False})
+
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    faces = face_cascade.detectMultiScale(gray, 1.1, 4)
+
+    if len(faces) == 0:
+        return jsonify({"face_detected": False})
+
+    x, y, w, h = faces[0]
+    face = img[y:y+h, x:x+w]
+
+    test = cv2.resize(face, (224, 224))
+    test = test / 255.0
+    test = np.expand_dims(test, axis=0)
+
+    pred = face_nonface_model.predict(test)[0][0]
+    if pred < 0.5:
+        return jsonify({"face_detected": False})
+
+    name, dist = recognize_face(face)
+
     return jsonify({
-        'apiKey': os.environ.get('FIREBASE_API_KEY'),
-        'authDomain': os.environ.get('FIREBASE_AUTH_DOMAIN'),
-        'projectId': os.environ.get('FIREBASE_PROJECT_ID'),
-        'storageBucket': os.environ.get('FIREBASE_STORAGE_BUCKET'),
-        'messagingSenderId': os.environ.get('FIREBASE_MESSAGING_SENDER_ID'),
-        'appId': os.environ.get('FIREBASE_APP_ID'),
-        'measurementId': os.environ.get('FIREBASE_MEASUREMENT_ID')
+        "face_detected": True,
+        "identity": name,
+        "distance": dist
     })
 
-
-@app.route('/process-loan', methods=['POST'])
-def process_loan():
-    try:
-        json_data = request.get_json(force=True)
-        
-        # Validate and sanitize input
-        is_valid, validation_message = validate_input(json_data)
-        if not is_valid:
-            return jsonify({"status": "error", "message": validation_message}), 400
-        
-        # Sanitize any text fields in the JSON data
-        if isinstance(json_data, dict):
-            for key, value in json_data.items():
-                if isinstance(value, str):
-                    json_data[key] = sanitize_input(value)
-        
-        print(f"Received JSON: {json_data}")
-
-        prompt = f"""
-You are a financial loan eligibility advisor specializing in agricultural loans for farmers in India.
-
-You will be given a JSON object that contains information about a farmer's loan application. The fields in this JSON will vary depending on the loan type (e.g., Crop Cultivation, Farm Equipment, Water Resources, Land Purchase).
-You will focus only on loan schemes and eligibility criteria followed by:
-1. Indian nationalized banks (e.g., SBI, Bank of Baroda)
-2. Private sector Indian banks (e.g., ICICI, HDFC)
-3. Regional Rural Banks (RRBs)
-4. Cooperative Banks
-5. NABARD & government schemes
-Do not suggest generic or international financing options.
-
-JSON Data = {json_data}
-
-Your task is to:
-1. Identify the loan type and understand which fields are important for assessing that particular loan.
-2. Analyze the farmer's provided details and assess their loan eligibility.
-3. Highlight areas of strength and areas where the farmer may face challenges.
-4. If any critical data is missing from the JSON, point it out clearly.
-5. Provide simple and actionable suggestions the farmer can follow to improve eligibility.
-6. Suggest the government schemes or subsidies applicable to their loan type.
-7. Ensure the tone is clear, supportive, and easy to understand for farmers.
-8. Respond in a structured format with labeled sections: Loan Type, Eligibility Status, Loan Range, Improvements, Schemes.
-9. **IMPORTANT: Return your response in **Markdown format** with:
-Headings for each section (Loan Type, Eligibility Status, Loan Range, Improvements, Schemes)
-Bullet points ( - ) for lists.
-Do not use "\\n" for newlines. Instead, structure properly.
-
-Do not add assumptions that are not supported by the data provided.
-"""
-
-        response = client.models.generate_content(
-            model=MODEL_ID,
-            contents=[{"parts": [{"text": prompt}]}]
-        )
-
-        reply = response.candidates[0].content.parts[0].text
-        return jsonify({"status": "success", "message": reply}), 200
-
-    except Exception as e:
-        print(f"Unexpected Error: {e}")
-        traceback.print_exc()
-        return jsonify({"status": "error", "message": str(e)}), 500
-
-
-# Serve HTML pages
-@app.route('/')
-def index():
-    return send_from_directory('.', 'index.html')
-
-@app.route('/farmer')
-def farmer():
-    return send_from_directory('.', 'farmer.html')
-
-@app.route('/shopkeeper')
-def shopkeeper():
-    return send_from_directory('.', 'shopkeeper.html')
-
-@app.route('/main')
-def main():
-    return send_from_directory('.', 'main.html')
-
-@app.route('/about')
-def about():
-    return send_from_directory('.', 'about.html')
-
-@app.route('/blog')
-def blog():
-    return send_from_directory('.', 'blog.html')
-
-@app.route('/contact')
-def contact():
-    return send_from_directory('.', 'contact.html')
-
-@app.route('/chat')
-def chat():
-    return send_from_directory('.', 'chat.html')
-
-@app.route('/<path:filename>')
-def serve_static(filename):
-    return send_from_directory('.', filename)
-
-
-if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
