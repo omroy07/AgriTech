@@ -7,7 +7,7 @@
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Root Variables - Updated to match previous design */
+/* Root Variables - Updated to match previous design (Untouched) */
 :root {
   /* Light mode colors */
   --bg-primary: #ffffff;
@@ -53,7 +53,7 @@
 }
 
 [data-theme="dark"] {
-  /* Dark mode colors - Updated to match */
+  /* Dark mode colors - Updated to match (Untouched) */
   --bg-primary: #0f172a;
   --bg-secondary: #1e293b;
   --bg-tertiary: #2d3748;
@@ -85,7 +85,7 @@
   --shadow-color: rgba(0, 0, 0, 0.3);
 }
 
-/* Typography */
+/* Typography (Untouched) */
 body {
   font-family: "Roboto", sans-serif;
   background-color: var(--bg-secondary);
@@ -96,7 +96,9 @@ body {
   flex-direction: column;
 }
 
-/* Header/Navbar - Untouched */
+/* ============================================
+   REDESIGNED NAVIGATION BAR (Single Row Fix)
+   ============================================ */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -107,32 +109,35 @@ body {
   position: sticky;
   top: 0;
   z-index: 1000;
-  padding: 1rem 2.5rem;
-  transition: var(--transition);
+  padding: 0.8rem 2rem; /* Adjusted for better horizontal fit */
 }
 
 .navbar .heading h1 {
   font-family: 'Poppins', sans-serif;
-  font-size: 2rem;
+  font-size: 1.8rem; /* Slightly smaller to fit row better */
   font-weight: 700;
   color: var(--primary-green);
   margin: 0;
   letter-spacing: -0.5px;
+  white-space: nowrap;
 }
 
+/* FIX: Forces all elements into a single horizontal row */
 .nav-buttons {
   display: flex;
   gap: 1rem;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* Prevents Register button from dropping to new line */
 }
 
-/* Buttons - Untouched */
+/* ============================================
+   REDESIGNED BUTTONS (Standardized)
+   ============================================ */
 .btn {
-  padding: 0.75rem 1.5rem;
+  padding: 0.6rem 1.2rem; /* Standardized height/padding */
   border-radius: 8px;
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -142,18 +147,19 @@ body {
   justify-content: center;
   gap: 0.5rem;
   font-family: 'Poppins', sans-serif;
+  white-space: nowrap; /* Ensures text doesn't wrap inside button */
 }
 
 .btn-primary {
   background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
   color: white !important;
-  box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+  box-shadow: 0 4px 15px rgba(46, 125, 50, 0.2);
 }
 
 .btn-primary:hover {
   background: linear-gradient(135deg, var(--dark-green), var(--primary-green));
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+  box-shadow: 0 6px 20px rgba(46, 125, 50, 0.3);
 }
 
 .btn-secondary {
@@ -171,9 +177,10 @@ body {
   background: var(--light-green);
   border: 1px solid var(--border-color);
   color: var(--text-primary);
+  padding: 0.5rem 1rem;
 }
 
-/* Main content sections - Untouched */
+/* Main content sections (Untouched) */
 main {
   flex: 1;
   padding: 3rem 2rem;
@@ -197,7 +204,7 @@ section:hover {
   box-shadow: 0 15px 40px var(--shadow-medium);
 }
 
-/* Headings - Untouched */
+/* Headings (Untouched) */
 h2 {
   font-family: 'Poppins', sans-serif;
   font-size: 2rem;
@@ -226,7 +233,7 @@ p {
   margin-bottom: 1.5rem;
 }
 
-/* Services list - Untouched */
+/* Services list (Untouched) */
 .services-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -260,7 +267,7 @@ p {
   font-size: 1.1rem;
 }
 
-/* Why it matters section - Untouched */
+/* Why it matters section (Untouched) */
 .why-it-matters-section ul {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -290,7 +297,7 @@ p {
 }
 
 /* ============================================
-   RE-DESIGNED FOOTER STYLES (4-COLUMN GRID)
+   RE-DESIGNED FOOTER STYLES (4-COLUMN GRID) (Untouched)
    ============================================ */
 .site-footer {
   position: relative;
@@ -309,7 +316,7 @@ p {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr; /* Optimized column balance */
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
   gap: 3rem;
   margin-bottom: 3rem;
 }
@@ -419,7 +426,7 @@ p {
 }
 
 /* ============================================
-   FLOATING BUTTONS - Untouched
+   FLOATING BUTTONS (Untouched)
    ============================================ */
 #chatbotBtn, .scroll-btn {
   position: fixed;
@@ -467,12 +474,20 @@ p {
 }
 
 /* ============================================
-   RESPONSIVE STYLES
+   RESPONSIVE STYLES (Existing maintained)
    ============================================ */
 @media (max-width: 992px) {
   .footer-grid {
     grid-template-columns: 1fr 1fr;
     gap: 2.5rem;
+  }
+}
+
+@media (max-width: 850px) {
+  /* Allow wrap on smaller tablet screens only when necessary */
+  .nav-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 
