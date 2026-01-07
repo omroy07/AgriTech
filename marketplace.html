@@ -536,6 +536,24 @@ text-shadow:
             .sort-btn { flex: 1; min-width: 80px; margin: 5px; }
             .products-grid { grid-template-columns: 1fr; }
         }
+        /* Default (light) */
+:root {
+    --bg: #f9fafb;
+    --text: #1f2937;
+}
+
+/* Dark mode */
+body[data-theme="dark"] {
+    --bg: #0f172a;
+    --text: #e5e7eb;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
     </style>
 </head>
 <body data-theme="dark">
@@ -551,10 +569,11 @@ text-shadow:
                 </a>
             </div>
             <div>
-                <button class="theme-toggle" id="themeToggle">
-                    <i class="fas fa-sun" id="themeIcon"></i>
-                    <span id="themeText">Dark</span>
-                </button>
+                <button id="themeToggle" class="theme-toggle">
+    <i id="themeIcon" class="fas fa-sun"></i>
+    <span id="themeText">Light</span>
+</button>
+
             </div>
         </nav>
 
@@ -928,14 +947,35 @@ text-shadow:
         let usePagination = false;
 
         // --- Theme Toggle Logic (FIXED) ---
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            document.body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('marketplaceTheme', newTheme);
-            updateThemeButton(newTheme);
-            showNotification(`Switched to ${newTheme} theme`, 'info');
-        });
+       document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+
+    // Load saved theme (default: dark)
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    applyTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        applyTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+
+    function applyTheme(theme) {
+        document.body.setAttribute('data-theme', theme);
+
+        if (theme === 'dark') {
+            themeIcon.className = 'fas fa-sun';
+            themeText.textContent = 'Light';
+        } else {
+            themeIcon.className = 'fas fa-moon';
+            themeText.textContent = 'Dark';
+        }
+    }
+});
 
         function updateThemeButton(theme) {
             if (theme === 'dark') {
@@ -968,9 +1008,6 @@ text-shadow:
         });
 
         // Sample product data
-        let allProducts = [];
-        let filteredProducts = [];
-        let cartItems = 0;
 
         // Initialize products data
         function initializeProducts() {
