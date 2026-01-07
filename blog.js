@@ -145,16 +145,97 @@ const blogPosts = [
         `,
         author: "Organic Farming Association", 
         date: "2025-01-05"
-    } ,
+    },
     {
-        id: 4,
+        id: "soil-health-basics",
+        title: "Soil Health Basics Every Farmer Should Know",
+        category: "farming-tips",
+        description: "Healthy soil is the foundation of successful farming. Learn simple ways to improve it.",
+        author: "Anita Verma",
+        date: "February 10, 2025",
+        image: "https://cdn.tractorkarvan.com/tr:f-webp/images/Blogs/soil-health-card-scheme/Soil-Health-Card-Scheme-Blog.jpg",
+        content: `
+            <p>Healthy soil leads to better crop growth and higher yields.</p>
+            <h4>Key Tips</h4>
+            <ul>
+                <li>Add organic compost regularly</li>
+                <li>Avoid over-tilling the land</li>
+                <li>Test soil nutrients every season</li>
+            </ul>
+            <p>Improving soil health ensures long-term farm sustainability.</p>
+        `
+    },
+    {
+        id: "water-saving-irrigation",
+        title: "Water-Saving Irrigation Techniques",
+        category: "farming-tips",
+        description: "Reduce water usage while maintaining crop productivity with smart irrigation.",
+        author: "Ramesh Patel",
+        date: "February 18, 2025",
+        image: "https://images.unsplash.com/photo-1524486361537-8ad15938e1a3?w=800&fit=crop",
+        content: `
+            <p>Water management is crucial, especially in dry regions.</p>
+            <h4>Best Practices</h4>
+            <ul>
+                <li>Use drip irrigation systems</li>
+                <li>Water crops early in the morning</li>
+                <li>Monitor soil moisture regularly</li>
+            </ul>
+            <p>Efficient irrigation saves resources and increases profitability.</p>
+        `
+    },
+    {
+        id: "natural-pest-control",
+        title: "Natural Pest Control Methods",
+        category: "farming-tips",
+        description: "Protect crops using eco-friendly pest control methods instead of chemicals.",
+        author: "Dr. Kunal Mehta",
+        date: "March 02, 2025",
+        image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?w=800&fit=crop",
+        content: `
+            <p>Chemical pesticides can harm soil and crops.</p>
+            <h4>Natural Solutions</h4>
+            <ul>
+                <li>Neem oil spray</li>
+                <li>Introduce beneficial insects</li>
+                <li>Practice crop rotation</li>
+            </ul>
+            <p>Natural pest control keeps farms safe and sustainable.</p>
+        `
+    },
+    {
+        id: "seasonal-crop-planning",
+        title: "Seasonal Crop Planning for Better Yield",
+        category: "farming-tips",
+        description: "Choosing the right crop for the right season can significantly boost yield.",
+        author: "Sunita Rao",
+        date: "March 20, 2025",
+        image: "https://i.ytimg.com/vi/v3lFfRBZkxY/maxresdefault.jpg",
+        content: `
+            <p>Seasonal planning helps farmers avoid losses.</p>
+            <h4>Planning Tips</h4>
+            <ul>
+                <li>Understand local climate patterns</li>
+                <li>Choose crops suited to the season</li>
+                <li>Rotate crops yearly</li>
+            </ul>
+            <p>Smart planning leads to stable income and healthy soil.</p>
+        `
+    },
+
+        {
+        id: "maximize-yield-crop-rotation",
         title: "Maximize Yield with Crop Rotation",
-        category: "farming-tips", // Matches the button data-category="farming-tips"
+        category: "farming-tips",
+        description: "Learn how crop rotation improves soil health and boosts crop yield.",
         author: "Dr. R.K. Singh",
         date: "March 15, 2025",
         image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=800&q=80",
-        content: "Crop rotation is the practice of planting different crops sequentially on the same plot of land to improve soil health, optimize nutrients in the soil, and combat pest and weed pressure..."
+        content: `
+            <p>Crop rotation is the practice of planting different crops sequentially on the same plot of land...</p>
+        `
     },
+
     {
         id: 5,
         title: "Agri-Market Trends: Wheat Prices Soar",
@@ -263,18 +344,25 @@ function updateFavoriteCounter() {
 
 function filterPosts() {
     filteredPosts = blogPosts.filter(post => {
-        const matchesSearch = post.title.toLowerCase().includes(searchQuery) || 
-                            post.description.toLowerCase().includes(searchQuery);
-        const matchesCategory = currentCategory === 'all' || post.category === currentCategory;
+        const title = post.title ? post.title.toLowerCase() : '';
+        const description = post.description ? post.description.toLowerCase() : '';
+        const content = post.content ? post.content.toLowerCase() : '';
+
+        const matchesSearch =
+            title.includes(searchQuery) ||
+            description.includes(searchQuery) ||
+            content.includes(searchQuery);
+
+        const matchesCategory =
+            currentCategory === 'all' || post.category === currentCategory;
+
         return matchesSearch && matchesCategory;
     });
 
     currentPage = 0;
     const blogGrid = document.getElementById('blogGrid');
-    if (blogGrid) {
-        blogGrid.innerHTML = '';
-        displayPosts();
-    }
+    blogGrid.innerHTML = '';
+    displayPosts();
 }
 
 function displayPosts() {
@@ -287,7 +375,18 @@ function displayPosts() {
     const loadMoreBtn = document.getElementById('loadMoreBtn');
 
     if (postsToShow.length === 0) {
-        blogGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem;">No posts found.</div>';
+        blogGrid.innerHTML = `
+    <div class="no-results">
+        <i class="fas fa-search"></i>
+        <h3>No matching blogs found</h3>
+        <p>
+            We couldn’t find any blog posts for
+            <strong>"${searchQuery || 'your search'}"</strong>.
+        </p>
+        <span>Try different keywords or change the category filter.</span>
+    </div>
+`;
+
         if (loadMoreBtn) loadMoreBtn.style.display = 'none';
         return;
     }
