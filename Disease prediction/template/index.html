@@ -15,7 +15,213 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../static/index.css" />
-    <link rel="stylesheet" href="../../theme.css" />
+    
+    <style>
+        /* -------------------- Root Colors & Fonts -------------------- */
+        :root {
+            --primary: #16a34a;
+            --primary-light: #0dda58;
+            --primary1: #ffffff;
+            --primary-dark: #05ba60;
+            --secondary: #f59e0b;
+            --accent: #3b82f6;
+
+            --bg-primary: #030137;
+            --bg-secondary: #15253f;
+            --bg-accent: #23334b;
+            --text-primary: #ffffff;
+            --text-secondary: #ced9e7;
+            --text-muted: #b2c1d6;
+            --border: #334155;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 20px 30px rgba(0, 0, 0, 0.5);
+
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            --space-3xl: 4rem;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-accent: #e2e8f0;
+            --text-primary: #1e293b;
+            --primary1: #16a34a;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* -------------------- Reset -------------------- */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: 0.3s ease;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        /* -------------------- Navbar -------------------- */
+        .header {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+            padding: var(--space-md) 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-text {
+            color: #16a34a;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .logo-text {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.75rem;
+            color: var(--primary1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            color: var(--text-primary);
+            position: relative;
+            padding: 0.25rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: var(--bg-accent);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            box-shadow: var(--shadow);
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-secondary);
+        }
+          .logo img {
+            width: 40px;
+            height: 40px;
+            margin-left: 25px;
+        }
+
+        .logo a {
+            font-size: 1.3rem;
+        }
+         .footer {
+            padding: var(--space-lg) 0;
+            text-align: center;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* -------------------- Responsive -------------------- */
+        @media(max-width:768px) {
+            .nav-links {
+                display: none;
+            }
+        }
+</style>
   </head>
   <body>
     <div class="background-animation">
@@ -29,19 +235,24 @@
       <div class="leaf"></div>
     </div>
 
-    <header class="header">
-      <div class="nav-container">
-        <div class="logo">
-          <i class="fas fa-leaf"></i>
-          <span>PlantCare AI</span>
+     <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <img src="/images/logo.png" alt="AgriTech logo">
+                <span class="logo-text">AgriTech</span>
+            </a>
+            <nav class="nav-links">
+                <a href="/index.html">Home</a>
+                <a href="/about.html">About</a>
+                <a href="/blog.html">Blog</a>
+            </nav>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon" id="themeIcon"></i>
+                <span id="themeText">Dark Mode</span>
+            </button>
         </div>
-        <button class="theme-toggle" aria-label="Toggle dark/light mode" style="background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
-          <i class="fas fa-sun sun-icon"></i>
-          <i class="fas fa-moon moon-icon"></i>
-          <span class="theme-text">Light</span>
-        </button>
-      </div>
     </header>
+
 
     <div class="main-container">
       <div class="hero-section">
@@ -207,8 +418,11 @@
       });
     </script>
     <script src="../../theme.js"></script>
+    <!-- Footer -->
     <footer class="footer">
-      <p>&copy; 2025 PlantCare AI. All rights reserved.</p>
+        <div class="container">
+            <p class="footer-text">© 2026 AgriTech. Empowering farmers with intelligent agriculture solutions.</p>
+        </div>
     </footer>
   </body>
 </html>
