@@ -1141,7 +1141,7 @@
     </div>
 
     <div class="footer-bottom">
-        <p>© 2025 AgriTech. All rights reserved.</p>
+        <p>© <span class="current-year"></span> AgriTech. All rights reserved.</p>
     </div>
     
     <div class="footer-wave-overlay"></div> 
@@ -1154,7 +1154,7 @@
   <button class="scroll-btn" id="scrollBtn" title="Scroll">
     <i class="fas fa-arrow-down" id="scrollIcon"></i>
   </button>
-
+  <script>document.querySelector(".current-year").textContent = new Date().getFullYear();</script>
   <script type="importmap">
     {
       "imports": {
@@ -1371,6 +1371,7 @@
         }
       });
     }
+    
   </script>
 
 </body>
