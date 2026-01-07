@@ -1,6 +1,275 @@
 /* Import theme system */
 @import url('../../theme.css');
 
+
+
+/* ================== BACKGROUND CANVAS ================== */
+#canvas-container {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.18;
+}
+
+#three-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ================== NAVBAR ================== */
+.navbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 2rem;
+  background: linear-gradient(
+    135deg,
+    var(--primary-green),
+    var(--dark-green)
+  );
+  box-shadow: 0 8px 30px var(--shadow-medium);
+  z-index: 1000;
+}
+
+.back-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(-3px);
+}
+
+.navbar-title {
+  color: #fff;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.theme-toggle {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ================== PROGRESS BAR ================== */
+.form-progress {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  height: 3px;
+  background: var(--secondary-green);
+  width: 0%;
+  z-index: 999;
+  transition: width 0.3s ease;
+}
+
+/* ================== MAIN CONTAINER ================== */
+.container {
+  max-width: 1100px;
+  margin: 0 auto 4rem;
+  padding: 3rem;
+  background: var(--bg-primary);
+  border-radius: 28px;
+  box-shadow: 0 30px 70px var(--shadow-medium);
+  animation: fadeUp 0.8s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ================== HEADINGS ================== */
+h1 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 800;
+  text-align: center;
+  color: var(--primary-green);
+}
+
+.subtitle {
+  text-align: center;
+  margin: 1rem auto 3rem;
+  max-width: 720px;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+/* ================== FORM ================== */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.75rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+input,
+select {
+  padding: 0.95rem 1rem;
+  border-radius: 14px;
+  border: 1.5px solid var(--border-color);
+  background: var(--bg-primary);
+  font-size: 0.95rem;
+  transition: 0.25s ease;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.15);
+}
+
+input::placeholder {
+  color: var(--text-muted);
+}
+
+/* ================== SUBMIT BUTTON ================== */
+.predict-btn {
+  margin: 3rem auto 0;
+  display: block;
+  padding: 1.1rem 3rem;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(
+    135deg,
+    var(--primary-green),
+    var(--secondary-green)
+  );
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(34, 197, 94, 0.35);
+  transition: all 0.3s ease;
+}
+
+.predict-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(34, 197, 94, 0.45);
+}
+
+/* ================== RESULT ================== */
+#result-container {
+  margin-top: 3rem;
+  padding: 2.5rem;
+  background: var(--light-green);
+  border-radius: 24px;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+#result-container h2 {
+  text-align: center;
+  font-size: 1.7rem;
+  margin-bottom: 1rem;
+}
+
+#result-text {
+  text-align: center;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--dark-green);
+  background: #fff;
+  padding: 1rem;
+  border-radius: 14px;
+  margin-bottom: 2.5rem;
+}
+
+/* ================== GUIDE ================== */
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.guide-item {
+  background: var(--bg-primary);
+  padding: 1.6rem;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px var(--shadow-light);
+  transition: 0.3s ease;
+}
+
+.guide-item:hover {
+  transform: translateY(-5px);
+}
+
+.guide-item h4 {
+  margin-bottom: 0.75rem;
+  font-size: 1.05rem;
+}
+
+.guide-item p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+/* ================== VALIDATION ================== */
+.error-message {
+  font-size: 0.8rem;
+  color: #dc2626;
+  margin-top: 5px;
+  display: none;
+}
+
+.form-group.error input,
+.form-group.error select {
+  border-color: #dc2626;
+}
+
+.form-group.error .error-message {
+  display: block;
+}
+
+/* ================== UTIL ================== */
+.hidden {
+  display: none;
+}
+
+/* ================== RESPONSIVE ================== */
+@media (max-width: 768px) {
+  .container {
+    padding: 2rem 1.5rem;
+    margin: 1rem;
+  }
+
+  .navbar-title {
+    font-size: 1.1rem;
+  }
+
+  .predict-btn {
+    width: 100%;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
