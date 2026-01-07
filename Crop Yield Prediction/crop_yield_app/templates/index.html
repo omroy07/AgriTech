@@ -501,6 +501,43 @@
               padding: 10px 1rem;
           }
       }
+      .footer {
+  margin-top: 80px;
+  padding: 32px 0;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(0, 0, 0, 0.04)
+  );
+  border-top: 1px solid var(--border-color-soft);
+}
+
+.footer .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.footer-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+  max-width: 800px;
+}
+
+/* Dark mode polish */
+:root.dark-mode .footer {
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(0, 0, 0, 0.25)
+  );
+  border-top: 1px solid var(--border-color);
+}
+      
     </style>
     </head>
   <body>
@@ -630,6 +667,11 @@
         </div>
       </div>
     </main>
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">© 2026 AgriTech. Empowering farmers with intelligent agriculture solutions.</p>
+        </div>
+    </footer>
     
     <script>
       function createConfetti() {
