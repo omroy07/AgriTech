@@ -738,6 +738,49 @@
             background: #2563eb;
             transform: translateY(-2px);
         }
+        /* LIGHT MODE FIXES */
+[data-theme="light"] .settings-panel {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-left: 1px solid var(--border-color);
+}
+
+[data-theme="light"] .settings-header {
+    border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="light"] .settings-group h4 {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .setting-item {
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Toggle switch */
+[data-theme="light"] .setting-toggle {
+    background: #e2e8f0; /* soft gray */
+}
+
+[data-theme="light"] .setting-toggle.active {
+    background: var(--accent-green-light);
+}
+
+[data-theme="light"] .setting-toggle::before {
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Export buttons */
+[data-theme="light"] .export-btn {
+    background: var(--accent-info);
+    color: #ffffff;
+}
+
+[data-theme="light"] .export-btn:hover {
+    background: #2563eb;
+}
+
 
       /* CTA Section */
 .cta-section {
