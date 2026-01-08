@@ -1451,7 +1451,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p>© 2025 AgriTech. All rights reserved.</p>
+      <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
     </div>
     
     <div class="footer-wave-overlay"></div> 
@@ -1471,6 +1471,11 @@
         "three": "https://unpkg.com/three@0.158.0/build/three.module.js"
       }
     }
+  </script>
+
+  <script>
+    document.getElementById("current-year").textContent =
+      new Date().getFullYear();
   </script>
 
   <script type="module">
