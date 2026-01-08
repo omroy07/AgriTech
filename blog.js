@@ -344,18 +344,25 @@ function updateFavoriteCounter() {
 
 function filterPosts() {
     filteredPosts = blogPosts.filter(post => {
-        const matchesSearch = post.title.toLowerCase().includes(searchQuery) || 
-                            post.description.toLowerCase().includes(searchQuery);
-        const matchesCategory = currentCategory === 'all' || post.category === currentCategory;
+        const title = post.title ? post.title.toLowerCase() : '';
+        const description = post.description ? post.description.toLowerCase() : '';
+        const content = post.content ? post.content.toLowerCase() : '';
+
+        const matchesSearch =
+            title.includes(searchQuery) ||
+            description.includes(searchQuery) ||
+            content.includes(searchQuery);
+
+        const matchesCategory =
+            currentCategory === 'all' || post.category === currentCategory;
+
         return matchesSearch && matchesCategory;
     });
 
     currentPage = 0;
     const blogGrid = document.getElementById('blogGrid');
-    if (blogGrid) {
-        blogGrid.innerHTML = '';
-        displayPosts();
-    }
+    blogGrid.innerHTML = '';
+    displayPosts();
 }
 
 function displayPosts() {
@@ -368,7 +375,18 @@ function displayPosts() {
     const loadMoreBtn = document.getElementById('loadMoreBtn');
 
     if (postsToShow.length === 0) {
-        blogGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem;">No posts found.</div>';
+        blogGrid.innerHTML = `
+    <div class="no-results">
+        <i class="fas fa-search"></i>
+        <h3>No matching blogs found</h3>
+        <p>
+            We couldn’t find any blog posts for
+            <strong>"${searchQuery || 'your search'}"</strong>.
+        </p>
+        <span>Try different keywords or change the category filter.</span>
+    </div>
+`;
+
         if (loadMoreBtn) loadMoreBtn.style.display = 'none';
         return;
     }
