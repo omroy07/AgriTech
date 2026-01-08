@@ -17,24 +17,24 @@
     <style>
         :root {
             /* Dark Theme Variables */
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-tertiary: #334155;
-            --text-primary: #f8fafc;
-            --text-secondary: #cbd5e1;
-            --text-muted: #94a3b8;
+            --bg-primary: #01133c;
+            --bg-secondary: #142a4f;
+            --bg-tertiary: #1e3d68;
+            --text-primary: #ffffff;
+            --text-secondary: #d2deed;
+            --text-muted: #d1d4d8;
             --border-color: #334155;
             --shadow-light: rgba(0, 0, 0, 0.3);
             --shadow-medium: rgba(0, 0, 0, 0.4);
             --shadow-heavy: rgba(0, 0, 0, 0.6);
-            --accent-green-light: #10b981;
-            --accent-green-dark: #059669;
-            --accent-success: #22c55e;
+            --accent-green-light: #03d445;
+            --accent-green-dark: #01af2a;
+            --accent-success: #18b451;
             --accent-warning: #f59e0b;
             --accent-danger: #ef4444;
             --accent-info: #3b82f6;
             --primary-blue: #2196F3;
-            --text-secondary: #666;
+            --text-secondary: #c1c0c0;
         }
 
         [data-theme="light"] {
@@ -253,6 +253,7 @@
             box-shadow: 0 15px 35px var(--shadow-medium);
             border-color: var(--accent-green-light);
         }
+        
 
         .feature-icon {
             font-size: 3rem;
@@ -738,19 +739,118 @@
             transform: translateY(-2px);
         }
 
-        .cta-section {
-            background: rgba(30, 41, 59, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            padding: 40px;
-            text-align: center;
-            margin: 40px 0;
-            box-shadow: 0 8px 25px var(--shadow-light);
-        }
+      /* CTA Section */
+.cta-section {
+    background: linear-gradient(
+        135deg,
+        var(--bg-secondary),
+        var(--bg-tertiary)
+    );
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 20px 40px var(--shadow-heavy);
+    max-width: 900px;
+    margin: 3rem auto;
+}
+
+/* Heading */
+.cta-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.5px;
+}
+
+/* Subtitle */
+.cta-section p {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+}
+
+/* Buttons container (optional wrapper) */
+.cta-section .cta-button {
+    appearance: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0.85rem 1.75rem;
+    margin: 0.4rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(
+        135deg,
+        var(--accent-green-light),
+        var(--accent-green-dark)
+    );
+    box-shadow: 0 10px 20px var(--shadow-medium);
+    transition: 
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+/* Hover effect */
+.cta-section .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 30px var(--shadow-heavy);
+    background: linear-gradient(
+        135deg,
+        var(--accent-green-dark),
+        var(--accent-green-light)
+    );
+}
+
+/* Active / click */
+.cta-section .cta-button:active {
+    transform: translateY(0);
+    box-shadow: 0 8px 16px var(--shadow-light);
+}
+
+/* Secondary button styles (auto via order) */
+.cta-section .cta-button:nth-child(2) {
+    background: linear-gradient(
+        135deg,
+        var(--accent-info),
+        var(--primary-blue)
+    );
+}
+
+/* Tertiary button */
+.cta-section .cta-button:nth-child(3) {
+    background: linear-gradient(
+        135deg,
+        var(--accent-success),
+        var(--accent-green-dark)
+    );
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .cta-section {
+        padding: 2rem 1.5rem;
+    }
+
+    .cta-section h2 {
+        font-size: 1.6rem;
+    }
+
+    .cta-section .cta-button {
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
 
         .cta-button {
-            background: linear-gradient(135deg, var(--accent-green-light), var(--accent-green-dark));
+            background:  var(--accent-green-light);
             color: white;
             padding: 15px 30px;
             border: none;
@@ -893,61 +993,10 @@
         [data-theme="dark"] .header::before {
             opacity: 0.3;
         }
+    
 
-        /*Range-Tooltip*/
-        .setting-item {
-            position: relative;
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-        }
+      
 
-        input[type="range"] {
-            -webkit-appearance: none;
-            width: 200px;
-            height: 4px;
-            background: #3e4b5b;
-            border-radius: 5px;
-            outline: none;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 16px;
-            height: 16px;
-            background: #2196F3;
-            border: 2px solid #fff;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 0 8px rgba(33, 150, 243, 0.4);
-        }
-
-        .range-tooltip {
-            position: absolute;
-            top: 0px;
-            background: #2196F3;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: bold;
-            transform: translateX(-50%);
-            pointer-events: none;
-            white-space: nowrap;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .range-tooltip::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
-            border-top: 4px solid #2196F3;
-        }
     </style>
 </head>
 
@@ -1331,8 +1380,8 @@
 
         <!-- CTA Section -->
         <div class="cta-section">
-            <h2 style="color: var(--text-primary); margin-bottom: 20px;">Get Started with Smart Crop Monitoring</h2>
-            <p style="margin-bottom: 30px; color: var(--text-secondary);">Transform your farming with intelligent
+            <h2>Get Started with Smart Crop Monitoring</h2>
+            <p>Transform your farming with intelligent
                 monitoring systems</p>
             <button class="cta-button" onclick="showNotification('Free trial started!', 'success')">Start Free
                 Trial</button>
