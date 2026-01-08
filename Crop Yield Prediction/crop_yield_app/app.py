@@ -1,18 +1,33 @@
 
 from flask import Flask, render_template, request, jsonify
-import joblib
 import numpy as np
 import re
 from functools import wraps
-from auth_utils import token_required, roles_required
+import time  # For simulating processing delay
 
 app = Flask(__name__)
 
-# Load model and encoders
-model = joblib.load('models/xgb_crop_model.pkl')
-crop_encoder = joblib.load('models/Crop_encoder.pkl')
-season_encoder = joblib.load('models/Season_encoder.pkl')
-state_encoder = joblib.load('models/State_encoder.pkl')
+# Mock model and encoders for testing
+class MockEncoder:
+    def __init__(self, classes):
+        self.classes_ = classes
+
+    def transform(self, values):
+        return [self.classes_.tolist().index(val) if val in self.classes_ else 0 for val in values]
+
+# Mock data
+crop_encoder = MockEncoder(np.array(["Rice", "Wheat", "Maize", "Cotton", "Sugarcane", "Soybean", "Groundnut", "Barley", "Ragi", "Jowar"]))
+season_encoder = MockEncoder(np.array(["Kharif", "Rabi", "Summer", "Whole Year"]))
+state_encoder = MockEncoder(np.array(["Andhra Pradesh", "Maharashtra", "Karnataka", "Tamil Nadu", "Uttar Pradesh", "Punjab", "Haryana", "Gujarat", "Rajasthan", "Madhya Pradesh"]))
+
+def mock_predict(features):
+    """Mock prediction function that returns a random yield value"""
+    # Simulate processing time
+    time.sleep(2)
+    # Return a mock prediction between 10-100 hg/ha
+    return np.random.uniform(10, 100, size=(len(features),))
+
+model = type('MockModel', (), {'predict': mock_predict})()
 
 # Input validation helper functions
 def validate_required_fields(required_fields):
@@ -60,11 +75,13 @@ def validate_year(year):
 
 @app.route('/')
 def index():
+    return render_template('input.html')
+
+@app.route('/result')
+def result():
     return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
-@token_required
-@roles_required('farmer', 'admin')
 @validate_required_fields(['crop', 'year', 'season', 'state', 'area', 'production', 'rainfall'])
 def predict():
     try:
@@ -81,11 +98,11 @@ def predict():
 
         # Validate against encoder classes
         if crop not in crop_encoder.classes_:
-            return jsonify({'success': False, 'error': f"Unknown crop: {crop}"}), 400
+            return render_template('input.html', error=f"Unknown crop: {crop}")
         if season not in season_encoder.classes_:
-            return jsonify({'success': False, 'error': f"Unknown season: {season}"}), 400
+            return render_template('input.html', error=f"Unknown season: {season}")
         if state not in state_encoder.classes_:
-            return jsonify({'success': False, 'error': f"Unknown state: {state}"}), 400
+            return render_template('input.html', error=f"Unknown state: {state}")
 
         # Encode values
         crop_encoded = crop_encoder.transform([crop])[0]
@@ -98,25 +115,28 @@ def predict():
         # Predict
         prediction = float(round(model.predict(features)[0], 2))
 
-        # Return result
-        return jsonify({
-            'success': True,
-            'prediction': prediction,
-            'context': {
-                'efficiency': "Moderate",
-                'efficiency_note': "Yield efficiency is average.",
-                'rainfall_impact': "Positive",
-                'rainfall_note': "Rainfall is within optimal range.",
-                'recommendation': "Consider using improved seeds for better yield.",
-                'season_tip': "Ensure timely sowing for the selected season."
-            }
-        })
+        # Prepare data for template
+        params = {
+            'crop': crop,
+            'year': year,
+            'season': season,
+            'state': state,
+            'area': area,
+            'production': production,
+            'rainfall': rainfall,
+            'temperature': 25.0,  # Default value since not in form
+            'humidity': 60.0,     # Default value since not in form
+            'ph': 6.5            # Default value since not in form
+        }
+
+        # Render result template with prediction data
+        return render_template('index.html', crop=crop, params=params)
 
     except ValueError as e:
-        return jsonify({'success': False, 'error': str(e)}), 400
+        return render_template('input.html', error=str(e))
     except Exception as e:
         app.logger.error(f"Prediction error: {str(e)}")
-        return jsonify({'success': False, 'error': 'Prediction failed'}), 500
+        return render_template('input.html', error='Prediction failed')
 
 # Global error handlers
 @app.errorhandler(400)
