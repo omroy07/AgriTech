@@ -1,4 +1,9 @@
 // DOM Elements
+const yearEl = document.querySelector(".current-year");
+if (yearEl) {
+  yearEl.textContent = new Date().getFullYear();
+}
+
 const hamburgerBtn = document.getElementById('hamburgerBtn');
 const mobileMenu = document.querySelector('.mobile-menu');
 const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
@@ -11,6 +16,7 @@ const sunIcon = document.querySelector('.sun-icon');
 const moonIcon = document.querySelector('.moon-icon');
 const scrollBtn = document.getElementById('scrollBtn');
 const scrollIcon = document.getElementById('scrollIcon');
+
 
 // Theme Management
 const applyTheme = (theme) => {
