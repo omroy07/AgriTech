@@ -702,11 +702,11 @@
             .container {
                 padding: 10px;
             }
-            
+
             .header h1 {
                 font-size: 2rem;
             }
-            
+
             .practices-grid {
                 grid-template-columns: 1fr;
             }
@@ -720,6 +720,48 @@
                 width: 90vw;
                 right: 5vw;
             }
+        }
+
+        /* Scroll to Top Button */
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 15px var(--shadow-medium);
+        }
+
+        #scrollTopBtn:hover {
+            background: var(--accent-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--shadow-medium);
+        }
+
+        #scrollTopBtn.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Light theme adjustments for scroll button */
+        [data-theme="light"] #scrollTopBtn {
+            background: #00b894;
+            box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
+        }
+
+        [data-theme="light"] #scrollTopBtn:hover {
+            background: #00cec9;
+            box-shadow: 0 6px 20px rgba(0, 184, 148, 0.4);
         }
     </style>
 </head>
@@ -1340,5 +1382,32 @@
         });
     </script>
     <script src="theme.js"></script>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" title="Go to top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Scroll to Top Functionality
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+        // Show/hide button based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        // Smooth scroll to top when clicked
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
 </body>
 </html>
