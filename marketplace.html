@@ -433,51 +433,119 @@
             transition: background 0.3s ease;
         }
 
-        /* --- Categories --- */
-        .category-card {
-            background: linear-gradient(135deg, #e17055, var(--accent-secondary));
-            color: white;
-            padding: 30px 20px;
-            border-radius: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
+      .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+}
+.category-card {
+    background: linear-gradient(135deg, #e17055, var(--accent-secondary));
+    color: white;
+    padding: 28px 20px;
+    border-radius: 16px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
 
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            animation: pulse 3s ease-in-out infinite;
-        }
+    /* IMPORTANT */
+    transform: translateZ(0);
+    transition: 
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
 
-        .category-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(225, 112, 85, 0.3);
-        }
+/* Glow effect */
+.category-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at top right,
+        rgba(255, 255, 255, 0.15),
+        transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
 
-        .category-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
+/* SAFE hover (no scale) */
+.category-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 30px rgba(225, 112, 85, 0.35);
+}
 
-        .category-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
+.category-card:hover::before {
+    opacity: 1;
+}
 
-        .category-count {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
+
+/* Inner wrapper handles hover transform */
+.category-inner {
+    background: linear-gradient(135deg, #e17055, var(--accent-secondary));
+    color: white;
+    padding: 28px 20px;
+    border-radius: 18px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect */
+.category-card:hover .category-inner {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(225, 112, 85, 0.35);
+}
+
+/* Glow animation */
+.category-inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right,
+        rgba(255, 255, 255, 0.835),
+        transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.category-card:hover .category-inner::before {
+    opacity: 1;
+}
+
+/* Icon */
+.category-icon {
+    font-size: 2.8rem;
+    margin-bottom: 14px;
+}
+
+/* Title */
+.category-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+/* Count */
+.category-count {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+.category-icon {
+    font-size: 2.8rem;
+    margin-bottom: 14px;
+}
+
+.category-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.category-count {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
 
         .price-chart {
             background: var(--bg-primary);
