@@ -1,114 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crop Yield Prediction | AgriTech</title>
-    <link rel="icon" type="image/png" href="/images/logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        /* -------------------- Root Colors & Fonts -------------------- */
-        :root {
-            --primary: #16a34a;
-            --primary-light: #0dda58;
-            --primary1: #ffffff;
-            --primary-dark: #05ba60;
-            --secondary: #f59e0b;
-            --accent: #3b82f6;
-
-            --bg-primary: #030137;
-            --bg-secondary: #15253f;
-            --bg-accent: #23334b;
-            --text-primary: #ffffff;
-            --text-secondary: #ced9e7;
-            --text-muted: #b2c1d6;
-            --border: #334155;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            --shadow-lg: 0 20px 30px rgba(0, 0, 0, 0.5);
-
-            --radius-sm: 0.375rem;
-            --radius-md: 0.5rem;
-            --radius-lg: 0.75rem;
-            --radius-xl: 1rem;
-
-            --font-display: 'Space Grotesk', sans-serif;
-            --font-body: 'Inter', sans-serif;
-
-            --space-xs: 0.25rem;
-            --space-sm: 0.5rem;
-            --space-md: 1rem;
-            --space-lg: 1.5rem;
-            --space-xl: 2rem;
-            --space-2xl: 3rem;
-            --space-3xl: 4rem;
-        }
-
-        [data-theme="light"] {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --bg-accent: #e2e8f0;
-            --text-primary: #1e293b;
-            --primary1: #16a34a;
-            --text-secondary: #64748b;
-            --text-muted: #94a3b8;
-            --border: #e2e8f0;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 20px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        /* -------------------- Reset -------------------- */
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            transition: 0.3s ease;
         }
 
         body {
             font-family: var(--font-body);
             background: var(--bg-secondary);
             color: var(--text-primary);
-            line-height: 1.7;
-            min-height: 100vh;
-        }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        img {
-            display: block;
-            max-width: 100%;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--space-lg);
-        }
-
-        /* -------------------- Navbar -------------------- */
-        .header {
-            background: var(--bg-primary);
-            border-bottom: 1px solid var(--border);
-            padding: var(--space-md) 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            justify-content: center;
-            box-shadow: var(--shadow);
-        }
-
-        .header-content {
-            width: 100%;
-            max-width: 1200px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -117,118 +15,33 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-        }
 
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--primary);
             border-radius: var(--radius-lg);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.5rem;
+
         }
 
         .logo-text {
             font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 1.75rem;
-            color: var(--primary1);
-        }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            font-weight: 500;
-            color: var(--text-primary);
-            position: relative;
-            padding: 0.25rem 0;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -3px;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: 0.3s;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .theme-toggle {
-            background: var(--bg-accent);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-lg);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-            box-shadow: var(--shadow);
-        }
-
-        .theme-toggle:hover {
-            background: var(--bg-secondary);
-        }
-
-        /* -------------------- Hero -------------------- */
-        .hero {
-            background: var(--bg-primary);
-            padding: var(--space-3xl) 0 var(--space-2xl);
-            text-align: center;
-            position: relative;
         }
 
         .hero-title {
             font-family: var(--font-display);
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 800;
-            color: var(--text-primary);
-            margin-bottom: var(--space-md);
-            line-height: 1.2;
-        }
 
-        .hero-subtitle {
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto var(--space-2xl);
-            font-size: 1.125rem;
-        }
-
-        /* -------------------- Form Section -------------------- */
-        .form-section {
-            padding: var(--space-3xl) 0;
-            background: var(--bg-primary);
         }
 
         .form-card {
             background: var(--bg-secondary);
-            padding: var(--space-2xl);
-            border-radius: var(--radius-xl);
-            max-width: 900px;
-            margin: 0 auto;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-lg);
+
         }
 
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: var(--space-lg);
-            margin-bottom: var(--space-xl);
+
         }
 
         .input-group {
@@ -236,41 +49,7 @@
         }
 
         .input-label {
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            display: block;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-        }
 
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 0.75rem 0.75rem 0.75rem 2.5rem;
-            border-radius: var(--radius-lg);
-            border: 2px solid var(--border);
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            font-family: inherit;
-            outline: none;
-            font-size: 0.95rem;
-        }
-
-        .form-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2);
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 0.75rem;
-            color: var(--text-muted);
-            font-size: 1.2rem;
         }
 
         .input-hint {
@@ -279,63 +58,31 @@
             margin-top: 0.25rem;
         }
 
+
         .btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
-            border: none;
-            border-radius: var(--radius-lg);
-            cursor: pointer;
-            min-width: 180px;
-            justify-content: center;
-            font-size: 0.95rem;
-            transition: 0.3s;
-        }
 
-        .btn-primary {
-            background: var(--primary);
             color: white;
             box-shadow: var(--shadow);
         }
 
         .btn-primary:hover {
-            background: var(--primary-light);
-            transform: translateY(-2px);
+
         }
 
         .btn-secondary {
             background: var(--bg-accent);
             color: var(--text-primary);
             border: 1px solid var(--border);
-            box-shadow: var(--shadow);
+
         }
 
         .btn-secondary:hover {
             background: var(--bg-primary);
             transform: translateY(-2px);
-        }
 
-        /* -------------------- Error Styling -------------------- */
-        .input-error {
-            border: 2px solid #e53935;
-            background-color: #fff5f5;
-        }
-
-        .error-text {
-            color: #e53935;
-            font-size: 0.85rem;
-            margin-top: 4px;
-            display: none;
-        }
-
-        /* -------------------- Footer -------------------- */
-        .footer {
-            padding: var(--space-lg) 0;
-            text-align: center;
-            background: var(--bg-primary);
-            border-top: 1px solid var(--border);
         }
 
         .footer-text {
@@ -343,126 +90,12 @@
             font-size: 0.875rem;
         }
 
-        /* -------------------- Responsive -------------------- */
-        @media(max-width:768px) {
-            .nav-links {
-                display: none;
-            }
-        }
 
-        .logo img {
-            width: 40px;
-            height: 40px;
-            margin-left: 25px;
-        }
-
-        .logo a {
-            font-size: 1.3rem;
-        }
-    </style>
-</head>
-
-<body>
-    <!-- Navbar -->
-    <header class="header">
-        <div class="header-content">
-            <a href="index.html" class="logo">
-                <img src="/images/logo.png" alt="AgriTech logo">
-                <span class="logo-text">AgriTech</span>
-            </a>
-            <nav class="nav-links">
-                <a href="/index.html">Home</a>
-                <a href="/about.html">About</a>
-                <a href="/blog.html">Blog</a>
-            </nav>
-            <button class="theme-toggle" id="themeToggle">
-                <i class="fas fa-moon" id="themeIcon"></i>
-                <span id="themeText">Dark Mode</span>
-            </button>
-        </div>
-    </header>
-
-    <!-- Hero -->
-    <main class="main-content">
-        <section class="hero">
-            <div class="container">
-                <h1 class="hero-title">Crop Yield Prediction</h1>
-                <p class="hero-subtitle">Predict crop yields based on historical data, weather patterns, and agricultural inputs to optimize your farming decisions.</p>
-            </div>
-        </section>
-
-        <!-- Form -->
-        <section class="form-section">
-            <div class="container">
                 <div class="form-card">
                     <form id="yieldForm" action="/predict" method="POST">
                         <div class="form-grid">
                             <div class="input-group">
-                                <label class="input-label" for="crop">Crop Type</label>
-                                <div class="input-wrapper">
-                                    <input type="text" id="crop" name="crop" class="form-input" placeholder="e.g., Rice, Wheat" required>
-                                    <i class="fas fa-seedling input-icon"></i>
-                                </div>
-                                <p class="error-text" id="crop-error">⚠️ Please enter a crop type (e.g., Rice, Wheat, Maize). This field is required for prediction.</p>
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label" for="year">Year</label>
-                                <div class="input-wrapper">
-                                    <input type="number" id="year" name="year" class="form-input" placeholder="2023" min="1900" max="2100" required>
-                                    <i class="fas fa-calendar input-icon"></i>
-                                </div>
-                                <p class="error-text" id="year-error">⚠️ Year must be between 1900-2100. Please enter a valid year for accurate prediction.</p>
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label" for="season">Season</label>
-                                <div class="input-wrapper">
-                                    <input type="text" id="season" name="season" class="form-input" placeholder="e.g., Kharif, Rabi" required>
-                                    <i class="fas fa-sun input-icon"></i>
-                                </div>
-                                <p class="error-text" id="season-error">⚠️ Please enter a valid season (e.g., Kharif, Rabi, Summer). This helps determine the best crop cycle.</p>
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label" for="state">State</label>
-                                <div class="input-wrapper">
-                                    <input type="text" id="state" name="state" class="form-input" placeholder="e.g., Punjab, Haryana" required>
-                                    <i class="fas fa-map-marker-alt input-icon"></i>
-                                </div>
-                                <p class="error-text" id="state-error">⚠️ Please enter a valid state (e.g., Punjab, Haryana, Maharashtra). This helps in regional yield analysis.</p>
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label" for="area">Area (hectares)</label>
-                                <div class="input-wrapper">
-                                    <input type="number" id="area" name="area" class="form-input" placeholder="0-1000000" min="0" max="1000000" step="0.01" required>
-                                    <i class="fas fa-ruler-combined input-icon"></i>
-                                </div>
-                                <div class="input-hint">Area in hectares</div>
-                                <p class="error-text" id="area-error">⚠️ Area must be between 0-1,000,000 hectares. This represents the land area for cultivation.</p>
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label" for="production">Production (tons)</label>
-                                <div class="input-wrapper">
-                                    <input type="number" id="production" name="production" class="form-input" placeholder="0-1000000" min="0" max="1000000" step="0.01" required>
-                                    <i class="fas fa-weight-hanging input-icon"></i>
-                                </div>
-                                <div class="input-hint">Production in tons</div>
-                                <p class="error-text" id="production-error">⚠️ Production must be between 0-1,000,000 tons. This is the expected crop output.</p>
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label" for="rainfall">Rainfall (mm)</label>
-                                <div class="input-wrapper">
-                                    <input type="number" id="rainfall" name="rainfall" class="form-input" placeholder="0-10000" min="0" max="10000" step="0.01" required>
-                                    <i class="fas fa-cloud-rain input-icon"></i>
-                                </div>
-                                <div class="input-hint">Rainfall in mm</div>
-                                <p class="error-text" id="rainfall-error">⚠️ Rainfall must be between 0-10,000 mm. This affects crop growth and yield.</p>
-                            </div>
-                        </div>
-                        <div class="button-group" style="display:flex;gap:1rem;justify-content:center;">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-chart-line"></i> Predict Yield
-                            </button>
-                            <a href="javascript:history.back()" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left"></i> Back
+
                             </a>
                         </div>
                     </form>
@@ -470,175 +103,4 @@
             </div>
         </section>
     </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p class="footer-text">© 2026 AgriTech. Empowering farmers with intelligent agriculture solutions.</p>
-        </div>
-    </footer>
-
-    <!-- JS -->
-    <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const themeText = document.getElementById('themeText');
-        const html = document.documentElement;
-
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        setTheme(savedTheme);
-
-        themeToggle.addEventListener('click', () => {
-            setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-        });
-
-        function setTheme(theme) {
-            html.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-            if (theme === 'dark') {
-                themeIcon.className = 'fas fa-sun';
-                themeText.textContent = 'Light Mode';
-            } else {
-                themeIcon.className = 'fas fa-moon';
-                themeText.textContent = 'Dark Mode';
-            }
-        }
-
-        // Form validation
-        const yieldForm = document.getElementById('yieldForm');
-        const crop = document.getElementById('crop');
-        const year = document.getElementById('year');
-        const season = document.getElementById('season');
-        const state = document.getElementById('state');
-        const area = document.getElementById('area');
-        const production = document.getElementById('production');
-        const rainfall = document.getElementById('rainfall');
-
-        const cropError = document.getElementById('crop-error');
-        const yearError = document.getElementById('year-error');
-        const seasonError = document.getElementById('season-error');
-        const stateError = document.getElementById('state-error');
-        const areaError = document.getElementById('area-error');
-        const productionError = document.getElementById('production-error');
-        const rainfallError = document.getElementById('rainfall-error');
-
-        function showError(input, messageEl) {
-            input.classList.add('input-error');
-            messageEl.style.display = 'block';
-        }
-
-        function clearError(input, messageEl) {
-            input.classList.remove('input-error');
-            messageEl.style.display = 'none';
-        }
-
-        // Real-time validation
-        crop.addEventListener('input', () => {
-            if (crop.value.trim() !== '') {
-                clearError(crop, cropError);
-            }
-        });
-
-        year.addEventListener('input', () => {
-            if (year.value >= 1900 && year.value <= 2100) {
-                clearError(year, yearError);
-            }
-        });
-
-        season.addEventListener('input', () => {
-            if (season.value.trim() !== '') {
-                clearError(season, seasonError);
-            }
-        });
-
-        state.addEventListener('input', () => {
-            if (state.value.trim() !== '') {
-                clearError(state, stateError);
-            }
-        });
-
-        area.addEventListener('input', () => {
-            if (area.value >= 0 && area.value <= 1000000) {
-                clearError(area, areaError);
-            }
-        });
-
-        production.addEventListener('input', () => {
-            if (production.value >= 0 && production.value <= 1000000) {
-                clearError(production, productionError);
-            }
-        });
-
-        rainfall.addEventListener('input', () => {
-            if (rainfall.value >= 0 && rainfall.value <= 10000) {
-                clearError(rainfall, rainfallError);
-            }
-        });
-
-        yieldForm.addEventListener('submit', (e) => {
-            let isValid = true;
-
-            // Validate crop
-            if (!crop.value.trim()) {
-                showError(crop, cropError);
-                isValid = false;
-            } else {
-                clearError(crop, cropError);
-            }
-
-            // Validate year
-            if (!year.value || year.value < 1900 || year.value > 2100) {
-                showError(year, yearError);
-                isValid = false;
-            } else {
-                clearError(year, yearError);
-            }
-
-            // Validate season
-            if (!season.value.trim()) {
-                showError(season, seasonError);
-                isValid = false;
-            } else {
-                clearError(season, seasonError);
-            }
-
-            // Validate state
-            if (!state.value.trim()) {
-                showError(state, stateError);
-                isValid = false;
-            } else {
-                clearError(state, stateError);
-            }
-
-            // Validate area
-            if (!area.value || area.value < 0 || area.value > 1000000) {
-                showError(area, areaError);
-                isValid = false;
-            } else {
-                clearError(area, areaError);
-            }
-
-            // Validate production
-            if (!production.value || production.value < 0 || production.value > 1000000) {
-                showError(production, productionError);
-                isValid = false;
-            } else {
-                clearError(production, productionError);
-            }
-
-            // Validate rainfall
-            if (!rainfall.value || rainfall.value < 0 || rainfall.value > 10000) {
-                showError(rainfall, rainfallError);
-                isValid = false;
-            } else {
-                clearError(rainfall, rainfallError);
-            }
-
-            if (!isValid) {
-                e.preventDefault();
-            }
-        });
-    </script>
-</body>
-
 </html>
