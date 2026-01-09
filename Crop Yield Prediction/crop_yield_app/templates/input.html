@@ -1,72 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crop Yield Prediction</title>
-    <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #059669;
-            --primary-light: #10b981;
-            --primary-dark: #047857;
-            --secondary: #f59e0b;
-            --accent: #3b82f6;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --bg-accent: #f1f5f9;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --text-muted: #94a3b8;
-            --border: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --radius-sm: 0.375rem;
-            --radius-md: 0.5rem;
-            --radius-lg: 0.75rem;
-            --radius-xl: 1rem;
-            --radius-2xl: 1.5rem;
-            --font-display: 'Inter', system-ui, sans-serif;
-            --font-body: 'Inter', system-ui, sans-serif;
-        }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
 
         body {
             font-family: var(--font-body);
             background: var(--bg-secondary);
             color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .header {
-            background: var(--bg-primary);
-            border-bottom: 1px solid var(--border);
-            padding: 1.5rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(8px);
-        }
-
-        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -75,72 +15,33 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-        }
 
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             border-radius: var(--radius-lg);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.25rem;
+
         }
 
         .logo-text {
             font-family: var(--font-display);
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
 
-        .hero {
-            background: var(--bg-primary);
-            padding: 3rem 0;
-            text-align: center;
         }
 
         .hero-title {
             font-family: var(--font-display);
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-            line-height: 1.1;
-        }
 
-        .hero-subtitle {
-            font-size: clamp(1.125rem, 2vw, 1.25rem);
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            line-height: 1.7;
-        }
-
-        .form-section {
-            background: var(--bg-primary);
-            padding: 3rem 0;
         }
 
         .form-card {
             background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-2xl);
-            padding: 2rem;
-            box-shadow: var(--shadow-lg);
-            max-width: 800px;
-            margin: 0 auto;
+
         }
 
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
+
         }
 
         .input-group {
@@ -148,33 +49,7 @@
         }
 
         .input-label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
 
-        .form-input, .form-select {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--border);
-            border-radius: var(--radius-lg);
-            font-size: 1rem;
-            font-family: inherit;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            outline: none;
-            transition: var(--transition);
-        }
-
-        .form-input:focus, .form-select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
-        }
-
-        .form-input::placeholder {
-            color: var(--text-muted);
         }
 
         .input-hint {
@@ -183,79 +58,31 @@
             margin-top: 0.25rem;
         }
 
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
 
         .btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 1rem 2rem;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            border: none;
-            border-radius: var(--radius-lg);
-            cursor: pointer;
-            transition: var(--transition);
-            white-space: nowrap;
-            text-align: center;
-            min-width: 180px;
-            justify-content: center;
-        }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
             box-shadow: var(--shadow);
         }
 
         .btn-primary:hover {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+
         }
 
         .btn-secondary {
             background: var(--bg-accent);
             color: var(--text-primary);
             border: 1px solid var(--border);
+
         }
 
         .btn-secondary:hover {
             background: var(--bg-primary);
             transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
 
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        .btn.loading {
-            pointer-events: none;
-        }
-
-        .btn.loading .btn-icon {
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .footer {
-            background: var(--bg-primary);
-            border-top: 1px solid var(--border);
-            padding: 2rem 0;
-            text-align: center;
         }
 
         .footer-text {
@@ -263,159 +90,12 @@
             font-size: 0.875rem;
         }
 
-        @media (max-width: 768px) {
-            .form-card {
-                padding: 1.5rem;
-            }
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            .button-group {
-                flex-direction: column;
-                align-items: center;
-            }
-            .btn {
-                width: 100%;
-                max-width: 280px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <a href="#" class="logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-seedling"></i>
-                    </div>
-                    <span class="logo-text">AgriTech</span>
-                </a>
-            </div>
-        </div>
-    </header>
 
-    <main>
-        <section class="hero">
-            <div class="container">
-                <h1 class="hero-title">
-                    Crop Yield Prediction
-                </h1>
-                <p class="hero-subtitle">
-                    Predict agricultural crop yield using region and climate data for optimal farming decisions.
-                </p>
-            </div>
-        </section>
-
-        <section class="form-section">
-            <div class="container">
-                {% if error %}
-                <div style="background: #fee; color: #c33; padding: 1rem; border-radius: 0.5rem; margin-bottom: 2rem; border: 1px solid #fcc;">
-                    <strong>Error:</strong> {{ error }}
-                </div>
-                {% endif %}
                 <div class="form-card">
                     <form id="yieldForm" action="/predict" method="POST">
                         <div class="form-grid">
                             <div class="input-group">
-                                <label class="input-label" for="crop">Crop</label>
-                                <select id="crop" name="crop" class="form-select" required>
-                                    <option value="">Select Crop</option>
-                                    <!-- Options will be populated dynamically or statically -->
-                                </select>
-                                <div class="input-hint">Choose the crop type</div>
-                            </div>
 
-                            <div class="input-group">
-                                <label class="input-label" for="year">Year</label>
-                                <input
-                                    type="number"
-                                    id="year"
-                                    name="year"
-                                    class="form-input"
-                                    placeholder="Enter year"
-                                    min="1900"
-                                    max="2100"
-                                    required
-                                >
-                                <div class="input-hint">Range: 1900-2100</div>
-                            </div>
-
-                            <div class="input-group">
-                                <label class="input-label" for="season">Season</label>
-                                <select id="season" name="season" class="form-select" required>
-                                    <option value="">Select Season</option>
-                                    <!-- Options will be populated dynamically or statically -->
-                                </select>
-                                <div class="input-hint">Choose the farming season</div>
-                            </div>
-
-                            <div class="input-group">
-                                <label class="input-label" for="state">State</label>
-                                <select id="state" name="state" class="form-select" required>
-                                    <option value="">Select State</option>
-                                    <!-- Options will be populated dynamically or statically -->
-                                </select>
-                                <div class="input-hint">Choose the state/region</div>
-                            </div>
-
-                            <div class="input-group">
-                                <label class="input-label" for="area">Area (hectares)</label>
-                                <input
-                                    type="number"
-                                    id="area"
-                                    name="area"
-                                    class="form-input"
-                                    placeholder="Enter area"
-                                    step="0.01"
-                                    min="0"
-                                    max="1000000"
-                                    required
-                                >
-                                <div class="input-hint">Area in hectares</div>
-                            </div>
-
-                            <div class="input-group">
-                                <label class="input-label" for="production">Production (tonnes)</label>
-                                <input
-                                    type="number"
-                                    id="production"
-                                    name="production"
-                                    class="form-input"
-                                    placeholder="Enter production"
-                                    step="0.01"
-                                    min="0"
-                                    max="1000000"
-                                    required
-                                >
-                                <div class="input-hint">Expected production in tonnes</div>
-                            </div>
-
-                            <div class="input-group">
-                                <label class="input-label" for="rainfall">Rainfall (mm)</label>
-                                <input
-                                    type="number"
-                                    id="rainfall"
-                                    name="rainfall"
-                                    class="form-input"
-                                    placeholder="Enter rainfall"
-                                    step="0.1"
-                                    min="0"
-                                    max="10000"
-                                    required
-                                >
-                                <div class="input-hint">Annual rainfall in mm</div>
-                            </div>
-                        </div>
-
-                        <div class="button-group">
-                            <button type="submit" class="btn btn-primary" id="submitBtn">
-                                <i class="fas fa-chart-line btn-icon"></i>
-                                <span>Predict Yield</span>
-                            </button>
-                            <a href="javascript:history.back()" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left"></i>
-                                <span>Back</span>
                             </a>
                         </div>
                     </form>
@@ -423,62 +103,4 @@
             </div>
         </section>
     </main>
-
-    <footer class="footer">
-        <div class="container">
-            <p class="footer-text">
-                © 2024 AgriTech. Empowering farmers with intelligent agriculture solutions.
-            </p>
-        </div>
-    </footer>
-
-    <script>
-        // Populate select options (you may need to fetch these from the server)
-        const cropOptions = ["Rice", "Wheat", "Maize", "Cotton", "Sugarcane", "Soybean", "Groundnut", "Barley", "Ragi", "Jowar"];
-        const seasonOptions = ["Kharif", "Rabi", "Summer", "Whole Year"];
-        const stateOptions = ["Andhra Pradesh", "Maharashtra", "Karnataka", "Tamil Nadu", "Uttar Pradesh", "Punjab", "Haryana", "Gujarat", "Rajasthan", "Madhya Pradesh"];
-
-        const cropSelect = document.getElementById('crop');
-        const seasonSelect = document.getElementById('season');
-        const stateSelect = document.getElementById('state');
-
-        cropOptions.forEach(option => {
-            const opt = document.createElement('option');
-            opt.value = option;
-            opt.textContent = option;
-            cropSelect.appendChild(opt);
-        });
-
-        seasonOptions.forEach(option => {
-            const opt = document.createElement('option');
-            opt.value = option;
-            opt.textContent = option;
-            seasonSelect.appendChild(opt);
-        });
-
-        stateOptions.forEach(option => {
-            const opt = document.createElement('option');
-            opt.value = option;
-            opt.textContent = option;
-            stateSelect.appendChild(opt);
-        });
-
-        // Form handling
-        const form = document.getElementById('yieldForm');
-        const submitBtn = document.getElementById('submitBtn');
-
-        form.addEventListener('submit', function(e) {
-            const submitIcon = submitBtn.querySelector('.btn-icon');
-            const submitText = submitBtn.querySelector('span');
-
-            // Add loading state
-            submitBtn.classList.add('loading');
-            submitBtn.disabled = true;
-            submitIcon.className = 'fas fa-spinner btn-icon';
-            submitText.textContent = 'Processing...';
-
-            // Form will submit normally, but button is disabled and shows loading
-        });
-    </script>
-</body>
 </html>

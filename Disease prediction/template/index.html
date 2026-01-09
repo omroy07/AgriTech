@@ -215,6 +215,14 @@
             font-size: 0.875rem;
         }
 
+        /* -------------------- Error Styling -------------------- */
+        .error-text {
+            color: #e53935;
+            font-size: 0.85rem;
+            margin-top: 4px;
+            display: none;
+        }
+
         /* -------------------- Responsive -------------------- */
         @media(max-width:768px) {
             .nav-links {
@@ -305,6 +313,7 @@
               Analyze Plant Health
             </span>
           </button>
+          <p class="error-text" id="file-error">⚠️ Please upload a valid image file (JPG, PNG, WebP). Only plant leaf images are supported.</p>
         </form>
       </div>
 
@@ -390,11 +399,20 @@
             filePreview.classList.add("show");
             submitBtn.disabled = false;
             uploadArea.style.display = "none";
+            clearError(fileInput, fileError);
           };
           reader.readAsDataURL(file);
         } else {
-          alert("Please select a valid image file.");
+          showError(fileInput, fileError);
         }
+      }
+
+      function showError(input, messageEl) {
+        messageEl.style.display = 'block';
+      }
+
+      function clearError(input, messageEl) {
+        messageEl.style.display = 'none';
       }
 
       // Remove file handler

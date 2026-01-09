@@ -3,7 +3,6 @@ from flask import Flask, render_template, request, jsonify
 import numpy as np
 import re
 from functools import wraps
-import time  # For simulating processing delay
 
 app = Flask(__name__)
 
@@ -77,11 +76,6 @@ def validate_year(year):
 def index():
     return render_template('input.html')
 
-@app.route('/result')
-def result():
-    return render_template('index.html')
-
-@app.route('/predict', methods=['POST'])
 @validate_required_fields(['crop', 'year', 'season', 'state', 'area', 'production', 'rainfall'])
 def predict():
     try:
