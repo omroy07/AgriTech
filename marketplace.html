@@ -11,6 +11,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
         rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <link rel="icon" type="image/png" href="images/logo.png">
 
     <style>
@@ -42,6 +45,9 @@
             /* Modern Shadows & Glass */
             --glass-bg: rgba(16, 28, 56, 0.8);
             --shadow-premium: 0 15px 30px rgba(0, 0, 0, 0.5);
+
+            --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
         [data-theme="light"] {
@@ -434,49 +440,73 @@
         }
 
         /* --- Categories --- */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 30px 0;
+        }
+
         .category-card {
             background: linear-gradient(135deg, #e17055, var(--accent-secondary));
-            color: white;
-            padding: 30px 20px;
-            border-radius: 15px;
+            padding: 24px;
+            border-radius: 20px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .category-card::before {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            animation: pulse 3s ease-in-out infinite;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.35) 100%);
+            z-index: 0;
         }
 
         .category-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(225, 112, 85, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-card>* {
+            position: relative;
+            z-index: 1;
         }
 
         .category-icon {
             font-size: 3rem;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover .category-icon {
+            transform: scale(1.1);
         }
 
         .category-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 5px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700 !important;
+            font-size: 1.25rem !important;
+            color: white !important;
+            margin-bottom: 6px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .category-count {
-            font-size: 0.9rem;
-            opacity: 0.9;
+            color: rgba(255, 255, 255, 0.95) !important;
+            font-size: 0.95rem;
+            font-weight: 500;
         }
 
         .price-chart {
@@ -836,41 +866,41 @@ body {
             <div class="categories-grid">
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'vegetables')">
                     <div class="category-icon">🥬</div>
-                    <div class="category-title"
-                        style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Fresh Vegetables</div>
-                    <div class="category-count" id="vegCount" style="color: var(--text-muted);">847 products</div>
+                    <div class="category-title">Fresh Vegetables</div>
+                    <div class="category-count" id="vegCount">847 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'fruits')">
                     <div class="category-icon">🍎</div>
-                    <div class="category-title"
-                        style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Seasonal Fruits</div>
-                    <div class="category-count" id="fruitCount" style="color: var(--text-muted);">623 products</div>
+                    <div class="category-title">Seasonal Fruits</div>
+                    <div class="category-count" id="fruitCount">623 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'grains')">
                     <div class="category-icon">🌾</div>
-                    <div class="category-title"
-                        style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Grains & Cereals</div>
-                    <div class="category-count" id="grainCount" style="color: var(--text-muted);">456 products</div>
+                    <div class="category-title">Grains & Cereals</div>
+                    <div class="category-count" id="grainCount">456 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'spices')">
                     <div class="category-icon">🌶️</div>
-                    <div class="category-title"
-                        style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Spices & Herbs</div>
-                    <div class="category-count" id="spiceCount" style="color: var(--text-muted);">321 products</div>
+                    <div class="category-title">Spices & Herbs</div>
+                    <div class="category-count" id="spiceCount">321 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'dairy')">
                     <div class="category-icon">🥛</div>
-                    <div class="category-title"
-                        style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Dairy Products</div>
-                    <div class="category-count" id="dairyCount" style="color: var(--text-muted);">234 products</div>
+                    <div class="category-title">Dairy Products</div>
+                    <div class="category-count" id="dairyCount">234 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'pulses')">
                     <div class="category-icon">🫘</div>
-                    <div class="category-title"
-                        style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Pulses & Legumes</div>
-                    <div class="category-count" id="pulseCount" style="color: var(--text-muted);">366 products</div>
+                    <div class="category-title">Pulses & Legumes</div>
+                    <div class="category-count" id="pulseCount">366 products</div>
                 </div>
             </div>
+
         </div>
 
         <div class="products-section">
