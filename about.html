@@ -39,11 +39,15 @@
     <div class="nav-buttons">
       <!-- Responsive Search Bar -->
         <div class="search-container">
-          <input type="text" placeholder="Search..." class="search-input" />
-          <button class="search-button">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
+  <i class="fas fa-search search-icon"></i>
+  <input
+    type="text"
+    placeholder="Search About AgriTech..."
+    class="search-input"
+    aria-label="Search content"
+  />
+</div>
+
       <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
         <i class="fas fa-sun sun-icon"></i>
         <i class="fas fa-moon moon-icon"></i>
@@ -240,6 +244,63 @@
           }
         });
     }
+
+  const searchInput = document.querySelector(".search-input");
+  const sections = document.querySelectorAll("main section");
+
+  // No result element
+  const noResultDiv = document.createElement("div");
+  noResultDiv.className = "no-results";
+  noResultDiv.innerHTML = `
+  <div class="icon-wrapper">
+    <i class="fas fa-leaf"></i>
+  </div>
+  <h3>No results found</h3>
+  <p>
+    We couldn’t find anything related to your search.<br>
+    Try exploring these popular topics instead 🌱
+  </p>
+  <div class="suggestions">
+    <span>Crop Recommendation</span>
+    <span>Yield Prediction</span>
+    <span>Organic Farming</span>
+    <span>AI Agriculture</span>
+  </div>
+`;
+
+  document.querySelector("main").appendChild(noResultDiv);
+  noResultDiv.style.display = "none";
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase().trim();
+    let found = false;
+
+    sections.forEach(section => {
+      const elements = section.querySelectorAll("h2, p, li");
+      let sectionMatch = false;
+
+      elements.forEach(el => {
+        el.classList.remove("search-highlight");
+
+        if (query !== "" && el.textContent.toLowerCase().includes(query)) {
+          el.classList.add("search-highlight");
+          sectionMatch = true;
+          found = true;
+        }
+      });
+
+      section.style.display = query === "" || sectionMatch ? "block" : "none";
+    });
+
+    noResultDiv.style.display = query !== "" && !found ? "block" : "none";
+  });
+document.addEventListener("click", (e) => {
+    if (e.target.closest(".suggestions span")) {
+      const text = e.target.textContent;
+      searchInput.value = text;
+      searchInput.dispatchEvent(new Event("input"));
+    }
+  });
   </script>
 </body>
 </html>
