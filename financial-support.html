@@ -730,7 +730,6 @@
 </head>
 
 <body>
-  <!-- Navigation -->
   <nav class="navbar">
     <div class="navbar-content">
       <a href="index.html" class="logo">AgriTech</a>
@@ -747,7 +746,6 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
       <h1 class="serif">Financial Support & Insurance</h1>
@@ -755,9 +753,7 @@
     </div>
   </section>
 
-  <!-- Main Content -->
   <div class="main-content">
-    <!-- Loan Calculator -->
     <section class="loan-calculator loading">
       <h3 class="calculator-title serif">Agricultural Loan Calculator</h3>
       <div class="calculator-form">
@@ -788,7 +784,6 @@
       </div>
     </section>
 
-    <!-- Application Progress Tracker -->
     <section class="progress-tracker loading">
       <h3 class="section-title serif">Application Progress</h3>
       <div class="progress-steps">
@@ -806,7 +801,6 @@
       </div>
     </section>
 
-    <!-- Services Section -->
     <section class="section loading">
       <h2 class="section-title serif">Our Financial Services</h2>
       <p class="section-subtitle">Empowering farmers with tailored financial solutions for sustainable growth</p>
@@ -904,7 +898,6 @@
       </div>
     </section>
 
-    <!-- How It Works -->
     <section class="section loading">
       <h2 class="section-title serif">How It Works</h2>
       <p class="section-subtitle">Simple steps to access financial support for your farming needs</p>
@@ -933,7 +926,6 @@
       </div>
     </section>
 
-    <!-- Statistics -->
     <section class="stats-section loading">
       <h2 class="section-title serif">Our Impact</h2>
       <div class="stats-grid">
@@ -956,7 +948,6 @@
       </div>
     </section>
 
-    <!-- CTA Section -->
     <section class="cta-section loading">
       <h2 class="cta-title serif">Ready to Grow Your Farm?</h2>
       <p class="cta-description">Join thousands of farmers who have transformed their agricultural business with our financial support. Get started today and unlock your farm's potential.</p>
@@ -964,7 +955,6 @@
     </section>
   </div>
 
-  <!-- Chat Widget -->
   <div class="chat-widget" id="chatWidget">
     <div class="chat-header">
       <h4>Financial Assistant</h4>
@@ -987,7 +977,6 @@
     <i class="fas fa-comments"></i>
   </button>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-links">
@@ -998,7 +987,7 @@
         <a href="privacy-policy.html">Privacy</a>
       </div>
       <div class="copyright">
-        <p>&copy; 2025 AgriTech. All rights reserved. Empowering agriculture through technology.</p>
+        <p>&copy; <span id="current-year"></span> AgriTech. All rights reserved. Empowering agriculture through technology.</p>
       </div>
     </div>
   </footer>
@@ -1213,6 +1202,12 @@
 
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
+      // Automatically update the copyright year
+      const yearSpan = document.getElementById("current-year");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+      
       calculateLoan();
       showNotification('Welcome to AgriTech Financial Services!');
     });
