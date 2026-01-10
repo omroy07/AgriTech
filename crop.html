@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,29 +8,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
+        rel="stylesheet">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/logo.png">
-    
+
     <style>
         :root {
             /* Dark Theme Variables */
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-tertiary: #334155;
-            --text-primary: #f8fafc;
-            --text-secondary: #cbd5e1;
-            --text-muted: #94a3b8;
+            --bg-primary: #01133c;
+            --bg-secondary: #142a4f;
+            --bg-tertiary: #1e3d68;
+            --text-primary: #ffffff;
+            --text-secondary: #d2deed;
+            --text-muted: #d1d4d8;
             --border-color: #334155;
             --shadow-light: rgba(0, 0, 0, 0.3);
             --shadow-medium: rgba(0, 0, 0, 0.4);
             --shadow-heavy: rgba(0, 0, 0, 0.6);
-            --accent-green-light: #10b981;
-            --accent-green-dark: #059669;
-            --accent-success: #22c55e;
+            --accent-green-light: #03d445;
+            --accent-green-dark: #01af2a;
+            --accent-success: #18b451;
             --accent-warning: #f59e0b;
             --accent-danger: #ef4444;
             --accent-info: #3b82f6;
+            --primary-blue: #2196F3;
+            --text-secondary: #c1c0c0;
         }
 
         [data-theme="light"] {
@@ -126,7 +131,7 @@
         }
 
         .header {
-            background: rgba(30, 41, 59, 0.95);
+            background: var(--bg-secondary);
             backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
             border-radius: 15px;
@@ -150,8 +155,13 @@
         }
 
         @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .header-content {
@@ -212,7 +222,7 @@
         }
 
         .feature-card {
-            background: rgba(30, 41, 59, 0.95);
+            background: var(--bg-secondary);
             backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
             border-radius: 15px;
@@ -230,7 +240,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             transition: left 0.5s;
         }
 
@@ -243,6 +253,7 @@
             box-shadow: 0 15px 35px var(--shadow-medium);
             border-color: var(--accent-green-light);
         }
+        
 
         .feature-icon {
             font-size: 3rem;
@@ -282,7 +293,7 @@
         }
 
         .monitoring-dashboard {
-            background: rgba(30, 41, 59, 0.95);
+            background: var(--bg-secondary);
             backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
             border-radius: 15px;
@@ -333,7 +344,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1));
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1));
             opacity: 0;
             transition: opacity 0.3s;
         }
@@ -370,9 +381,17 @@
             z-index: 2;
         }
 
-        .trend-up { color: #22c55e; }
-        .trend-down { color: #ef4444; }
-        .trend-stable { color: #f59e0b; }
+        .trend-up {
+            color: #22c55e;
+        }
+
+        .trend-down {
+            color: #ef4444;
+        }
+
+        .trend-stable {
+            color: #f59e0b;
+        }
 
         .chart-container {
             background: var(--bg-primary);
@@ -419,12 +438,12 @@
             left: 20px;
             right: 20px;
             height: 120px;
-            background: linear-gradient(to right, 
-                var(--accent-green-light) 0%, 
-                var(--accent-success) 25%, 
-                var(--accent-warning) 50%, 
-                var(--accent-success) 75%, 
-                var(--accent-green-light) 100%);
+            background: linear-gradient(to right,
+                    var(--accent-green-light) 0%,
+                    var(--accent-success) 25%,
+                    var(--accent-warning) 50%,
+                    var(--accent-success) 75%,
+                    var(--accent-green-light) 100%);
             clip-path: polygon(0 80%, 10% 60%, 20% 70%, 30% 40%, 40% 50%, 50% 30%, 60% 45%, 70% 20%, 80% 35%, 90% 15%, 100% 25%, 100% 100%, 0 100%);
             opacity: 0.7;
         }
@@ -545,8 +564,17 @@
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.05; }
-            50% { transform: scale(1.1); opacity: 0.1; }
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.05;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.1;
+            }
         }
 
         .sensor-item.warning {
@@ -595,8 +623,15 @@
         }
 
         @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
         }
 
         .status-indicator.warning {
@@ -626,6 +661,21 @@
             right: 0;
         }
 
+        [data-theme="light"] .settings-panel {
+            background: rgba(248, 250, 252, 0.98);
+            color: var(--text-primary);
+        }
+
+        [data-theme="light"] .settings-panel h3,
+        [data-theme="light"] .settings-panel h4 {
+            color: var(--text-primary);
+        }
+
+        [data-theme="light"] .settings-panel .setting-item span {
+            color: var(--text-secondary);
+        }
+
+
         .settings-header {
             display: flex;
             justify-content: space-between;
@@ -634,6 +684,11 @@
             padding-bottom: 20px;
             border-bottom: 1px solid var(--border-color);
         }
+
+        .settings-header button {
+            cursor: pointer;
+        }
+
 
         .settings-group {
             margin-bottom: 25px;
@@ -703,20 +758,205 @@
             background: #2563eb;
             transform: translateY(-2px);
         }
+        /* LIGHT MODE FIXES */
+[data-theme="light"] .settings-panel {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-left: 1px solid var(--border-color);
+}
 
-        .cta-section {
-            background: rgba(30, 41, 59, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            padding: 40px;
-            text-align: center;
-            margin: 40px 0;
-            box-shadow: 0 8px 25px var(--shadow-light);
+[data-theme="light"] .settings-header {
+    border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="light"] .settings-group h4 {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .setting-item {
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Toggle switch */
+[data-theme="light"] .setting-toggle {
+    background: #e2e8f0; /* soft gray */
+}
+
+[data-theme="light"] .setting-toggle.active {
+    background: var(--accent-green-light);
+}
+
+[data-theme="light"] .setting-toggle::before {
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Export buttons */
+[data-theme="light"] .export-btn {
+    background: var(--accent-info);
+    color: #ffffff;
+}
+
+[data-theme="light"] .export-btn:hover {
+    background: #2563eb;
+}
+
+.scroll-btn {
+  position: fixed;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #16a34a;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+
+.scroll-btn:hover {
+  transform: scale(1.1);
+  background: #15803d;
+}
+
+.scroll-btn {
+  bottom: 20px;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.scroll-btn.visible {
+  opacity: 1;
+  visibility: visible;
+}
+      /* CTA Section */
+.cta-section {
+    background: linear-gradient(
+        135deg,
+        var(--bg-secondary),
+        var(--bg-tertiary)
+    );
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 20px 40px var(--shadow-heavy);
+    max-width: 900px;
+    margin: 3rem auto;
+}
+
+/* Heading */
+.cta-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.5px;
+}
+
+/* Subtitle */
+.cta-section p {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+}
+
+/* Buttons container (optional wrapper) */
+.cta-section .cta-button {
+    appearance: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0.85rem 1.75rem;
+    margin: 0.4rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(
+        135deg,
+        var(--accent-green-light),
+        var(--accent-green-dark)
+    );
+    box-shadow: 0 10px 20px var(--shadow-medium);
+    transition: 
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+/* Hover effect */
+.cta-section .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 30px var(--shadow-heavy);
+    background: linear-gradient(
+        135deg,
+        var(--accent-green-dark),
+        var(--accent-green-light)
+    );
+}
+
+/* Active / click */
+.cta-section .cta-button:active {
+    transform: translateY(0);
+    box-shadow: 0 8px 16px var(--shadow-light);
+}
+
+/* Secondary button styles (auto via order) */
+.cta-section .cta-button:nth-child(2) {
+    background: linear-gradient(
+        135deg,
+        var(--accent-info),
+        var(--primary-blue)
+    );
+}
+
+/* Tertiary button */
+.cta-section .cta-button:nth-child(3) {
+    background: linear-gradient(
+        135deg,
+        var(--accent-success),
+        var(--accent-green-dark)
+    );
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .cta-section {
+        padding: 2rem 1.5rem;
+    }
+
+    .cta-section h2 {
+        font-size: 1.6rem;
+    }
+
+    .cta-section .cta-button {
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
+
+        .cta-section h2 {
+            color: #ffffff !important;
         }
 
+        .cta-section p {
+            color: #e5e7eb !important;
+        }
+
+
+
         .cta-button {
-            background: linear-gradient(135deg, var(--accent-green-light), var(--accent-green-dark));
+            background:  var(--accent-green-light);
             color: white;
             padding: 15px 30px;
             border: none;
@@ -770,16 +1010,16 @@
             .container {
                 padding: 10px;
             }
-            
+
             .header h1 {
                 font-size: 2rem;
             }
-            
+
             .features-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-            
+
             .metrics-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -803,14 +1043,16 @@
             .control-btn {
                 flex-shrink: 0;
             }
-            .chart-tabs{
+
+            .chart-tabs {
                 flex-wrap: wrap;
-                justify-content: center;  
-                gap: 6px; 
+                justify-content: center;
+                gap: 6px;
             }
-            .chart-tab{
-                padding: 6px 10px;  
-                white-space: nowrap;      
+
+            .chart-tab {
+                padding: 6px 10px;
+                white-space: nowrap;
             }
         }
 
@@ -845,11 +1087,25 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
+
+        [data-theme="dark"] .header::before {
+            opacity: 0.3;
+        }
+    
+
+      
+
     </style>
 </head>
+
 <body data-theme="dark">
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
@@ -879,7 +1135,8 @@
         <div class="header">
             <div class="header-content">
                 <h1><i class="fas fa-seedling"></i> Smart Crop Monitoring</h1>
-                <p>Advanced IoT-powered crop monitoring system for precision agriculture and maximum yield optimization</p>
+                <p>Advanced IoT-powered crop monitoring system for precision agriculture and maximum yield optimization
+                </p>
             </div>
         </div>
 
@@ -980,9 +1237,11 @@
                     <div class="chart-content">
                         <div class="chart-line" id="chartLine"></div>
                         <div style="color: var(--text-muted); text-align: center;">
-                            <i class="fas fa-chart-area" style="font-size: 3rem; color: var(--accent-green-light); margin-bottom: 20px;"></i>
+                            <i class="fas fa-chart-area"
+                                style="font-size: 3rem; color: var(--accent-green-light); margin-bottom: 20px;"></i>
                             <p>Real-time <span id="currentChart">temperature</span> data visualization</p>
-                            <p style="font-size: 0.9rem; opacity: 0.8;">Interactive charts showing trends and patterns</p>
+                            <p style="font-size: 0.9rem; opacity: 0.8;">Interactive charts showing trends and patterns
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -1051,7 +1310,7 @@
                     <p>Battery: <span id="sensor1Battery">89%</span></p>
                     <p>Signal Strength: <span id="sensor1Signal">Strong</span></p>
                 </div>
-                
+
                 <div class="sensor-item warning">
                     <div class="sensor-header">
                         <strong>Field Sensor #2</strong>
@@ -1121,8 +1380,9 @@
                     <h2><i class="fas fa-cloud-sun"></i> Weather Forecast</h2>
                     <p>7-day weather forecast for optimal crop planning</p>
                 </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px;">
+
+                <div
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px;">
                     <div class="weather-item" style="padding: 20px;">
                         <div class="weather-icon"><i class="fas fa-sun" style="color: #f59e0b;"></i></div>
                         <h4 style="color: var(--text-primary);">Today</h4>
@@ -1176,7 +1436,7 @@
                 <h3 style="color: var(--text-primary); margin-bottom: 20px;">
                     <i class="fas fa-bell"></i> System Alerts & Notifications
                 </h3>
-                
+
                 <div class="alert-item warning">
                     <i class="fas fa-exclamation-triangle alert-icon" style="color: var(--accent-warning);"></i>
                     <div class="alert-content">
@@ -1226,11 +1486,14 @@
 
         <!-- CTA Section -->
         <div class="cta-section">
-            <h2 style="color: var(--text-primary); margin-bottom: 20px;">Get Started with Smart Crop Monitoring</h2>
-            <p style="margin-bottom: 30px; color: var(--text-secondary);">Transform your farming with intelligent monitoring systems</p>
-            <button class="cta-button" onclick="showNotification('Free trial started!', 'success')">Start Free Trial</button>
+            <h2 style="margin-bottom: 20px;">Get Started with Smart Crop Monitoring</h2>
+            <p style="margin-bottom: 30px;">Transform your farming with intelligent
+                monitoring systems</p>
+            <button class="cta-button" onclick="showNotification('Free trial started!', 'success')">Start Free
+                Trial</button>
             <button class="cta-button" onclick="showNotification('Demo scheduled!', 'info')">Request Demo</button>
-            <button class="cta-button" onclick="showNotification('Sales team contacted!', 'success')">Contact Sales</button>
+            <button class="cta-button" onclick="showNotification('Sales team contacted!', 'success')">Contact
+                Sales</button>
         </div>
     </div>
 
@@ -1238,7 +1501,8 @@
     <div class="settings-panel" id="settingsPanel">
         <div class="settings-header">
             <h3 style="color: var(--text-primary);">Dashboard Settings</h3>
-            <button onclick="toggleSettings()" style="background: none; border: none; color: var(--text-primary); font-size: 1.2rem;">
+            <button onclick="toggleSettings()"
+                style="background: none; border: none; color: var(--text-primary); font-size: 1.2rem;">
                 <i class="fas fa-times"></i>
             </button>
         </div>
@@ -1289,16 +1553,43 @@
             <h4>Thresholds</h4>
             <div class="setting-item">
                 <label style="color: var(--text-secondary);">Soil Moisture Alert (%)</label>
-                <input type="range" min="20" max="80" value="40" style="margin-left: auto;" onchange="updateThreshold('moisture', this.value)">
+                <input type="range" min="20" max="80" value="40" style="margin-left: auto;"
+                    onchange="updateThreshold('moisture', this.value)">
             </div>
             <div class="setting-item">
                 <label style="color: var(--text-secondary);">Temperature Alert (°C)</label>
-                <input type="range" min="15" max="40" value="35" style="margin-left: auto;" onchange="updateThreshold('temperature', this.value)">
+                <input type="range" min="15" max="40" value="35" style="margin-left: auto;"
+                    onchange="updateThreshold('temperature', this.value)">
             </div>
         </div>
     </div>
+    <!--croll to top button-->
+    <button class="scroll-btn" id="scrollBtn" title="Scroll">
+    <i class="fas fa-arrow-down" id="scrollIcon"></i>
+  </button>
+  <script>
+    const scrollBtn = document.getElementById("scrollBtn");
+    const scrollIcon = document.getElementById("scrollIcon");
 
-    <script>
+    if (scrollBtn && scrollIcon) {
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 300) {
+            scrollBtn.classList.add('visible');
+            scrollIcon.classList.remove("fa-arrow-down");
+            scrollIcon.classList.add("fa-arrow-up");
+          } else {
+            scrollBtn.classList.remove('visible');
+            scrollIcon.classList.remove("fa-arrow-up");
+            scrollIcon.classList.add("fa-arrow-down");
+          }
+        });
+
+        scrollBtn.addEventListener("click", () => {
+          if (scrollIcon.classList.contains("fa-arrow-up")) {
+            window.scrollTo({top: 0, behavior: "smooth"});
+          }
+        });
+    }
         // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
@@ -1313,7 +1604,7 @@
         themeToggle.addEventListener('click', () => {
             const currentTheme = document.body.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
+
             document.body.setAttribute('data-theme', newTheme);
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('agritech-theme', newTheme);
@@ -1379,7 +1670,7 @@
 
             // Update trends
             updateTrends();
-            
+
             // Update last update time
             document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
 
@@ -1395,7 +1686,7 @@
             ['soilTrend', 'tempTrend', 'humidityTrend', 'lightTrend'].forEach((id, index) => {
                 const trendIndex = Math.floor(Math.random() * 3);
                 const element = document.getElementById(id);
-                
+
                 element.className = 'metric-trend ' + trendClasses[trendIndex];
                 element.innerHTML = `<i class="fas ${trendIcons[trendIndex]}"></i>`;
             });
@@ -1425,7 +1716,7 @@
 
             // Show selected view
             document.getElementById(view + 'View').style.display = 'block';
-            
+
             currentView = view;
             showNotification(`Switched to ${view} view`, 'info');
         }
@@ -1436,7 +1727,7 @@
                 tab.classList.remove('active');
             });
             event.target.classList.add('active');
-            
+
             document.getElementById('currentChart').textContent = type;
             showNotification(`Showing ${type} chart`, 'info');
         }
@@ -1445,7 +1736,7 @@
         function toggleSettings() {
             const panel = document.getElementById('settingsPanel');
             settingsOpen = !settingsOpen;
-            
+
             if (settingsOpen) {
                 panel.classList.add('open');
             } else {
@@ -1465,7 +1756,7 @@
         // Data Export
         function exportData(format = 'csv') {
             showLoading();
-            
+
             setTimeout(() => {
                 hideLoading();
                 showNotification(`Data exported as ${format.toUpperCase()}`, 'success');
@@ -1475,7 +1766,7 @@
         // Refresh Data
         function refreshData() {
             showLoading();
-            
+
             setTimeout(() => {
                 updateMetrics();
                 hideLoading();
@@ -1496,25 +1787,25 @@
         function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
-            
+
             const icons = {
                 success: 'fa-check-circle',
                 warning: 'fa-exclamation-triangle',
                 danger: 'fa-exclamation-circle',
                 info: 'fa-info-circle'
             };
-            
+
             notification.innerHTML = `
                 <i class="fas ${icons[type]}"></i>
                 <span style="margin-left: 10px;">${message}</span>
             `;
-            
+
             document.body.appendChild(notification);
-            
+
             setTimeout(() => {
                 notification.classList.add('show');
             }, 100);
-            
+
             setTimeout(() => {
                 notification.classList.remove('show');
                 setTimeout(() => notification.remove(), 300);
@@ -1525,7 +1816,7 @@
         function updateSensorTimes() {
             const sensors = ['sensor1Time', 'sensor2Time', 'weatherTime', 'sensor3Time', 'irrigationTime', 'phTime'];
             const times = ['2 minutes ago', '5 minutes ago', '1 minute ago', '26 minutes ago', '31 seconds ago', '11 minutes ago'];
-            
+
             sensors.forEach((id, index) => {
                 if (document.getElementById(id)) {
                     document.getElementById(id).textContent = times[index];
@@ -1566,7 +1857,7 @@
         }
 
         // Initialize everything
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             showNotification('Smart Crop Monitoring System Initialized', 'success');
             updateMetrics();
             updateWeatherData();
@@ -1601,9 +1892,9 @@
         });
 
         // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.ctrlKey || e.metaKey) {
-                switch(e.key) {
+                switch (e.key) {
                     case '1':
                         e.preventDefault();
                         switchView('overview');
@@ -1631,7 +1922,38 @@
                 }
             }
         });
+
+        function initTooltips() {
+            const sliders = document.querySelectorAll('.setting-item input[type="range"]');
+
+            sliders.forEach(slider => {
+                const tooltip = document.createElement('div');
+                tooltip.className = 'range-tooltip';
+                slider.parentNode.appendChild(tooltip);
+
+                const updatePosition = () => {
+                    const val = slider.value;
+                    const min = slider.min ? slider.min : 0;
+                    const max = slider.max ? slider.max : 100;
+                    const percent = (val - min) / (max - min);
+                    const labelText = slider.previousElementSibling.innerText;
+                    const unit = labelText.includes('%') ? '%' : '°C';
+                    tooltip.innerHTML = val + unit;
+                    const sliderWidth = slider.offsetWidth;
+                    const sliderLeft = slider.offsetLeft;
+                    const thumbPosition = sliderLeft + (sliderWidth * percent);
+
+                    tooltip.style.left = thumbPosition + 'px';
+                };
+
+                slider.addEventListener('input', updatePosition);
+                setTimeout(updatePosition, 10);
+            });
+        }
+
+        window.onload = initTooltips;
     </script>
     <script src="theme.js"></script>
 </body>
+
 </html>

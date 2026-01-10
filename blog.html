@@ -13,17 +13,21 @@
         <div class="blog-container">
             <div class="blog-header">
                 <div class="header-actions">
-                    <button class="theme-toggle" id="themeToggle">
-                        <span id="themeIcon">☀️</span>
-                        <span id="themeText">Light Mode</span>
-                    </button>
-                    
-                    <a href="favorites.html" class="favorites-link">
-                        <i class="fas fa-heart"></i>
-                        <span>My Favorites</span>
-                        <span class="favorite-count">0</span>
-                    </a>
-                </div>
+    <a href="index.html" class="home-btn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <button class="theme-toggle" id="themeToggle">
+        <span id="themeIcon">☀️</span>
+        <span id="themeText">Light Mode</span>
+    </button>
+    
+    <a href="favorites.html" class="favorites-link">
+        <i class="fas fa-heart"></i>
+        <span>My Favorites</span>
+        <span class="favorite-count">0</span>
+    </a>
+</div>
                 <h1 class="blog-title">🌱 AgriTech Blog — Farming Tips & Insights</h1>
                 <p class="blog-subtitle">Stay updated with the latest in agriculture, technology, and sustainability.</p>
             </div>
@@ -75,7 +79,34 @@
     </div>
 
     <script src="js/features/favorites.js"></script>
-    
-    <script src="blog.js"></script> 
+
+    <script src="blog.js"></script>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" title="Go to top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Scroll to Top Functionality
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+        // Show/hide button based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        // Smooth scroll to top when clicked
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
 </body>
 </html>
