@@ -801,7 +801,40 @@
     background: #2563eb;
 }
 
+.scroll-btn {
+  position: fixed;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #16a34a;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
 
+
+.scroll-btn:hover {
+  transform: scale(1.1);
+  background: #15803d;
+}
+
+.scroll-btn {
+  bottom: 20px;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.scroll-btn.visible {
+  opacity: 1;
+  visibility: visible;
+}
       /* CTA Section */
 .cta-section {
     background: linear-gradient(
@@ -1530,8 +1563,33 @@
             </div>
         </div>
     </div>
+    <!--croll to top button-->
+    <button class="scroll-btn" id="scrollBtn" title="Scroll">
+    <i class="fas fa-arrow-down" id="scrollIcon"></i>
+  </button>
+  <script>
+    const scrollBtn = document.getElementById("scrollBtn");
+    const scrollIcon = document.getElementById("scrollIcon");
 
-    <script>
+    if (scrollBtn && scrollIcon) {
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 300) {
+            scrollBtn.classList.add('visible');
+            scrollIcon.classList.remove("fa-arrow-down");
+            scrollIcon.classList.add("fa-arrow-up");
+          } else {
+            scrollBtn.classList.remove('visible');
+            scrollIcon.classList.remove("fa-arrow-up");
+            scrollIcon.classList.add("fa-arrow-down");
+          }
+        });
+
+        scrollBtn.addEventListener("click", () => {
+          if (scrollIcon.classList.contains("fa-arrow-up")) {
+            window.scrollTo({top: 0, behavior: "smooth"});
+          }
+        });
+    }
         // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
