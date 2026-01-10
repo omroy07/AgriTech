@@ -4,33 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Favorites - AgriTech</title>
+
     <link rel="stylesheet" href="blog.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+        const savedTheme = localStorage.getItem("agritech-theme") || "dark";
+        if (savedTheme === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            document.documentElement.removeAttribute("data-theme");
+        }
+    </script>
+
     <style>
         .favorites-container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
         .favorites-header { text-align: center; margin-bottom: 3rem; }
         .favorites-title { font-size: 2.5rem; color: #2c5f2d; margin-bottom: 1rem; }
         .favorites-stats { font-size: 1.1rem; color: #666; margin-bottom: 2rem; }
-        .favorites-actions { display: flex; gap: 1rem; justify-content: center; margin-bottom: 2rem; flex-wrap: wrap; }
-        .action-btn { padding: 0.8rem 1.5rem; border: none; border-radius: 25px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem; }
+
+        .favorites-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         .btn-danger { background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; }
         .btn-secondary { background: #6c757d; color: white; }
         .btn-primary { background: linear-gradient(45deg, #4CAF50, #45a049); color: white; text-decoration: none; }
-        .action-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        .no-favorites { text-align: center; padding: 4rem 2rem; color: #666; background: white; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-        .no-favorites i { font-size: 4rem; color: #ccc; margin-bottom: 1rem; }
-        .back-to-blog { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2rem; padding: 0.8rem 1.5rem; background: #4CAF50; color: white; text-decoration: none; border-radius: 25px; transition: all 0.3s ease; }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .no-favorites {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .no-favorites i {
+            font-size: 4rem;
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+
+        .back-to-blog {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            background: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+        }
+
         .favorite-item-actions { display: flex; gap: 0.5rem; margin-top: 1rem; }
-        .remove-btn { background: #e74c3c; color: white; border: none; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-size: 0.9rem; }
+        .remove-btn { background: #e74c3c; color: white; border: none; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; }
         .favorite-date { font-size: 0.8rem; color: #999; margin-top: 0.5rem; }
+
+        /* DARK THEME OVERRIDES (attribute-based) */
+        html[data-theme="dark"] .favorites-title { color: #9be39b; }
+        html[data-theme="dark"] .favorites-stats { color: #ccc; }
+        html[data-theme="dark"] .no-favorites {
+            background: #1e1e1e;
+            color: #ccc;
+        }
+        html[data-theme="dark"] .no-favorites i { color: #777; }
+        html[data-theme="dark"] .favorite-date { color: #aaa; }
     </style>
 </head>
+
 <body>
     <section class="agritech-blog">
         <div class="favorites-container">
             <div class="favorites-header">
-                <h1 class="favorites-title"><i class="fas fa-heart" style="color: #e74c3c;"></i> My Favorite Blogs</h1>
-                <p class="favorites-stats">You have <span id="favoritesCount">0</span> saved articles</p>
+                <h1 class="favorites-title">
+                    <i class="fas fa-heart" style="color:#e74c3c;"></i> My Favorite Blogs
+                </h1>
+                <p class="favorites-stats">
+                    You have <span id="favoritesCount">0</span> saved articles
+                </p>
             </div>
 
             <div class="favorites-actions">
@@ -45,114 +119,81 @@
                 </a>
             </div>
 
-            <div id="favoritesContainer">
-                <!-- Favorites will be loaded here -->
-            </div>
+            <div id="favoritesContainer"></div>
         </div>
     </section>
 
     <script>
         class FavoritesPage {
             constructor() {
-                this.favorites = JSON.parse(localStorage.getItem('agritech_favorite_blogs')) || [];
+                this.favorites = JSON.parse(localStorage.getItem("agritech_favorite_blogs")) || [];
                 this.renderFavorites();
                 this.updateStats();
             }
 
             renderFavorites() {
-                const container = document.getElementById('favoritesContainer');
-                
-                if (this.favorites.length === 0) {
+                const container = document.getElementById("favoritesContainer");
+
+                if (!this.favorites.length) {
                     container.innerHTML = `
                         <div class="no-favorites">
                             <i class="far fa-heart"></i>
                             <h3>No Favorite Blogs Yet</h3>
                             <p>Start exploring our blog section and add your favorite articles here!</p>
-                            <a href="blog.html" class="back-to-blog">
-                                <i class="fas fa-newspaper"></i> Explore Blogs
-                            </a>
+                            <a href="blog.html" class="back-to-blog">Explore Blogs</a>
                         </div>
                     `;
                     return;
                 }
 
-                const sortedFavorites = [...this.favorites].sort((a, b) => 
-                    new Date(b.addedAt) - new Date(a.addedAt)
-                );
-
                 container.innerHTML = `
                     <div class="blog-grid">
-                        ${sortedFavorites.map(blog => `
+                        ${this.favorites.map(blog => `
                             <div class="blog-card">
                                 <img src="${blog.image}" alt="${blog.title}">
                                 <button class="favorite-btn active" onclick="removeFavorite('${blog.id}')">
                                     <i class="fas fa-heart"></i>
                                 </button>
                                 <div class="card-content">
-                                    <span class="card-category">${blog.category?.replace('-', ' ') || 'Uncategorized'}</span>
                                     <h3 class="card-title">${blog.title}</h3>
                                     <p class="card-description">${blog.description}</p>
-                                    <div class="card-meta">
-                                        <span class="card-author">By ${blog.author || 'Unknown Author'}</span>
-                                        <span class="card-date">${blog.date || 'Unknown Date'}</span>
-                                    </div>
-                                    <div class="favorite-date">
-                                        <i class="fas fa-calendar-plus"></i> Added on ${new Date(blog.addedAt).toLocaleDateString()}
-                                    </div>
-                                    <div class="favorite-item-actions">
-                                        <button class="read-more-btn" onclick="viewBlogPost('${blog.id}')">Read Article</button>
-                                        <button class="remove-btn" onclick="removeFavorite('${blog.id}')">
-                                            <i class="fas fa-trash"></i> Remove
-                                        </button>
-                                    </div>
                                 </div>
                             </div>
-                        `).join('')}
+                        `).join("")}
                     </div>
                 `;
             }
 
             updateStats() {
-                document.getElementById('favoritesCount').textContent = this.favorites.length;
+                document.getElementById("favoritesCount").textContent = this.favorites.length;
             }
         }
 
-        function removeFavorite(blogId) {
-            let favorites = JSON.parse(localStorage.getItem('agritech_favorite_blogs')) || [];
-            favorites = favorites.filter(blog => blog.id !== blogId);
-            localStorage.setItem('agritech_favorite_blogs', JSON.stringify(favorites));
+        function removeFavorite(id) {
+            let favs = JSON.parse(localStorage.getItem("agritech_favorite_blogs")) || [];
+            favs = favs.filter(b => b.id !== id);
+            localStorage.setItem("agritech_favorite_blogs", JSON.stringify(favs));
             new FavoritesPage();
         }
 
         function clearAllFavorites() {
-            if (confirm('Are you sure you want to clear all favorites?')) {
-                localStorage.removeItem('agritech_favorite_blogs');
+            if (confirm("Clear all favorites?")) {
+                localStorage.removeItem("agritech_favorite_blogs");
                 new FavoritesPage();
             }
         }
 
         function exportFavorites() {
-            const favorites = JSON.parse(localStorage.getItem('agritech_favorite_blogs')) || [];
-            if (favorites.length === 0) {
-                alert('No favorites to export');
-                return;
-            }
-            
-            const data = JSON.stringify(favorites, null, 2);
-            const blob = new Blob([data], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'agritech-favorites.json';
+            const favs = JSON.parse(localStorage.getItem("agritech_favorite_blogs")) || [];
+            if (!favs.length) return alert("No favorites to export");
+            const blob = new Blob([JSON.stringify(favs, null, 2)], { type: "application/json" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "agritech-favorites.json";
             a.click();
-            URL.revokeObjectURL(url);
         }
 
-        function viewBlogPost(blogId) {
-            window.location.href = `blog.html#${blogId}`;
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener("DOMContentLoaded", () => {
             new FavoritesPage();
         });
     </script>
