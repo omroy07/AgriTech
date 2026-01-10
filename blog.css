@@ -186,6 +186,10 @@
     padding: 1.5rem;
 }
 
+.read-more-btn{
+    margin-top: auto;
+}
+
 .card-category {
     display: inline-block;
     background: #4CAF50;
@@ -196,6 +200,7 @@
     font-weight: 600;
     margin-bottom: 1rem;
     text-transform: capitalize;
+    align-self: flex-start;
 }
 
 .card-title {
@@ -206,11 +211,28 @@
     line-height: 1.4;
 }
 
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  height:100%;
+}
+
 .card-description {
     color: #666;
     line-height: 1.6;
     margin-bottom: 1.5rem;
 }
+
+.card-footer {
+  margin-top: auto; /* 🔥 THIS is the key */
+}
+
 
 .read-more-btn {
     background: linear-gradient(45deg, #4CAF50, #45a049);
@@ -827,4 +849,75 @@
 
 [data-theme="dark"] .modal-body::-webkit-scrollbar-thumb {
     background: #4a5568;
+}
+
+/* Style for Back to Home Button */
+    .home-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background-color: #2e7d32; /* AgriTech Green */
+        color: white;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .home-btn:hover {
+        background-color: #1b5e20; /* Darker green on hover */
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Ensure the header actions align properly */
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+    .no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    border-radius: 20px;
+    background: rgba(46, 204, 113, 0.08);
+    color: #2c5f2d;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.no-results i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #27ae60;
+}
+
+.no-results h3 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+}
+
+.no-results p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.no-results span {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
