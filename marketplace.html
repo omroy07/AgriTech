@@ -331,19 +331,20 @@
         }
 
         .stat-card:nth-child(1) {
-            --fire-color: rgba(255, 153, 0, 0.6);
-            --fire-glow: rgba(255, 170, 0, 0.9);
-        }
+    --fire-color: rgba(255, 153, 0, 0.6);
+    --fire-glow: rgba(255, 170, 0, 0.9);
+}
 
-        .stat-card:nth-child(2) {
-            --fire-color: rgba(0, 200, 255, 0.6);
-            --fire-glow: rgba(0, 220, 255, 0.9);
-        }
+.stat-card:nth-child(2) {
+    --fire-color: rgba(0, 200, 255, 0.6);
+    --fire-glow: rgba(0, 220, 255, 0.9);
+}
 
-        .stat-card:nth-child(3) {
-            --fire-color: rgba(255, 80, 120, 0.6);
-            --fire-glow: rgba(255, 100, 150, 0.9);
-        }
+.stat-card:nth-child(3) {
+    --fire-color: rgba(255, 80, 120, 0.6);
+    --fire-glow: rgba(255, 100, 150, 0.9);
+}
+
 
         .stat-card:nth-child(4) {
             --fire-color: rgba(140, 120, 255, 0.6);
@@ -375,19 +376,19 @@
 
         /* --- Product Cards --- */
         .product-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 28px;
-            padding: 16px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-        }
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 28px;
+    padding: 16px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
 
-        .product-card:hover {
-            transform: translateY(-12px);
-            border-color: var(--accent-primary);
-            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.4);
-        }
+.product-card:hover {
+    transform: translateY(-12px);
+    border-color: var(--accent-primary);
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.4);
+}
 
         .product-image {
             width: 100%;
@@ -938,6 +939,9 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
+                            <button class="btn-primary" onclick="toggleCart()">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
                             <button class="btn-primary" onclick="contactSeller('Kumar Farms')">Contact Seller</button>
                             <button class="btn-secondary" onclick="toggleLike(this)"
                                 style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
@@ -973,12 +977,18 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
-                            <button class="btn-primary" onclick="contactSeller('Mountain Fresh')">Contact
-                                Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)"
-                                style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
-                                    class="far fa-heart"></i></button>
-                        </div>
+    <button class="btn-primary" onclick="toggleCart()">
+        <i class="fas fa-cart-plus"></i> Add to Cart
+    </button>
+
+    <button class="btn-primary" onclick="contactSeller('Mountain Fresh')">Contact Seller</button>
+
+    <button class="btn-secondary" onclick="toggleLike(this)"
+        style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;">
+        <i class="far fa-heart"></i>
+    </button>
+</div>
+
                     </div>
                 </div>
 
@@ -1008,12 +1018,18 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
-                            <button class="btn-primary" onclick="contactSeller('Green Fields Co.')">Contact
-                                Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)"
-                                style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
-                                    class="far fa-heart"></i></button>
-                        </div>
+    <button class="btn-primary" onclick="toggleCart()">
+        <i class="fas fa-cart-plus"></i> Add to Cart
+    </button>
+
+    <button class="btn-primary" onclick="contactSeller('Green Fields Co.')">Contact Seller</button>
+
+    <button class="btn-secondary" onclick="toggleLike(this)"
+        style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;">
+        <i class="far fa-heart"></i>
+    </button>
+</div>
+
                     </div>
                 </div>
 
@@ -1043,6 +1059,9 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
+                            <button class="btn-primary" onclick="toggleCart()">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
                             <button class="btn-primary" onclick="contactSeller('Spice Hub')">Contact Seller</button>
                             <button class="btn-secondary" onclick="toggleLike(this)"
                                 style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
@@ -1078,6 +1097,9 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
+                            <button class="btn-primary" onclick="toggleCart()">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
                             <button class="btn-primary" onclick="contactSeller('Vitis Growers')">Contact Seller</button>
                             <button class="btn-secondary" onclick="toggleLike(this)"
                                 style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
@@ -1112,6 +1134,9 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
+                            <button class="btn-primary" onclick="toggleCart()">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
                             <button class="btn-primary" onclick="contactSeller('Amulya Dairy')">Contact Seller</button>
                             <button class="btn-secondary" onclick="toggleLike(this)"
                                 style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
@@ -1588,14 +1613,24 @@ body {
         }
 
         function toggleCart() {
-            cartItems++;
-            const cartCountElement = document.getElementById('cartCount');
-            cartCountElement.textContent = cartItems;
-            const cartWidget = document.getElementById('cartWidget');
-            cartWidget.style.transform = 'scale(1.2)';
-            setTimeout(() => cartWidget.style.transform = 'scale(1)', 150);
-            showNotification('Item added to cart!');
+            cartItems++;  // Increment the cart counter
+
+            const cartCountElement = document.getElementById("cartCount");
+            if (cartCountElement) {
+                cartCountElement.textContent = cartItems;
+            }
+
+            const cartWidget = document.getElementById("cartWidget");
+            if (cartWidget) {
+                cartWidget.style.transform = "scale(1.2)";
+                setTimeout(() => {
+                    cartWidget.style.transform = "scale(1)";
+                }, 150);
+            }
+
+            showNotification("Item added to cart!", "success");
         }
+
 
         function contactSeller(name) {
             showNotification(`Initiating contact with ${name}...`, 'info');
