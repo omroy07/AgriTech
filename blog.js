@@ -404,11 +404,14 @@ function displayPosts() {
                 <span class="card-category">${post.category.replace('-', ' ')}</span>
                 <h3 class="card-title">${post.title}</h3>
                 <p class="card-description">${post.description}</p>
+    
+                <div class="card-footer">
                 <div class="card-meta">
                     <span class="card-author">By ${post.author}</span>
                     <span class="card-date">${post.date}</span>
                 </div>
-                <button class="read-more-btn" style="margin-top:16px"onclick="openModal('${post.id}')">Read More</button>
+                <button class="read-more-btn" onclick="openModal('${post.id}')">Read More</button>
+                </div>
             </div>
         `;
         blogGrid.appendChild(postElement);
