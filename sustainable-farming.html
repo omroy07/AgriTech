@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,16 +8,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
+        rel="stylesheet">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/logo.png">
-    
+
     <style>
         :root {
             /* Dark Theme Variables */
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-tertiary: #334155;
+            --bg-primary: #011034;
+            --bg-secondary: #0d1c34;
+            --bg-tertiary: #172437;
             --text-primary: #f8fafc;
             --text-secondary: #cbd5e1;
             --text-muted: #94a3b8;
@@ -24,9 +27,9 @@
             --shadow-light: rgba(0, 0, 0, 0.3);
             --shadow-medium: rgba(0, 0, 0, 0.4);
             --shadow-heavy: rgba(0, 0, 0, 0.6);
-            --accent-primary: #00b894;
-            --accent-secondary: #00cec9;
-            --accent-success: #22c55e;
+            --accent-primary: #0ba238;
+            --accent-secondary: #03b137;
+            --accent-success: #03a73f;
             --accent-warning: #f59e0b;
             --accent-danger: #ef4444;
         }
@@ -55,7 +58,7 @@
             font-family: 'Open Sans', sans-serif;
             line-height: 1.6;
             color: var(--text-primary);
-            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+            background: linear-gradient(135deg, #017c329d 0%, #049f209e 100%);
             min-height: 100vh;
             transition: all 0.3s ease;
         }
@@ -208,8 +211,13 @@
         }
 
         @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .header-content {
@@ -293,7 +301,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             transform: rotate(45deg);
             transition: all 0.6s ease;
             opacity: 0;
@@ -305,8 +313,13 @@
         }
 
         @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
         }
 
         .metric-card:hover {
@@ -330,6 +343,42 @@
             opacity: 0.9;
         }
 
+
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .impact-stat {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            border-left: 5px solid var(--accent-primary);
+            transition: all 0.3s ease;
+        }
+
+        .impact-stat:hover {
+            background: var(--bg-tertiary);
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px var(--shadow-light);
+        }
+
+        .impact-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 10px;
+        }
+
+        .impact-description {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
         .practices-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -405,79 +454,7 @@
             margin-right: 10px;
         }
 
-        .impact-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin: 30px 0;
-        }
-
-        .impact-stat {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            border-left: 5px solid var(--accent-primary);
-            transition: all 0.3s ease;
-        }
-
-        .impact-stat:hover {
-            background: var(--bg-tertiary);
-            transform: translateX(5px);
-            box-shadow: 0 8px 20px var(--shadow-light);
-        }
-
-        .impact-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--accent-primary);
-            margin-bottom: 10px;
-        }
-
-        .impact-description {
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .tips-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .tip-card {
-            background: linear-gradient(135deg, rgba(0, 184, 148, 0.1), rgba(0, 206, 201, 0.1));
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 25px;
-            border-left: 4px solid var(--accent-primary);
-            transition: all 0.3s ease;
-        }
-
-        .tip-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 25px rgba(0,184,148,0.2);
-            border-left-width: 8px;
-        }
-
-        .tip-title {
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
-
-        .tip-title i {
-            margin-right: 10px;
-            color: var(--accent-primary);
-        }
-
-        .tip-card p {
-            color: var(--text-secondary);
-        }
-
+       
         .assessment-form {
             max-width: 600px;
             margin: 0 auto;
@@ -533,7 +510,7 @@
 
         .assess-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,184,148,0.3);
+            box-shadow: 0 8px 20px rgba(0, 184, 148, 0.3);
         }
 
         .results-section {
@@ -545,12 +522,51 @@
             display: none;
             animation: fadeInUp 0.5s ease;
         }
+         .tips-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .tip-card {
+            background: linear-gradient(135deg, rgba(0, 184, 148, 0.1), rgba(0, 206, 201, 0.1));
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid var(--accent-primary);
+            transition: all 0.3s ease;
+        }
+
+        .tip-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 184, 148, 0.2);
+            border-left-width: 8px;
+        }
+
+        .tip-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tip-title i {
+            margin-right: 10px;
+            color: var(--accent-primary);
+        }
+
+        .tip-card p {
+            color: var(--text-secondary);
+        }
+
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -598,24 +614,7 @@
             box-shadow: 0 8px 20px var(--shadow-medium);
         }
 
-        .notification {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            background: var(--accent-success);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px var(--shadow-medium);
-            z-index: 1000;
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            max-width: 300px;
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
+       
 
         .notification.warning {
             background: var(--accent-warning);
@@ -658,10 +657,33 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
+         .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--accent-success);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px var(--shadow-medium);
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .floating-tips {
@@ -765,6 +787,7 @@
         }
     </style>
 </head>
+
 <body data-theme="dark">
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
@@ -959,42 +982,48 @@
                         <i class="fas fa-clock"></i>
                         Morning Routine
                     </div>
-                    <p>Check soil moisture levels before irrigation. Use the finger test or install moisture sensors for accurate readings.</p>
+                    <p>Check soil moisture levels before irrigation. Use the finger test or install moisture sensors for
+                        accurate readings.</p>
                 </div>
                 <div class="tip-card">
                     <div class="tip-title">
                         <i class="fas fa-leaf"></i>
                         Composting
                     </div>
-                    <p>Turn your organic waste into nutrient-rich compost. Mix green and brown materials in a 3:1 ratio for optimal results.</p>
+                    <p>Turn your organic waste into nutrient-rich compost. Mix green and brown materials in a 3:1 ratio
+                        for optimal results.</p>
                 </div>
                 <div class="tip-card">
                     <div class="tip-title">
                         <i class="fas fa-bug"></i>
                         Natural Pest Control
                     </div>
-                    <p>Plant marigolds, basil, and mint around your crops. These natural repellents keep harmful insects away.</p>
+                    <p>Plant marigolds, basil, and mint around your crops. These natural repellents keep harmful insects
+                        away.</p>
                 </div>
                 <div class="tip-card">
                     <div class="tip-title">
                         <i class="fas fa-recycle"></i>
                         Waste Reduction
                     </div>
-                    <p>Reuse plastic containers for seedling trays and water collection. Every small action contributes to sustainability.</p>
+                    <p>Reuse plastic containers for seedling trays and water collection. Every small action contributes
+                        to sustainability.</p>
                 </div>
                 <div class="tip-card">
                     <div class="tip-title">
                         <i class="fas fa-sun"></i>
                         Solar Energy
                     </div>
-                    <p>Consider solar panels for irrigation pumps. Initial investment pays off through reduced electricity bills.</p>
+                    <p>Consider solar panels for irrigation pumps. Initial investment pays off through reduced
+                        electricity bills.</p>
                 </div>
                 <div class="tip-card">
                     <div class="tip-title">
                         <i class="fas fa-chart-line"></i>
                         Data Tracking
                     </div>
-                    <p>Keep records of your sustainable practices. Track water usage, soil health, and cost savings over time.</p>
+                    <p>Keep records of your sustainable practices. Track water usage, soil health, and cost savings over
+                        time.</p>
                 </div>
             </div>
         </div>
@@ -1055,7 +1084,8 @@
 
         <div class="cta-section">
             <h2 style="color: var(--text-primary); margin-bottom: 20px;">Start Your Sustainable Journey Today</h2>
-            <p style="margin-bottom: 30px; color: var(--text-secondary);">Join thousands of farmers creating a more sustainable future</p>
+            <p style="margin-bottom: 30px; color: var(--text-secondary);">Join thousands of farmers creating a more
+                sustainable future</p>
             <button class="cta-button" onclick="showNotification('Consultation booked!', 'success')">
                 <i class="fas fa-user-md"></i> Get Consultation
             </button>
@@ -1094,7 +1124,7 @@
         themeToggle.addEventListener('click', () => {
             const currentTheme = document.body.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
+
             document.body.setAttribute('data-theme', newTheme);
             localStorage.setItem('sustainableTheme', newTheme);
             updateThemeButton(newTheme);
@@ -1115,8 +1145,8 @@
         ['currentPractices', 'waterUsage', 'organicUse', 'energyEfficiency'].forEach(id => {
             const slider = document.getElementById(id);
             const valueDisplay = document.getElementById(id.replace(/([A-Z])/g, '$1').toLowerCase().replace(/^(.)/, '$1').replace(' ', '') + 'Value');
-            
-            slider.addEventListener('input', function() {
+
+            slider.addEventListener('input', function () {
                 valueDisplay.textContent = this.value;
             });
         });
@@ -1124,17 +1154,17 @@
         // Calculate sustainability score
         function calculateSustainability() {
             showLoading();
-            
+
             setTimeout(() => {
                 const farmSize = document.getElementById('farmSize').value;
                 const practices = parseInt(document.getElementById('currentPractices').value);
                 const water = parseInt(document.getElementById('waterUsage').value);
                 const organic = parseInt(document.getElementById('organicUse').value);
                 const energy = parseInt(document.getElementById('energyEfficiency').value);
-                
+
                 // Calculate base score
                 let score = ((practices + water + organic + energy) / 4) * 10;
-                
+
                 // Adjust for farm size
                 const sizeMultiplier = {
                     'small': 1.1,
@@ -1142,23 +1172,23 @@
                     'large': 0.95,
                     'xlarge': 0.9
                 };
-                
+
                 score = Math.round(score * sizeMultiplier[farmSize]);
-                
+
                 // Show results
                 const resultsSection = document.getElementById('assessmentResults');
                 const scoreValue = document.getElementById('scoreValue');
                 const scoreFill = document.getElementById('scoreFill');
                 const scoreDescription = document.getElementById('scoreDescription');
                 const recommendations = document.getElementById('recommendations');
-                
+
                 scoreValue.textContent = score;
-                
+
                 // Animate score bar
                 setTimeout(() => {
                     scoreFill.style.width = score + '%';
                 }, 100);
-                
+
                 let description, recs, color;
                 if (score >= 80) {
                     description = "Excellent! You're a sustainability champion with outstanding eco-friendly practices.";
@@ -1177,15 +1207,15 @@
                     recs = "Start with basic practices: soil testing, water conservation, and reducing chemical inputs.";
                     color = '#ef4444';
                 }
-                
+
                 scoreFill.style.background = `linear-gradient(90deg, ${color}, #00cec9)`;
                 scoreDescription.textContent = description;
                 recommendations.innerHTML = `<strong style="color: var(--accent-primary);">Recommendations:</strong> ${recs}`;
-                
+
                 resultsSection.style.display = 'block';
                 hideLoading();
                 showNotification(`Assessment complete! Score: ${score}/100`, 'success');
-                
+
                 setTimeout(() => {
                     resultsSection.scrollIntoView({ behavior: 'smooth' });
                 }, 500);
@@ -1221,9 +1251,9 @@
 
             metrics.forEach(metric => {
                 const element = document.getElementById(metric.id);
-                const variation = Math.floor(Math.random() * metric.range) - metric.range/2;
+                const variation = Math.floor(Math.random() * metric.range) - metric.range / 2;
                 const newValue = Math.max(0, Math.min(100, metric.base + variation));
-                
+
                 // Animate number change
                 animateValue(element, parseInt(element.textContent), newValue, 1000);
             });
@@ -1242,7 +1272,7 @@
                 const element = document.getElementById(stat.id);
                 const variation = Math.random() * 0.2 - 0.1; // ±10% variation
                 const newValue = stat.base * (1 + variation);
-                
+
                 let displayValue;
                 if (stat.suffix === 'M') {
                     displayValue = newValue.toFixed(1) + 'M';
@@ -1251,7 +1281,7 @@
                 } else {
                     displayValue = Math.floor(newValue).toString();
                 }
-                
+
                 element.textContent = displayValue;
             });
         }
@@ -1259,19 +1289,19 @@
         // Animate number changes
         function animateValue(element, start, end, duration) {
             const startTimestamp = performance.now();
-            
+
             function step(timestamp) {
                 const elapsed = timestamp - startTimestamp;
                 const progress = Math.min(elapsed / duration, 1);
-                
+
                 const current = Math.floor(start + (end - start) * progress);
                 element.textContent = current;
-                
+
                 if (progress < 1) {
                     requestAnimationFrame(step);
                 }
             }
-            
+
             requestAnimationFrame(step);
         }
 
@@ -1312,25 +1342,25 @@
         function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
-            
+
             const icons = {
                 success: 'fa-check-circle',
                 warning: 'fa-exclamation-triangle',
                 danger: 'fa-exclamation-circle',
                 info: 'fa-info-circle'
             };
-            
+
             notification.innerHTML = `
                 <i class="fas ${icons[type]}"></i>
                 <span style="margin-left: 10px;">${message}</span>
             `;
-            
+
             document.body.appendChild(notification);
-            
+
             setTimeout(() => {
                 notification.classList.add('show');
             }, 100);
-            
+
             setTimeout(() => {
                 notification.classList.remove('show');
                 setTimeout(() => notification.remove(), 300);
@@ -1338,14 +1368,14 @@
         }
 
         // Initialize everything
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             showNotification('Sustainable Farming Guidance loaded!', 'success');
-            
+
             // Show floating tips after 3 seconds
             setTimeout(() => {
                 document.getElementById('floatingTips').classList.add('show');
             }, 3000);
-            
+
             // Set up auto-updates
             setInterval(updateMetrics, 12000);
             setInterval(updateImpactStats, 18000);
@@ -1356,7 +1386,7 @@
             cards.forEach((card, index) => {
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(30px)';
-                
+
                 setTimeout(() => {
                     card.style.transition = 'all 0.6s ease';
                     card.style.opacity = '1';
@@ -1366,9 +1396,9 @@
         });
 
         // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.ctrlKey || e.metaKey) {
-                switch(e.key) {
+                switch (e.key) {
                     case 'a':
                         e.preventDefault();
                         document.getElementById('sustainabilityForm').scrollIntoView({ behavior: 'smooth' });
@@ -1410,4 +1440,5 @@
         });
     </script>
 </body>
+
 </html>
