@@ -11,6 +11,37 @@ const buyRequestDisplay = document.getElementById("buy-request-display");
 const productCount = document.getElementById("product-count");
 const requestCount = document.getElementById("request-count");
 
+// Validation functions
+function validateContactNumber(phone) {
+  const phoneRegex = /^[0-9]{10}$/;
+  return phoneRegex.test(phone.replace(/[\s\-()]/g, ''));
+}
+
+function validateQuantity(quantity) {
+  const quantityNum = parseFloat(quantity);
+  return !isNaN(quantityNum) && quantityNum > 0;
+}
+
+function showErrorMessage(container, message) {
+  const existingError = container.querySelector(".error-message");
+  if (existingError) {
+    existingError.remove();
+  }
+
+  const errorDiv = document.createElement("div");
+  errorDiv.className = "error-message";
+  errorDiv.innerHTML = `
+    <i class="fas fa-exclamation-circle"></i>
+    <span>${message}</span>
+  `;
+
+  container.insertBefore(errorDiv, container.firstChild);
+
+  setTimeout(() => {
+    errorDiv.remove();
+  }, 4000);
+}
+
 // Tab switching functionality
 tabButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -175,42 +206,84 @@ window.removeRequest = function (index) {
 productForm.addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const formData = new FormData(productForm);
+  const sellerName = document.getElementById("seller-name").value.trim();
+  const sellerContact = document.getElementById("seller-contact").value.trim();
+  const productName = document.getElementById("product-name").value.trim();
+  const productQuantity = document.getElementById("product-quantity").value.trim();
+  const productPrice = document.getElementById("product-price").value.trim();
+
+  // Validate contact number
+  if (!validateContactNumber(sellerContact)) {
+    showErrorMessage(productForm, "❌ Contact number must be a valid 10-digit mobile number (e.g., 9876543210)");
+    return;
+  }
+
+  // Validate quantity
+  if (!validateQuantity(productQuantity)) {
+    showErrorMessage(productForm, "❌ Quantity must be a positive number (e.g., 500 kg)");
+    return;
+  }
+
+  // Check all fields are filled
+  if (!sellerName || !productName || !productPrice) {
+    showErrorMessage(productForm, "❌ Please fill in all required fields");
+    return;
+  }
+
   const product = {
-    sellerName: document.getElementById("seller-name").value.trim(),
-    contact: document.getElementById("seller-contact").value.trim(),
-    name: document.getElementById("product-name").value.trim(),
-    quantity: document.getElementById("product-quantity").value.trim(),
-    price: document.getElementById("product-price").value.trim(),
+    sellerName: sellerName,
+    contact: sellerContact,
+    name: productName,
+    quantity: productQuantity,
+    price: productPrice,
   };
 
-  if (Object.values(product).every((value) => value)) {
-    products.push(product);
-    renderProducts();
-    productForm.reset();
-    showSuccessMessage(productDisplay, "Product added successfully!");
-  }
+  products.push(product);
+  renderProducts();
+  productForm.reset();
+  showSuccessMessage(productDisplay, "✅ Product added successfully!");
 });
 
 buyForm.addEventListener("submit", function (e) {
   e.preventDefault();
 
+  const buyerName = document.getElementById("buyer-name").value.trim();
+  const buyerContact = document.getElementById("buyer-contact").value.trim();
+  const productName = document.getElementById("buy-product-name").value.trim();
+  const quantity = document.getElementById("buy-product-quantity").value.trim();
+
+  // Validate contact number
+  if (!validateContactNumber(buyerContact)) {
+    showErrorMessage(buyForm, "❌ Contact number must be a valid 10-digit mobile number (e.g., 9876543210)");
+    return;
+  }
+
+  // Validate quantity
+  if (!validateQuantity(quantity)) {
+    showErrorMessage(buyForm, "❌ Quantity must be a positive number (e.g., 1000 kg)");
+    return;
+  }
+
+  // Check all fields are filled
+  if (!buyerName || !productName) {
+    showErrorMessage(buyForm, "❌ Please fill in all required fields");
+    return;
+  }
+
   const request = {
-    buyerName: document.getElementById("buyer-name").value.trim(),
-    contact: document.getElementById("buyer-contact").value.trim(),
-    productName: document.getElementById("buy-product-name").value.trim(),
-    quantity: document.getElementById("buy-product-quantity").value.trim(),
+    buyerName: buyerName,
+    contact: buyerContact,
+    productName: productName,
+    quantity: quantity,
   };
 
-  if (Object.values(request).every((value) => value)) {
-    requests.push(request);
-    renderRequests();
-    buyForm.reset();
-    showSuccessMessage(
-      buyRequestDisplay,
-      "Buy request submitted successfully!"
-    );
-  }
+  requests.push(request);
+  renderRequests();
+  buyForm.reset();
+  showSuccessMessage(
+    buyRequestDisplay,
+    "✅ Buy request submitted successfully!"
+  );
 });
 
 // Initialize
