@@ -11,6 +11,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
         rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <link rel="icon" type="image/png" href="images/logo.png">
 
      <style>
@@ -42,6 +45,9 @@
             /* Modern Shadows & Glass */
             --glass-bg: rgba(16, 28, 56, 0.8);
             --shadow-premium: 0 15px 30px rgba(0, 0, 0, 0.5);
+
+            --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
         [data-theme="light"] {
@@ -325,19 +331,20 @@
         }
 
         .stat-card:nth-child(1) {
-            --fire-color: rgba(255, 153, 0, 0.6);
-            --fire-glow: rgba(255, 170, 0, 0.9);
-        }
+    --fire-color: rgba(255, 153, 0, 0.6);
+    --fire-glow: rgba(255, 170, 0, 0.9);
+}
 
-        .stat-card:nth-child(2) {
-            --fire-color: rgba(0, 200, 255, 0.6);
-            --fire-glow: rgba(0, 220, 255, 0.9);
-        }
+.stat-card:nth-child(2) {
+    --fire-color: rgba(0, 200, 255, 0.6);
+    --fire-glow: rgba(0, 220, 255, 0.9);
+}
 
-        .stat-card:nth-child(3) {
-            --fire-color: rgba(255, 80, 120, 0.6);
-            --fire-glow: rgba(255, 100, 150, 0.9);
-        }
+.stat-card:nth-child(3) {
+    --fire-color: rgba(255, 80, 120, 0.6);
+    --fire-glow: rgba(255, 100, 150, 0.9);
+}
+
 
         .stat-card:nth-child(4) {
             --fire-color: rgba(140, 120, 255, 0.6);
@@ -369,19 +376,19 @@
 
         /* --- Product Cards --- */
         .product-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 28px;
-            padding: 16px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-        }
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 28px;
+    padding: 16px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
 
-        .product-card:hover {
-            transform: translateY(-12px);
-            border-color: var(--accent-primary);
-            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.4);
-        }
+.product-card:hover {
+    transform: translateY(-12px);
+    border-color: var(--accent-primary);
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.4);
+}
 
         .product-image {
             width: 100%;
@@ -904,41 +911,41 @@ body {
             <div class="categories-grid">
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'vegetables')">
                     <div class="category-icon">🥬</div>
-                    <div class="category-title"
-                        style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Fresh Vegetables</div>
-                    <div class="category-count" id="vegCount" style="color: var(--text-muted);">847 products</div>
+                    <div class="category-title">Fresh Vegetables</div>
+                    <div class="category-count" id="vegCount">847 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'fruits')">
                     <div class="category-icon">🍎</div>
-                    <div class="category-title"
-                        style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Seasonal Fruits</div>
-                    <div class="category-count" id="fruitCount" style="color: var(--text-muted);">623 products</div>
+                    <div class="category-title">Seasonal Fruits</div>
+                    <div class="category-count" id="fruitCount">623 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'grains')">
                     <div class="category-icon">🌾</div>
-                    <div class="category-title"
-                        style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Grains & Cereals</div>
-                    <div class="category-count" id="grainCount" style="color: var(--text-muted);">456 products</div>
+                    <div class="category-title">Grains & Cereals</div>
+                    <div class="category-count" id="grainCount">456 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'spices')">
                     <div class="category-icon">🌶️</div>
-                    <div class="category-title"
-                        style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Spices & Herbs</div>
-                    <div class="category-count" id="spiceCount" style="color: var(--text-muted);">321 products</div>
+                    <div class="category-title">Spices & Herbs</div>
+                    <div class="category-count" id="spiceCount">321 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'dairy')">
                     <div class="category-icon">🥛</div>
-                    <div class="category-title"
-                        style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Dairy Products</div>
-                    <div class="category-count" id="dairyCount" style="color: var(--text-muted);">234 products</div>
+                    <div class="category-title">Dairy Products</div>
+                    <div class="category-count" id="dairyCount">234 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'pulses')">
                     <div class="category-icon">🫘</div>
-                    <div class="category-title"
-                        style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Pulses & Legumes</div>
-                    <div class="category-count" id="pulseCount" style="color: var(--text-muted);">366 products</div>
+                    <div class="category-title">Pulses & Legumes</div>
+                    <div class="category-count" id="pulseCount">366 products</div>
                 </div>
             </div>
+
         </div>
 
         <div class="products-section">
@@ -976,6 +983,9 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
+                            <button class="btn-primary" onclick="toggleCart()">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
                             <button class="btn-primary" onclick="contactSeller('Kumar Farms')">Contact Seller</button>
                             <button class="btn-secondary" onclick="toggleLike(this)"
                                 style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
@@ -1011,12 +1021,18 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
-                            <button class="btn-primary" onclick="contactSeller('Mountain Fresh')">Contact
-                                Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)"
-                                style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
-                                    class="far fa-heart"></i></button>
-                        </div>
+    <button class="btn-primary" onclick="toggleCart()">
+        <i class="fas fa-cart-plus"></i> Add to Cart
+    </button>
+
+    <button class="btn-primary" onclick="contactSeller('Mountain Fresh')">Contact Seller</button>
+
+    <button class="btn-secondary" onclick="toggleLike(this)"
+        style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;">
+        <i class="far fa-heart"></i>
+    </button>
+</div>
+
                     </div>
                 </div>
 
@@ -1046,12 +1062,18 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
-                            <button class="btn-primary" onclick="contactSeller('Green Fields Co.')">Contact
-                                Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)"
-                                style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
-                                    class="far fa-heart"></i></button>
-                        </div>
+    <button class="btn-primary" onclick="toggleCart()">
+        <i class="fas fa-cart-plus"></i> Add to Cart
+    </button>
+
+    <button class="btn-primary" onclick="contactSeller('Green Fields Co.')">Contact Seller</button>
+
+    <button class="btn-secondary" onclick="toggleLike(this)"
+        style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;">
+        <i class="far fa-heart"></i>
+    </button>
+</div>
+
                     </div>
                 </div>
 
@@ -1081,6 +1103,9 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
+                            <button class="btn-primary" onclick="toggleCart()">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
                             <button class="btn-primary" onclick="contactSeller('Spice Hub')">Contact Seller</button>
                             <button class="btn-secondary" onclick="toggleLike(this)"
                                 style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
@@ -1116,6 +1141,9 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
+                            <button class="btn-primary" onclick="toggleCart()">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
                             <button class="btn-primary" onclick="contactSeller('Vitis Growers')">Contact Seller</button>
                             <button class="btn-secondary" onclick="toggleLike(this)"
                                 style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
@@ -1150,6 +1178,9 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
+                            <button class="btn-primary" onclick="toggleCart()">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
                             <button class="btn-primary" onclick="contactSeller('Amulya Dairy')">Contact Seller</button>
                             <button class="btn-secondary" onclick="toggleLike(this)"
                                 style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
@@ -1621,14 +1652,24 @@ body {
         }
 
         function toggleCart() {
-            cartItems++;
-            const cartCountElement = document.getElementById('cartCount');
-            cartCountElement.textContent = cartItems;
-            const cartWidget = document.getElementById('cartWidget');
-            cartWidget.style.transform = 'scale(1.2)';
-            setTimeout(() => cartWidget.style.transform = 'scale(1)', 150);
-            showNotification('Item added to cart!');
+            cartItems++;  // Increment the cart counter
+
+            const cartCountElement = document.getElementById("cartCount");
+            if (cartCountElement) {
+                cartCountElement.textContent = cartItems;
+            }
+
+            const cartWidget = document.getElementById("cartWidget");
+            if (cartWidget) {
+                cartWidget.style.transform = "scale(1.2)";
+                setTimeout(() => {
+                    cartWidget.style.transform = "scale(1)";
+                }, 150);
+            }
+
+            showNotification("Item added to cart!", "success");
         }
+
 
         function contactSeller(name) {
             showNotification(`Initiating contact with ${name}...`, 'info');

@@ -422,12 +422,13 @@
 
     /* FOOTER */
     .site-footer {
-      background: #f9fdf7;
-      color: #374151;
+      background: var(--surface-color);
+      color: var(--text-color);
       position: relative;
       font-size: 0.95rem;
-      border-top: 1px solid #e5f2e0;
+      border-top: 1px solid var(--border-color);
     }
+
 
     .footer-top-accent {
       height: 4px;
@@ -459,14 +460,14 @@
     }
 
     .footer-brand h3 {
-      color: #14532d;
+      color: var(--accent-color);
       font-size: 1.3rem;
     }
 
     .tagline {
       margin: 0.8rem 0 1.2rem;
       line-height: 1.6;
-      color: #4b5563;
+      color: var(--text-muted);
     }
 
     .social-icons {
@@ -497,7 +498,7 @@
     }
 
     .footer-section h4 {
-      color: #14532d;
+      color: var(--accent-color);
       margin-bottom: 0.9rem;
       font-size: 1rem;
     }
@@ -513,7 +514,7 @@
     }
 
     .footer-section ul a {
-      color: #374151;
+      color: var(--text-muted);
       text-decoration: none;
       display: flex;
       align-items: center;
@@ -522,14 +523,14 @@
     }
 
     .footer-section ul a:hover {
-      color: #16a34a;
+      color: var(--accent-color);
     }
 
     .footer-bottom {
       text-align: center;
       padding: 1rem;
-      background: #f1f8ed;
-      color: #4b5563;
+      background:  var(--section-bg);
+      color: var(--text-muted);
       font-size: 0.85rem;
     }
 
@@ -1141,7 +1142,7 @@
     </div>
 
     <div class="footer-bottom">
-        <p>© 2025 AgriTech. All rights reserved.</p>
+      <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
     </div>
     
     <div class="footer-wave-overlay"></div> 
@@ -1161,6 +1162,11 @@
         "three": "https://unpkg.com/three@0.158.0/build/three.module.js"
       }
     }
+  </script>
+
+  <script>
+    document.getElementById("current-year").textContent =
+      new Date().getFullYear();
   </script>
 
   <script type="module">
