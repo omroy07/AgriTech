@@ -154,6 +154,24 @@ function displayPosts() {
         `;
         blogGrid.appendChild(postElement);
     });
+    //Changes for issue #478
+    let BlGrid = document.getElementById('blogGrid');
+    let array = BlGrid.children;
+    
+        let card2 = array[1]; // second card
+        let cardcontent = card2.children[2]; // card content of second card
+        let cardmeta = cardcontent.querySelector(".card-meta");
+        cardmeta.style.transform = "translateY(20px)";
+        let btn = cardcontent.children[4]; // read more button of second card
+        btn.style.transform = "translateY(20px)";
+
+        let card3 = array[2]; // third card
+        let cardcontent2 = card3.children[2]; // card content of second card
+        let cardmeta2 = cardcontent2.querySelector(".card-meta");
+        cardmeta2.style.transform = "translateY(20px)";
+        let btn2 = cardcontent2.children[4]; // read more button of second card
+        btn2.style.transform = "translateY(20px)";
+    
 
     document.getElementById('loadMoreBtn').style.display = 
         (currentPage + 1) * postsPerPage >= filteredPosts.length ? 'none' : 'inline-block';
