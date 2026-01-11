@@ -434,6 +434,30 @@
       cursor: pointer;
     }
 
+    /* Scroll to Top Button */
+    .scroll-btn {
+      display: none;
+      position: fixed;
+      bottom: 7rem; /* Placed above chat toggle */
+      right: 2rem;
+      z-index: 1001;
+      background: var(--accent-primary);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 15px var(--shadow-medium);
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+    }
+
+    .scroll-btn:hover {
+      transform: translateY(-5px);
+      background-color: #2563eb;
+    }
+
     /* Main Content */
     .main-content {
       max-width: 1200px;
@@ -997,6 +1021,10 @@
     </a>
   </button>
 
+  <button id="scrollTopBtn" class="scroll-btn" onclick="scrollToTop()" aria-label="Scroll to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-links">
@@ -1040,6 +1068,25 @@
         themeIcon.className = 'fas fa-moon';
         themeText.textContent = 'Dark';
       }
+    }
+
+    // Scroll to Top Functionality
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+    window.onscroll = function() {
+      // Show button when scrolled down 300px
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        scrollTopBtn.style.display = "block";
+      } else {
+        scrollTopBtn.style.display = "none";
+      }
+    };
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     }
 
     // Loan Calculator

@@ -884,6 +884,93 @@
         display: none !important;
       }
     }
+    .search-highlight {
+  background: rgba(34, 197, 94, 0.4);
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+/* Search Not Found Popup */
+.search-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.search-popup {
+  background: var(--surface-color);
+  color: var(--text-color);
+  padding: 2rem;
+  border-radius: 16px;
+  max-width: 380px;
+  width: 90%;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  animation: popupScale 0.35s ease;
+}
+
+@keyframes popupScale {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.search-popup i {
+  font-size: 3rem;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+.search-popup h3 {
+  margin-bottom: 0.5rem;
+}
+
+.search-popup p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.search-popup button {
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.search-popup button:hover {
+  background: #15803d;
+}
+.search-highlight {
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 6px;
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 6px rgba(34,197,94,0.5); }
+  to { box-shadow: 0 0 14px rgba(34,197,94,0.9); }
+}
+.search-highlight {
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  color: #fff;
+  padding: 2px 4px;
+  border-radius: 4px;
+  animation: pulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from { box-shadow: 0 0 6px rgba(34,197,94,.5); }
+  to { box-shadow: 0 0 14px rgba(34,197,94,.9); }
+}
+
   </style>
 </head>
 <body>
@@ -1378,6 +1465,132 @@
       });
     }
   </script>
+<script>
+if (window.location.pathname.endsWith("index.html") || window.location.pathname === "/") {
+
+  const pageMap = {
+    home: "index.html",
+    about: "about.html",
+    blog: "blog.html",
+    crop: "crop.html",
+    marketplace: "marketplace.html",
+    supply: "supply-chain.html",
+    sustainable: "sustainable-farming.html",
+    finance: "financial-support.html",
+    login: "login.html",
+    register: "register.html",
+    faq: "faq.html",
+    feedback: "feed-back.html",
+    chat: "chat.html"
+  };
+
+  function clearHighlights() {
+    document.querySelectorAll(".search-highlight").forEach(span => {
+      span.replaceWith(span.textContent);
+    });
+  }
+
+  function highlightAll(query) {
+    clearHighlights();
+    let found = false;
+    let firstMatch = null;
+
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+
+    nodes.forEach(node => {
+      const text = node.nodeValue;
+      const lower = text.toLowerCase();
+
+      if (!lower.includes(query)) return;
+
+      const parent = node.parentNode;
+      const fragment = document.createDocumentFragment();
+      let lastIndex = 0;
+
+      lower.replace(new RegExp(query, "gi"), (match, index) => {
+        found = true;
+
+        fragment.append(document.createTextNode(text.slice(lastIndex, index)));
+
+        const span = document.createElement("span");
+        span.className = "search-highlight";
+        span.textContent = text.slice(index, index + match.length);
+
+        if (!firstMatch) firstMatch = span;
+
+        fragment.append(span);
+        lastIndex = index + match.length;
+      });
+
+      fragment.append(document.createTextNode(text.slice(lastIndex)));
+      parent.replaceChild(fragment, node);
+    });
+
+    if (firstMatch) {
+      firstMatch.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    return found;
+  }
+
+  function showSearchPopup(query) {
+    document.getElementById("searchPopupText").textContent =
+      `No results found for "${query}". Try different keywords.`;
+    document.getElementById("searchPopup").style.display = "flex";
+  }
+
+  window.closeSearchPopup = () => {
+    document.getElementById("searchPopup").style.display = "none";
+  };
+
+  function handleSearch(value) {
+    if (!value) return;
+    const query = value.trim().toLowerCase();
+
+    // 1️⃣ Page redirect
+    for (const key in pageMap) {
+      if (query.includes(key)) {
+        window.location.href = pageMap[key];
+        return;
+      }
+    }
+
+    // 2️⃣ Highlight ALL matches
+    if (highlightAll(query)) return;
+
+    // 3️⃣ Popup if nothing found
+    showSearchPopup(value);
+  }
+
+  // Desktop
+  document.querySelector(".search-button")?.addEventListener("click", () =>
+    handleSearch(document.querySelector(".search-input").value)
+  );
+  document.querySelector(".search-input")?.addEventListener("keydown", e => {
+    if (e.key === "Enter") handleSearch(e.target.value);
+  });
+
+  // Mobile
+  document.querySelector(".mobile-search-btn")?.addEventListener("click", () =>
+    handleSearch(document.querySelector(".mobile-search-input").value)
+  );
+  document.querySelector(".mobile-search-input")?.addEventListener("keydown", e => {
+    if (e.key === "Enter") handleSearch(e.target.value);
+  });
+}
+</script>
+
+<div class="search-popup-overlay" id="searchPopup">
+  <div class="search-popup">
+    <i class="fas fa-search"></i>
+    <h3>No Results Found</h3>
+    <p id="searchPopupText"></p>
+    <button onclick="closeSearchPopup()">Got it</button>
+  </div>
+</div>
 
 </body>
 </html>
