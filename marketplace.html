@@ -16,11 +16,11 @@
 
     <link rel="icon" type="image/png" href="images/logo.png">
 
-    <style>
+     <style>
         /* --- NEW CATCHY COLOR PALETTE --- */
         :root {
             /* DEFAULT: Sophisticated Dark Blue/Midnight Palette */
-            --bg-primary: #0a1120;
+            --bg-primary: #021234;
             /* Deep Midnight Blue */
             --bg-secondary: #101c38;
             /* Darker Slate Blue */
@@ -33,7 +33,7 @@
             --border-color: rgba(255, 255, 255, 0.15);
 
             /* Dark Mode Accents (Blue & Yellow/Gold Contrast) */
-            --accent-primary: #4ab7f7;
+            --accent-primary: #e5eff5;
             /* Bright Sky Blue */
             --accent-secondary: #ffd700;
             /* Gold/Yellow */
@@ -66,7 +66,7 @@
             /* Light Mode Accents (Green & Mint) */
             --accent-primary: #38c172;
             /* Vivid Green */
-            --accent-secondary: #3b7440;
+            --accent-secondary: #f3f5f3;
             --accent-gradient: linear-gradient(135deg, #38c172 0%, #2fb362 100%);
 
             --glass-bg: rgba(255, 255, 255, 0.85);
@@ -164,7 +164,7 @@
 
 
         .header p {
-            color: rgba(255, 255, 255, 0.78);
+            color: rgb(255, 255, 255);
         }
 
         .header::before {
@@ -203,7 +203,7 @@
             font-size: 3.5rem;
             font-weight: 800;
             letter-spacing: -0.05em;
-            background: var(--accent-gradient);
+            background: var(--accent-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -440,75 +440,119 @@
             transition: background 0.3s ease;
         }
 
-        /* --- Categories --- */
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin: 30px 0;
-        }
+      .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+}
+.category-card {
+    background: linear-gradient(135deg, #e17055, var(--accent-secondary));
+    color: white;
+    padding: 28px 20px;
+    border-radius: 16px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
 
-        .category-card {
-            background: linear-gradient(135deg, #e17055, var(--accent-secondary));
-            padding: 24px;
-            border-radius: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            min-height: 180px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: var(--shadow-medium);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+    /* IMPORTANT */
+    transform: translateZ(0);
+    transition: 
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
 
-        .category-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.35) 100%);
-            z-index: 0;
-        }
+/* Glow effect */
+.category-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at top right,
+        rgba(255, 255, 255, 0.15),
+        transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
 
-        .category-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
-        }
+/* SAFE hover (no scale) */
+.category-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 30px rgba(225, 112, 85, 0.35);
+}
 
-        .category-card>* {
-            position: relative;
-            z-index: 1;
-        }
+.category-card:hover::before {
+    opacity: 1;
+}
 
-        .category-icon {
-            font-size: 3rem;
-            margin-bottom: 12px;
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
-            transition: transform 0.3s ease;
-        }
 
-        .category-card:hover .category-icon {
-            transform: scale(1.1);
-        }
+/* Inner wrapper handles hover transform */
+.category-inner {
+    background: linear-gradient(135deg, #e17055, var(--accent-secondary));
+    color: white;
+    padding: 28px 20px;
+    border-radius: 18px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-        .category-title {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 700 !important;
-            font-size: 1.25rem !important;
-            color: white !important;
-            margin-bottom: 6px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
+/* Hover effect */
+.category-card:hover .category-inner {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(225, 112, 85, 0.35);
+}
 
-        .category-count {
-            color: rgba(255, 255, 255, 0.95) !important;
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
+/* Glow animation */
+.category-inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right,
+        rgba(255, 255, 255, 0.835),
+        transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.category-card:hover .category-inner::before {
+    opacity: 1;
+}
+
+/* Icon */
+.category-icon {
+    font-size: 2.8rem;
+    margin-bottom: 14px;
+}
+
+/* Title */
+.category-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+/* Count */
+.category-count {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+.category-icon {
+    font-size: 2.8rem;
+    margin-bottom: 14px;
+}
+
+.category-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.category-count {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
 
         .price-chart {
             background: var(--bg-primary);
@@ -1254,15 +1298,10 @@ body {
     </button>
 
     <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const themeText = document.getElementById('themeText');
+       
         const productsGrid = document.getElementById('productsGrid');
 
-        // Initial Theme Load
-        const savedTheme = localStorage.getItem('marketplaceTheme') || 'dark';
-        document.body.setAttribute('data-theme', savedTheme);
-        updateThemeButton(savedTheme);
+       
 
         // State variables
         let allProducts = [];
@@ -1637,6 +1676,39 @@ body {
         }
 
         document.addEventListener('DOMContentLoaded', initializeProducts);
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+
+    // Initial Theme Load
+    const savedTheme = localStorage.getItem('marketplaceTheme') || 'dark';
+    document.body.setAttribute('data-theme', savedTheme);
+    updateThemeButton(savedTheme);
+
+    // Theme Toggle Event
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('marketplaceTheme', newTheme);
+        updateThemeButton(newTheme);
+        showNotification(`Switched to ${newTheme} theme`, 'info');
+    });
+
+    function updateThemeButton(theme) {
+        if (theme === 'dark') {
+            themeIcon.className = 'fas fa-sun';
+            themeText.textContent = 'Dark';
+        } else {
+            themeIcon.className = 'fas fa-moon';
+            themeText.textContent = 'Light';
+        }
+    }
+});
+
     </script>
 </body>
 </html>
