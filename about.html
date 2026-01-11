@@ -22,8 +22,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Libertinus+Serif:wght@400;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
 
   <link rel="stylesheet" href="about.css" />
   <link rel="stylesheet" href="theme.css" />
@@ -31,22 +33,37 @@
 
 <body>
   <nav class="navbar" aria-label="Main Navigation">
-    <div class="heading">
-      <h1>About Us</h1>
-    </div>
-    <div class="nav-buttons">
-      <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
-        <i class="fas fa-sun sun-icon"></i>
-        <i class="fas fa-moon moon-icon"></i>
-        <span class="theme-text">Light</span>
+  <div class="heading">
+    <h1>About Us</h1>
+  </div>
+
+  <!-- Hamburger Icon (Mobile Only) -->
+  <button class="hamburger" aria-label="Toggle navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div class="nav-buttons">
+    <div class="search-container">
+      <input type="text" placeholder="Search..." class="search-input" />
+      <button class="search-button">
+        <i class="fas fa-search"></i>
       </button>
-      <a href="index.html" class="btn btn-secondary">Home</a>
-      <a href="blog.html" class="btn btn-secondary">Blog</a>
-      <a href="login.html" class="btn btn-secondary">Login</a>
-      <a href="faq.html" class="btn btn-secondary">FAQ</a>
-      <a href="register.html" class="btn btn-primary" style="color:white">Register</a>
     </div>
-  </nav>
+
+    <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
+      <i class="fas fa-sun sun-icon"></i>
+      <i class="fas fa-moon moon-icon"></i>
+      <span class="theme-text">Light</span>
+    </button>
+
+    <a href="index.html" class="btn btn-secondary">Home</a>
+    <a href="blog.html" class="btn btn-secondary">Blog</a>
+    <a href="login.html" class="btn btn-secondary">Login</a>
+    <a href="faq.html" class="btn btn-secondary">FAQ</a>
+    <a href="register.html" class="btn btn-primary" style="color:white">Register</a>
+  </div>
+</nav>
+
 
   <main>
     <section class="about-section" id="who-we-are">
@@ -162,7 +179,7 @@
             <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
           </div>
           <div class="footer-contact-info">
-             <p><i class="fas fa-envelope"></i> support@agritech.com</p>
+             <p><span><i class="fas fa-envelope"></i></span> support@agritech.com</p>
           </div>
         </div>
       </div>
@@ -186,6 +203,13 @@
     const sunIcon = document.querySelector('.sun-icon');
     const moonIcon = document.querySelector('.moon-icon');
 
+    const hamburger = document.querySelector('.hamburger');
+  const navButtons = document.querySelector('.nav-buttons');
+
+  hamburger.addEventListener('click', () => {
+    navButtons.classList.toggle('active');
+  });
+  
     const applyTheme = (theme) => {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
@@ -231,6 +255,63 @@
           }
         });
     }
+
+  const searchInput = document.querySelector(".search-input");
+  const sections = document.querySelectorAll("main section");
+
+  // No result element
+  const noResultDiv = document.createElement("div");
+  noResultDiv.className = "no-results";
+  noResultDiv.innerHTML = `
+  <div class="icon-wrapper">
+    <i class="fas fa-leaf"></i>
+  </div>
+  <h3>No results found</h3>
+  <p>
+    We couldn’t find anything related to your search.<br>
+    Try exploring these popular topics instead 🌱
+  </p>
+  <div class="suggestions">
+    <span>Crop Recommendation</span>
+    <span>Yield Prediction</span>
+    <span>Organic Farming</span>
+    <span>AI Agriculture</span>
+  </div>
+`;
+
+  document.querySelector("main").appendChild(noResultDiv);
+  noResultDiv.style.display = "none";
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase().trim();
+    let found = false;
+
+    sections.forEach(section => {
+      const elements = section.querySelectorAll("h2, p, li");
+      let sectionMatch = false;
+
+      elements.forEach(el => {
+        el.classList.remove("search-highlight");
+
+        if (query !== "" && el.textContent.toLowerCase().includes(query)) {
+          el.classList.add("search-highlight");
+          sectionMatch = true;
+          found = true;
+        }
+      });
+
+      section.style.display = query === "" || sectionMatch ? "block" : "none";
+    });
+
+    noResultDiv.style.display = query !== "" && !found ? "block" : "none";
+  });
+document.addEventListener("click", (e) => {
+    if (e.target.closest(".suggestions span")) {
+      const text = e.target.textContent;
+      searchInput.value = text;
+      searchInput.dispatchEvent(new Event("input"));
+    }
+  });
   </script>
 </body>
 </html>

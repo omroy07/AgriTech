@@ -25,7 +25,7 @@ body {
   background-color: var(--bg-primary);
   border-bottom: 1px solid var(--border-color);
   padding: 1rem 0;
-  position: sticky;
+  position: relative;
   top: 0;
   z-index: 100;
   backdrop-filter: blur(20px);
@@ -36,7 +36,11 @@ body {
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
   align-items: center;
 }
 
@@ -48,12 +52,75 @@ body {
   font-family: var(--font-serif);
 }
 
+/* spacer pushes buttons to extreme right */
+.navbar-spacer {
+  flex: 1;
+}
+
 .nav-buttons {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
+/* Back to Home button */
+.back-bar-inner {
+  max-width: 1200px;
+  margin: 0 auto 1rem auto;
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+  z-index: 10; 
+}
+
+/* base styling stays the same */
+.back-home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background-color: #111827;  
+  color: #f9fafb;          
+  text-decoration: none;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  position: relative;
+  z-index: 11;
+  transition: all 0.3s ease;
+}
+
+/* adjust per theme */
+[data-theme="light"] .back-home-btn {
+  background-color: #e5f9ed; 
+  color: #f9fafb;
+}
+
+[data-theme="dark"] .back-home-btn {
+  background-color: #111827;  
+  color: #065f46;             
+  border-color: rgba(6, 95, 70, 0.4);
+}
+
+/* hover */
+.back-home-btn:hover {
+  background-color: #16a34a;
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(22, 163, 74, 0.4);
+}
+
+
+.back-icon {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+/* Buttons */
 .btn {
   padding: 0.5rem 1rem;
   border-radius: 8px;
@@ -520,8 +587,17 @@ body {
     gap: 1rem;
   }
 
+  .navbar-spacer {
+    display: none;
+  }
+
   .nav-buttons {
     flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .back-bar-inner {
+    padding: 0 1rem;
     justify-content: center;
   }
 
@@ -608,7 +684,8 @@ body {
   .navbar,
   .toc-sidebar,
   .agreement-actions,
-  .site-footer {
+  .site-footer,
+  .back-bar-inner {
     display: none !important;
   }
 
