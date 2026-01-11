@@ -160,6 +160,18 @@
     opacity: 1;
     transform: scale(1);
     position: relative;
+     animation: fadeUp 0.4s ease forwards;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .blog-card:hover {
@@ -186,6 +198,10 @@
     padding: 1.5rem;
 }
 
+.read-more-btn{
+    margin-top: auto;
+}
+
 .card-category {
     display: inline-block;
     background: #4CAF50;
@@ -196,6 +212,7 @@
     font-weight: 600;
     margin-bottom: 1rem;
     text-transform: capitalize;
+    align-self: flex-start;
 }
 
 .card-title {
@@ -204,6 +221,18 @@
     margin-bottom: 0.8rem;
     font-weight: 600;
     line-height: 1.4;
+}
+
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  height:100%;
 }
 
 .card-description {
@@ -320,19 +349,21 @@
     width: 90%;
     max-width: 800px;
     max-height: 90vh;
-    overflow-y: auto;
+    /* overflow-y: auto;  <-- REMOVED THIS to let .modal-body handle scrolling */
     position: relative;
     animation: slideIn 0.3s ease;
+    display: flex; /* NEW: Helps with scrolling layout */
+    flex-direction: column;
 }
 
 .modal-header {
     padding: 2rem;
     border-bottom: 1px solid #eee;
-    position: sticky;
-    top: 0;
+    position: relative; /* Changed from sticky to relative for better layout */
     background: white;
     z-index: 10;
     border-radius: 15px 15px 0 0;
+    flex-shrink: 0; /* Prevents header from squishing */
 }
 
 .modal-title {
@@ -353,10 +384,6 @@
     text-transform: capitalize;
 }
 
-.modal-body {
-    padding: 2rem;
-}
-
 .modal-image {
     width: 100%;
     height: 300px;
@@ -365,6 +392,7 @@
     margin-bottom: 2rem;
 }
 
+/* Typography for Article Content */
 .modal-text {
     color: #333;
     line-height: 1.8;
@@ -662,6 +690,108 @@
     color: #e74c3c;
 }
 
+[data-theme="dark"] .blog-card {
+    background: linear-gradient(
+        145deg,
+        rgba(45, 55, 72, 0.95),
+        rgba(26, 32, 44, 0.95)
+    );
+    border: 1px solid rgba(104, 211, 145, 0.15);
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(6px);
+}
+
+[data-theme="dark"] .blog-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(104, 211, 145, 0.3);
+}
+
+[data-theme="dark"] .blog-card img {
+    filter: brightness(0.85) contrast(1.05);
+    transition: filter 0.3s ease;
+}
+
+[data-theme="dark"] .blog-card:hover img {
+    filter: brightness(1) contrast(1.1);
+}
+
+[data-theme="dark"] .card-title {
+    color: #f8fafc;
+    font-weight: 600;
+}
+
+[data-theme="dark"] .card-description {
+    color: #cbd5e1;
+    line-height: 1.7;
+}
+
+[data-theme="dark"] .card-category {
+    background: linear-gradient(135deg, #68d391, #48bb78);
+    color: #0f172a;
+    box-shadow: 0 4px 15px rgba(104, 211, 145, 0.35);
+}
+
+[data-theme="dark"] .read-more-btn {
+    background: linear-gradient(135deg, #68d391, #38a169);
+    box-shadow: 0 6px 18px rgba(104, 211, 145, 0.4);
+}
+
+[data-theme="dark"] .read-more-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(104, 211, 145, 0.55);
+}
+
+[data-theme="dark"] .search-filter-section {
+    background: rgba(45, 55, 72, 0.95);
+    border: 1px solid rgba(104, 211, 145, 0.15);
+    backdrop-filter: blur(8px);
+}
+
+[data-theme="dark"] .search-bar {
+    background: rgba(26, 32, 44, 0.9);
+    border: 1px solid rgba(104, 211, 145, 0.25);
+}
+
+[data-theme="dark"] .search-bar:focus {
+    box-shadow: 0 0 0 3px rgba(104, 211, 145, 0.25);
+}
+
+[data-theme="dark"] .filter-btn {
+    background: rgba(74, 85, 104, 0.7);
+    border: 1px solid rgba(104, 211, 145, 0.25);
+}
+
+[data-theme="dark"] .filter-btn.active {
+    background: linear-gradient(135deg, #68d391, #38a169);
+    color: #0f172a;
+    box-shadow: 0 0 0 2px rgba(104, 211, 145, 0.3);
+}
+
+[data-theme="dark"] .filter-btn {
+    background: rgba(74, 85, 104, 0.7);
+    border: 1px solid rgba(104, 211, 145, 0.25);
+}
+
+[data-theme="dark"] .filter-btn.active {
+    background: linear-gradient(135deg, #68d391, #38a169);
+    color: #0f172a;
+    box-shadow: 0 0 0 2px rgba(104, 211, 145, 0.3);
+}
+
+[data-theme="dark"] .no-results {
+    background: rgba(104, 211, 145, 0.08);
+    color: #c6f6d5;
+}
+
+[data-theme="dark"] .no-results i {
+    color: #68d391;
+}
+
+
 /* Add transition for smooth theme switching */
 .agritech-blog,
 .search-filter-section,
@@ -765,5 +895,139 @@
     .favorites-link {
         width: 100%;
         justify-content: center;
+    }
+}
+
+
+/* =========================================
+   NEW FIXES: Modal & Metadata Styling
+   ========================================= */
+
+/* Metadata Row (Author & Date) */
+.modal-meta {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 0.9rem;
+    color: #94a3b8; /* Slate-400 for dark mode contrast */
+    margin-top: 5px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.modal-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.modal-meta i {
+    color: #4CAF50; /* Green accent */
+}
+
+/* Scrollable Body Fix */
+.modal-body {
+    padding: 2rem;
+    max-height: 65vh; /* Prevents modal from being taller than screen */
+    overflow-y: auto; /* Adds scrollbar inside the modal if text is long */
+}
+
+/* Custom Scrollbar */
+.modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+/* Dark Mode Updates for New Elements */
+[data-theme="dark"] .modal-meta {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #a0aec0;
+}
+
+[data-theme="dark"] .modal-body::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .modal-body::-webkit-scrollbar-thumb {
+    background: #4a5568;
+}
+
+/* Style for Back to Home Button */
+    .home-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background-color: #2e7d32; /* AgriTech Green */
+        color: white;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .home-btn:hover {
+        background-color: #1b5e20; /* Darker green on hover */
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Ensure the header actions align properly */
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+    .no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    border-radius: 20px;
+    background: rgba(46, 204, 113, 0.08);
+    color: #2c5f2d;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.no-results i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #27ae60;
+}
+
+.no-results h3 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+}
+
+.no-results p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.no-results span {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

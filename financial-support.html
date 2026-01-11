@@ -4,14 +4,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-  <meta name="description" content="AgriTech Financial Support - Comprehensive financial solutions for farmers including loans, insurance, and investment opportunities." />
+  <meta name="description"
+    content="AgriTech Financial Support - Comprehensive financial solutions for farmers including loans, insurance, and investment opportunities." />
   <title>Financial Support - AgriTech</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="icon" type="image/png" href="images/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet" />
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
+    rel="stylesheet" />
+
   <style>
     :root {
       /* Dark Theme Variables */
@@ -25,7 +28,7 @@
       --shadow-light: rgba(0, 0, 0, 0.3);
       --shadow-medium: rgba(0, 0, 0, 0.4);
       --shadow-heavy: rgba(0, 0, 0, 0.6);
-      --accent-primary: #3b82f6;
+      --accent-primary: oklch(62.55% 0.18669 259.706);
       --accent-secondary: #10b981;
       --accent-warning: #f59e0b;
       --accent-danger: #ef4444;
@@ -431,6 +434,30 @@
       cursor: pointer;
     }
 
+    /* Scroll to Top Button */
+    .scroll-btn {
+      display: none;
+      position: fixed;
+      bottom: 7rem; /* Placed above chat toggle */
+      right: 2rem;
+      z-index: 1001;
+      background: var(--accent-primary);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 15px var(--shadow-medium);
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+    }
+
+    .scroll-btn:hover {
+      transform: translateY(-5px);
+      background-color: #2563eb;
+    }
+
     /* Main Content */
     .main-content {
       max-width: 1200px;
@@ -676,21 +703,21 @@
       .hero h1 {
         font-size: 2rem;
       }
-      
+
       .navbar-content {
         flex-direction: column;
         gap: 1rem;
       }
-      
+
       .nav-buttons {
         flex-wrap: wrap;
         justify-content: center;
       }
-      
+
       .services-grid {
         grid-template-columns: 1fr;
       }
-      
+
       .footer-links {
         flex-direction: column;
         gap: 1rem;
@@ -730,34 +757,32 @@
 </head>
 
 <body>
-  <!-- Navigation -->
   <nav class="navbar">
     <div class="navbar-content">
-      <a href="index.html" class="logo">AgriTech</a>
+      <a href="index.html" class="btn btn-secondary" style="display: flex; align-items: center; gap: 0.5rem;">
+        <i class="fas fa-arrow-left"></i>
+        Back to Home
+      </a>
       <div class="nav-buttons">
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
           <i class="fas fa-moon" id="themeIcon"></i>
           <span id="themeText">Light</span>
         </button>
-        <a href="index.html" class="btn btn-secondary">Home</a>
-        <a href="about.html" class="btn btn-secondary">About</a>
         <a href="login.html" class="btn btn-secondary">Login</a>
         <a href="register.html" class="btn btn-primary">Register</a>
       </div>
     </div>
   </nav>
 
-  <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
       <h1 class="serif">Financial Support & Insurance</h1>
-      <p>Comprehensive financial solutions designed specifically for farmers and agricultural businesses. Access loans, insurance, and investment opportunities to grow your farming enterprise.</p>
+      <p>Comprehensive financial solutions designed specifically for farmers and agricultural businesses. Access loans,
+        insurance, and investment opportunities to grow your farming enterprise.</p>
     </div>
   </section>
 
-  <!-- Main Content -->
   <div class="main-content">
-    <!-- Loan Calculator -->
     <section class="loan-calculator loading">
       <h3 class="calculator-title serif">Agricultural Loan Calculator</h3>
       <div class="calculator-form">
@@ -788,7 +813,6 @@
       </div>
     </section>
 
-    <!-- Application Progress Tracker -->
     <section class="progress-tracker loading">
       <h3 class="section-title serif">Application Progress</h3>
       <div class="progress-steps">
@@ -806,18 +830,18 @@
       </div>
     </section>
 
-    <!-- Services Section -->
     <section class="section loading">
       <h2 class="section-title serif">Our Financial Services</h2>
       <p class="section-subtitle">Empowering farmers with tailored financial solutions for sustainable growth</p>
-      
+
       <div class="services-grid">
         <div class="service-card">
           <div class="service-icon">
             <i class="fas fa-coins"></i>
           </div>
           <h3 class="service-title serif">Agricultural Loans</h3>
-          <p class="service-description">Flexible loan options for equipment purchase, crop production, and farm expansion with competitive interest rates.</p>
+          <p class="service-description">Flexible loan options for equipment purchase, crop production, and farm
+            expansion with competitive interest rates.</p>
           <ul class="service-features">
             <li><i class="fas fa-check"></i> Low interest rates starting from 8.5%</li>
             <li><i class="fas fa-check"></i> Flexible repayment schedules</li>
@@ -832,7 +856,8 @@
             <i class="fas fa-shield-alt"></i>
           </div>
           <h3 class="service-title serif">Crop Insurance</h3>
-          <p class="service-description">Comprehensive crop insurance coverage protecting against weather-related losses, pests, and diseases.</p>
+          <p class="service-description">Comprehensive crop insurance coverage protecting against weather-related
+            losses, pests, and diseases.</p>
           <ul class="service-features">
             <li><i class="fas fa-check"></i> Weather-based coverage</li>
             <li><i class="fas fa-check"></i> Disease & pest protection</li>
@@ -847,7 +872,8 @@
             <i class="fas fa-chart-line"></i>
           </div>
           <h3 class="service-title serif">Investment Plans</h3>
-          <p class="service-description">Smart investment opportunities in agricultural technology, equipment, and sustainable farming practices.</p>
+          <p class="service-description">Smart investment opportunities in agricultural technology, equipment, and
+            sustainable farming practices.</p>
           <ul class="service-features">
             <li><i class="fas fa-check"></i> Technology investments</li>
             <li><i class="fas fa-check"></i> Equipment financing</li>
@@ -862,14 +888,16 @@
             <i class="fas fa-university"></i>
           </div>
           <h3 class="service-title serif">Government Schemes</h3>
-          <p class="service-description">Access government subsidies, grants, and schemes designed to support farmers and agricultural development.</p>
+          <p class="service-description">Access government subsidies, grants, and schemes designed to support farmers
+            and agricultural development.</p>
           <ul class="service-features">
             <li><i class="fas fa-check"></i> Subsidy applications</li>
             <li><i class="fas fa-check"></i> Grant assistance</li>
             <li><i class="fas fa-check"></i> Documentation support</li>
             <li><i class="fas fa-check"></i> Expert guidance</li>
           </ul>
-          <a href="#" class="btn btn-primary" onclick="showNotification('Government schemes accessed!')">View Schemes</a>
+          <a href="#" class="btn btn-primary" onclick="showNotification('Government schemes accessed!')">View
+            Schemes</a>
         </div>
 
         <div class="service-card">
@@ -877,7 +905,8 @@
             <i class="fas fa-credit-card"></i>
           </div>
           <h3 class="service-title serif">Credit Facilities</h3>
-          <p class="service-description">Flexible credit lines and working capital solutions for day-to-day farming operations and seasonal needs.</p>
+          <p class="service-description">Flexible credit lines and working capital solutions for day-to-day farming
+            operations and seasonal needs.</p>
           <ul class="service-features">
             <li><i class="fas fa-check"></i> Working capital loans</li>
             <li><i class="fas fa-check"></i> Seasonal credit facilities</li>
@@ -892,48 +921,52 @@
             <i class="fas fa-calculator"></i>
           </div>
           <h3 class="service-title serif">Financial Planning</h3>
-          <p class="service-description">Expert financial advice and planning services to help optimize your farm's profitability and growth potential.</p>
+          <p class="service-description">Expert financial advice and planning services to help optimize your farm's
+            profitability and growth potential.</p>
           <ul class="service-features">
             <li><i class="fas fa-check"></i> Cash flow management</li>
             <li><i class="fas fa-check"></i> Risk assessment</li>
             <li><i class="fas fa-check"></i> Tax optimization</li>
             <li><i class="fas fa-check"></i> Retirement planning</li>
           </ul>
-          <a href="#" class="btn btn-primary" onclick="showNotification('Expert consultation booked!')">Consult Expert</a>
+          <a href="#" class="btn btn-primary" onclick="showNotification('Expert consultation booked!')">Consult
+            Expert</a>
         </div>
       </div>
     </section>
 
-    <!-- How It Works -->
     <section class="section loading">
       <h2 class="section-title serif">How It Works</h2>
       <p class="section-subtitle">Simple steps to access financial support for your farming needs</p>
-      
+
       <div class="process-steps">
         <div class="process-step">
           <div class="step-number">1</div>
           <h3 class="step-title">Apply Online</h3>
-          <p class="step-description">Complete our simple online application form with your farming details and financial requirements.</p>
+          <p class="step-description">Complete our simple online application form with your farming details and
+            financial requirements.</p>
         </div>
         <div class="process-step">
           <div class="step-number">2</div>
           <h3 class="step-title">Document Verification</h3>
-          <p class="step-description">Submit required documents through our secure portal for quick verification and processing.</p>
+          <p class="step-description">Submit required documents through our secure portal for quick verification and
+            processing.</p>
         </div>
         <div class="process-step">
           <div class="step-number">3</div>
           <h3 class="step-title">Expert Review</h3>
-          <p class="step-description">Our agricultural finance experts review your application and provide personalized recommendations.</p>
+          <p class="step-description">Our agricultural finance experts review your application and provide personalized
+            recommendations.</p>
         </div>
         <div class="process-step">
           <div class="step-number">4</div>
           <h3 class="step-title">Approval & Funding</h3>
-          <p class="step-description">Receive approval notification and get funded quickly to support your agricultural activities.</p>
+          <p class="step-description">Receive approval notification and get funded quickly to support your agricultural
+            activities.</p>
         </div>
       </div>
     </section>
 
-    <!-- Statistics -->
     <section class="stats-section loading">
       <h2 class="section-title serif">Our Impact</h2>
       <div class="stats-grid">
@@ -956,15 +989,14 @@
       </div>
     </section>
 
-    <!-- CTA Section -->
     <section class="cta-section loading">
       <h2 class="cta-title serif">Ready to Grow Your Farm?</h2>
-      <p class="cta-description">Join thousands of farmers who have transformed their agricultural business with our financial support. Get started today and unlock your farm's potential.</p>
+      <p class="cta-description">Join thousands of farmers who have transformed their agricultural business with our
+        financial support. Get started today and unlock your farm's potential.</p>
       <a href="register.html" class="cta-button">Start Your Application</a>
     </section>
   </div>
 
-  <!-- Chat Widget -->
   <div class="chat-widget" id="chatWidget">
     <div class="chat-header">
       <h4>Financial Assistant</h4>
@@ -983,11 +1015,16 @@
     </div>
   </div>
 
-  <button class="chat-toggle" id="chatToggle" onclick="toggleChat()">
-    <i class="fas fa-comments"></i>
+  <button class="chat-toggle" id="chatToggle">
+    <a href="finance_bot.html">
+      <i class="fas fa-comments"></i>
+    </a>
   </button>
 
-  <!-- Footer -->
+  <button id="scrollTopBtn" class="scroll-btn" onclick="scrollToTop()" aria-label="Scroll to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-links">
@@ -998,7 +1035,7 @@
         <a href="privacy-policy.html">Privacy</a>
       </div>
       <div class="copyright">
-        <p>&copy; 2025 AgriTech. All rights reserved. Empowering agriculture through technology.</p>
+        <p>&copy; <span id="current-year"></span> AgriTech. All rights reserved. Empowering agriculture through technology.</p>
       </div>
     </div>
   </footer>
@@ -1010,16 +1047,16 @@
     const themeText = document.getElementById('themeText');
 
     // Check for saved theme
-    const savedTheme = localStorage.getItem('theme') || 'dark';
+    const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeButton(savedTheme);
 
     themeToggle.addEventListener('click', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme');
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      
+
       document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
+      localStorage.setItem('agritech-theme', newTheme);
       updateThemeButton(newTheme);
     });
 
@@ -1033,25 +1070,44 @@
       }
     }
 
+    // Scroll to Top Functionality
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+    window.onscroll = function() {
+      // Show button when scrolled down 300px
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        scrollTopBtn.style.display = "block";
+      } else {
+        scrollTopBtn.style.display = "none";
+      }
+    };
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
     // Loan Calculator
     function calculateLoan() {
       const amount = parseFloat(document.getElementById('loanAmount').value) || 500000;
       const rate = parseFloat(document.getElementById('interestRate').value) || 8.5;
       const term = parseFloat(document.getElementById('loanTerm').value) || 5;
-      
+
       const monthlyRate = (rate / 100) / 12;
       const totalPayments = term * 12;
-      
-      const emi = (amount * monthlyRate * Math.pow(1 + monthlyRate, totalPayments)) / 
-                  (Math.pow(1 + monthlyRate, totalPayments) - 1);
-      
+
+      const emi = (amount * monthlyRate * Math.pow(1 + monthlyRate, totalPayments)) /
+        (Math.pow(1 + monthlyRate, totalPayments) - 1);
+
       const totalAmount = emi * totalPayments;
       const totalInterest = totalAmount - amount;
-      
+
       document.getElementById('emiAmount').textContent = Math.round(emi).toLocaleString();
       document.getElementById('totalAmount').textContent = Math.round(totalAmount).toLocaleString();
       document.getElementById('totalInterest').textContent = Math.round(totalInterest).toLocaleString();
-      
+
       const resultDiv = document.getElementById('calculatorResult');
       resultDiv.classList.add('show');
     }
@@ -1065,10 +1121,10 @@
         document.getElementById(`step${currentStep}`).classList.add('completed');
         currentStep++;
         document.getElementById(`step${currentStep}`).classList.add('active');
-        
+
         const progressFill = document.getElementById('progressFill');
         progressFill.style.width = `${((currentStep - 1) / (totalSteps - 1)) * 100}%`;
-        
+
         if (currentStep === totalSteps) {
           showNotification('Application completed successfully!');
         }
@@ -1091,9 +1147,9 @@
     function toggleChat() {
       const chatWidget = document.getElementById('chatWidget');
       const chatToggle = document.getElementById('chatToggle');
-      
+
       chatOpen = !chatOpen;
-      
+
       if (chatOpen) {
         chatWidget.classList.add('open');
         chatToggle.style.display = 'none';
@@ -1106,11 +1162,11 @@
     function sendMessage() {
       const input = document.getElementById('chatInput');
       const message = input.value.trim();
-      
+
       if (message) {
         addMessage(message, 'user');
         input.value = '';
-        
+
         // Simulate bot response
         setTimeout(() => {
           const responses = [
@@ -1149,7 +1205,7 @@
         const target = parseInt(counter.getAttribute('data-target'));
         const increment = target / 100;
         let current = 0;
-        
+
         const updateCounter = () => {
           if (current < target) {
             current += increment;
@@ -1159,7 +1215,7 @@
             counter.textContent = target.toLocaleString();
           }
         };
-        
+
         updateCounter();
       });
     }
@@ -1172,13 +1228,13 @@
         <i class="fas fa-check-circle"></i>
         <span>${message}</span>
       `;
-      
+
       document.body.appendChild(notification);
-      
+
       setTimeout(() => {
         notification.classList.add('show');
       }, 100);
-      
+
       setTimeout(() => {
         notification.classList.remove('show');
         setTimeout(() => notification.remove(), 300);
@@ -1213,10 +1269,18 @@
 
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
+      // Automatically update the copyright year
+      const yearSpan = document.getElementById("current-year");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+      
       calculateLoan();
       showNotification('Welcome to AgriTech Financial Services!');
     });
   </script>
+  <script src="theme.js"></script>
+
 </body>
 
 </html>

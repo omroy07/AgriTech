@@ -40,15 +40,23 @@ def delete_community():
 
 @socketio.on('join')
 def on_join(data):
-    username = data['username']
-    room = data['room']
+    username = data.get('username')
+    room = data.get('room')
+    
+    if not username or not room:
+        emit('error', {'msg': 'Username and Room are required.'})
+        return
+
     if room not in communities:
-        communities[room] = set()
+        emit('error', {'msg': 'Room does not exist.'})
+        return 
+
     join_room(room)
     communities[room].add(username)
+    
     send({'msg': f'{username} joined {room}'}, room=room)
     emit('user_list', list(communities[room]), room=room)
-
+    
 @socketio.on('leave')
 def on_leave(data):
     username = data['username']

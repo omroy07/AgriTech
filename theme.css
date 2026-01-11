@@ -46,7 +46,7 @@
 
 [data-theme="dark"] {
   /* Dark mode colors */
-  --bg-primary: #0f172a;
+  --bg-primary: #021542ff;
   --bg-secondary: #1e293b;
   --bg-tertiary: #334155;
   --text-primary: #f8fafc;
@@ -574,4 +574,17 @@ select:focus {
   footer {
     display: none !important;
   }
+}
+
+/* 🔥 FIX: Search bar inner dark box remove */
+.search-container input.search-input {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 10px 12px !important;
+}
+
+[data-theme="dark"] .search-container input.search-input {
+  background-color: transparent !important;
+  color: #c8e6c9 !important;
 }

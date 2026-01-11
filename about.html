@@ -6,58 +6,66 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Us - AgriTech</title>
 
-  <!-- SEO Meta Tags -->
   <meta name="description"
     content="AgriTech is a smart farming platform empowering farmers with AI-powered crop recommendation, yield prediction, and sustainable agricultural practices." />
   <meta name="keywords" content="AgriTech, smart farming, AI agriculture, crop recommendation, yield prediction" />
   <meta name="author" content="AgriTech Team" />
 
-  <!-- Open Graph (for sharing) -->
   <meta property="og:title" content="About Us - AgriTech" />
   <meta property="og:description"
     content="Empowering India's farming future with innovative AI-powered agricultural solutions." />
   <meta property="og:image" content="images/logo.png" />
   <meta property="og:type" content="website" />
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/logo.png">
 
-  <!-- Fonts & Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
 
-  <!-- Stylesheets -->
   <link rel="stylesheet" href="about.css" />
   <link rel="stylesheet" href="theme.css" />
 </head>
 
 <body>
-  <!-- Navigation bar -->
   <nav class="navbar" aria-label="Main Navigation">
-    <div class="heading">
-      <h1>About Us</h1>
-    </div>
-    <div class="nav-buttons">
-      <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
-        <i class="fas fa-sun sun-icon"></i>
-        <i class="fas fa-moon moon-icon"></i>
-        <span class="theme-text">Light</span>
-      </button>
-      <a href="index.html" class="btn btn-secondary">Home</a>
-        <a href="blog.html" class="btn btn-secondary">Blog</a>
-        <a href="login.html" class="btn btn-secondary">Login</a>
-        <a href="faq.html" class="btn btn-secondary">FAQ</a> 
-        <a href="register.html" class="btn btn-primary" style="color:white">Register</a>
-    </div>
-  </nav>
+  <div class="heading">
+    <h1>About Us</h1>
+  </div>
 
-  <!-- Main content -->
+  <!-- Hamburger Icon (Mobile Only) -->
+  <button class="hamburger" aria-label="Toggle navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div class="nav-buttons">
+    <div class="search-container">
+      <input type="text" placeholder="Search..." class="search-input" />
+      <button class="search-button">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+
+    <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
+      <i class="fas fa-sun sun-icon"></i>
+      <i class="fas fa-moon moon-icon"></i>
+      <span class="theme-text">Light</span>
+    </button>
+
+    <a href="index.html" class="btn btn-secondary">Home</a>
+    <a href="blog.html" class="btn btn-secondary">Blog</a>
+    <a href="login.html" class="btn btn-secondary">Login</a>
+    <a href="faq.html" class="btn btn-secondary">FAQ</a>
+    <a href="register.html" class="btn btn-primary" style="color:white">Register</a>
+  </div>
+</nav>
+
+
   <main>
-    <!-- Who We Are -->
     <section class="about-section" id="who-we-are">
       <h2>🌿 Who We Are</h2>
       <p>
@@ -74,7 +82,6 @@
       </p>
     </section>
 
-    <!-- Vision -->
     <section class="vision-section" id="vision">
       <h2>🌈 Our Vision</h2>
       <p>
@@ -98,7 +105,6 @@
       </p>
     </section>
 
-    <!-- What We Do -->
     <section class="what-we-do-section" id="what-we-do">
       <h2>🛠️ What We Do</h2>
       <p>
@@ -120,7 +126,6 @@
       </ul>
     </section>
 
-    <!-- Why It Matters -->
     <section class="why-it-matters-section" id="why-it-matters">
       <h2>🌍 Why It Matters</h2>
       <p>
@@ -137,115 +142,176 @@
   </main>
 
   <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="brand-header">
-          <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
-          <h3 class="serif">AgriTech</h3>
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="footer-brand-header">
+            <img src="images/logo.png" alt="AgriTech logo">
+            <h3 class="serif">AgriTech</h3>
+          </div>
+          <p class="brand-text">Empowering India's Farming Future with innovative technology connecting every stakeholder.</p>
         </div>
-        <div class="mission-statement">
-          <p>Empowering India's Farming Future with innovative <span class="no-break">technology</span> solutions that connect every stakeholder in the <span class="no-break">agricultural</span> ecosystem</p>
+
+        <div class="footer-col">
+          <h4 class="serif">Quick Links</h4>
+          <ul class="footer-ul">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+            <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="serif">Smart Tools</h4>
+          <ul class="footer-ul">
+            <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
+            <li><a href="#"><i class="fas fa-seedling"></i> Crop Planner</a></li>
+            <li><a href="#"><i class="fas fa-chart-line"></i> Yield Predictor</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="serif">Connect</h4>
+          <div class="social-links">
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          </div>
+          <div class="footer-contact-info">
+             <p><span><i class="fas fa-envelope"></i></span> support@agritech.com</p>
+          </div>
         </div>
       </div>
-      <div class="footer-links">
-        <h4 class="serif">Quick Links</h4>
-        <nav aria-label="Footer navigation">
-        <ul>
-          <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-          <li><a href="login.html" title="Login first to access dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-          <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
-          <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
-          <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
-        </ul>
-        </nav>
-      </div>
-      <div class="footer-links">
-        <h4 class="serif">About AgriTech</h4>
-        <nav aria-label="About navigation">
-        <ul>
-          <li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li>
-          <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
-          <li><a href="team.html"><i class="fas fa-users"></i> Our Team</a></li>
-          <li><a href="mission.html"><i class="fas fa-bullseye"></i> Our Mission</a></li>
-          <li><a href="careers.html"><i class="fas fa-briefcase"></i> Careers</a></li>
-        </ul>
-        </nav>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="footer-bottom-content">
-        <p class="copyright">© 2025 AgriTech. All rights reserved.</p>
-        <div class="footer-bottom-links">
-          <a href="terms-and-service.html">Terms of Service</a>
-          <span class="separator">•</span>
-          <a href="privacy-policy.html">Privacy Policy</a>
-          <span class="separator">•</span>
-          <a href="contact.html">Contact Us</a>
-        </div>
+      <div class="footer-bottom">
+        <p>© 2026 AgriTech. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
-  <!-- Scroll to Top -->
-  <div class="scroll-to-top" id="scrollToTop" title="Back to top" aria-label="Scroll to top">
-    <i class="fas fa-arrow-up"></i>
-  </div>
+  <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
+    <i class="fas fa-robot"></i>
+  </a>
 
-  <!-- Scripts -->
+  <button class="scroll-btn" id="scrollBtn" title="Scroll">
+    <i class="fas fa-arrow-down" id="scrollIcon"></i>
+  </button>
+
   <script>
-    const scrollToTopBtn = document.getElementById("scrollToTop");
-    window.addEventListener("scroll", () => {
-      scrollToTopBtn.classList.toggle("visible", window.scrollY > 300);
-    });
-    scrollToTopBtn.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  </script>
-  <script src="theme.js"></script>
+    const themeToggle = document.querySelector('.theme-toggle');
+    const themeText = document.querySelector('.theme-text');
+    const sunIcon = document.querySelector('.sun-icon');
+    const moonIcon = document.querySelector('.moon-icon');
+
+    const hamburger = document.querySelector('.hamburger');
+  const navButtons = document.querySelector('.nav-buttons');
+
+  hamburger.addEventListener('click', () => {
+    navButtons.classList.toggle('active');
+  });
   
-<!-- Floating Chatbot Button -->
-<a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
-  <i class="fas fa-robot"></i>
-</a>
- 
-<!-- Scroll Button -->
-<button class="scroll-btn" id="scrollBtn" title="Scroll">
-  <i class="fas fa-arrow-down" id="scrollIcon"></i>
-</button>
+    const applyTheme = (theme) => {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        if (theme === 'dark') {
+            themeText.textContent = 'Light';
+            moonIcon.style.display = 'none';
+            sunIcon.style.display = 'inline-block';
+        } else {
+            themeText.textContent = 'Dark';
+            moonIcon.style.display = 'inline-block';
+            sunIcon.style.display = 'none';
+        }
+    };
 
-<script>
-  const scrollBtn = document.getElementById("scrollBtn");
-  const scrollIcon = document.getElementById("scrollIcon");
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    applyTheme(savedTheme);
 
-  window.addEventListener("scroll", () => {
-    // If near top, show "scroll down" button
-    if (window.scrollY < 300) {
-      scrollBtn.classList.add("visible");
-      scrollIcon.classList.replace("fa-arrow-up", "fa-arrow-down");
-    } 
-    // If scrolled down, show "scroll up" button
-    else {
-      scrollBtn.classList.add("visible");
-      scrollIcon.classList.replace("fa-arrow-down", "fa-arrow-up");
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      applyTheme(next);
+    });
+
+    const scrollBtn = document.getElementById("scrollBtn");
+    const scrollIcon = document.getElementById("scrollIcon");
+
+    if (scrollBtn && scrollIcon) {
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 300) {
+            scrollBtn.classList.add('visible');
+            scrollIcon.classList.remove("fa-arrow-down");
+            scrollIcon.classList.add("fa-arrow-up");
+          } else {
+            scrollBtn.classList.remove('visible');
+            scrollIcon.classList.remove("fa-arrow-up");
+            scrollIcon.classList.add("fa-arrow-down");
+          }
+        });
+
+        scrollBtn.addEventListener("click", () => {
+          if (scrollIcon.classList.contains("fa-arrow-up")) {
+            window.scrollTo({top: 0, behavior: "smooth"});
+          }
+        });
+    }
+
+  const searchInput = document.querySelector(".search-input");
+  const sections = document.querySelectorAll("main section");
+
+  // No result element
+  const noResultDiv = document.createElement("div");
+  noResultDiv.className = "no-results";
+  noResultDiv.innerHTML = `
+  <div class="icon-wrapper">
+    <i class="fas fa-leaf"></i>
+  </div>
+  <h3>No results found</h3>
+  <p>
+    We couldn’t find anything related to your search.<br>
+    Try exploring these popular topics instead 🌱
+  </p>
+  <div class="suggestions">
+    <span>Crop Recommendation</span>
+    <span>Yield Prediction</span>
+    <span>Organic Farming</span>
+    <span>AI Agriculture</span>
+  </div>
+`;
+
+  document.querySelector("main").appendChild(noResultDiv);
+  noResultDiv.style.display = "none";
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase().trim();
+    let found = false;
+
+    sections.forEach(section => {
+      const elements = section.querySelectorAll("h2, p, li");
+      let sectionMatch = false;
+
+      elements.forEach(el => {
+        el.classList.remove("search-highlight");
+
+        if (query !== "" && el.textContent.toLowerCase().includes(query)) {
+          el.classList.add("search-highlight");
+          sectionMatch = true;
+          found = true;
+        }
+      });
+
+      section.style.display = query === "" || sectionMatch ? "block" : "none";
+    });
+
+    noResultDiv.style.display = query !== "" && !found ? "block" : "none";
+  });
+document.addEventListener("click", (e) => {
+    if (e.target.closest(".suggestions span")) {
+      const text = e.target.textContent;
+      searchInput.value = text;
+      searchInput.dispatchEvent(new Event("input"));
     }
   });
-
-  scrollBtn.addEventListener("click", () => {
-    if (scrollIcon.classList.contains("fa-arrow-down")) {
-      // Scroll to bottom
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: "smooth",
-      });
-    } else {
-      // Scroll to top
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }
-  });
-</script>
+  </script>
 </body>
-
 </html>

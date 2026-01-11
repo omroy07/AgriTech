@@ -29,6 +29,10 @@
 
     <!-- HERO -->
     <section class="hero">
+      <a href="index.html" class="back-home-btn hero-back">
+  <i class="fas fa-arrow-left"></i> Back to Home
+</a>
+
       <div class="hero-content">
         <h1>Get in Touch</h1>
         <p>Have questions about our AI-powered agricultural solutions? We're here to help farmers, agricultural professionals, and communities grow smarter and more sustainably.</p>
@@ -128,7 +132,16 @@
 
           <div class="form-group">
             <label for="message">Message *</label>
-            <textarea id="message" name="message" rows="6" placeholder="Please describe your question, issue, or how we can help you..." required></textarea>
+            <textarea 
+              id="message" 
+              name="message" 
+              rows="6" 
+              maxlength="200"
+              placeholder="Please describe your question, issue, or how we can help you..." 
+              required>
+            </textarea>
+            <div class="char-counter" id="messageCounter">0 / 200</div>
+
           </div>
 
           <div class="form-group checkbox-group">
@@ -211,28 +224,57 @@
   </div>
 
   <script>
-    // Theme toggle functionality
+    // Theme toggle functionality with localStorage persistence
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
 
     themeToggle.addEventListener('click', () => {
-      body.classList.toggle('dark-mode');
-      const icon = themeToggle.querySelector('i');
-
-      if (body.classList.contains('dark-mode')) {
-        icon.className = 'fas fa-sun';
-        localStorage.setItem('theme', 'dark');
+      const currentTheme = localStorage.getItem('agritech-theme') || 'dark';
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      
+      if (newTheme === 'dark') {
+        body.classList.add('dark-mode');
+        themeToggle.querySelector('i').className = 'fas fa-sun';
       } else {
-        icon.className = 'fas fa-moon';
-        localStorage.setItem('theme', 'light');
+        body.classList.remove('dark-mode');
+        themeToggle.querySelector('i').className = 'fas fa-moon';
       }
+      
+      localStorage.setItem('agritech-theme', newTheme);
+      document.documentElement.setAttribute('data-theme', newTheme);
     });
 
     // Load saved theme
-    const savedTheme = localStorage.getItem('theme');
+    const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
     if (savedTheme === 'dark') {
       body.classList.add('dark-mode');
+      document.documentElement.setAttribute('data-theme', 'dark');
       themeToggle.querySelector('i').className = 'fas fa-sun';
+    } else {
+      body.classList.remove('dark-mode');
+      document.documentElement.setAttribute('data-theme', 'light');
+      themeToggle.querySelector('i').className = 'fas fa-moon';
+    }
+
+    // Character counter for message textarea
+    const messageInput = document.getElementById("message");
+    const messageCounter = document.getElementById("messageCounter");
+    const maxLength = 200;
+
+    if (messageInput && messageCounter) {
+      messageInput.addEventListener("input", () => {
+        const length = messageInput.value.length;
+        messageCounter.textContent = `${length} / ${maxLength}`;
+
+        messageCounter.classList.remove("warning", "danger");
+
+        if (length > 150) {
+          messageCounter.classList.add("warning");
+        }
+        if (length > 180) {
+          messageCounter.classList.add("danger");
+        }
+      });
     }
 
     // Form submission
@@ -240,7 +282,14 @@
       e.preventDefault();
       alert('Thank you for your message! We\'ll get back to you soon.');
       this.reset();
+
+      // Reset character counter
+      if (messageCounter) {
+        messageCounter.textContent = `0 / ${maxLength}`;
+        messageCounter.classList.remove("warning", "danger");
+      }
     });
+
 
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -255,5 +304,6 @@
       });
     });
   </script>
+  <script src="theme.js"></script>
 </body>
 </html>
