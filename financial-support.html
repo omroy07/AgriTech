@@ -434,6 +434,30 @@
       cursor: pointer;
     }
 
+    /* Scroll to Top Button */
+    .scroll-btn {
+      display: none;
+      position: fixed;
+      bottom: 7rem; /* Placed above chat toggle */
+      right: 2rem;
+      z-index: 1001;
+      background: var(--accent-primary);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 15px var(--shadow-medium);
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+    }
+
+    .scroll-btn:hover {
+      transform: translateY(-5px);
+      background-color: #2563eb;
+    }
+
     /* Main Content */
     .main-content {
       max-width: 1200px;
@@ -733,7 +757,6 @@
 </head>
 
 <body>
-  <!-- Navigation -->
   <nav class="navbar">
     <div class="navbar-content">
       <a href="index.html" class="btn btn-secondary" style="display: flex; align-items: center; gap: 0.5rem;">
@@ -751,7 +774,6 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
       <h1 class="serif">Financial Support & Insurance</h1>
@@ -760,9 +782,7 @@
     </div>
   </section>
 
-  <!-- Main Content -->
   <div class="main-content">
-    <!-- Loan Calculator -->
     <section class="loan-calculator loading">
       <h3 class="calculator-title serif">Agricultural Loan Calculator</h3>
       <div class="calculator-form">
@@ -793,7 +813,6 @@
       </div>
     </section>
 
-    <!-- Application Progress Tracker -->
     <section class="progress-tracker loading">
       <h3 class="section-title serif">Application Progress</h3>
       <div class="progress-steps">
@@ -811,7 +830,6 @@
       </div>
     </section>
 
-    <!-- Services Section -->
     <section class="section loading">
       <h2 class="section-title serif">Our Financial Services</h2>
       <p class="section-subtitle">Empowering farmers with tailored financial solutions for sustainable growth</p>
@@ -917,7 +935,6 @@
       </div>
     </section>
 
-    <!-- How It Works -->
     <section class="section loading">
       <h2 class="section-title serif">How It Works</h2>
       <p class="section-subtitle">Simple steps to access financial support for your farming needs</p>
@@ -950,7 +967,6 @@
       </div>
     </section>
 
-    <!-- Statistics -->
     <section class="stats-section loading">
       <h2 class="section-title serif">Our Impact</h2>
       <div class="stats-grid">
@@ -973,7 +989,6 @@
       </div>
     </section>
 
-    <!-- CTA Section -->
     <section class="cta-section loading">
       <h2 class="cta-title serif">Ready to Grow Your Farm?</h2>
       <p class="cta-description">Join thousands of farmers who have transformed their agricultural business with our
@@ -982,7 +997,6 @@
     </section>
   </div>
 
-  <!-- Chat Widget -->
   <div class="chat-widget" id="chatWidget">
     <div class="chat-header">
       <h4>Financial Assistant</h4>
@@ -1007,7 +1021,10 @@
     </a>
   </button>
 
-  <!-- Footer -->
+  <button id="scrollTopBtn" class="scroll-btn" onclick="scrollToTop()" aria-label="Scroll to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-links">
@@ -1018,7 +1035,7 @@
         <a href="privacy-policy.html">Privacy</a>
       </div>
       <div class="copyright">
-        <p>&copy; 2025 AgriTech. All rights reserved. Empowering agriculture through technology.</p>
+        <p>&copy; <span id="current-year"></span> AgriTech. All rights reserved. Empowering agriculture through technology.</p>
       </div>
     </div>
   </footer>
@@ -1051,6 +1068,25 @@
         themeIcon.className = 'fas fa-moon';
         themeText.textContent = 'Dark';
       }
+    }
+
+    // Scroll to Top Functionality
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+    window.onscroll = function() {
+      // Show button when scrolled down 300px
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        scrollTopBtn.style.display = "block";
+      } else {
+        scrollTopBtn.style.display = "none";
+      }
+    };
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     }
 
     // Loan Calculator
@@ -1233,6 +1269,12 @@
 
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
+      // Automatically update the copyright year
+      const yearSpan = document.getElementById("current-year");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+      
       calculateLoan();
       showNotification('Welcome to AgriTech Financial Services!');
     });
