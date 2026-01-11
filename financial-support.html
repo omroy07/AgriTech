@@ -756,6 +756,44 @@
   </style>
 </head>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const counters = document.querySelectorAll('.stat-number');
+    const speed = 200; // The lower the slower
+
+    const animateCounters = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    
+                    const inc = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 20);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+
+                updateCount();
+                observer.unobserve(counter); 
+            }
+        });
+    };
+
+    const sectionObserver = new IntersectionObserver(animateCounters, {
+        threshold: 0.7 
+    });
+
+    counters.forEach(counter => {
+        sectionObserver.observe(counter);
+    });
+});
+</script>
 <body>
   <nav class="navbar">
     <div class="navbar-content">
