@@ -6,14 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Plant Disease Detector - AI-Powered Diagnosis</title>
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      rel="stylesheet"
-    />
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+
+    <!-- Styles -->
     <link rel="stylesheet" href="../static/index.css" />
     <link rel="stylesheet" href="../../theme.css" />
 
@@ -66,26 +63,33 @@
   </head>
 
   <body>
+    <!-- Background animation -->
     <div class="background-animation">
       <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
       <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
       <div class="leaf"></div><div class="leaf"></div>
     </div>
 
+    <!-- Header -->
     <header class="header">
-      <div class="nav-container">
-        <div class="logo">
-          <i class="fas fa-leaf"></i>
-          <span>PlantCare AI</span>
-        </div>
-        <button class="theme-toggle" aria-label="Toggle dark/light mode">
-          <i class="fas fa-sun sun-icon"></i>
-          <i class="fas fa-moon moon-icon"></i>
-          <span class="theme-text">Light</span>
+      <div class="header-content">
+        <a href="/index.html" class="logo">
+          <img src="/images/logo.png" alt="AgriTech logo">
+          <span class="logo-text">AgriTech</span>
+        </a>
+        <nav class="nav-links">
+          <a href="/index.html">Home</a>
+          <a href="/about.html">About</a>
+          <a href="/blog.html">Blog</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle">
+          <i class="fas fa-moon" id="themeIcon"></i>
+          <span id="themeText">Dark Mode</span>
         </button>
       </div>
     </header>
 
+    <!-- Main -->
     <div class="main-container">
       <div class="hero-section">
         <h1 class="hero-title">Plant Disease Detector</h1>
@@ -136,6 +140,10 @@
               Analyze Plant Health
             </span>
           </button>
+
+          <p class="error-text" id="file-error">
+            ⚠️ Please upload a valid image file (JPG, PNG, WebP).
+          </p>
         </form>
       </div>
     </div>
@@ -148,6 +156,7 @@
       </div>
     </div>
 
+    <!-- Scripts -->
     <script>
       const uploadArea = document.getElementById("upload-area");
       const fileInput = document.getElementById("file-input");
@@ -158,6 +167,7 @@
       const submitBtn = document.getElementById("submit-btn");
       const uploadForm = document.getElementById("upload-form");
       const loadingOverlay = document.getElementById("loading-overlay");
+      const fileError = document.getElementById("file-error");
 
       uploadArea.addEventListener("click", () => fileInput.click());
 
@@ -165,9 +175,12 @@
         if (e.target.files.length > 0) {
           const file = e.target.files[0];
           if (!file.type.startsWith("image/")) {
-            alert("Please upload a valid image file");
+            fileError.style.display = "block";
+            submitBtn.disabled = true;
             return;
           }
+
+          fileError.style.display = "none";
           const reader = new FileReader();
           reader.onload = (evt) => {
             previewImage.src = evt.target.result;
@@ -185,6 +198,7 @@
         filePreview.classList.remove("show");
         uploadArea.style.display = "block";
         submitBtn.disabled = true;
+        fileError.style.display = "none";
       });
 
       uploadForm.addEventListener("submit", () => {
@@ -195,8 +209,13 @@
 
     <script src="../../theme.js"></script>
 
+    <!-- Footer -->
     <footer class="footer">
-      <p>&copy; 2025 PlantCare AI. All rights reserved.</p>
+      <div class="container">
+        <p class="footer-text">
+          © 2026 AgriTech. Empowering farmers with intelligent agriculture solutions.
+        </p>
+      </div>
     </footer>
   </body>
 </html>

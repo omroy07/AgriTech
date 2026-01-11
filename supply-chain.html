@@ -22,7 +22,7 @@
             font-family: 'Open Sans', sans-serif;
             line-height: 1.6;
             color: #333;
-            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            background: linear-gradient(135deg, #4877b8 0%, #0e745e 100%);
             min-height: 100vh;
         }
 
@@ -33,7 +33,7 @@
         }
 
         .header {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(190, 208, 212, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 30px;
@@ -69,7 +69,7 @@
         }
 
         .supply-chain-flow {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(210, 204, 212, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 30px;
@@ -94,7 +94,7 @@
         }
 
         .flow-step {
-            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            background: linear-gradient(135deg, #062a29, #306187);
             color: white;
             padding: 20px;
             border-radius: 15px;
@@ -148,7 +148,7 @@
         }
 
         .service-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(166, 202, 216, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 30px;
@@ -163,7 +163,7 @@
 
         .service-icon {
             font-size: 3rem;
-            color: #74b9ff;
+            color: #0c4373;
             margin-bottom: 20px;
         }
 
@@ -194,7 +194,7 @@
         }
 
         .tracking-dashboard {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(154, 208, 216, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 30px;
@@ -222,7 +222,7 @@
         }
 
         .shipment-card {
-            background: #f8f9fa;
+            background: #2da2c0;
             border-radius: 10px;
             padding: 20px;
             border-left: 4px solid #74b9ff;
@@ -279,7 +279,7 @@
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #74b9ff, #0984e3);
+            background: linear-gradient(90deg, #74b9ff, #e30952);
             border-radius: 3px;
             transition: width 0.3s ease;
         }
@@ -292,8 +292,8 @@
         }
 
         .metric-box {
-            background: linear-gradient(135deg, #74b9ff, #0984e3);
-            color: white;
+            background: linear-gradient(135deg, #2ca696, #095879);
+            color: rgb(255, 255, 255);
             padding: 20px;
             border-radius: 10px;
             text-align: center;
@@ -311,7 +311,7 @@
         }
 
         .cta-section {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(196, 203, 176, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 40px;
@@ -321,7 +321,7 @@
         }
 
         .cta-button {
-            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            background: linear-gradient(135deg, #146b09, #000910);
             color: white;
             padding: 15px 30px;
             border: none;
@@ -338,6 +338,40 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
+        .scroll-btn {
+                    position: fixed;
+                    right: 20px;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    background: #16a34a;
+                    color: white;
+                    border: none;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 1000;
+                    transition: all 0.3s;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                    }
+
+
+                    .scroll-btn:hover {
+                    transform: scale(1.1);
+                    background: #15803d;
+                    }
+
+                    .scroll-btn {
+                    bottom: 20px;
+                    opacity: 0;
+                    visibility: hidden;
+                    }
+
+                    .scroll-btn.visible {
+                    opacity: 1;
+                    visibility: visible;
+                    }
 
         @media (max-width: 768px) {
             .flow-steps {
@@ -552,7 +586,34 @@
             <a href="#" class="cta-button">Contact Support</a>
         </div>
     </div>
+   <!--scroll button-->
+    <button class="scroll-btn" id="scrollBtn" title="Scroll">
+    <i class="fas fa-arrow-down" id="scrollIcon"></i>
+  </button>
+  <script>
+    const scrollBtn = document.getElementById("scrollBtn");
+    const scrollIcon = document.getElementById("scrollIcon");
 
+    if (scrollBtn && scrollIcon) {
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 300) {
+            scrollBtn.classList.add('visible');
+            scrollIcon.classList.remove("fa-arrow-down");
+            scrollIcon.classList.add("fa-arrow-up");
+          } else {
+            scrollBtn.classList.remove('visible');
+            scrollIcon.classList.remove("fa-arrow-up");
+            scrollIcon.classList.add("fa-arrow-down");
+          }
+        });
+
+        scrollBtn.addEventListener("click", () => {
+          if (scrollIcon.classList.contains("fa-arrow-up")) {
+            window.scrollTo({top: 0, behavior: "smooth"});
+          }
+        });
+    }
+    </script>
     <script>
         // Simulate real-time updates
         function updateMetrics() {

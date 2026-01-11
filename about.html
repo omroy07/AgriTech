@@ -6,41 +6,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Us - AgriTech</title>
 
-  <!-- SEO Meta Tags -->
   <meta name="description"
     content="AgriTech is a smart farming platform empowering farmers with AI-powered crop recommendation, yield prediction, and sustainable agricultural practices." />
   <meta name="keywords" content="AgriTech, smart farming, AI agriculture, crop recommendation, yield prediction" />
   <meta name="author" content="AgriTech Team" />
 
-  <!-- Open Graph (for sharing) -->
   <meta property="og:title" content="About Us - AgriTech" />
   <meta property="og:description"
     content="Empowering India's farming future with innovative AI-powered agricultural solutions." />
   <meta property="og:image" content="images/logo.png" />
   <meta property="og:type" content="website" />
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/logo.png">
 
-  <!-- Fonts & Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Libertinus+Serif:wght@400;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
 
-  <!-- Stylesheets -->
   <link rel="stylesheet" href="about.css" />
   <link rel="stylesheet" href="theme.css" />
 </head>
 
 <body>
-  <!-- Navigation bar -->
   <nav class="navbar" aria-label="Main Navigation">
     <div class="heading">
       <h1>About Us</h1>
     </div>
     <div class="nav-buttons">
+      <!-- Responsive Search Bar -->
+        <div class="search-container">
+  <i class="fas fa-search search-icon"></i>
+  <input
+    type="text"
+    placeholder="Search About AgriTech..."
+    class="search-input"
+    aria-label="Search content"
+  />
+</div>
+
       <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
         <i class="fas fa-sun sun-icon"></i>
         <i class="fas fa-moon moon-icon"></i>
@@ -54,9 +61,7 @@
     </div>
   </nav>
 
-  <!-- Main content -->
   <main>
-    <!-- Who We Are -->
     <section class="about-section" id="who-we-are">
       <h2>🌿 Who We Are</h2>
       <p>
@@ -73,7 +78,6 @@
       </p>
     </section>
 
-    <!-- Vision -->
     <section class="vision-section" id="vision">
       <h2>🌈 Our Vision</h2>
       <p>
@@ -97,7 +101,6 @@
       </p>
     </section>
 
-    <!-- What We Do -->
     <section class="what-we-do-section" id="what-we-do">
       <h2>🛠️ What We Do</h2>
       <p>
@@ -119,7 +122,6 @@
       </ul>
     </section>
 
-    <!-- Why It Matters -->
     <section class="why-it-matters-section" id="why-it-matters">
       <h2>🌍 Why It Matters</h2>
       <p>
@@ -135,52 +137,63 @@
     </section>
   </main>
 
-  <!-- FOOTER - Exact same as index.html -->
   <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="brand-header">
-          <img src="images/logo.png" alt="AgriTech logo">
-          <h3 class="serif">AgriTech</h3>
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="footer-brand-header">
+            <img src="images/logo.png" alt="AgriTech logo">
+            <h3 class="serif">AgriTech</h3>
+          </div>
+          <p class="brand-text">Empowering India's Farming Future with innovative technology connecting every stakeholder.</p>
         </div>
-        <p>Empowering India's Farming Future with innovative technology connecting every stakeholder.</p>
+
+        <div class="footer-col">
+          <h4 class="serif">Quick Links</h4>
+          <ul class="footer-ul">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+            <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="serif">Smart Tools</h4>
+          <ul class="footer-ul">
+            <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
+            <li><a href="#"><i class="fas fa-seedling"></i> Crop Planner</a></li>
+            <li><a href="#"><i class="fas fa-chart-line"></i> Yield Predictor</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="serif">Connect</h4>
+          <div class="social-links">
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          </div>
+          <div class="footer-contact-info">
+             <p><i class="fas fa-envelope"></i> support@agritech.com</p>
+          </div>
+        </div>
       </div>
-      <div class="footer-links">
-        <h4 class="serif">Quick Links</h4>
-        <ul>
-          <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-          <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-          <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
-          <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
-          <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
-        </ul>
+      <div class="footer-bottom">
+        <p>© 2026 AgriTech. All rights reserved.</p>
       </div>
-      <div class="footer-links">
-        <h4 class="serif">Contact</h4>
-        <ul>
-          <li><a href="#"><i class="fas fa-envelope"></i> Email Us</a></li>
-          <li><a href="#"><i class="fas fa-phone"></i> Call Us</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2025 AgriTech. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- Floating Chatbot Button - Same as index.html -->
   <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
     <i class="fas fa-robot"></i>
   </a>
 
-  <!-- Scroll Button - Same as index.html -->
   <button class="scroll-btn" id="scrollBtn" title="Scroll">
     <i class="fas fa-arrow-down" id="scrollIcon"></i>
   </button>
 
-  <!-- Scripts -->
   <script>
-    // Theme toggle functionality
     const themeToggle = document.querySelector('.theme-toggle');
     const themeText = document.querySelector('.theme-text');
     const sunIcon = document.querySelector('.sun-icon');
@@ -209,7 +222,6 @@
       applyTheme(next);
     });
 
-    // Scroll Button functionality - Same as index.html
     const scrollBtn = document.getElementById("scrollBtn");
     const scrollIcon = document.getElementById("scrollIcon");
 
@@ -232,6 +244,63 @@
           }
         });
     }
+
+  const searchInput = document.querySelector(".search-input");
+  const sections = document.querySelectorAll("main section");
+
+  // No result element
+  const noResultDiv = document.createElement("div");
+  noResultDiv.className = "no-results";
+  noResultDiv.innerHTML = `
+  <div class="icon-wrapper">
+    <i class="fas fa-leaf"></i>
+  </div>
+  <h3>No results found</h3>
+  <p>
+    We couldn’t find anything related to your search.<br>
+    Try exploring these popular topics instead 🌱
+  </p>
+  <div class="suggestions">
+    <span>Crop Recommendation</span>
+    <span>Yield Prediction</span>
+    <span>Organic Farming</span>
+    <span>AI Agriculture</span>
+  </div>
+`;
+
+  document.querySelector("main").appendChild(noResultDiv);
+  noResultDiv.style.display = "none";
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase().trim();
+    let found = false;
+
+    sections.forEach(section => {
+      const elements = section.querySelectorAll("h2, p, li");
+      let sectionMatch = false;
+
+      elements.forEach(el => {
+        el.classList.remove("search-highlight");
+
+        if (query !== "" && el.textContent.toLowerCase().includes(query)) {
+          el.classList.add("search-highlight");
+          sectionMatch = true;
+          found = true;
+        }
+      });
+
+      section.style.display = query === "" || sectionMatch ? "block" : "none";
+    });
+
+    noResultDiv.style.display = query !== "" && !found ? "block" : "none";
+  });
+document.addEventListener("click", (e) => {
+    if (e.target.closest(".suggestions span")) {
+      const text = e.target.textContent;
+      searchInput.value = text;
+      searchInput.dispatchEvent(new Event("input"));
+    }
+  });
   </script>
 </body>
 </html>
