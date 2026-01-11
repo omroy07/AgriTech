@@ -155,6 +155,32 @@ body.dark-mode .bg-animation div {
     z-index: 100;
     transition: all 0.3s ease;
 }
+.hero-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.hero-back:hover {
+  background-color: #66bb6a;
+}
+
+body.dark-mode .hero-back {
+  background-color: #81C784;
+  color: #121212;
+}
+
+body.dark-mode .hero-back:hover {
+  background-color: #4CAF50;
+}
 
 body.dark-mode .header {
     background: rgba(26, 43, 26, 0.95);
@@ -382,11 +408,12 @@ body.dark-mode .method-card a {
 .contact-form-section {
     background: white;
     border-radius: 20px;
-    padding: 3rem;
-    margin: 4rem 0;
+    padding: 3rem, 2rem;
+    margin: 4rem 2rem;
     border: 1px solid rgba(34, 139, 34, 0.1);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
     transform-style: preserve-3d;
+   
 }
 
 body.dark-mode .contact-form-section {
@@ -455,14 +482,14 @@ body.dark-mode .form-group label {
     font-size: 1rem;
     transition: all 0.3s ease;
     background: white;
-    color: #333;
+    color: #ccc7c7;
     transform: translateZ(10px);
 }
 
 body.dark-mode .form-group input,
 body.dark-mode .form-group select,
 body.dark-mode .form-group textarea {
-    background: rgba(26, 43, 26, 0.5);
+    background: rgba(95, 99, 95, 0.5);
     border-color: rgba(76, 175, 80, 0.3);
     color: #e0e0e0;
 }
