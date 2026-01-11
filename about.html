@@ -38,15 +38,15 @@
     </div>
     <div class="nav-buttons">
       <!-- Responsive Search Bar -->
-        <div class="search-container">
-  <i class="fas fa-search search-icon"></i>
-  <input
-    type="text"
-    placeholder="Search About AgriTech..."
-    class="search-input"
-    aria-label="Search content"
-  />
-</div>
+      <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input
+          type="text"
+          placeholder="Search About AgriTech..."
+          class="search-input"
+          aria-label="Search content"
+        />
+      </div>
 
       <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
         <i class="fas fa-sun sun-icon"></i>
@@ -204,10 +204,12 @@
         localStorage.setItem('theme', theme);
         if (theme === 'dark') {
             themeText.textContent = 'Light';
+            themeText.style.paddingLeft = "1rem";
             moonIcon.style.display = 'none';
             sunIcon.style.display = 'inline-block';
         } else {
             themeText.textContent = 'Dark';
+            themeText.style.paddingLeft = "0";
             moonIcon.style.display = 'inline-block';
             sunIcon.style.display = 'none';
         }
