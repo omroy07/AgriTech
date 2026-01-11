@@ -12,18 +12,85 @@
     <link rel="icon" type="image/png" href="images/logo.png">
     
     <style>
+        /* ================= DARK MODE VARIABLES ================= */
+:root {
+    --bg-gradient: linear-gradient(135deg, #4877b8 0%, #0e745e 100%);
+    --card-bg: rgba(210, 204, 212, 0.95);
+    --header-bg: rgba(190, 208, 212, 0.95);
+    --text-main: #333;
+    --heading: #2c3e50;
+}
+body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+
+    /* dark mode enabled */
+    background: var(--bg-gradient);
+    color: var(--text-main);
+}
+[data-theme="dark"] {
+    --bg-gradient: linear-gradient(135deg, #0e1a2b 0%, #02140c 100%);
+    --card-bg: rgba(30, 30, 30, 0.85);
+    --header-bg: rgba(45, 45, 45, 0.85);
+    --text-main: #ddd;
+    --heading: #f0f0f0;
+}
+/* APPLY VARIABLES */
+body {
+    background: var(--bg-gradient);
+    color: var(--text-main);
+}
+.header {
+    background: var(--header-bg);
+}
+
+.header,
+.supply-chain-flow,
+.service-card,
+.tracking-dashboard,
+.cta-section {
+    background: var(--card-bg);
+}
+
+.header h1,
+.flow-title,
+.dashboard-header h2,
+.service-card h3 {
+    color: var(--heading);
+}
+
+.service-features li,
+.cta-section p {
+    color: var(--text-main);
+}
+
+/* ================= TOGGLE BUTTON ================= */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #111827;
+    color: white;
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 1200;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+}
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Open Sans', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #4877b8 0%, #0e745e 100%);
-            min-height: 100vh;
         }
 
         .container {
@@ -31,9 +98,11 @@
             margin: 0 auto;
             padding: 20px;
         }
+        .header {
+    background: var(--header-bg);
+}
 
         .header {
-            background: rgba(190, 208, 212, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 30px;
@@ -53,8 +122,8 @@
             position: fixed;
             top: 20px;
             left: 20px;
-            background: #fff;
-            color: #333;
+            background: var(--header-bg);
+            color: white;
             padding: 10px 15px;
             border-radius: 50px;
             text-decoration: none;
@@ -69,7 +138,7 @@
         }
 
         .supply-chain-flow {
-            background: rgba(210, 204, 212, 0.95);
+            background: var(--header-bg);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 30px;
@@ -148,7 +217,7 @@
         }
 
         .service-card {
-            background: rgba(166, 202, 216, 0.95);
+             background: var(--header-bg);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 30px;
@@ -194,7 +263,7 @@
         }
 
         .tracking-dashboard {
-            background: rgba(154, 208, 216, 0.95);
+             background: var(--header-bg);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 30px;
@@ -279,7 +348,7 @@
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #74b9ff, #e30952);
+           background: var(--header-bg);
             border-radius: 3px;
             transition: width 0.3s ease;
         }
@@ -292,7 +361,7 @@
         }
 
         .metric-box {
-            background: linear-gradient(135deg, #2ca696, #095879);
+            background: var(--header-bg);
             color: rgb(255, 255, 255);
             padding: 20px;
             border-radius: 10px;
@@ -311,7 +380,7 @@
         }
 
         .cta-section {
-            background: rgba(196, 203, 176, 0.95);
+            background: var(--header-bg);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 40px;
@@ -673,6 +742,29 @@
         // Update shipments every 15 seconds
         setInterval(simulateShipmentUpdate, 15000);
     </script>
+<button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">
+    <i class="fas fa-moon"></i>
+</button>
+<script>
+    const themeToggle = document.getElementById("themeToggle");
+    const icon = themeToggle.querySelector("i");
+
+    function setTheme(theme) {
+        document.body.setAttribute("data-theme", theme);
+        localStorage.setItem("agritech-theme", theme);
+        icon.className = theme === "dark" ? "fas fa-sun" : "fas fa-moon";
+    }
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem("agritech-theme") || "light";
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener("click", () => {
+        const current = document.body.getAttribute("data-theme");
+        setTheme(current === "dark" ? "light" : "dark");
+    });
+</script>
+
 </body>
 </html>
 
