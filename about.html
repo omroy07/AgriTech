@@ -33,33 +33,50 @@
 
 <body>
   <nav class="navbar" aria-label="Main Navigation">
-    <div class="heading">
-      <h1>About Us</h1>
-    </div>
-    <div class="nav-buttons">
-      <!-- Responsive Search Bar -->
-      <div class="search-container">
-        <i class="fas fa-search search-icon"></i>
-        <input
-          type="text"
-          placeholder="Search About AgriTech..."
-          class="search-input"
-          aria-label="Search content"
-        />
-      </div>
 
-      <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
-        <i class="fas fa-sun sun-icon"></i>
-        <i class="fas fa-moon moon-icon"></i>
-        <span class="theme-text">Light</span>
-      </button>
-      <a href="index.html" class="btn btn-secondary">Home</a>
-      <a href="blog.html" class="btn btn-secondary">Blog</a>
-      <a href="login.html" class="btn btn-secondary">Login</a>
-      <a href="faq.html" class="btn btn-secondary">FAQ</a>
-      <a href="register.html" class="btn btn-primary" style="color:white">Register</a>
-    </div>
-  </nav>
+<div class="heading">
+  <h1>About Us</h1>
+</div>
+
+<div class="nav-buttons">
+  <!-- Responsive Search Bar -->
+  <div class="search-container">
+    <i class="fas fa-search search-icon"></i>
+    <input
+      type="text"
+      placeholder="Search About AgriTech..."
+      class="search-input"
+      aria-label="Search content"
+    />
+  </div>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
+    <i class="fas fa-sun sun-icon"></i>
+    <i class="fas fa-moon moon-icon"></i>
+    <span class="theme-text">Light</span>
+  </button>
+
+  <!-- Hamburger Menu (Mobile Only) -->
+  <button class="hamburger" aria-label="Toggle navigation">
+    <i class="fas fa-bars"></i>
+   </button>
+ </div>
+
+    <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
+      <i class="fas fa-sun sun-icon"></i>
+      <i class="fas fa-moon moon-icon"></i>
+      <span class="theme-text">Light</span>
+    </button>
+
+    <a href="index.html" class="btn btn-secondary">Home</a>
+    <a href="blog.html" class="btn btn-secondary">Blog</a>
+    <a href="login.html" class="btn btn-secondary">Login</a>
+    <a href="faq.html" class="btn btn-secondary">FAQ</a>
+    <a href="register.html" class="btn btn-primary" style="color:white">Register</a>
+  </div>
+</nav>
+
 
   <main>
     <section class="about-section" id="who-we-are">
@@ -199,6 +216,13 @@
     const sunIcon = document.querySelector('.sun-icon');
     const moonIcon = document.querySelector('.moon-icon');
 
+    const hamburger = document.querySelector('.hamburger');
+  const navButtons = document.querySelector('.nav-buttons');
+
+  hamburger.addEventListener('click', () => {
+    navButtons.classList.toggle('active');
+  });
+  
     const applyTheme = (theme) => {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);

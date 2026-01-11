@@ -297,6 +297,40 @@ p {
   box-shadow: 0 5px 15px rgba(76, 175, 80, 0.1);
 }
 
+/* Hide hamburger on tablet & desktop */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* Mobile styles only */
+@media (max-width: 426px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-buttons {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    background: inherit;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.8rem;
+    z-index: 1000;
+  }
+
+  .nav-buttons.active {
+    display: flex;
+  }
+}
+
+
 /* ============================================
    RE-DESIGNED FOOTER STYLES (4-COLUMN GRID) (Untouched)
    ============================================ */
