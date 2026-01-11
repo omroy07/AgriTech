@@ -123,6 +123,12 @@ Do not add assumptions that are not supported by the data provided.
             model=MODEL_ID,
             contents=[{"parts": [{"text": prompt}]}]
         )
+        
+        if not response.candidates:
+            return jsonify({
+                "status": "error",
+                "message": "No response generated from Gemini API"
+          }), 500
 
         reply = response.candidates[0].content.parts[0].text
         return jsonify({"status": "success", "message": reply}), 200
