@@ -207,6 +207,7 @@ We love contributions! Please read our **[CONTRIBUTING.md](./CONTRIBUTING.md)** 
 ---
 
 ## ✨ Contributors
+wahide
 
 #### Thanks to all the wonderful people contributing to this project! 💖
 
