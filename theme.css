@@ -46,7 +46,7 @@
 
 [data-theme="dark"] {
   /* Dark mode colors */
-  --bg-primary: #0f172a;
+  --bg-primary: #021542ff;
   --bg-secondary: #1e293b;
   --bg-tertiary: #334155;
   --text-primary: #f8fafc;
@@ -78,6 +78,101 @@ body {
 .serif {
   font-family: var(--font-serif);
 }
+/* Dark mode toggle styles */
+[data-theme="dark"] {
+  --bg-primary: #b4b0b0;
+  --text-primary: #e0e0e0;
+  --text-secondary: #c0ffc0;
+  --border-light: #8b8787;
+  --shadow-light: rgba(131, 129, 129, 0.6);
+  --accent-green: #90ee90;
+  --accent-darkgreen: #00ff7f;
+  --btn-disabled: #a19191;
+}
+
+[data-theme="dark"] body,
+[data-theme="dark"] .main-content {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .analysis-section,
+[data-theme="dark"] .features-section {
+  background: var(--bg-primary);
+  border: 2px solid var(--border-light);
+  box-shadow: 0 8px 25px var(--shadow-light);
+}
+
+[data-theme="dark"] .upload-area,
+[data-theme="dark"] .preview-container,
+[data-theme="dark"] .result-card,
+[data-theme="dark"] .treatment,
+[data-theme="dark"] .feature-card,
+[data-theme="dark"] .modal-content {
+  background: #2a2a2a;
+  border: 2px solid var(--border-light);
+  color: var(--text-primary);
+  box-shadow: 0 4px 15px var(--shadow-light);
+}
+
+[data-theme="dark"] .upload-icon,
+[data-theme="dark"] .feature-icon {
+  color: var(--accent-green);
+}
+
+[data-theme="dark"] .upload-text,
+[data-theme="dark"] .description,
+[data-theme="dark"] .confidence,
+[data-theme="dark"] .disease-name,
+[data-theme="dark"] .feature-card h3,
+[data-theme="dark"] .treatment h4 {
+  color: var(--accent-green);
+}
+
+[data-theme="dark"] .btn {
+  background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-darkgreen) 100%);
+  color: #121212;
+}
+
+[data-theme="dark"] .btn:disabled {
+  background: var(--btn-disabled);
+  color: #888;
+}
+
+[data-theme="dark"] .severity.low {
+  background: #15572433;
+  color: var(--accent-green);
+}
+[data-theme="dark"] .severity.medium {
+  background: #85640433;
+  color: #ffd700;
+}
+[data-theme="dark"] .severity.high {
+  background: #721c2433;
+  color: #ff6b6b;
+}
+
+[data-theme="dark"] .no-results {
+  color: #888;
+}
+
+[data-theme="dark"] .upload-area:hover {
+  border-color: var(--accent-darkgreen);
+  background: #2e2e2e;
+  box-shadow: 0 8px 25px rgba(0, 255, 127, 0.2);
+}
+
+[data-theme="dark"] .upload-area.dragover {
+  border-color: var(--accent-darkgreen);
+  background: #1b1b1b;
+  box-shadow: 0 8px 25px rgba(0, 255, 127, 0.3);
+}
+
+[data-theme="dark"] .spinner {
+  border: 4px solid var(--border-light);
+  border-top: 4px solid var(--accent-green);
+}
+
 
 /* Theme Toggle Button */
 .theme-toggle,.back-button {
@@ -132,6 +227,8 @@ body {
   transform: rotate(180deg);
   
 }
+
+
 
 /* Apply theme colors to common elements */
 .card,
