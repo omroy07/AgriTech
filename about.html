@@ -37,16 +37,13 @@
       <h1>About Us</h1>
     </div>
     <div class="nav-buttons">
-      <!-- Responsive Search Bar -->
-        <div class="search-container">
-  <i class="fas fa-search search-icon"></i>
-  <input
-    type="text"
-    placeholder="Search About AgriTech..."
-    class="search-input"
-    aria-label="Search content"
-  />
-</div>
+      <div class="search-container">
+      <input type="text" placeholder="Search About AgriTech..." class="search-input" autocomplete="off"
+        style="outline: none;" />
+          <button class="search-button" aria-label="Search content">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
 
       <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
         <i class="fas fa-sun sun-icon"></i>
@@ -245,8 +242,31 @@
         });
     }
 
+  const searchButton = document.querySelector(".search-button");
   const searchInput = document.querySelector(".search-input");
   const sections = document.querySelectorAll("main section");
+
+    searchButton?.addEventListener("click", () => {
+      handleSearch(searchInput.value);
+    });
+
+    searchInput?.addEventListener("keydown", e => {
+      if (e.key === "Enter") handleSearch(e.target.value);
+    });
+
+    // Add focus effect when button is clicked or focused
+    searchButton?.addEventListener("click", () => {
+      searchInput?.classList.add("input-focused");
+    });
+
+    searchButton?.addEventListener("focus", () => {
+      searchInput?.focus(); //Focus the input to show cursor
+      searchInput?.classList.add("input-focused");
+    });
+
+    searchInput?.addEventListener("blur", () => {
+        searchInput.classList.remove("input-focused");
+      });
 
   // No result element
   const noResultDiv = document.createElement("div");

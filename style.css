@@ -267,7 +267,10 @@
       --text-primary: #1e293b;
       --text-secondary: #64748b;
       --text-muted: #94a3b8;
+      --text-color: #0f172a;
       --border-color: #e2e8f0;
+      --input-border: #94a3b8;
+      --accent-color: #16a34a;
       --shadow-light: rgba(0, 0, 0, 0.05);
       --shadow-medium: rgba(0, 0, 0, 0.1);
       --shadow-heavy: rgba(0, 0, 0, 0.15);
@@ -289,6 +292,7 @@
       --text-primary: #f8fafc;
       --text-secondary: #cbd5e1;
       --text-muted: #94a3b8;
+      --text-color: #ffffff;
       --border-color: #334155;
       --shadow-light: rgba(0, 0, 0, 0.3);
       --shadow-medium: rgba(0, 0, 0, 0.4);
@@ -404,97 +408,53 @@
       border-color: var(--primary-green);
       color: var(--primary-green);
     }
+
     /* Responsive Search bar */
-     .search-container {
-        display: flex;
-        align-items: center;
-        background: linear-gradient(135deg, #f8fdfc 0%, #f3f8f6 100%);
-        border: 2px solid transparent;
-        border-radius: 30px;
-        padding: 8px 15px;
-        width: 100%;
-        max-width: 320px;
-        margin-left: auto;
-        margin-right: 20px;
-        box-shadow: 0 4px 15px rgba(56, 142, 60, 0.1);
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden; /* OK */
-      }
-
-
-      .search-container::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, #4caf50, #388e3c);
-        border-radius: 30px;
-        padding: 2px;
-        z-index: -1;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-
-      .search-container:focus-within::before {
-        opacity: 1;
-      }
-
-      .search-container:focus-within {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(56, 142, 60, 0.2);
-      }
-
-      .search-input {
-        border: none;
-        outline: none;
-        padding: 10px 12px;
-        font-size: 15px;
-        flex: 1;
-        color: #2e7d32;
-        background: #f8fdfc;
-        font-family: "Poppins", sans-serif;
-        font-weight: 500;
-      }
-
-      .search-input::placeholder {
-        color: #81c784;
-        font-weight: 400;
-      }
-
-      .search-button {
-        background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-        color: white;
-        font-size: 16px;
-        width: 35px;
-        height: 35px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 8px rgba(56, 142, 60, 0.2);
-      }
-
-      .search-button:hover {
-        transform: scale(1.1);
-        box-shadow: 0 4px 15px rgba(56, 142, 60, 0.4);
-      }
-
+        .search-container {
+          position: relative;
+          display: flex;
+          gap: 0.25rem;
+          flex-shrink: 1;
+          min-width: 150px;
+        }
+    
+        .search-input {
+          padding: 0.5rem;
+          padding-right: 40px;
+          border-radius: 8px;
+          border: 1px solid var(--input-border);
+          background: transparent;
+          color: var(--text-color);
+          width: 230px;
+          transition: all 0.3s ease;
+          font-size: 0.85rem;
+        }
+    
+        .search-button {
+          position: absolute;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          padding: 0.5rem 0.6rem;
+          background: var(--accent-color);
+          border: none;
+          border-radius: 0 8px 8px 0;
+          color: white;
+          cursor: pointer;
+          flex-shrink: 0;
+        }
+    
+        .search-input:focus,
+        .search-input.input-focused {
+          width: 330px;
+          outline: none !important;
+          border-color: var(--accent-color);
+        }
+            
       /* Mobile responsive improvements */
       @media screen and (max-width: 991.98px) {
         .navbar {
           padding: 0.75rem 0;
-        }
-
-        .search-container {
-          max-width: 100%;
-          margin: 1rem 0 0 0;
-          order: 3;
         }
       }
 
@@ -2042,6 +2002,20 @@
         margin: 0 0 1rem 0;
       }
 
+      .search-input {
+        width: 100%;
+        padding-right: 50px;
+      }
+
+      .search-input:focus,
+      .search-input.input-focused {
+        width: 100%;
+      }
+
+      .search-button {
+        padding: 0.5rem 1rem;
+      }
+
       .hero {
         padding: 3rem 1rem;
       }
@@ -2170,10 +2144,6 @@
     @media (max-width: 1024px) and (min-width: 769px) {
       .navbar {
         padding: 1rem 2rem;
-      }
-
-      .search-container {
-        max-width: 280px;
       }
 
       .hero {

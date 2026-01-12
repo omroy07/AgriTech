@@ -252,10 +252,9 @@
         <a href="index.html" class="logo">AgriTech</a>
       </div>
       <div class="nav-buttons">
-        <!-- Responsive Search Bar -->
         <div class="search-container">
-          <input type="text" placeholder="Search..." class="search-input" />
-          <button class="search-button">
+          <input type="text" placeholder="Search..." class="search-input" autocomplete="off" />
+          <button class="search-button" aria-label="Search content">
             <i class="fas fa-search"></i>
           </button>
         </div>
@@ -652,6 +651,32 @@
         faqItem.classList.add('active');
       }
     }
+
+    // Desktop Search
+      const searchButton = document.querySelector(".search-button");
+      const searchInput = document.querySelector(".search-input");
+
+      searchButton?.addEventListener("click", () => {
+        handleSearch(searchInput.value);
+      });
+
+      searchInput?.addEventListener("keydown", e => {
+        if (e.key === "Enter") handleSearch(e.target.value);
+      });
+
+      // Add focus effect when button is clicked or focused
+      searchButton?.addEventListener("click", () => {
+        searchInput?.classList.add("input-focused");
+      });
+
+      searchButton?.addEventListener("focus", () => {
+        searchInput?.focus(); //Focus the input to show cursor
+        searchInput?.classList.add("input-focused");
+      });
+
+      searchInput?.addEventListener("blur", () => {
+        searchInput.classList.remove("input-focused");
+      });
 
     // Theme toggle functionality
     const themeToggle = document.querySelector('.theme-toggle');

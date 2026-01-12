@@ -204,7 +204,7 @@ select {
   transition: all 0.3s ease;
 }
 
-input:focus,
+/* input:focus, */
 textarea:focus,
 select:focus {
   background-color: var(--bg-primary);
@@ -472,7 +472,7 @@ tr:hover {
 }
 
 button:focus,
-input:focus,
+/* input:focus, */
 textarea:focus,
 select:focus {
   outline: none;
@@ -574,17 +574,4 @@ select:focus {
   footer {
     display: none !important;
   }
-}
-
-/* 🔥 FIX: Search bar inner dark box remove */
-.search-container input.search-input {
-  background-color: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 10px 12px !important;
-}
-
-[data-theme="dark"] .search-container input.search-input {
-  background-color: transparent !important;
-  color: #c8e6c9 !important;
 }
