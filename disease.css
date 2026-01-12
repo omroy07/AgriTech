@@ -1,19 +1,148 @@
 /* Import theme system */
 @import url('theme.css');
 
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--bg-secondary, #f8fff8);
-  color: var(--text-primary, #333);
-  line-height: 1.8;
-  min-height: 100vh;
+/* Container: limit max-width */
+.container {
+  max-width: 1000px; /* 👈 minimum navbar width */
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Header styling */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  color: white;
+  padding: 7.5px 0;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(45, 90, 39, 0.3);
+}
+
+/* Navbar content */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Title group */
+.title-group h1 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.title-group p {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-top: 4px;
+}
+
+/* Back button */
+.back-button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  white-space: nowrap;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .back-button {
+    align-self: flex-start;
+  }
+}
+
+/* Header (Navbar) */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  box-shadow: 0 10px 30px rgba(45, 90, 39, 0.3);
+}
+
+/* Limit navbar content width */
+.header .container {
+  max-width: 1200px;   /* 👈 controls navbar width */
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Navbar layout */
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Title group */
+.title-group h1 {
+  margin: 0;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+}
+
+.title-group p {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Back button */
+.back-button {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Theme toggle spacing */
+.theme-toggle {
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .back-button {
+    align-self: flex-start;
+  }
 }
 
 .container {
