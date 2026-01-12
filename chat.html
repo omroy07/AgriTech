@@ -20,47 +20,8 @@ connect-src 'self' http://localhost:3000;
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <link rel="icon" type="image/png" href="images/logo.png" />
-    <link rel="stylesheet" href="chat.css" />
     <link rel="stylesheet" href="theme.css" />
-    <style>
-      /* Added styles for light green color on specified text */
-
-      .chat-header h2 {
-        color: #22c55e !important; /* Force AgriTech Green */
-        text-shadow: 0 1px 2px rgba(0,0,0,0.3); /* Adds depth for better readability */
-      }
-
-      .logo h1 {
-        color: var(--light-green); /* Light green for AgriBot */
-      }
-
-      /* --- NEW STYLES FOR IMAGE UPLOAD --- */
-      #image-preview-container {
-        display: none;
-        padding: 10px;
-        background: rgba(34, 197, 94, 0.1);
-        border-radius: 8px;
-        margin: 0 20px 10px 20px;
-        align-items: center;
-        gap: 15px;
-        border: 1px dashed #22c55e;
-      }
-      .preview-wrapper { position: relative; display: inline-block; }
-      .preview-wrapper img { max-height: 60px; border-radius: 5px; border: 2px solid #22c55e; }
-      .remove-img {
-        position: absolute; top: -8px; right: -8px;
-        background: #ef4444; color: white; border: none;
-        border-radius: 50%; width: 20px; height: 20px;
-        cursor: pointer; font-size: 12px; display: flex;
-        align-items: center; justify-content: center;
-      }
-      .camera-btn {
-        background: none; border: none; color: #22c55e;
-        cursor: pointer; font-size: 1.3rem; margin-right: 10px;
-        transition: transform 0.2s;
-      }
-      .camera-btn:hover { transform: scale(1.1); }
-    </style>
+    <link rel="stylesheet" href="chat.css" />
   </head>
   <body>
     <header>
@@ -69,7 +30,7 @@ connect-src 'self' http://localhost:3000;
           <i class="fas fa-seedling"></i>
           <h1>AgriBot</h1>
         </div>
-        <div style="display: flex; gap: 1rem; align-items: center;">
+        <div class="header-actions">
           <button class="theme-toggle" aria-label="Toggle dark/light mode">
             <i class="fas fa-sun sun-icon"></i>
             <i class="fas fa-moon moon-icon"></i>
@@ -85,55 +46,65 @@ connect-src 'self' http://localhost:3000;
 
     <main>
       <div id="chat-container">
-        <div class="chat-header">
-          <i class="fas fa-robot"></i>
-          <h2>Ask me anything about agriculture, crops, or farming techniques</h2>
+        <div class="chat-header glass-effect">
+          <div class="chat-header-info">
+            <i class="fas fa-robot"></i>
+            <div>
+              <h2>AgriTech Assistant</h2>
+              <span class="status-dot"></span> <small>Online</small>
+            </div>
+          </div>
         </div>
 
         <div id="chat-window">
           <div class="welcome-message">
-            <h3><i class="fas fa-leaf"></i> Welcome to AgriTech Assistant!</h3>
+            <div class="welcome-icon-wrapper">
+              <i class="fas fa-leaf"></i>
+            </div>
+            <h3>Welcome to AgriTech Assistant!</h3>
             <p>
-              I'm powered by Google Gemini AI to help with all your farming
-              questions.
+              Powered by Google Gemini AI. Ask me anything about agriculture, diagnosis, or farming techniques.
             </p>
 
             <div class="suggestions">
               <div class="suggestion">Best crops for this season?</div>
-              <div class="suggestion">Organic pest control methods</div>
-              <div class="suggestion">Water conservation techniques</div>
-              <div class="suggestion">Soil health improvement</div>
+              <div class="suggestion">Organic pest control</div>
+              <div class="suggestion">Water conservation tips</div>
+              <div class="suggestion">Improve soil health</div>
             </div>
           </div>
         </div>
 
         <div id="image-preview-container">
           <div class="preview-wrapper">
-            <img id="image-preview" src="">
+            <img id="image-preview" src="" alt="Image preview">
             <button type="button" class="remove-img" onclick="clearImage()">×</button>
           </div>
-          <span style="font-size: 0.85rem; color: #22c55e;">Image attached for AI analysis</span>
+          <span class="preview-text">Image attached for analysis</span>
         </div>
 
-        <form id="chat-form">
-          <div class="input-container" style="display: flex; align-items: center;">
+        <form id="chat-form" class="glass-effect">
+          <div class="input-wrapper">
             <input type="file" id="image-input" accept="image/*" style="display: none;" onchange="handleImagePreview(event)">
-            <button type="button" class="camera-btn" onclick="document.getElementById('image-input').click()" title="Upload image for diagnosis">
+            
+            <button type="button" class="action-btn camera-btn" onclick="document.getElementById('image-input').click()" title="Upload image">
               <i class="fas fa-camera"></i>
             </button>
 
             <input
               type="text"
               id="chat-input"
-              placeholder="Ask about crops or upload a photo..."
+              placeholder="Ask a question or upload a photo..."
               aria-label="Chat input"
               autofocus
               required
+              autocomplete="off"
             />
+            
+            <button type="submit" id="send-button" title="Send message">
+              <i class="fas fa-paper-plane"></i>
+            </button>
           </div>
-          <button type="submit" id="send-button">
-            <i class="fas fa-paper-plane"></i> Send
-          </button>
         </form>
       </div>
     </main>
@@ -147,7 +118,7 @@ connect-src 'self' http://localhost:3000;
               const reader = new FileReader();
               reader.onload = function(e) {
                   document.getElementById('image-preview').src = e.target.result;
-                  document.getElementById('image-preview-container').style.display = 'flex';
+                  document.getElementById('image-preview-container').classList.add('active');
                   // Store base64 data for Python backend
                   window.selectedImageBase64 = e.target.result.split(',')[1];
               };
@@ -158,10 +129,9 @@ connect-src 'self' http://localhost:3000;
       function clearImage() {
           selectedImageBase64 = null;
           document.getElementById('image-input').value = '';
-          document.getElementById('image-preview-container').style.display = 'none';
+          document.getElementById('image-preview-container').classList.remove('active');
       }
     </script>
-
     <script src="json-chatbot.js"></script>
     <script src="chat.js"></script>
     <script src="theme.js"></script>
