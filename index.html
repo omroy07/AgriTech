@@ -389,36 +389,81 @@
     }
 
     .feature-card {
-      background: var(--surface-color);
-      padding: 2rem;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      transition: all 0.3s ease;
-      text-align: center;
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      min-height: 340px;
+      display: flex;
+      align-items: flex-end;
+      text-align: left;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      border: none;
+      padding: 0;
     }
 
+    /* Cinematic Dark Gradient Overlay */
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, 
+        rgba(0,0,0,0.9) 0%, 
+        rgba(0,0,0,0.6) 60%, 
+        rgba(0,0,0,0.1) 100%);
+      transition: background 0.3s ease;
+      z-index: 1;
+    }
+
+    /* Hover Effects */
     .feature-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--accent-color);
-      box-shadow: 0 8px 24px rgba(34, 197, 94, 0.2);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
     }
 
-    .feature-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      color: var(--text-color);
+    .feature-card:hover::before {
+      background: linear-gradient(to top, 
+        rgba(0,0,0,0.95) 0%, 
+        rgba(0,0,0,0.7) 60%, 
+        rgba(0,0,0,0.2) 100%);
+    }
+
+    /* Content Styling */
+    .feature-content {
+      position: relative;
+      z-index: 2;
+      padding: 2rem;
+      width: 100%;
+      transform: translateY(0);
+      transition: transform 0.3s ease;
     }
 
     .feature-title {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: var(--accent-color);
+      font-family: 'Libertinus Serif', serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      letter-spacing: 0.5px;
     }
 
     .feature-description {
-      color: var(--text-muted);
+      color: #f1f5f9;
+      font-size: 1.05rem;
       line-height: 1.6;
+      font-weight: 500;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+      max-width: 95%;
     }
+
+    /* Feature-Specific Backgrounds */
+    .feature-card.farmer { background-image: url('images/farmer_card_bg.png'); }
+    .feature-card.buyer { background-image: url('images/buyer_card_bg.png'); }
+    .feature-card.equipment { background-image: url('images/equipment_card_bg.png'); }
+    .feature-card.grocery { background-image: url('images/grocery_card_bg.png'); }
 
     /* FOOTER */
     .site-footer {
@@ -1156,25 +1201,29 @@
     <div class="features-container">
       <h2 class="features-title serif">Our Platform Benefits</h2>
       <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">🌱</div>
-          <h3 class="feature-title serif">For Farmers</h3>
-          <p class="feature-description">Direct access to buyers, fair pricing, and equipment rental services to maximize harvest potential.</p>
+        <div class="feature-card farmer">
+          <div class="feature-content">
+            <h3 class="feature-title serif">For Farmers</h3>
+            <p class="feature-description">Direct access to buyers, fair pricing, and equipment rental services to maximize harvest potential.</p>
+          </div>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">🏪</div>
-          <h3 class="feature-title serif">For Buyers</h3>
-          <p class="feature-description">Source fresh produce directly from verified farmers with transparent pricing and quality assurance.</p>
+        <div class="feature-card buyer">
+          <div class="feature-content">
+            <h3 class="feature-title serif">For Buyers</h3>
+            <p class="feature-description">Source fresh produce directly from verified farmers with transparent pricing and quality assurance.</p>
+          </div>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">🚜</div>
-          <h3 class="feature-title serif">Equipment Suppliers</h3>
-          <p class="feature-description">Expand your reach and connect with farmers needing modern agricultural equipment.</p>
+        <div class="feature-card equipment">
+          <div class="feature-content">
+            <h3 class="feature-title serif">Equipment Suppliers</h3>
+            <p class="feature-description">Expand your reach and connect with farmers needing modern agricultural equipment.</p>
+          </div>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">🛒</div>
-          <h3 class="feature-title serif">Grocery Sellers</h3>
-          <p class="feature-description">Access fresh produce with reliable supply chain and competitive costs.</p>
+        <div class="feature-card grocery">
+          <div class="feature-content">
+            <h3 class="feature-title serif">Grocery Sellers</h3>
+            <p class="feature-description">Access fresh produce with reliable supply chain and competitive costs.</p>
+          </div>
         </div>
       </div>
     </div>
