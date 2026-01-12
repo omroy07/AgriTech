@@ -45,7 +45,6 @@
   --border-color: #cbd5e1;
   --accent-color: #16a34a;
   --input-bg: #ffffff;
-  --input-border: #94a3b8;
   --btn-bg: #e2e8f0;
   --btn-text: #0f172a;
   --btn-hover: #cbd5e1;
@@ -78,7 +77,6 @@
   --border-color: #334155;
   --accent-color: #22c55e;
   --input-bg: #333333;
-  --input-border: #555555;
   --btn-bg: #334155;
   --btn-text: #ffffff;
   --btn-hover: #475569;
@@ -171,6 +169,11 @@ body {
 .btn-secondary:hover {
   background: var(--light-green);
   transform: translateY(-2px);
+}
+
+input[placeholder="Search about AgriTech..."]::placeholder {
+  color: #888;
+  opacity: 1;
 }
 
 .theme-toggle {
@@ -295,6 +298,40 @@ p {
   transform: scale(1.02);
   box-shadow: 0 5px 15px rgba(76, 175, 80, 0.1);
 }
+
+/* Hide hamburger on tablet & desktop */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* Mobile styles only */
+@media (max-width: 426px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-buttons {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    background: inherit;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.8rem;
+    z-index: 1000;
+  }
+
+  .nav-buttons.active {
+    display: flex;
+  }
+}
+
 
 /* ============================================
    RE-DESIGNED FOOTER STYLES (4-COLUMN GRID) (Untouched)
