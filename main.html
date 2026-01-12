@@ -262,49 +262,7 @@
       color: inherit !important;
     }
 
-    /* Auth message styles */
-    @keyframes slideInRight {
-      from {
-        opacity: 0;
-        transform: translateX(100%);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    @keyframes slideOutRight {
-      from {
-        opacity: 1;
-        transform: translateX(0);
-      }
-      to {
-        opacity: 0;
-        transform: translateX(100%);
-      }
-    }
-    /* =========================
-   Responsive Button Fix
-   ========================= */
-
-@media (max-width: 768px) {
-  .calendar-button,
-  .logout-button,
-  .feedback-button,
-  .theme-toggle {
-    width: 100%;                 /* Full width buttons */
-    justify-content: center;
-    padding: 0.7rem 1rem;        /* Smaller padding */
-    font-size: 0.95rem;
-  }
-
-  .header-buttons {
-    flex-direction: column;
-    align-items: stretch;
-  }
-}
-
+   
 
     .auth-message {
       position: fixed;
@@ -448,6 +406,47 @@
     object-fit: cover;
   }
 }
+ /* Auth message styles */
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideOutRight {
+      from {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+    }
+   
+
+@media (max-width: 768px) {
+  .calendar-button,
+  .logout-button,
+  .feedback-button,
+  .theme-toggle {
+    width: 100%;                 
+    justify-content: center;
+    padding: 0.7rem 1rem;        
+    font-size: 0.95rem;
+  }
+
+  .header-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
   </style>
 </head>
 
