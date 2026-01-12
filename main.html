@@ -68,6 +68,49 @@
       justify-content: space-between;
       align-items: center;
     }
+    /* Hamburger Button */
+.hamburger {
+  display: none;
+  font-size: 26px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 2000; /* ensure clickable */
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  header {
+    flex-wrap: wrap;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .header-buttons {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .header-buttons.show {
+    display: flex;
+  }
+
+  .header-buttons a,
+  .theme-toggle,
+  .search-container {
+    width: 100%;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+}
+
 
       .search-container::before {
         content: "";
@@ -179,6 +222,8 @@
       cursor: pointer;
       box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
     }
+   
+
 
     .btn-green:hover {
       background: linear-gradient(135deg, #1b5e20, #2e7d32);
@@ -260,28 +305,7 @@
       color: inherit !important;
     }
 
-    /* Auth message styles */
-    @keyframes slideInRight {
-      from {
-        opacity: 0;
-        transform: translateX(100%);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    @keyframes slideOutRight {
-      from {
-        opacity: 1;
-        transform: translateX(0);
-      }
-      to {
-        opacity: 0;
-        transform: translateX(100%);
-      }
-    }
+   
 
     .auth-message {
       position: fixed;
@@ -389,43 +413,123 @@
     transform: none;
   }
 }
+@media (max-width: 768px) {
+  .brand {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .header-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .header-buttons a,
+  .header-buttons button {
+    width: 100%;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  .search-container {
+    order: 3;
+  }
+}
+@media (max-width: 600px) {
+  .services-menu {
+    width: 90%;
+    left: 5%;
+    transform: none;
+  }
+}
+@media (max-width: 480px) {
+  .grid-item img {
+    height: 180px;
+    object-fit: cover;
+  }
+}
+ /* Auth message styles */
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideOutRight {
+      from {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+    }
+   
+
+@media (max-width: 768px) {
+  .calendar-button,
+  .logout-button,
+  .feedback-button,
+  .theme-toggle {
+    width: 100%;                 
+    justify-content: center;
+    padding: 0.7rem 1rem;        
+    font-size: 0.95rem;
+  }
+
+  .header-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
   </style>
 </head>
 
 <body>
   <div class="header-nav-wrapper">
-    <header>
-      <div class="brand">
-        <img src="images/logo.png" alt="AgriTech logo" class="site-logo">
-        <h2>Welcome to AgriTech</h2>
-      </div>
-      <div class="header-buttons">
-        <a href="cropCalendar.html" class="calendar-button" title="Crop Calendar">
-          <span class="calendar-icon">📅</span>
-          Calendar
-        </a>
+  <header>
+    <div class="brand">
+      <img src="images/logo.png" alt="AgriTech logo" class="site-logo">
+      <h2> AgriTech</h2>
+    </div>
 
-         <!-- Responsive Search Bar -->
-        <div class="search-container">
-          <input type="text" placeholder="Search..." class="search-input" />
-          <button class="search-button">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
+    <!-- Hamburger -->
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      ☰
+    </button>
 
-        <a href="feed-back.html" class="feedback-button">Feedback</a>
-        <a href="#" class="logout-button" onclick="showLogoutConfirmation()">Logout</a>
-        <button class="theme-toggle" aria-label="Toggle dark/light mode">
-          <i class="fas fa-sun sun-icon"></i>
-          <i class="fas fa-moon moon-icon"></i>
-          <span class="theme-text">Light</span>
+    <div class="header-buttons" id="navMenu">
+      <a href="cropCalendar.html" class="calendar-button">📅 Calendar</a>
+
+      <div class="search-container">
+        <input type="text" placeholder="Search..." class="search-input" />
+        <button class="search-button">
+          <i class="fas fa-search"></i>
         </button>
       </div>
-    </header>
-  </div>
+
+      <a href="feed-back.html" class="feedback-button">Feedback</a>
+      <a href="#" class="logout-button" onclick="showLogoutConfirmation()">Logout</a>
+
+      <button class="theme-toggle">
+        🌞 🌙 <span class="theme-text">Light</span>
+      </button>
+    </div>
+  </header>
+</div>
+ 
+
 
   <!-- Main Section -->
-   <nav>
+   
   <main>
     <button id="servicesMenuToggle" class="services-menu-toggle" aria-label="Show Services Menu">
   <i class="fas fa-bars"></i> Services
@@ -717,7 +821,7 @@
         </section>
       </div>
   </main>
-</nav>
+
 
   <!-- Footer -->
   <style>
@@ -788,6 +892,13 @@ document.getElementById('servicesMenuToggle').addEventListener('click', function
   document.getElementById('servicesMenu').classList.toggle('active');
 });
      </script>
+   <script>
+  function toggleMenu() {
+    document.getElementById("navMenu").classList.toggle("show");
+  }
+</script>
+
+
     
     <script src="theme.js"></script>
     
