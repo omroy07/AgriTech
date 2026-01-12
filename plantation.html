@@ -1,28 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="icon" type="image/png" href="images/logo.png" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AgriTech</title>
-    <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet" />
+    <link rel="icon" type="image/png" href="/AgriTech/images/logo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="plantation.css" />
     <link rel="stylesheet" href="theme.css" />
   </head>
 
   <body>
+    <a
+      class="skip-link"
+      href="#main-content"
+      style="
+        position: absolute;
+        left: -999px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      "
+      >Skip to main content</a
+    >
     <div class="scroll-indicator" id="scrollIndicator"></div>
 
     <header>
       <div class="header-content">
-        <h1 class="header">AgriTech</h1>
-        <div style="display: flex; gap: 1rem; align-items: center;">
-          <button class="theme-toggle" aria-label="Toggle dark/light mode" style="background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
+        <span class="header" aria-label="AgriTech">AgriTech</span>
+        <div style="display: flex; gap: 1rem; align-items: center">
+          <button
+            class="theme-toggle"
+            aria-label="Toggle dark/light mode"
+            style="
+              background: rgba(255, 255, 255, 0.2);
+              border: 1px solid rgba(255, 255, 255, 0.3);
+              color: white;
+            "
+          >
             <i class="fas fa-sun sun-icon"></i>
             <i class="fas fa-moon moon-icon"></i>
             <span class="theme-text">Light</span>
@@ -46,7 +72,7 @@
       </nav>
     </header>
 
-    <main>
+    <main id="main-content">
       <section id="research-development">
         <h2>Research and Development</h2>
         <p>
@@ -869,15 +895,17 @@
     </main>
 
     <footer>
-      <p>
-        &copy; 2025 AgriTech Guide. All rights reserved.
-        Future 🌾
-      </p>
+      <p>&copy; 2025 AgriTech Guide. All rights reserved. Future 🌾</p>
     </footer>
-<!-- Floating Chatbot Button -->
-<a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
-  <i class="fas fa-robot"></i>
-</a>
+    <!-- Floating Chatbot Button -->
+    <a
+      href="chat.html"
+      id="chatbotBtn"
+      title="Chat with us"
+      aria-label="AI Assistant"
+    >
+      <i class="fas fa-robot"></i>
+    </a>
     <script src="plantation.js"></script>
     <script src="theme.js"></script>
   </body>
