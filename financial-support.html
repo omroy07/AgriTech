@@ -613,7 +613,6 @@
       font-weight: 700;
       color: var(--accent-secondary);
       margin-bottom: 0.5rem;
-      counter-reset: stat-counter;
     }
 
     .stat-label {
@@ -1198,25 +1197,38 @@
       }
     });
 
-    // Counter Animation
-    function animateCounters() {
-      const counters = document.querySelectorAll('.stat-number');
-      counters.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-target'));
-        const increment = target / 100;
-        let current = 0;
+    // IMPROVED Counter Animation logic
+    let hasAnimated = false; // Flag to ensure animation runs only once
 
-        const updateCounter = () => {
-          if (current < target) {
-            current += increment;
-            counter.textContent = Math.ceil(current).toLocaleString();
+    function animateCounters() {
+      if (hasAnimated) return;
+      hasAnimated = true;
+
+      const counters = document.querySelectorAll('.stat-number');
+      const duration = 2000; // Total duration in ms
+
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const startTime = performance.now();
+
+        const updateCounter = (currentTime) => {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          
+          // Use easeOutQuad for smoother visual feeling
+          const easedProgress = 1 - (1 - progress) * (1 - progress);
+          const currentCount = Math.floor(easedProgress * target);
+
+          counter.textContent = currentCount.toLocaleString();
+
+          if (progress < 1) {
             requestAnimationFrame(updateCounter);
           } else {
             counter.textContent = target.toLocaleString();
           }
         };
 
-        updateCounter();
+        requestAnimationFrame(updateCounter);
       });
     }
 
@@ -1245,6 +1257,7 @@
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          // Trigger counter animation specifically when stats-section is visible
           if (entry.target.classList.contains('stats-section')) {
             animateCounters();
           }
