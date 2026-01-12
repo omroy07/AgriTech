@@ -11,7 +11,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
         rel="stylesheet">
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/logo.png">
 
     <style>
@@ -252,6 +251,25 @@
             transform: translateY(-5px);
             box-shadow: 0 15px 35px var(--shadow-medium);
             border-color: var(--accent-green-light);
+        }
+
+        /* BOUNCY ANIMATION FOR LIGHT MODE FEATURE CARDS */
+        [data-theme="light"] .feature-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            /* Premium elastic bounce feel */
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        box-shadow 0.3s ease, 
+                        border-color 0.3s ease;
+        }
+
+        [data-theme="light"] .feature-card:hover {
+            /* Lift 12px and Scale 1.05 as per requirements */
+            transform: translateY(-12px) scale(1.05);
+            /* Subtle depth on light background */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: #10b981; /* Matches accent green */
+            cursor: pointer;
         }
         
 
@@ -869,6 +887,15 @@
     line-height: 1.6;
 }
 
+/* Light Mode visibility fixes for CTA */
+[data-theme="light"] .cta-section h2 {
+    color: #1e293b !important;
+}
+
+[data-theme="light"] .cta-section p {
+    color: #475569 !important;
+}
+
 /* Buttons container (optional wrapper) */
 .cta-section .cta-button {
     appearance: none;
@@ -1099,20 +1126,52 @@
         [data-theme="dark"] .header::before {
             opacity: 0.3;
         }
-    
 
-      
+        /* --- ADDED BOUNCY HOVER WITH INDIVIDUAL COLORS --- */
+        /* Targets all feature cards for the core bounce logic */
+        .features-grid .feature-card {
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        box-shadow 0.3s ease, 
+                        border-color 0.3s ease !important;
+        }
 
+        /* Card 1: Environmental Monitoring - Blue Theme */
+        .features-grid .feature-card:nth-child(1):hover {
+            transform: translateY(-15px) scale(1.05);
+            border-color: #3b82f6 !important;
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.35) !important;
+        }
+        .features-grid .feature-card:nth-child(1):hover .feature-icon i {
+            color: #3b82f6 !important;
+        }
+
+        /* Card 2: IoT Sensor Network - Purple Theme */
+        .features-grid .feature-card:nth-child(2):hover {
+            transform: translateY(-15px) scale(1.05);
+            border-color: #a855f7 !important;
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.35) !important;
+        }
+        .features-grid .feature-card:nth-child(2):hover .feature-icon i {
+            color: #a855f7 !important;
+        }
+
+        /* Card 3: Data Analytics - Teal/Green Theme */
+        .features-grid .feature-card:nth-child(3):hover {
+            transform: translateY(-15px) scale(1.05);
+            border-color: #03d445 !important;
+            box-shadow: 0 20px 40px rgba(3, 212, 69, 0.35) !important;
+        }
+        .features-grid .feature-card:nth-child(3):hover .feature-icon i {
+            color: #03d445 !important;
+        }
     </style>
 </head>
 
 <body data-theme="dark">
-    <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
     </div>
 
-    <!-- Top Navigation -->
     <div class="container">
         <nav class="top-nav">
             <div class="nav-left">
@@ -1131,7 +1190,6 @@
             </div>
         </nav>
 
-        <!-- Header -->
         <div class="header">
             <div class="header-content">
                 <h1><i class="fas fa-seedling"></i> Smart Crop Monitoring</h1>
@@ -1140,7 +1198,6 @@
             </div>
         </div>
 
-        <!-- Dashboard Controls -->
         <div class="dashboard-controls">
             <button class="control-btn active" data-view="overview" onclick="switchView('overview')">
                 <i class="fas fa-tachometer-alt"></i> Overview
@@ -1162,7 +1219,6 @@
             </button>
         </div>
 
-        <!-- Weather Widget -->
         <div class="weather-widget" id="weatherWidget">
             <div class="weather-item">
                 <div class="weather-icon"><i class="fas fa-sun"></i></div>
@@ -1186,9 +1242,7 @@
             </div>
         </div>
 
-        <!-- Overview Section -->
         <div class="view-content" id="overviewView">
-            <!-- Monitoring Dashboard -->
             <div class="monitoring-dashboard">
                 <div class="dashboard-header">
                     <h2><i class="fas fa-tachometer-alt"></i> Live Monitoring Dashboard</h2>
@@ -1226,7 +1280,6 @@
                     </div>
                 </div>
 
-                <!-- Chart Container -->
                 <div class="chart-container">
                     <div class="chart-tabs">
                         <button class="chart-tab active" onclick="switchChart('temperature')">Temperature</button>
@@ -1247,7 +1300,6 @@
                 </div>
             </div>
 
-            <!-- Features Grid -->
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
@@ -1296,7 +1348,6 @@
             </div>
         </div>
 
-        <!-- Sensors Section -->
         <div class="view-content" id="sensorsView" style="display: none;">
             <div class="sensor-status">
                 <div class="sensor-item">
@@ -1373,7 +1424,6 @@
             </div>
         </div>
 
-        <!-- Weather Section -->
         <div class="view-content" id="weatherView" style="display: none;">
             <div class="monitoring-dashboard">
                 <div class="dashboard-header">
@@ -1430,7 +1480,6 @@
             </div>
         </div>
 
-        <!-- Alerts Section -->
         <div class="view-content" id="alertsView" style="display: none;">
             <div class="alerts-panel">
                 <h3 style="color: var(--text-primary); margin-bottom: 20px;">
@@ -1484,7 +1533,6 @@
             </div>
         </div>
 
-        <!-- CTA Section -->
         <div class="cta-section">
             <h2 style="margin-bottom: 20px;">Get Started with Smart Crop Monitoring</h2>
             <p style="margin-bottom: 30px;">Transform your farming with intelligent
@@ -1497,7 +1545,6 @@
         </div>
     </div>
 
-    <!-- Settings Panel -->
     <div class="settings-panel" id="settingsPanel">
         <div class="settings-header">
             <h3 style="color: var(--text-primary);">Dashboard Settings</h3>
@@ -1563,7 +1610,6 @@
             </div>
         </div>
     </div>
-    <!--croll to top button-->
     <button class="scroll-btn" id="scrollBtn" title="Scroll">
     <i class="fas fa-arrow-down" id="scrollIcon"></i>
   </button>
