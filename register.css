@@ -49,16 +49,13 @@ body::before {
 }
 
 @keyframes float {
-
   0%,
   100% {
     transform: translateY(0px) rotate(0deg);
   }
-
   33% {
     transform: translateY(-10px) rotate(1deg);
   }
-
   66% {
     transform: translateY(5px) rotate(-1deg);
   }
@@ -101,21 +98,46 @@ body::before {
 }
 
 @keyframes shimmer {
-
   0%,
   100% {
     background-position: -200% 0;
   }
-
   50% {
     background-position: 200% 0;
   }
+}
+
+/* NEW: back button styling */
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(46, 125, 50, 0.08);
+  border: 1px solid rgba(46, 125, 50, 0.3);
+  color: #1b5e20;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+}
+
+.back-button i {
+  font-size: 16px;
+}
+
+.back-button:hover {
+  background: rgba(46, 125, 50, 0.16);
 }
 
 /* Logo/Brand area */
 .brand-section {
   text-align: center;
   margin-bottom: 35px;
+  margin-top: 10px;
 }
 
 .brand-icon {
@@ -132,12 +154,10 @@ body::before {
 }
 
 @keyframes pulse {
-
   0%,
   100% {
     transform: scale(1);
   }
-
   50% {
     transform: scale(1.05);
   }
@@ -375,7 +395,6 @@ body::before {
   0% {
     transform: rotate(0deg);
   }
-
   100% {
     transform: rotate(360deg);
   }
@@ -414,16 +433,13 @@ body::before {
 }
 
 @keyframes shake {
-
   0%,
   100% {
     transform: translateX(0);
   }
-
   25% {
     transform: translateX(-5px);
   }
-
   75% {
     transform: translateX(5px);
   }
