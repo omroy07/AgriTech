@@ -37,38 +37,142 @@
     />
     <link href="style.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="about.css" />
-    <link rel="stylesheet" href="theme.css" />
-  </head>
+  <link rel="stylesheet" href="about.css" />
+  <link rel="stylesheet" href="theme.css" />
+</head>
 
-  <body>
-    <a
-      class="skip-link"
-      href="#main-content"
-      style="
-        position: absolute;
-        left: -999px;
-        top: auto;
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-      "
-      >Skip to main content</a
-    >
-    <nav class="navbar" aria-label="Primary">
-      <div class="heading">
-        <span class="page-title" aria-hidden="true">About Us</span>
-      </div>
-      <div class="nav-buttons">
-        <!-- Responsive Search Bar -->
-        <div class="search-container">
-          <i class="fas fa-search search-icon"></i>
-          <input
-            type="text"
-            placeholder="Search About AgriTech..."
-            class="search-input"
-            aria-label="Search content"
-          />
+<body>
+  <nav class="navbar" aria-label="Main Navigation">
+
+<div class="heading">
+  <h1>About Us</h1>
+</div>
+
+<div class="nav-buttons">
+  <!-- Responsive Search Bar -->
+  <div class="search-container">
+    <i class="fas fa-search search-icon"></i>
+    <input
+      type="text"
+      placeholder="Search About AgriTech..."
+      class="search-input"
+      aria-label="Search content"
+    />
+  </div>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
+    <i class="fas fa-sun sun-icon"></i>
+    <i class="fas fa-moon moon-icon"></i>
+    <span class="theme-text">Light</span>
+  </button>
+
+  <!-- Hamburger Menu (Mobile Only) -->
+  <button class="hamburger" aria-label="Toggle navigation">
+    <i class="fas fa-bars"></i>
+   </button>
+ </div>
+
+    <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
+      <i class="fas fa-sun sun-icon"></i>
+      <i class="fas fa-moon moon-icon"></i>
+      <span class="theme-text">Light</span>
+    </button>
+
+    <a href="index.html" class="btn btn-secondary">Home</a>
+    <a href="blog.html" class="btn btn-secondary">Blog</a>
+    <a href="login.html" class="btn btn-secondary">Login</a>
+    <a href="faq.html" class="btn btn-secondary">FAQ</a>
+    <a href="register.html" class="btn btn-primary" style="color:white">Register</a>
+  </div>
+</nav>
+
+
+  <main>
+    <section class="about-section" id="who-we-are">
+      <h2>🌿 Who We Are</h2>
+      <p>
+        AgriTech is a comprehensive platform designed to empower farmers and
+        agricultural enthusiasts with the latest technology and information.
+        Our mission is to enhance agricultural productivity and sustainability
+        through innovative solutions.
+      </p>
+      <p>
+        We are an AgriTech platform dedicated to transforming agriculture
+        through the power of technology. Our team of agronomists, data
+        scientists, engineers, and innovators is committed to solving real
+        challenges faced by farmers, agri-businesses, and policymakers.
+      </p>
+    </section>
+
+    <section class="vision-section" id="vision">
+      <h2>🌈 Our Vision</h2>
+      <p>
+        Our vision is to revolutionize agriculture by building a smart,
+        resilient, and inclusive ecosystem that empowers every farmer with the
+        power of technology. We envision a world where even the smallest farm
+        benefits from precision tools, AI-driven insights, and real-time
+        data—helping farmers make confident, sustainable decisions.
+      </p>
+      <p>
+        In an era marked by climate change, depleting resources, and
+        rising food demand, we aim to make technology accessible to all.
+        Through satellite imagery, machine learning, and IoT-based monitoring,
+        we bridge the urban-rural digital divide and empower farmers to adapt
+        to challenges while enhancing yields.
+      </p>
+      <p>
+        Our platform seeks to be a trusted companion for the farming
+        community—offering clarity, consistency, and confidence in every step
+        of the agricultural journey.
+      </p>
+    </section>
+
+    <section class="what-we-do-section" id="what-we-do">
+      <h2>🛠️ What We Do</h2>
+      <p>
+        We combine technology, data, and community to deliver
+        smart farming solutions tailored to every grower's needs.
+      </p>
+      <p><strong>Here's how we support farmers at every step:</strong></p>
+
+      <ul class="services-list">
+        <li><strong>🌱 Crop Recommendation</strong> – Personalized crop suggestions.</li>
+        <li><strong>📈 Yield Prediction</strong> – AI-powered models for yield forecasting.</li>
+        <li><strong>🦠 Disease Prediction</strong> – Early detection with preventive measures.</li>
+        <li><strong>🌾 Organic Farming Guide</strong> – Eco-friendly sustainable practices.</li>
+        <li><strong>👨‍🌾 Farmer Connection</strong> – Community and knowledge sharing.</li>
+        <li><strong>🛒 Shopkeeper Listings</strong> – Find local suppliers easily.</li>
+        <li><strong>💬 ChatBot Assistance</strong> – AI-powered agricultural support.</li>
+        <li><strong>🌿 Plantation Management</strong> – Tools for effective planning.</li>
+        <li><strong>📅 Crop Planning</strong> – Optimize your farming schedule.</li>
+      </ul>
+    </section>
+
+    <section class="why-it-matters-section" id="why-it-matters">
+      <h2>🌍 Why It Matters</h2>
+      <p>
+        Agriculture today faces challenges like climate change, soil degradation, unpredictable weather,
+        and rising food demands. Farmers often lack timely tools to adapt—this is where we step in.
+      </p>
+      <ul>
+        <li>🌾 Increase agricultural productivity</li>
+        <li>🌱 Promote sustainable practices</li>
+        <li>🛡️ Enhance food security</li>
+        <li>🏡 Support rural economies</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="footer-brand-header">
+            <img src="images/logo.png" alt="AgriTech logo">
+            <h3 class="serif">AgriTech</h3>
+          </div>
+          <p class="brand-text">Empowering India's Farming Future with innovative technology connecting every stakeholder.</p>
         </div>
 
         <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
@@ -246,59 +350,54 @@
               </li>
             </ul>
           </div>
-
-          <div class="footer-col">
-            <h4 class="serif">Connect</h4>
-            <div class="social-links">
-              <a href="#" aria-label="Instagram"
-                ><i class="fab fa-instagram"></i
-              ></a>
-              <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-              <a href="#" aria-label="LinkedIn"
-                ><i class="fab fa-linkedin"></i
-              ></a>
-            </div>
-            <div class="footer-contact-info">
-              <p><i class="fas fa-envelope"></i> support@agritech.com</p>
-            </div>
+          <div class="footer-contact-info">
+             <p><span><i class="fas fa-envelope"></i></span> support@agritech.com</p>
           </div>
         </div>
         <div class="footer-bottom">
           <p>© 2026 AgriTech. All rights reserved.</p>
         </div>
       </div>
-    </footer>
+      <div class="footer-bottom">
+        <p>© 2026 AgriTech. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 
-    <a
-      href="chat.html"
-      id="chatbotBtn"
-      title="Chat with us"
-      aria-label="AI Assistant"
-    >
-      <i class="fas fa-robot"></i>
-    </a>
+  <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
+    <i class="fas fa-robot"></i>
+  </a>
 
-    <button class="scroll-btn" id="scrollBtn" title="Scroll">
-      <i class="fas fa-arrow-down" id="scrollIcon"></i>
-    </button>
+  <button class="scroll-btn" id="scrollBtn" title="Scroll">
+    <i class="fas fa-arrow-down" id="scrollIcon"></i>
+  </button>
 
-    <script>
-      const themeToggle = document.querySelector(".theme-toggle");
-      const themeText = document.querySelector(".theme-text");
-      const sunIcon = document.querySelector(".sun-icon");
-      const moonIcon = document.querySelector(".moon-icon");
+  <script>
+    const themeToggle = document.querySelector('.theme-toggle');
+    const themeText = document.querySelector('.theme-text');
+    const sunIcon = document.querySelector('.sun-icon');
+    const moonIcon = document.querySelector('.moon-icon');
 
-      const applyTheme = (theme) => {
-        document.documentElement.setAttribute("data-theme", theme);
-        localStorage.setItem("theme", theme);
-        if (theme === "dark") {
-          themeText.textContent = "Light";
-          moonIcon.style.display = "none";
-          sunIcon.style.display = "inline-block";
+    const hamburger = document.querySelector('.hamburger');
+  const navButtons = document.querySelector('.nav-buttons');
+
+  hamburger.addEventListener('click', () => {
+    navButtons.classList.toggle('active');
+  });
+  
+    const applyTheme = (theme) => {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        if (theme === 'dark') {
+            themeText.textContent = 'Light';
+            themeText.style.paddingLeft = "1rem";
+            moonIcon.style.display = 'none';
+            sunIcon.style.display = 'inline-block';
         } else {
-          themeText.textContent = "Dark";
-          moonIcon.style.display = "inline-block";
-          sunIcon.style.display = "none";
+            themeText.textContent = 'Dark';
+            themeText.style.paddingLeft = "0";
+            moonIcon.style.display = 'inline-block';
+            sunIcon.style.display = 'none';
         }
       };
 

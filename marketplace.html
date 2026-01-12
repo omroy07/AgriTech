@@ -11,13 +11,16 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
         rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <link rel="icon" type="image/png" href="images/logo.png">
 
-    <style>
+     <style>
         /* --- NEW CATCHY COLOR PALETTE --- */
         :root {
             /* DEFAULT: Sophisticated Dark Blue/Midnight Palette */
-            --bg-primary: #0a1120;
+            --bg-primary: #021234;
             /* Deep Midnight Blue */
             --bg-secondary: #101c38;
             /* Darker Slate Blue */
@@ -30,7 +33,7 @@
             --border-color: rgba(255, 255, 255, 0.15);
 
             /* Dark Mode Accents (Blue & Yellow/Gold Contrast) */
-            --accent-primary: #4ab7f7;
+            --accent-primary: #e5eff5;
             /* Bright Sky Blue */
             --accent-secondary: #ffd700;
             /* Gold/Yellow */
@@ -42,6 +45,9 @@
             /* Modern Shadows & Glass */
             --glass-bg: rgba(16, 28, 56, 0.8);
             --shadow-premium: 0 15px 30px rgba(0, 0, 0, 0.5);
+
+            --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
         [data-theme="light"] {
@@ -60,7 +66,7 @@
             /* Light Mode Accents (Green & Mint) */
             --accent-primary: #38c172;
             /* Vivid Green */
-            --accent-secondary: #3b7440;
+            --accent-secondary: #f3f5f3;
             --accent-gradient: linear-gradient(135deg, #38c172 0%, #2fb362 100%);
 
             --glass-bg: rgba(255, 255, 255, 0.85);
@@ -158,7 +164,7 @@
 
 
         .header p {
-            color: rgba(255, 255, 255, 0.78);
+            color: rgb(255, 255, 255);
         }
 
         .header::before {
@@ -197,7 +203,7 @@
             font-size: 3.5rem;
             font-weight: 800;
             letter-spacing: -0.05em;
-            background: var(--accent-gradient);
+            background: var(--accent-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -325,19 +331,20 @@
         }
 
         .stat-card:nth-child(1) {
-            --fire-color: rgba(255, 153, 0, 0.6);
-            --fire-glow: rgba(255, 170, 0, 0.9);
-        }
+    --fire-color: rgba(255, 153, 0, 0.6);
+    --fire-glow: rgba(255, 170, 0, 0.9);
+}
 
-        .stat-card:nth-child(2) {
-            --fire-color: rgba(0, 200, 255, 0.6);
-            --fire-glow: rgba(0, 220, 255, 0.9);
-        }
+.stat-card:nth-child(2) {
+    --fire-color: rgba(0, 200, 255, 0.6);
+    --fire-glow: rgba(0, 220, 255, 0.9);
+}
 
-        .stat-card:nth-child(3) {
-            --fire-color: rgba(255, 80, 120, 0.6);
-            --fire-glow: rgba(255, 100, 150, 0.9);
-        }
+.stat-card:nth-child(3) {
+    --fire-color: rgba(255, 80, 120, 0.6);
+    --fire-glow: rgba(255, 100, 150, 0.9);
+}
+
 
         .stat-card:nth-child(4) {
             --fire-color: rgba(140, 120, 255, 0.6);
@@ -369,19 +376,19 @@
 
         /* --- Product Cards --- */
         .product-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 28px;
-            padding: 16px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-        }
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 28px;
+    padding: 16px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
 
-        .product-card:hover {
-            transform: translateY(-12px);
-            border-color: var(--accent-primary);
-            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.4);
-        }
+.product-card:hover {
+    transform: translateY(-12px);
+    border-color: var(--accent-primary);
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.4);
+}
 
         .product-image {
             width: 100%;
@@ -433,51 +440,119 @@
             transition: background 0.3s ease;
         }
 
-        /* --- Categories --- */
-        .category-card {
-            background: linear-gradient(135deg, #e17055, var(--accent-secondary));
-            color: white;
-            padding: 30px 20px;
-            border-radius: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
+      .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+}
+.category-card {
+    background: linear-gradient(135deg, #e17055, var(--accent-secondary));
+    color: white;
+    padding: 28px 20px;
+    border-radius: 16px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
 
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            animation: pulse 3s ease-in-out infinite;
-        }
+    /* IMPORTANT */
+    transform: translateZ(0);
+    transition: 
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
 
-        .category-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(225, 112, 85, 0.3);
-        }
+/* Glow effect */
+.category-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at top right,
+        rgba(255, 255, 255, 0.15),
+        transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
 
-        .category-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
+/* SAFE hover (no scale) */
+.category-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 30px rgba(225, 112, 85, 0.35);
+}
 
-        .category-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
+.category-card:hover::before {
+    opacity: 1;
+}
 
-        .category-count {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
+
+/* Inner wrapper handles hover transform */
+.category-inner {
+    background: linear-gradient(135deg, #e17055, var(--accent-secondary));
+    color: white;
+    padding: 28px 20px;
+    border-radius: 18px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect */
+.category-card:hover .category-inner {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(225, 112, 85, 0.35);
+}
+
+/* Glow animation */
+.category-inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right,
+        rgba(255, 255, 255, 0.835),
+        transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.category-card:hover .category-inner::before {
+    opacity: 1;
+}
+
+/* Icon */
+.category-icon {
+    font-size: 2.8rem;
+    margin-bottom: 14px;
+}
+
+/* Title */
+.category-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+/* Count */
+.category-count {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+.category-icon {
+    font-size: 2.8rem;
+    margin-bottom: 14px;
+}
+
+.category-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.category-count {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
 
         .price-chart {
             background: var(--bg-primary);
@@ -836,41 +911,41 @@ body {
             <div class="categories-grid">
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'vegetables')">
                     <div class="category-icon">🥬</div>
-                    <div class="category-title"
-                        style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Fresh Vegetables</div>
-                    <div class="category-count" id="vegCount" style="color: var(--text-muted);">847 products</div>
+                    <div class="category-title">Fresh Vegetables</div>
+                    <div class="category-count" id="vegCount">847 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'fruits')">
                     <div class="category-icon">🍎</div>
-                    <div class="category-title"
-                        style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Seasonal Fruits</div>
-                    <div class="category-count" id="fruitCount" style="color: var(--text-muted);">623 products</div>
+                    <div class="category-title">Seasonal Fruits</div>
+                    <div class="category-count" id="fruitCount">623 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'grains')">
                     <div class="category-icon">🌾</div>
-                    <div class="category-title"
-                        style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Grains & Cereals</div>
-                    <div class="category-count" id="grainCount" style="color: var(--text-muted);">456 products</div>
+                    <div class="category-title">Grains & Cereals</div>
+                    <div class="category-count" id="grainCount">456 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'spices')">
                     <div class="category-icon">🌶️</div>
-                    <div class="category-title"
-                        style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Spices & Herbs</div>
-                    <div class="category-count" id="spiceCount" style="color: var(--text-muted);">321 products</div>
+                    <div class="category-title">Spices & Herbs</div>
+                    <div class="category-count" id="spiceCount">321 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'dairy')">
                     <div class="category-icon">🥛</div>
-                    <div class="category-title"
-                        style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Dairy Products</div>
-                    <div class="category-count" id="dairyCount" style="color: var(--text-muted);">234 products</div>
+                    <div class="category-title">Dairy Products</div>
+                    <div class="category-count" id="dairyCount">234 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'pulses')">
                     <div class="category-icon">🫘</div>
-                    <div class="category-title"
-                        style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Pulses & Legumes</div>
-                    <div class="category-count" id="pulseCount" style="color: var(--text-muted);">366 products</div>
+                    <div class="category-title">Pulses & Legumes</div>
+                    <div class="category-count" id="pulseCount">366 products</div>
                 </div>
             </div>
+
         </div>
 
         <div class="products-section">
@@ -908,6 +983,9 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
+                            <button class="btn-primary" onclick="toggleCart()">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
                             <button class="btn-primary" onclick="contactSeller('Kumar Farms')">Contact Seller</button>
                             <button class="btn-secondary" onclick="toggleLike(this)"
                                 style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
@@ -943,12 +1021,18 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
-                            <button class="btn-primary" onclick="contactSeller('Mountain Fresh')">Contact
-                                Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)"
-                                style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
-                                    class="far fa-heart"></i></button>
-                        </div>
+    <button class="btn-primary" onclick="toggleCart()">
+        <i class="fas fa-cart-plus"></i> Add to Cart
+    </button>
+
+    <button class="btn-primary" onclick="contactSeller('Mountain Fresh')">Contact Seller</button>
+
+    <button class="btn-secondary" onclick="toggleLike(this)"
+        style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;">
+        <i class="far fa-heart"></i>
+    </button>
+</div>
+
                     </div>
                 </div>
 
@@ -978,12 +1062,18 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
-                            <button class="btn-primary" onclick="contactSeller('Green Fields Co.')">Contact
-                                Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)"
-                                style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
-                                    class="far fa-heart"></i></button>
-                        </div>
+    <button class="btn-primary" onclick="toggleCart()">
+        <i class="fas fa-cart-plus"></i> Add to Cart
+    </button>
+
+    <button class="btn-primary" onclick="contactSeller('Green Fields Co.')">Contact Seller</button>
+
+    <button class="btn-secondary" onclick="toggleLike(this)"
+        style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;">
+        <i class="far fa-heart"></i>
+    </button>
+</div>
+
                     </div>
                 </div>
 
@@ -1013,6 +1103,9 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
+                            <button class="btn-primary" onclick="toggleCart()">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
                             <button class="btn-primary" onclick="contactSeller('Spice Hub')">Contact Seller</button>
                             <button class="btn-secondary" onclick="toggleLike(this)"
                                 style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
@@ -1048,6 +1141,9 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
+                            <button class="btn-primary" onclick="toggleCart()">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
                             <button class="btn-primary" onclick="contactSeller('Vitis Growers')">Contact Seller</button>
                             <button class="btn-secondary" onclick="toggleLike(this)"
                                 style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
@@ -1082,6 +1178,9 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
+                            <button class="btn-primary" onclick="toggleCart()">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
                             <button class="btn-primary" onclick="contactSeller('Amulya Dairy')">Contact Seller</button>
                             <button class="btn-secondary" onclick="toggleLike(this)"
                                 style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
@@ -1199,15 +1298,10 @@ body {
     </button>
 
     <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const themeText = document.getElementById('themeText');
+       
         const productsGrid = document.getElementById('productsGrid');
 
-        // Initial Theme Load
-        const savedTheme = localStorage.getItem('marketplaceTheme') || 'dark';
-        document.body.setAttribute('data-theme', savedTheme);
-        updateThemeButton(savedTheme);
+       
 
         // State variables
         let allProducts = [];
@@ -1558,20 +1652,63 @@ body {
         }
 
         function toggleCart() {
-            cartItems++;
-            const cartCountElement = document.getElementById('cartCount');
-            cartCountElement.textContent = cartItems;
-            const cartWidget = document.getElementById('cartWidget');
-            cartWidget.style.transform = 'scale(1.2)';
-            setTimeout(() => cartWidget.style.transform = 'scale(1)', 150);
-            showNotification('Item added to cart!');
+            cartItems++;  // Increment the cart counter
+
+            const cartCountElement = document.getElementById("cartCount");
+            if (cartCountElement) {
+                cartCountElement.textContent = cartItems;
+            }
+
+            const cartWidget = document.getElementById("cartWidget");
+            if (cartWidget) {
+                cartWidget.style.transform = "scale(1.2)";
+                setTimeout(() => {
+                    cartWidget.style.transform = "scale(1)";
+                }, 150);
+            }
+
+            showNotification("Item added to cart!", "success");
         }
+
 
         function contactSeller(name) {
             showNotification(`Initiating contact with ${name}...`, 'info');
         }
 
         document.addEventListener('DOMContentLoaded', initializeProducts);
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+
+    // Initial Theme Load
+    const savedTheme = localStorage.getItem('marketplaceTheme') || 'dark';
+    document.body.setAttribute('data-theme', savedTheme);
+    updateThemeButton(savedTheme);
+
+    // Theme Toggle Event
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('marketplaceTheme', newTheme);
+        updateThemeButton(newTheme);
+        showNotification(`Switched to ${newTheme} theme`, 'info');
+    });
+
+    function updateThemeButton(theme) {
+        if (theme === 'dark') {
+            themeIcon.className = 'fas fa-sun';
+            themeText.textContent = 'Dark';
+        } else {
+            themeIcon.className = 'fas fa-moon';
+            themeText.textContent = 'Light';
+        }
+    }
+});
+
     </script>
 </body>
 </html>

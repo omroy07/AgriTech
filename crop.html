@@ -11,30 +11,29 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
         rel="stylesheet">
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/logo.png">
 
     <style>
         :root {
             /* Dark Theme Variables */
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-tertiary: #334155;
-            --text-primary: #f8fafc;
-            --text-secondary: #cbd5e1;
-            --text-muted: #94a3b8;
+            --bg-primary: #01133c;
+            --bg-secondary: #142a4f;
+            --bg-tertiary: #1e3d68;
+            --text-primary: #ffffff;
+            --text-secondary: #d2deed;
+            --text-muted: #d1d4d8;
             --border-color: #334155;
             --shadow-light: rgba(0, 0, 0, 0.3);
             --shadow-medium: rgba(0, 0, 0, 0.4);
             --shadow-heavy: rgba(0, 0, 0, 0.6);
-            --accent-green-light: #10b981;
-            --accent-green-dark: #059669;
-            --accent-success: #22c55e;
+            --accent-green-light: #03d445;
+            --accent-green-dark: #01af2a;
+            --accent-success: #18b451;
             --accent-warning: #f59e0b;
             --accent-danger: #ef4444;
             --accent-info: #3b82f6;
             --primary-blue: #2196F3;
-            --text-secondary: #666;
+            --text-secondary: #c1c0c0;
         }
 
         [data-theme="light"] {
@@ -76,7 +75,7 @@
             padding: 20px;
         }
 
-        .top-nav {
+         .top-nav{
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -86,8 +85,7 @@
             border: 1px solid var(--border-color);
             border-radius: 15px;
             margin-bottom: 2rem;
-            position: sticky;
-            top: 20px;
+            position: relative;
             z-index: 100;
         }
 
@@ -191,7 +189,7 @@
             margin: 2rem 0;
         }
 
-        .control-btn {
+       .control-btn {
             background: var(--accent-green-light);
             color: white;
             border: none;
@@ -253,6 +251,27 @@
             box-shadow: 0 15px 35px var(--shadow-medium);
             border-color: var(--accent-green-light);
         }
+
+        /* BOUNCY ANIMATION FOR LIGHT MODE FEATURE CARDS */
+        [data-theme="light"] .feature-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            /* Premium elastic bounce feel */
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+        [data-theme="light"] .feature-card:hover {
+            /* Lift 12px and Scale 1.05 as per requirements */
+            transform: translateY(-12px) scale(1.05);
+            /* Subtle depth on light background */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: #10b981;
+            /* Matches accent green */
+            cursor: pointer;
+        }
+
 
         .feature-icon {
             font-size: 3rem;
@@ -380,17 +399,9 @@
             z-index: 2;
         }
 
-        .trend-up {
-            color: #22c55e;
-        }
-
-        .trend-down {
-            color: #ef4444;
-        }
-
-        .trend-stable {
-            color: #f59e0b;
-        }
+        .trend-up { color: #22c55e; }
+        .trend-down { color: #ef4444; }
+        .trend-stable { color: #f59e0b; }
 
         .chart-container {
             background: var(--bg-primary);
@@ -758,16 +769,209 @@
             transform: translateY(-2px);
         }
 
-        .cta-section {
-            background: rgba(30, 41, 59, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            padding: 40px;
-            text-align: center;
-            margin: 40px 0;
-            box-shadow: 0 8px 25px var(--shadow-light);
+        /* LIGHT MODE FIXES */
+        [data-theme="light"] .settings-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid var(--border-color);
         }
+
+        [data-theme="light"] .settings-header {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        [data-theme="light"] .settings-group h4 {
+            color: var(--text-primary);
+        }
+
+        [data-theme="light"] .setting-item {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Toggle switch */
+        [data-theme="light"] .setting-toggle {
+            background: #e2e8f0;
+            /* soft gray */
+        }
+
+        [data-theme="light"] .setting-toggle.active {
+            background: var(--accent-green-light);
+        }
+
+        [data-theme="light"] .setting-toggle::before {
+            background: #ffffff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Export buttons */
+        [data-theme="light"] .export-btn {
+            background: var(--accent-info);
+            color: #ffffff;
+        }
+
+        [data-theme="light"] .export-btn:hover {
+            background: #2563eb;
+        }
+
+        .scroll-btn {
+            position: fixed;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #16a34a;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+
+        .scroll-btn:hover {
+            transform: scale(1.1);
+            background: #15803d;
+        }
+
+        .scroll-btn {
+            bottom: 20px;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .scroll-btn.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg,
+                    var(--bg-secondary),
+                    var(--bg-tertiary));
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 20px 40px var(--shadow-heavy);
+            max-width: 900px;
+            margin: 3rem auto;
+            /* Interactive Bounce for the whole section */
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease !important;
+        }
+
+        .cta-section:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Heading */
+        .cta-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.5px;
+        }
+
+        /* Subtitle */
+        .cta-section p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        /* Light Mode visibility fixes for CTA (Bug Fix Persistence) */
+        [data-theme="light"] .cta-section h2 {
+            color: #1e293b !important;
+        }
+
+        [data-theme="light"] .cta-section p {
+            color: #475569 !important;
+        }
+
+        /* Buttons container (optional wrapper) */
+        .cta-section .cta-button {
+            appearance: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 0.85rem 1.75rem;
+            margin: 0.4rem;
+            border-radius: 999px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #ffffff;
+            background: linear-gradient(135deg,
+                    var(--accent-green-light),
+                    var(--accent-green-dark));
+            box-shadow: 0 10px 20px var(--shadow-medium);
+            /* Bouncy timing logic */
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.3s ease,
+                background 0.3s ease !important;
+        }
+
+        /* Unique Hover Glows */
+        .cta-section .cta-button:nth-child(3):hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 30px rgba(34, 197, 94, 0.4);
+            /* Green Glow */
+        }
+
+        /* Demo Button Unique Identity */
+        .cta-section .cta-button:nth-child(4) {
+            background: linear-gradient(135deg,
+                    var(--accent-info),
+                    var(--primary-blue));
+        }
+
+        .cta-section .cta-button:nth-child(4):hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
+            /* Blue Glow */
+        }
+
+        /* Sales Button Unique Identity */
+        .cta-section .cta-button:nth-child(5) {
+            background: linear-gradient(135deg,
+                    var(--accent-success),
+                    var(--accent-green-dark));
+        }
+
+        .cta-section .cta-button:nth-child(5):hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4);
+            /* Success Glow */
+        }
+
+        /* Active / click */
+        .cta-section .cta-button:active {
+            transform: translateY(0) scale(0.95);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .cta-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .cta-section h2 {
+                font-size: 1.6rem;
+            }
+
+            .cta-section .cta-button {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+
 
         .cta-section h2 {
             color: #ffffff !important;
@@ -780,7 +984,7 @@
 
 
         .cta-button {
-            background: linear-gradient(135deg, var(--accent-green-light), var(--accent-green-dark));
+            background: var(--accent-green-light);
             color: white;
             padding: 15px 30px;
             border: none;
@@ -924,70 +1128,100 @@
             opacity: 0.3;
         }
 
-        /*Range-Tooltip*/
-        .setting-item {
-            position: relative;
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
+        /* --- ADDED BOUNCY HOVER WITH INDIVIDUAL COLORS --- */
+        /* Targets all feature cards for the core bounce logic */
+        .features-grid .feature-card {
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease !important;
         }
 
-        input[type="range"] {
-            -webkit-appearance: none;
-            width: 200px;
-            height: 4px;
-            background: #3e4b5b;
-            border-radius: 5px;
-            outline: none;
+        /* Card 1: Environmental Monitoring - Blue Theme */
+        .features-grid .feature-card:nth-child(1):hover {
+            transform: translateY(-15px) scale(1.05);
+            border-color: #3b82f6 !important;
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.35) !important;
         }
 
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 16px;
-            height: 16px;
-            background: #2196F3;
-            border: 2px solid #fff;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 0 8px rgba(33, 150, 243, 0.4);
+        .features-grid .feature-card:nth-child(1):hover .feature-icon i {
+            color: #3b82f6 !important;
         }
 
-        .range-tooltip {
-            position: absolute;
-            top: 0px;
-            background: #2196F3;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: bold;
-            transform: translateX(-50%);
-            pointer-events: none;
-            white-space: nowrap;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        /* Card 2: IoT Sensor Network - Purple Theme */
+        .features-grid .feature-card:nth-child(2):hover {
+            transform: translateY(-15px) scale(1.05);
+            border-color: #a855f7 !important;
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.35) !important;
         }
 
-        .range-tooltip::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
-            border-top: 4px solid #2196F3;
+        .features-grid .feature-card:nth-child(2):hover .feature-icon i {
+            color: #a855f7 !important;
         }
+
+        /* Card 3: Data Analytics - Teal/Green Theme */
+        .features-grid .feature-card:nth-child(3):hover {
+            transform: translateY(-15px) scale(1.05);
+            border-color: #03d445 !important;
+            box-shadow: 0 20px 40px rgba(3, 212, 69, 0.35) !important;
+        }
+
+        .features-grid .feature-card:nth-child(3):hover .feature-icon i {
+            color: #03d445 !important;
+        }
+
+
+        /* --- START OF CTA INTERACTIVE ENHANCEMENTS --- */
+
+        /* 1. High-Contrast Emerald Gradient Heading for Light Mode */
+        body[data-theme="light"] .cta-section h2 {
+    background: linear-gradient(135deg, #064e3b 0%, #10b981 100%) !important;
+
+    /* Standard property (fixes VS Code warning) */
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    font-weight: 800 !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
+}
+
+
+        /* 2. Enhanced Subtitle Visibility */
+        [data-theme="light"] .cta-section p {
+            color: #334155 !important;
+            /* Deep charcoal for perfect readability */
+            font-weight: 600;
+        }
+
+        /* 3. Glassmorphism & Bouncy Lift for the CTA Box */
+        [data-theme="light"] .cta-section {
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.4s ease !important;
+        }
+
+        /* 4. Deep Shadow on Hover for Interest */
+        [data-theme="light"] .cta-section:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.12);
+        }
+
+        /* 5. Button Interaction Polish */
+        [data-theme="light"] .cta-section .cta-button:hover {
+            transform: scale(1.1) translateY(-3px) !important;
+            box-shadow: 0 12px 25px rgba(16, 185, 129, 0.4) !important;
+        }
+
+        /* --- END OF CTA INTERACTIVE ENHANCEMENTS --- */
     </style>
 </head>
 
 <body data-theme="dark">
-    <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
     </div>
 
-    <!-- Top Navigation -->
     <div class="container">
         <nav class="top-nav">
             <div class="nav-left">
@@ -1006,7 +1240,6 @@
             </div>
         </nav>
 
-        <!-- Header -->
         <div class="header">
             <div class="header-content">
                 <h1><i class="fas fa-seedling"></i> Smart Crop Monitoring</h1>
@@ -1015,7 +1248,6 @@
             </div>
         </div>
 
-        <!-- Dashboard Controls -->
         <div class="dashboard-controls">
             <button class="control-btn active" data-view="overview" onclick="switchView('overview')">
                 <i class="fas fa-tachometer-alt"></i> Overview
@@ -1037,7 +1269,6 @@
             </button>
         </div>
 
-        <!-- Weather Widget -->
         <div class="weather-widget" id="weatherWidget">
             <div class="weather-item">
                 <div class="weather-icon"><i class="fas fa-sun"></i></div>
@@ -1061,9 +1292,7 @@
             </div>
         </div>
 
-        <!-- Overview Section -->
         <div class="view-content" id="overviewView">
-            <!-- Monitoring Dashboard -->
             <div class="monitoring-dashboard">
                 <div class="dashboard-header">
                     <h2><i class="fas fa-tachometer-alt"></i> Live Monitoring Dashboard</h2>
@@ -1101,7 +1330,6 @@
                     </div>
                 </div>
 
-                <!-- Chart Container -->
                 <div class="chart-container">
                     <div class="chart-tabs">
                         <button class="chart-tab active" onclick="switchChart('temperature')">Temperature</button>
@@ -1122,7 +1350,6 @@
                 </div>
             </div>
 
-            <!-- Features Grid -->
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
@@ -1171,7 +1398,6 @@
             </div>
         </div>
 
-        <!-- Sensors Section -->
         <div class="view-content" id="sensorsView" style="display: none;">
             <div class="sensor-status">
                 <div class="sensor-item">
@@ -1248,7 +1474,6 @@
             </div>
         </div>
 
-        <!-- Weather Section -->
         <div class="view-content" id="weatherView" style="display: none;">
             <div class="monitoring-dashboard">
                 <div class="dashboard-header">
@@ -1305,7 +1530,6 @@
             </div>
         </div>
 
-        <!-- Alerts Section -->
         <div class="view-content" id="alertsView" style="display: none;">
             <div class="alerts-panel">
                 <h3 style="color: var(--text-primary); margin-bottom: 20px;">
@@ -1359,7 +1583,6 @@
             </div>
         </div>
 
-        <!-- CTA Section -->
         <div class="cta-section">
             <h2 style="margin-bottom: 20px;">Get Started with Smart Crop Monitoring</h2>
             <p style="margin-bottom: 30px;">Transform your farming with intelligent
@@ -1372,7 +1595,6 @@
         </div>
     </div>
 
-    <!-- Settings Panel -->
     <div class="settings-panel" id="settingsPanel">
         <div class="settings-header">
             <h3 style="color: var(--text-primary);">Dashboard Settings</h3>
@@ -1438,8 +1660,32 @@
             </div>
         </div>
     </div>
-
+    <button class="scroll-btn" id="scrollBtn" title="Scroll">
+        <i class="fas fa-arrow-down" id="scrollIcon"></i>
+    </button>
     <script>
+        const scrollBtn = document.getElementById("scrollBtn");
+        const scrollIcon = document.getElementById("scrollIcon");
+
+        if (scrollBtn && scrollIcon) {
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 300) {
+                    scrollBtn.classList.add('visible');
+                    scrollIcon.classList.remove("fa-arrow-down");
+                    scrollIcon.classList.add("fa-arrow-up");
+                } else {
+                    scrollBtn.classList.remove('visible');
+                    scrollIcon.classList.remove("fa-arrow-up");
+                    scrollIcon.classList.add("fa-arrow-down");
+                }
+            });
+
+            scrollBtn.addEventListener("click", () => {
+                if (scrollIcon.classList.contains("fa-arrow-up")) {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+            });
+        }
         // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');

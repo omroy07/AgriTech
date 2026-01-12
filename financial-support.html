@@ -434,6 +434,34 @@
       cursor: pointer;
     }
 
+    /* --- IMPROVED SCROLL TO TOP BUTTON --- */
+    .scroll-btn {
+      display: none;
+      position: fixed;
+      bottom: 7rem; /* Placed above chat toggle */
+      right: 2rem;
+      z-index: 1001;
+      /* Brand consistent Green Gradient */
+      background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%; /* Circular Aesthetic */
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 15px var(--shadow-medium);
+      /* Smooth Lift Transition */
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease, box-shadow 0.3s ease;
+      font-size: 1.2rem;
+    }
+
+    .scroll-btn:hover {
+      /* Smooth Hover Lift */
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px var(--shadow-heavy);
+      background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+    }
+
     /* Main Content */
     .main-content {
       max-width: 1200px;
@@ -519,7 +547,7 @@
       width: 16px;
     }
 
-    /* Process Steps */
+    /* --- BOUNCY PROCESS STEPS (#725 Upgrade) --- */
     .process-steps {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -533,12 +561,15 @@
       padding: 2rem;
       border-radius: 0.75rem;
       border: 1px solid var(--border-color);
-      transition: all 0.3s ease;
+      /* Upgrade: Elastic Bouncy Transition */
+      transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease;
     }
 
     .process-step:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px var(--shadow-medium);
+      /* Upgrade: Increased lift and scale pop */
+      transform: translateY(-12px) scale(1.05);
+      box-shadow: 0 15px 30px var(--shadow-heavy);
+      border-color: var(--accent-secondary);
     }
 
     .step-number {
@@ -589,7 +620,6 @@
       font-weight: 700;
       color: var(--accent-secondary);
       margin-bottom: 0.5rem;
-      counter-reset: stat-counter;
     }
 
     .stat-label {
@@ -733,7 +763,6 @@
 </head>
 
 <body>
-  <!-- Navigation -->
   <nav class="navbar">
     <div class="navbar-content">
       <a href="index.html" class="btn btn-secondary" style="display: flex; align-items: center; gap: 0.5rem;">
@@ -751,7 +780,6 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
       <h1 class="serif">Financial Support & Insurance</h1>
@@ -760,9 +788,7 @@
     </div>
   </section>
 
-  <!-- Main Content -->
   <div class="main-content">
-    <!-- Loan Calculator -->
     <section class="loan-calculator loading">
       <h3 class="calculator-title serif">Agricultural Loan Calculator</h3>
       <div class="calculator-form">
@@ -793,7 +819,6 @@
       </div>
     </section>
 
-    <!-- Application Progress Tracker -->
     <section class="progress-tracker loading">
       <h3 class="section-title serif">Application Progress</h3>
       <div class="progress-steps">
@@ -811,7 +836,6 @@
       </div>
     </section>
 
-    <!-- Services Section -->
     <section class="section loading">
       <h2 class="section-title serif">Our Financial Services</h2>
       <p class="section-subtitle">Empowering farmers with tailored financial solutions for sustainable growth</p>
@@ -917,7 +941,6 @@
       </div>
     </section>
 
-    <!-- How It Works -->
     <section class="section loading">
       <h2 class="section-title serif">How It Works</h2>
       <p class="section-subtitle">Simple steps to access financial support for your farming needs</p>
@@ -950,7 +973,6 @@
       </div>
     </section>
 
-    <!-- Statistics -->
     <section class="stats-section loading">
       <h2 class="section-title serif">Our Impact</h2>
       <div class="stats-grid">
@@ -973,7 +995,6 @@
       </div>
     </section>
 
-    <!-- CTA Section -->
     <section class="cta-section loading">
       <h2 class="cta-title serif">Ready to Grow Your Farm?</h2>
       <p class="cta-description">Join thousands of farmers who have transformed their agricultural business with our
@@ -982,7 +1003,6 @@
     </section>
   </div>
 
-  <!-- Chat Widget -->
   <div class="chat-widget" id="chatWidget">
     <div class="chat-header">
       <h4>Financial Assistant</h4>
@@ -1007,7 +1027,10 @@
     </a>
   </button>
 
-  <!-- Footer -->
+  <button id="scrollTopBtn" class="scroll-btn" onclick="scrollToTop()" aria-label="Scroll to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-links">
@@ -1018,7 +1041,7 @@
         <a href="privacy-policy.html">Privacy</a>
       </div>
       <div class="copyright">
-        <p>&copy; 2025 AgriTech. All rights reserved. Empowering agriculture through technology.</p>
+        <p>&copy; <span id="current-year"></span> AgriTech. All rights reserved. Empowering agriculture through technology.</p>
       </div>
     </div>
   </footer>
@@ -1051,6 +1074,25 @@
         themeIcon.className = 'fas fa-moon';
         themeText.textContent = 'Dark';
       }
+    }
+
+    // Scroll to Top Functionality
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+    window.onscroll = function() {
+      // Show button when scrolled down 300px
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        scrollTopBtn.style.display = "block";
+      } else {
+        scrollTopBtn.style.display = "none";
+      }
+    };
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     }
 
     // Loan Calculator
@@ -1162,25 +1204,38 @@
       }
     });
 
-    // Counter Animation
-    function animateCounters() {
-      const counters = document.querySelectorAll('.stat-number');
-      counters.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-target'));
-        const increment = target / 100;
-        let current = 0;
+    // IMPROVED Counter Animation logic
+    let hasAnimated = false; // Flag to ensure animation runs only once
 
-        const updateCounter = () => {
-          if (current < target) {
-            current += increment;
-            counter.textContent = Math.ceil(current).toLocaleString();
+    function animateCounters() {
+      if (hasAnimated) return;
+      hasAnimated = true;
+
+      const counters = document.querySelectorAll('.stat-number');
+      const duration = 2000; // Total duration in ms
+
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const startTime = performance.now();
+
+        const updateCounter = (currentTime) => {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          
+          // Use easeOutQuad for smoother visual feeling
+          const easedProgress = 1 - (1 - progress) * (1 - progress);
+          const currentCount = Math.floor(easedProgress * target);
+
+          counter.textContent = currentCount.toLocaleString();
+
+          if (progress < 1) {
             requestAnimationFrame(updateCounter);
           } else {
             counter.textContent = target.toLocaleString();
           }
         };
 
-        updateCounter();
+        requestAnimationFrame(updateCounter);
       });
     }
 
@@ -1209,6 +1264,7 @@
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          // Trigger counter animation specifically when stats-section is visible
           if (entry.target.classList.contains('stats-section')) {
             animateCounters();
           }
@@ -1233,6 +1289,12 @@
 
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
+      // Automatically update the copyright year
+      const yearSpan = document.getElementById("current-year");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+      
       calculateLoan();
       showNotification('Welcome to AgriTech Financial Services!');
     });
