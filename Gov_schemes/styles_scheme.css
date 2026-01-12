@@ -39,7 +39,7 @@ body.dark-mode .scheme-card:hover {
   transform: translateY(-5px);
 }
 
-/* Header - Solid green background, white text */
+/* Header */
 header {
   background: #27ae60;
   color: white;
@@ -78,14 +78,9 @@ header::before {
   0% {
     transform: translateX(-50px) translateY(-50px);
   }
-
   100% {
     transform: translateX(50px) translateY(50px);
   }
-}
-
-.dark-mode header {
-  background: linear-gradient(135deg, #166d3b 0%, #1a7a42 100%);
 }
 
 .header-content {
@@ -116,7 +111,7 @@ header p {
   flex-wrap: wrap;
 }
 
-/* Style for theme button */
+/* Theme button */
 .theme-btn {
   background: rgba(255, 255, 255, 0.15);
   color: white;
@@ -143,6 +138,30 @@ header p {
   font-size: 1.2rem;
 }
 
+/* Back button */
+.back-btn {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
 /* Container */
 .container {
   max-width: 1400px;
@@ -167,7 +186,6 @@ header p {
   margin-bottom: 25px;
 }
 
-/* Search input */
 #searchInput {
   width: 100%;
   max-width: 600px;
@@ -246,7 +264,7 @@ select:focus {
   margin-bottom: 25px;
 }
 
-.dark-mode .gender-section h3 {
+body.dark-mode .gender-section h3 {
   color: #f7fafc;
 }
 
@@ -342,7 +360,7 @@ select:focus {
   color: #2d3748;
 }
 
-.dark-mode .results-header h2 {
+body.dark-mode .results-header h2 {
   color: #f7fafc;
 }
 
@@ -374,7 +392,7 @@ select:focus {
   border-color: #27ae60;
 }
 
-/* Schemes Container - Optimized Grid */
+/* Schemes Container */
 .schemes-container {
   display: grid;
   gap: 20px;
@@ -407,7 +425,7 @@ select:focus {
   display: list-item;
 }
 
-/* Scheme Cards - Improved Compact Design */
+/* Scheme Cards */
 .scheme-card {
   background: white;
   border-radius: 16px;
@@ -448,7 +466,7 @@ select:focus {
   line-height: 1.3;
 }
 
-.dark-mode .scheme-title {
+body.dark-mode .scheme-title {
   color: #f7fafc;
 }
 
@@ -491,7 +509,7 @@ select:focus {
   font-size: 0.95rem;
 }
 
-.dark-mode .scheme-description {
+body.dark-mode .scheme-description {
   color: #cbd5e0;
 }
 
@@ -507,10 +525,9 @@ select:focus {
   font-weight: 600;
 }
 
-.dark-mode .scheme-benefits h4 {
+body.dark-mode .scheme-benefits h4 {
   color: #f7fafc;
 }
-
 
 .benefits-list {
   list-style: none;
@@ -530,15 +547,13 @@ select:focus {
   line-height: 1.4;
 }
 
-/* mobile: stack again */
 @media (max-width: 768px) {
   .benefits-list {
     grid-template-columns: 1fr;
   }
 }
 
-
-.dark-mode .benefits-list li {
+body.dark-mode .benefits-list li {
   color: #cbd5e0;
 }
 
@@ -565,7 +580,7 @@ select:focus {
   gap: 12px;
 }
 
-.dark-mode .scheme-footer {
+body.dark-mode .scheme-footer {
   border-top-color: #4a5568;
 }
 
@@ -595,7 +610,7 @@ select:focus {
   font-weight: 400;
 }
 
-/* Loading and No Results States */
+/* Loading and No Results */
 .loading-state,
 .no-results {
   text-align: center;
@@ -603,8 +618,8 @@ select:focus {
   color: #4a5568;
 }
 
-.dark-mode .loading-state,
-.dark-mode .no-results {
+body.dark-mode .loading-state,
+body.dark-mode .no-results {
   color: #cbd5e0;
 }
 
@@ -622,7 +637,6 @@ select:focus {
   0% {
     transform: rotate(0deg);
   }
-
   100% {
     transform: rotate(360deg);
   }
@@ -651,7 +665,7 @@ footer {
   margin-bottom: 5px;
 }
 
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
   .container {
     padding: 0 15px;
@@ -703,17 +717,4 @@ footer {
   .apply-btn {
     text-align: center;
   }
-}
-
-/* Back button (if used) */
-.back-button {
-  background-color: #4caf50;
-  color: white;
-  text-decoration: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-}
-
-.back-button:hover {
-  background-color: #45a049;
 }

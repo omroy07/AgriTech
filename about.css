@@ -180,6 +180,7 @@ body {
   padding: 0.5rem 1rem;
 }
 
+
 /* Main content sections (Untouched) */
 main {
   flex: 1;
@@ -296,6 +297,40 @@ p {
   box-shadow: 0 5px 15px rgba(76, 175, 80, 0.1);
 }
 
+/* Hide hamburger on tablet & desktop */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* Mobile styles only */
+@media (max-width: 426px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-buttons {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    background: inherit;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.8rem;
+    z-index: 1000;
+  }
+
+  .nav-buttons.active {
+    display: flex;
+  }
+}
+
+
 /* ============================================
    RE-DESIGNED FOOTER STYLES (4-COLUMN GRID) (Untouched)
    ============================================ */
@@ -376,8 +411,8 @@ p {
 }
 
 .footer-ul li a i {
-  margin-right: 8px;
   color: var(--primary-green);
+  margin-right: 8px;
 }
 
 .footer-ul li a:hover {
@@ -388,6 +423,7 @@ p {
 /* Modern Social Links */
 .social-links {
   display: flex;
+  align-items: center;
   gap: 15px;
   margin-bottom: 1.5rem;
 }
@@ -412,29 +448,22 @@ p {
   box-shadow: 0 5px 15px rgba(46, 125, 50, 0.2);
 }
 
+.social-links a i{
+  color: #179d49;
+}
+
 .footer-contact-info p {
   font-size: 0.9rem;
   color: var(--text-muted);
 }
-.social-links a i {
-  color: var(--accent-color);
-  font-size: 1.1rem;
-  padding-left: 3px;
-}
+
 .footer-bottom {
   border-top: 1px solid var(--border-color);
   padding-top: 2rem;
   text-align: center;
   color: var(--text-muted);
   font-size: 0.9rem;
-  display: flex;
-  justify-content: center;
-  align-items: center; 
 }
-.footer-contact-info p span{
-  color: var(--accent-color);
-}
-
 
 /* ============================================
    FLOATING BUTTONS (Untouched)
@@ -862,11 +891,14 @@ p {
 
 /* Footer headings */
 [data-theme="light"] .site-footer h3 {
+  color: #16a34a; /* fallback */
   background: linear-gradient(135deg, #16a34a, #22c55e);
   -webkit-background-clip: text;
+  background-clip: text; /* standard property */
   -webkit-text-fill-color: transparent;
   text-shadow: none;
 }
+
 
 [data-theme="light"] .site-footer h4 {
   color: #1e293b;
@@ -926,6 +958,7 @@ p {
 [data-theme="light"] .footer-bottom p {
   color: #64748b;
 }
+
 [data-theme="light"] .social-media a {
   background: #111010;
   color: #1e293b; /* dark icon color */
@@ -976,11 +1009,11 @@ p {
 
 .search-container:focus-within {
   border-color: #22c55e;
-  box-shadow: 0 0 0 3px rgba(34,197,94,0.25);
+  box-shadow: 0 0 0 1px rgba(34,197,94,0.25);
 }
 
 .search-icon {
-  color: #22c55e;
+  color: #9ee891;
   font-size: 14px;
   margin-right: 8px;
 }
@@ -991,11 +1024,11 @@ p {
   background: transparent;
   font-size: 14px;
   width: 190px;
-  color: #111827;
+  color: #d7dbe0;
 }
 
 .search-input::placeholder {
-  color: #6b7280;
+  color: #a2a6ab;
 }
 
 /* Dark Mode */
@@ -1009,7 +1042,7 @@ p {
 }
 
 [data-theme="dark"] .search-input::placeholder {
-  color: #9ca3af;
+  color: #d7dbe0;
 }
 
 /* ===== Highlight Result ===== */
