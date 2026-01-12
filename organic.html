@@ -1,27 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="icon" type="image/png" href="images/logo.png" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>AgriTech – Organic Farming</title>
     <link rel="stylesheet" href="organic.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
+    <link rel="icon" type="image/png" href="/AgriTech/images/logo.png" />
     <link rel="stylesheet" href="global.css" />
     <link rel="stylesheet" href="theme.css" />
   </head>
-<!-- Floating Chatbot Button -->
-<a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
-  <i class="fas fa-robot"></i>
-</a>
+  <!-- Floating Chatbot Button -->
+  <a
+    href="chat.html"
+    id="chatbotBtn"
+    title="Chat with us"
+    aria-label="AI Assistant"
+  >
+    <i class="fas fa-robot"></i>
+  </a>
   <body>
+    <a
+      class="skip-link"
+      href="#main-content"
+      style="
+        position: absolute;
+        left: -999px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      "
+      >Skip to main content</a
+    >
     <div id="particles-js"></div>
 
     <div class="scroll-indicator">
@@ -31,21 +52,23 @@
     <header>
       <div class="header-container">
         <div class="brand">
-          <img src="images/logo.png" alt="AgriTech logo" class="site-logo">
-          <h1>Welcome to AgriTech</h1>
+          <img src="images/logo.png" alt="AgriTech logo" class="site-logo" />
+          <span class="site-title">Welcome to AgriTech</span>
         </div>
-        <div style="display: flex; gap: 1rem; align-items: center;">
+        <div style="display: flex; gap: 1rem; align-items: center">
           <button class="theme-toggle" aria-label="Toggle dark/light mode">
             <i class="fas fa-sun sun-icon"></i>
             <i class="fas fa-moon moon-icon"></i>
             <span class="theme-text">Light</span>
           </button>
-          <a href="#" class="logout-button" onclick="showLogoutConfirmation()">Logout</a>
+          <a href="#" class="logout-button" onclick="showLogoutConfirmation()"
+            >Logout</a
+          >
         </div>
       </div>
     </header>
 
-    <nav class="nav">
+    <nav class="nav" aria-label="Primary">
       <div class="nav-container">
         <ul>
           <li class="dropdown">
@@ -82,7 +105,7 @@
         </p>
       </div>
 
-      <main>
+      <main id="main-content">
         <section id="principles" class="animate-in">
           <h2>🌿 Principles of Organic Farming</h2>
           <ul>
@@ -419,57 +442,153 @@
         </section>
       </main>
     </div>
-      <style>
-    .site-footer {background: linear-gradient(135deg,#2e7d32,#66bb6a); color:#fff; margin-top:auto; padding: 2rem 1.25rem;}
-    .site-footer .footer-inner {max-width:1200px;margin:0 auto; display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1.5rem; align-items:flex-start;}
-    .footer-brand {display:flex;flex-direction:column;gap:.5rem}
-    .footer-logo {width:48px;height:48px;border-radius:8px;object-fit:cover;background:#fff;padding:4px}
-    .site-footer h3,.site-footer h4{margin:0 0 .5rem 0}
-    .site-footer p {margin:0;opacity:.9}
-    .site-footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.4rem}
-    .site-footer a{color:#fff;text-decoration:none;opacity:.9;transition:opacity .2s}
-    .site-footer a:hover{opacity:1;text-decoration:underline}
-    .footer-bottom{max-width:1200px;margin:1rem auto 0; padding-top:1rem; border-top:1px solid rgba(255,255,255,.25); text-align:center; font-size:.9rem; opacity:.9}
-    .social-media {display:flex;gap:1rem;margin-top:.5rem}
-    .social-media a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:50%;transition:all .3s ease;font-size:1.2rem}
-    .social-media a:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
-  </style>
+    <style>
+      .site-footer {
+        background: linear-gradient(135deg, #2e7d32, #66bb6a);
+        color: #fff;
+        margin-top: auto;
+        padding: 2rem 1.25rem;
+      }
+      .site-footer .footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+        align-items: flex-start;
+      }
+      .footer-brand {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .footer-logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        object-fit: cover;
+        background: #fff;
+        padding: 4px;
+      }
+      .site-footer h3,
+      .site-footer h4 {
+        margin: 0 0 0.5rem 0;
+      }
+      .site-footer p {
+        margin: 0;
+        opacity: 0.9;
+      }
+      .site-footer ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .site-footer a {
+        color: #fff;
+        text-decoration: none;
+        opacity: 0.9;
+        transition: opacity 0.2s;
+      }
+      .site-footer a:hover {
+        opacity: 1;
+        text-decoration: underline;
+      }
+      .footer-bottom {
+        max-width: 1200px;
+        margin: 1rem auto 0;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.25);
+        text-align: center;
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+      .social-media {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.5rem;
+      }
+      .social-media a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        font-size: 1.2rem;
+      }
+      .social-media a:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+    </style>
     <footer class="site-footer">
       <div class="footer-inner">
         <div class="footer-brand">
-                      <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
+          <img src="images/logo.png" alt="AgriTech logo" class="footer-logo" />
           <h3>AgriTech</h3>
           <p>Empowering India's Farming Future</p>
           <div class="social-media">
-            <a href="https://instagram.com" target="_blank" aria-label="Follow us on Instagram">
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              aria-label="Follow us on Instagram"
+            >
               <i class="fab fa-instagram"></i>
             </a>
-            <a href="https://github.com/omroy07" target="_blank" aria-label="View our GitHub repositories">
+            <a
+              href="https://github.com/omroy07"
+              target="_blank"
+              aria-label="View our GitHub repositories"
+            >
               <i class="fab fa-github"></i>
             </a>
-            <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank" aria-label="Connect with us on LinkedIn">
+            <a
+              href="https://www.linkedin.com/in/om-roy-3b809628a/"
+              target="_blank"
+              aria-label="Connect with us on LinkedIn"
+            >
               <i class="fab fa-linkedin"></i>
             </a>
           </div>
         </div>
-                  <div class="footer-links">
-            <h4>Quick Links</h4>
-            <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="main.html">Dashboard</a></li>
-              <li><a href="feed-back.html">Feedback</a></li>
-              <li><a href="chat.html">AI Assistant</a></li>
-            </ul>
-          </div>
-                  <div class="footer-links">
-            <h4>Tools</h4>
-            <ul>
-              <li><a href="Crop Recommendation/templates/index.html">Crop Recommendation</a></li>
-              <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
-              <li><a href="Disease prediction/template/index.html">Disease Detector</a></li>
-              <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
-            </ul>
-          </div>
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="main.html">Dashboard</a></li>
+            <li><a href="feed-back.html">Feedback</a></li>
+            <li><a href="chat.html">AI Assistant</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Tools</h4>
+          <ul>
+            <li>
+              <a href="Crop Recommendation/templates/index.html"
+                >Crop Recommendation</a
+              >
+            </li>
+            <li>
+              <a
+                href="Crop Yield Prediction/crop_yield_app/templates/index.html"
+                >Yield Prediction</a
+              >
+            </li>
+            <li>
+              <a href="Disease prediction/template/index.html"
+                >Disease Detector</a
+              >
+            </li>
+            <li>
+              <a href="Crop_Planning/templates/cropplan.html">Crop Planner</a>
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div>
     </footer>
@@ -477,23 +596,23 @@
     <script src="organic.js"></script>
     <script src="theme.js"></script>
     <script>
-        function showLogoutConfirmation() {
-            Swal.fire({
-            title: 'Confirm Logout',
-            text: 'Are you sure you want to logout?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, logout',
-            cancelButtonText: 'No'
-            }).then((result) => {
-            if (result.isConfirmed) {
-                // Redirect to logout page or homepage
-                window.location.href = 'index.html';  
-            }
-            });
-        }
+      function showLogoutConfirmation() {
+        Swal.fire({
+          title: "Confirm Logout",
+          text: "Are you sure you want to logout?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#d33",
+          cancelButtonColor: "#3085d6",
+          confirmButtonText: "Yes, logout",
+          cancelButtonText: "No",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Redirect to logout page or homepage
+            window.location.href = "index.html";
+          }
+        });
+      }
     </script>
   </body>
 </html>
