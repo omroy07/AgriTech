@@ -1547,7 +1547,7 @@ if (window.location.pathname.endsWith("index.html") || window.location.pathname 
 
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     const nodes = [];
-
+    
     while (walker.nextNode()) nodes.push(walker.currentNode);
 
     nodes.forEach(node => {
