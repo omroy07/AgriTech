@@ -68,6 +68,49 @@
       justify-content: space-between;
       align-items: center;
     }
+    /* Hamburger Button */
+.hamburger {
+  display: none;
+  font-size: 26px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 2000; /* ensure clickable */
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  header {
+    flex-wrap: wrap;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .header-buttons {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .header-buttons.show {
+    display: flex;
+  }
+
+  .header-buttons a,
+  .theme-toggle,
+  .search-container {
+    width: 100%;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+}
+
 
       .search-container::before {
         content: "";
