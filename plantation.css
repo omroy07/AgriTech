@@ -257,3 +257,41 @@ footer p span {
     display: none;
   }
 }
+
+/* Scroll To Top Button */
+#scrollTopBtn {
+  position: fixed;
+  bottom: 30px;           /* below chatbot (chat is at 100px) */
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  background-color: #2ecc71;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  display: none;          /* hidden by default */
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;          /* slightly below chatbot (1100) */
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+/* Show state (optional if you want class-based toggle) */
+#scrollTopBtn.show {
+  display: flex;
+}
+
+#scrollTopBtn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+  background-color: #27ae60;
+}
+
+/* Dark mode adjustment */
+[data-theme="dark"] #scrollTopBtn {
+  background-color: #2e7d32;
+}
