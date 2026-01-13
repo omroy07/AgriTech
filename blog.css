@@ -356,7 +356,7 @@
     background-color: white;
     margin: 2% auto;
     padding: 0;
-    border-radius: 15px;
+    border-radius: 5px;
     width: 90%;
     max-width: 800px;
     max-height: 90vh;
@@ -370,7 +370,7 @@
 .modal-header {
     padding: 2rem;
     border-bottom: 1px solid #eee;
-    position: relative; /* Changed from sticky to relative for better layout */
+    /* position: relative; Changed from sticky to relative for better layout */
     background: white;
     z-index: 10;
     border-radius: 15px 15px 0 0;
@@ -427,12 +427,16 @@
 
 .close {
     color: #aaa;
-    float: right;
     font-size: 2rem;
     font-weight: bold;
     cursor: pointer;
     line-height: 1;
     transition: color 0.3s ease;
+    background: transparent;
+    border: none;
+    position: absolute;
+    top: 35px;
+    right: 40px;
 }
 
 .close:hover,
@@ -443,11 +447,11 @@
 /* Modal Favorite Button */
 .modal-favorite-btn {
     position: absolute;
-    top: 20px;
-    right: 60px;
+    top: 30px;
+    right: 65px;
     background: rgba(255, 255, 255, 0.9);
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     color: #ccc;
     cursor: pointer;
     padding: 10px;
