@@ -38,3 +38,30 @@ window.addEventListener("scroll", () => {
     }
   });
 });
+
+// Scroll to Top Button Logic
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+const scrollThreshold = 250; // px
+
+const toggleScrollTopBtn = () => {
+  const scrollY = window.scrollY || document.documentElement.scrollTop;
+  if (scrollY > scrollThreshold) {
+    scrollTopBtn.classList.add('show');
+  } else {
+    scrollTopBtn.classList.remove('show');
+  }
+};
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+  // Optional: move focus to header for accessibility
+  const header = document.querySelector('header');
+  if (header) header.setAttribute('tabindex', '-1');
+  if (header) header.focus();
+};
+
+window.addEventListener('scroll', toggleScrollTopBtn, { passive: true });
+scrollTopBtn.addEventListener('click', scrollToTop);
