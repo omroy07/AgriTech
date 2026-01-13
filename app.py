@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, send_from_directory
-from google import genai
+import google.genai as genai
 import traceback
 import os
 import re
