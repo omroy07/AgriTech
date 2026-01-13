@@ -1,66 +1,135 @@
-# 🌱 AgriTech: Smart Farming Solutions
+# 🌱 AgriTech — Smart Farming Solutions
+
+![AgriTech Banner](images/plant.png)
 
 [![SWoC 2026](https://img.shields.io/badge/SWoC-2026-blue?style=for-the-badge)](https://swoc.tech)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](CONTRIBUTING.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen?style=for-the-badge)](CONTRIBUTING.md)
 
-**AgriTech** is an innovative AI-powered platform designed to empower farmers and agricultural communities with real-time insights, disease detection, and interactive collaboration tools to ensure a sustainable future.
-
----
-
-## 🚀 Quick Start (TL;DR)
-
-1. **Clone:** `git clone https://github.com/omroy07/AgriTech.git && cd AgriTech`
-2. **Install & Run Backend:** `pip install -r requirements.txt && python app.py` (runs on `http://localhost:5000`)
-3. **Run Frontend:** In another terminal: `cd src/frontend && python -m http.server 8000` (opens `http://localhost:8000`)
-4. **Goal:** Get accurate soil analysis and plant health reports instantly.
-
-> **Note:** Backend handles APIs; Frontend is the web UI. Both must run together.
+**AgriTech** is an AI-powered smart agriculture platform designed to assist farmers with crop
+recommendations, yield prediction, plant disease detection, and community-driven collaboration—enabling sustainable and data-driven farming practices.
 
 ---
 
-## 🎯 Quick Preview
+## 📌 Overview
 
-### Dashboard Overview
-
-![AgriTech Dashboard](https://github.com/omroy07/AgriTech/blob/main/image/Screenshot%202025-06-03%20111019.png)
-
-### 📸 Key Features in Action
-
-|                                           Crop Recommendation                                            |                                          Disease Detection                                           |                                         Community Chat                                         |
-| :------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
-| ![Crop Recommendation](https://github.com/omroy07/AgriTech/raw/main/images/gifs/crop-recommendation.gif) | ![Disease Detection](https://github.com/omroy07/AgriTech/raw/main/images/gifs/disease-detection.gif) | ![Community Chat](https://github.com/omroy07/AgriTech/raw/main/images/gifs/community-chat.gif) |
+- AI-driven decision support for modern agriculture
+- Early-stage plant disease detection
+- Crop yield forecasting using machine learning models
+- Collaborative ecosystem for farmers and stakeholders
 
 ---
 
-## 🏗 System Architecture & Flow
+## 🚀 Quick Start
 
-1. **User Input:** Farmers upload soil data or plant images via the Dashboard.
-2. **Processing:** The Flask backend routes data to specific AI/ML models.
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/omroy07/AgriTech.git
+cd AgriTech
+```
+
+### 2️⃣ Run Backend (Primary – Flask)
+
+```bash
+pip install -r requirements.txt
+python app.py
+```
+
+**Backend URL:**
+
+```bash
+http://localhost:5000
+```
+
+**🔍 Backend Health Check**
+
+```bash
+GET http://localhost:5000/health
+```
+
+**Expected response:**
+
+```bash
+{ "status": "ok" }
+```
+
+**3️⃣ Run Frontend**
+
+```bash
+cd src/frontend
+python -m http.server 8000
+```
+
+**Frontend URL:**
+
+```bash
+http://localhost:8000
+```
+
+Note: Backend and frontend must be running simultaneously for proper functionality.
+
+---
+
+## 🖥️ Application Preview
+
+<img src="images/image1.png"
+       alt="AgriTech Dashboard" width="100%" />
+<img src="images/image.png"
+       alt="AgriTech Dashboard" width="100%" />
+
+<img src="images/image2.png"
+       alt="AgriTech Dashboard" width="100%" />
+<img src="images/image3.png"
+       alt="AgriTech Dashboard" width="100%" />
+
+---
+
+
+## 🏗️ System Architecture
+
+1. **User Input:** Soil data and plant images
+2. **Backend Processing:** Flask APIs and model routing
 3. **ML Inference:**
-   - **CNN Models:** Detect plant diseases from images.
-   - **Random Forest/XGBoost:** Suggest crops based on soil NPK levels.
-4. **Output:** Results are displayed with preventive measures and yield predictions.
+   - CNNs for disease detection
+   - Random Forest / XGBoost for crop recommendation
+   - Regression models for yield prediction
+4. **Output:** Predictions with insights and actions
 
 ---
 
 ## 🌟 Core Features
 
-- 🌾 **Crop Recommendation:** AI suggestions based on soil and weather.
-- 📉 **Yield Prediction:** Advanced models to forecast seasonal harvest.
-- 🔬 **Disease Prediction:** Early detection of plant diseases with treatment steps.
-- 🤝 **Farmer Connection:** A community hub to share resources and advice.
-- 🛒 **Shopkeeper Listings:** Local directory for agricultural products.
+- 🌾 Crop Recommendation
+- 📉 Yield Prediction
+- 🔬 Disease Detection
+- 🤝 Farmer Community
+-  🛒 Shopkeeper Listings
 
 ---
+## 🛠️ Tech Stack
 
-## 🛠 Tech Stack
+### 🎨 Frontend
+- HTML5
+- CSS3
+- JavaScript (ES6)
 
-- **Frontend:** HTML5, CSS3, JavaScript (ES6+)
-- **Backend:** Flask (Python) / Node.js
-- **Machine Learning:** TensorFlow, Scikit-Learn, OpenCV
-- **Database:** MySQL / MongoDB
-- **DevOps:** Docker, GitHub Actions (CI/CD)
+### ⚙️ Backend
+- Python (Flask)
+- Node.js (Optional)
+
+### 🤖 Machine Learning
+- TensorFlow
+- Scikit-learn
+- OpenCV
+
+### 🗄️ Database & DevOps
+- MySQL
+- MongoDB
+- Firebase
+- Docker
+- GitHub Actions
+
 
 ---
 
@@ -77,84 +146,38 @@ AGRITECH/
 │       ├── 📁 pages/           # Individual page files
 │       ├── 📁 css/             # Stylesheets
 │       └── 📁 js/              # Client-side scripts
-├── 📁 Crop Recommendation/     # 🌾 Crop recommendation module
-├── 📁 Disease prediction/      # 🔬 Disease detection module
+├── 📁 Crop Recommendation/   # 🌾 Crop recommendation module
+├── 📁 Disease Prediction/     # 🔬 Disease detection module
 ├── 📁 Crop Yield Prediction/   # 📊 Yield forecasting module
-├── 📁 Community/               # 💬 Community/forum backend
+├── 📁 Community/               # 💬 community/forum backend
 ├── 📁 images/                  # 📸 Screenshots and assets
 ├── 📄 README.md                # This file
 └── 📄 CONTRIBUTING.md          # Contribution guidelines
 ```
 
+---
+
 ### Backend vs Frontend
 
-- **Backend** (`app.py` at root): Flask server handling APIs, Firebase config, loan processing
+- **Backend** (`app.py` at root): Flask server handling APIs, Firebase config
 - **Frontend** (`src/frontend/`): Static HTML/CSS/JS served via Python HTTP server
 - **Optional Node Server** (`server.js`): Alternative chat backend (not required)
 
 ---
 
-## 🛡️ Security & Reliability
+## 🔐 Security & Reliability
 
-- **Data Sanitization:** All user-uploaded images are processed via **OpenCV** filters to ensure data integrity and prevent malicious file injections during the ML inference phase.
-- **Environment Safety:** Sensitive information, including API keys, database credentials, and secret tokens, are strictly managed via `.env` files to prevent accidental exposure in the version control system.
-- **Model Validation:** We implement continuous testing and cross-validation of our ML models (CNNs & Random Forest) to ensure a prediction accuracy threshold of **90% or above** before deployment.
+- Image sanitization using OpenCV
+- Secrets stored in `.env` files
+- ML models evaluated using standard performance metrics (accuracy varies by model and dataset)
 
 ---
 
-## 🏁 Getting Started
-
-### 📋 Prerequisites
-
-- **Python 3.9+**
-- **Node.js 18+**
-- **Local Server** (Live Server extension or Python `http.server`)
-
-### ⚙️ Installation
+### ⚙️ Environment Variables
 
 ```bash
-git clone [https://github.com/omroy07/AgriTech.git](https://github.com/omroy07/AgriTech.git)
-cd AgriTech
-```
-
-### 🐍 Running Backend (Flask)
-
-```bash
-# From project root
-pip install -r requirements.txt
-
-# Set environment variables (create .env file or export)
-export GEMINI_API_KEY="your_api_key_here"
-export FIREBASE_API_KEY="your_firebase_key"
-# ... (see .env.example for all required vars)
-
-# Start Flask server
-python app.py
-# Backend runs on http://localhost:5000
-```
-
-### 🌐 Running Frontend (Static Server)
-
-```bash
-# In a NEW terminal, from project root
-cd src/frontend
-python -m http.server 8000
-# Frontend runs on http://localhost:8000
-```
-
-### ✅ Verify Both Are Running
-
-- Backend API: http://localhost:5000/ (JSON response)
-- Frontend UI: http://localhost:8000/ (HTML page)
-- Open http://localhost:8000 in your browser
-
-### 📝 Setting Up Environment Variables
-
-Create a `.env` file at project root:
-
-```
-GEMINI_API_KEY=your_gemini_key
-FIREBASE_API_KEY=your_firebase_api_key
+GEMINI_API_KEY=your_api_key
+FIREBASE_API_KEY=your_key
 FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
 FIREBASE_PROJECT_ID=your_project_id
 FIREBASE_STORAGE_BUCKET=your_bucket.appspot.com
@@ -163,40 +186,37 @@ FIREBASE_APP_ID=your_app_id
 FIREBASE_MEASUREMENT_ID=your_measurement_id
 ```
 
-See `.env.example` for a template.
+---
 
-## 🛣 Roadmap
+## 🛣️ Roadmap
 
-- [ ] Cloud deployment
-- [ ] Mobile app integration
-- [ ] Real-time weather API
-- [ ] AI chatbot for farmers
-- [ ] Regional language support
-
-## 🔄 Contribution Flow
-
-Fork → Clone → Branch → Code → Commit → Push → Pull Request → Review → Merge
+- Cloud Deployment
+- Mobile Application
+- Real-Time Weather API
+- AI Chatbot
+- Multilingual Support
 
 ---
 
-## 🔮 Future Scope
+## 🤝 Contribution Flow
 
-- **Cloud Deployment:** Migration to AWS/Heroku for global high-availability.
-- **Mobile Integration:** Native Android application for on-field utility.
-- **IoT Support:** Integration with real-time soil moisture and NPK sensors.
-- **Multilingual Support:** Adding regional Indian languages to improve accessibility for farmers.
+```bash
+Fork → Clone → Branch → Commit → Push → Pull Request → Review → Merge
+```
 
----
+ Read **[CONTRIBUTING.md](CONTRIBUTING.md)** for SWoC 2026 guidelines.
 
-## 👥 Team Members
-
-| Name                        | Role         |
-| :-------------------------- | :----------- | ----------------- | ----------- |
-| **Om Roy**                  | Project Lead | Web Developer     | ML Engineer |
-| **Kanisha Ravindra Sharma** | ML Engineer  | Backend Developer |
-| **Shubhangi Roy**           | ML Engineer  | Backend Developer |
 
 ---
+
+## 👥 Team
+
+| Name                    | Role                    |
+|-------------------------|-------------------------|
+| Om Roy                  | Project Lead · Web · ML |
+| Kanisha Ravindra Sharma | ML · Backend            |
+| Shubhangi Roy           | ML · Backend            |
+
 
 ---
 
@@ -207,18 +227,13 @@ We love contributions! Please read our **[CONTRIBUTING.md](./CONTRIBUTING.md)** 
 ---
 
 ## ✨ Contributors
-wahide
 
 #### Thanks to all the wonderful people contributing to this project! 💖
 
-<a href="https://github.com/omroy07/AgriTech/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=omroy07/AgriTech" />
-</a>
+![Contributors](https://contrib.rocks/image?repo=omroy07/AgriTech)
 
-#### [View full contribution graph](https://github.com/omroy07/AgriTech/graphs/contributors)
+[View full contribution graph](https://github.com/omroy07/AgriTech/graphs/contributors)
 
 ---
 
-<div align="center">
-  <b>Made with ❤️ by the AgriTech Community. Part of SWoC 2026.</b>
-</div>
+**Made with ❤️ by the AgriTech Community — SWoC 2026**
