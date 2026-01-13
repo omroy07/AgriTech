@@ -151,7 +151,8 @@
     .hero {
       /* Base gradient */
       background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-      padding: 6rem 0; /* Increased padding for more presence */
+      padding: 6rem 0;
+      /* Increased padding for more presence */
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -168,7 +169,8 @@
       /* Geometric Tech Pattern SVG rendered in brand green subtly */
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%2310b981' fill-opacity='0.1'%3E%3Cpath opacity='1' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h16v-4h1v4h9v-4h1v4h9v-4h1v4h9v-4h1v4h9v-4h1v4h9v-4h1v4h9v-4h1v4h9v-4h1v4h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-80-9h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-80-9h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-80-9h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-80-9h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-80-9h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M0 0h100v1H0zm0 0v100h1V0zm0 100h100v-1H0zm100 0v-100h-1v100z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
       background-size: 60px 60px;
-      opacity: 0.4; /* Subtle visibility */
+      opacity: 0.4;
+      /* Subtle visibility */
       z-index: 0;
       /* Slow diagonal movement animation */
       animation: bgScroll 60s linear infinite;
@@ -176,13 +178,16 @@
 
     /* Layer 2: Vignette overlay for depth and focus */
     .hero::after {
-        content: '';
-        position: absolute;
-        top:0; left:0; right:0; bottom:0;
-        /* Radial gradient that is transparent in center and darkens at edges */
-        background: radial-gradient(ellipse at center, transparent 20%, var(--bg-primary) 100%);
-        z-index: 1;
-        pointer-events: none;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      /* Radial gradient that is transparent in center and darkens at edges */
+      background: radial-gradient(ellipse at center, transparent 20%, var(--bg-primary) 100%);
+      z-index: 1;
+      pointer-events: none;
     }
 
     /* Ensure text is above all background layers */
@@ -196,25 +201,31 @@
 
     /* Slow background scrolling animation */
     @keyframes bgScroll {
-        from { background-position: 0 0; }
-        to { background-position: 100% 100%; }
+      from {
+        background-position: 0 0;
+      }
+
+      to {
+        background-position: 100% 100%;
+      }
     }
 
     /* --- PREMIUM HEADING --- */
     .hero h1 {
-      font-size: 4rem; /* High-impact sizing */
-      font-weight: 800; /* Extra bold for visibility */
-      letter-spacing: -0.03em; /* Modern tight kerning */
+      font-size: 4rem;
+      /* High-impact sizing */
+      font-weight: 800;
+      /* Extra bold for visibility */
+      letter-spacing: -0.03em;
+      /* Modern tight kerning */
       line-height: 1.1;
       margin-bottom: 1.5rem;
       /* Shimmering Animated Brand Gradient */
-      background: linear-gradient(
-        to right,
-        #fff 20%,
-        var(--accent-secondary) 40%,
-        var(--accent-primary) 60%,
-        #fff 80%
-      );
+      background: linear-gradient(to right,
+          #fff 20%,
+          var(--accent-secondary) 40%,
+          var(--accent-primary) 60%,
+          #fff 80%);
       background-size: 200% auto;
       -webkit-background-clip: text;
       background-clip: text;
@@ -225,7 +236,9 @@
     }
 
     @keyframes shine {
-      to { background-position: 200% center; }
+      to {
+        background-position: 200% center;
+      }
     }
 
     .hero p {
@@ -481,7 +494,8 @@
     .scroll-btn {
       display: none;
       position: fixed;
-      bottom: 7rem; /* Placed above chat toggle */
+      bottom: 7rem;
+      /* Placed above chat toggle */
       right: 2rem;
       z-index: 1001;
       background: var(--accent-primary);
@@ -810,8 +824,9 @@
           <i class="fas fa-moon" id="themeIcon"></i>
           <span id="themeText">Light</span>
         </button>
-        <a href="login.html" class="btn btn-secondary">Login</a>
-        <a href="register.html" class="btn btn-primary">Register</a>
+        <a href="login.html" class="btn btn-secondary login-btn-desktop">Login</a>
+        <a href="register.html" class="btn btn-primary register-btn-desktop">Register</a>
+        <a href="#" class="btn btn-secondary logout-button" style="display: none;">Logout</a>
       </div>
     </div>
   </nav>
@@ -1077,7 +1092,8 @@
         <a href="privacy-policy.html">Privacy</a>
       </div>
       <div class="copyright">
-        <p>&copy; <span id="current-year"></span> AgriTech. All rights reserved. Empowering agriculture through technology.</p>
+        <p>&copy; <span id="current-year"></span> AgriTech. All rights reserved. Empowering agriculture through
+          technology.</p>
       </div>
     </div>
   </footer>
@@ -1115,7 +1131,7 @@
     // Scroll to Top Functionality
     const scrollTopBtn = document.getElementById("scrollTopBtn");
 
-    window.onscroll = function() {
+    window.onscroll = function () {
       // Show button when scrolled down 300px
       if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
         scrollTopBtn.style.display = "block";
@@ -1257,7 +1273,7 @@
         const updateCounter = (currentTime) => {
           const elapsed = currentTime - startTime;
           const progress = Math.min(elapsed / duration, 1);
-          
+
           // Use easeOutQuad for smoother visual feeling
           const easedProgress = 1 - (1 - progress) * (1 - progress);
           const currentCount = Math.floor(easedProgress * target);
@@ -1330,13 +1346,14 @@
       if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
       }
-      
+
       calculateLoan();
       showNotification('Welcome to AgriTech Financial Services!');
     });
   </script>
   <script src="theme.js"></script>
 
+  <script src="auth.js"></script>
 </body>
 
 </html>

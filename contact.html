@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/logo.png">
 </head>
+
 <body>
   <div class="container">
     <!-- HEADER -->
@@ -30,12 +32,13 @@
     <!-- HERO -->
     <section class="hero">
       <a href="index.html" class="back-home-btn hero-back">
-  <i class="fas fa-arrow-left"></i> Back to Home
-</a>
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </a>
 
       <div class="hero-content">
         <h1>Get in Touch</h1>
-        <p>Have questions about our AI-powered agricultural solutions? We're here to help farmers, agricultural professionals, and communities grow smarter and more sustainably.</p>
+        <p>Have questions about our AI-powered agricultural solutions? We're here to help farmers, agricultural
+          professionals, and communities grow smarter and more sustainably.</p>
       </div>
       <div class="hero-decoration">
         <i class="fas fa-tractor"></i>
@@ -77,7 +80,8 @@
       <div class="form-container">
         <div class="form-header">
           <h2>Send us a Message</h2>
-          <p>Whether you're a farmer seeking guidance, a researcher interested in collaboration, or someone with questions about our AI-powered tools, we'd love to hear from you.</p>
+          <p>Whether you're a farmer seeking guidance, a researcher interested in collaboration, or someone with
+            questions about our AI-powered tools, we'd love to hear from you.</p>
         </div>
 
         <form class="contact-form" id="contactForm">
@@ -132,13 +136,8 @@
 
           <div class="form-group">
             <label for="message">Message *</label>
-            <textarea 
-              id="message" 
-              name="message" 
-              rows="6" 
-              maxlength="200"
-              placeholder="Please describe your question, issue, or how we can help you..." 
-              required>
+            <textarea id="message" name="message" rows="6" maxlength="200"
+              placeholder="Please describe your question, issue, or how we can help you..." required>
             </textarea>
             <div class="char-counter" id="messageCounter">0 / 200</div>
 
@@ -202,22 +201,26 @@
       <div class="faq-grid">
         <div class="faq-item">
           <h3>How accurate are the crop recommendations?</h3>
-          <p>Our AI models are trained on extensive agricultural data and provide recommendations with high accuracy based on your soil conditions and local weather patterns.</p>
+          <p>Our AI models are trained on extensive agricultural data and provide recommendations with high accuracy
+            based on your soil conditions and local weather patterns.</p>
         </div>
 
         <div class="faq-item">
           <h3>Is AgriTech suitable for small-scale farmers?</h3>
-          <p>Absolutely! AgriTech is designed to be accessible and valuable for farmers of all scales, from small family farms to large agricultural operations.</p>
+          <p>Absolutely! AgriTech is designed to be accessible and valuable for farmers of all scales, from small family
+            farms to large agricultural operations.</p>
         </div>
 
         <div class="faq-item">
           <h3>How do I join the farmer community?</h3>
-          <p>Simply create an account on our platform and you'll have access to our community chat features where you can connect with fellow farmers and share experiences.</p>
+          <p>Simply create an account on our platform and you'll have access to our community chat features where you
+            can connect with fellow farmers and share experiences.</p>
         </div>
 
         <div class="faq-item">
           <h3>Do you offer training on using the platform?</h3>
-          <p>Yes! We provide comprehensive guides, video tutorials, and offer support sessions to help you get the most out of all AgriTech features.</p>
+          <p>Yes! We provide comprehensive guides, video tutorials, and offer support sessions to help you get the most
+            out of all AgriTech features.</p>
         </div>
       </div>
     </section>
@@ -231,7 +234,7 @@
     themeToggle.addEventListener('click', () => {
       const currentTheme = localStorage.getItem('agritech-theme') || 'dark';
       const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      
+
       if (newTheme === 'dark') {
         body.classList.add('dark-mode');
         themeToggle.querySelector('i').className = 'fas fa-sun';
@@ -239,7 +242,7 @@
         body.classList.remove('dark-mode');
         themeToggle.querySelector('i').className = 'fas fa-moon';
       }
-      
+
       localStorage.setItem('agritech-theme', newTheme);
       document.documentElement.setAttribute('data-theme', newTheme);
     });
@@ -278,7 +281,7 @@
     }
 
     // Form submission
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
       e.preventDefault();
       alert('Thank you for your message! We\'ll get back to you soon.');
       this.reset();
@@ -305,5 +308,7 @@
     });
   </script>
   <script src="theme.js"></script>
+  <script src="auth.js"></script>
 </body>
+
 </html>

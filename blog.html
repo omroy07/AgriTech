@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="icon" type="image/png" href="images/logo.png">
     <meta charset="UTF-8">
@@ -8,33 +9,35 @@
     <link rel="stylesheet" href="blog.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
     <section class="agritech-blog">
         <div class="blog-container">
             <div class="blog-header">
                 <div class="header-actions">
-    <a href="index.html" class="home-btn">
-        <i class="fas fa-arrow-left"></i> Back to Home
-    </a>
+                    <a href="index.html" class="home-btn">
+                        <i class="fas fa-arrow-left"></i> Back to Home
+                    </a>
 
-    <button class="theme-toggle" id="themeToggle">
-        <span id="themeIcon">☀️</span>
-        <span id="themeText">Light Mode</span>
-    </button>
-    
-    <a href="favorites.html" class="favorites-link">
-        <i class="fas fa-heart"></i>
-        <span>My Favorites</span>
-        <span class="favorite-count">0</span>
-    </a>
-</div>
+                    <button class="theme-toggle" id="themeToggle">
+                        <span id="themeIcon">☀️</span>
+                        <span id="themeText">Light Mode</span>
+                    </button>
+
+                    <a href="favorites.html" class="favorites-link">
+                        <i class="fas fa-heart"></i>
+                        <span>My Favorites</span>
+                        <span class="favorite-count">0</span>
+                    </a>
+                </div>
                 <h1 class="blog-title">🌱 AgriTech Blog — Farming Tips & Insights</h1>
-                <p class="blog-subtitle">Stay updated with the latest in agriculture, technology, and sustainability.</p>
+                <p class="blog-subtitle">Stay updated with the latest in agriculture, technology, and sustainability.
+                </p>
             </div>
 
             <div class="search-filter-section">
                 <input type="text" class="search-bar" placeholder="Search blog posts..." id="searchInput">
-                
+
                 <div class="category-filters">
                     <button class="filter-btn active" data-category="all">All Posts</button>
                     <button class="filter-btn" data-category="farming-tips">Farming Tips</button>
@@ -57,7 +60,7 @@
     <div id="blogModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                
+
                 <h2 class="modal-title" id="modalTitle"></h2>
 
                 <div class="icons">
@@ -66,8 +69,8 @@
                         <i class="far fa-heart"></i>
                     </button>
                 </div>
-                    
-                
+
+
                 <div class="modal-meta">
                     <span id="modalAuthor"><i class="fas fa-user"></i> </span>
                     <span id="modalDate"><i class="far fa-calendar-alt"></i> </span>
@@ -75,7 +78,7 @@
 
                 <span class="modal-category" id="modalCategory"></span>
             </div>
-            
+
             <div class="modal-body">
                 <img class="modal-image" id="modalImage" alt="Blog post image">
                 <div class="modal-text" id="modalContent"></div>
@@ -114,5 +117,7 @@
         });
     </script>
     <script src="blog.js"></script>
+    <script src="auth.js"></script>
 </body>
+
 </html>
