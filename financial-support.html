@@ -147,15 +147,17 @@
       color: var(--text-primary);
     }
 
-    /* Hero Section */
+    /* --- UPGRADED HERO SECTION WITH INTERESTING UI --- */
     .hero {
+      /* Base gradient */
       background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-      padding: 4rem 0;
+      padding: 6rem 0; /* Increased padding for more presence */
       text-align: center;
       position: relative;
       overflow: hidden;
     }
 
+    /* Layer 1: Subtle Animated Tech/Data Pattern Pattern */
     .hero::before {
       content: '';
       position: absolute;
@@ -163,10 +165,27 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-      opacity: 0.1;
+      /* Geometric Tech Pattern SVG rendered in brand green subtly */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%2310b981' fill-opacity='0.1'%3E%3Cpath opacity='1' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h16v-4h1v4h9v-4h1v4h9v-4h1v4h9v-4h1v4h9v-4h1v4h9v-4h1v4h9v-4h1v4h9v-4h1v4h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-80-9h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-80-9h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-80-9h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-80-9h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-80-9h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M0 0h100v1H0zm0 0v100h1V0zm0 100h100v-1H0zm100 0v-100h-1v100z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      background-size: 60px 60px;
+      opacity: 0.4; /* Subtle visibility */
+      z-index: 0;
+      /* Slow diagonal movement animation */
+      animation: bgScroll 60s linear infinite;
     }
 
+    /* Layer 2: Vignette overlay for depth and focus */
+    .hero::after {
+        content: '';
+        position: absolute;
+        top:0; left:0; right:0; bottom:0;
+        /* Radial gradient that is transparent in center and darkens at edges */
+        background: radial-gradient(ellipse at center, transparent 20%, var(--bg-primary) 100%);
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    /* Ensure text is above all background layers */
     .hero-content {
       max-width: 800px;
       margin: 0 auto;
@@ -175,14 +194,38 @@
       z-index: 2;
     }
 
+    /* Slow background scrolling animation */
+    @keyframes bgScroll {
+        from { background-position: 0 0; }
+        to { background-position: 100% 100%; }
+    }
+
+    /* --- PREMIUM HEADING --- */
     .hero h1 {
-      font-size: 3rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: var(--text-primary);
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 1s ease forwards;
+      font-size: 4rem; /* High-impact sizing */
+      font-weight: 800; /* Extra bold for visibility */
+      letter-spacing: -0.03em; /* Modern tight kerning */
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      /* Shimmering Animated Brand Gradient */
+      background: linear-gradient(
+        to right,
+        #fff 20%,
+        var(--accent-secondary) 40%,
+        var(--accent-primary) 60%,
+        #fff 80%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shine 5s linear infinite;
+      /* Deep multi-layered shadow/glow */
+      text-shadow: 0 10px 30px rgba(16, 185, 129, 0.25);
+    }
+
+    @keyframes shine {
+      to { background-position: 200% center; }
     }
 
     .hero p {
@@ -434,32 +477,28 @@
       cursor: pointer;
     }
 
-    /* --- IMPROVED SCROLL TO TOP BUTTON --- */
+    /* Scroll to Top Button */
     .scroll-btn {
       display: none;
       position: fixed;
       bottom: 7rem; /* Placed above chat toggle */
       right: 2rem;
       z-index: 1001;
-      /* Brand consistent Green Gradient */
-      background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+      background: var(--accent-primary);
       color: white;
       width: 50px;
       height: 50px;
-      border-radius: 50%; /* Circular Aesthetic */
+      border-radius: 50%;
       border: none;
       cursor: pointer;
       box-shadow: 0 4px 15px var(--shadow-medium);
-      /* Smooth Lift Transition */
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease, box-shadow 0.3s ease;
+      transition: all 0.3s ease;
       font-size: 1.2rem;
     }
 
     .scroll-btn:hover {
-      /* Smooth Hover Lift */
       transform: translateY(-5px);
-      box-shadow: 0 10px 20px var(--shadow-heavy);
-      background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+      background-color: #2563eb;
     }
 
     /* Main Content */
@@ -547,7 +586,7 @@
       width: 16px;
     }
 
-    /* --- BOUNCY PROCESS STEPS (#725 Upgrade) --- */
+    /* Process Steps */
     .process-steps {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -561,15 +600,12 @@
       padding: 2rem;
       border-radius: 0.75rem;
       border: 1px solid var(--border-color);
-      /* Upgrade: Elastic Bouncy Transition */
-      transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease;
+      transition: all 0.3s ease;
     }
 
     .process-step:hover {
-      /* Upgrade: Increased lift and scale pop */
-      transform: translateY(-12px) scale(1.05);
-      box-shadow: 0 15px 30px var(--shadow-heavy);
-      border-color: var(--accent-secondary);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px var(--shadow-medium);
     }
 
     .step-number {
