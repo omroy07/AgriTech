@@ -651,20 +651,18 @@
         pointer-events: auto;
       }
 
-      .mobile-menu-header {
-        display: flex;
-        justify-content: flex-end;
-        margin-bottom: 1rem;
-      }
+      /* 🔥 FORCE CLOSE BUTTON TO ALWAYS RECEIVE TOUCH */
+.mobile-menu-header {
+  position: sticky;
+  top: 0;
+  z-index: 1002;
+}
 
-      .mobile-close-btn {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        color: var(--text-color);
-        cursor: pointer;
-        padding: 0.5rem;
-      }
+.mobile-close-btn {
+  position: relative;
+  z-index: 1003;
+  pointer-events: auto !important;
+}
 
       .mobile-search {
         display: flex;
@@ -971,6 +969,18 @@
   to { box-shadow: 0 0 14px rgba(34,197,94,.9); }
 }
 
+/* 🔥 FORCE CLOSE BUTTON TO BE CLICKABLE */
+.mobile-close-btn {
+  position: relative;
+  z-index: 1001;
+  pointer-events: auto;
+}
+
+/* Ensure menu captures touches correctly */
+.mobile-menu {
+  pointer-events: auto;
+}
+
   </style>
 </head>
 <body>
@@ -1044,9 +1054,16 @@
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
-      <button class="mobile-close-btn" id="mobileCloseBtn" aria-label="Close menu">
-        <i class="fas fa-times"></i>
-      </button>
+      <button class="mobile-close-btn"
+        type="button"
+        aria-label="Close menu"
+        onclick="
+          document.getElementById('mobileMenu').classList.remove('active');
+          document.getElementById('mobileMenuOverlay').classList.remove('active');
+          document.body.style.overflow='';
+        ">
+  <i class="fas fa-times"></i>
+</button>
     </div>
     
     <div class="mobile-menu-content">
@@ -1403,31 +1420,57 @@
         });
     }
 
-    // Mobile Menu
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+    // ===== MOBILE MENU (FINAL FIX) =====
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
 
-    if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
-      hamburgerBtn.addEventListener('click', () => {
-        mobileMenu.classList.add('active');
-        mobileMenuOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      });
+function closeMobileMenu() {
+  mobileMenu.classList.remove('active');
+  mobileMenuOverlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
 
-      mobileCloseBtn.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-        mobileMenuOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-      });
+function openMobileMenu() {
+  mobileMenu.classList.add('active');
+  mobileMenuOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
 
-      mobileMenuOverlay.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-        mobileMenuOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-      });
-    }
+if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
+
+  // OPEN
+  hamburgerBtn.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    openMobileMenu();
+  });
+
+  // ❌ CLOSE — TOUCH SAFE
+  mobileCloseBtn.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    closeMobileMenu();
+  });
+
+  // BACKUP FOR OLD MOBILE BROWSERS
+  mobileCloseBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    closeMobileMenu();
+  }, { passive: false });
+
+  // OVERLAY CLICK
+  mobileMenuOverlay.addEventListener('pointerdown', () => {
+    closeMobileMenu();
+  });
+
+  // PREVENT BUBBLING INSIDE MENU
+  mobileMenu.addEventListener('pointerdown', (e) => {
+    e.stopPropagation();
+  });
+}
+
+
 
     // Mobile Services Toggle
     const mobileServicesToggle = document.getElementById('mobileServicesToggle');
