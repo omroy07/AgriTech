@@ -65,20 +65,22 @@ connect-src 'self' http://localhost:3000;
   <body>
     <header>
       <div class="header-content">
-        <div class="logo">
-          <i class="fas fa-seedling"></i>
-          <h1>AgriBot</h1>
+        <div class="nav-left" style="display: flex; align-items: center; gap: 1.5rem;">
+          <a href="index.html" class="nav-back">
+            <i class="fas fa-arrow-left"></i> Back to Home
+          </a>
+          <div class="logo">
+            <i class="fas fa-seedling"></i>
+            <h1>AgriBot</h1>
+          </div>
         </div>
-        <div style="display: flex; gap: 1rem; align-items: center;">
+        
+        <div class="nav-right" style="display: flex; align-items: center;">
           <button class="theme-toggle" aria-label="Toggle dark/light mode">
             <i class="fas fa-sun sun-icon"></i>
             <i class="fas fa-moon moon-icon"></i>
             <span class="theme-text">Light</span>
           </button>
-
-          <a href="index.html" class="nav-back">
-            <i class="fas fa-arrow-left"></i> Back to Home
-          </a>
         </div>
       </div>
     </header>
