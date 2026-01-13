@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Govt Schemes & Subsidy Tracker</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
 <style>
 :root{
@@ -11,16 +12,33 @@
   --secondary:#1b5e20;
   --bg:#f1f5f3;
   --card:#ffffff;
+  --text:#333333;
+  --label:#1b5e20;
+  --input-bg:#ffffff;
+  --input-border:#cccccc;
   --danger:#d32f2f;
   --success:#2e7d32;
   --shadow:0 18px 45px rgba(0,0,0,0.12);
 }
+
+/* DARK THEME VARIABLES */
+[data-theme="dark"] {
+  --bg:#0f172a;
+  --card:#1e293b;
+  --text:#f1f5f3;
+  --label:#4caf50;
+  --input-bg:#0f172a;
+  --input-border:#334155;
+  --shadow:0 18px 45px rgba(0,0,0,0.4);
+}
+
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
   font-family:"Segoe UI",sans-serif;
   background:var(--bg);
-  color:#333;
+  color:var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* HEADER */
@@ -31,8 +49,37 @@ header{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 header h1{font-size:26px;font-weight:800}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* THEME TOGGLE STYLE */
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
 header a{
   background:#fff;
   color:var(--primary);
@@ -40,17 +87,24 @@ header a{
   border-radius:40px;
   text-decoration:none;
   font-weight:800;
+  transition: all 0.3s ease;
+}
+
+header a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 /* FORM */
 .hero{display:flex;justify-content:center;padding:40px 20px}
 .form-card{
-  background:#fff;
+  background:var(--card);
   max-width:900px;
   width:100%;
   padding:55px 65px;
   border-radius:28px;
   box-shadow:var(--shadow);
+  transition: background 0.3s ease;
 }
 .form-card h2{
   text-align:center;
@@ -58,15 +112,23 @@ header a{
   margin-bottom:40px;
   color:var(--primary);
 }
-label{font-size:19px;font-weight:800;margin-top:24px;display:block}
+
+[data-theme="dark"] .form-card h2 {
+    color: var(--label);
+}
+
+label{font-size:19px;font-weight:800;margin-top:24px;display:block; color: var(--label);}
 select,input{
   width:100%;
   padding:18px;
   margin-top:10px;
   font-size:18px;
   border-radius:16px;
-  border:1px solid #ccc;
+  border:1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--text);
 }
+
 button{
   margin-top:38px;
   width:100%;
@@ -78,24 +140,32 @@ button{
   font-size:21px;
   font-weight:900;
   cursor:pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
 /* SCHEMES */
 .container{max-width:1200px;margin:auto;padding:50px 20px}
 .scheme{
-  background:#fff;
+  background:var(--card);
   border-left:10px solid var(--primary);
   padding:32px;
   border-radius:22px;
   box-shadow:var(--shadow);
   margin-bottom:30px;
+  transition: background 0.3s ease;
 }
-.scheme h3{font-size:26px;color:#1b5e20}
+.scheme h3{font-size:26px;color:var(--label)}
 .scheme p{font-size:19px;margin:6px 0}
 
 .eligible{color:var(--success);font-weight:900;font-size:20px}
 .not-eligible{color:var(--danger);font-weight:900;font-size:20px}
 .deadline{color:#b71c1c;font-weight:800}
+[data-theme="dark"] .deadline { color: #ff5252; }
 
 .actions{
   display:flex;
@@ -136,19 +206,21 @@ button{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.6);
+  background:rgba(0,0,0,.8);
   justify-content:center;
   align-items:center;
   z-index:1000;
 }
 .modal-content{
-  background:#fff;
+  background:var(--card);
+  color: var(--text);
   padding:40px;
   border-radius:26px;
   max-width:520px;
   width:90%;
 }
 .modal-content h3{color:var(--primary);margin-bottom:20px}
+[data-theme="dark"] .modal-content h3 { color: var(--label); }
 .modal-content ul{padding-left:20px}
 .modal-content li{font-size:17px;margin-bottom:8px}
 .close{
@@ -162,6 +234,7 @@ button{
 }
 
 @media(max-width:768px){
+  header{ flex-direction: column; gap: 15px; text-align: center;}
   .form-card{padding:30px}
   .form-card h2{font-size:26px}
 }
@@ -172,7 +245,13 @@ button{
 
 <header>
   <h1>📜 Govt Schemes & Subsidy Tracker</h1>
-  <a href="index.html">⬅ Back to Home</a>
+  <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle">
+          <i class="fas fa-moon" id="themeIcon"></i>
+          <span id="themeText">Dark</span>
+      </button>
+      <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Home</a>
+  </div>
 </header>
 
 <section class="hero">
@@ -204,7 +283,6 @@ button{
 
 <div class="container" id="schemeList"></div>
 
-<!-- MODAL -->
 <div class="modal" id="modal">
   <div class="modal-content">
     <h3 id="modalTitle"></h3>
@@ -292,6 +370,35 @@ link:"https://pmmsy.dof.gov.in",
 docs:["Aadhaar Card","Bank Passbook","Fisheries Registration"]
 }
 ];
+
+// --- THEME MANAGEMENT LOGIC ---
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const themeText = document.getElementById('themeText');
+
+// Load saved theme from localStorage
+const currentTheme = localStorage.getItem('agritech-theme') || 'light';
+document.documentElement.setAttribute('data-theme', currentTheme);
+updateToggleUI(currentTheme);
+
+themeToggle.addEventListener('click', () => {
+    let theme = document.documentElement.getAttribute('data-theme');
+    let newTheme = theme === 'light' ? 'dark' : 'light';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('agritech-theme', newTheme);
+    updateToggleUI(newTheme);
+});
+
+function updateToggleUI(theme) {
+    if (theme === 'dark') {
+        themeIcon.className = 'fas fa-sun';
+        themeText.innerText = 'Light';
+    } else {
+        themeIcon.className = 'fas fa-moon';
+        themeText.innerText = 'Dark';
+    }
+}
 
 function checkEligibility(){
   const state=document.getElementById("state").value;
