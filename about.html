@@ -45,15 +45,12 @@
     </div>
 
     <div class="nav-buttons">
-      <!-- Responsive Search Bar -->
       <div class="search-container">
-        <i class="fas fa-search search-icon"></i>
-        <input
-          type="text"
-          placeholder="Search About AgriTech..."
-          class="search-input"
-          aria-label="Search content"
-        />
+        <input type="text" placeholder="Search About AgriTech..." class="search-input" autocomplete="off"
+          aria-label="Search content" />
+        <button class="search-button" aria-label="Search">
+          <i class="fas fa-search"></i>
+        </button>
       </div>
 
       <!-- Theme Toggle -->
@@ -73,10 +70,6 @@
       <a href="login.html" class="btn btn-secondary">Login</a>
       <a href="faq.html" class="btn btn-secondary">FAQ</a>
       <a href="register.html" class="btn btn-primary" style="color:white">Register</a>
-
-    </div>
-
-      
     </div>
   </nav>
 
@@ -182,7 +175,8 @@
             <img src="images/logo.png" alt="AgriTech logo">
             <h3 class="serif">AgriTech</h3>
           </div>
-          <p class="brand-text">Empowering India's Farming Future with innovative technology connecting every stakeholder.</p>
+          <p class="brand-text">Empowering India's Farming Future with innovative technology connecting every
+            stakeholder.</p>
         </div>
 
         <div class="footer-col">
@@ -317,6 +311,78 @@
         <span>AI Agriculture</span>
       </div>
     `;
+
+    document.querySelector("main").appendChild(noResultDiv);
+    noResultDiv.style.display = "none";
+
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.toLowerCase().trim();
+      let found = false;
+
+      sections.forEach(section => {
+        const elements = section.querySelectorAll("h2, p, li");
+        let sectionMatch = false;
+
+        elements.forEach(el => {
+          el.classList.remove("search-highlight");
+
+          if (query !== "" && el.textContent.toLowerCase().includes(query)) {
+            el.classList.add("search-highlight");
+            sectionMatch = true;
+            found = true;
+          }
+        });
+
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      });
+    }
+
+    const searchInput = document.querySelector(".search-input");
+    const searchButton = document.querySelector(".search-button");
+    const sections = document.querySelectorAll("main section");
+
+    searchButton?.addEventListener("click", () => {
+      handleSearch(searchInput.value);
+    });
+
+    searchInput?.addEventListener("keydown", e => {
+      if (e.key === "Enter") handleSearch(e.target.value);
+    });
+
+    // Add focus effect when button is clicked or focused
+    searchButton?.addEventListener("click", () => {
+      searchInput?.classList.add("input-focused");
+    });
+
+    searchButton?.addEventListener("focus", () => {
+      searchInput?.focus(); //Focus the input to show cursor
+      searchInput?.classList.add("input-focused");
+    });
+
+    searchInput?.addEventListener("blur", () => {
+      searchInput.classList.remove("input-focused");
+    });
+
+    // No result element
+    const noResultDiv = document.createElement("div");
+    noResultDiv.className = "no-results";
+    noResultDiv.innerHTML = `
+  <div class="icon-wrapper">
+    <i class="fas fa-leaf"></i>
+  </div>
+  <h3>No results found</h3>
+  <p>
+    We couldn’t find anything related to your search.<br>
+    Try exploring these popular topics instead 🌱
+  </p>
+  <div class="suggestions">
+    <span>Crop Recommendation</span>
+    <span>Yield Prediction</span>
+    <span>Organic Farming</span>
+    <span>AI Agriculture</span>
+  </div>
+`;
 
     document.querySelector("main").appendChild(noResultDiv);
     noResultDiv.style.display = "none";
