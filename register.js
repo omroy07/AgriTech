@@ -12,6 +12,15 @@ function togglePassword() {
   }
 }
 
+// NEW: back handler using history API with fallback [web:16][web:25]
+function handleBack() {
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.href = "index.html"; // fallback route
+  }
+}
+
 // Role icon update
 function updateRoleIcon() {
   const roleSelect = document.getElementById("role");
@@ -47,16 +56,11 @@ function checkPasswordStrength() {
   let strength = 0;
   let feedback = "";
 
-  // Length check
   if (password.length >= 8) strength += 25;
-
   if (/[a-z]/.test(password)) strength += 25;
-
   if (/[A-Z]/.test(password)) strength += 25;
-  
   if (/[\d\W]/.test(password)) strength += 25;
 
-  // Update strength bar
   strengthBar.className = "strength-bar";
 
   if (strength <= 25) {
@@ -130,31 +134,30 @@ function handleRegister(event) {
     email: document.getElementById("email").value.trim(),
     password: document.getElementById("password").value
   };
+
   setTimeout(() => {
     const result = window.authManager.register(formData);
-    
+
     if (result.success) {
       inputs.forEach((input) => {
         input.classList.add("success");
       });
-      
+
       registerText.textContent = "Account Created!";
-      showAuthMessage(result.message, 'success');
+      showAuthMessage(result.message, "success");
       setTimeout(() => {
         window.location.href = "main.html";
       }, 1500);
     } else {
-      // Show error message
-      showAuthMessage(result.message, 'error');
-      
-      // Mark relevant fields as error
-      if (result.message.includes('email')) {
+      showAuthMessage(result.message, "error");
+
+      if (result.message.includes("email")) {
         document.getElementById("email").classList.add("error");
       }
-      if (result.message.includes('password') || result.message.includes('Password')) {
+      if (result.message.includes("password") || result.message.includes("Password")) {
         document.getElementById("password").classList.add("error");
       }
-      
+
       registerBtn.classList.remove("loading");
       registerText.textContent = "Create Account";
       registerBtn.disabled = false;
@@ -162,7 +165,7 @@ function handleRegister(event) {
   }, 2000);
 }
 
-// Add input event listeners for progress tracking
+// Input listeners for progress and focus animation
 document.querySelectorAll("input, select").forEach((input) => {
   input.addEventListener("input", updateProgress);
   input.addEventListener("change", updateProgress);
