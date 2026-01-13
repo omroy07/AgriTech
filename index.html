@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <link rel="icon" type="image/png" href="images/logo.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="description" content="AgriTech - Empowering Agriculture Through Technology. Connect farmers, buyers, and suppliers in India's agricultural ecosystem." />
+  <meta name="description"
+    content="AgriTech - Empowering Agriculture Through Technology. Connect farmers, buyers, and suppliers in India's agricultural ecosystem." />
   <title>AgriTech - Revolutionizing Agriculture with Technology</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
+    rel="stylesheet" />
   <style>
     /* 1. DEFINE VARIABLES FOR THEMES */
     :root {
@@ -53,7 +57,8 @@
       box-sizing: border-box;
     }
 
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
     }
@@ -183,29 +188,35 @@
 
     .search-input {
       padding: 0.5rem;
-      border-radius: 4px;
+      padding-right: 40px;
+      border-radius: 8px;
       border: 1px solid var(--input-border);
-      background: var(--input-bg);
+      background: transparent;
       color: var(--text-color);
-      width: 200px;
+      width: 230px;
       transition: all 0.3s ease;
       font-size: 0.85rem;
     }
 
-    .search-input:focus {
-      width: 300px;
-      outline: none;
-      border-color: var(--accent-color);
-    }
-
     .search-button {
-      padding: 0.5rem 0.75rem;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      padding: 0.5rem 0.6rem;
       background: var(--accent-color);
       border: none;
-      border-radius: 4px;
+      border-radius: 0 8px 8px 0;
       color: white;
       cursor: pointer;
       flex-shrink: 0;
+    }
+
+    .search-input:focus,
+    .search-input.input-focused {
+      width: 330px;
+      outline: none;
+      border-color: var(--accent-color);
     }
 
     /* Services Dropdown */
@@ -529,7 +540,7 @@
     .footer-bottom {
       text-align: center;
       padding: 1rem;
-      background:  var(--section-bg);
+      background: var(--section-bg);
       color: var(--text-muted);
       font-size: 0.85rem;
     }
@@ -539,7 +550,8 @@
     }
 
     /* FLOATING BUTTONS */
-    #chatbotBtn, .scroll-btn {
+    #chatbotBtn,
+    .scroll-btn {
       position: fixed;
       right: 20px;
       width: 50px;
@@ -561,7 +573,8 @@
       bottom: 80px;
     }
 
-    #chatbotBtn:hover, .scroll-btn:hover {
+    #chatbotBtn:hover,
+    .scroll-btn:hover {
       transform: scale(1.1);
       background: #15803d;
     }
@@ -651,45 +664,53 @@
         pointer-events: auto;
       }
 
-      .mobile-menu-header {
-        display: flex;
-        justify-content: flex-end;
-        margin-bottom: 1rem;
-      }
+      /* 🔥 FORCE CLOSE BUTTON TO ALWAYS RECEIVE TOUCH */
+.mobile-menu-header {
+  position: sticky;
+  top: 0;
+  z-index: 1002;
+}
 
-      .mobile-close-btn {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        color: var(--text-color);
-        cursor: pointer;
-        padding: 0.5rem;
-      }
+.mobile-close-btn {
+  position: relative;
+  z-index: 1003;
+  pointer-events: auto !important;
+}
 
       .mobile-search {
+        position: relative;
         display: flex;
-        gap: 0.5rem;
         margin-bottom: 1.5rem;
-        padding: 0.5rem;
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
       }
 
       .mobile-search-input {
         flex: 1;
+        padding: 0.5rem;
+        padding-right: 40px;
+        border-radius: 8px;
+        border: 1px solid var(--input-border);
         background: transparent;
-        border: none;
         color: var(--text-color);
         outline: none;
       }
 
       .mobile-search-btn {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        padding: 0.5rem 0.6rem;
         background: var(--accent-color);
         border: none;
+        border-radius: 0 8px 8px 0;
         color: white;
-        padding: 0.5rem;
-        border-radius: 4px;
         cursor: pointer;
+      }
+
+      .mobile-search-input:focus,
+      .mobile-search-input.input-focused {
+        outline: none;
+        border-color: var(--accent-color);
       }
 
       .mobile-buttons {
@@ -866,7 +887,8 @@
         padding: 1.5rem;
       }
 
-      #chatbotBtn, .scroll-btn {
+      #chatbotBtn,
+      .scroll-btn {
         width: 45px;
         height: 45px;
         right: 15px;
@@ -878,101 +900,238 @@
     }
 
     @media (min-width: 1201px) {
+
       .mobile-menu,
       .mobile-menu-overlay,
       .hamburger-btn {
         display: none !important;
       }
     }
+
     .search-highlight {
-  background: rgba(34, 197, 94, 0.4);
-  padding: 2px 4px;
-  border-radius: 4px;
-}
-/* Search Not Found Popup */
-.search-popup-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-}
+      background: rgba(34, 197, 94, 0.4);
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
 
-.search-popup {
-  background: var(--surface-color);
-  color: var(--text-color);
-  padding: 2rem;
-  border-radius: 16px;
-  max-width: 380px;
-  width: 90%;
-  text-align: center;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
-  animation: popupScale 0.35s ease;
-}
+    /* Search Not Found Popup */
+    .search-popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
 
-@keyframes popupScale {
-  from { transform: scale(0.85); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
+    .search-popup {
+      background: var(--surface-color);
+      color: var(--text-color);
+      padding: 2rem;
+      border-radius: 16px;
+      max-width: 380px;
+      width: 90%;
+      text-align: center;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+      animation: popupScale 0.35s ease;
+    }
 
-.search-popup i {
-  font-size: 3rem;
-  color: var(--accent-color);
-  margin-bottom: 1rem;
-}
+    @keyframes popupScale {
+      from {
+        transform: scale(0.85);
+        opacity: 0;
+      }
 
-.search-popup h3 {
-  margin-bottom: 0.5rem;
-}
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
 
-.search-popup p {
-  color: var(--text-muted);
-  margin-bottom: 1.5rem;
-}
+    .search-popup i {
+      font-size: 3rem;
+      color: var(--accent-color);
+      margin-bottom: 1rem;
+    }
 
-.search-popup button {
-  background: var(--accent-color);
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
+    .search-popup h3 {
+      margin-bottom: 0.5rem;
+    }
 
-.search-popup button:hover {
-  background: #15803d;
-}
-.search-highlight {
-  background: linear-gradient(90deg, #22c55e, #16a34a);
-  color: #fff;
-  padding: 2px 6px;
-  border-radius: 6px;
-  animation: glow 1.5s ease-in-out infinite alternate;
-}
+    .search-popup p {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
 
-@keyframes glow {
-  from { box-shadow: 0 0 6px rgba(34,197,94,0.5); }
-  to { box-shadow: 0 0 14px rgba(34,197,94,0.9); }
-}
-.search-highlight {
-  background: linear-gradient(90deg, #22c55e, #16a34a);
-  color: #fff;
-  padding: 2px 4px;
-  border-radius: 4px;
-  animation: pulse 1.2s ease-in-out infinite alternate;
-}
+    .search-popup button {
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
 
 @keyframes pulse {
   from { box-shadow: 0 0 6px rgba(34,197,94,.5); }
   to { box-shadow: 0 0 14px rgba(34,197,94,.9); }
 }
+/* 🔥 FORCE CLOSE BUTTON TO BE CLICKABLE */
+.mobile-close-btn {
+  position: relative;
+  z-index: 1001;
+  pointer-events: auto;
+}
 
+/* Ensure menu captures touches correctly */
+.mobile-menu {
+  pointer-events: auto;
+}
+
+    /* Features improvements: responsive grid, card layout, icon styles, focus and hover */
+    .feature-intro {
+      color: var(--text-muted);
+      margin: 0.5rem 0 1.25rem;
+      max-width: 900px;
+      line-height: 1.5;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .feature-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 16px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: transform 0.28s cubic-bezier(.2,.9,.3,1), box-shadow 0.28s ease, border-color 0.28s ease;
+      min-height: 220px;
+      backdrop-filter: blur(6px) saturate(110%);
+    }
+
+    .feature-card:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.12);
+      transform: translateY(-4px);
+      border-color: rgba(34,197,94,0.12);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: 0 18px 40px rgba(2,6,23,0.12);
+      border-color: rgba(34,197,94,0.12);
+    }
+
+    .feature-icon {
+      font-size: 1.6rem;
+      width: 56px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(34,197,94,0.14), rgba(22,163,74,0.06));
+      color: var(--accent-color);
+      box-shadow: 0 10px 24px rgba(16,185,129,0.06);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: translateY(-3px) rotate(-4deg) scale(1.03);
+      box-shadow: 0 18px 36px rgba(16,185,129,0.09);
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+      100% { transform: translateY(0); }
+    }
+
+    .feature-card .feature-title { margin: 0.15rem 0; }
+
+    .feature-card .feature-description {
+      color: var(--text-muted);
+      flex: 1 1 auto;
+      margin-bottom: 0.5rem;
+    }
+
+    /* stronger CTA inside cards without affecting global .btn styles elsewhere */
+    .feature-card .btn.btn-secondary {
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      color: #fff;
+      border: none;
+      padding: 0.5rem 0.85rem;
+      border-radius: 10px;
+      box-shadow: 0 8px 18px rgba(22,163,74,0.12);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+    }
+
+    .feature-card .btn.btn-secondary:hover,
+    .feature-card .btn.btn-secondary:focus {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 28px rgba(22,163,74,0.18);
+      opacity: 0.98;
+    }
+
+    @media (max-width: 520px) {
+      .features-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .feature-card { padding: 1rem; min-height: auto; }
+      .feature-icon { width: 46px; height: 46px; font-size: 1.3rem; }
+    }
+
+    /* Respect reduced motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .feature-icon, .feature-card, .feature-card .btn { transition: none !important; animation: none !important; }
+    }
+
+
+    .search-highlight {
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 6px;
+      animation: glow 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+      }
+
+      to {
+        box-shadow: 0 0 14px rgba(34, 197, 94, 0.9);
+      }
+    }
+
+    .search-highlight {
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      color: #fff;
+      padding: 2px 4px;
+      border-radius: 4px;
+      animation: pulse 1.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse {
+      from {
+        box-shadow: 0 0 6px rgba(34, 197, 94, .5);
+      }
+
+      to {
+        box-shadow: 0 0 14px rgba(34, 197, 94, .9);
+      }
+    }
   </style>
 </head>
+
 <body>
 
   <canvas id="bg-canvas"></canvas>
@@ -1000,7 +1159,8 @@
               <li><a href="supply-chain.html"><i class="fas fa-truck"></i> Supply Chain Support</a></li>
               <li><a href="sustainable-farming.html"><i class="fas fa-leaf"></i> Sustainable Farming Guidance</a></li>
               <li><a href="marketplace.html"><i class="fas fa-store"></i> Marketplace Services</a></li>
-              <li><a href="financial-support.html"><i class="fas fa-dollar-sign"></i> Financial & Insurance Support</a></li>
+              <li><a href="financial-support.html"><i class="fas fa-dollar-sign"></i> Financial & Insurance Support</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -1008,9 +1168,9 @@
 
       <!-- Right Side Navigation -->
       <div class="nav-buttons">
-        <!-- Search with icon inside -->
         <div class="search-container">
-          <input type="text" placeholder="Search..." class="search-input" autocomplete="off" />
+          <input type="text" placeholder="Search..." class="search-input" autocomplete="off"
+            aria-label="Search content" />
           <button class="search-button" aria-label="Search">
             <i class="fas fa-search"></i>
           </button>
@@ -1044,11 +1204,18 @@
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
-      <button class="mobile-close-btn" id="mobileCloseBtn" aria-label="Close menu">
-        <i class="fas fa-times"></i>
-      </button>
+      <button class="mobile-close-btn"
+        type="button"
+        aria-label="Close menu"
+        onclick="
+          document.getElementById('mobileMenu').classList.remove('active');
+          document.getElementById('mobileMenuOverlay').classList.remove('active');
+          document.body.style.overflow='';
+        ">
+  <i class="fas fa-times"></i>
+</button>
     </div>
-    
+
     <div class="mobile-menu-content">
       <div class="mobile-search">
         <input type="text" placeholder="Search..." class="mobile-search-input" autocomplete="off" />
@@ -1056,79 +1223,83 @@
           <i class="fas fa-search"></i>
         </button>
       </div>
-      
+
       <div class="mobile-buttons">
         <button class="mobile-theme-toggle btn" id="mobileThemeToggle" aria-label="Toggle theme">
           <i class="fas fa-sun mobile-sun-icon" style="display: none;"></i>
           <i class="fas fa-moon mobile-moon-icon"></i>
           <span class="mobile-theme-text">Dark Mode</span>
         </button>
-        
+
         <div class="mobile-links">
           <a href="index.html" class="mobile-link">
-            <i class="fas fa-home"></i> 
+            <i class="fas fa-home"></i>
             <span>Home</span>
             <i class="fas fa-chevron-right link-arrow"></i>
           </a>
           <a href="about.html" class="mobile-link">
-            <i class="fas fa-info-circle"></i> 
+            <i class="fas fa-info-circle"></i>
             <span>About</span>
             <i class="fas fa-chevron-right link-arrow"></i>
           </a>
           <a href="blog.html" class="mobile-link">
-            <i class="fas fa-blog"></i> 
+            <i class="fas fa-blog"></i>
             <span>Blog</span>
             <i class="fas fa-chevron-right link-arrow"></i>
           </a>
           <a href="login.html" class="mobile-link">
-            <i class="fas fa-sign-in-alt"></i> 
+            <i class="fas fa-sign-in-alt"></i>
             <span>Login</span>
             <i class="fas fa-chevron-right link-arrow"></i>
           </a>
           <a href="faq.html" class="mobile-link">
-            <i class="fas fa-question-circle"></i> 
+            <i class="fas fa-question-circle"></i>
             <span>FAQ</span>
             <i class="fas fa-chevron-right link-arrow"></i>
           </a>
           <a href="register.html" class="mobile-link mobile-register">
-            <i class="fas fa-user-plus"></i> 
+            <i class="fas fa-user-plus"></i>
             <span>Register</span>
             <i class="fas fa-chevron-right link-arrow"></i>
           </a>
-          
+          <a href="scheme.html" class="mobile-link">
+            <i class="fas fa-scroll"></i> 
+            <span>Schemes</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
           <!-- Mobile Services Dropdown -->
           <div class="mobile-services-section">
             <a href="#" class="mobile-link mobile-services-toggle" id="mobileServicesToggle">
-              <i class="fas fa-cogs"></i> 
+              <i class="fas fa-cogs"></i>
               <span>Services</span>
               <i class="fas fa-chevron-down services-arrow" id="mobileServicesArrow"></i>
             </a>
             <div class="mobile-services-list" id="mobileServicesList">
               <a href="crop.html" class="mobile-sublink">
-                <i class="fas fa-seedling"></i> 
+                <i class="fas fa-seedling"></i>
                 <span>Smart Crop Monitoring</span>
               </a>
               <a href="supply-chain.html" class="mobile-sublink">
-                <i class="fas fa-truck"></i> 
+                <i class="fas fa-truck"></i>
                 <span>Supply Chain Support</span>
               </a>
               <a href="sustainable-farming.html" class="mobile-sublink">
-                <i class="fas fa-leaf"></i> 
+                <i class="fas fa-leaf"></i>
                 <span>Sustainable Farming Guidance</span>
               </a>
               <a href="marketplace.html" class="mobile-sublink">
-                <i class="fas fa-store"></i> 
+                <i class="fas fa-store"></i>
                 <span>Marketplace Services</span>
               </a>
               <a href="financial-support.html" class="mobile-sublink">
-                <i class="fas fa-dollar-sign"></i> 
+                <i class="fas fa-dollar-sign"></i>
                 <span>Financial & Insurance Support</span>
               </a>
             </div>
           </div>
         </div>
       </div>
-      
+
       <div class="mobile-footer-links">
         <a href="terms-and-service.html" class="mobile-footer-link">
           <i class="fas fa-file-contract"></i> Terms & Service
@@ -1148,41 +1319,65 @@
       <h2 class="serif">Empowering Agriculture Through Technology</h2>
       <p>AgriTech connects <strong>Farmers</strong>, <strong>Buyers</strong>,
         <strong>Equipment Suppliers</strong>, and <strong>Grocery Sellers</strong>
-        to revolutionize India's agricultural ecosystem through smart solutions and seamless collaboration.</p>
+        to revolutionize India's agricultural ecosystem through smart solutions and seamless collaboration.
+      </p>
     </div>
   </section>
 
   <section class="features">
     <div class="features-container">
       <h2 class="features-title serif">Our Platform Benefits</h2>
+      <p class="feature-intro">AgriTech brings tailored tools and services to every stakeholder in the agricultural value chain. Explore targeted benefits below and follow the quick links to learn more.</p>
+
       <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">🌱</div>
-          <h3 class="feature-title serif">For Farmers</h3>
-          <p class="feature-description">Direct access to buyers, fair pricing, and equipment rental services to maximize harvest potential.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">🏪</div>
-          <h3 class="feature-title serif">For Buyers</h3>
-          <p class="feature-description">Source fresh produce directly from verified farmers with transparent pricing and quality assurance.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">🚜</div>
-          <h3 class="feature-title serif">Equipment Suppliers</h3>
-          <p class="feature-description">Expand your reach and connect with farmers needing modern agricultural equipment.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">🛒</div>
-          <h3 class="feature-title serif">Grocery Sellers</h3>
-          <p class="feature-description">Access fresh produce with reliable supply chain and competitive costs.</p>
-        </div>
+        <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-1-title">
+          <div class="feature-icon" aria-hidden="true">🌱</div>
+          <h3 id="feature-1-title" class="feature-title serif">Farmers</h3>
+          <p class="feature-description">Real-time crop monitoring, weather alerts, and direct-market access to get fair prices for your harvest.</p>
+          <a class="btn btn-secondary" href="crop.html" aria-label="Learn more about crop monitoring">Learn more</a>
+        </article>
+
+        <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-2-title">
+          <div class="feature-icon" aria-hidden="true">🏪</div>
+          <h3 id="feature-2-title" class="feature-title serif">Buyers & Retailers</h3>
+          <p class="feature-description">Source verified produce directly from farmers, schedule deliveries, and manage bulk orders with ease.</p>
+          <a class="btn btn-secondary" href="marketplace.html" aria-label="Browse the marketplace">Browse marketplace</a>
+        </article>
+
+        <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-3-title">
+          <div class="feature-icon" aria-hidden="true">🚜</div>
+          <h3 id="feature-3-title" class="feature-title serif">Equipment Suppliers</h3>
+          <p class="feature-description">List equipment, offer rentals, and connect with nearby farmers who need modern machinery.</p>
+          <a class="btn btn-secondary" href="marketplace.html" aria-label="List equipment on the marketplace">List equipment</a>
+        </article>
+
+        <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-4-title">
+          <div class="feature-icon" aria-hidden="true">🛒</div>
+          <h3 id="feature-4-title" class="feature-title serif">Grocery Sellers</h3>
+          <p class="feature-description">Integrate reliable suppliers into your supply chain and receive consistent quality produce on schedule.</p>
+          <a class="btn btn-secondary" href="marketplace.html" aria-label="Partner with suppliers">Partner with suppliers</a>
+        </article>
+
+        <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-5-title">
+          <div class="feature-icon" aria-hidden="true">🧑‍🌾</div>
+          <h3 id="feature-5-title" class="feature-title serif">Agronomists & Advisors</h3>
+          <p class="feature-description">Share expertise, provide remote diagnostic services, and recommend data-driven treatments to improve yields.</p>
+          <a class="btn btn-secondary" href="chat.html" aria-label="Offer advisory services">Offer services</a>
+        </article>
+
+        <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-6-title">
+          <div class="feature-icon" aria-hidden="true">💰</div>
+          <h3 id="feature-6-title" class="feature-title serif">Finance & Insurance</h3>
+          <p class="feature-description">Access loan options, crop insurance, and financial tools designed for seasonal agriculture cashflows.</p>
+          <a class="btn btn-secondary" href="financial-support.html" aria-label="Get financial support">Get support</a>
+        </article>
       </div>
     </div>
   </section>
 
   <footer class="site-footer tech-dark-theme final-match">
     <div class="footer-top-accent"></div>
-    
+
     <div class="footer-inner-content">
         <div class="footer-section footer-brand">
             <div class="brand-header">
@@ -1198,42 +1393,52 @@
                 <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
+        <p class="tagline">Empowering India's Farming Future with innovative technology connecting every stakeholder.
+        </p>
 
-        <div class="footer-group-links"> 
-            <div class="footer-section footer-links">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
-                    <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
-                    <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section footer-contact">
-                <h4>Contact</h4>
-                <ul>
-                    <li>
-                        <a href="mailto:contact@agritech.com">
-                            <i class="fas fa-envelope"></i> Email Us
-                        </a>
-                    </li>
-                    <li>
-                        <a href="tel:+910000000000">
-                            <i class="fas fa-phone"></i> Call Us
-                        </a>
-                    </li>
-                </ul>
-            </div>
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         </div>
+      </div>
+
+      <div class="footer-group-links">
+        <div class="footer-section footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+            <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
+            <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-contact">
+          <h4>Contact</h4>
+          <ul>
+            <li>
+              <a href="mailto:contact@agritech.com">
+                <i class="fas fa-envelope"></i> Email Us
+              </a>
+            </li>
+            <li>
+              <a href="tel:+910000000000">
+                <i class="fas fa-phone"></i> Call Us
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
 
     <div class="footer-bottom">
       <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
     </div>
-    
-    <div class="footer-wave-overlay"></div> 
+
+    <div class="footer-wave-overlay"></div>
   </footer>
 
   <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
@@ -1265,16 +1470,16 @@
     camera.position.set(0, 3, 10);
 
     const renderer = new THREE.WebGLRenderer({
-        canvas: document.querySelector('#bg-canvas'),
-        alpha: true
+      canvas: document.querySelector('#bg-canvas'),
+      alpha: true
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     const geometry = new THREE.PlaneGeometry(20, 20, 40, 40);
     const material = new THREE.MeshBasicMaterial({
-        color: 0x22c55e,
-        wireframe: true
+      color: 0x22c55e,
+      wireframe: true
     });
     const plane = new THREE.Mesh(geometry, material);
     plane.rotation.x = -Math.PI / 2;
@@ -1287,38 +1492,38 @@
     const targetMouse = new THREE.Vector2(0, 0);
 
     window.addEventListener('mousemove', (event) => {
-        targetMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        targetMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      targetMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      targetMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     });
 
     function animate() {
-        const t = clock.getElapsedTime();
-        mouse.x += (targetMouse.x - mouse.x) * 0.05;
-        mouse.y += (targetMouse.y - mouse.y) * 0.05;
+      const t = clock.getElapsedTime();
+      mouse.x += (targetMouse.x - mouse.x) * 0.05;
+      mouse.y += (targetMouse.y - mouse.y) * 0.05;
 
-        const positions = plane.geometry.attributes.position.array;
-        const mouseWorld = new THREE.Vector2(mouse.x * 10, mouse.y * 10);
+      const positions = plane.geometry.attributes.position.array;
+      const mouseWorld = new THREE.Vector2(mouse.x * 10, mouse.y * 10);
 
-        for (let i = 0; i < positions.length; i += 3) {
-            const x = originalPositions[i];
-            const y = originalPositions[i + 1];
-            const baseWave = Math.sin(x * 0.5 + t * 0.5) * 0.1 + Math.sin(y * 0.5 + t * 0.5) * 0.1;
-            const dist = new THREE.Vector2(x, y).distanceTo(mouseWorld);
-            const influence = Math.max(0, 1 - dist / 5);
-            const ripple = Math.sin(dist * 2 - t * 2) * influence * 0.3;
-            positions[i + 2] = baseWave + ripple;
-        }
+      for (let i = 0; i < positions.length; i += 3) {
+        const x = originalPositions[i];
+        const y = originalPositions[i + 1];
+        const baseWave = Math.sin(x * 0.5 + t * 0.5) * 0.1 + Math.sin(y * 0.5 + t * 0.5) * 0.1;
+        const dist = new THREE.Vector2(x, y).distanceTo(mouseWorld);
+        const influence = Math.max(0, 1 - dist / 5);
+        const ripple = Math.sin(dist * 2 - t * 2) * influence * 0.3;
+        positions[i + 2] = baseWave + ripple;
+      }
 
-        plane.geometry.attributes.position.needsUpdate = true;
-        renderer.render(scene, camera);
-        requestAnimationFrame(animate);
+      plane.geometry.attributes.position.needsUpdate = true;
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
     }
 
     window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     });
 
     animate();
@@ -1326,7 +1531,7 @@
 
 
   <script src="index.js"></script>
-  
+
   <script>
     // Theme Toggle
     const themeToggle = document.querySelector('.theme-toggle');
@@ -1335,17 +1540,17 @@
     const moonIcon = document.querySelector('.moon-icon');
 
     const applyTheme = (theme) => {
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('agritech-theme', theme);
-        if (theme === 'dark') {
-            themeText.textContent = 'Light';
-            moonIcon.style.display = 'none';
-            sunIcon.style.display = 'inline-block';
-        } else {
-            themeText.textContent = 'Dark';
-            moonIcon.style.display = 'inline-block';
-            sunIcon.style.display = 'none';
-        }
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('agritech-theme', theme);
+      if (theme === 'dark') {
+        themeText.textContent = 'Light';
+        moonIcon.style.display = 'none';
+        sunIcon.style.display = 'inline-block';
+      } else {
+        themeText.textContent = 'Dark';
+        moonIcon.style.display = 'inline-block';
+        sunIcon.style.display = 'none';
+      }
     };
 
     const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
@@ -1363,20 +1568,20 @@
     const servicesArrow = document.querySelector('.services-arrow');
 
     if (servicesToggle && servicesDropdown && servicesArrow) {
-        servicesToggle.addEventListener('click', (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          servicesDropdown.classList.toggle('active');
-          servicesArrow.classList.toggle('rotated');
-        });
+      servicesToggle.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        servicesDropdown.classList.toggle('active');
+        servicesArrow.classList.toggle('rotated');
+      });
 
-        document.addEventListener('click', (e) => {
-          const container = document.querySelector('.services-toggle-container');
-          if (container && !container.contains(e.target) && servicesDropdown.classList.contains('active')) {
-             servicesDropdown.classList.remove('active');
-             servicesArrow.classList.remove('rotated');
-          }
-        });
+      document.addEventListener('click', (e) => {
+        const container = document.querySelector('.services-toggle-container');
+        if (container && !container.contains(e.target) && servicesDropdown.classList.contains('active')) {
+          servicesDropdown.classList.remove('active');
+          servicesArrow.classList.remove('rotated');
+        }
+      });
     }
 
     // Scroll Button
@@ -1384,50 +1589,76 @@
     const scrollIcon = document.getElementById("scrollIcon");
 
     if (scrollBtn && scrollIcon) {
-        window.addEventListener("scroll", () => {
-          if (window.scrollY > 300) {
-            scrollBtn.classList.add('visible');
-            scrollIcon.classList.remove("fa-arrow-down");
-            scrollIcon.classList.add("fa-arrow-up");
-          } else {
-            scrollBtn.classList.remove('visible');
-            scrollIcon.classList.remove("fa-arrow-up");
-            scrollIcon.classList.add("fa-arrow-down");
-          }
-        });
-
-        scrollBtn.addEventListener("click", () => {
-          if (scrollIcon.classList.contains("fa-arrow-up")) {
-            window.scrollTo({top: 0, behavior: "smooth"});
-          }
-        });
-    }
-
-    // Mobile Menu
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
-
-    if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
-      hamburgerBtn.addEventListener('click', () => {
-        mobileMenu.classList.add('active');
-        mobileMenuOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+          scrollBtn.classList.add('visible');
+          scrollIcon.classList.remove("fa-arrow-down");
+          scrollIcon.classList.add("fa-arrow-up");
+        } else {
+          scrollBtn.classList.remove('visible');
+          scrollIcon.classList.remove("fa-arrow-up");
+          scrollIcon.classList.add("fa-arrow-down");
+        }
       });
 
-      mobileCloseBtn.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-        mobileMenuOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-      });
-
-      mobileMenuOverlay.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-        mobileMenuOverlay.classList.remove('active');
-        document.body.style.overflow = '';
+      scrollBtn.addEventListener("click", () => {
+        if (scrollIcon.classList.contains("fa-arrow-up")) {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
       });
     }
+
+    // ===== MOBILE MENU (FINAL FIX) =====
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+
+function closeMobileMenu() {
+  mobileMenu.classList.remove('active');
+  mobileMenuOverlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function openMobileMenu() {
+  mobileMenu.classList.add('active');
+  mobileMenuOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
+
+  // OPEN
+  hamburgerBtn.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    openMobileMenu();
+  });
+
+  // ❌ CLOSE — TOUCH SAFE
+  mobileCloseBtn.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    closeMobileMenu();
+  });
+
+  // BACKUP FOR OLD MOBILE BROWSERS
+  mobileCloseBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    closeMobileMenu();
+  }, { passive: false });
+
+  // OVERLAY CLICK
+  mobileMenuOverlay.addEventListener('pointerdown', () => {
+    closeMobileMenu();
+  });
+
+  // PREVENT BUBBLING INSIDE MENU
+  mobileMenu.addEventListener('pointerdown', (e) => {
+    e.stopPropagation();
+  });
+}
+
+
 
     // Mobile Services Toggle
     const mobileServicesToggle = document.getElementById('mobileServicesToggle');
@@ -1453,7 +1684,7 @@
         const current = document.documentElement.getAttribute('data-theme');
         const next = current === 'light' ? 'dark' : 'light';
         applyTheme(next);
-        
+
         if (next === 'dark') {
           mobileThemeText.textContent = 'Light Mode';
           mobileMoonIcon.style.display = 'none';
@@ -1466,132 +1697,169 @@
       });
     }
   </script>
-<script>
-if (window.location.pathname.endsWith("index.html") || window.location.pathname === "/") {
+  <script>
+    if (window.location.pathname.endsWith("index.html") || window.location.pathname === "/") {
 
-  const pageMap = {
-    home: "index.html",
-    about: "about.html",
-    blog: "blog.html",
-    crop: "crop.html",
-    marketplace: "marketplace.html",
-    supply: "supply-chain.html",
-    sustainable: "sustainable-farming.html",
-    finance: "financial-support.html",
-    login: "login.html",
-    register: "register.html",
-    faq: "faq.html",
-    feedback: "feed-back.html",
-    chat: "chat.html"
-  };
+      const pageMap = {
+        home: "index.html",
+        about: "about.html",
+        blog: "blog.html",
+        crop: "crop.html",
+        marketplace: "marketplace.html",
+        supply: "supply-chain.html",
+        sustainable: "sustainable-farming.html",
+        finance: "financial-support.html",
+        login: "login.html",
+        register: "register.html",
+        faq: "faq.html",
+        feedback: "feed-back.html",
+        chat: "chat.html"
+      };
 
-  function clearHighlights() {
-    document.querySelectorAll(".search-highlight").forEach(span => {
-      span.replaceWith(span.textContent);
-    });
-  }
+      function clearHighlights() {
+        document.querySelectorAll(".search-highlight").forEach(span => {
+          span.replaceWith(span.textContent);
+        });
+      }
 
-  function highlightAll(query) {
-    clearHighlights();
-    let found = false;
-    let firstMatch = null;
+      function highlightAll(query) {
+        clearHighlights();
+        let found = false;
+        let firstMatch = null;
 
-    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-    const nodes = [];
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        const nodes = [];
 
-    while (walker.nextNode()) nodes.push(walker.currentNode);
+        while (walker.nextNode()) nodes.push(walker.currentNode);
 
-    nodes.forEach(node => {
-      const text = node.nodeValue;
-      const lower = text.toLowerCase();
+        nodes.forEach(node => {
+          const text = node.nodeValue;
+          const lower = text.toLowerCase();
 
-      if (!lower.includes(query)) return;
+          if (!lower.includes(query)) return;
 
-      const parent = node.parentNode;
-      const fragment = document.createDocumentFragment();
-      let lastIndex = 0;
+          const parent = node.parentNode;
+          const fragment = document.createDocumentFragment();
+          let lastIndex = 0;
 
-      lower.replace(new RegExp(query, "gi"), (match, index) => {
-        found = true;
+          lower.replace(new RegExp(query, "gi"), (match, index) => {
+            found = true;
 
-        fragment.append(document.createTextNode(text.slice(lastIndex, index)));
+            fragment.append(document.createTextNode(text.slice(lastIndex, index)));
 
-        const span = document.createElement("span");
-        span.className = "search-highlight";
-        span.textContent = text.slice(index, index + match.length);
+            const span = document.createElement("span");
+            span.className = "search-highlight";
+            span.textContent = text.slice(index, index + match.length);
 
-        if (!firstMatch) firstMatch = span;
+            if (!firstMatch) firstMatch = span;
 
-        fragment.append(span);
-        lastIndex = index + match.length;
+            fragment.append(span);
+            lastIndex = index + match.length;
+          });
+
+          fragment.append(document.createTextNode(text.slice(lastIndex)));
+          parent.replaceChild(fragment, node);
+        });
+
+        if (firstMatch) {
+          firstMatch.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+
+        return found;
+      }
+
+      function showSearchPopup(query) {
+        document.getElementById("searchPopupText").textContent =
+          `No results found for "${query}". Try different keywords.`;
+        document.getElementById("searchPopup").style.display = "flex";
+      }
+
+      window.closeSearchPopup = () => {
+        document.getElementById("searchPopup").style.display = "none";
+      };
+
+      function handleSearch(value) {
+        if (!value) return;
+        const query = value.trim().toLowerCase();
+
+        // 1️⃣ Page redirect
+        for (const key in pageMap) {
+          if (query.includes(key)) {
+            window.location.href = pageMap[key];
+            return;
+          }
+        }
+
+        // 2️⃣ Highlight ALL matches
+        if (highlightAll(query)) return;
+
+        // 3️⃣ Popup if nothing found
+        showSearchPopup(value);
+      }
+
+      // Desktop Search
+      const searchButton = document.querySelector(".search-button");
+      const searchInput = document.querySelector(".search-input");
+
+      searchButton?.addEventListener("click", () => {
+        handleSearch(searchInput.value);
       });
 
-      fragment.append(document.createTextNode(text.slice(lastIndex)));
-      parent.replaceChild(fragment, node);
-    });
+      searchInput?.addEventListener("keydown", e => {
+        if (e.key === "Enter") handleSearch(e.target.value);
+      });
 
-    if (firstMatch) {
-      firstMatch.scrollIntoView({ behavior: "smooth", block: "center" });
+      // Add focus effect when button is clicked or focused
+      searchButton?.addEventListener("click", () => {
+        searchInput?.classList.add("input-focused");
+      });
+
+      searchButton?.addEventListener("focus", () => {
+        searchInput?.focus(); //Focus the input to show cursor
+        searchInput?.classList.add("input-focused");
+      });
+
+      searchInput?.addEventListener("blur", () => {
+        searchInput.classList.remove("input-focused");
+      });
+
+      // Mobile Search
+      const mobileSearchBtn = document.querySelector(".mobile-search-btn");
+      const mobileSearchInput = document.querySelector(".mobile-search-input");
+
+      mobileSearchBtn?.addEventListener("click", () => {
+        handleSearch(mobileSearchInput.value);
+      });
+
+      mobileSearchInput?.addEventListener("keydown", e => {
+        if (e.key === "Enter") handleSearch(e.target.value);
+      });
+
+      // Add focus effect when button is clicked or focused
+      mobileSearchBtn?.addEventListener("click", () => {
+        mobileSearchInput?.classList.add("input-focused");
+      });
+
+      mobileSearchBtn?.addEventListener("focus", () => {
+        mobileSearchInput?.focus(); // Focus the input to show cursor
+        mobileSearchInput?.classList.add("input-focused");
+      });
+
+      mobileSearchInput?.addEventListener("blur", () => {
+        mobileSearchInput.classList.remove("input-focused");
+      });
     }
+  </script>
 
-    return found;
-  }
-
-  function showSearchPopup(query) {
-    document.getElementById("searchPopupText").textContent =
-      `No results found for "${query}". Try different keywords.`;
-    document.getElementById("searchPopup").style.display = "flex";
-  }
-
-  window.closeSearchPopup = () => {
-    document.getElementById("searchPopup").style.display = "none";
-  };
-
-  function handleSearch(value) {
-    if (!value) return;
-    const query = value.trim().toLowerCase();
-
-    // 1️⃣ Page redirect
-    for (const key in pageMap) {
-      if (query.includes(key)) {
-        window.location.href = pageMap[key];
-        return;
-      }
-    }
-
-    // 2️⃣ Highlight ALL matches
-    if (highlightAll(query)) return;
-
-    // 3️⃣ Popup if nothing found
-    showSearchPopup(value);
-  }
-
-  // Desktop
-  document.querySelector(".search-button")?.addEventListener("click", () =>
-    handleSearch(document.querySelector(".search-input").value)
-  );
-  document.querySelector(".search-input")?.addEventListener("keydown", e => {
-    if (e.key === "Enter") handleSearch(e.target.value);
-  });
-
-  // Mobile
-  document.querySelector(".mobile-search-btn")?.addEventListener("click", () =>
-    handleSearch(document.querySelector(".mobile-search-input").value)
-  );
-  document.querySelector(".mobile-search-input")?.addEventListener("keydown", e => {
-    if (e.key === "Enter") handleSearch(e.target.value);
-  });
-}
-</script>
-
-<div class="search-popup-overlay" id="searchPopup">
-  <div class="search-popup">
-    <i class="fas fa-search"></i>
-    <h3>No Results Found</h3>
-    <p id="searchPopupText"></p>
-    <button onclick="closeSearchPopup()">Got it</button>
+  <div class="search-popup-overlay" id="searchPopup">
+    <div class="search-popup">
+      <i class="fas fa-search"></i>
+      <h3>No Results Found</h3>
+      <p id="searchPopupText"></p>
+      <button onclick="closeSearchPopup()">Got it</button>
+    </div>
   </div>
-</div>
 
 </body>
+
 </html>
