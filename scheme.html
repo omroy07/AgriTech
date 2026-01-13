@@ -12,6 +12,7 @@
   --secondary:#1b5e20;
   --bg:#f1f5f3;
   --card:#ffffff;
+  --card: rgba(255, 255, 255, 0.9);
   --text:#333333;
   --label:#1b5e20;
   --input-bg:#ffffff;
@@ -19,6 +20,8 @@
   --danger:#d32f2f;
   --success:#2e7d32;
   --shadow:0 18px 45px rgba(0,0,0,0.12);
+  --heading-grad: linear-gradient(135deg, #1e293b 30%, #059669 100%);
+  --grid-color: rgba(0, 0, 0, 0.05);
 }
 
 /* DARK THEME VARIABLES */
@@ -35,11 +38,13 @@
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  font-family:"Segoe UI",sans-serif;
+  font-family:"Open Sans", sans-serif;
   background:var(--bg);
   color:var(--text);
   transition: background 0.3s ease, color 0.3s ease;
 }
+
+.serif { font-family: 'Libertinus Serif', serif; }
 
 /* HEADER */
 header{
@@ -89,7 +94,7 @@ header h1{
 header a{
   background:#fff;
   color:var(--primary);
-  padding:12px 26px;
+  padding:10px 22px;
   border-radius:40px;
   text-decoration:none;
   font-weight:800;
@@ -173,39 +178,140 @@ button:hover {
 .deadline{color:#b71c1c;font-weight:800}
 [data-theme="dark"] .deadline { color: #ff5252; }
 
-.actions{
-  display:flex;
-  gap:14px;
-  margin-top:18px;
-  flex-wrap:wrap;
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: moveGrid 120s linear infinite;
+  z-index: 0;
 }
 
-/* BUTTONS */
-.apply{
-  padding:12px 26px;
-  font-size:17px;
-  border-radius:30px;
-  font-weight:800;
-  text-decoration:none;
-  background:#1976d2;
-  color:#fff;
-}
-.apply.disabled{
-  background:#bdbdbd;
-  pointer-events:none;
-  cursor:not-allowed;
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at center, transparent 20%, var(--bg) 100%);
+  z-index: 1;
 }
 
-.docs,.reminder{
-  padding:12px 26px;
-  border-radius:30px;
-  font-size:16px;
-  font-weight:800;
-  border:none;
-  cursor:pointer;
+@keyframes moveGrid {
+  from { background-position: 0 0; }
+  to { background-position: 1000px 1000px; }
 }
-.docs{background:#6a1b9a;color:#fff}
-.reminder{background:var(--primary);color:#fff}
+
+/* GLASSMORPHISM FORM CARD */
+.form-card{
+  position: relative;
+  z-index: 2;
+  background: var(--card);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  max-width: 850px;
+  width: 100%;
+  padding: 60px;
+  border-radius: 32px;
+  box-shadow: var(--shadow);
+}
+
+/* ADAPTIVE GRADIENT HEADING */
+.form-card h2{
+  text-align: center;
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 40px;
+  font-family: 'Libertinus Serif', serif;
+  background: var(--heading-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+}
+
+label { font-size: 17px; font-weight: 700; margin-top: 24px; display: block; color: var(--label); }
+
+select, input {
+  width: 100%;
+  padding: 16px 20px;
+  margin-top: 10px;
+  font-size: 17px;
+  border-radius: 14px;
+  border: 2px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--text);
+  transition: all 0.3s ease;
+}
+
+select:focus, input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.15);
+}
+
+/* BOUNCY CTA BUTTON */
+.btn-primary-cta {
+  margin-top: 45px;
+  width: 100%;
+  padding: 22px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(46, 125, 50, 0.3);
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+}
+
+.btn-primary-cta:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 15px 30px rgba(46, 125, 50, 0.4);
+}
+
+.btn-primary-cta:active { transform: translateY(0) scale(0.98); }
+
+/* SCHEMES CONTAINER */
+.container{ max-width: 1100px; margin: auto; padding: 40px 20px; }
+.scheme {
+  background: var(--card);
+  border-left: 8px solid var(--primary);
+  padding: 35px;
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 30px;
+  transition: transform 0.3s ease;
+}
+
+.scheme:hover { transform: translateY(-5px); }
+.scheme h3 { font-size: 26px; color: var(--label); margin-bottom: 10px; font-family: 'Libertinus Serif', serif; }
+
+.eligible { color: var(--success); font-weight: 800; font-size: 19px; }
+.not-eligible { color: var(--danger); font-weight: 800; font-size: 19px; }
+.deadline { color: #b71c1c; font-weight: 700; margin-top: 10px; }
+[data-theme="dark"] .deadline { color: #ff5252; }
+
+.actions { display: flex; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
+
+.apply, .docs, .reminder {
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.apply { background: #1976d2; color: #fff; }
+.docs { background: #6a1b9a; color: #fff; }
+.reminder { background: var(--primary); color: #fff; }
+
+.apply:hover, .docs:hover, .reminder:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
 /* MODAL */
 .modal{
@@ -316,11 +422,20 @@ body.dark .modal{
 }
 
 </style>
+<script src="voice-input.js" defer></script>
 </head>
 
 <body>
 
 <header>
+  <h1 class="serif">📜 Subsidy Tracker</h1>
+  <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle">
+          <i class="fas fa-moon" id="themeIcon"></i>
+          <span id="themeText">Dark</span>
+      </button>
+      <a href="index.html"><i class="fas fa-arrow-left"></i> Home</a>
+  </div>
   <h1>📜 Govt Schemes & Subsidy Tracker</h1>
   <div class="nav-actions">
       <button class="theme-toggle" id="themeToggle">
@@ -334,30 +449,30 @@ body.dark .modal{
 </header>
 
 <section class="hero">
-<div class="form-card">
-<h2>Check Your Scheme Eligibility</h2>
+  <div class="form-card">
+    <h2 class="serif">Check Your Scheme Eligibility</h2>
 
-<label>State</label>
-<select id="state">
-<option>India</option>
-<option>Karnataka</option>
-<option>Maharashtra</option>
-<option>Tamil Nadu</option>
-<option>Uttar Pradesh</option>
-<option>Bihar</option>
-<option>Punjab</option>
-<option>Haryana</option>
-<option>Rajasthan</option>
-<option>Madhya Pradesh</option>
-<option>Telangana</option>
-<option>Andhra Pradesh</option>
-</select>
+    <label>State</label>
+    <select id="state">
+      <option>India</option>
+      <option>Karnataka</option>
+      <option>Maharashtra</option>
+      <option>Tamil Nadu</option>
+      <option>Uttar Pradesh</option>
+      <option>Bihar</option>
+      <option>Punjab</option>
+      <option>Haryana</option>
+      <option>Rajasthan</option>
+      <option>Madhya Pradesh</option>
+      <option>Telangana</option>
+      <option>Andhra Pradesh</option>
+    </select>
 
-<label>Land Holding (acres)</label>
-<input type="number" id="land" placeholder="Example: 2.5">
+    <label>Land Holding (acres)</label>
+    <input type="number" id="land" placeholder="Example: 2.5">
 
-<button onclick="checkEligibility()">Find Eligible Schemes</button>
-</div>
+    <button class="btn-primary-cta" onclick="checkEligibility()">Find Eligible Schemes</button>
+  </div>
 </section>
 
 <div class="container" id="schemeList"></div>
@@ -489,7 +604,7 @@ function checkEligibility(){
     const eligible=land<=s.max&&(s.states.includes(state)||s.states.includes("India"));
     list.innerHTML+=`
     <div class="scheme">
-      <h3>${s.name}</h3>
+      <h3 class="serif">${s.name}</h3>
       <p>${s.desc}</p>
       <p class="${eligible?'eligible':'not-eligible'}">
         ${eligible?'✔ Eligible':'✖ Not Eligible'}
