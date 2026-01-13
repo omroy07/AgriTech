@@ -12,267 +12,83 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet" />
   <link href="style.css" rel="stylesheet" />
-  
-  <style>
-    /* FIX #476: Remove footer link stroke/underline animations */
-    .site-footer .footer-links a::before,
-    .site-footer .footer-links a::after,
-    .footer-links ul li a::after, 
-    .site-footer .footer-links a:hover::before {
-      display: none !important;
-      width: 0 !important;
-      content: none !important;
-    }
-
-    /* Optional: Keep a simple color change on hover so it's not boring */
-    .site-footer .footer-links a:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateX(5px); /* Simple movement instead of stroke */
-      text-decoration: none !important;
-    }
-
-    /* FAQ Specific Styles */
-    .faq-hero {
-      background: linear-gradient(135deg, var(--light-green) 0%, var(--bg-secondary) 100%);
-      padding: 3rem 2rem;
-      text-align: center;
-    }
-
-    .faq-hero-content {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .faq-hero h1 {
-      font-family: 'Libertinus Serif', serif;
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 1rem;
-      line-height: 1.2;
-    }
-
-    .faq-hero p {
-      font-size: 1.125rem;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      margin-bottom: 2rem;
-    }
-
-    .faq-container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
-      background: var(--bg-primary);
-    }
-
-    .faq-section {
-      margin-bottom: 3rem;
-    }
-
-    .faq-section-title {
-      font-family: 'Libertinus Serif', serif;
-      font-size: 2rem;
-      font-weight: 600;
-      color: var(--primary-green);
-      margin-bottom: 2rem;
-      text-align: center;
-      position: relative;
-    }
-
-    .faq-section-title::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 3px;
-      background: var(--primary-green);
-      border-radius: 2px;
-    }
-
-    .faq-item {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      margin-bottom: 1rem;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-
-    .faq-item:hover {
-      border-color: var(--primary-green);
-      box-shadow: 0 4px 15px var(--shadow-light);
-    }
-
-    .faq-question {
-      padding: 1.5rem;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--bg-secondary);
-      transition: all 0.3s ease;
-      user-select: none;
-    }
-
-    .faq-question:hover {
-      background: var(--bg-tertiary);
-    }
-
-    .faq-question h3 {
-      font-family: 'Libertinus Serif', serif;
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin: 0;
-      padding-right: 1rem;
-      line-height: 1.4;
-    }
-
-    .faq-icon {
-      color: var(--primary-green);
-      font-size: 1.25rem;
-      transition: transform 0.3s ease;
-      flex-shrink: 0;
-    }
-
-    .faq-item.active .faq-icon {
-      transform: rotate(180deg);
-    }
-
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-
-    .faq-item.active .faq-answer {
-      max-height: 500px;
-    }
-
-    .faq-answer-content {
-      padding: 0 1.5rem 1.5rem;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      font-size: 1rem;
-    }
-
-    .faq-answer-content p {
-      margin-bottom: 1rem;
-    }
-
-    .faq-answer-content ul {
-      padding-left: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .faq-answer-content li {
-      margin-bottom: 0.5rem;
-    }
-
-    .faq-answer-content strong {
-      color: var(--primary-green);
-      font-weight: 600;
-    }
-
-    .contact-cta {
-      background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
-      color: white;
-      padding: 3rem 2rem;
-      text-align: center;
-      margin-top: 3rem;
-    }
-
-    .contact-cta h2 {
-      font-family: 'Libertinus Serif', serif;
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .contact-cta p {
-      font-size: 1.125rem;
-      margin-bottom: 2rem;
-      opacity: 0.9;
-    }
-
-    .contact-btn {
-      display: inline-block;
-      background: white;
-      color: var(--primary-green);
-      padding: 1rem 2rem;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.125rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .contact-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .faq-hero {
-        padding: 2rem 1rem;
-      }
-
-      .faq-container {
-        padding: 3rem 1rem;
-      }
-
-      .faq-question {
-        padding: 1.25rem;
-      }
-
-      .faq-question h3 {
-        font-size: 1.125rem;
-      }
-
-      .faq-answer-content {
-        padding: 0 1.25rem 1.25rem;
-      }
-
-      .contact-cta {
-        padding: 2.5rem 1rem;
-      }
-    }
-  </style>
+  <link href="faq.css" rel="stylesheet" />
 </head>
 
 <body>
   <!-- Navigation -->
   <nav class="navbar">
     <div class="navbar-content">
-      <div class="brand">
+      <!-- Left side: Logo and Brand Name -->
+      <div class="brand-section">
+        <img src="images/logo.png" alt="AgriTech Logo" class="nav-logo">
         <a href="index.html" class="logo">AgriTech</a>
       </div>
-      <div class="nav-buttons">
-        <!-- Responsive Search Bar -->
-        <div class="search-container">
-          <input type="text" placeholder="Search..." class="search-input" />
-          <button class="search-button">
+      
+      <!-- Center: Navigation Links -->
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="services.html" class="nav-link">Services</a>
+        
+        <!-- Search Bar -->
+        <div class="nav-search">
+          <input type="text" placeholder="Search..." class="search-input">
+          <button class="search-btn">
             <i class="fas fa-search"></i>
           </button>
         </div>
-
+      </div>
+      
+      <!-- Right side: Buttons -->
+      <div class="nav-buttons">
         <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
           <i class="fas fa-sun sun-icon"></i>
           <i class="fas fa-moon moon-icon"></i>
-          <span class="theme-text">Dark</span>
+          <span class="theme-text">Light</span>
         </button>
 
-        <a href="about.html" class="btn btn-secondary">About</a>
-        <a href="faq.html" class="btn btn-secondary">FAQ</a>
         <a href="login.html" class="btn btn-secondary">Login</a>
+        <a href="faq.html" class="btn btn-secondary active">FAQ</a>
         <a href="register.html" class="btn btn-primary">Register</a>
       </div>
+      
+      <!-- Mobile Hamburger Menu Button -->
+      <button class="nav-toggle btn" id="navToggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
   </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-search">
+      <input type="text" placeholder="Search..." class="search-input">
+      <button class="search-btn">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+    
+    <div class="mobile-nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="services.html" class="nav-link">Services</a>
+    </div>
+    
+    <div class="mobile-nav-buttons">
+      <button class="theme-toggle btn" id="mobileThemeToggle" aria-label="Toggle dark/light mode">
+        <i class="fas fa-sun sun-icon"></i>
+        <i class="fas fa-moon moon-icon"></i>
+        <span class="theme-text">Light</span>
+      </button>
+      
+      <a href="login.html" class="btn btn-secondary">Login</a>
+      <a href="faq.html" class="btn btn-secondary active">FAQ</a>
+      <a href="register.html" class="btn btn-primary">Register</a>
+    </div>
+  </div>
 
   <!-- FAQ Hero Section -->
   <section class="faq-hero">
@@ -653,6 +469,53 @@
       }
     }
 
+    // Mobile Menu Functionality
+    const navToggle = document.getElementById('navToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+
+    // Toggle mobile menu
+    navToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navToggle.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+
+    // Close mobile menu when clicking on a link
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!mobileMenu.contains(e.target) && !navToggle.contains(e.target)) {
+        navToggle.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Sync theme toggle for mobile
+    if (mobileThemeToggle) {
+      mobileThemeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        // Update both theme toggles
+        document.querySelectorAll('.theme-text').forEach(text => {
+          text.textContent = newTheme === 'dark' ? 'Light' : 'Dark';
+        });
+      });
+    }
+
     // Theme toggle functionality
     const themeToggle = document.querySelector('.theme-toggle');
     const themeText = document.querySelector('.theme-text');
@@ -698,8 +561,15 @@
         });
       }
     });
-  </script>
-  <script src="theme.js"></script>
-</body>
 
+    // Prevent body scroll when menu is open
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+        navToggle.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+</body>
 </html>
