@@ -5,6 +5,9 @@
 <title>Govt Schemes & Subsidy Tracker</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600;800&display=swap" rel="stylesheet" />
 
 <style>
 :root{
@@ -37,11 +40,13 @@
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  font-family:"Segoe UI",sans-serif;
+  font-family:"Open Sans", sans-serif;
   background:var(--bg);
   color:var(--text);
   transition: background 0.3s ease, color 0.3s ease;
 }
+
+.serif { font-family: 'Libertinus Serif', serif; }
 
 /* HEADER */
 header{
@@ -91,7 +96,7 @@ header h1{
 header a{
   background:#fff;
   color:var(--primary);
-  padding:12px 26px;
+  padding:10px 22px;
   border-radius:40px;
   text-decoration:none;
   font-weight:800;
@@ -184,11 +189,15 @@ button:active {
 .deadline{color:#b71c1c;font-weight:800}
 [data-theme="dark"] .deadline { color: #ff5252; }
 
-.actions{
-  display:flex;
-  gap:14px;
-  margin-top:18px;
-  flex-wrap:wrap;
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: moveGrid 120s linear infinite;
+  z-index: 0;
 }
 
 /* BUTTONS */
@@ -340,11 +349,20 @@ body.dark .modal{
 }
 
 </style>
+<script src="voice-input.js" defer></script>
 </head>
 
 <body>
 
 <header>
+  <h1 class="serif">📜 Subsidy Tracker</h1>
+  <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle">
+          <i class="fas fa-moon" id="themeIcon"></i>
+          <span id="themeText">Dark</span>
+      </button>
+      <a href="index.html"><i class="fas fa-arrow-left"></i> Home</a>
+  </div>
   <h1>📜 Govt Schemes & Subsidy Tracker</h1>
   <div class="nav-actions">
       <button class="theme-toggle" id="themeToggle">
@@ -358,30 +376,30 @@ body.dark .modal{
 </header>
 
 <section class="hero">
-<div class="form-card">
-<h2>Check Your Scheme Eligibility</h2>
+  <div class="form-card">
+    <h2 class="serif">Check Your Scheme Eligibility</h2>
 
-<label>State</label>
-<select id="state">
-<option>India</option>
-<option>Karnataka</option>
-<option>Maharashtra</option>
-<option>Tamil Nadu</option>
-<option>Uttar Pradesh</option>
-<option>Bihar</option>
-<option>Punjab</option>
-<option>Haryana</option>
-<option>Rajasthan</option>
-<option>Madhya Pradesh</option>
-<option>Telangana</option>
-<option>Andhra Pradesh</option>
-</select>
+    <label>State</label>
+    <select id="state">
+      <option>India</option>
+      <option>Karnataka</option>
+      <option>Maharashtra</option>
+      <option>Tamil Nadu</option>
+      <option>Uttar Pradesh</option>
+      <option>Bihar</option>
+      <option>Punjab</option>
+      <option>Haryana</option>
+      <option>Rajasthan</option>
+      <option>Madhya Pradesh</option>
+      <option>Telangana</option>
+      <option>Andhra Pradesh</option>
+    </select>
 
-<label>Land Holding (acres)</label>
-<input type="number" id="land" placeholder="Example: 2.5">
+    <label>Land Holding (acres)</label>
+    <input type="number" id="land" placeholder="Example: 2.5">
 
-<button onclick="checkEligibility()">Find Eligible Schemes</button>
-</div>
+    <button class="btn-primary-cta" onclick="checkEligibility()">Find Eligible Schemes</button>
+  </div>
 </section>
 
 <div class="container" id="schemeList"></div>
@@ -512,7 +530,7 @@ function checkEligibility(){
     const eligible=land<=s.max&&(s.states.includes(state)||s.states.includes("India"));
     list.innerHTML+=`
     <div class="scheme">
-      <h3>${s.name}</h3>
+      <h3 class="serif">${s.name}</h3>
       <p>${s.desc}</p>
       <p class="${eligible?'eligible':'not-eligible'}">
         ${eligible?'✔ Eligible':'✖ Not Eligible'}

@@ -61,12 +61,12 @@ def get_firebase_config():
     try:
         return jsonify({
             'apikey': os.environ['FIREBASE_API_KEY'],
-            'authDomain': os.environ('FIREBASE_AUTH_DOMAIN'),
-            'projectId': os.environ('FIREBASE_PROJECT_ID'),
-            'storageBucket': os.environ('FIREBASE_STORAGE_BUCKET'),
-            'messagingSenderId': os.environ('FIREBASE_MESSAGING_SENDER_ID'),
-            'appId': os.environ('FIREBASE_APP_ID'),
-            'measurementId': os.environ('FIREBASE_MEASUREMENT_ID')
+            'authDomain': os.environ['FIREBASE_AUTH_DOMAIN'],
+            'projectId': os.environ['FIREBASE_PROJECT_ID'],
+            'storageBucket': os.environ['FIREBASE_STORAGE_BUCKET'],
+            'messagingSenderId': os.environ['FIREBASE_MESSAGING_SENDER_ID'],
+            'appId': os.environ['FIREBASE_APP_ID'],
+            'measurementId': os.environ['FIREBASE_MEASUREMENT_ID']
 
         })
     except KeyError as e:
