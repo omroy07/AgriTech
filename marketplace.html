@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,49 +8,67 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <link rel="icon" type="image/png" href="images/logo.png">
-    
-    <style>
+
+     <style>
         /* --- NEW CATCHY COLOR PALETTE --- */
         :root {
             /* DEFAULT: Sophisticated Dark Blue/Midnight Palette */
-            --bg-primary: #0a1120; /* Deep Midnight Blue */
-            --bg-secondary: #101c38; /* Darker Slate Blue */
-            --bg-tertiary: #1f3050; /* Medium Blue/Gray */
-            --text-primary: #e6f7ff; /* Off-White/Light Blue */
+            --bg-primary: #021234;
+            /* Deep Midnight Blue */
+            --bg-secondary: #101c38;
+            /* Darker Slate Blue */
+            --bg-tertiary: #1f3050;
+            /* Medium Blue/Gray */
+            --text-primary: #e6f7ff;
+            /* Off-White/Light Blue */
             --text-secondary: #a3c2e6;
             --text-muted: #647a9b;
             --border-color: rgba(255, 255, 255, 0.15);
-            
+
             /* Dark Mode Accents (Blue & Yellow/Gold Contrast) */
-            --accent-primary: #4ab7f7; /* Bright Sky Blue */
-            --accent-secondary: #ffd700; /* Gold/Yellow */
+            --accent-primary: #e5eff5;
+            /* Bright Sky Blue */
+            --accent-secondary: #ffd700;
+            /* Gold/Yellow */
             --accent-gradient: linear-gradient(135deg, #154f71 0%, #725896 100%);
             --accent-success: #10b981;
             --accent-warning: #ffd700;
             --accent-danger: #ef4444;
-            
+
             /* Modern Shadows & Glass */
             --glass-bg: rgba(16, 28, 56, 0.8);
             --shadow-premium: 0 15px 30px rgba(0, 0, 0, 0.5);
+
+            --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
         [data-theme="light"] {
             /* LIGHT: Vibrant Green/Mint Palette */
-            --bg-primary: #fafff8; /* Very Light Mint */
+            --bg-primary: #fafff8;
+            /* Very Light Mint */
             --bg-secondary: #ffffff;
-            --bg-tertiary: #e7f7e9; /* Light Pale Green */
-            --text-primary: #1e3f22; /* Deep Forest Green */
+            --bg-tertiary: #e7f7e9;
+            /* Light Pale Green */
+            --text-primary: #1e3f22;
+            /* Deep Forest Green */
             --text-secondary: #3b7440;
             --text-muted: #6b8e70;
             --border-color: rgba(0, 0, 0, 0.1);
-            
+
             /* Light Mode Accents (Green & Mint) */
-            --accent-primary: #38c172; /* Vivid Green */
-            --accent-secondary: #3b7440; 
+            --accent-primary: #38c172;
+            /* Vivid Green */
+            --accent-secondary: #f3f5f3;
             --accent-gradient: linear-gradient(135deg, #38c172 0%, #2fb362 100%);
-            
+
             --glass-bg: rgba(255, 255, 255, 0.85);
         }
 
@@ -61,293 +80,479 @@
             transition: all 0.4s ease;
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
-        
+
         /* Dynamic Background Gradient (Subtle distinction between themes) */
         body[data-theme="dark"] {
-            background-image: 
+            background-image:
                 radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.08) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(129, 140, 248, 0.08) 0px, transparent 50%);
         }
-        
+
         body[data-theme="light"] {
-            background-image: 
+            background-image:
                 radial-gradient(at 0% 0%, rgba(56, 248, 189, 0.1) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(140, 248, 129, 0.1) 0px, transparent 50%);
         }
 
-        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
         /* --- Navigation --- */
         .top-nav {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0.8rem 2rem; background: var(--glass-bg);
-            backdrop-filter: blur(12px); border: 1px solid var(--border-color);
-            border-radius: 20px; margin-bottom: 2rem;
-            position: sticky; top: 20px; z-index: 1000; box-shadow: var(--shadow-premium);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 20px;
+            z-index: 1000;
+            box-shadow: var(--shadow-premium);
         }
 
         .nav-back {
-            background: var(--bg-tertiary); color: var(--text-primary);
-            padding: 10px 18px; border-radius: 12px; text-decoration: none;
-            font-weight: 600; font-size: 0.9rem; transition: 0.3s;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            padding: 10px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
             border: 1px solid var(--border-color);
         }
 
-        .nav-back:hover { background: var(--accent-gradient); border-color: transparent; transform: translateX(-5px); }
+        .nav-back:hover {
+            background: var(--accent-gradient);
+            border-color: transparent;
+            transform: translateX(-5px);
+        }
 
         .theme-toggle {
-            background: var(--accent-gradient); color: rgb(255, 255, 255); border: none;
-            border-radius: 12px; padding: 10px 18px; cursor: pointer;
-            display: flex; align-items: center; gap: 8px; font-weight: 700;
+            background: var(--accent-gradient);
+            color: rgb(255, 255, 255);
+            border: none;
+            border-radius: 12px;
+            padding: 10px 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
             transition: all 0.3s ease;
         }
 
         /* --- Header --- */
         .header {
-            background: var(--bg-secondary); padding: 60px 40px; border-radius: 32px;
-            text-align: center; border: 1px solid var(--border-color);
-            margin-bottom: 40px; box-shadow: var(--shadow-premium);
-             position: relative;
-  background: linear-gradient(
-    135deg,
-    #081a3a,
-    #0a2c6e,
-    #0d45c9
-  );
-  border-radius: 28px;
-  overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #081a3a, #0a2c6e, #0d45c9);
+            padding: 60px 40px;
+            border-radius: 32px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-premium);
+            overflow: hidden;
         }
 
 
-.header p {
-  color: rgba(255, 255, 255, 0.78);
-}
-.header::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -120%;
-  width: 60%;
-  height: 100%;
+        .header p {
+            color: rgb(255, 255, 255);
+        }
 
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255,255,255,0.25),
-    transparent
-  );
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 60%;
+            height: 100%;
 
-  transform: skewX(-20deg);
-  animation: headerShine 5s infinite;
-  pointer-events: none;
-}
+            background: linear-gradient(120deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.25),
+                    transparent);
 
-@keyframes headerShine {
-  0% { left: -120%; }
-  60% { left: 140%; }
-  100% { left: 140%; }
-}
+            transform: skewX(-20deg);
+            animation: headerShine 5s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes headerShine {
+            0% {
+                left: -120%;
+            }
+
+            60% {
+                left: 140%;
+            }
+
+            100% {
+                left: 140%;
+            }
+        }
 
         .header h1 {
-            font-size: 3.5rem; font-weight: 800; letter-spacing: -0.05em;
-            background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            background: var(--accent-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         /* --- Controls & Inputs --- */
         .marketplace-controls {
-            background: var(--bg-secondary); padding: 30px; border-radius: 24px;
-            border: 1px solid var(--border-color); margin-bottom: 40px;
+            background: var(--bg-secondary);
+            padding: 30px;
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 40px;
         }
 
-        .search-box { flex: 3; position: relative; }
+        .search-box {
+            flex: 3;
+            position: relative;
+        }
+
         .search-box input {
-            width: 100%; padding: 16px 2px; border-radius: 16px;
-            background: var(--bg-primary); border: 1px solid var(--border-color);
-            color: var(--text-primary); font-size: 1rem; transition: 0.3s;
+            width: 100%;
+            padding: 16px 2px;
+            border-radius: 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: 0.3s;
         }
 
-        .search-box input:focus { border-color: var(--accent-primary); outline: none; box-shadow: 0 0 0 4px var(--accent-primary)15; }
+        .search-box input:focus {
+            border-color: var(--accent-primary);
+            outline: none;
+            box-shadow: 0 0 0 4px var(--accent-primary)15;
+        }
 
         .filter-select {
-            padding: 14px 20px; border-radius: 14px; background: var(--bg-primary);
-            border: 1px solid var(--border-color); color: var(--text-primary); cursor: pointer;
+            padding: 14px 20px;
+            border-radius: 14px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
         }
 
         .sort-btn {
-            padding: 10px 18px; border-radius: 12px; background: var(--bg-primary);
-            border: 1px solid var(--border-color); color: var(--text-secondary);
-            cursor: pointer; transition: 0.3s; font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
         }
 
-        .sort-btn.active { background: var(--accent-gradient); color: white; border: none; }
+        .sort-btn.active {
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+        }
 
         /* --- Stats Cards --- */
-        .marketplace-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 40px; }
-        .stat-card {
-            background: var(--bg-secondary); border: 1px solid var(--border-color);
-            border-radius: 24px; padding: 30px; text-align: left; transition: 0.3s;
-             position: relative;
-  overflow: hidden;
-  transition: transform 0.35s ease;
+        .marketplace-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
         }
 
-.stat-card::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -40%;
-  width: 100%;
-  height: 70%;
+        .stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 30px;
+            text-align: left;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.35s ease;
+        }
 
-  background: linear-gradient(
-    to top,
-    var(--fire-color),
-    transparent 75%
-  );
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -40%;
+            width: 100%;
+            height: 70%;
 
-  opacity: 0;
-  transform: translateY(20%);
-  transition:
-    opacity 0.6s ease,
-    transform 0.6s ease,
-    bottom 0.6s ease;
+            background: linear-gradient(to top,
+                    var(--fire-color),
+                    transparent 75%);
 
-  pointer-events: none;
-}
+            opacity: 0;
+            transform: translateY(20%);
+            transition:
+                opacity 0.6s ease,
+                transform 0.6s ease,
+                bottom 0.6s ease;
 
-.stat-card:hover::before {
-  bottom: 0;
-  opacity: 1;
-  transform: translateY(0);
-}
+            pointer-events: none;
+        }
 
-.stat-value {
-  position: relative;
-  z-index: 2;
-  transition:
-    transform 0.3s ease,
-    color 0.3s ease,
-    text-shadow 0.3s ease;
-}
+        .stat-card:hover::before {
+            bottom: 0;
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-.stat-card:hover .stat-value {
-  transform: translateY(-6px) scale(1.07);
-  color: #ffffff;
-text-shadow:
-    0 1px 2px rgba(0,0,0,0.45),
-    0 0 4px var(--fire-glow);
-}
-.stat-card:nth-child(1) {
-  --fire-color: rgba(255, 153, 0, 0.6);
-  --fire-glow: rgba(255, 170, 0, 0.9);
+        .stat-value {
+            position: relative;
+            z-index: 2;
+            transition:
+                transform 0.3s ease,
+                color 0.3s ease,
+                text-shadow 0.3s ease;
+        }
+
+        .stat-card:hover .stat-value {
+            transform: translateY(-6px) scale(1.07);
+            color: #ffffff;
+            text-shadow:
+                0 1px 2px rgba(0, 0, 0, 0.45),
+                0 0 4px var(--fire-glow);
+        }
+
+        .stat-card:nth-child(1) {
+    --fire-color: rgba(255, 153, 0, 0.6);
+    --fire-glow: rgba(255, 170, 0, 0.9);
 }
 
 .stat-card:nth-child(2) {
-  --fire-color: rgba(0, 200, 255, 0.6);
-  --fire-glow: rgba(0, 220, 255, 0.9);
+    --fire-color: rgba(0, 200, 255, 0.6);
+    --fire-glow: rgba(0, 220, 255, 0.9);
 }
 
 .stat-card:nth-child(3) {
-  --fire-color: rgba(255, 80, 120, 0.6);
-  --fire-glow: rgba(255, 100, 150, 0.9);
+    --fire-color: rgba(255, 80, 120, 0.6);
+    --fire-glow: rgba(255, 100, 150, 0.9);
 }
 
-.stat-card:nth-child(4) {
-  --fire-color: rgba(140, 120, 255, 0.6);
-  --fire-glow: rgba(160, 140, 255, 0.9);
-}
-.stat-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(255,255,255,0.05),
-    transparent 60%
-  );
-  pointer-events: none;
-}
 
-        .stat-card:hover { transform: translateY(-8px); border-color: var(--accent-primary); }
-        .stat-value {
-            font-size: 2.8rem; font-weight: 800; background: var(--accent-gradient);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        .stat-card:nth-child(4) {
+            --fire-color: rgba(140, 120, 255, 0.6);
+            --fire-glow: rgba(160, 140, 255, 0.9);
         }
+
+        .stat-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top,
+                    rgba(255, 255, 255, 0.05),
+                    transparent 60%);
+            pointer-events: none;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-primary);
+        }
+
+        .stat-value {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         /* --- Product Cards --- */
         .product-card {
-            background: var(--bg-secondary); border: 1px solid var(--border-color);
-            border-radius: 28px; padding: 16px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative; 
-        }
-        .product-card:hover { transform: translateY(-12px); border-color: var(--accent-primary); box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.4); }
-        .product-image {
-            width: 100%; height: 220px; border-radius: 20px;
-            background: linear-gradient(45deg, var(--bg-tertiary), var(--bg-secondary));
-            font-size: 5rem; display: flex; align-items: center; justify-content: center;
-            position: relative; overflow: hidden;
-        }
-        .product-badge {
-            position: absolute; top: 15px; left: 15px;
-            background: var(--accent-gradient); color: white;
-            padding: 6px 14px; border-radius: 12px; font-weight: 700; font-size: 0.75rem;
-            z-index: 2;
-        }
-        /* Specific fix for badge text color in light mode */
-        [data-theme="light"] .product-badge {
-            color: var(--text-primary); /* Ensures badge text is deep green/readable on light backgrounds */
-        }
-        .product-price { font-size: 1.6rem; font-weight: 800; color: var(--accent-primary); }
-        .btn-primary {
-            background: var(--accent-gradient); color: white; border: none;
-            padding: 14px 20px; border-radius: 14px; font-weight: 700; cursor: pointer; flex: 1;
-            transition: background 0.3s ease;
-        }
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 28px;
+    padding: 16px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
 
-        /* --- Categories --- */
-        .category-card {
-            background: linear-gradient(135deg, #e17055, var(--accent-secondary));
-            color: white;
-            padding: 30px 20px;
-            border-radius: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
+.product-card:hover {
+    transform: translateY(-12px);
+    border-color: var(--accent-primary);
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.4);
+}
+
+        .product-image {
+            width: 100%;
+            height: 220px;
+            border-radius: 20px;
+            background: linear-gradient(45deg, var(--bg-tertiary), var(--bg-secondary));
+            font-size: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
             overflow: hidden;
         }
 
-        .category-card::before {
-            content: '';
+        .product-badge {
             position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            opacity: 0;
-            animation: pulse 3s ease-in-out infinite;
+            top: 15px;
+            left: 15px;
+            background: var(--accent-gradient);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            z-index: 2;
         }
 
-        .category-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(225,112,85,0.3);
+        /* Specific fix for badge text color in light mode */
+        [data-theme="light"] .product-badge {
+            color: var(--text-primary);
+            /* Ensures badge text is deep green/readable on light backgrounds */
         }
 
-        .category-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
+        .product-price {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--accent-primary);
         }
 
-        .category-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 5px;
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            flex: 1;
+            transition: background 0.3s ease;
         }
 
-        .category-count {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
+      .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+}
+.category-card {
+    background: linear-gradient(135deg, #e17055, var(--accent-secondary));
+    color: white;
+    padding: 28px 20px;
+    border-radius: 16px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+    /* IMPORTANT */
+    transform: translateZ(0);
+    transition: 
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+/* Glow effect */
+.category-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at top right,
+        rgba(255, 255, 255, 0.15),
+        transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* SAFE hover (no scale) */
+.category-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 30px rgba(225, 112, 85, 0.35);
+}
+
+.category-card:hover::before {
+    opacity: 1;
+}
+
+
+/* Inner wrapper handles hover transform */
+.category-inner {
+    background: linear-gradient(135deg, #e17055, var(--accent-secondary));
+    color: white;
+    padding: 28px 20px;
+    border-radius: 18px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect */
+.category-card:hover .category-inner {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(225, 112, 85, 0.35);
+}
+
+/* Glow animation */
+.category-inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right,
+        rgba(255, 255, 255, 0.835),
+        transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.category-card:hover .category-inner::before {
+    opacity: 1;
+}
+
+/* Icon */
+.category-icon {
+    font-size: 2.8rem;
+    margin-bottom: 14px;
+}
+
+/* Title */
+.category-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+/* Count */
+.category-count {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+.category-icon {
+    font-size: 2.8rem;
+    margin-bottom: 14px;
+}
+
+.category-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.category-count {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
 
         .price-chart {
             background: var(--bg-primary);
@@ -454,7 +659,7 @@ text-shadow:
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             transition: 0.6s;
             z-index: -1;
         }
@@ -471,7 +676,7 @@ text-shadow:
         /* --- ADDED: SCROLL TO TOP BUTTON STYLES --- */
         .scroll-top-btn {
             position: fixed;
-            bottom: 90px; 
+            bottom: 90px;
             right: 30px;
             width: 50px;
             height: 50px;
@@ -509,35 +714,109 @@ text-shadow:
         }
 
         .notification {
-            position: fixed; top: 100px; right: 20px; background: var(--bg-secondary);
-            border-left: 5px solid var(--accent-success); padding: 18px 25px;
-            border-radius: 16px; box-shadow: var(--shadow-premium); z-index: 2000;
-            transform: translateX(120%); transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            min-width: 300px; color: var(--text-primary);
-            display: flex; align-items: center; gap: 10px;
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--bg-secondary);
+            border-left: 5px solid var(--accent-success);
+            padding: 18px 25px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-premium);
+            z-index: 2000;
+            transform: translateX(120%);
+            transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            min-width: 300px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .notification.info { border-color: var(--accent-primary); }
-        .notification.success { border-color: var(--accent-success); }
-        .notification.show { transform: translateX(0); }
+
+        .notification.info {
+            border-color: var(--accent-primary);
+        }
+
+        .notification.success {
+            border-color: var(--accent-success);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
         .cart-widget {
-            position: fixed; bottom: 30px; right: 30px; background: var(--accent-gradient);
-            width: 70px; height: 70px; border-radius: 22px; display: flex;
-            align-items: center; justify-content: center; color: white; font-size: 1.5rem;
-            cursor: pointer; box-shadow: 0 15px 35px rgba(56, 189, 248, 0.4); z-index: 1000;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-gradient);
+            width: 70px;
+            height: 70px;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 15px 35px rgba(56, 189, 248, 0.4);
+            z-index: 1000;
             transition: transform 0.15s ease-out;
         }
 
         /* --- Responsive --- */
         @media (max-width: 768px) {
-            .header h1 { font-size: 2.2rem; }
-            .controls-row { flex-direction: column; align-items: stretch !important; }
-            .filter-select, .sort-buttons { width: 100%; margin-top: 10px; }
-            .sort-buttons { display: flex; flex-wrap: wrap; justify-content: space-between; }
-            .sort-btn { flex: 1; min-width: 80px; margin: 5px; }
-            .products-grid { grid-template-columns: 1fr; }
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .controls-row {
+                flex-direction: column;
+                align-items: stretch !important;
+            }
+
+            .filter-select,
+            .sort-buttons {
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .sort-buttons {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+
+            .sort-btn {
+                flex: 1;
+                min-width: 80px;
+                margin: 5px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
         }
+        /* Default (light) */
+:root {
+    --bg: #f9fafb;
+    --text: #1f2937;
+}
+
+/* Dark mode */
+body[data-theme="dark"] {
+    --bg: #0f172a;
+    --text: #e5e7eb;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
     </style>
 </head>
+
 <body data-theme="dark">
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
@@ -551,17 +830,19 @@ text-shadow:
                 </a>
             </div>
             <div>
-                <button class="theme-toggle" id="themeToggle">
-                    <i class="fas fa-sun" id="themeIcon"></i>
-                    <span id="themeText">Dark</span>
-                </button>
+                <button id="themeToggle" class="theme-toggle">
+    <i id="themeIcon" class="fas fa-sun"></i>
+    <span id="themeText">Light</span>
+</button>
+
             </div>
         </nav>
 
         <div class="header">
             <div class="header-content">
                 <h1><i class="fas fa-store"></i> Marketplace Services</h1>
-                <p style="color: var(--text-secondary); margin-top: 10px; font-size: 1.1rem;">Connect directly with farmers and buyers for the best agricultural products and prices</p>
+                <p style="color: var(--text-secondary); margin-top: 10px; font-size: 1.1rem;">Connect directly with
+                    farmers and buyers for the best agricultural products and prices</p>
             </div>
         </div>
 
@@ -569,7 +850,8 @@ text-shadow:
             <div class="controls-row" style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
                 <div class="search-box">
                     <input type="text" placeholder="Search for products, sellers, or locations..." id="searchInput">
-                    <button class="search-btn" onclick="searchProducts()" style="position: absolute; right: 8px; top: 8px; background: var(--accent-gradient); border: none; padding: 8px 15px; border-radius: 10px; color: white; cursor: pointer;">
+                    <button class="search-btn" onclick="searchProducts()"
+                        style="position: absolute; right: 8px; top: 8px; background: var(--accent-gradient); border: none; padding: 8px 15px; border-radius: 10px; color: white; cursor: pointer;">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
@@ -619,208 +901,301 @@ text-shadow:
             </div>
         </div>
 
-        <div class="categories-section" style="background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 40px; border-radius: 32px; margin-bottom: 40px;">
+        <div class="categories-section"
+            style="background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 40px; border-radius: 32px; margin-bottom: 40px;">
             <div class="section-header" style="text-align: center; margin-bottom: 40px;">
-                <h2 style="font-size: 2.2rem; font-weight: 800;"><i class="fas fa-th-large" style="color: var(--accent-primary);"></i> Browse Categories</h2>
+                <h2 style="font-size: 2.2rem; font-weight: 800;"><i class="fas fa-th-large"
+                        style="color: var(--accent-primary);"></i> Browse Categories</h2>
                 <p style="color: var(--text-secondary);">Explore our wide range of agricultural products</p>
             </div>
             <div class="categories-grid">
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'vegetables')">
                     <div class="category-icon">🥬</div>
-                    <div class="category-title" style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Fresh Vegetables</div>
-                    <div class="category-count" id="vegCount" style="color: var(--text-muted);">847 products</div>
+                    <div class="category-title">Fresh Vegetables</div>
+                    <div class="category-count" id="vegCount">847 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'fruits')">
                     <div class="category-icon">🍎</div>
-                    <div class="category-title" style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Seasonal Fruits</div>
-                    <div class="category-count" id="fruitCount" style="color: var(--text-muted);">623 products</div>
+                    <div class="category-title">Seasonal Fruits</div>
+                    <div class="category-count" id="fruitCount">623 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'grains')">
                     <div class="category-icon">🌾</div>
-                    <div class="category-title" style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Grains & Cereals</div>
-                    <div class="category-count" id="grainCount" style="color: var(--text-muted);">456 products</div>
+                    <div class="category-title">Grains & Cereals</div>
+                    <div class="category-count" id="grainCount">456 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'spices')">
                     <div class="category-icon">🌶️</div>
-                    <div class="category-title" style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Spices & Herbs</div>
-                    <div class="category-count" id="spiceCount" style="color: var(--text-muted);">321 products</div>
+                    <div class="category-title">Spices & Herbs</div>
+                    <div class="category-count" id="spiceCount">321 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'dairy')">
                     <div class="category-icon">🥛</div>
-                    <div class="category-title" style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Dairy Products</div>
-                    <div class="category-count" id="dairyCount" style="color: var(--text-muted);">234 products</div>
+                    <div class="category-title">Dairy Products</div>
+                    <div class="category-count" id="dairyCount">234 products</div>
                 </div>
+
                 <div class="category-card" onclick="setFilterAndDisplay('category', 'pulses')">
                     <div class="category-icon">🫘</div>
-                    <div class="category-title" style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Pulses & Legumes</div>
-                    <div class="category-count" id="pulseCount" style="color: var(--text-muted);">366 products</div>
+                    <div class="category-title">Pulses & Legumes</div>
+                    <div class="category-count" id="pulseCount">366 products</div>
                 </div>
             </div>
+
         </div>
 
         <div class="products-section">
             <div class="section-header" style="text-align: center; margin-bottom: 40px;">
-                <h2 style="font-size: 2.2rem; font-weight: 800;"><i class="fas fa-shopping-cart" style="color: var(--accent-primary);"></i> Featured Products</h2>
+                <h2 style="font-size: 2.2rem; font-weight: 800;"><i class="fas fa-shopping-cart"
+                        style="color: var(--accent-primary);"></i> Featured Products</h2>
                 <p style="color: var(--text-secondary);">High-quality products from verified sellers</p>
             </div>
-            <div class="products-grid" id="productsGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px;">
-                
-                <div class="product-card" data-category="vegetables" data-location="punjab" data-price="45" data-rating="4.8" data-distance="50" data-newest="2">
+            <div class="products-grid" id="productsGrid"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px;">
+
+                <div class="product-card" data-category="vegetables" data-location="punjab" data-price="45"
+                    data-rating="4.8" data-distance="50" data-newest="2">
                     <div class="product-image">
                         🥕
                         <div class="product-badge">Organic</div>
                     </div>
                     <div class="product-info">
-                        <div class="product-title" style="font-weight: 800; font-size: 1.2rem; margin-bottom: 8px;">Fresh Organic Carrots</div>
-                        <div class="product-seller" style="font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                        <div class="product-title" style="font-weight: 800; font-size: 1.2rem; margin-bottom: 8px;">
+                            Fresh Organic Carrots</div>
+                        <div class="product-seller"
+                            style="font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
                             <i class="fas fa-user-circle"></i> Kumar Farms, Punjab
-                            <div class="seller-rating" style="background: rgba(243, 156, 18, 0.15); color: var(--accent-warning); padding: 2px 8px; border-radius: 6px; font-weight: 700;">
+                            <div class="seller-rating"
+                                style="background: rgba(243, 156, 18, 0.15); color: var(--accent-warning); padding: 2px 8px; border-radius: 6px; font-weight: 700;">
                                 <i class="fas fa-star"></i> 4.8
                             </div>
                         </div>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Premium quality organic carrots, freshly harvested rich in vitamins.</p>
-                        <div class="product-details" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Premium quality
+                            organic carrots, freshly harvested rich in vitamins.</p>
+                        <div class="product-details"
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                             <div class="product-price">₹45/kg</div>
-                            <div class="product-quantity" style="font-weight: 600; color: var(--text-muted);">Min: 10kg</div>
+                            <div class="product-quantity" style="font-weight: 600; color: var(--text-muted);">Min: 10kg
+                            </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
+                            <button class="btn-primary" onclick="toggleCart()">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
                             <button class="btn-primary" onclick="contactSeller('Kumar Farms')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)" style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i class="far fa-heart"></i></button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"
+                                style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
+                                    class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
-                
-                <div class="product-card" data-category="fruits" data-location="kashmir" data-price="180" data-rating="4.9" data-distance="200" data-newest="1">
+
+                <div class="product-card" data-category="fruits" data-location="kashmir" data-price="180"
+                    data-rating="4.9" data-distance="200" data-newest="1">
                     <div class="product-image">
                         🍎
-                        <div class="product-badge" style="background: var(--accent-warning); color: var(--bg-primary);">Premium</div>
+                        <div class="product-badge" style="background: var(--accent-warning); color: var(--bg-primary);">
+                            Premium</div>
                     </div>
                     <div class="product-info">
-                        <div class="product-title" style="font-weight: 800; font-size: 1.2rem; margin-bottom: 8px;">Kashmiri Red Apples</div>
-                        <div class="product-seller" style="font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                        <div class="product-title" style="font-weight: 800; font-size: 1.2rem; margin-bottom: 8px;">
+                            Kashmiri Red Apples</div>
+                        <div class="product-seller"
+                            style="font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
                             <i class="fas fa-user-circle"></i> Mountain Fresh, Kashmir
-                            <div class="seller-rating" style="background: rgba(243, 156, 18, 0.15); color: var(--accent-warning); padding: 2px 8px; border-radius: 6px; font-weight: 700;">
+                            <div class="seller-rating"
+                                style="background: rgba(243, 156, 18, 0.15); color: var(--accent-warning); padding: 2px 8px; border-radius: 6px; font-weight: 700;">
                                 <i class="fas fa-star"></i> 4.9
                             </div>
                         </div>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Sweet and crispy Kashmiri apples, directly from the orchards.</p>
-                        <div class="product-details" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Sweet and crispy
+                            Kashmiri apples, directly from the orchards.</p>
+                        <div class="product-details"
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                             <div class="product-price">₹180/kg</div>
-                            <div class="product-quantity" style="font-weight: 600; color: var(--text-muted);">Min: 5kg</div>
+                            <div class="product-quantity" style="font-weight: 600; color: var(--text-muted);">Min: 5kg
+                            </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
-                            <button class="btn-primary" onclick="contactSeller('Mountain Fresh')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)" style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i class="far fa-heart"></i></button>
-                        </div>
+    <button class="btn-primary" onclick="toggleCart()">
+        <i class="fas fa-cart-plus"></i> Add to Cart
+    </button>
+
+    <button class="btn-primary" onclick="contactSeller('Mountain Fresh')">Contact Seller</button>
+
+    <button class="btn-secondary" onclick="toggleLike(this)"
+        style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;">
+        <i class="far fa-heart"></i>
+    </button>
+</div>
+
                     </div>
                 </div>
-                
-                <div class="product-card" data-category="grains" data-location="haryana" data-price="2500" data-rating="4.5" data-distance="100" data-newest="3">
+
+                <div class="product-card" data-category="grains" data-location="haryana" data-price="2500"
+                    data-rating="4.5" data-distance="100" data-newest="3">
                     <div class="product-image">
                         🌾
                         <div class="product-badge" style="background: var(--accent-success);">Bulk Deal</div>
                     </div>
                     <div class="product-info">
-                        <div class="product-title" style="font-weight: 800; font-size: 1.2rem; margin-bottom: 8px;">Premium Milling Wheat (Bulk)</div>
-                        <div class="product-seller" style="font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                        <div class="product-title" style="font-weight: 800; font-size: 1.2rem; margin-bottom: 8px;">
+                            Premium Milling Wheat (Bulk)</div>
+                        <div class="product-seller"
+                            style="font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
                             <i class="fas fa-user-circle"></i> Green Fields Co., Haryana
-                            <div class="seller-rating" style="background: rgba(243, 156, 18, 0.15); color: var(--accent-warning); padding: 2px 8px; border-radius: 6px; font-weight: 700;">
+                            <div class="seller-rating"
+                                style="background: rgba(243, 156, 18, 0.15); color: var(--accent-warning); padding: 2px 8px; border-radius: 6px; font-weight: 700;">
                                 <i class="fas fa-star"></i> 4.5
                             </div>
                         </div>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">High-protein wheat ready for immediate bulk purchase.</p>
-                        <div class="product-details" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">High-protein wheat
+                            ready for immediate bulk purchase.</p>
+                        <div class="product-details"
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                             <div class="product-price">₹2500/quintal</div>
-                            <div class="product-quantity" style="font-weight: 600; color: var(--text-muted);">Min: 50qt</div>
+                            <div class="product-quantity" style="font-weight: 600; color: var(--text-muted);">Min: 50qt
+                            </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
-                            <button class="btn-primary" onclick="contactSeller('Green Fields Co.')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)" style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i class="far fa-heart"></i></button>
-                        </div>
+    <button class="btn-primary" onclick="toggleCart()">
+        <i class="fas fa-cart-plus"></i> Add to Cart
+    </button>
+
+    <button class="btn-primary" onclick="contactSeller('Green Fields Co.')">Contact Seller</button>
+
+    <button class="btn-secondary" onclick="toggleLike(this)"
+        style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;">
+        <i class="far fa-heart"></i>
+    </button>
+</div>
+
                     </div>
                 </div>
-                
-                <div class="product-card" data-category="spices" data-location="maharashtra" data-price="120" data-rating="4.7" data-distance="150" data-newest="4">
+
+                <div class="product-card" data-category="spices" data-location="maharashtra" data-price="120"
+                    data-rating="4.7" data-distance="150" data-newest="4">
                     <div class="product-image">
                         🌶️
                         <div class="product-badge" style="background: var(--accent-danger);">Hot Stock</div>
                     </div>
                     <div class="product-info">
-                        <div class="product-title" style="font-weight: 800; font-size: 1.2rem; margin-bottom: 8px;">Organic Turmeric Powder</div>
-                        <div class="product-seller" style="font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                        <div class="product-title" style="font-weight: 800; font-size: 1.2rem; margin-bottom: 8px;">
+                            Organic Turmeric Powder</div>
+                        <div class="product-seller"
+                            style="font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
                             <i class="fas fa-user-circle"></i> Spice Hub, Maharashtra
-                            <div class="seller-rating" style="background: rgba(243, 156, 18, 0.15); color: var(--accent-warning); padding: 2px 8px; border-radius: 6px; font-weight: 700;">
+                            <div class="seller-rating"
+                                style="background: rgba(243, 156, 18, 0.15); color: var(--accent-warning); padding: 2px 8px; border-radius: 6px; font-weight: 700;">
                                 <i class="fas fa-star"></i> 4.7
                             </div>
                         </div>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">High curcumin content, finely ground organic turmeric.</p>
-                        <div class="product-details" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">High curcumin
+                            content, finely ground organic turmeric.</p>
+                        <div class="product-details"
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                             <div class="product-price">₹120/100g</div>
-                            <div class="product-quantity" style="font-weight: 600; color: var(--text-muted);">Min: 1kg</div>
-                        </div>
-                        <div class="product-actions" style="display: flex; gap: 10px;">
-                            <button class="btn-primary" onclick="contactSeller('Spice Hub')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)" style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i class="far fa-heart"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="product-card" data-category="fruits" data-location="maharashtra" data-price="120" data-rating="4.9" data-distance="90" data-newest="5">
-                    <div class="product-image">
-                        🍇
-                        <div class="product-badge" style="background: var(--accent-secondary); color: var(--bg-primary);">Sweet Stock</div>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-title" style="font-weight: 800; font-size: 1.2rem; margin-bottom: 8px;">Nashik Green Grapes</div>
-                        <div class="product-seller" style="font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-                            <i class="fas fa-user-circle"></i> Vitis Growers, Maharashtra
-                            <div class="seller-rating" style="background: rgba(255, 215, 0, 0.2); color: var(--accent-warning); padding: 2px 8px; border-radius: 6px; font-weight: 700;">
-                                <i class="fas fa-star"></i> 4.9
+                            <div class="product-quantity" style="font-weight: 600; color: var(--text-muted);">Min: 1kg
                             </div>
                         </div>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Export quality, seedless green grapes, excellent for eating or wine.</p>
-                        <div class="product-details" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                            <div class="product-price">₹120/kg</div>
-                            <div class="product-quantity" style="font-weight: 600; color: var(--text-muted);">Min: 20kg</div>
-                        </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
-                            <button class="btn-primary" onclick="contactSeller('Vitis Growers')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)" style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i class="far fa-heart"></i></button>
+                            <button class="btn-primary" onclick="toggleCart()">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
+                            <button class="btn-primary" onclick="contactSeller('Spice Hub')">Contact Seller</button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"
+                                style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
+                                    class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="dairy" data-location="gujarat" data-price="60" data-rating="4.7" data-distance="65" data-newest="6">
+                <div class="product-card" data-category="fruits" data-location="maharashtra" data-price="120"
+                    data-rating="4.9" data-distance="90" data-newest="5">
+                    <div class="product-image">
+                        🍇
+                        <div class="product-badge"
+                            style="background: var(--accent-secondary); color: var(--bg-primary);">Sweet Stock</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title" style="font-weight: 800; font-size: 1.2rem; margin-bottom: 8px;">
+                            Nashik Green Grapes</div>
+                        <div class="product-seller"
+                            style="font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                            <i class="fas fa-user-circle"></i> Vitis Growers, Maharashtra
+                            <div class="seller-rating"
+                                style="background: rgba(255, 215, 0, 0.2); color: var(--accent-warning); padding: 2px 8px; border-radius: 6px; font-weight: 700;">
+                                <i class="fas fa-star"></i> 4.9
+                            </div>
+                        </div>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Export quality,
+                            seedless green grapes, excellent for eating or wine.</p>
+                        <div class="product-details"
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <div class="product-price">₹120/kg</div>
+                            <div class="product-quantity" style="font-weight: 600; color: var(--text-muted);">Min: 20kg
+                            </div>
+                        </div>
+                        <div class="product-actions" style="display: flex; gap: 10px;">
+                            <button class="btn-primary" onclick="toggleCart()">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
+                            <button class="btn-primary" onclick="contactSeller('Vitis Growers')">Contact Seller</button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"
+                                style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
+                                    class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="dairy" data-location="gujarat" data-price="60"
+                    data-rating="4.7" data-distance="65" data-newest="6">
                     <div class="product-image">
                         🥛
                         <div class="product-badge">Fresh Daily</div>
                     </div>
                     <div class="product-info">
-                        <div class="product-title" style="font-weight: 800; font-size: 1.2rem; margin-bottom: 8px;">Pure Farm Cow Milk</div>
-                        <div class="product-seller" style="font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                        <div class="product-title" style="font-weight: 800; font-size: 1.2rem; margin-bottom: 8px;">Pure
+                            Farm Cow Milk</div>
+                        <div class="product-seller"
+                            style="font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
                             <i class="fas fa-user-circle"></i> Amulya Dairy, Gujarat
-                            <div class="seller-rating" style="background: rgba(255, 215, 0, 0.2); color: var(--accent-warning); padding: 2px 8px; border-radius: 6px; font-weight: 700;">
+                            <div class="seller-rating"
+                                style="background: rgba(255, 215, 0, 0.2); color: var(--accent-warning); padding: 2px 8px; border-radius: 6px; font-weight: 700;">
                                 <i class="fas fa-star"></i> 4.7
                             </div>
                         </div>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Untouched, high-fat content cow milk, collected and chilled instantly.</p>
-                        <div class="product-details" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Untouched, high-fat
+                            content cow milk, collected and chilled instantly.</p>
+                        <div class="product-details"
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                             <div class="product-price">₹60/liter</div>
-                            <div class="product-quantity" style="font-weight: 600; color: var(--text-muted);">Min: 50L</div>
+                            <div class="product-quantity" style="font-weight: 600; color: var(--text-muted);">Min: 50L
+                            </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
+                            <button class="btn-primary" onclick="toggleCart()">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
                             <button class="btn-primary" onclick="contactSeller('Amulya Dairy')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)" style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i class="far fa-heart"></i></button>
+                            <button class="btn-secondary" onclick="toggleLike(this)"
+                                style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;"><i
+                                    class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
 
         <!-- LOAD MORE + PAGINATION UI (ONLY ADDITION) -->
         <div id="loadMoreSection" style="text-align: center; margin: 30px 0;">
-            <button id="loadMoreBtn" onclick="loadMoreProducts()" style="background: var(--accent-gradient); color: white; border: none; padding: 14px 26px; border-radius: 999px; font-weight: 700; cursor: pointer;">
+            <button id="loadMoreBtn" onclick="loadMoreProducts()"
+                style="background: var(--accent-gradient); color: white; border: none; padding: 14px 26px; border-radius: 999px; font-weight: 700; cursor: pointer;">
                 <i class="fas fa-plus-circle"></i> Load More Products
             </button>
             <p style="color: var(--text-muted); margin-top: 15px; font-size: 0.9rem;">
@@ -829,72 +1204,93 @@ text-shadow:
         </div>
 
         <div id="paginationSection" style="display: none; text-align: center; margin: 30px 0;">
-            <div style="display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+            <div
+                style="display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
                 <button class="sort-btn" onclick="goToPage(currentPage - 1)" id="prevBtn">
                     <i class="fas fa-chevron-left"></i> Previous
                 </button>
-                
+
                 <div id="pageNumbers" style="display: flex; gap: 5px; flex-wrap: wrap;"></div>
-                
+
                 <button class="sort-btn" onclick="goToPage(currentPage + 1)" id="nextBtn">
                     Next <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
-            
+
             <select class="filter-select" onchange="jumpToPage(this.value)" id="pageJump">
                 <option value="">Jump to page...</option>
             </select>
-            
+
             <p style="color: var(--text-muted); margin-top: 10px; font-size: 0.9rem;">
                 Page <span id="currentPageDisplay">1</span> of <span id="totalPagesDisplay">158</span>
             </p>
         </div>
 
-        <div class="price-tracker" style="background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 40px; border-radius: 32px; margin: 40px 0;">
+        <div class="price-tracker"
+            style="background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 40px; border-radius: 32px; margin: 40px 0;">
             <div class="section-header" style="text-align: center; margin-bottom: 40px;">
-                <h2 style="font-size: 2.2rem; font-weight: 800;"><i class="fas fa-chart-line" style="color: var(--accent-primary);"></i> Market Price Trends</h2>
+                <h2 style="font-size: 2.2rem; font-weight: 800;"><i class="fas fa-chart-line"
+                        style="color: var(--accent-primary);"></i> Market Price Trends</h2>
                 <p style="color: var(--text-secondary);">Live price tracking and market analysis</p>
             </div>
-            <div class="price-chart" style="background: var(--bg-primary); padding: 40px; border-radius: 20px; text-align: center; border: 1px solid var(--border-color);">
-                <i class="fas fa-chart-area" style="font-size: 4rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px;"></i>
+            <div class="price-chart"
+                style="background: var(--bg-primary); padding: 40px; border-radius: 20px; text-align: center; border: 1px solid var(--border-color);">
+                <i class="fas fa-chart-area"
+                    style="font-size: 4rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px;"></i>
                 <p style="color: var(--text-primary); font-weight: 700;">Interactive Visualization Ready</p>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 10px;">Real-time data visualization of commodity prices across different markets</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 10px;">Real-time data visualization
+                    of commodity prices across different markets</p>
             </div>
-            <div class="price-trends" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px;">
+            <div class="price-trends"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px;">
                 <div class="trend-item">
                     <div style="font-size: 2.5rem;">🥕</div>
                     <div class="trend-info">
                         <h4 style="font-weight: 700;">Carrots</h4>
-                        <div class="trend-price" id="carrotPrice" style="color: var(--accent-primary); font-weight: 800; font-size: 1.2rem;">₹45/kg</div>
-                        <div class="trend-change" id="carrotChange" style="color: var(--accent-success); font-weight: 700; font-size: 0.85rem;">+5% this week</div>
+                        <div class="trend-price" id="carrotPrice"
+                            style="color: var(--accent-primary); font-weight: 800; font-size: 1.2rem;">₹45/kg</div>
+                        <div class="trend-change" id="carrotChange"
+                            style="color: var(--accent-success); font-weight: 700; font-size: 0.85rem;">+5% this week
+                        </div>
                     </div>
                 </div>
                 <div class="trend-item">
                     <div style="font-size: 2.5rem;">🍎</div>
                     <div class="trend-info">
                         <h4 style="font-weight: 700;">Apples</h4>
-                        <div class="trend-price" id="applePrice" style="color: var(--accent-primary); font-weight: 800; font-size: 1.2rem;">₹180/kg</div>
-                        <div class="trend-change negative" id="appleChange" style="color: var(--accent-danger); font-weight: 700; font-size: 0.85rem;">-2% this week</div>
+                        <div class="trend-price" id="applePrice"
+                            style="color: var(--accent-primary); font-weight: 800; font-size: 1.2rem;">₹180/kg</div>
+                        <div class="trend-change negative" id="appleChange"
+                            style="color: var(--accent-danger); font-weight: 700; font-size: 0.85rem;">-2% this week
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="cta-section" style="background: var(--accent-gradient); border-radius: 32px; padding: 60px; text-align: center; color: white;">
+        <div class="cta-section"
+            style="background: var(--accent-gradient); border-radius: 32px; padding: 60px; text-align: center; color: white;">
             <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 15px;">Start Trading Today</h2>
-            <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 40px;">Join thousands of farmers and buyers in our marketplace</p>
+            <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 40px;">Join thousands of farmers and buyers in our
+                marketplace</p>
             <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                <button class="cta-button" onclick="showNotification('Product listing started!', 'success')" style="background: rgb(48, 126, 124); color: var(--bg-primary); border: none; padding: 18px 35px; border-radius: 16px; font-weight: 800; cursor: pointer; transition: 0.3s;">List Your Products</button>
-                <button class="cta-button" onclick="showNotification('Supplier search initiated!', 'info')" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 18px 35px; border-radius: 16px; font-weight: 800; cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px);">Find Suppliers</button>
+                <button class="cta-button" onclick="showNotification('Product listing started!', 'success')"
+                    style="background: rgb(48, 126, 124); color: var(--bg-primary); border: none; padding: 18px 35px; border-radius: 16px; font-weight: 800; cursor: pointer; transition: 0.3s;">List
+                    Your Products</button>
+                <button class="cta-button" onclick="showNotification('Supplier search initiated!', 'info')"
+                    style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 18px 35px; border-radius: 16px; font-weight: 800; cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px);">Find
+                    Suppliers</button>
             </div>
         </div>
     </div>
 
     <div class="cart-widget" id="cartWidget" onclick="toggleCart()">
         <i class="fas fa-shopping-cart"></i>
-        <div class="cart-count" id="cartCount" style="position: absolute; top: -5px; right: -5px; background: var(--accent-danger); color: white; width: 25px; height: 25px; border-radius: 50%; font-size: 0.8rem; font-weight: 800; border: 3px solid var(--bg-primary); display: flex; align-items: center; justify-content: center;">0</div>
+        <div class="cart-count" id="cartCount"
+            style="position: absolute; top: -5px; right: -5px; background: var(--accent-danger); color: white; width: 25px; height: 25px; border-radius: 50%; font-size: 0.8rem; font-weight: 800; border: 3px solid var(--bg-primary); display: flex; align-items: center; justify-content: center;">
+            0</div>
     </div>
-    
+
     <div id="notificationContainer"></div>
 
     <button id="scrollToTop" class="scroll-top-btn" aria-label="Scroll to top">
@@ -902,15 +1298,10 @@ text-shadow:
     </button>
 
     <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const themeText = document.getElementById('themeText');
+       
         const productsGrid = document.getElementById('productsGrid');
 
-        // Initial Theme Load
-        const savedTheme = localStorage.getItem('marketplaceTheme') || 'dark';
-        document.body.setAttribute('data-theme', savedTheme);
-        updateThemeButton(savedTheme);
+       
 
         // State variables
         let allProducts = [];
@@ -928,14 +1319,35 @@ text-shadow:
         let usePagination = false;
 
         // --- Theme Toggle Logic (FIXED) ---
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            document.body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('marketplaceTheme', newTheme);
-            updateThemeButton(newTheme);
-            showNotification(`Switched to ${newTheme} theme`, 'info');
-        });
+       document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+
+    // Load saved theme (default: dark)
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    applyTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        applyTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+
+    function applyTheme(theme) {
+        document.body.setAttribute('data-theme', theme);
+
+        if (theme === 'dark') {
+            themeIcon.className = 'fas fa-sun';
+            themeText.textContent = 'Light';
+        } else {
+            themeIcon.className = 'fas fa-moon';
+            themeText.textContent = 'Dark';
+        }
+    }
+});
 
         function updateThemeButton(theme) {
             if (theme === 'dark') {
@@ -968,9 +1380,6 @@ text-shadow:
         });
 
         // Sample product data
-        let allProducts = [];
-        let filteredProducts = [];
-        let cartItems = 0;
 
         // Initialize products data
         function initializeProducts() {
@@ -1243,20 +1652,63 @@ text-shadow:
         }
 
         function toggleCart() {
-            cartItems++;
-            const cartCountElement = document.getElementById('cartCount');
-            cartCountElement.textContent = cartItems;
-            const cartWidget = document.getElementById('cartWidget');
-            cartWidget.style.transform = 'scale(1.2)';
-            setTimeout(() => cartWidget.style.transform = 'scale(1)', 150);
-            showNotification('Item added to cart!');
+            cartItems++;  // Increment the cart counter
+
+            const cartCountElement = document.getElementById("cartCount");
+            if (cartCountElement) {
+                cartCountElement.textContent = cartItems;
+            }
+
+            const cartWidget = document.getElementById("cartWidget");
+            if (cartWidget) {
+                cartWidget.style.transform = "scale(1.2)";
+                setTimeout(() => {
+                    cartWidget.style.transform = "scale(1)";
+                }, 150);
+            }
+
+            showNotification("Item added to cart!", "success");
         }
+
 
         function contactSeller(name) {
             showNotification(`Initiating contact with ${name}...`, 'info');
         }
 
         document.addEventListener('DOMContentLoaded', initializeProducts);
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+
+    // Initial Theme Load
+    const savedTheme = localStorage.getItem('marketplaceTheme') || 'dark';
+    document.body.setAttribute('data-theme', savedTheme);
+    updateThemeButton(savedTheme);
+
+    // Theme Toggle Event
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('marketplaceTheme', newTheme);
+        updateThemeButton(newTheme);
+        showNotification(`Switched to ${newTheme} theme`, 'info');
+    });
+
+    function updateThemeButton(theme) {
+        if (theme === 'dark') {
+            themeIcon.className = 'fas fa-sun';
+            themeText.textContent = 'Dark';
+        } else {
+            themeIcon.className = 'fas fa-moon';
+            themeText.textContent = 'Light';
+        }
+    }
+});
+
     </script>
 </body>
 </html>

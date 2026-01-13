@@ -20,7 +20,7 @@
   <link rel="icon" type="image/png" href="/AgriTech/images/logo.png" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="../static/style.css" />
+  
   <link rel="stylesheet" href="main.css" />
   <link rel="stylesheet" href="theme.css" />
 
@@ -68,6 +68,49 @@
       justify-content: space-between;
       align-items: center;
     }
+    /* Hamburger Button */
+.hamburger {
+  display: none;
+  font-size: 26px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 2000; /* ensure clickable */
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  header {
+    flex-wrap: wrap;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .header-buttons {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .header-buttons.show {
+    display: flex;
+  }
+
+  .header-buttons a,
+  .theme-toggle,
+  .search-container {
+    width: 100%;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+}
+
 
       .search-container::before {
         content: "";
@@ -179,6 +222,8 @@
       cursor: pointer;
       box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
     }
+   
+
 
     .btn-green:hover {
       background: linear-gradient(135deg, #1b5e20, #2e7d32);
@@ -260,28 +305,7 @@
       color: inherit !important;
     }
 
-    /* Auth message styles */
-    @keyframes slideInRight {
-      from {
-        opacity: 0;
-        transform: translateX(100%);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    @keyframes slideOutRight {
-      from {
-        opacity: 1;
-        transform: translateX(0);
-      }
-      to {
-        opacity: 0;
-        transform: translateX(100%);
-      }
-    }
+   
 
     .auth-message {
       position: fixed;
@@ -389,60 +413,198 @@
     transform: none;
   }
 }
+@media (max-width: 768px) {
+  .brand {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .header-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .header-buttons a,
+  .header-buttons button {
+    width: 100%;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  .search-container {
+    order: 3;
+  }
+}
+@media (max-width: 600px) {
+  .services-menu {
+    width: 90%;
+    left: 5%;
+    transform: none;
+  }
+}
+@media (max-width: 480px) {
+  .grid-item img {
+    height: 180px;
+    object-fit: cover;
+  }
+}
+ /* Auth message styles */
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideOutRight {
+      from {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+    }
+   
+
+@media (max-width: 768px) {
+  .calendar-button,
+  .logout-button,
+  .feedback-button,
+  .theme-toggle {
+    width: 100%;                 
+    justify-content: center;
+    padding: 0.7rem 1rem;        
+    font-size: 0.95rem;
+  }
+
+  .header-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
   </style>
 </head>
 
 <body>
   <div class="header-nav-wrapper">
-    <header>
-      <div class="brand">
-        <img src="images/logo.png" alt="AgriTech logo" class="site-logo">
-        <h2>Welcome to AgriTech</h2>
-      </div>
-      <div class="header-buttons">
-        <a href="cropCalendar.html" class="calendar-button" title="Crop Calendar">
-          <span class="calendar-icon">📅</span>
-          Calendar
-        </a>
+  <header>
+    <div class="brand">
+      <img src="images/logo.png" alt="AgriTech logo" class="site-logo">
+      <h2> AgriTech</h2>
+    </div>
 
-         <!-- Responsive Search Bar -->
-        <div class="search-container">
-          <input type="text" placeholder="Search..." class="search-input" />
-          <button class="search-button">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
+    <!-- Hamburger -->
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      ☰
+    </button>
 
-        <a href="feed-back.html" class="feedback-button">Feedback</a>
-        <a href="#" class="logout-button" onclick="showLogoutConfirmation()">Logout</a>
-        <button class="theme-toggle" aria-label="Toggle dark/light mode">
-          <i class="fas fa-sun sun-icon"></i>
-          <i class="fas fa-moon moon-icon"></i>
-          <span class="theme-text">Light</span>
+    <div class="header-buttons" id="navMenu">
+      <a href="cropCalendar.html" class="calendar-button">📅 Calendar</a>
+
+      <div class="search-container">
+        <input type="text" placeholder="Search..." class="search-input" />
+        <button class="search-button">
+          <i class="fas fa-search"></i>
         </button>
       </div>
-    </header>
-  </div>
+
+      <a href="feed-back.html" class="feedback-button">Feedback</a>
+      <a href="#" class="logout-button" onclick="showLogoutConfirmation()">Logout</a>
+
+      <button class="theme-toggle">
+        🌞 🌙 <span class="theme-text">Light</span>
+      </button>
+    </div>
+  </header>
+</div>
+ 
+
 
   <!-- Main Section -->
-   <nav>
+   
   <main>
-    <button id="servicesMenuToggle" class="services-menu-toggle" aria-label="Show Services Menu">
-  <i class="fas fa-bars"></i> Services
-</button>
-<ul id="servicesMenu" class="services-menu">
-  <li><a href="Crop Recommendation/templates/index.html">🌱 Crop Recommendation</a></li>
-  <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">📈 Yield Prediction</a></li>
-  <li><a href="disease.html">🐞 Disease Prediction</a></li>
-  <li><a href="organic.html">🌾 Organic Farming</a></li>
-  <li><a href="farmer.html">📶 Farmer Network</a></li>
-  <li><a href="weather.html">🌩 Weather Check</a></li>
-  <li><a href="shopkeeper.html">📝 Shopkeeper Listings</a></li>
-  <li><a href="chat.html">🤖 AI ChatBot</a></li>
-  <li><a href="plantation.html">🌴 Plantation</a></li>
-  <li><a href="Crop_Planning/templates/cropplan.html">🎋 Crop Planning</a></li>
-  <li><a href="Labour_Alerts/templates/labour.html">🚨Labour Alerts</a></li>
-</ul>
+    <!-- Services Mega Menu - Original 11 Services -->
+    <div class="services-menu-container">
+      <button id="servicesMenuBtn" class="services-menu-btn">
+        <i class="fas fa-th-large"></i> Services
+        <i class="fas fa-chevron-down dropdown-icon"></i>
+      </button>
+
+      <div id="servicesMegaMenu" class="services-mega-menu">
+        <div class="mega-menu-content">
+
+          <!-- Crop Tools Section -->
+          <div class="mega-menu-category">
+            <h3><i class="fas fa-seedling"></i> Crop Tools</h3>
+            <ul>
+              <li><a href="Crop Recommendation/templates/index.html">
+                <i class="fas fa-leaf"></i> Crop Recommendation
+              </a></li>
+              <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">
+                <i class="fas fa-chart-line"></i> Yield Prediction
+              </a></li>
+              <li><a href="disease.html">
+                <i class="fas fa-bug"></i> Disease Prediction
+              </a></li>
+              <li><a href="organic.html">
+                <i class="fas fa-spa"></i> Organic Farming
+              </a></li>
+            </ul>
+          </div>
+
+          <!-- Community Section -->
+          <div class="mega-menu-category">
+            <h3><i class="fas fa-users"></i> Community</h3>
+            <ul>
+              <li><a href="farmer.html">
+                <i class="fas fa-network-wired"></i> Farmer Network
+              </a></li>
+              <li><a href="chat.html">
+                <i class="fas fa-robot"></i> AI ChatBot
+              </a></li>
+              <li><a href="shopkeeper.html">
+                <i class="fas fa-store"></i> Shopkeeper Listings
+              </a></li>
+            </ul>
+          </div>
+
+          <!-- Planning Section -->
+          <div class="mega-menu-category">
+            <h3><i class="fas fa-calendar-check"></i> Planning</h3>
+            <ul>
+              <li><a href="Crop_Planning/templates/cropplan.html">
+                <i class="fas fa-project-diagram"></i> Crop Planning
+              </a></li>
+              <li><a href="Labour_Alerts/templates/labour.html">
+                <i class="fas fa-bell"></i> Labour Alerts
+              </a></li>
+              <li><a href="plantation.html">
+                <i class="fas fa-tree"></i> Plantation Guide
+              </a></li>
+            </ul>
+          </div>
+
+          <!-- Weather Section -->
+          <div class="mega-menu-category">
+            <h3><i class="fas fa-cloud-sun"></i> Weather</h3>
+            <ul>
+              <li><a href="weather.html">
+                <i class="fas fa-thermometer-half"></i> Weather Check
+              </a></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
     <div class="section-title">
       <h2>Comprehensive Agricultural Solutions</h2>
       <p>
@@ -717,7 +879,7 @@
         </section>
       </div>
   </main>
-</nav>
+
 
   <!-- Footer -->
   <style>
@@ -788,7 +950,14 @@ document.getElementById('servicesMenuToggle').addEventListener('click', function
   document.getElementById('servicesMenu').classList.toggle('active');
 });
      </script>
-    <script src="main.js"></script>
+   <script>
+  function toggleMenu() {
+    document.getElementById("navMenu").classList.toggle("show");
+  }
+</script>
+
+
+    
     <script src="theme.js"></script>
     
     <!-- Authentication Manager Script -->
@@ -956,6 +1125,33 @@ document.getElementById('servicesMenuToggle').addEventListener('click', function
         window.location.href = `smart_loan.html?lang=${lang}`;
       });
     </script>
+
+
+  <!-- Services Mega Menu Toggle Script -->
+  <script>
+    const servicesBtn = document.getElementById('servicesMenuBtn');
+    const megaMenu = document.getElementById('servicesMegaMenu');
+    const dropdownIcon = servicesBtn.querySelector('.dropdown-icon');
+
+    servicesBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      megaMenu.classList.toggle('active');
+      dropdownIcon.classList.toggle('rotate');
+    });
+
+    // Close mega menu when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!megaMenu.contains(e.target) && !servicesBtn.contains(e.target)) {
+        megaMenu.classList.remove('active');
+        dropdownIcon.classList.remove('rotate');
+      }
+    });
+
+    // Prevent menu from closing when clicking inside it
+    megaMenu.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  </script>
 
 </body>
 

@@ -12,18 +12,139 @@
     <link rel="icon" type="image/png" href="images/logo.png">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* ================= THEME VARIABLES ================= */
+        :root {
+            /* existing light mode colors (unchanged) */
+            --bg-gradient: linear-gradient(135deg, #4877b8 0%, #0e745e 100%);
+            --card-bg: rgba(210, 204, 212, 0.95);
+            --header-bg: rgba(190, 208, 212, 0.95);
+            --text-main: #333;
+            --heading: #2c3e50;
+        }
+
+        /* Enhanced dark mode – only affects when data-theme="dark" */
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #020617 0%, #0b1120 40%, #022c22 100%);
+            --card-bg: rgba(15, 23, 42, 0.92);
+            --header-bg: rgba(15, 23, 42, 0.98);
+            --text-main: #e5e7eb;
+            --heading: #f9fafb;
         }
 
         body {
             font-family: 'Open Sans', sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #4877b8 0%, #0e745e 100%);
             min-height: 100vh;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            transition: background 0.4s ease, color 0.3s ease;
+        }
+
+        .header,
+        .supply-chain-flow,
+        .service-card,
+        .tracking-dashboard,
+        .cta-section {
+            background: var(--card-bg);
+            transition: background 0.4s ease, box-shadow 0.3s ease;
+        }
+
+        .header h1,
+        .flow-title,
+        .dashboard-header h2,
+        .service-card h3 {
+            color: var(--heading);
+            transition: color 0.3s ease;
+        }
+
+        .service-features li,
+        .cta-section p,
+        .tracking-dashboard p,
+        .metric-label,
+        .step-desc,
+        .step-title {
+            color: var(--text-main);
+            transition: color 0.3s ease;
+        }
+
+        /* Slightly stronger elevation in dark mode only */
+        [data-theme="dark"] .header,
+        [data-theme="dark"] .supply-chain-flow,
+        [data-theme="dark"] .service-card,
+        [data-theme="dark"] .tracking-dashboard,
+        [data-theme="dark"] .cta-section {
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.8);
+        }
+
+        /* Shipment cards – keep layout same, just adapt colors in dark mode */
+        [data-theme="dark"] .shipment-card {
+            background: #0f766e;
+            border-left-color: #22c55e;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.7);
+        }
+
+        [data-theme="dark"] .shipment-id {
+            color: #e5e7eb;
+        }
+
+        [data-theme="dark"] .metric-box {
+            background: rgba(15, 23, 42, 0.95);
+            color: #f9fafb;
+        }
+
+        [data-theme="dark"] .metric-label {
+            color: #9ca3af;
+        }
+
+        [data-theme="dark"] .progress-bar {
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        [data-theme="dark"] .progress-fill {
+            background: #22c55e;
+        }
+
+        /* Scroll button – keep same shape/position, only colors tuned */
+        [data-theme="dark"] .scroll-btn {
+            background: #16a34a;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.8);
+        }
+
+        /* Theme toggle button – same position & size, only colors refined */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 1200;
+            background: #111827;
+            color: #f9fafb;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.8);
+            transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.08);
+            box-shadow: 0 14px 35px rgba(15, 23, 42, 0.9);
+        }
+
+        [data-theme="dark"] .theme-toggle {
+            background: #facc15;
+            color: #1e293b;
+            box-shadow: 0 14px 35px rgba(250, 204, 21, 0.55);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         .container {
@@ -31,9 +152,11 @@
             margin: 0 auto;
             padding: 20px;
         }
+        .header {
+    background: var(--header-bg);
+}
 
         .header {
-            background: rgba(190, 208, 212, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 30px;
@@ -53,8 +176,8 @@
             position: fixed;
             top: 20px;
             left: 20px;
-            background: #fff;
-            color: #333;
+            background: var(--header-bg);
+            color: white;
             padding: 10px 15px;
             border-radius: 50px;
             text-decoration: none;
@@ -69,7 +192,7 @@
         }
 
         .supply-chain-flow {
-            background: rgba(210, 204, 212, 0.95);
+            background: var(--header-bg);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 30px;
@@ -148,7 +271,7 @@
         }
 
         .service-card {
-            background: rgba(166, 202, 216, 0.95);
+             background: var(--header-bg);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 30px;
@@ -194,7 +317,7 @@
         }
 
         .tracking-dashboard {
-            background: rgba(154, 208, 216, 0.95);
+             background: var(--header-bg);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 30px;
@@ -279,7 +402,7 @@
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #74b9ff, #e30952);
+           background: var(--header-bg);
             border-radius: 3px;
             transition: width 0.3s ease;
         }
@@ -292,7 +415,7 @@
         }
 
         .metric-box {
-            background: linear-gradient(135deg, #2ca696, #095879);
+            background: var(--header-bg);
             color: rgb(255, 255, 255);
             padding: 20px;
             border-radius: 10px;
@@ -311,7 +434,7 @@
         }
 
         .cta-section {
-            background: rgba(196, 203, 176, 0.95);
+            background: var(--header-bg);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 40px;
@@ -338,6 +461,40 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
+        .scroll-btn {
+                    position: fixed;
+                    right: 20px;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    background: #16a34a;
+                    color: white;
+                    border: none;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 1000;
+                    transition: all 0.3s;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                    }
+
+
+                    .scroll-btn:hover {
+                    transform: scale(1.1);
+                    background: #15803d;
+                    }
+
+                    .scroll-btn {
+                    bottom: 20px;
+                    opacity: 0;
+                    visibility: hidden;
+                    }
+
+                    .scroll-btn.visible {
+                    opacity: 1;
+                    visibility: visible;
+                    }
 
         @media (max-width: 768px) {
             .flow-steps {
@@ -552,7 +709,34 @@
             <a href="#" class="cta-button">Contact Support</a>
         </div>
     </div>
+   <!--scroll button-->
+    <button class="scroll-btn" id="scrollBtn" title="Scroll">
+    <i class="fas fa-arrow-down" id="scrollIcon"></i>
+  </button>
+  <script>
+    const scrollBtn = document.getElementById("scrollBtn");
+    const scrollIcon = document.getElementById("scrollIcon");
 
+    if (scrollBtn && scrollIcon) {
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 300) {
+            scrollBtn.classList.add('visible');
+            scrollIcon.classList.remove("fa-arrow-down");
+            scrollIcon.classList.add("fa-arrow-up");
+          } else {
+            scrollBtn.classList.remove('visible');
+            scrollIcon.classList.remove("fa-arrow-up");
+            scrollIcon.classList.add("fa-arrow-down");
+          }
+        });
+
+        scrollBtn.addEventListener("click", () => {
+          if (scrollIcon.classList.contains("fa-arrow-up")) {
+            window.scrollTo({top: 0, behavior: "smooth"});
+          }
+        });
+    }
+    </script>
     <script>
         // Simulate real-time updates
         function updateMetrics() {
@@ -612,6 +796,28 @@
         // Update shipments every 15 seconds
         setInterval(simulateShipmentUpdate, 15000);
     </script>
+<button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">
+    <i class="fas fa-moon"></i>
+</button>
+<script>
+    const themeToggle = document.getElementById("themeToggle");
+    const icon = themeToggle.querySelector("i");
+
+    function setTheme(theme) {
+        document.body.setAttribute("data-theme", theme);
+        localStorage.setItem("agritech-theme", theme);
+        icon.className = theme === "dark" ? "fas fa-sun" : "fas fa-moon";
+    }
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem("agritech-theme") || "light";
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener("click", () => {
+        const current = document.body.getAttribute("data-theme");
+        setTheme(current === "dark" ? "light" : "dark");
+    });
+</script>
+
 </body>
 </html>
-

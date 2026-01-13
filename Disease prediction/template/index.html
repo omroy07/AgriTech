@@ -5,255 +5,91 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Plant Disease Detector - AI-Powered Diagnosis</title>
-    <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      rel="stylesheet"
-    />
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+
+    <!-- Styles -->
     <link rel="stylesheet" href="../static/index.css" />
-    
+    <link rel="stylesheet" href="../../theme.css" />
+
+    <!-- Loading Overlay Styles -->
     <style>
-        /* -------------------- Root Colors & Fonts -------------------- */
-        :root {
-            --primary: #16a34a;
-            --primary-light: #0dda58;
-            --primary1: #ffffff;
-            --primary-dark: #05ba60;
-            --secondary: #f59e0b;
-            --accent: #3b82f6;
+      .loading-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
 
-            --bg-primary: #030137;
-            --bg-secondary: #15253f;
-            --bg-accent: #23334b;
-            --text-primary: #ffffff;
-            --text-secondary: #ced9e7;
-            --text-muted: #b2c1d6;
-            --border: #334155;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            --shadow-lg: 0 20px 30px rgba(0, 0, 0, 0.5);
+      .loading-overlay.active {
+        display: flex;
+      }
 
-            --radius-sm: 0.375rem;
-            --radius-md: 0.5rem;
-            --radius-lg: 0.75rem;
-            --radius-xl: 1rem;
+      .loader-box {
+        background: #ffffff;
+        padding: 30px 40px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      }
 
-            --font-display: 'Space Grotesk', sans-serif;
-            --font-body: 'Inter', sans-serif;
+      .loader-box p {
+        margin-top: 15px;
+        font-weight: 600;
+        color: #2e7d32;
+      }
 
-            --space-xs: 0.25rem;
-            --space-sm: 0.5rem;
-            --space-md: 1rem;
-            --space-lg: 1.5rem;
-            --space-xl: 2rem;
-            --space-2xl: 3rem;
-            --space-3xl: 4rem;
+      .spinner {
+        width: 48px;
+        height: 48px;
+        border: 5px solid #c8e6c9;
+        border-top-color: #2e7d32;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
         }
-
-        [data-theme="light"] {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --bg-accent: #e2e8f0;
-            --text-primary: #1e293b;
-            --primary1: #16a34a;
-            --text-secondary: #64748b;
-            --text-muted: #94a3b8;
-            --border: #e2e8f0;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 20px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        /* -------------------- Reset -------------------- */
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            transition: 0.3s ease;
-        }
-
-        body {
-            font-family: var(--font-body);
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            line-height: 1.7;
-            min-height: 100vh;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        img {
-            display: block;
-            max-width: 100%;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--space-lg);
-        }
-
-        /* -------------------- Navbar -------------------- */
-        .header {
-            background: var(--bg-primary);
-            border-bottom: 1px solid var(--border);
-            padding: var(--space-md) 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            justify-content: center;
-            box-shadow: var(--shadow);
-        }
-
-        .header-content {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-text {
-            color: #16a34a;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--primary);
-            border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        .logo-text {
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 1.75rem;
-            color: var(--primary1);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            font-weight: 500;
-            color: var(--text-primary);
-            position: relative;
-            padding: 0.25rem 0;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -3px;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: 0.3s;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .theme-toggle {
-            background: var(--bg-accent);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-lg);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-            box-shadow: var(--shadow);
-        }
-
-        .theme-toggle:hover {
-            background: var(--bg-secondary);
-        }
-          .logo img {
-            width: 40px;
-            height: 40px;
-            margin-left: 25px;
-        }
-
-        .logo a {
-            font-size: 1.3rem;
-        }
-         .footer {
-            padding: var(--space-lg) 0;
-            text-align: center;
-            background: var(--bg-primary);
-            border-top: 1px solid var(--border);
-        }
-
-        .footer-text {
-            color: var(--text-muted);
-            font-size: 0.875rem;
-        }
-
-        /* -------------------- Responsive -------------------- */
-        @media(max-width:768px) {
-            .nav-links {
-                display: none;
-            }
-        }
-</style>
+      }
+    </style>
   </head>
+
   <body>
+    <!-- Background animation -->
     <div class="background-animation">
-      <div class="leaf"></div>
-      <div class="leaf"></div>
-      <div class="leaf"></div>
-      <div class="leaf"></div>
-      <div class="leaf"></div>
-      <div class="leaf"></div>
-      <div class="leaf"></div>
-      <div class="leaf"></div>
+      <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
+      <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
+      <div class="leaf"></div><div class="leaf"></div>
     </div>
 
-     <header class="header">
-        <div class="header-content">
-            <a href="index.html" class="logo">
-                <img src="/images/logo.png" alt="AgriTech logo">
-                <span class="logo-text">AgriTech</span>
-            </a>
-            <nav class="nav-links">
-                <a href="/index.html">Home</a>
-                <a href="/about.html">About</a>
-                <a href="/blog.html">Blog</a>
-            </nav>
-            <button class="theme-toggle" id="themeToggle">
-                <i class="fas fa-moon" id="themeIcon"></i>
-                <span id="themeText">Dark Mode</span>
-            </button>
-        </div>
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <a href="/index.html" class="logo">
+          <img src="/images/logo.png" alt="AgriTech logo">
+          <span class="logo-text">AgriTech</span>
+        </a>
+        <nav class="nav-links">
+          <a href="/index.html">Home</a>
+          <a href="/about.html">About</a>
+          <a href="/blog.html">Blog</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle">
+          <i class="fas fa-moon" id="themeIcon"></i>
+          <span id="themeText">Dark Mode</span>
+        </button>
+      </div>
     </header>
 
-
+    <!-- Main -->
     <div class="main-container">
       <div class="hero-section">
         <h1 class="hero-title">Plant Disease Detector</h1>
@@ -299,48 +135,28 @@
           </div>
 
           <button type="submit" class="submit-btn" id="submit-btn" disabled>
-            <div class="loading-spinner" id="loading-spinner"></div>
             <span class="btn-text">
               <i class="fas fa-search"></i>
               Analyze Plant Health
             </span>
           </button>
-        </form>
-      </div>
 
-      <div class="features">
-        <div class="feature-card">
-          <div class="feature-icon">
-            <i class="fas fa-brain"></i>
-          </div>
-          <div class="feature-title">AI-Powered Analysis</div>
-          <div class="feature-description">
-            Advanced machine learning algorithms trained on thousands of plant
-            disease images
-          </div>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <i class="fas fa-bolt"></i>
-          </div>
-          <div class="feature-title">Instant Results</div>
-          <div class="feature-description">
-            Get accurate disease diagnosis in seconds with confidence scores
-          </div>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">
-            <i class="fas fa-seedling"></i>
-          </div>
-          <div class="feature-title">Treatment Guidance</div>
-          <div class="feature-description">
-            Receive personalized care recommendations to help your plants
-            recover
-          </div>
-        </div>
+          <p class="error-text" id="file-error">
+            ⚠️ Please upload a valid image file (JPG, PNG, WebP).
+          </p>
+        </form>
       </div>
     </div>
 
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+      <div class="loader-box">
+        <div class="spinner"></div>
+        <p>Analyzing plant image… Please wait</p>
+      </div>
+    </div>
+
+    <!-- Scripts -->
     <script>
       const uploadArea = document.getElementById("upload-area");
       const fileInput = document.getElementById("file-input");
@@ -349,80 +165,57 @@
       const fileName = document.getElementById("file-name");
       const removeFile = document.getElementById("remove-file");
       const submitBtn = document.getElementById("submit-btn");
-      const loadingSpinner = document.getElementById("loading-spinner");
-      const btnText = submitBtn.querySelector(".btn-text");
       const uploadForm = document.getElementById("upload-form");
+      const loadingOverlay = document.getElementById("loading-overlay");
+      const fileError = document.getElementById("file-error");
 
-      // Drag and drop functionality
-      uploadArea.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        uploadArea.classList.add("dragover");
-      });
+      uploadArea.addEventListener("click", () => fileInput.click());
 
-      uploadArea.addEventListener("dragleave", () => {
-        uploadArea.classList.remove("dragover");
-      });
-
-      uploadArea.addEventListener("drop", (e) => {
-        e.preventDefault();
-        uploadArea.classList.remove("dragover");
-        const files = e.dataTransfer.files;
-        if (files.length > 0) {
-          fileInput.files = files;
-          handleFileSelect(files[0]);
-        }
-      });
-
-      // File input change handler
       fileInput.addEventListener("change", (e) => {
         if (e.target.files.length > 0) {
-          handleFileSelect(e.target.files[0]);
+          const file = e.target.files[0];
+          if (!file.type.startsWith("image/")) {
+            fileError.style.display = "block";
+            submitBtn.disabled = true;
+            return;
+          }
+
+          fileError.style.display = "none";
+          const reader = new FileReader();
+          reader.onload = (evt) => {
+            previewImage.src = evt.target.result;
+            fileName.textContent = file.name;
+            filePreview.classList.add("show");
+            uploadArea.style.display = "none";
+            submitBtn.disabled = false;
+          };
+          reader.readAsDataURL(file);
         }
       });
 
-      // Handle file selection
-      function handleFileSelect(file) {
-        if (file && file.type.startsWith("image/")) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            previewImage.src = e.target.result;
-            fileName.textContent = file.name;
-            filePreview.classList.add("show");
-            submitBtn.disabled = false;
-            uploadArea.style.display = "none";
-          };
-          reader.readAsDataURL(file);
-        } else {
-          alert("Please select a valid image file.");
-        }
-      }
-
-      // Remove file handler
       removeFile.addEventListener("click", () => {
         fileInput.value = "";
         filePreview.classList.remove("show");
-        submitBtn.disabled = true;
         uploadArea.style.display = "block";
-      });
-
-      // Form submission handler
-      uploadForm.addEventListener("submit", (e) => {
-        loadingSpinner.style.display = "block";
-        btnText.innerHTML = '<i class="fas fa-cog fa-spin"></i> Processing...';
         submitBtn.disabled = true;
+        fileError.style.display = "none";
       });
 
-      // Click to upload
-      uploadArea.addEventListener("click", () => {
-        fileInput.click();
+      uploadForm.addEventListener("submit", () => {
+        loadingOverlay.classList.add("active");
+        submitBtn.disabled = true;
       });
     </script>
+
     <script src="../../theme.js"></script>
+
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <p class="footer-text">© 2026 AgriTech. Empowering farmers with intelligent agriculture solutions.</p>
-        </div>
+      <div class="container">
+        <p class="footer-text">
+          © 2026 AgriTech. Empowering farmers with intelligent agriculture solutions.
+        </p>
+      </div>
     </footer>
   </body>
 </html>

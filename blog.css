@@ -160,6 +160,18 @@
     opacity: 1;
     transform: scale(1);
     position: relative;
+     animation: fadeUp 0.4s ease forwards;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .blog-card:hover {
@@ -186,6 +198,10 @@
     padding: 1.5rem;
 }
 
+.read-more-btn{
+    margin-top: auto;
+}
+
 .card-category {
     display: inline-block;
     background: #4CAF50;
@@ -196,6 +212,7 @@
     font-weight: 600;
     margin-bottom: 1rem;
     text-transform: capitalize;
+    align-self: flex-start;
 }
 
 .card-title {
@@ -206,11 +223,24 @@
     line-height: 1.4;
 }
 
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  height:100%;
+}
+
 .card-description {
     color: #666;
     line-height: 1.6;
     margin-bottom: 1.5rem;
 }
+
 
 .read-more-btn {
     background: linear-gradient(45deg, #4CAF50, #45a049);
@@ -660,6 +690,108 @@
     color: #e74c3c;
 }
 
+[data-theme="dark"] .blog-card {
+    background: linear-gradient(
+        145deg,
+        rgba(45, 55, 72, 0.95),
+        rgba(26, 32, 44, 0.95)
+    );
+    border: 1px solid rgba(104, 211, 145, 0.15);
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(6px);
+}
+
+[data-theme="dark"] .blog-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(104, 211, 145, 0.3);
+}
+
+[data-theme="dark"] .blog-card img {
+    filter: brightness(0.85) contrast(1.05);
+    transition: filter 0.3s ease;
+}
+
+[data-theme="dark"] .blog-card:hover img {
+    filter: brightness(1) contrast(1.1);
+}
+
+[data-theme="dark"] .card-title {
+    color: #f8fafc;
+    font-weight: 600;
+}
+
+[data-theme="dark"] .card-description {
+    color: #cbd5e1;
+    line-height: 1.7;
+}
+
+[data-theme="dark"] .card-category {
+    background: linear-gradient(135deg, #68d391, #48bb78);
+    color: #0f172a;
+    box-shadow: 0 4px 15px rgba(104, 211, 145, 0.35);
+}
+
+[data-theme="dark"] .read-more-btn {
+    background: linear-gradient(135deg, #68d391, #38a169);
+    box-shadow: 0 6px 18px rgba(104, 211, 145, 0.4);
+}
+
+[data-theme="dark"] .read-more-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(104, 211, 145, 0.55);
+}
+
+[data-theme="dark"] .search-filter-section {
+    background: rgba(45, 55, 72, 0.95);
+    border: 1px solid rgba(104, 211, 145, 0.15);
+    backdrop-filter: blur(8px);
+}
+
+[data-theme="dark"] .search-bar {
+    background: rgba(26, 32, 44, 0.9);
+    border: 1px solid rgba(104, 211, 145, 0.25);
+}
+
+[data-theme="dark"] .search-bar:focus {
+    box-shadow: 0 0 0 3px rgba(104, 211, 145, 0.25);
+}
+
+[data-theme="dark"] .filter-btn {
+    background: rgba(74, 85, 104, 0.7);
+    border: 1px solid rgba(104, 211, 145, 0.25);
+}
+
+[data-theme="dark"] .filter-btn.active {
+    background: linear-gradient(135deg, #68d391, #38a169);
+    color: #0f172a;
+    box-shadow: 0 0 0 2px rgba(104, 211, 145, 0.3);
+}
+
+[data-theme="dark"] .filter-btn {
+    background: rgba(74, 85, 104, 0.7);
+    border: 1px solid rgba(104, 211, 145, 0.25);
+}
+
+[data-theme="dark"] .filter-btn.active {
+    background: linear-gradient(135deg, #68d391, #38a169);
+    color: #0f172a;
+    box-shadow: 0 0 0 2px rgba(104, 211, 145, 0.3);
+}
+
+[data-theme="dark"] .no-results {
+    background: rgba(104, 211, 145, 0.08);
+    color: #c6f6d5;
+}
+
+[data-theme="dark"] .no-results i {
+    color: #68d391;
+}
+
+
 /* Add transition for smooth theme switching */
 .agritech-blog,
 .search-filter-section,
@@ -898,4 +1030,45 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* --- NEW SCROLL TO TOP BUTTON STYLING (REPLACED ORIGINAL) --- */
+#scrollTopBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    /* Brand-consistent Green Gradient */
+    background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+    color: white;
+    border: none;
+    border-radius: 50%; /* Modern Circular Aesthetic */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    /* Animated Interaction Logic */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Visibility logic triggered by JS classList */
+#scrollTopBtn.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Smooth Hover Lift Effect */
+#scrollTopBtn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+}
+
+#scrollTopBtn:active {
+    transform: translateY(0);
 }
