@@ -651,20 +651,18 @@
         pointer-events: auto;
       }
 
-      .mobile-menu-header {
-        display: flex;
-        justify-content: flex-end;
-        margin-bottom: 1rem;
-      }
+      /* 🔥 FORCE CLOSE BUTTON TO ALWAYS RECEIVE TOUCH */
+.mobile-menu-header {
+  position: sticky;
+  top: 0;
+  z-index: 1002;
+}
 
-      .mobile-close-btn {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        color: var(--text-color);
-        cursor: pointer;
-        padding: 0.5rem;
-      }
+.mobile-close-btn {
+  position: relative;
+  z-index: 1003;
+  pointer-events: auto !important;
+}
 
       .mobile-search {
         display: flex;
@@ -970,6 +968,120 @@
   from { box-shadow: 0 0 6px rgba(34,197,94,.5); }
   to { box-shadow: 0 0 14px rgba(34,197,94,.9); }
 }
+/* 🔥 FORCE CLOSE BUTTON TO BE CLICKABLE */
+.mobile-close-btn {
+  position: relative;
+  z-index: 1001;
+  pointer-events: auto;
+}
+
+/* Ensure menu captures touches correctly */
+.mobile-menu {
+  pointer-events: auto;
+}
+
+    /* Features improvements: responsive grid, card layout, icon styles, focus and hover */
+    .feature-intro {
+      color: var(--text-muted);
+      margin: 0.5rem 0 1.25rem;
+      max-width: 900px;
+      line-height: 1.5;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .feature-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 16px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: transform 0.28s cubic-bezier(.2,.9,.3,1), box-shadow 0.28s ease, border-color 0.28s ease;
+      min-height: 220px;
+      backdrop-filter: blur(6px) saturate(110%);
+    }
+
+    .feature-card:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.12);
+      transform: translateY(-4px);
+      border-color: rgba(34,197,94,0.12);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: 0 18px 40px rgba(2,6,23,0.12);
+      border-color: rgba(34,197,94,0.12);
+    }
+
+    .feature-icon {
+      font-size: 1.6rem;
+      width: 56px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(34,197,94,0.14), rgba(22,163,74,0.06));
+      color: var(--accent-color);
+      box-shadow: 0 10px 24px rgba(16,185,129,0.06);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: translateY(-3px) rotate(-4deg) scale(1.03);
+      box-shadow: 0 18px 36px rgba(16,185,129,0.09);
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+      100% { transform: translateY(0); }
+    }
+
+    .feature-card .feature-title { margin: 0.15rem 0; }
+
+    .feature-card .feature-description {
+      color: var(--text-muted);
+      flex: 1 1 auto;
+      margin-bottom: 0.5rem;
+    }
+
+    /* stronger CTA inside cards without affecting global .btn styles elsewhere */
+    .feature-card .btn.btn-secondary {
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      color: #fff;
+      border: none;
+      padding: 0.5rem 0.85rem;
+      border-radius: 10px;
+      box-shadow: 0 8px 18px rgba(22,163,74,0.12);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+    }
+
+    .feature-card .btn.btn-secondary:hover,
+    .feature-card .btn.btn-secondary:focus {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 28px rgba(22,163,74,0.18);
+      opacity: 0.98;
+    }
+
+    @media (max-width: 520px) {
+      .features-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .feature-card { padding: 1rem; min-height: auto; }
+      .feature-icon { width: 46px; height: 46px; font-size: 1.3rem; }
+    }
+
+    /* Respect reduced motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .feature-icon, .feature-card, .feature-card .btn { transition: none !important; animation: none !important; }
+    }
+
 
   </style>
 </head>
@@ -1044,9 +1156,16 @@
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
-      <button class="mobile-close-btn" id="mobileCloseBtn" aria-label="Close menu">
-        <i class="fas fa-times"></i>
-      </button>
+      <button class="mobile-close-btn"
+        type="button"
+        aria-label="Close menu"
+        onclick="
+          document.getElementById('mobileMenu').classList.remove('active');
+          document.getElementById('mobileMenuOverlay').classList.remove('active');
+          document.body.style.overflow='';
+        ">
+  <i class="fas fa-times"></i>
+</button>
     </div>
     
     <div class="mobile-menu-content">
@@ -1095,7 +1214,11 @@
             <span>Register</span>
             <i class="fas fa-chevron-right link-arrow"></i>
           </a>
-          
+          <a href="scheme.html" class="mobile-link">
+            <i class="fas fa-scroll"></i> 
+            <span>Schemes</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
           <!-- Mobile Services Dropdown -->
           <div class="mobile-services-section">
             <a href="#" class="mobile-link mobile-services-toggle" id="mobileServicesToggle">
@@ -1155,27 +1278,50 @@
   <section class="features">
     <div class="features-container">
       <h2 class="features-title serif">Our Platform Benefits</h2>
+      <p class="feature-intro">AgriTech brings tailored tools and services to every stakeholder in the agricultural value chain. Explore targeted benefits below and follow the quick links to learn more.</p>
+
       <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">🌱</div>
-          <h3 class="feature-title serif">For Farmers</h3>
-          <p class="feature-description">Direct access to buyers, fair pricing, and equipment rental services to maximize harvest potential.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">🏪</div>
-          <h3 class="feature-title serif">For Buyers</h3>
-          <p class="feature-description">Source fresh produce directly from verified farmers with transparent pricing and quality assurance.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">🚜</div>
-          <h3 class="feature-title serif">Equipment Suppliers</h3>
-          <p class="feature-description">Expand your reach and connect with farmers needing modern agricultural equipment.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">🛒</div>
-          <h3 class="feature-title serif">Grocery Sellers</h3>
-          <p class="feature-description">Access fresh produce with reliable supply chain and competitive costs.</p>
-        </div>
+        <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-1-title">
+          <div class="feature-icon" aria-hidden="true">🌱</div>
+          <h3 id="feature-1-title" class="feature-title serif">Farmers</h3>
+          <p class="feature-description">Real-time crop monitoring, weather alerts, and direct-market access to get fair prices for your harvest.</p>
+          <a class="btn btn-secondary" href="crop.html" aria-label="Learn more about crop monitoring">Learn more</a>
+        </article>
+
+        <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-2-title">
+          <div class="feature-icon" aria-hidden="true">🏪</div>
+          <h3 id="feature-2-title" class="feature-title serif">Buyers & Retailers</h3>
+          <p class="feature-description">Source verified produce directly from farmers, schedule deliveries, and manage bulk orders with ease.</p>
+          <a class="btn btn-secondary" href="marketplace.html" aria-label="Browse the marketplace">Browse marketplace</a>
+        </article>
+
+        <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-3-title">
+          <div class="feature-icon" aria-hidden="true">🚜</div>
+          <h3 id="feature-3-title" class="feature-title serif">Equipment Suppliers</h3>
+          <p class="feature-description">List equipment, offer rentals, and connect with nearby farmers who need modern machinery.</p>
+          <a class="btn btn-secondary" href="marketplace.html" aria-label="List equipment on the marketplace">List equipment</a>
+        </article>
+
+        <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-4-title">
+          <div class="feature-icon" aria-hidden="true">🛒</div>
+          <h3 id="feature-4-title" class="feature-title serif">Grocery Sellers</h3>
+          <p class="feature-description">Integrate reliable suppliers into your supply chain and receive consistent quality produce on schedule.</p>
+          <a class="btn btn-secondary" href="marketplace.html" aria-label="Partner with suppliers">Partner with suppliers</a>
+        </article>
+
+        <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-5-title">
+          <div class="feature-icon" aria-hidden="true">🧑‍🌾</div>
+          <h3 id="feature-5-title" class="feature-title serif">Agronomists & Advisors</h3>
+          <p class="feature-description">Share expertise, provide remote diagnostic services, and recommend data-driven treatments to improve yields.</p>
+          <a class="btn btn-secondary" href="chat.html" aria-label="Offer advisory services">Offer services</a>
+        </article>
+
+        <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-6-title">
+          <div class="feature-icon" aria-hidden="true">💰</div>
+          <h3 id="feature-6-title" class="feature-title serif">Finance & Insurance</h3>
+          <p class="feature-description">Access loan options, crop insurance, and financial tools designed for seasonal agriculture cashflows.</p>
+          <a class="btn btn-secondary" href="financial-support.html" aria-label="Get financial support">Get support</a>
+        </article>
       </div>
     </div>
   </section>
@@ -1403,31 +1549,57 @@
         });
     }
 
-    // Mobile Menu
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+    // ===== MOBILE MENU (FINAL FIX) =====
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
 
-    if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
-      hamburgerBtn.addEventListener('click', () => {
-        mobileMenu.classList.add('active');
-        mobileMenuOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      });
+function closeMobileMenu() {
+  mobileMenu.classList.remove('active');
+  mobileMenuOverlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
 
-      mobileCloseBtn.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-        mobileMenuOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-      });
+function openMobileMenu() {
+  mobileMenu.classList.add('active');
+  mobileMenuOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
 
-      mobileMenuOverlay.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-        mobileMenuOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-      });
-    }
+if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
+
+  // OPEN
+  hamburgerBtn.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    openMobileMenu();
+  });
+
+  // ❌ CLOSE — TOUCH SAFE
+  mobileCloseBtn.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    closeMobileMenu();
+  });
+
+  // BACKUP FOR OLD MOBILE BROWSERS
+  mobileCloseBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    closeMobileMenu();
+  }, { passive: false });
+
+  // OVERLAY CLICK
+  mobileMenuOverlay.addEventListener('pointerdown', () => {
+    closeMobileMenu();
+  });
+
+  // PREVENT BUBBLING INSIDE MENU
+  mobileMenu.addEventListener('pointerdown', (e) => {
+    e.stopPropagation();
+  });
+}
+
+
 
     // Mobile Services Toggle
     const mobileServicesToggle = document.getElementById('mobileServicesToggle');

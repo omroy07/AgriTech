@@ -47,7 +47,6 @@ header{
   color:#fff;
   padding:24px 30px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
   box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
@@ -80,6 +79,13 @@ header h1{font-size:26px;font-weight:800}
   transform: translateY(-2px);
 }
 
+  gap:20px;
+}
+header h1{
+  font-size:26px;
+  font-weight:800;
+  flex:1; /* pushes right items safely */
+}
 header a{
   background:#fff;
   color:var(--primary);
@@ -238,6 +244,77 @@ button:hover {
   .form-card{padding:30px}
   .form-card h2{font-size:26px}
 }
+/* ========= PREMIUM DARK MODE ========= */
+body.dark{
+  --bg:#0b1220;
+  --card:#111827;
+  --text:#e5e7eb;
+  --primary:#22c55e;
+  --secondary:#16a34a;
+  --shadow:0 20px 50px rgba(0,0,0,0.7);
+}
+
+/* text fix */
+body.dark,
+body.dark p,
+body.dark label{
+  color:var(--text);
+}
+
+/* inputs */
+body.dark select,
+body.dark input{
+  background:#020617;
+  color:#e5e7eb;
+  border:1px solid #334155;
+}
+
+/* cards */
+body.dark .form-card,
+body.dark .scheme,
+body.dark .modal-content{
+  background:var(--card);
+}
+
+/* eligibility visibility */
+body.dark .eligible{color:#4ade80}
+body.dark .not-eligible{color:#f87171}
+body.dark .deadline{color:#fb7185}
+
+/* header button */
+.dark-toggle{
+  width:54px;
+  height:30px;
+  border-radius:30px;
+  background:#e5e7eb;
+  position:relative;
+  cursor:pointer;
+  transition:0.3s;
+}
+.dark-toggle::before{
+  content:"☀️";
+  position:absolute;
+  left:5px;
+  top:3px;
+  transition:0.3s;
+}
+body.dark .dark-toggle{
+  background:#020617;
+}
+body.dark .dark-toggle::before{
+  content:"🌙";
+  left:28px;
+}
+
+/* apply button */
+body.dark .apply{background:#2563eb}
+body.dark .apply.disabled{background:#475569}
+
+/* modal overlay */
+body.dark .modal{
+  background:rgba(2,6,23,0.85);
+}
+
 </style>
 </head>
 
@@ -252,6 +329,8 @@ button:hover {
       </button>
       <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Home</a>
   </div>
+  <div class="dark-toggle" onclick="toggleDark()"></div>
+  <a href="index.html">⬅ Back to Home</a>
 </header>
 
 <section class="hero">
@@ -442,6 +521,19 @@ function showMsg(msg){
 }
 function closeModal(){
   document.getElementById("modal").style.display="none";
+}
+</script>
+<script>
+function toggleDark(){
+  document.body.classList.toggle("dark");
+  localStorage.setItem(
+    "darkMode",
+    document.body.classList.contains("dark")
+  );
+}
+
+if(localStorage.getItem("darkMode")==="true"){
+  document.body.classList.add("dark");
 }
 </script>
 

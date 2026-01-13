@@ -423,7 +423,6 @@ function displayPosts() {
         let card2 = array[1]; // second card
         let cardcontent = card2.children[2]; // card content of second card
         let cardmeta = cardcontent.querySelector(".card-meta");
-        cardmeta.style.transform = "translateY(20px)";
         let btn = cardcontent.children[4]; // read more button of second card
         btn.style.transform = "translateY(20px)";
 
