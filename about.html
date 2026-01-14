@@ -289,8 +289,6 @@
       });
     }
 
-    const searchInput = document.querySelector(".search-input");
-    const sections = document.querySelectorAll("main section");
 
     // No result element
     const noResultDiv = document.createElement("div");
@@ -316,27 +314,28 @@
     noResultDiv.style.display = "none";
 
     searchInput.addEventListener("input", () => {
-      const query = searchInput.value.toLowerCase().trim();
-      let found = false;
+  const query = searchInput.value.toLowerCase().trim();
+  let found = false;
 
-      sections.forEach(section => {
-        const elements = section.querySelectorAll("h2, p, li");
-        let sectionMatch = false;
+  sections.forEach(section => {
+    const elements = section.querySelectorAll("h2, p, li");
 
-        elements.forEach(el => {
-          el.classList.remove("search-highlight");
+    elements.forEach(el => {
+      el.classList.remove("search-highlight");
 
-          if (query !== "" && el.textContent.toLowerCase().includes(query)) {
-            el.classList.add("search-highlight");
-            sectionMatch = true;
-            found = true;
-          }
-        });
+      if (query !== "" && el.textContent.toLowerCase().includes(query)) {
+        el.classList.add("search-highlight");
+        found = true;
+      }
+    });
+  });
 
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-      });
-    }
+  if (found) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+});
+
+    
 
     const searchInput = document.querySelector(".search-input");
     const searchButton = document.querySelector(".search-button");
