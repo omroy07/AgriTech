@@ -15,6 +15,13 @@
             background: linear-gradient(180deg, #eef3f8, #dfe7f0);
         }
 
+        /* ACCESSIBILITY: visible focus for keyboard users */
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid #2c5f2d;
+            outline-offset: 3px;
+        }
+
         .agritech-blog {
             min-height: 100vh;
             display: flex;
@@ -69,21 +76,9 @@
             font-size: 1rem;
         }
 
-        .btn-danger {
-            background: #e74c3c;
-            color: #fff;
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-            color: #fff;
-        }
-
-        .btn-primary {
-            background: #4CAF50;
-            color: #fff;
-            text-decoration: none;
-        }
+        .btn-danger { background: #e74c3c; color: #fff; }
+        .btn-secondary { background: #6c757d; color: #fff; }
+        .btn-primary { background: #4CAF50; color: #fff; text-decoration: none; }
 
         .action-btn:hover {
             transform: translateY(-2px);
@@ -106,12 +101,6 @@
             font-size: 4.5rem;
             color: #ccc;
             margin-bottom: 1rem;
-        }
-
-        .favorite-date {
-            font-size: 0.85rem;
-            color: #999;
-            margin-top: 0.5rem;
         }
 
         .favorite-item-actions {
@@ -151,24 +140,37 @@
 
         <div class="favorites-header">
             <h1 class="favorites-title">
-                <i class="fas fa-heart"></i> My Favorite Blogs
+                <i class="fas fa-heart" aria-hidden="true"></i>
+                My Favorite Blogs
             </h1>
+
             <p class="favorites-stats">
-                You have <span id="favoritesCount">0</span> saved articles
+                You have
+                <span id="favoritesCount" aria-live="polite">0</span>
+                saved articles
             </p>
         </div>
 
         <div class="favorites-actions">
-            <button class="action-btn btn-danger" onclick="clearAllFavorites()">
-                <i class="fas fa-trash"></i> Clear All
+            <button class="action-btn btn-danger"
+                    onclick="clearAllFavorites()"
+                    aria-label="Clear all favorite blogs">
+                <i class="fas fa-trash" aria-hidden="true"></i>
+                Clear All
             </button>
 
-            <button class="action-btn btn-secondary" onclick="exportFavorites()">
-                <i class="fas fa-download"></i> Export
+            <button class="action-btn btn-secondary"
+                    onclick="exportFavorites()"
+                    aria-label="Export favorite blogs">
+                <i class="fas fa-download" aria-hidden="true"></i>
+                Export
             </button>
 
-            <a href="blog.html" class="action-btn btn-primary">
-                <i class="fas fa-arrow-left"></i> Back to Blog
+            <a href="blog.html"
+               class="action-btn btn-primary"
+               aria-label="Go back to blog page">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                Back to Blog
             </a>
         </div>
 
@@ -179,10 +181,8 @@
 <script>
 class FavoritesPage {
     constructor() {
-        this.favorites = JSON.parse(
-            localStorage.getItem('agritech_favorite_blogs')
-        ) || [];
-
+        this.favorites =
+            JSON.parse(localStorage.getItem('agritech_favorite_blogs')) || [];
         this.renderFavorites();
         this.updateStats();
     }
@@ -193,30 +193,31 @@ class FavoritesPage {
         if (this.favorites.length === 0) {
             container.innerHTML = `
                 <div class="no-favorites">
-                    <i class="far fa-heart"></i>
+                    <i class="far fa-heart" aria-hidden="true"></i>
                     <h3>No Favorite Blogs Yet</h3>
                     <p>Start exploring our blog section and add favorites.</p>
-                    <a href="blog.html" class="back-to-blog">
-                        <i class="fas fa-newspaper"></i> Explore Blogs
+                    <a href="blog.html"
+                       class="back-to-blog"
+                       aria-label="Explore all blogs">
+                        <i class="fas fa-newspaper" aria-hidden="true"></i>
+                        Explore Blogs
                     </a>
                 </div>
             `;
             return;
         }
 
-        const sorted = [...this.favorites].sort(
-            (a, b) => new Date(b.addedAt) - new Date(a.addedAt)
-        );
-
         container.innerHTML = `
             <div class="blog-grid">
-                ${sorted.map(blog => `
+                ${this.favorites.map(blog => `
                     <div class="blog-card">
                         <img src="${blog.image}" alt="${blog.title}">
 
                         <button class="favorite-btn active"
-                                onclick="removeFavorite('${blog.id}')">
-                            <i class="fas fa-heart"></i>
+                                tabindex="0"
+                                aria-label="Remove ${blog.title} from favorites"
+                                data-id="${blog.id}">
+                            <i class="fas fa-heart" aria-hidden="true"></i>
                         </button>
 
                         <div class="card-content">
@@ -227,29 +228,18 @@ class FavoritesPage {
                             <h3 class="card-title">${blog.title}</h3>
                             <p class="card-description">${blog.description}</p>
 
-                            <div class="card-meta">
-                                <span class="card-author">
-                                    By ${blog.author || 'Unknown Author'}
-                                </span>
-                                <span class="card-date">
-                                    ${new Date(blog.addedAt).toLocaleDateString()}
-                                </span>
-                            </div>
-
-                            <div class="favorite-date">
-                                <i class="fas fa-calendar-plus"></i>
-                                Added on ${new Date(blog.addedAt).toLocaleDateString()}
-                            </div>
-
                             <div class="favorite-item-actions">
                                 <button class="read-more-btn"
-                                        onclick="viewBlogPost('${blog.id}')">
+                                        onclick="viewBlogPost('${blog.id}')"
+                                        aria-label="Read full blog ${blog.title}">
                                     Read Article
                                 </button>
 
                                 <button class="remove-btn"
-                                        onclick="removeFavorite('${blog.id}')">
-                                    <i class="fas fa-trash"></i> Remove
+                                        onclick="removeFavorite('${blog.id}')"
+                                        aria-label="Remove ${blog.title} from favorites">
+                                    <i class="fas fa-trash" aria-hidden="true"></i>
+                                    Remove
                                 </button>
                             </div>
                         </div>
@@ -257,6 +247,19 @@ class FavoritesPage {
                 `).join('')}
             </div>
         `;
+
+        this.enableKeyboardSupport();
+    }
+
+    enableKeyboardSupport() {
+        document.querySelectorAll('.favorite-btn').forEach(btn => {
+            btn.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    removeFavorite(btn.dataset.id);
+                }
+            });
+        });
     }
 
     updateStats() {
@@ -266,16 +269,10 @@ class FavoritesPage {
 }
 
 function removeFavorite(id) {
-    let favorites = JSON.parse(
-        localStorage.getItem('agritech_favorite_blogs')
-    ) || [];
-
-    favorites = favorites.filter(blog => blog.id !== id);
-    localStorage.setItem(
-        'agritech_favorite_blogs',
-        JSON.stringify(favorites)
-    );
-
+    let favorites =
+        JSON.parse(localStorage.getItem('agritech_favorite_blogs')) || [];
+    favorites = favorites.filter(b => b.id !== id);
+    localStorage.setItem('agritech_favorite_blogs', JSON.stringify(favorites));
     new FavoritesPage();
 }
 
@@ -287,9 +284,8 @@ function clearAllFavorites() {
 }
 
 function exportFavorites() {
-    const favorites = JSON.parse(
-        localStorage.getItem('agritech_favorite_blogs')
-    ) || [];
+    const favorites =
+        JSON.parse(localStorage.getItem('agritech_favorite_blogs')) || [];
 
     if (favorites.length === 0) {
         alert('No favorites to export');
