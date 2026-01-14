@@ -1,6 +1,12 @@
 const USE_AI_FALLBACK = true;
 
 document.addEventListener('DOMContentLoaded', () => {
+  // --- BUG FIX: DYNAMIC COPYRIGHT YEAR ---
+  const yearElement = document.getElementById('current-year');
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+  }
+
   const chatWindow = document.getElementById('chat-window');
   const chatForm = document.getElementById('chat-form');
   const chatInput = document.getElementById('chat-input');
