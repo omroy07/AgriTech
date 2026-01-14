@@ -194,14 +194,22 @@ section {
   border-radius: 20px;
   padding: 2.5rem;
   margin: 2rem 0;
-  box-shadow: 0 10px 30px var(--shadow-light);
   border: 1px solid var(--border-color);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 30px var(--shadow-light);
+  position: relative;
+
+  transition:
+    transform 0.35s cubic-bezier(.4,0,.2,1),
+    box-shadow 0.35s cubic-bezier(.4,0,.2,1),
+    border-color 0.35s ease;
 }
 
 section:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 15px 40px var(--shadow-medium);
+  transform: translateY(-4px) scale(1.015);
+  box-shadow:
+    0 6px 16px rgba(0, 60, 30, 0.35),
+    0 18px 45px rgba(0, 60, 30, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 /* Headings (Untouched) */
