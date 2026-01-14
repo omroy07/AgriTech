@@ -1135,3 +1135,114 @@ p {
     box-shadow: 0 0 0 18px rgba(34, 197, 94, 0);
   }
 }
+/* ===============================
+   WHY IT MATTERS SECTION
+================================ */
+
+.why-it-matters-section {
+  padding: 60px 20px;
+  background: #ffffff;
+}
+
+/* Heading */
+.why-it-matters-section h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+/* Description */
+.why-desc {
+  max-width: 900px;
+  margin-bottom: 40px;
+  color: #555;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Cards grid */
+.why-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Card */
+.why-card {
+  position: relative;
+  overflow: hidden; /* FIXES BORDER OVERFLOW */
+  background: #f6fff8;
+  padding: 35px 25px;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+/* Left green hover accent */
+.why-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  background: #22c55e;
+  border-radius: 18px 0 0 18px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Hover effects */
+.why-card:hover::before {
+  opacity: 1;
+}
+
+.why-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 35px rgba(34, 197, 94, 0.25);
+}
+
+/* Icon */
+.why-card .icon {
+  font-size: 42px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Title */
+.why-card h3 {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 12px;
+  color: #1a7f37;
+}
+
+/* Description text */
+.why-card p {
+  text-align: center;
+  font-size: 14.5px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 900px) {
+  .why-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .why-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .why-it-matters-section h2 {
+    font-size: 26px;
+  }
+}
