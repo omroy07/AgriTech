@@ -22,9 +22,6 @@ body {
   max-width: 1100px;
   height: 600px;
   margin: 50px auto;
-  /* remove left margin that caused overflow */
-  /* margin-left: 22%; */
-
   border-radius: 20px;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.389);
   display: flex;
@@ -52,13 +49,76 @@ body {
   text-align: center;
 }
 
-.box .left .main input {
+/* Search container for autocomplete */
+.search-container {
+  position: relative;
+  display: inline-block;
   width: 75%;
+}
+
+.box .left .main input {
+  width: 100%;
   height: 15px;
   border-radius: 20px;
   border: 2px solid #aeadad;
   background-color: rgb(255, 255, 255);
   padding: 12px;
+  box-sizing: border-box;
+}
+
+/* Suggestions dropdown */
+.suggestions-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #aeadad;
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  display: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.suggestions-dropdown.show {
+  display: block;
+}
+
+.suggestion-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f8ff;
+}
+
+.suggestion-item .city-name {
+  font-weight: 600;
+  color: #333;
+}
+
+.suggestion-item .city-details {
+  font-size: 0.85em;
+  color: #666;
+  margin-top: 2px;
+}
+
+.no-suggestions {
+  padding: 10px 15px;
+  text-align: center;
+  color: #999;
+  font-style: italic;
 }
 
 .box .left .main button {
@@ -414,5 +474,9 @@ footer {
   .box .left,
   .box .right {
     width: 100%;
+  }
+  
+  .search-container {
+    width: 85%;
   }
 }

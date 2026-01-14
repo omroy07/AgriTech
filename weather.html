@@ -26,11 +26,15 @@
   <div class="box weather-box">
     <div class="left general-data">
       <div class="main">
-        <input
-          type="text"
-          id="cityInput"
-          placeholder="Enter a city (by default, New Delhi)"
-        >
+        <div class="search-container">
+          <input
+            type="text"
+            id="cityInput"
+            placeholder="Enter a city (by default, New Delhi)"
+            autocomplete="off"
+          >
+          <div id="suggestions" class="suggestions-dropdown"></div>
+        </div>
         <br>
         <button id="search">Search</button>
       </div>
