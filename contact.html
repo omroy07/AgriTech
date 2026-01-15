@@ -131,7 +131,7 @@
 
     /* --- HERO ADJUSTED --- */
     .hero {
-      padding-top: calc(var(--nav-height) + 60px);
+      padding-top: calc(var(--nav-height) + 60px); /* PREVENTS OVERLAP */
       text-align: center;
       background: linear-gradient(to bottom, #143a18, var(--bg-dark));
       padding-bottom: 80px;
@@ -150,7 +150,7 @@
       opacity: 0.8;
     }
 
-    /* --- DARK DROPDOWN FIX PRESERVED --- */
+    /* --- FIXED: IMPROVED DARK DROPDOWN STYLING --- */
     select {
       width: 100%;
       padding: 14px;
@@ -161,11 +161,15 @@
       font-size: 1rem;
       margin-top: 10px;
       appearance: none;
+      cursor: pointer;
+      /* Tells the browser to use dark-mode for the pop-up list UI */
+      color-scheme: dark; 
     }
 
     select option {
-      background-color: var(--bg-dark);
+      background-color: var(--card-bg); /* Forces dark background */
       color: var(--text-light);
+      padding: 10px;
     }
 
     /* Form Styles */
