@@ -52,11 +52,12 @@
         <i class="fas fa-bars"></i>
       </button>
 
-      <a href="index.html"  class="menu" style="color:white;text-decoration: none;">Home</a>
-      <a href="blog.html" class="menu" style="color:white;text-decoration: none;">Blog</a>
-      <a href="login.html"  class="menu" style="color:white;text-decoration: none;">Login</a>
-      <a href="faq.html"  class="menu" style="color:white;text-decoration: none;">FAQ</a>
-      <a href="register.html"  class="menu" style="color:white;text-decoration: none;">Register</a>
+      <a href="index.html" class="btn btn-secondary">Home</a>
+      <a href="blog.html" class="btn btn-secondary">Blog</a>
+      <a href="login.html" class="btn btn-secondary login-btn-desktop">Login</a>
+      <a href="faq.html" class="btn btn-secondary">FAQ</a>
+      <a href="register.html" class="btn btn-primary register-btn-desktop" style="color:white">Register</a>
+      <a href="#" class="btn btn-secondary logout-button" style="display: none;">Logout</a>
     </div>
   </nav>
 
@@ -331,6 +332,17 @@
   });
 </script>
 
+      noResultDiv.style.display = query !== "" && !found ? "block" : "none";
+    });
+    document.addEventListener("click", (e) => {
+      if (e.target.closest(".suggestions span")) {
+        const text = e.target.textContent;
+        searchInput.value = text;
+        searchInput.dispatchEvent(new Event("input"));
+      }
+    });
+  </script>
+  <script src="auth.js"></script>
 </body>
 
 </html>
