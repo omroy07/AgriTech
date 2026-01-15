@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-    <link rel="icon" type="image/png" href="images/logo.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AgriTech Blog</title>
@@ -13,6 +12,7 @@
 <body>
     <section class="agritech-blog">
         <div class="blog-container">
+            <!-- Blog Header with Favorites -->
             <div class="blog-header">
                 <div class="header-actions">
                     <a href="index.html" class="home-btn">
@@ -35,6 +35,7 @@
                 </p>
             </div>
 
+            <!-- Search and Filter Section -->
             <div class="search-filter-section">
                 <input type="text" class="search-bar" placeholder="Search blog posts..." id="searchInput">
 
@@ -48,15 +49,19 @@
                 </div>
             </div>
 
+            <!-- Blog Grid -->
             <div class="blog-grid" id="blogGrid">
+                <!-- Blog cards will be populated by JavaScript -->
             </div>
 
+            <!-- Load More Button -->
             <div class="load-more-container">
                 <button class="load-more-btn" id="loadMoreBtn">Load More Posts</button>
             </div>
         </div>
     </section>
 
+    <!-- Modal for Blog Post with Favorite Button -->
     <div id="blogModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -86,36 +91,8 @@
         </div>
     </div>
 
+    <!-- JavaScript Files -->
     <script src="js/features/favorites.js"></script>
-
-    <script src="blog.js"></script>
-
-    <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" title="Go to top" aria-label="Scroll to top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
-    <script>
-        // Scroll to Top Functionality
-        const scrollTopBtn = document.getElementById('scrollTopBtn');
-
-        // Show/hide button based on scroll position
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                scrollTopBtn.classList.add('visible');
-            } else {
-                scrollTopBtn.classList.remove('visible');
-            }
-        });
-
-        // Smooth scroll to top when clicked
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    </script>
     <script src="blog.js"></script>
     <script src="auth.js"></script>
 </body>

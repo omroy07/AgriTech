@@ -4,60 +4,86 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="weather.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Font Awesome -->
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
-
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
+    
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/logo.png" />
     <title>Weather Check System</title>
     <script src="voice-input.js" defer></script>
   </head>
   <body>
-     <header>
+    <!-- Header from main branch -->
+    <header>
       <div class="header-content">
         <div class="logo">
           <i class="fas fa-seedling"></i>
           <h1>AgriTech</h1>
         </div>
         <div style="display: flex; gap: 1rem; align-items: center;">
-          
-
           <a href="index.html" class="nav-back">
             <i class="fas fa-arrow-left"></i> Back to Home
           </a>
         </div>
       </div>
     </header>
+    
+    <!-- Weather box with autocomplete -->
     <div class="box weather-box">
       <div class="left general-data">
         <div class="main">
-          <input
-            type="text"
-            id="cityInput"
-            placeholder="Enter a city (by default, New Delhi)"
-          />
+          <!-- Your autocomplete feature -->
+          <div class="search-container">
+            <input
+              type="text"
+              id="cityInput"
+              placeholder="Enter a city (by default, New Delhi)"
+              autocomplete="off"
+            />
+            <div id="suggestions" class="suggestions-dropdown"></div>
+          </div>
           <br />
           <button id="search">Search</button>
         </div>
-        <div class="hour" id="hour">
-          <!-- cards are entered dynamically -->
+        
+        <div class="general">
+          <h3 id="city">City</h3>
+          <h4 id="region">Region</h4>
+          <h5 id="country">Country</h5>
+          <br><br>
+          <h6 id="description">mostly ---</h6>
+          <p id="temperature">40</p>
         </div>
       </div>
 
-      <div class="daywise">
-        <div>
-          <p>10 days forecast</p>
+      <div class="right predictions-data">
+        <div class="hourly">
+          <div>
+            <p>Hourly forecast</p>
+          </div>
+          <div class="hour" id="hour">
+            <!-- cards are entered dynamically -->
+          </div>
         </div>
-        <div class="day" id="day">
-          <!-- cards are entered dynamically -->
+
+        <div class="daywise">
+          <div>
+            <p>10 days forecast</p>
+          </div>
+          <div class="day" id="day">
+            <!-- cards are entered dynamically -->
+          </div>
         </div>
       </div>
     </div>
@@ -70,29 +96,18 @@
           <h3>AgriTech</h3>
           <p>Empowering India's Farming Future</p>
           <div class="social-media">
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              aria-label="Follow us on Instagram"
-            >
+            <a href="https://instagram.com" target="_blank" aria-label="Follow us on Instagram">
               <i class="fab fa-instagram"></i>
             </a>
-            <a
-              href="https://github.com/omroy07"
-              target="_blank"
-              aria-label="View our GitHub repositories"
-            >
+            <a href="https://github.com/omroy07" target="_blank" aria-label="View our GitHub repositories">
               <i class="fab fa-github"></i>
             </a>
-            <a
-              href="https://www.linkedin.com/in/om-roy-3b809628a/"
-              target="_blank"
-              aria-label="Connect with us on LinkedIn"
-            >
+            <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank" aria-label="Connect with us on LinkedIn">
               <i class="fab fa-linkedin"></i>
             </a>
           </div>
         </div>
+        
         <div class="footer-links">
           <h4>Quick Links</h4>
           <ul>
@@ -102,42 +117,25 @@
             <li><a href="chat.html">AI Assistant</a></li>
           </ul>
         </div>
+        
         <div class="footer-links">
           <h4>Tools</h4>
           <ul>
-            <li>
-              <a href="Crop Recommendation/templates/index.html"
-                >Crop Recommendation</a
-              >
-            </li>
-            <li>
-              <a
-                href="Crop Yield Prediction/crop_yield_app/templates/index.html"
-                >Yield Prediction</a
-              >
-            </li>
-            <li>
-              <a href="Disease prediction/template/index.html"
-                >Disease Detector</a
-              >
-            </li>
-            <li>
-              <a href="Crop_Planning/templates/cropplan.html">Crop Planner</a>
-            </li>
+            <li><a href="Crop Recommendation/templates/index.html">Crop Recommendation</a></li>
+            <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
+            <li><a href="Disease prediction/template/index.html">Disease Detector</a></li>
+            <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div>
     </footer>
+    
     <!-- Floating Chatbot Button -->
-    <a
-      href="chat.html"
-      id="chatbotBtn"
-      title="Chat with us"
-      aria-label="AI Assistant"
-    >
+    <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
       <i class="fas fa-robot"></i>
     </a>
+    
     <script src="weather.js"></script>
   </body>
 </html>

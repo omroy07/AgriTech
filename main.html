@@ -37,6 +37,7 @@
       color: var(--text-primary, #333);
       transition: background-color 0.3s ease, color 0.3s ease;
     }
+    
 
     /* Responsive Search bar */
     .search-container {
@@ -484,6 +485,36 @@
         transform: translateX(100%);
       }
     }
+   
+
+@media (max-width: 768px) {
+  .calendar-button,
+  .logout-button,
+  .feedback-button,
+  .theme-toggle {
+    width: 100%;                 
+    justify-content: center;
+    padding: 0.7rem 1rem;        
+    font-size: 0.95rem;
+  }
+
+  .header-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+          .header-nav-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+}
+
+main {
+  margin-top: 90px; 
+}
 
 
     @media (max-width: 768px) {
@@ -558,9 +589,9 @@
           <div class="mega-menu-category">
             <h3><i class="fas fa-seedling"></i> Crop Tools</h3>
             <ul>
-              <li><a href="Crop Recommendation/templates/index.html">
-                  <i class="fas fa-leaf"></i> Crop Recommendation
-                </a></li>
+              <li><a href="/crop">
+                <i class="fas fa-leaf"></i> Crop Recommendation
+              </a></li>
               <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">
                   <i class="fas fa-chart-line"></i> Yield Prediction
                 </a></li>
@@ -886,6 +917,11 @@
               <option value="en">English</option>
               <option value="hi">हिन्दी</option>
             </select>
+            <small class="language-note">
+              Language change applies only to Smart Loan Guide
+            </small>
+
+
           </div>
 
         </section>
@@ -1248,5 +1284,6 @@
   </script>
 
 </body>
+
 
 </html>
