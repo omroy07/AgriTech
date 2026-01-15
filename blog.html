@@ -91,6 +91,62 @@
         </div>
     </div>
 
+    <!-- Floating Action Button for Creating Post -->
+    <button class="fab-btn" id="createPostBtn" title="Create New Post">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <!-- Modal for Creating New Post -->
+    <div id="createPostModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Create New Post</h2>
+                <button class="close" id="closeCreateModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="createPostForm" class="create-post-form">
+                    <div class="form-group">
+                        <label for="postTitle">Title</label>
+                        <input type="text" id="postTitle" required placeholder="Enter post title">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="postCategory">Category</label>
+                        <select id="postCategory" required>
+                            <option value="farming-tips">Farming Tips</option>
+                            <option value="technology">Technology</option>
+                            <option value="market-trends">Market Trends</option>
+                            <option value="sustainability">Sustainability</option>
+                            <option value="business">Business</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="postDescription">Short Description</label>
+                        <textarea id="postDescription" required placeholder="Brief summary of your post" rows="2"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="postImage">Image URL</label>
+                        <input type="url" id="postImage" required placeholder="https://example.com/image.jpg">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="postContent">Content (HTML supported)</label>
+                        <textarea id="postContent" required placeholder="Write your full article here..." rows="6"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="postAuthor">Author Name</label>
+                        <input type="text" id="postAuthor" required placeholder="Your name">
+                    </div>
+
+                    <button type="submit" class="submit-btn">Publish Post</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript Files -->
     <script src="js/features/favorites.js"></script>
     <script src="blog.js"></script>
