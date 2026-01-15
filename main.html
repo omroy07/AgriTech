@@ -489,6 +489,18 @@
     align-items: stretch;
   }
 }
+          .header-nav-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+}
+
+main {
+  margin-top: 90px; 
+}
 
   </style>
 </head>
@@ -545,7 +557,7 @@
           <div class="mega-menu-category">
             <h3><i class="fas fa-seedling"></i> Crop Tools</h3>
             <ul>
-              <li><a href="Crop Recommendation/templates/index.html">
+              <li><a href="/crop">
                 <i class="fas fa-leaf"></i> Crop Recommendation
               </a></li>
               <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">
@@ -874,6 +886,11 @@
               <option value="en">English</option>
               <option value="hi">हिन्दी</option>
             </select>
+            <small class="language-note">
+              Language change applies only to Smart Loan Guide
+            </small>
+
+
           </div>
           
         </section>
@@ -1154,5 +1171,6 @@ document.getElementById('servicesMenuToggle').addEventListener('click', function
   </script>
 
 </body>
+
 
 </html>

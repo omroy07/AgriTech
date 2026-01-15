@@ -1,16 +1,22 @@
 from flask import Flask, request, jsonify, send_from_directory
-from google import genai
+import google.generativeai as genai
 import traceback
 import os
 import re
 from flask_cors import CORS
 from dotenv import load_dotenv
+from crop_recommendation.routes import crop_bp
+
+
 
 # Load environment variables
 load_dotenv()
 
 app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
+
+app.register_blueprint(crop_bp)
+
 
 # Input validation and sanitization functions
 def sanitize_input(text):
@@ -52,7 +58,9 @@ if not API_KEY:
     raise RuntimeError("GEMINI_API_KEY is not set in environment variables")
 
 # Configure Gemini Client
-client = genai.Client(api_key=API_KEY)
+genai.configure(api_key=API_KEY)
+model = genai.GenerativeModel("gemini-2.5-flash")
+
 
 
 """Secure endpoint to provide Firebase configuration to client"""
@@ -128,10 +136,9 @@ Do not use "\\n" for newlines. Instead, structure properly.
 Do not add assumptions that are not supported by the data provided.
 """
 
-        response = client.models.generate_content(
-            model=MODEL_ID,
-            contents=[{"parts": [{"text": prompt}]}]
-        )
+        response = model.generate_content(prompt)
+        reply = response.text
+
         
         if not response.candidates:
             return jsonify({
