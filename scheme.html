@@ -4,51 +4,24 @@
 <meta charset="UTF-8">
 <title>Govt Schemes & Subsidy Tracker</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600;800&display=swap" rel="stylesheet" />
 
 <style>
 :root{
   --primary:#2e7d32;
   --secondary:#1b5e20;
   --bg:#f1f5f3;
-  --card: rgba(255, 255, 255, 0.9);
-  --text:#333333;
-  --label:#1b5e20;
-  --input-bg:#ffffff;
-  --input-border:#cccccc;
+  --card:#ffffff;
   --danger:#d32f2f;
   --success:#2e7d32;
   --shadow:0 18px 45px rgba(0,0,0,0.12);
-  --heading-grad: linear-gradient(135deg, #1e293b 30%, #059669 100%);
-  --grid-color: rgba(0, 0, 0, 0.05);
 }
-
-[data-theme="dark"] {
-  --bg:#0f172a;
-  --card: rgba(30, 41, 59, 0.8);
-  --text:#f1f5f3;
-  --label:#4caf50;
-  --input-bg:#1e293b;
-  --input-border:#334155;
-  --shadow:0 18px 45px rgba(0,0,0,0.4);
-  --heading-grad: linear-gradient(135deg, #ffffff 40%, #10b981 100%);
-  --grid-color: rgba(255, 255, 255, 0.05);
-}
-
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  font-family:"Open Sans", sans-serif;
+  font-family:"Segoe UI",sans-serif;
   background:var(--bg);
-  color:var(--text);
-  transition: all 0.3s ease;
-  min-height: 100vh;
+  color:#333;
 }
-
-.serif { font-family: 'Libertinus Serif', serif; }
 
 /* HEADER */
 header{
@@ -57,34 +30,6 @@ header{
   padding:24px 30px;
   display:flex;
   align-items:center;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-header h1{font-size:24px;font-weight:800; letter-spacing: -0.02em;}
-
-.nav-actions { display: flex; align-items: center; gap: 15px; }
-
-.theme-toggle {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 40px;
-  cursor: pointer;
-  display: flex;
-  align-items: center; gap: 10px;
-  font-weight: 700;
-  transition: all 0.3s ease;
-}
-
-.theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: translateY(-2px);
-}
-
   gap:20px;
 }
 header h1{
@@ -95,193 +40,134 @@ header h1{
 header a{
   background:#fff;
   color:var(--primary);
-  padding:10px 22px;
+  padding:12px 26px;
   border-radius:40px;
   text-decoration:none;
   font-weight:800;
-  transition: all 0.3s ease;
 }
 
-header a:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-
-/* PREMIUM HERO WITH ANIMATED DATA GRID */
-.hero {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  padding: 80px 20px;
-  overflow: hidden;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
-                    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: moveGrid 120s linear infinite;
-  z-index: 0;
-}
-
-.hero::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(circle at center, transparent 20%, var(--bg) 100%);
-  z-index: 1;
-}
-
-@keyframes moveGrid {
-  from { background-position: 0 0; }
-  to { background-position: 1000px 1000px; }
-}
-
-/* GLASSMORPHISM FORM CARD */
+/* FORM */
+.hero{display:flex;justify-content:center;padding:40px 20px}
 .form-card{
-  position: relative;
-  z-index: 2;
-  background: var(--card);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  max-width: 850px;
-  width: 100%;
-  padding: 60px;
-  border-radius: 32px;
-  box-shadow: var(--shadow);
+  background:#fff;
+  max-width:900px;
+  width:100%;
+  padding:55px 65px;
+  border-radius:28px;
+  box-shadow:var(--shadow);
 }
-
-/* ADAPTIVE GRADIENT HEADING */
 .form-card h2{
-  text-align: center;
-  font-size: 42px;
-  font-weight: 800;
-  margin-bottom: 40px;
-  font-family: 'Libertinus Serif', serif;
-  background: var(--heading-grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+  text-align:center;
+  font-size:34px;
+  margin-bottom:40px;
+  color:var(--primary);
+}
+label{font-size:19px;font-weight:800;margin-top:24px;display:block}
+select,input{
+  width:100%;
+  padding:18px;
+  margin-top:10px;
+  font-size:18px;
+  border-radius:16px;
+  border:1px solid #ccc;
+}
+button{
+  margin-top:38px;
+  width:100%;
+  padding:20px;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:#fff;
+  border:none;
+  border-radius:50px;
+  font-size:21px;
+  font-weight:900;
+  cursor:pointer;
 }
 
-label { font-size: 17px; font-weight: 700; margin-top: 24px; display: block; color: var(--label); }
+/* SCHEMES */
+.container{max-width:1200px;margin:auto;padding:50px 20px}
+.scheme{
+  background:#fff;
+  border-left:10px solid var(--primary);
+  padding:32px;
+  border-radius:22px;
+  box-shadow:var(--shadow);
+  margin-bottom:30px;
+}
+.scheme h3{font-size:26px;color:#1b5e20}
+.scheme p{font-size:19px;margin:6px 0}
 
-select, input {
-  width: 100%;
-  padding: 16px 20px;
-  margin-top: 10px;
-  font-size: 17px;
-  border-radius: 14px;
-  border: 2px solid var(--input-border);
-  background: var(--input-bg);
-  color: var(--text);
-  transition: all 0.3s ease;
+.eligible{color:var(--success);font-weight:900;font-size:20px}
+.not-eligible{color:var(--danger);font-weight:900;font-size:20px}
+.deadline{color:#b71c1c;font-weight:800}
+
+.actions{
+  display:flex;
+  gap:14px;
+  margin-top:18px;
+  flex-wrap:wrap;
 }
 
-select:focus, input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.15);
+/* BUTTONS */
+.apply{
+  padding:12px 26px;
+  font-size:17px;
+  border-radius:30px;
+  font-weight:800;
+  text-decoration:none;
+  background:#1976d2;
+  color:#fff;
+}
+.apply.disabled{
+  background:#bdbdbd;
+  pointer-events:none;
+  cursor:not-allowed;
 }
 
-/* BOUNCY CTA BUTTON */
-.btn-primary-cta {
-  margin-top: 45px;
-  width: 100%;
-  padding: 22px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: #fff;
-  border: none;
-  border-radius: 50px;
-  font-size: 20px;
-  font-weight: 800;
-  cursor: pointer;
-  box-shadow: 0 10px 20px rgba(46, 125, 50, 0.3);
-  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+.docs,.reminder{
+  padding:12px 26px;
+  border-radius:30px;
+  font-size:16px;
+  font-weight:800;
+  border:none;
+  cursor:pointer;
 }
-
-.btn-primary-cta:hover {
-  transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 15px 30px rgba(46, 125, 50, 0.4);
-}
-
-.btn-primary-cta:active { transform: translateY(0) scale(0.98); }
-
-/* SCHEMES CONTAINER */
-.container{ max-width: 1100px; margin: auto; padding: 40px 20px; }
-.scheme {
-  background: var(--card);
-  border-left: 8px solid var(--primary);
-  padding: 35px;
-  border-radius: 24px;
-  box-shadow: var(--shadow);
-  margin-bottom: 30px;
-  transition: transform 0.3s ease;
-}
-
-.scheme:hover { transform: translateY(-5px); }
-.scheme h3 { font-size: 26px; color: var(--label); margin-bottom: 10px; font-family: 'Libertinus Serif', serif; }
-
-.eligible { color: var(--success); font-weight: 800; font-size: 19px; }
-.not-eligible { color: var(--danger); font-weight: 800; font-size: 19px; }
-.deadline { color: #b71c1c; font-weight: 700; margin-top: 10px; }
-[data-theme="dark"] .deadline { color: #ff5252; }
-
-.actions { display: flex; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
-
-.apply, .docs, .reminder {
-  padding: 12px 24px;
-  border-radius: 30px;
-  font-size: 15px;
-  font-weight: 700;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.apply { background: #1976d2; color: #fff; }
-.docs { background: #6a1b9a; color: #fff; }
-.reminder { background: var(--primary); color: #fff; }
-
-.apply:hover, .docs:hover, .reminder:hover { transform: translateY(-2px); filter: brightness(1.1); }
+.docs{background:#6a1b9a;color:#fff}
+.reminder{background:var(--primary);color:#fff}
 
 /* MODAL */
-.modal {
-  display: none; position: fixed; inset: 0;
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(8px);
-  justify-content: center; align-items: center; z-index: 1000;
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
 }
-.modal-content {
-  background: var(--card);
-  color: var(--text);
-  padding: 45px;
-  border-radius: 28px;
-  max-width: 550px;
-  width: 90%;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+.modal-content{
+  background:#fff;
+  padding:40px;
+  border-radius:26px;
+  max-width:520px;
+  width:90%;
 }
-.modal-content h3 { font-family: 'Libertinus Serif', serif; color: var(--label); font-size: 28px; margin-bottom: 20px; }
-.modal-content li { font-size: 17px; margin-bottom: 12px; opacity: 0.9; }
-
-.close {
-  margin-top: 30px;
-  background: var(--primary);
-  color: #fff;
-  padding: 15px;
-  border-radius: 30px;
-  text-align: center;
-  font-weight: 800;
-  cursor: pointer;
+.modal-content h3{color:var(--primary);margin-bottom:20px}
+.modal-content ul{padding-left:20px}
+.modal-content li{font-size:17px;margin-bottom:8px}
+.close{
+  margin-top:25px;
+  background:var(--primary);
+  color:#fff;
+  padding:14px;
+  border-radius:30px;
+  text-align:center;
+  cursor:pointer;
 }
 
 @media(max-width:768px){
-  header { flex-direction: column; gap: 15px; }
-  .form-card { padding: 35px 25px; }
-  .form-card h2 { font-size: 28px; }
+  .form-card{padding:30px}
+  .form-card h2{font-size:26px}
 }
 /* ========= PREMIUM DARK MODE ========= */
 body.dark{
@@ -355,54 +241,46 @@ body.dark .modal{
 }
 
 </style>
-<script src="voice-input.js" defer></script>
 </head>
 
 <body>
 
 <header>
-  <h1 class="serif">📜 Subsidy Tracker</h1>
-  <div class="nav-actions">
-      <button class="theme-toggle" id="themeToggle">
-          <i class="fas fa-moon" id="themeIcon"></i>
-          <span id="themeText">Dark</span>
-      </button>
-      <a href="index.html"><i class="fas fa-arrow-left"></i> Home</a>
-  </div>
   <h1>📜 Govt Schemes & Subsidy Tracker</h1>
   <div class="dark-toggle" onclick="toggleDark()"></div>
   <a href="index.html">⬅ Back to Home</a>
 </header>
 
 <section class="hero">
-  <div class="form-card">
-    <h2 class="serif">Check Your Scheme Eligibility</h2>
+<div class="form-card">
+<h2>Check Your Scheme Eligibility</h2>
 
-    <label>State</label>
-    <select id="state">
-      <option>India</option>
-      <option>Karnataka</option>
-      <option>Maharashtra</option>
-      <option>Tamil Nadu</option>
-      <option>Uttar Pradesh</option>
-      <option>Bihar</option>
-      <option>Punjab</option>
-      <option>Haryana</option>
-      <option>Rajasthan</option>
-      <option>Madhya Pradesh</option>
-      <option>Telangana</option>
-      <option>Andhra Pradesh</option>
-    </select>
+<label>State</label>
+<select id="state">
+<option>India</option>
+<option>Karnataka</option>
+<option>Maharashtra</option>
+<option>Tamil Nadu</option>
+<option>Uttar Pradesh</option>
+<option>Bihar</option>
+<option>Punjab</option>
+<option>Haryana</option>
+<option>Rajasthan</option>
+<option>Madhya Pradesh</option>
+<option>Telangana</option>
+<option>Andhra Pradesh</option>
+</select>
 
-    <label>Land Holding (acres)</label>
-    <input type="number" id="land" placeholder="Example: 2.5">
+<label>Land Holding (acres)</label>
+<input type="number" id="land" placeholder="Example: 2.5">
 
-    <button class="btn-primary-cta" onclick="checkEligibility()">Find Eligible Schemes</button>
-  </div>
+<button onclick="checkEligibility()">Find Eligible Schemes</button>
+</div>
 </section>
 
 <div class="container" id="schemeList"></div>
 
+<!-- MODAL -->
 <div class="modal" id="modal">
   <div class="modal-content">
     <h3 id="modalTitle"></h3>
@@ -491,34 +369,6 @@ docs:["Aadhaar Card","Bank Passbook","Fisheries Registration"]
 }
 ];
 
-// --- THEME MANAGEMENT LOGIC ---
-const themeToggle = document.getElementById('themeToggle');
-const themeIcon = document.getElementById('themeIcon');
-const themeText = document.getElementById('themeText');
-
-const currentTheme = localStorage.getItem('agritech-theme') || 'light';
-document.documentElement.setAttribute('data-theme', currentTheme);
-updateToggleUI(currentTheme);
-
-themeToggle.addEventListener('click', () => {
-    let theme = document.documentElement.getAttribute('data-theme');
-    let newTheme = theme === 'light' ? 'dark' : 'light';
-    
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('agritech-theme', newTheme);
-    updateToggleUI(newTheme);
-});
-
-function updateToggleUI(theme) {
-    if (theme === 'dark') {
-        themeIcon.className = 'fas fa-sun';
-        themeText.innerText = 'Light';
-    } else {
-        themeIcon.className = 'fas fa-moon';
-        themeText.innerText = 'Dark';
-    }
-}
-
 function checkEligibility(){
   const state=document.getElementById("state").value;
   const land=parseFloat(document.getElementById("land").value||0);
@@ -529,7 +379,7 @@ function checkEligibility(){
     const eligible=land<=s.max&&(s.states.includes(state)||s.states.includes("India"));
     list.innerHTML+=`
     <div class="scheme">
-      <h3 class="serif">${s.name}</h3>
+      <h3>${s.name}</h3>
       <p>${s.desc}</p>
       <p class="${eligible?'eligible':'not-eligible'}">
         ${eligible?'✔ Eligible':'✖ Not Eligible'}

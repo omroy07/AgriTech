@@ -22,8 +22,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="style.css" rel="stylesheet" />
 
   <link rel="stylesheet" href="about.css" />
@@ -32,6 +31,11 @@
 <body style="background-color:rgb(0, 0, 0)">
   <nav class="navbar" aria-label="Main Navigation" style="background-color:#0f172ae6;">
 
+    <div class="nav-buttons">
+      <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" placeholder="Search About AgriTech..." class="search-input" aria-label="Search content" />
+      </div>
     <div class="heading">
       <h1>About Us</h1>
     </div>
@@ -191,6 +195,7 @@
   </button>
 
   <script>
+    // Theme logic - updated to handle single toggle
     const themeToggle = document.querySelector('.theme-toggle');
     const themeText = document.querySelector('.theme-text');
     const sunIcon = document.querySelector('.sun-icon');
@@ -246,10 +251,61 @@
 
       scrollBtn.addEventListener("click", () => {
         if (scrollIcon.classList.contains("fa-arrow-up")) {
-          window.scrollTo({ top: 0, behavior: "smooth" });
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
         }
       });
     }
+
+
+    // No result element
+    const noResultDiv = document.createElement("div");
+    noResultDiv.className = "no-results";
+    noResultDiv.innerHTML = `
+      <div class="icon-wrapper">
+        <i class="fas fa-leaf"></i>
+      </div>
+      <h3>No results found</h3>
+      <p>
+        We couldn’t find anything related to your search.<br>
+        Try exploring these popular topics instead 🌱
+      </p>
+      <div class="suggestions">
+        <span>Crop Recommendation</span>
+        <span>Yield Prediction</span>
+        <span>Organic Farming</span>
+        <span>AI Agriculture</span>
+      </div>
+    `;
+
+    document.querySelector("main").appendChild(noResultDiv);
+    noResultDiv.style.display = "none";
+
+    searchInput.addEventListener("input", () => {
+  const query = searchInput.value.toLowerCase().trim();
+  let found = false;
+
+  sections.forEach(section => {
+    const elements = section.querySelectorAll("h2, p, li");
+
+    elements.forEach(el => {
+      el.classList.remove("search-highlight");
+
+      if (query !== "" && el.textContent.toLowerCase().includes(query)) {
+        el.classList.add("search-highlight");
+        found = true;
+      }
+    });
+  });
+
+  if (found) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+});
+
+    
 
     const searchInput = document.querySelector(".search-input");
     const searchButton = document.querySelector(".search-button");
@@ -323,6 +379,7 @@
 
       noResultDiv.style.display = query !== "" && !found ? "block" : "none";
     });
+
     document.addEventListener("click", (e) => {
       if (e.target.closest(".suggestions span")) {
         const text = e.target.textContent;
