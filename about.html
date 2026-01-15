@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head >
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Us - AgriTech</title>
@@ -28,40 +28,42 @@
   <link rel="stylesheet" href="about.css" />
   <link rel="stylesheet" href="theme.css" />
 </head>
-
-<body>
-  <nav class="navbar" aria-label="Main Navigation">
-    <div class="heading">
-      <h1>About Us</h1>
-    </div>
+<body style="background-color:rgb(0, 0, 0)">
+  <nav class="navbar" aria-label="Main Navigation" style="background-color:#0f172ae6;">
 
     <div class="nav-buttons">
       <div class="search-container">
-        <i class="fas fa-search search-icon"></i>
-        <input type="text" placeholder="Search About AgriTech..." class="search-input" aria-label="Search content" />
+  <input
+    type="text"
+    placeholder="Search About AgriTech..."
+    class="search-input"
+    autocomplete="off"
+    aria-label="Search content"
+  />
+  <button class="search-button" aria-label="Search">
+    <i class="fas fa-search"></i>
+  </button>
+</div>
+
       </div>
 
-      <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
-        <i class="fas fa-sun sun-icon"></i>
-        <i class="fas fa-moon moon-icon"></i>
-        <span class="theme-text">Light</span>
+           <!-- Hamburger Menu (Mobile Only) -->
+      <button class="hamburger" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
       </button>
 
       <a href="index.html" class="btn btn-secondary">Home</a>
       <a href="blog.html" class="btn btn-secondary">Blog</a>
-      <a href="login.html" class="btn btn-secondary">Login</a>
+      <a href="login.html" class="btn btn-secondary login-btn-desktop">Login</a>
       <a href="faq.html" class="btn btn-secondary">FAQ</a>
-      <a href="register.html" class="btn btn-primary" style="color:white">Register</a>
-
-      <button class="hamburger" aria-label="Toggle navigation">
-        <i class="fas fa-bars"></i>
-      </button>
+      <a href="register.html" class="btn btn-primary register-btn-desktop" style="color:white">Register</a>
+      <a href="#" class="btn btn-secondary logout-button" style="display: none;">Logout</a>
     </div>
   </nav>
 
   <main>
-    <section class="about-section" id="who-we-are">
-      <h2>🌿 Who We Are</h2>
+    <section class="about-section" id="who-we-are" style="background-color:#0f172ae6;">
+      <h2 style="color:rgb(3, 185, 3)">🌿 Who We Are</h2>
       <p>
         AgriTech is a comprehensive platform designed to empower farmers and
         agricultural enthusiasts with the latest technology and information.
@@ -76,8 +78,8 @@
       </p>
     </section>
 
-    <section class="vision-section" id="vision">
-      <h2>🌈 Our Vision</h2>
+    <section class="vision-section" id="vision" style="background-color:#0f172ae6;">
+      <h2 style="color:rgb(3, 185, 3)">🌈 Our Vision</h2>
       <p>
         Our vision is to revolutionize agriculture by building a smart,
         resilient, and inclusive ecosystem that empowers every farmer with the
@@ -99,8 +101,8 @@
       </p>
     </section>
 
-    <section class="what-we-do-section" id="what-we-do">
-      <h2>🛠️ What We Do</h2>
+    <section class="what-we-do-section" id="what-we-do" style="background-color:#0f172ae6;">
+      <h2 style="color:rgb(3, 185, 3)">🛠️ What We Do</h2>
       <p>
         We combine technology, data, and community to deliver
         smart farming solutions tailored to every grower's needs.
@@ -120,34 +122,34 @@
       </ul>
     </section>
 
-    <section class="why-it-matters-section" id="why-it-matters">
-      <h2>🌍 Why It Matters</h2>
+    <section class="why-it-matters-section" id="why-it-matters" style="background-color:#0f172ae6;">
+      <h2 style="color:rgb(3, 185, 3)">🌍 Why It Matters</h2>
       <p>
         Agriculture today faces challenges like climate change, soil degradation, unpredictable weather,
         and rising food demands. Farmers often lack timely tools to adapt—this is where we step in.
       </p>
-      <ul>
-        <li>🌾 Increase agricultural productivity</li>
-        <li>🌱 Promote sustainable practices</li>
-        <li>🛡️ Enhance food security</li>
-        <li>🏡 Support rural economies</li>
+      <ul >
+        <li><span style="font-size:25px">🌾</span> <b>Increase agricultural productivity</b></li>
+        <li><span style="font-size:25px">🌱</span> <b>Promote sustainable practices</b></li>
+        <li><span style="font-size:25px">🛡️</span> <b>Enhance food security</b></li>
+        <li><span style="font-size:25px">🏡</span> <b>Support rural economies</b></li>
       </ul>
     </section>
   </main>
-
-  <footer class="site-footer">
+  <footer class="site-footer" style="background-color:#0f172a4d;">
     <div class="footer-container">
       <div class="footer-grid">
         <div class="footer-col">
           <div class="footer-brand-header">
             <img src="images/logo.png" alt="AgriTech logo">
-            <h3 class="serif">AgriTech</h3>
+            <h3 class="serif" style="color:rgb(3, 185, 3);">AgriTech</h3>
           </div>
-          <p class="brand-text">Empowering India's Farming Future with innovative technology connecting every stakeholder.</p>
+          <p class="brand-text">Empowering India's Farming Future with innovative technology connecting every
+            stakeholder.</p>
         </div>
 
         <div class="footer-col">
-          <h4 class="serif">Quick Links</h4>
+          <h4 class="serif" style="color:rgb(3, 185, 3);">Quick Links</h4>
           <ul class="footer-ul">
             <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
             <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
@@ -157,7 +159,7 @@
         </div>
 
         <div class="footer-col">
-          <h4 class="serif">Smart Tools</h4>
+          <h4 class="serif" style="color:rgb(3, 185, 3);">Smart Tools</h4>
           <ul class="footer-ul">
             <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
             <li><a href="#"><i class="fas fa-seedling"></i> Crop Planner</a></li>
@@ -166,7 +168,7 @@
         </div>
 
         <div class="footer-col">
-          <h4 class="serif">Connect</h4>
+          <h4 class="serif" style="color:rgb(3, 185, 3);">Connect</h4>
           <div class="social-links">
             <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
@@ -191,121 +193,147 @@
     <i class="fas fa-arrow-down" id="scrollIcon"></i>
   </button>
 
-  <script>
-    // Theme logic - updated to handle single toggle
-    const themeToggle = document.querySelector('.theme-toggle');
-    const themeText = document.querySelector('.theme-text');
-    const sunIcon = document.querySelector('.sun-icon');
-    const moonIcon = document.querySelector('.moon-icon');
+<script>
+  /* =========================
+     THEME TOGGLE
+  ========================== */
+  const themeToggle = document.querySelector('.theme-toggle');
+  const themeText = document.querySelector('.theme-text');
+  const sunIcon = document.querySelector('.sun-icon');
+  const moonIcon = document.querySelector('.moon-icon');
 
-    const hamburger = document.querySelector('.hamburger');
-    const navButtons = document.querySelector('.nav-buttons');
+  const applyTheme = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
 
-    hamburger.addEventListener('click', () => {
-      navButtons.classList.toggle('active');
-    });
-
-    const applyTheme = (theme) => {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-      if (theme === 'dark') {
-        themeText.textContent = 'Light';
-        themeText.style.paddingLeft = "1rem";
-        moonIcon.style.display = 'none';
-        sunIcon.style.display = 'inline-block';
-      } else {
-        themeText.textContent = 'Dark';
-        themeText.style.paddingLeft = "0";
-        moonIcon.style.display = 'inline-block';
-        sunIcon.style.display = 'none';
-      }
-    };
-
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    applyTheme(savedTheme);
-
-    themeToggle.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'light' ? 'dark' : 'light';
-      applyTheme(next);
-    });
-
-    const scrollBtn = document.getElementById("scrollBtn");
-    const scrollIcon = document.getElementById("scrollIcon");
-
-    if (scrollBtn && scrollIcon) {
-      window.addEventListener("scroll", () => {
-        if (window.scrollY > 300) {
-          scrollBtn.classList.add('visible');
-          scrollIcon.classList.remove("fa-arrow-down");
-          scrollIcon.classList.add("fa-arrow-up");
-        } else {
-          scrollBtn.classList.remove('visible');
-          scrollIcon.classList.remove("fa-arrow-up");
-          scrollIcon.classList.add("fa-arrow-down");
-        }
-      });
-
-      scrollBtn.addEventListener("click", () => {
-        if (scrollIcon.classList.contains("fa-arrow-up")) {
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-          });
-        }
-      });
+    if (theme === 'dark') {
+      themeText.textContent = 'Light';
+      themeText.style.paddingLeft = "1rem";
+      moonIcon.style.display = 'none';
+      sunIcon.style.display = 'inline-block';
+    } else {
+      themeText.textContent = 'Dark';
+      themeText.style.paddingLeft = "0";
+      moonIcon.style.display = 'inline-block';
+      sunIcon.style.display = 'none';
     }
+  };
 
-    const searchInput = document.querySelector(".search-input");
-    const sections = document.querySelectorAll("main section");
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  applyTheme(savedTheme);
 
-    // No result element
-    const noResultDiv = document.createElement("div");
-    noResultDiv.className = "no-results";
-    noResultDiv.innerHTML = `
-      <div class="icon-wrapper">
-        <i class="fas fa-leaf"></i>
-      </div>
-      <h3>No results found</h3>
-      <p>
-        We couldn’t find anything related to your search.<br>
-        Try exploring these popular topics instead 🌱
-      </p>
-      <div class="suggestions">
-        <span>Crop Recommendation</span>
-        <span>Yield Prediction</span>
-        <span>Organic Farming</span>
-        <span>AI Agriculture</span>
-      </div>
-    `;
+  themeToggle?.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    applyTheme(current === 'light' ? 'dark' : 'light');
+  });
 
-    document.querySelector("main").appendChild(noResultDiv);
-    noResultDiv.style.display = "none";
+  /* =========================
+     HAMBURGER MENU
+  ========================== */
+  const hamburger = document.querySelector('.hamburger');
+  const navButtons = document.querySelector('.nav-buttons');
 
-    searchInput.addEventListener("input", () => {
-      const query = searchInput.value.toLowerCase().trim();
-      let found = false;
+  hamburger?.addEventListener('click', () => {
+    navButtons.classList.toggle('active');
+  });
 
-      sections.forEach(section => {
-        const elements = section.querySelectorAll("h2, p, li");
-        let sectionMatch = false;
+  /* =========================
+     SCROLL TO TOP BUTTON
+  ========================== */
+  const scrollBtn = document.getElementById("scrollBtn");
+  const scrollIcon = document.getElementById("scrollIcon");
 
-        elements.forEach(el => {
-          el.classList.remove("search-highlight");
+  if (scrollBtn && scrollIcon) {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 300) {
+        scrollBtn.classList.add('visible');
+        scrollIcon.classList.replace("fa-arrow-down", "fa-arrow-up");
+      } else {
+        scrollBtn.classList.remove('visible');
+        scrollIcon.classList.replace("fa-arrow-up", "fa-arrow-down");
+      }
+    });
 
-          if (query !== "" && el.textContent.toLowerCase().includes(query)) {
-            el.classList.add("search-highlight");
-            sectionMatch = true;
-            found = true;
-          }
-        });
+    scrollBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
 
-        section.style.display = query === "" || sectionMatch ? "block" : "none";
+  /* =========================
+     SEARCH FUNCTIONALITY
+  ========================== */
+  const searchInput = document.querySelector(".search-input");
+  const searchButton = document.querySelector(".search-button");
+  const sections = document.querySelectorAll("main section");
+
+  // No Results Element
+  const noResultDiv = document.createElement("div");
+  noResultDiv.className = "no-results";
+  noResultDiv.innerHTML = `
+    <div class="icon-wrapper">
+      <i class="fas fa-leaf"></i>
+    </div>
+    <h3>No results found</h3>
+    <p>
+      We couldn’t find anything related to your search.<br>
+      Try exploring these popular topics instead 🌱
+    </p>
+    <div class="suggestions">
+      <span>Crop Recommendation</span>
+      <span>Yield Prediction</span>
+      <span>Organic Farming</span>
+      <span>AI Agriculture</span>
+    </div>
+  `;
+  document.querySelector("main")?.appendChild(noResultDiv);
+  noResultDiv.style.display = "none";
+
+  function handleSearch(query) {
+    query = query.toLowerCase().trim();
+    let found = false;
+
+    sections.forEach(section => {
+      let sectionMatch = false;
+      const elements = section.querySelectorAll("h2, h3, p, li");
+
+      elements.forEach(el => {
+        el.classList.remove("search-highlight");
+
+        if (query && el.textContent.toLowerCase().includes(query)) {
+          el.classList.add("search-highlight");
+          sectionMatch = true;
+          found = true;
+        }
       });
+
+      section.style.display = query === "" || sectionMatch ? "block" : "none";
+    });
+
+    noResultDiv.style.display = query && !found ? "block" : "none";
+  }
+
+  searchButton?.addEventListener("click", () => {
+    handleSearch(searchInput.value);
+  });
+
+  searchInput?.addEventListener("keydown", e => {
+    if (e.key === "Enter") handleSearch(e.target.value);
+  });
+
+  searchInput?.addEventListener("input", e => {
+    handleSearch(e.target.value);
+  });
+
+  document.addEventListener("click", e => {
+    if (e.target.closest(".suggestions span")) {
+      searchInput.value = e.target.textContent;
+      handleSearch(searchInput.value);
+    }
+  });
+</script>
 
       noResultDiv.style.display = query !== "" && !found ? "block" : "none";
     });
-
     document.addEventListener("click", (e) => {
       if (e.target.closest(".suggestions span")) {
         const text = e.target.textContent;
@@ -314,6 +342,7 @@
       }
     });
   </script>
+  <script src="auth.js"></script>
 </body>
 
 </html>
