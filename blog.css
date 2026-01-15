@@ -68,7 +68,7 @@
     align-items: center;
     gap: 8px;
     padding: 10px 20px;
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    background: linear-gradient(135deg,#2cc02b,#c0392b);
     color: white;
     text-decoration: none;
     border-radius: 25px;
@@ -227,12 +227,20 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  border: 2px solid black;
+}
+
+.blog-card:hover {
+    box-shadow: 0 15px 25px rgb(20, 186, 42)!important;
+    transform: translateY(-30px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
 }
 
 .card-content {
   display: flex;
   flex-direction: column;
   height:100%;
+  justify-content: space-between;
 }
 
 .card-description {
@@ -241,6 +249,16 @@
     margin-bottom: 1.5rem;
 }
 
+.card-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.card-date {
+    color: rgb(112, 112, 111);
+    font-size: 13px;
+}
 
 .read-more-btn {
     background: linear-gradient(45deg, #4CAF50, #45a049);
@@ -345,7 +363,7 @@
     background-color: white;
     margin: 2% auto;
     padding: 0;
-    border-radius: 15px;
+    border-radius: 5px;
     width: 90%;
     max-width: 800px;
     max-height: 90vh;
@@ -359,7 +377,7 @@
 .modal-header {
     padding: 2rem;
     border-bottom: 1px solid #eee;
-    position: relative; /* Changed from sticky to relative for better layout */
+    /* position: relative; Changed from sticky to relative for better layout */
     background: white;
     z-index: 10;
     border-radius: 15px 15px 0 0;
@@ -416,12 +434,16 @@
 
 .close {
     color: #aaa;
-    float: right;
     font-size: 2rem;
     font-weight: bold;
     cursor: pointer;
     line-height: 1;
     transition: color 0.3s ease;
+    background: transparent;
+    border: none;
+    position: absolute;
+    top: 35px;
+    right: 40px;
 }
 
 .close:hover,
@@ -432,11 +454,11 @@
 /* Modal Favorite Button */
 .modal-favorite-btn {
     position: absolute;
-    top: 20px;
-    right: 60px;
+    top: 30px;
+    right: 65px;
     background: rgba(255, 255, 255, 0.9);
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     color: #ccc;
     cursor: pointer;
     padding: 10px;
@@ -966,7 +988,7 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        background-color: #2e7d32; /* AgriTech Green */
+        background-color: #17ac1e; /* AgriTech Green */
         color: white;
         text-decoration: none;
         padding: 8px 16px;
@@ -1071,4 +1093,27 @@
 
 #scrollTopBtn:active {
     transform: translateY(0);
+}
+.filter-btn {
+  transition: background 0.3s, color 0.3s, transform 0.2s;
+}
+
+.filter-btn.active {
+  background: #22c55e;
+  color: #0b1220;
+  transform: scale(1.05);
+}
+.blog-card {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
