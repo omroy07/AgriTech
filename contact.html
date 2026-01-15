@@ -19,6 +19,14 @@
       --nav-height: 70px;
     }
 
+    /* DARK THEME SUPPORT */
+    [data-theme="light"] {
+      --bg-dark: #f1f5f3;
+      --card-bg: #ffffff;
+      --text-light: #333333;
+      --input-border: #cccccc;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -30,9 +38,10 @@
       background-color: var(--bg-dark);
       color: var(--text-light);
       line-height: 1.6;
+      transition: background 0.3s ease;
     }
 
-    /* --- AUTO-HIDE NAVBAR STYLES --- */
+    /* --- PREMIUM ADAPTIVE GLASSMORPHISM & SMART-SHRINK NAVBAR --- */
     .header {
       position: fixed;
       top: 0;
@@ -40,14 +49,22 @@
       height: var(--nav-height);
       background: linear-gradient(135deg, var(--primary-green), #1b5e20);
       z-index: 2000;
-      transition: transform 0.3s ease-in-out; /* Animation for hiding */
+      /* Extended transition for premium feel */
+      transition: transform 0.3s ease-in-out, height 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s ease, backdrop-filter 0.4s ease;
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
       display: flex;
       align-items: center;
       padding: 0 20px;
     }
 
-    /* Class to hide the navbar via JS */
+    /* GLASSMORPHISM STATE: Applied on scroll */
+    .header.scrolled {
+      height: 60px; /* Smart-Shrink */
+      background: rgba(46, 125, 50, 0.7); /* 70% opacity */
+      backdrop-filter: blur(10px); /* Adaptive Glassmorphism blur */
+      -webkit-backdrop-filter: blur(10px);
+    }
+
     .nav-up {
       transform: translateY(-100%);
     }
@@ -65,8 +82,15 @@
       display: flex;
       align-items: center;
       gap: 20px;
+      transition: transform 0.3s ease;
     }
 
+    /* Shrink logo/buttons on scroll */
+    .header.scrolled .header-left, .header.scrolled .theme-toggle {
+      transform: scale(0.9);
+    }
+
+    /* --- BOUNCY INTERACTIVE EXIT BUTTON --- */
     .nav-back-btn {
       color: white;
       text-decoration: none;
@@ -75,15 +99,17 @@
       padding: 8px 16px;
       border-radius: 30px;
       font-size: 0.85rem;
-      transition: all 0.3s ease;
       display: flex;
       align-items: center;
       gap: 8px;
+      /* Elastic interaction timing */
+      transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease;
     }
 
     .nav-back-btn:hover {
       background: white;
       color: var(--primary-green);
+      transform: scale(1.1) translateY(-2px); /* Bouncy pop-out effect */
     }
 
     .logo {
@@ -100,11 +126,12 @@
       color: white;
       font-size: 1.2rem;
       cursor: pointer;
+      transition: transform 0.3s ease;
     }
 
-    /* --- HERO ADJUSTED FOR FIXED NAV --- */
+    /* --- HERO ADJUSTED --- */
     .hero {
-      padding-top: calc(var(--nav-height) + 60px); /* PREVENTS OVERLAP */
+      padding-top: calc(var(--nav-height) + 60px);
       text-align: center;
       background: linear-gradient(to bottom, #143a18, var(--bg-dark));
       padding-bottom: 80px;
@@ -123,22 +150,22 @@
       opacity: 0.8;
     }
 
-    /* --- DARK DROPDOWN FIX --- */
+    /* --- DARK DROPDOWN FIX PRESERVED --- */
     select {
       width: 100%;
       padding: 14px;
       border-radius: 10px;
-      background-color: var(--card-bg) !important; /* DARK BACKGROUND */
-      color: white !important;
+      background-color: var(--card-bg) !important;
+      color: var(--text-light) !important;
       border: 1px solid var(--input-border);
       font-size: 1rem;
       margin-top: 10px;
-      appearance: none; /* Modern look */
+      appearance: none;
     }
 
     select option {
-      background-color: var(--bg-dark); /* FIX FOR IRRITATING WHITE */
-      color: white;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
     }
 
     /* Form Styles */
@@ -170,9 +197,9 @@
       padding: 14px;
       margin-top: 8px;
       border-radius: 10px;
-      background: #273447;
+      background: rgba(39, 52, 71, 0.5);
       border: 1px solid var(--input-border);
-      color: white;
+      color: var(--text-light);
       font-size: 1rem;
     }
 
@@ -186,12 +213,13 @@
       font-weight: 700;
       font-size: 1.1rem;
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .submit-btn:hover {
-      transform: scale(1.02);
+      transform: scale(1.02) translateY(-3px);
       background: var(--accent-green);
+      box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3);
     }
 
     .contact-methods {
@@ -212,7 +240,10 @@
       text-align: center;
       width: 300px;
       border: 1px solid var(--input-border);
+      transition: transform 0.3s ease;
     }
+
+    .method-card:hover { transform: translateY(-10px); }
 
     .method-icon {
       font-size: 2rem;
@@ -239,7 +270,7 @@
           <span>AgriTech</span>
         </div>
       </div>
-      <button class="theme-toggle" id="themeToggle">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
         <i class="fas fa-sun"></i>
       </button>
     </div>
@@ -263,6 +294,11 @@
         <div class="method-icon"><i class="fas fa-phone"></i></div>
         <h3>Phone Support</h3>
         <a href="tel:+1234567890" style="color: var(--accent-green);">+1 (234) 567-890</a>
+      </div>
+      <div class="method-card">
+        <div class="method-icon"><i class="fas fa-comments"></i></div>
+        <h3>Community</h3>
+        <a href="#community" style="color: var(--accent-green);">Join Now</a>
       </div>
     </section>
 
@@ -312,27 +348,53 @@
   </div>
 
   <script>
-    // --- HIDE NAVBAR ON SCROLL LOGIC ---
+    // --- PREMIUM NAVIGATION LOGIC ---
     let lastScrollTop = 0;
     const navbar = document.getElementById('navbar');
 
     window.addEventListener('scroll', function() {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       
-      if (scrollTop > lastScrollTop && scrollTop > 100) {
-        // Scrolling down - Hide
+      // 1. ADAPTIVE GLASSMORPHISM & SMART SHRINK
+      if (scrollTop > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+
+      // 2. HIDE ON SCROLL DOWN / SHOW ON SCROLL UP
+      if (scrollTop > lastScrollTop && scrollTop > 200) {
         navbar.classList.add('nav-up');
       } else {
-        // Scrolling up - Show
         navbar.classList.remove('nav-up');
       }
       lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
     }, false);
 
+    // --- THEME TOGGLE LOGIC (FIXED) ---
+    const themeToggle = document.getElementById('themeToggle');
+    const root = document.documentElement;
+
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = localStorage.getItem('agritech-theme') || 'dark';
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      
+      root.setAttribute('data-theme', newTheme);
+      localStorage.setItem('agritech-theme', newTheme);
+      
+      // Update icon
+      themeToggle.querySelector('i').className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    });
+
+    // Load saved theme on load
+    const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
+    root.setAttribute('data-theme', savedTheme);
+    themeToggle.querySelector('i').className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+
     // Form logic
     document.getElementById('contactForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      alert('Message sent! We will contact you soon.');
+      alert('Message sent successfully! 🌱');
       this.reset();
     });
   </script>
