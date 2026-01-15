@@ -278,10 +278,10 @@ class AuthManager {
     this.saveUsers();
 
     // In production, send this via email
-    return { 
-      success: true, 
-      message: 'Password reset successfully', 
-      tempPassword: tempPassword 
+    return {
+      success: true,
+      message: 'Password reset successfully',
+      tempPassword: tempPassword
     };
   }
 }
@@ -399,3 +399,81 @@ function redirectIfLoggedIn() {
     window.location.href = 'main.html';
   }
 }
+
+// Update UI based on auth state
+AuthManager.prototype.updateAuthUI = function () {
+  const isLoggedIn = this.isLoggedIn();
+  const user = this.currentUser;
+
+  // Desktop Header Elements
+  const loginBtn = document.querySelector('.login-btn-desktop'); // Add this class to HTML
+  const registerBtn = document.querySelector('.register-btn-desktop'); // Add this class to HTML
+  const logoutBtn = document.querySelector('.logout-button');
+  const profileLink = document.querySelector('.profile-link'); // Optional: Add profile link
+
+  // Mobile Menu Elements
+  const mobileLoginLink = document.querySelector('a[href="login.html"].mobile-link');
+  const mobileRegisterLink = document.querySelector('a[href="register.html"].mobile-link');
+  const mobileLogoutLink = document.getElementById('mobile-logout-link'); // Add this to HTML
+
+  if (isLoggedIn) {
+    // Desktop: Hide Login/Register, Show Logout
+    if (loginBtn) loginBtn.style.display = 'none';
+    if (registerBtn) registerBtn.style.display = 'none';
+    if (logoutBtn) {
+      logoutBtn.style.display = 'inline-flex';
+      logoutBtn.onclick = (e) => {
+        e.preventDefault();
+        this.logout();
+        window.location.reload();
+      };
+    }
+
+    // Mobile: Hide Login/Register, Show Logout
+    if (mobileLoginLink) mobileLoginLink.style.display = 'none';
+    if (mobileRegisterLink) mobileRegisterLink.style.display = 'none';
+
+    // Check if mobile logout link exists, if not create it in mobile menu
+    if (!mobileLogoutLink) {
+      const mobileLinksContainer = document.querySelector('.mobile-links');
+      if (mobileLinksContainer) {
+        const logoutLink = document.createElement('a');
+        logoutLink.href = "#";
+        logoutLink.id = "mobile-logout-link";
+        logoutLink.className = "mobile-link";
+        logoutLink.innerHTML = `
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+                <i class="fas fa-chevron-right link-arrow"></i>
+            `;
+        logoutLink.onclick = (e) => {
+          e.preventDefault();
+          this.logout();
+          window.location.reload();
+        };
+        mobileLinksContainer.appendChild(logoutLink);
+      }
+    } else {
+      mobileLogoutLink.style.display = 'flex';
+    }
+
+  } else {
+    // Desktop: Show Login/Register, Hide Logout
+    if (loginBtn) loginBtn.style.display = 'inline-flex';
+    if (registerBtn) registerBtn.style.display = 'inline-flex';
+    if (logoutBtn) logoutBtn.style.display = 'none';
+
+    // Mobile: Show Login/Register, Hide Logout
+    if (mobileLoginLink) mobileLoginLink.style.display = 'flex';
+    if (mobileRegisterLink) mobileRegisterLink.style.display = 'flex';
+    if (mobileLogoutLink) mobileLogoutLink.style.display = 'none';
+  }
+};
+
+// Initialize global auth manager and UI
+window.authManager = new AuthManager();
+
+// Run UI update on load
+document.addEventListener('DOMContentLoaded', () => {
+  window.authManager.updateAuthUI();
+});
