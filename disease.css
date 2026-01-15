@@ -774,3 +774,134 @@ header > p {
     display: none;
   }
 }
+
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.header {
+  position: relative;
+  overflow: hidden;
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+  transform: translateX(-100%);
+}
+
+.header:hover::after {
+  animation: headerShimmer 0.8s ease;
+}
+
+@keyframes headerShimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+.back-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.back-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.4), transparent 60%);
+  opacity: 0;
+}
+
+.back-button:hover::after {
+  opacity: 1;
+  animation: rippleGlow 0.6s ease;
+}
+
+@keyframes rippleGlow {
+  0% { transform: scale(0.8); }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+.theme-toggle:hover {
+  filter: drop-shadow(0 0 8px rgba(255,255,255,0.6));
+}
+.upload-area {
+  background-size: 200% 200%;
+}
+
+.upload-area:hover {
+  border-style: solid;
+  animation: borderFlow 1.5s linear infinite;
+}
+
+@keyframes borderFlow {
+  0% { border-color: #4a7c59; }
+  50% { border-color: #2d5a27; }
+  100% { border-color: #4a7c59; }
+}
+.feature-card {
+  transform-style: preserve-3d;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px) rotateX(6deg) rotateY(-4deg);
+}
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.35),
+    transparent
+  );
+  transform: translateX(-100%);
+}
+
+.btn:hover::before {
+  animation: btnSweep 0.7s ease;
+}
+
+@keyframes btnSweep {
+  to { transform: translateX(100%); }
+}
+#chatbotBtn {
+  animation: breathe 3s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+.analysis-section,
+.features-section {
+  animation: fadeUp 0.8s ease both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
