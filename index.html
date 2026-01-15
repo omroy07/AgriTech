@@ -1781,8 +1781,6 @@
 
 
   <script type="module" src="index.js"></script>
-  
-  <script src="index.js"></script>
 
   <script>
     // Theme Toggle
@@ -1876,41 +1874,31 @@ function openMobileMenu() {
   mobileMenuOverlay.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+const mobileCloseBtn = document.querySelector('.mobile-close-btn');
 
 if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
-
   // OPEN
   hamburgerBtn.addEventListener('pointerdown', (e) => {
     e.preventDefault();
     openMobileMenu();
   });
 
-  // ❌ CLOSE — TOUCH SAFE
+  // CLOSE
   mobileCloseBtn.addEventListener('pointerdown', (e) => {
     e.preventDefault();
     e.stopPropagation();
     closeMobileMenu();
   });
 
-  // BACKUP FOR OLD MOBILE BROWSERS
-  mobileCloseBtn.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    closeMobileMenu();
-  }, { passive: false });
+  mobileMenuOverlay.addEventListener('pointerdown', closeMobileMenu);
 
-  // OVERLAY CLICK
-  mobileMenuOverlay.addEventListener('pointerdown', () => {
-    closeMobileMenu();
-  });
-
-  // PREVENT BUBBLING INSIDE MENU
   mobileMenu.addEventListener('pointerdown', (e) => {
     e.stopPropagation();
   });
 }
-
-
 
     // Mobile Services Toggle
     const mobileServicesToggle = document.getElementById('mobileServicesToggle');
