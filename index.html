@@ -452,7 +452,7 @@
       padding: 3rem 1.5rem;
       display: flex;
       justify-content: space-between;
-      gap: 3rem;
+      gap: 18rem;
       flex-wrap: wrap;
     }
 
@@ -847,10 +847,6 @@
         gap: 1.5rem;
       }
 
-      .footer-inner-content {
-        flex-direction: column;
-      }
-
       .footer-group-links {
         flex-direction: column;
         gap: 2rem;
@@ -908,7 +904,80 @@
       }
     }
 
-    .search-highlight {
+   /* 🌱 Farming Roadmap UI */
+.roadmap-card {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem 2rem;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.roadmap-card p {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  font-size: 1rem;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.roadmap-card p:last-child {
+  border-bottom: none;
+}
+
+.roadmap-card input[type="checkbox"] {
+  accent-color: var(--accent-color);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* FARMING ROADMAP STYLES */
+.roadmap-section {
+  max-width: 900px;
+  margin: 4rem auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.roadmap-title {
+  font-size: 2.2rem;
+  color: var(--accent-color);
+  margin-bottom: 1.5rem;
+}
+
+.roadmap-card {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.roadmap-card p {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  font-size: 1rem;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.roadmap-card p:last-child {
+  border-bottom: none;
+}
+
+.roadmap-card input[type="checkbox"] {
+  transform: scale(1.2);
+  accent-color: var(--accent-color);
+}
+
+.search-highlight {
       background: rgba(34, 197, 94, 0.4);
       padding: 2px 4px;
       border-radius: 4px;
@@ -1129,6 +1198,153 @@
         box-shadow: 0 0 14px rgba(34, 197, 94, .9);
       }
     }
+
+    .site-footer {
+  background: #0b1220;
+  color: #cbd5e1;
+  padding: 60px 20px 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+/* Headings */
+.footer-col h4,
+.footer-brand h3 {
+  color: #22c55e;
+  margin-bottom: 15px;
+}
+
+/* Branding */
+.brand-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-logo {
+  width: 40px;
+}
+
+.tagline {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 10px;
+}
+
+/* Lists */
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-col ul li {
+  margin-bottom: 10px;
+}
+
+.footer-col a {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+
+.footer-col a:hover {
+  color: #22c55e;
+}
+
+/* Social Icons */
+.social-icons {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.social-icons a {
+  width: 36px;
+  height: 36px;
+  background: #111827;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #22c55e;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.social-icons a:hover {
+  background: #22c55e;
+  color: #0b1220;
+  transform: translateY(-3px);
+}
+
+/* Footer bottom */
+.footer-bottom {
+  margin-top: 40px;
+  padding-top: 15px;
+  border-top: 1px solid #1f2933;
+  text-align: center;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .brand-header {
+    justify-content: center;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+}
+.footer-bottom {
+  background: #020617; /* same dark tone as footer */
+  margin-top: 40px;
+  padding: 18px 0;
+  text-align: center;
+  font-size: 13px;
+  color: #94a3b8;
+  border-top: 1px solid rgba(34, 197, 94, 0.2);
+}
+.footer-brand .tagline {
+  color: #cbd5e1;   /* brighter text */
+  max-width: 300px;
+}
+.social-icons {
+  margin-top: 16px;
+}
+.social-icons a:hover {
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.6);
+}
+.footer-col ul li a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-col ul li i {
+  color: #22c55e;
+  font-size: 14px;
+}
+
   </style>
 </head>
 
@@ -1148,7 +1364,6 @@
         <a href="index.html" class="nav-link">Home</a>
         <a href="about.html" class="nav-link">About</a>
         <a href="blog.html" class="nav-link">Blog</a>
-        <a href="scheme.html" class="nav-link">Schemes</a>
         <div class="services-toggle-container">
           <a href="#" class="nav-link services-toggle">
             Services <i class="fas fa-chevron-down services-arrow"></i>
@@ -1159,8 +1374,13 @@
               <li><a href="supply-chain.html"><i class="fas fa-truck"></i> Supply Chain Support</a></li>
               <li><a href="sustainable-farming.html"><i class="fas fa-leaf"></i> Sustainable Farming Guidance</a></li>
               <li><a href="marketplace.html"><i class="fas fa-store"></i> Marketplace Services</a></li>
-              <li><a href="financial-support.html"><i class="fas fa-dollar-sign"></i> Financial & Insurance Support</a>
-              </li>
+              <li><a href="financial-support.html"><i class="fas fa-dollar-sign"></i> Financial & Insurance Support</a></li>
+            <li><a href="disease.html"><i class="fas fa-bug"></i> Plant Disease Detector</a></li>
+<li><a href="shopkeeper.html"><i class="fas fa-store"></i> Shopkeeper Connect</a></li>
+<li><a href="organic.html"><i class="fas fa-leaf"></i> Organic Farming</a></li>
+<li><a href="scheme.html"><i class="fas fa-landmark"></i> Government Schemes</a></li>
+<li><a href="weather.html"><i class="fas fa-cloud-sun"></i> Weather Forecast</a></li>
+<li><a href="contact.html"><i class="fas fa-phone"></i> Contact Support</a></li>
             </ul>
           </div>
         </div>
@@ -1262,11 +1482,31 @@
             <span>Register</span>
             <i class="fas fa-chevron-right link-arrow"></i>
           </a>
-          <a href="scheme.html" class="mobile-link">
-            <i class="fas fa-scroll"></i> 
-            <span>Schemes</span>
-            <i class="fas fa-chevron-right link-arrow"></i>
-          </a>
+          <a href="shopkeeper.html" class="mobile-sublink">
+  <i class="fas fa-store"></i>
+  <span>Shopkeeper Connect</span>
+</a>
+
+<a href="organic.html" class="mobile-sublink">
+  <i class="fas fa-leaf"></i>
+  <span>Organic Farming</span>
+</a>
+
+<a href="scheme.html" class="mobile-sublink">
+  <i class="fas fa-landmark"></i>
+  <span>Government Schemes</span>
+</a>
+
+<a href="weather.html" class="mobile-sublink">
+  <i class="fas fa-cloud-sun"></i>
+  <span>Weather Forecast</span>
+</a>
+
+<a href="contact.html" class="mobile-sublink">
+  <i class="fas fa-phone"></i>
+  <span>Contact Support</span>
+</a>
+
           <!-- Mobile Services Dropdown -->
           <div class="mobile-services-section">
             <a href="#" class="mobile-link mobile-services-toggle" id="mobileServicesToggle">
@@ -1324,6 +1564,15 @@
     </div>
   </section>
 
+
+
+<!-- 🌱 Farming Roadmap Section -->
+<section class="roadmap-section">
+  <h2 class="roadmap-title">🌱 Farming Roadmap</h2>
+  <div class="roadmap-card" id="roadmap"></div>
+</section>
+
+
   <section class="features">
     <div class="features-container">
       <h2 class="features-title serif">Our Platform Benefits</h2>
@@ -1374,15 +1623,23 @@
       </div>
     </div>
   </section>
-
   <footer class="site-footer tech-dark-theme final-match">
     <div class="footer-top-accent"></div>
 
     <div class="footer-inner-content">
-      <div class="footer-section footer-brand">
-        <div class="brand-header">
-          <img src="images/logo.png" alt="AgriTech logo" class="brand-logo">
-          <h3>AgriTech</h3>
+        <div class="footer-section footer-brand">
+            <div class="brand-header">
+                <img src="images/logo.png" alt="AgriTech logo" class="brand-logo">
+                <h3>AgriTech</h3>
+            </div>
+            <p class="tagline">Empowering India's Farming Future with innovative technology connecting every stakeholder.</p>
+            
+            <div class="social-icons">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
         </div>
         <p class="tagline">Empowering India's Farming Future with innovative technology connecting every stakeholder.
         </p>
@@ -1521,6 +1778,9 @@
   </script>
 
 
+
+  <script type="module" src="index.js"></script>
+  
   <script src="index.js"></script>
 
   <script>

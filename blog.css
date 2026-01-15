@@ -256,7 +256,7 @@
 }
 
 .card-date {
-    color: #333;
+    color: rgb(112, 112, 111);
     font-size: 13px;
 }
 
@@ -1093,4 +1093,27 @@
 
 #scrollTopBtn:active {
     transform: translateY(0);
+}
+.filter-btn {
+  transition: background 0.3s, color 0.3s, transform 0.2s;
+}
+
+.filter-btn.active {
+  background: #22c55e;
+  color: #0b1220;
+  transform: scale(1.05);
+}
+.blog-card {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
