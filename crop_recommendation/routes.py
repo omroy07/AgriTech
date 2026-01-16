@@ -4,12 +4,13 @@ import numpy as np
 import os
 
 crop_bp = Blueprint(
-    "crop",
+    'crop',
     __name__,
-    template_folder="templates",
-    static_folder="static",
-    url_prefix="/crop"
+    url_prefix='/crop',
+    template_folder='templates',
+    static_folder='static'
 )
+
 
 # -------------------- Load Model Safely --------------------
 
