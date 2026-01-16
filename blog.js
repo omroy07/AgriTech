@@ -57,7 +57,7 @@
         }
 
        // Sample blog data - UPDATED with full content for "Read More" functionality
-const blogPosts = [
+let blogPosts = [
     {
         id: 'sustainable-farming-2025',
         title: "Sustainable Farming Practices for 2025",
@@ -301,73 +301,21 @@ const blogPosts = [
         }
 
         // Filter posts
-        function filterPosts() {
-            filteredPosts = blogPosts.filter(post => {
-                const matchesSearch = post.title.toLowerCase().includes(searchQuery) || 
-                                    post.description.toLowerCase().includes(searchQuery);
-                const matchesCategory = currentCategory === 'all' || post.category === currentCategory;
-                return matchesSearch && matchesCategory;
-            });
+       function filterPosts() {
+    filteredPosts = blogPosts.filter(post => {
+        const title = (post.title || '').toLowerCase();
+        const description = (post.description || '').toLowerCase();
+        const content = (post.content || '').toLowerCase();
 
-            currentPage = 0;
-            document.getElementById('blogGrid').innerHTML = '';
-            displayPosts();
-        }
+        const matchesSearch =
+            title.includes(searchQuery) ||
+            description.includes(searchQuery) ||
+            content.includes(searchQuery);
 
-        // Display posts with favorite buttons
-        function displayPosts() {
-            const blogGrid = document.getElementById('blogGrid');
-            const emptyState = document.getElementById('empty-blog-state');
-            const startIndex = currentPage * postsPerPage;
-            const endIndex = startIndex + postsPerPage;
-            const postsToShow = filteredPosts.slice(startIndex, endIndex);
 
-            // Check if there are no posts at all (not just filtered)
-            if (blogPosts.length === 0) {
-                emptyState.style.display = 'block';
-                blogGrid.style.display = 'none';
-                document.getElementById('loadMoreBtn').style.display = 'none';
-                return;
-            } else {
-                emptyState.style.display = 'none';
-                blogGrid.style.display = 'grid';
-            }
+        return matchesSearch && matchesCategory;
+    });
 
-            if (postsToShow.length === 0 && startIndex === 0) {
-                blogGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #666;">No posts found.</div>';
-                document.getElementById('loadMoreBtn').style.display = 'none';
-                return;
-            }
-
-            postsToShow.forEach(post => {
-                const isFavorite = window.favoritesManager ? window.favoritesManager.isFavorite(post.id) : false;
-                const favoriteIcon = isFavorite ? 'fas fa-heart' : 'far fa-heart';
-                const favoriteClass = isFavorite ? 'favorite-btn active' : 'favorite-btn';
-
-                const postElement = document.createElement('div');
-                postElement.className = 'blog-card';
-                postElement.innerHTML = `
-                    <img src="${post.image}" alt="${post.title}">
-                    <button class="${favoriteClass}" data-blog-id="${post.id}">
-                        <i class="${favoriteIcon}"></i>
-                    </button>
-                    <div class="card-content">
-                        <span class="card-category">${post.category.replace('-', ' ')}</span>
-                        <h3 class="card-title">${post.title}</h3>
-                        <p class="card-description">${post.description}</p>
-                        <div class="card-meta">
-                            <span class="card-author">By ${post.author}</span>
-                            <span class="card-date">${post.date}</span>
-                        </div>
-                        <button class="read-more-btn"style="margin-top:16px" onclick="openModal('${post.id}')">Read More</button>
-                    </div>
-                `;
-                blogGrid.appendChild(postElement);
-            });
-
-            document.getElementById('loadMoreBtn').style.display =
-                endIndex >= filteredPosts.length ? 'none' : 'inline-block';
-        }
 
         // Toggle favorite
         function toggleFavorite(blogId) {
@@ -428,8 +376,13 @@ const blogPosts = [
         }
 
         // Open modal
+        blogPosts = blogPosts.map(post => ({
+        ...post,
+        id: String(post.id)
+        }));
+
         function openModal(postId) {
-            const post = blogPosts.find(p => p.id === postId);
+            const post = blogPosts.find(p => (p.id) === (postId));
             if (!post) return;
 
             currentModalPostId = postId;
