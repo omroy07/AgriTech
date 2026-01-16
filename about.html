@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head >
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Us - AgriTech</title>
@@ -24,44 +24,712 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="style.css" rel="stylesheet" />
+   <style>
+    
+    /* =========================
+   GLOBAL FIXES
+========================= */
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #e5e7eb;
+}
 
+main section {
+  padding: 3rem 2rem;
+  border-radius: 1rem;
+  margin: 2rem auto;
+  max-width: 1100px;
+}
+
+/* =========================
+   NAVBAR SEARCH FIX
+========================= */
+.search-container {
+  display: flex;
+  align-items: center;
+  background: #020617;
+  border-radius: 999px;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid #1e293b;
+}
+
+.search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f8fafc;
+  width: 200px;
+  font-size: 0.9rem;
+}
+
+.search-input::placeholder {
+  color: #94a3b8;
+}
+
+.search-button {
+  background: transparent;
+  border: none;
+  color: #22c55e;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* =========================
+   SEARCH HIGHLIGHT
+========================= */
+.search-highlight {
+  background: rgba(34, 197, 94, 0.25);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.3rem;
+}
+
+/* =========================
+   NO RESULTS UI
+========================= */
+.no-results {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #cbd5f5;
+  animation: fadeIn 0.4s ease;
+}
+
+.no-results .icon-wrapper {
+  font-size: 3rem;
+  color: #22c55e;
+  margin-bottom: 1rem;
+}
+
+.no-results h3 {
+  font-size: 1.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.no-results p {
+  color: #94a3b8;
+  margin-bottom: 1.2rem;
+}
+
+.no-results .suggestions span {
+  display: inline-block;
+  margin: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  background: #020617;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  border: 1px solid #1e293b;
+}
+
+.no-results .suggestions span:hover {
+  background: #22c55e;
+  color: #020617;
+}
+
+/* =========================
+   SERVICES LIST
+========================= */
+.services-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 1.5rem;
+}
+
+.services-list li {
+  background: rgba(15, 23, 42, 0.8);
+  padding: 0.9rem 1.2rem;
+  border-radius: 0.75rem;
+  margin-bottom: 0.7rem;
+  border: 1px solid #1e293b;
+}
+
+/* =========================
+   FOOTER FIXES
+========================= */
+.site-footer {
+  color: #cbd5e1;
+}
+
+.footer-ul li a {
+  color: #94a3b8;
+  text-decoration: none;
+}
+
+.footer-ul li a:hover {
+  color: #22c55e;
+}
+
+/* =========================
+   CHATBOT FLOAT BUTTON
+========================= */
+#chatbotBtn {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 55px;
+  height: 55px;
+  background: #22c55e;
+  color: #020617;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  z-index: 999;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+#chatbotBtn:hover {
+  transform: scale(1.08);
+}
+
+/* =========================
+   SCROLL BUTTON
+========================= */
+.scroll-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 45px;
+  height: 45px;
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: #22c55e;
+  cursor: pointer;
+  z-index: 999;
+}
+
+.scroll-btn.visible {
+  display: flex;
+}
+
+/* =========================
+   MOBILE NAVBAR FIX
+========================= */
+.hamburger {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #f8fafc;
+  font-size: 1.3rem;
+}
+
+@media (max-width: 900px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-buttons {
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    background: #020617;
+    flex-direction: column;
+    padding: 1rem;
+    border-radius: 1rem;
+    display: none;
+    gap: 0.6rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+
+  .nav-buttons.active {
+    display: flex;
+  }
+
+  .search-container {
+    width: 100%;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+}
+
+/* =========================
+   ANIMATION
+========================= */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* =========================
+   THEME FIX (NO MORE BLACK)
+========================= */
+:root {
+  --bg-main: #020617;
+  --bg-card: #0f172a;
+  --text-main: #e5e7eb;
+}
+
+[data-theme="light"] {
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --text-main: #020617;
+}
+
+body {
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* =========================
+   NAVBAR FIX
+========================= */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1.5rem;
+  background: var(--bg-card);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-left {
+  flex: 1;
+}
+
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* =========================
+   SEARCH BAR
+========================= */
+.search-container {
+  display: flex;
+  align-items: center;
+  background: rgba(0,0,0,0.4);
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid #1e293b;
+}
+
+.search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-main);
+  width: 220px;
+}
+
+.search-button {
+  background: transparent;
+  border: none;
+  color: #22c55e;
+}
+
+/* =========================
+   HAMBURGER FIX
+========================= */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-main);
+  font-size: 1.4rem;
+}
+
+/* =========================
+   MOBILE FIX
+========================= */
+@media (max-width: 900px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-buttons {
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    flex-direction: column;
+    background: var(--bg-card);
+    padding: 1rem;
+    border-radius: 1rem;
+    display: none;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+
+  .nav-buttons.active {
+    display: flex;
+  }
+
+  .search-input {
+    width: 160px;
+  }
+}
+/* =========================
+   THEME VARIABLES
+========================= */
+:root {
+  --bg-main: #020617;
+  --bg-card: #0f172a;
+  --bg-nav: #020617;
+  --text-main: #e5e7eb;
+  --accent: #22c55e;
+}
+
+[data-theme="light"] {
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-nav: #e5e7eb;
+  --text-main: #020617;
+}
+
+/* Apply everywhere */
+body {
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+section,
+footer,
+.navbar {
+  background: var(--bg-card) !important;
+}
+
+/* =========================
+   THEME TOGGLE BUTTON
+========================= */
+.theme-toggle {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+.sun-icon {
+  display: none;
+}
+
+[data-theme="light"] .sun-icon {
+  display: inline-block;
+}
+
+[data-theme="light"] .moon-icon {
+  display: none;
+}
+/* =========================
+   NAVBAR LAYOUT FIX
+========================= */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 1.5rem;
+  background: var(--bg-nav, #0f172a);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* LEFT SIDE */
+.nav-left {
+  flex: 1;
+}
+
+/* SEARCH + THEME WRAPPER */
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid #1e293b;
+  max-width: 360px;
+}
+
+/* SEARCH INPUT */
+.search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-main, #e5e7eb);
+  width: 200px;
+  font-size: 0.9rem;
+}
+
+.search-input::placeholder {
+  color: #94a3b8;
+}
+
+/* SEARCH BUTTON */
+.search-button {
+  background: none;
+  border: none;
+  color: #22c55e;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* =========================
+   THEME TOGGLE BUTTON
+========================= */
+.theme-toggle {
+  background: none;
+  border: none;
+  color: var(--text-main, #e5e7eb);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0 0.3rem;
+}
+
+/* ICON VISIBILITY */
+.sun-icon {
+  display: none;
+}
+
+[data-theme="light"] .sun-icon {
+  display: inline-block;
+}
+
+[data-theme="light"] .moon-icon {
+  display: none;
+}
+
+/* =========================
+   NAV LINKS
+========================= */
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* =========================
+   HAMBURGER
+========================= */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-main, #e5e7eb);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+/* =========================
+   MOBILE FIX
+========================= */
+@media (max-width: 900px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-buttons {
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    flex-direction: column;
+    background: var(--bg-nav, #0f172a);
+    padding: 1rem;
+    border-radius: 1rem;
+    display: none;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+
+  .nav-buttons.active {
+    display: flex;
+  }
+
+  .search-input {
+    width: 140px;
+  }
+}
+/* =========================
+   GLOBAL THEME SYSTEM (FIX)
+========================= */
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* LIGHT MODE */
+html[data-theme="light"] {
+  --bg-main: #ffffff;
+  --bg-secondary: #f8fafc;
+  --text-main: #0f172a;
+  --card-bg: #ffffff;
+}
+
+/* DARK MODE */
+html[data-theme="dark"] {
+  --bg-main: #0f172a;
+  --bg-secondary: #020617;
+  --text-main: #f8fafc;
+  --card-bg: #020617;
+}
+
+/* APPLY BACKGROUND GLOBALLY */
+body {
+  background-color: var(--bg-main) !important;
+  color: var(--text-main) !important;
+}
+main,
+section {
+  background: transparent !important;
+}
+main,
+section {
+  background: transparent !important;
+}
+.navbar {
+  background: var(--bg-secondary) !important;
+}
+
+.card,
+.feature-card,
+.box,
+.panel {
+  background: var(--card-bg) !important;
+  color: var(--text-main);
+}
+/* =========================
+   NAVBAR LAYOUT FIX
+========================= */
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+}
+
+/* Left side container */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* space between search & toggle */
+}
+
+/* Search container stays inline */
+.search-container {
+  display: flex;
+  align-items: center;
+  background: var(--bg-secondary);
+  border-radius: 999px;
+  padding: 0.35rem 0.6rem;
+}
+
+/* Search input */
+.search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-main);
+  width: 220px;
+}
+
+/* Search icon */
+.search-button {
+  background: none;
+  border: none;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: none;
+  cursor: pointer;
+}
+
+/* Icons */
+.theme-toggle i {
+  font-size: 1rem;
+  color: var(--text-main);
+}
+
+/* Icon visibility */
+html[data-theme="dark"] .sun-icon {
+  display: inline-block;
+}
+html[data-theme="dark"] .moon-icon {
+  display: none;
+}
+html[data-theme="light"] .sun-icon {
+  display: none;
+}
+html[data-theme="light"] .moon-icon {
+  display: inline-block;
+}
+@media (max-width: 768px) {
+  .search-input {
+    width: 140px;
+  }
+}
+
+
+   </style>
   <link rel="stylesheet" href="about.css" />
   <link rel="stylesheet" href="theme.css" />
 </head>
-
-<body>
+<body style="background-color:rgb(0, 0, 0)">
   <nav class="navbar" aria-label="Main Navigation">
-    <div class="heading">
-      <h1>About Us</h1>
-    </div>
-
-    <div class="nav-buttons">
-      <div class="search-container">
-        <i class="fas fa-search search-icon"></i>
-        <input type="text" placeholder="Search About AgriTech..." class="search-input" aria-label="Search content" />
-      </div>
-
-      <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
-        <i class="fas fa-sun sun-icon"></i>
-        <i class="fas fa-moon moon-icon"></i>
-        <span class="theme-text">Light</span>
+  <div class="nav-left">
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Search About AgriTech..."
+        class="search-input"
+        autocomplete="off"
+      />
+      <button class="search-button">
+        <i class="fas fa-search"></i>
       </button>
 
-      <a href="index.html" class="btn btn-secondary">Home</a>
-      <a href="blog.html" class="btn btn-secondary">Blog</a>
-      <a href="login.html" class="btn btn-secondary">Login</a>
-      <a href="faq.html" class="btn btn-secondary">FAQ</a>
-      <a href="register.html" class="btn btn-primary" style="color:white">Register</a>
-
-      <button class="hamburger" aria-label="Toggle navigation">
-        <i class="fas fa-bars"></i>
-      </button>
     </div>
-  </nav>
+    <button class="theme-toggle" aria-label="Toggle theme">
+  <i class="fas fa-moon moon-icon"></i>
+  <i class="fas fa-sun sun-icon"></i>
+</button>
+  </div>
+
+  <button class="hamburger" aria-label="Toggle navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div class="nav-buttons">
+    <a href="index.html" class="btn btn-secondary">Home</a>
+    <a href="blog.html" class="btn btn-secondary">Blog</a>
+    <a href="login.html" class="btn btn-secondary">Login</a>
+    <a href="faq.html" class="btn btn-secondary">FAQ</a>
+    <a href="register.html" class="btn btn-primary">Register</a>
+    <a href="#" class="btn btn-secondary logout-button" style="display:none;">Logout</a>
+  </div>
+</nav>
+
 
   <main>
-    <section class="about-section" id="who-we-are">
-      <h2>🌿 Who We Are</h2>
+    <section class="about-section" id="who-we-are" style="background-color:#0f172ae6;">
+      <h2 style="color:rgb(3, 185, 3)">🌿 Who We Are</h2>
       <p>
         AgriTech is a comprehensive platform designed to empower farmers and
         agricultural enthusiasts with the latest technology and information.
@@ -76,8 +744,8 @@
       </p>
     </section>
 
-    <section class="vision-section" id="vision">
-      <h2>🌈 Our Vision</h2>
+    <section class="vision-section" id="vision" style="background-color:#0f172ae6;">
+      <h2 style="color:rgb(3, 185, 3)">🌈 Our Vision</h2>
       <p>
         Our vision is to revolutionize agriculture by building a smart,
         resilient, and inclusive ecosystem that empowers every farmer with the
@@ -99,8 +767,8 @@
       </p>
     </section>
 
-    <section class="what-we-do-section" id="what-we-do">
-      <h2>🛠️ What We Do</h2>
+    <section class="what-we-do-section" id="what-we-do" style="background-color:#0f172ae6;">
+      <h2 style="color:rgb(3, 185, 3)">🛠️ What We Do</h2>
       <p>
         We combine technology, data, and community to deliver
         smart farming solutions tailored to every grower's needs.
@@ -120,34 +788,34 @@
       </ul>
     </section>
 
-    <section class="why-it-matters-section" id="why-it-matters">
-      <h2>🌍 Why It Matters</h2>
+    <section class="why-it-matters-section" id="why-it-matters" style="background-color:#0f172ae6;">
+      <h2 style="color:rgb(3, 185, 3)">🌍 Why It Matters</h2>
       <p>
         Agriculture today faces challenges like climate change, soil degradation, unpredictable weather,
         and rising food demands. Farmers often lack timely tools to adapt—this is where we step in.
       </p>
-      <ul>
-        <li>🌾 Increase agricultural productivity</li>
-        <li>🌱 Promote sustainable practices</li>
-        <li>🛡️ Enhance food security</li>
-        <li>🏡 Support rural economies</li>
+      <ul >
+        <li><span style="font-size:25px">🌾</span> <b>Increase agricultural productivity</b></li>
+        <li><span style="font-size:25px">🌱</span> <b>Promote sustainable practices</b></li>
+        <li><span style="font-size:25px">🛡️</span> <b>Enhance food security</b></li>
+        <li><span style="font-size:25px">🏡</span> <b>Support rural economies</b></li>
       </ul>
     </section>
   </main>
-
-  <footer class="site-footer">
+  <footer class="site-footer" style="background-color:#0f172a4d;">
     <div class="footer-container">
       <div class="footer-grid">
         <div class="footer-col">
           <div class="footer-brand-header">
             <img src="images/logo.png" alt="AgriTech logo">
-            <h3 class="serif">AgriTech</h3>
+            <h3 class="serif" style="color:rgb(3, 185, 3);">AgriTech</h3>
           </div>
-          <p class="brand-text">Empowering India's Farming Future with innovative technology connecting every stakeholder.</p>
+          <p class="brand-text">Empowering India's Farming Future with innovative technology connecting every
+            stakeholder.</p>
         </div>
 
         <div class="footer-col">
-          <h4 class="serif">Quick Links</h4>
+          <h4 class="serif" style="color:rgb(3, 185, 3);">Quick Links</h4>
           <ul class="footer-ul">
             <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
             <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
@@ -157,7 +825,7 @@
         </div>
 
         <div class="footer-col">
-          <h4 class="serif">Smart Tools</h4>
+          <h4 class="serif" style="color:rgb(3, 185, 3);">Smart Tools</h4>
           <ul class="footer-ul">
             <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
             <li><a href="#"><i class="fas fa-seedling"></i> Crop Planner</a></li>
@@ -166,7 +834,7 @@
         </div>
 
         <div class="footer-col">
-          <h4 class="serif">Connect</h4>
+          <h4 class="serif" style="color:rgb(3, 185, 3);">Connect</h4>
           <div class="social-links">
             <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
@@ -190,130 +858,92 @@
   <button class="scroll-btn" id="scrollBtn" title="Scroll">
     <i class="fas fa-arrow-down" id="scrollIcon"></i>
   </button>
+<script>
+/* =========================
+   THEME TOGGLE (FIXED)
+========================= */
+const themeToggle = document.querySelector(".theme-toggle");
+const sunIcon = document.querySelector(".sun-icon");
+const moonIcon = document.querySelector(".moon-icon");
 
-  <script>
-    // Theme logic - updated to handle single toggle
-    const themeToggle = document.querySelector('.theme-toggle');
-    const themeText = document.querySelector('.theme-text');
-    const sunIcon = document.querySelector('.sun-icon');
-    const moonIcon = document.querySelector('.moon-icon');
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem("theme", theme);
 
-    const hamburger = document.querySelector('.hamburger');
-    const navButtons = document.querySelector('.nav-buttons');
+  if (theme === "dark") {
+    moonIcon.style.display = "none";
+    sunIcon.style.display = "inline-block";
+  } else {
+    sunIcon.style.display = "none";
+    moonIcon.style.display = "inline-block";
+  }
+}
 
-    hamburger.addEventListener('click', () => {
-      navButtons.classList.toggle('active');
-    });
+// Load saved theme
+const savedTheme = localStorage.getItem("theme") || "light";
+applyTheme(savedTheme);
 
-    const applyTheme = (theme) => {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-      if (theme === 'dark') {
-        themeText.textContent = 'Light';
-        themeText.style.paddingLeft = "1rem";
-        moonIcon.style.display = 'none';
-        sunIcon.style.display = 'inline-block';
-      } else {
-        themeText.textContent = 'Dark';
-        themeText.style.paddingLeft = "0";
-        moonIcon.style.display = 'inline-block';
-        sunIcon.style.display = 'none';
-      }
-    };
+// Toggle theme
+themeToggle.addEventListener("click", () => {
+  const current = document.documentElement.getAttribute("data-theme");
+  applyTheme(current === "dark" ? "light" : "dark");
+});
 
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    applyTheme(savedTheme);
+/* =========================
+   HAMBURGER MENU
+========================= */
+const hamburger = document.querySelector(".hamburger");
+const navButtons = document.querySelector(".nav-buttons");
 
-    themeToggle.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'light' ? 'dark' : 'light';
-      applyTheme(next);
-    });
+hamburger?.addEventListener("click", () => {
+  navButtons.classList.toggle("active");
+});
 
-    const scrollBtn = document.getElementById("scrollBtn");
-    const scrollIcon = document.getElementById("scrollIcon");
+/* =========================
+   SEARCH FUNCTIONALITY (FIXED)
+========================= */
+const searchInput = document.querySelector(".search-input");
+const searchButton = document.querySelector(".search-button");
+const sections = document.querySelectorAll("main section");
 
-    if (scrollBtn && scrollIcon) {
-      window.addEventListener("scroll", () => {
-        if (window.scrollY > 300) {
-          scrollBtn.classList.add('visible');
-          scrollIcon.classList.remove("fa-arrow-down");
-          scrollIcon.classList.add("fa-arrow-up");
-        } else {
-          scrollBtn.classList.remove('visible');
-          scrollIcon.classList.remove("fa-arrow-up");
-          scrollIcon.classList.add("fa-arrow-down");
-        }
-      });
+const noResultDiv = document.createElement("div");
+noResultDiv.className = "no-results";
+noResultDiv.innerHTML = `
+  <h3>No results found 🌱</h3>
+  <p>Try searching for Crop, Yield, Organic, AI</p>
+`;
+document.querySelector("main")?.appendChild(noResultDiv);
+noResultDiv.style.display = "none";
 
-      scrollBtn.addEventListener("click", () => {
-        if (scrollIcon.classList.contains("fa-arrow-up")) {
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-          });
-        }
-      });
+function handleSearch(query) {
+  query = query.toLowerCase().trim();
+  let found = false;
+
+  sections.forEach(section => {
+    let match = false;
+    const text = section.innerText.toLowerCase();
+
+    if (query && text.includes(query)) {
+      match = true;
+      found = true;
     }
 
-    const searchInput = document.querySelector(".search-input");
-    const sections = document.querySelectorAll("main section");
+    section.style.display = query === "" || match ? "block" : "none";
+  });
 
-    // No result element
-    const noResultDiv = document.createElement("div");
-    noResultDiv.className = "no-results";
-    noResultDiv.innerHTML = `
-      <div class="icon-wrapper">
-        <i class="fas fa-leaf"></i>
-      </div>
-      <h3>No results found</h3>
-      <p>
-        We couldn’t find anything related to your search.<br>
-        Try exploring these popular topics instead 🌱
-      </p>
-      <div class="suggestions">
-        <span>Crop Recommendation</span>
-        <span>Yield Prediction</span>
-        <span>Organic Farming</span>
-        <span>AI Agriculture</span>
-      </div>
-    `;
+  noResultDiv.style.display = query && !found ? "block" : "none";
+}
 
-    document.querySelector("main").appendChild(noResultDiv);
-    noResultDiv.style.display = "none";
+searchButton?.addEventListener("click", () => {
+  handleSearch(searchInput.value);
+});
 
-    searchInput.addEventListener("input", () => {
-      const query = searchInput.value.toLowerCase().trim();
-      let found = false;
+searchInput?.addEventListener("input", e => {
+  handleSearch(e.target.value);
+});
+</script>
 
-      sections.forEach(section => {
-        const elements = section.querySelectorAll("h2, p, li");
-        let sectionMatch = false;
-
-        elements.forEach(el => {
-          el.classList.remove("search-highlight");
-
-          if (query !== "" && el.textContent.toLowerCase().includes(query)) {
-            el.classList.add("search-highlight");
-            sectionMatch = true;
-            found = true;
-          }
-        });
-
-        section.style.display = query === "" || sectionMatch ? "block" : "none";
-      });
-
-      noResultDiv.style.display = query !== "" && !found ? "block" : "none";
-    });
-
-    document.addEventListener("click", (e) => {
-      if (e.target.closest(".suggestions span")) {
-        const text = e.target.textContent;
-        searchInput.value = text;
-        searchInput.dispatchEvent(new Event("input"));
-      }
-    });
-  </script>
+  <script src="auth.js"></script>
 </body>
 
 </html>

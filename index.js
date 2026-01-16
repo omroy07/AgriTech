@@ -181,3 +181,138 @@ window.addEventListener('resize', () => {
 function initThreeJS() {
     // Your Three.js code here
 }
+
+// ================================
+// 🌱 Farming Roadmap Feature (FINAL)
+// ================================
+
+import cropRoadmaps from "./roadmap.js";
+
+// --------------------
+// 1️⃣ Today calculation
+// --------------------
+function getTodayDay() {
+  const start = localStorage.getItem("roadmapStartDate");
+
+  if (!start) {
+    localStorage.setItem("roadmapStartDate", new Date().toISOString());
+    return 1;
+  }
+
+  const diff =
+    new Date() - new Date(start);
+
+  return Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
+}
+
+// --------------------
+// 2️⃣ Task generation
+// --------------------
+function generateDailyTasks(roadmap) {
+  let day = 1;
+  const tasks = [];
+
+  Object.values(roadmap).forEach(month => {
+    Object.values(month.weeks).forEach(week => {
+      week.forEach(task => {
+        tasks.push({
+          task,
+          baseDay: day,
+          day: day,
+          completed: false
+        });
+        day++;
+      });
+    });
+  });
+
+  return tasks;
+}
+
+// --------------------
+// 3️⃣ ✅ REAL rescheduling
+// --------------------
+function rescheduleTasks(tasks) {
+  const today = getTodayDay();
+
+  // ❗ MISSED = unchecked + scheduled before today
+  const missedCount = tasks.filter(
+    t => !t.completed && t.day < today
+  ).length;
+   
+  return tasks.map(t => ({
+    ...t,
+    day: t.baseDay + missedCount
+  }));
+}
+
+// --------------------
+// 4️⃣ Render UI
+// --------------------
+function renderRoadmap(tasks) {
+  const container = document.getElementById("roadmap");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  tasks
+    .sort((a, b) => a.day - b.day)
+    .forEach(task => {
+      const row = document.createElement("div");
+      row.style.display = "flex";
+      row.style.gap = "10px";
+      row.style.marginBottom = "10px";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = task.completed;
+
+      checkbox.onchange = () => {
+        task.completed = checkbox.checked;
+
+        // 🔁 Recalculate immediately
+        const updatedTasks = rescheduleTasks(tasks);
+        localStorage.setItem(
+          "roadmapProgress",
+          JSON.stringify(updatedTasks)
+        );
+        renderRoadmap(updatedTasks);
+      };
+
+      const overdue =
+        !task.completed && task.day < getTodayDay()
+          ? " 🔴 Overdue"
+          : "";
+
+      const label = document.createElement("span");
+      label.innerHTML = `
+        <strong>Day ${task.baseDay}</strong>
+        (Scheduled: Day ${task.day})
+        ${overdue}
+        : ${task.task}
+      `;
+
+      row.appendChild(checkbox);
+      row.appendChild(label);
+      container.appendChild(row);
+    });
+}
+
+// --------------------
+// 🚀 Init (ONCE)
+// --------------------
+const selectedCrop = "tomato";
+
+let tasks =
+  JSON.parse(localStorage.getItem("roadmapProgress")) ||
+  generateDailyTasks(
+    cropRoadmaps[selectedCrop].roadmap
+  );
+
+tasks = rescheduleTasks(tasks);
+localStorage.setItem(
+  "roadmapProgress",
+  JSON.stringify(tasks)
+);
+
+renderRoadmap(tasks);

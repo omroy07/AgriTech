@@ -14,10 +14,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
         rel="stylesheet">
 
+
     <link rel="icon" type="image/png" href="images/logo.png">
 
-     <style>
-        /* --- NEW CATCHY COLOR PALETTE --- */
+    <style>
         :root {
             /* DEFAULT: Sophisticated Dark Blue/Midnight Palette */
             --bg-primary: #021234;
@@ -81,7 +81,6 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        /* Dynamic Background Gradient (Subtle distinction between themes) */
         body[data-theme="dark"] {
             background-image:
                 radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.08) 0px, transparent 50%),
@@ -331,19 +330,19 @@
         }
 
         .stat-card:nth-child(1) {
-    --fire-color: rgba(255, 153, 0, 0.6);
-    --fire-glow: rgba(255, 170, 0, 0.9);
-}
+            --fire-color: rgba(255, 153, 0, 0.6);
+            --fire-glow: rgba(255, 170, 0, 0.9);
+        }
 
-.stat-card:nth-child(2) {
-    --fire-color: rgba(0, 200, 255, 0.6);
-    --fire-glow: rgba(0, 220, 255, 0.9);
-}
+        .stat-card:nth-child(2) {
+            --fire-color: rgba(0, 200, 255, 0.6);
+            --fire-glow: rgba(0, 220, 255, 0.9);
+        }
 
-.stat-card:nth-child(3) {
-    --fire-color: rgba(255, 80, 120, 0.6);
-    --fire-glow: rgba(255, 100, 150, 0.9);
-}
+        .stat-card:nth-child(3) {
+            --fire-color: rgba(255, 80, 120, 0.6);
+            --fire-glow: rgba(255, 100, 150, 0.9);
+        }
 
 
         .stat-card:nth-child(4) {
@@ -376,19 +375,19 @@
 
         /* --- Product Cards --- */
         .product-card {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 28px;
-    padding: 16px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
-}
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            padding: 16px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
 
-.product-card:hover {
-    transform: translateY(-12px);
-    border-color: var(--accent-primary);
-    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.4);
-}
+        .product-card:hover {
+            transform: translateY(-12px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.4);
+        }
 
         .product-image {
             width: 100%;
@@ -440,118 +439,118 @@
             transition: background 0.3s ease;
         }
 
-      .categories-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 24px;
-}
-.category-card {
-    background: linear-gradient(135deg, #e17055, var(--accent-secondary));
-    color: white;
-    padding: 28px 20px;
-    border-radius: 16px;
-    text-align: center;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+        }
 
-    /* IMPORTANT */
-    transform: translateZ(0);
-    transition: 
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
-}
+        .category-card {
+            background: linear-gradient(135deg, #e17055, var(--accent-secondary));
+            color: white;
+            padding: 28px 20px;
+            border-radius: 16px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
 
-/* Glow effect */
-.category-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-        circle at top right,
-        rgba(255, 255, 255, 0.15),
-        transparent 60%
-    );
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
+            /* IMPORTANT */
+            transform: translateZ(0);
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+        }
 
-/* SAFE hover (no scale) */
-.category-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 14px 30px rgba(225, 112, 85, 0.35);
-}
+        /* Glow effect */
+        .category-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right,
+                    rgba(255, 255, 255, 0.15),
+                    transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
 
-.category-card:hover::before {
-    opacity: 1;
-}
+        /* SAFE hover (no scale) */
+        .category-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 14px 30px rgba(225, 112, 85, 0.35);
+        }
+
+        .category-card:hover::before {
+            opacity: 1;
+        }
 
 
-/* Inner wrapper handles hover transform */
-.category-inner {
-    background: linear-gradient(135deg, #e17055, var(--accent-secondary));
-    color: white;
-    padding: 28px 20px;
-    border-radius: 18px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+        /* Inner wrapper handles hover transform */
+        .category-inner {
+            background: linear-gradient(135deg, #e17055, var(--accent-secondary));
+            color: white;
+            padding: 28px 20px;
+            border-radius: 18px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-/* Hover effect */
-.category-card:hover .category-inner {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 28px rgba(225, 112, 85, 0.35);
-}
+        /* Hover effect */
+        .category-card:hover .category-inner {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 28px rgba(225, 112, 85, 0.35);
+        }
 
-/* Glow animation */
-.category-inner::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at top right,
-        rgba(255, 255, 255, 0.835),
-        transparent 60%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
+        /* Glow animation */
+        .category-inner::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right,
+                    rgba(255, 255, 255, 0.835),
+                    transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
 
-.category-card:hover .category-inner::before {
-    opacity: 1;
-}
+        .category-card:hover .category-inner::before {
+            opacity: 1;
+        }
 
-/* Icon */
-.category-icon {
-    font-size: 2.8rem;
-    margin-bottom: 14px;
-}
+        /* Icon */
+        .category-icon {
+            font-size: 2.8rem;
+            margin-bottom: 14px;
+        }
 
-/* Title */
-.category-title {
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin-bottom: 6px;
-}
+        /* Title */
+        .category-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
 
-/* Count */
-.category-count {
-    font-size: 0.9rem;
-    opacity: 0.9;
-}
-.category-icon {
-    font-size: 2.8rem;
-    margin-bottom: 14px;
-}
+        /* Count */
+        .category-count {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
 
-.category-title {
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin-bottom: 6px;
-}
+        .category-icon {
+            font-size: 2.8rem;
+            margin-bottom: 14px;
+        }
 
-.category-count {
-    font-size: 0.9rem;
-    opacity: 0.9;
-}
+        .category-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .category-count {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
 
 
         .price-chart {
@@ -796,24 +795,24 @@
                 grid-template-columns: 1fr;
             }
         }
+
         /* Default (light) */
-:root {
-    --bg: #f9fafb;
-    --text: #1f2937;
-}
+        :root {
+            --bg: #f9fafb;
+            --text: #1f2937;
+        }
 
-/* Dark mode */
-body[data-theme="dark"] {
-    --bg: #0f172a;
-    --text: #e5e7eb;
-}
+        /* Dark mode */
+        body[data-theme="dark"] {
+            --bg: #0f172a;
+            --text: #e5e7eb;
+        }
 
-body {
-    background: var(--bg);
-    color: var(--text);
-    transition: background 0.3s ease, color 0.3s ease;
-}
-
+        body {
+            background: var(--bg);
+            color: var(--text);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
     </style>
 </head>
 
@@ -831,9 +830,9 @@ body {
             </div>
             <div>
                 <button id="themeToggle" class="theme-toggle">
-    <i id="themeIcon" class="fas fa-sun"></i>
-    <span id="themeText">Light</span>
-</button>
+                    <i id="themeIcon" class="fas fa-sun"></i>
+                    <span id="themeText">Light</span>
+                </button>
 
             </div>
         </nav>
@@ -1021,17 +1020,18 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
-    <button class="btn-primary" onclick="toggleCart()">
-        <i class="fas fa-cart-plus"></i> Add to Cart
-    </button>
+                            <button class="btn-primary" onclick="toggleCart()">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
 
-    <button class="btn-primary" onclick="contactSeller('Mountain Fresh')">Contact Seller</button>
+                            <button class="btn-primary" onclick="contactSeller('Mountain Fresh')">Contact the
+                                seller</button>
 
-    <button class="btn-secondary" onclick="toggleLike(this)"
-        style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;">
-        <i class="far fa-heart"></i>
-    </button>
-</div>
+                            <button class="btn-secondary" onclick="toggleLike(this)"
+                                style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
 
                     </div>
                 </div>
@@ -1062,17 +1062,18 @@ body {
                             </div>
                         </div>
                         <div class="product-actions" style="display: flex; gap: 10px;">
-    <button class="btn-primary" onclick="toggleCart()">
-        <i class="fas fa-cart-plus"></i> Add to Cart
-    </button>
+                            <button class="btn-primary" onclick="toggleCart()">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
 
-    <button class="btn-primary" onclick="contactSeller('Green Fields Co.')">Contact Seller</button>
+                            <button class="btn-primary" onclick="contactSeller('Green Fields Co.')">Contact
+                                Seller</button>
 
-    <button class="btn-secondary" onclick="toggleLike(this)"
-        style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;">
-        <i class="far fa-heart"></i>
-    </button>
-</div>
+                            <button class="btn-secondary" onclick="toggleLike(this)"
+                                style="background: var(--bg-tertiary); border: none; padding: 14px; border-radius: 14px; color: var(--text-primary); cursor: pointer;">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
 
                     </div>
                 </div>
@@ -1298,10 +1299,10 @@ body {
     </button>
 
     <script>
-       
+
         const productsGrid = document.getElementById('productsGrid');
 
-       
+
 
         // State variables
         let allProducts = [];
@@ -1319,35 +1320,35 @@ body {
         let usePagination = false;
 
         // --- Theme Toggle Logic (FIXED) ---
-       document.addEventListener('DOMContentLoaded', () => {
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = document.getElementById('themeIcon');
-    const themeText = document.getElementById('themeText');
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const themeText = document.getElementById('themeText');
 
-    // Load saved theme (default: dark)
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    applyTheme(savedTheme);
+            // Load saved theme (default: dark)
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            applyTheme(savedTheme);
 
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = document.body.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
-        applyTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
-    });
+                applyTheme(newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
 
-    function applyTheme(theme) {
-        document.body.setAttribute('data-theme', theme);
+            function applyTheme(theme) {
+                document.body.setAttribute('data-theme', theme);
 
-        if (theme === 'dark') {
-            themeIcon.className = 'fas fa-sun';
-            themeText.textContent = 'Light';
-        } else {
-            themeIcon.className = 'fas fa-moon';
-            themeText.textContent = 'Dark';
-        }
-    }
-});
+                if (theme === 'dark') {
+                    themeIcon.className = 'fas fa-sun';
+                    themeText.textContent = 'Light';
+                } else {
+                    themeIcon.className = 'fas fa-moon';
+                    themeText.textContent = 'Dark';
+                }
+            }
+        });
 
         function updateThemeButton(theme) {
             if (theme === 'dark') {
@@ -1677,38 +1678,7 @@ body {
 
         document.addEventListener('DOMContentLoaded', initializeProducts);
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = document.getElementById('themeIcon');
-    const themeText = document.getElementById('themeText');
-
-    // Initial Theme Load
-    const savedTheme = localStorage.getItem('marketplaceTheme') || 'dark';
-    document.body.setAttribute('data-theme', savedTheme);
-    updateThemeButton(savedTheme);
-
-    // Theme Toggle Event
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = document.body.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        document.body.setAttribute('data-theme', newTheme);
-        localStorage.setItem('marketplaceTheme', newTheme);
-        updateThemeButton(newTheme);
-        showNotification(`Switched to ${newTheme} theme`, 'info');
-    });
-
-    function updateThemeButton(theme) {
-        if (theme === 'dark') {
-            themeIcon.className = 'fas fa-sun';
-            themeText.textContent = 'Dark';
-        } else {
-            themeIcon.className = 'fas fa-moon';
-            themeText.textContent = 'Light';
-        }
-    }
-});
-
-    </script>
+   
+    <script src="auth.js"></script>
 </body>
 </html>
