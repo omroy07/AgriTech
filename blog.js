@@ -57,7 +57,7 @@
         }
 
        // Sample blog data - UPDATED with full content for "Read More" functionality
-const blogPosts = [
+let blogPosts = [
     {
         id: 'sustainable-farming-2025',
         title: "Sustainable Farming Practices for 2025",
@@ -416,8 +416,13 @@ const blogPosts = [
         }
 
         // Open modal
+        blogPosts = blogPosts.map(post => ({
+        ...post,
+        id: String(post.id)
+        }));
+
         function openModal(postId) {
-            const post = blogPosts.find(p => p.id === postId);
+            const post = blogPosts.find(p => (p.id) === (postId));
             if (!post) return;
 
             currentModalPostId = postId;
