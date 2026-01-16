@@ -656,68 +656,116 @@
         });
 
         cropForm.addEventListener('submit', (e) => {
-            let isValid = true;
+    // 1. ALWAYS prevent default first so it doesn't try to reload/post to a server
+    e.preventDefault();
 
-            // Validate nitrogen
-            if (!nitrogen.value || nitrogen.value < 0 || nitrogen.value > 140) {
-                showError(nitrogen, nitrogenError);
-                isValid = false;
-            } else {
-                clearError(nitrogen, nitrogenError);
-            }
+    let isValid = true;
 
-            // Validate phosphorus
-            if (!phosphorus.value || phosphorus.value < 5 || phosphorus.value > 145) {
-                showError(phosphorus, phosphorusError);
-                isValid = false;
-            } else {
-                clearError(phosphorus, phosphorusError);
-            }
+    // --- EXISTING VALIDATION LOGIC (From your provided file) ---
 
-            // Validate potassium
-            if (!potassium.value || potassium.value < 5 || potassium.value > 205) {
-                showError(potassium, potassiumError);
-                isValid = false;
-            } else {
-                clearError(potassium, potassiumError);
-            }
+    // Validate nitrogen
+    if (!nitrogen.value || nitrogen.value < 0 || nitrogen.value > 140) {
+        showError(nitrogen, nitrogenError);
+        isValid = false;
+    } else {
+        clearError(nitrogen, nitrogenError);
+    }
 
-            // Validate temperature
-            if (!temperature.value || temperature.value < 8 || temperature.value > 45) {
-                showError(temperature, temperatureError);
-                isValid = false;
-            } else {
-                clearError(temperature, temperatureError);
-            }
+    // Validate phosphorus
+    if (!phosphorus.value || phosphorus.value < 5 || phosphorus.value > 145) {
+        showError(phosphorus, phosphorusError);
+        isValid = false;
+    } else {
+        clearError(phosphorus, phosphorusError);
+    }
 
-            // Validate humidity
-            if (!humidity.value || humidity.value < 14 || humidity.value > 100) {
-                showError(humidity, humidityError);
-                isValid = false;
-            } else {
-                clearError(humidity, humidityError);
-            }
+    // Validate potassium
+    if (!potassium.value || potassium.value < 5 || potassium.value > 205) {
+        showError(potassium, potassiumError);
+        isValid = false;
+    } else {
+        clearError(potassium, potassiumError);
+    }
 
-            // Validate pH
-            if (!ph.value || ph.value < 3.5 || ph.value > 10) {
-                showError(ph, phError);
-                isValid = false;
-            } else {
-                clearError(ph, phError);
-            }
+    // Validate temperature
+    if (!temperature.value || temperature.value < 8 || temperature.value > 45) {
+        showError(temperature, temperatureError);
+        isValid = false;
+    } else {
+        clearError(temperature, temperatureError);
+    }
 
-            // Validate rainfall
-            if (!rainfall.value || rainfall.value < 20 || rainfall.value > 300) {
-                showError(rainfall, rainfallError);
-                isValid = false;
-            } else {
-                clearError(rainfall, rainfallError);
-            }
+    // Validate humidity
+    if (!humidity.value || humidity.value < 14 || humidity.value > 100) {
+        showError(humidity, humidityError);
+        isValid = false;
+    } else {
+        clearError(humidity, humidityError);
+    }
 
-            if (!isValid) {
-                e.preventDefault();
-            }
+    // Validate pH
+    if (!ph.value || ph.value < 3.5 || ph.value > 10) {
+        showError(ph, phError);
+        isValid = false;
+    } else {
+        clearError(ph, phError);
+    }
+
+    // Validate rainfall
+    if (!rainfall.value || rainfall.value < 20 || rainfall.value > 300) {
+        showError(rainfall, rainfallError);
+        isValid = false;
+    } else {
+        clearError(rainfall, rainfallError);
+    }
+
+    // --- END VALIDATION LOGIC ---
+
+
+    // --- START DUMMY DATA LOGIC (If Validation Passes) ---
+    if (isValid) {
+        
+        // 1. Get values from the form inputs
+        const nVal = parseInt(nitrogen.value);
+        const pVal = parseInt(phosphorus.value);
+        const kVal = parseInt(potassium.value);
+        const rainVal = parseInt(rainfall.value);
+        const tempVal = parseInt(temperature.value);
+
+        // 2. Define a simple variable for the recommendation
+        let recommendedCrop = "Rice"; // Default fallback
+
+        // 3. Simple IF-ELSE Logic to simulate AI analysis
+        // You can tweak these numbers to change the outcome!
+        if (nVal > 100) {
+            recommendedCrop = "Cotton";
+        } else if (rainVal > 150) {
+            recommendedCrop = "Rice";
+        } else if (rainVal < 50 && tempVal > 25) {
+            recommendedCrop = "Mothbeans";
+        } else if (kVal > 50 && pVal > 50) {
+            recommendedCrop = "Chickpea";
+        } else if (tempVal < 20 && rainVal > 80) {
+            recommendedCrop = "Maize";
+        } else {
+            recommendedCrop = "Jute";
+        }
+
+        // 4. Redirect to result page with the data in the URL
+        // We act like a server by passing data via Query Parameters
+        const queryParams = new URLSearchParams({
+            crop: recommendedCrop,
+            N: nVal,
+            P: pVal,
+            K: kVal,
+            temp: tempVal,
+            rain: rainVal
         });
+
+        // Redirect to result.html and attach the query parameters
+        window.location.href = `result.html?${queryParams.toString()}`;
+    }
+});
     </script>
 </body>
 
