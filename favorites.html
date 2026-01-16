@@ -6,7 +6,8 @@
     <title>My Favorite Blogs - AgriTech</title>
 
     <link rel="stylesheet" href="blog.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
         body {
@@ -76,9 +77,21 @@
             font-size: 1rem;
         }
 
-        .btn-danger { background: #e74c3c; color: #fff; }
-        .btn-secondary { background: #6c757d; color: #fff; }
-        .btn-primary { background: #4CAF50; color: #fff; text-decoration: none; }
+        .btn-danger {
+            background: #e74c3c;
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: #fff;
+        }
+
+        .btn-primary {
+            background: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+        }
 
         .action-btn:hover {
             transform: translateY(-2px);
@@ -89,7 +102,7 @@
             background: white;
             border-radius: 18px;
             padding: 3rem 2rem;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
         }
 
         .no-favorites {
@@ -271,8 +284,12 @@ class FavoritesPage {
 function removeFavorite(id) {
     let favorites =
         JSON.parse(localStorage.getItem('agritech_favorite_blogs')) || [];
+
     favorites = favorites.filter(b => b.id !== id);
-    localStorage.setItem('agritech_favorite_blogs', JSON.stringify(favorites));
+    localStorage.setItem(
+        'agritech_favorite_blogs',
+        JSON.stringify(favorites)
+    );
     new FavoritesPage();
 }
 

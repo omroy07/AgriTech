@@ -28,7 +28,7 @@
       --shadow-light: rgba(0, 0, 0, 0.3);
       --shadow-medium: rgba(0, 0, 0, 0.4);
       --shadow-heavy: rgba(0, 0, 0, 0.6);
-      --accent-primary: #3b82f6;
+      --accent-primary: oklch(62.55% 0.18669 259.706);
       --accent-secondary: #10b981;
       --accent-warning: #f59e0b;
       --accent-danger: #ef4444;
@@ -147,15 +147,17 @@
       color: var(--text-primary);
     }
 
-    /* Hero Section */
+    /* --- UPGRADED HERO SECTION WITH INTERESTING UI --- */
     .hero {
+      /* Base gradient */
       background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-      padding: 4rem 0;
+      padding: 6rem 0; /* Increased padding for more presence */
       text-align: center;
       position: relative;
       overflow: hidden;
     }
 
+    /* Layer 1: Subtle Animated Tech/Data Pattern Pattern */
     .hero::before {
       content: '';
       position: absolute;
@@ -163,10 +165,27 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-      opacity: 0.1;
+      /* Geometric Tech Pattern SVG rendered in brand green subtly */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%2310b981' fill-opacity='0.1'%3E%3Cpath opacity='1' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h16v-4h1v4h9v-4h1v4h9v-4h1v4h9v-4h1v4h9v-4h1v4h9v-4h1v4h9v-4h1v4h9v-4h1v4h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-80-9h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-80-9h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-80-9h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-80-9h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm-80-9h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M0 0h100v1H0zm0 0v100h1V0zm0 100h100v-1H0zm100 0v-100h-1v100z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      background-size: 60px 60px;
+      opacity: 0.4; /* Subtle visibility */
+      z-index: 0;
+      /* Slow diagonal movement animation */
+      animation: bgScroll 60s linear infinite;
     }
 
+    /* Layer 2: Vignette overlay for depth and focus */
+    .hero::after {
+        content: '';
+        position: absolute;
+        top:0; left:0; right:0; bottom:0;
+        /* Radial gradient that is transparent in center and darkens at edges */
+        background: radial-gradient(ellipse at center, transparent 20%, var(--bg-primary) 100%);
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    /* Ensure text is above all background layers */
     .hero-content {
       max-width: 800px;
       margin: 0 auto;
@@ -175,14 +194,38 @@
       z-index: 2;
     }
 
+    /* Slow background scrolling animation */
+    @keyframes bgScroll {
+        from { background-position: 0 0; }
+        to { background-position: 100% 100%; }
+    }
+
+    /* --- PREMIUM HEADING --- */
     .hero h1 {
-      font-size: 3rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: var(--text-primary);
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 1s ease forwards;
+      font-size: 4rem; /* High-impact sizing */
+      font-weight: 800; /* Extra bold for visibility */
+      letter-spacing: -0.03em; /* Modern tight kerning */
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      /* Shimmering Animated Brand Gradient */
+      background: linear-gradient(
+        to right,
+        #fff 20%,
+        var(--accent-secondary) 40%,
+        var(--accent-primary) 60%,
+        #fff 80%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shine 5s linear infinite;
+      /* Deep multi-layered shadow/glow */
+      text-shadow: 0 10px 30px rgba(16, 185, 129, 0.25);
+    }
+
+    @keyframes shine {
+      to { background-position: 200% center; }
     }
 
     .hero p {
@@ -434,6 +477,30 @@
       cursor: pointer;
     }
 
+    /* Scroll to Top Button */
+    .scroll-btn {
+      display: none;
+      position: fixed;
+      bottom: 7rem; /* Placed above chat toggle */
+      right: 2rem;
+      z-index: 1001;
+      background: var(--accent-primary);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 15px var(--shadow-medium);
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+    }
+
+    .scroll-btn:hover {
+      transform: translateY(-5px);
+      background-color: #2563eb;
+    }
+
     /* Main Content */
     .main-content {
       max-width: 1200px;
@@ -589,7 +656,6 @@
       font-weight: 700;
       color: var(--accent-secondary);
       margin-bottom: 0.5rem;
-      counter-reset: stat-counter;
     }
 
     .stat-label {
@@ -733,7 +799,6 @@
 </head>
 
 <body>
-  <!-- Navigation -->
   <nav class="navbar">
     <div class="navbar-content">
       <a href="index.html" class="btn btn-secondary" style="display: flex; align-items: center; gap: 0.5rem;">
@@ -751,7 +816,6 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
       <h1 class="serif">Financial Support & Insurance</h1>
@@ -760,9 +824,7 @@
     </div>
   </section>
 
-  <!-- Main Content -->
   <div class="main-content">
-    <!-- Loan Calculator -->
     <section class="loan-calculator loading">
       <h3 class="calculator-title serif">Agricultural Loan Calculator</h3>
       <div class="calculator-form">
@@ -793,7 +855,6 @@
       </div>
     </section>
 
-    <!-- Application Progress Tracker -->
     <section class="progress-tracker loading">
       <h3 class="section-title serif">Application Progress</h3>
       <div class="progress-steps">
@@ -811,7 +872,6 @@
       </div>
     </section>
 
-    <!-- Services Section -->
     <section class="section loading">
       <h2 class="section-title serif">Our Financial Services</h2>
       <p class="section-subtitle">Empowering farmers with tailored financial solutions for sustainable growth</p>
@@ -917,7 +977,6 @@
       </div>
     </section>
 
-    <!-- How It Works -->
     <section class="section loading">
       <h2 class="section-title serif">How It Works</h2>
       <p class="section-subtitle">Simple steps to access financial support for your farming needs</p>
@@ -950,7 +1009,6 @@
       </div>
     </section>
 
-    <!-- Statistics -->
     <section class="stats-section loading">
       <h2 class="section-title serif">Our Impact</h2>
       <div class="stats-grid">
@@ -973,7 +1031,6 @@
       </div>
     </section>
 
-    <!-- CTA Section -->
     <section class="cta-section loading">
       <h2 class="cta-title serif">Ready to Grow Your Farm?</h2>
       <p class="cta-description">Join thousands of farmers who have transformed their agricultural business with our
@@ -982,7 +1039,6 @@
     </section>
   </div>
 
-  <!-- Chat Widget -->
   <div class="chat-widget" id="chatWidget">
     <div class="chat-header">
       <h4>Financial Assistant</h4>
@@ -1001,11 +1057,16 @@
     </div>
   </div>
 
-  <button class="chat-toggle" id="chatToggle" onclick="toggleChat()">
-    <i class="fas fa-comments"></i>
+  <button class="chat-toggle" id="chatToggle">
+    <a href="finance_bot.html">
+      <i class="fas fa-comments"></i>
+    </a>
   </button>
 
-  <!-- Footer -->
+  <button id="scrollTopBtn" class="scroll-btn" onclick="scrollToTop()" aria-label="Scroll to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-links">
@@ -1016,7 +1077,7 @@
         <a href="privacy-policy.html">Privacy</a>
       </div>
       <div class="copyright">
-        <p>&copy; 2025 AgriTech. All rights reserved. Empowering agriculture through technology.</p>
+        <p>&copy; <span id="current-year"></span> AgriTech. All rights reserved. Empowering agriculture through technology.</p>
       </div>
     </div>
   </footer>
@@ -1049,6 +1110,25 @@
         themeIcon.className = 'fas fa-moon';
         themeText.textContent = 'Dark';
       }
+    }
+
+    // Scroll to Top Functionality
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+    window.onscroll = function() {
+      // Show button when scrolled down 300px
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        scrollTopBtn.style.display = "block";
+      } else {
+        scrollTopBtn.style.display = "none";
+      }
+    };
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     }
 
     // Loan Calculator
@@ -1160,25 +1240,38 @@
       }
     });
 
-    // Counter Animation
-    function animateCounters() {
-      const counters = document.querySelectorAll('.stat-number');
-      counters.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-target'));
-        const increment = target / 100;
-        let current = 0;
+    // IMPROVED Counter Animation logic
+    let hasAnimated = false; // Flag to ensure animation runs only once
 
-        const updateCounter = () => {
-          if (current < target) {
-            current += increment;
-            counter.textContent = Math.ceil(current).toLocaleString();
+    function animateCounters() {
+      if (hasAnimated) return;
+      hasAnimated = true;
+
+      const counters = document.querySelectorAll('.stat-number');
+      const duration = 2000; // Total duration in ms
+
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const startTime = performance.now();
+
+        const updateCounter = (currentTime) => {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          
+          // Use easeOutQuad for smoother visual feeling
+          const easedProgress = 1 - (1 - progress) * (1 - progress);
+          const currentCount = Math.floor(easedProgress * target);
+
+          counter.textContent = currentCount.toLocaleString();
+
+          if (progress < 1) {
             requestAnimationFrame(updateCounter);
           } else {
             counter.textContent = target.toLocaleString();
           }
         };
 
-        updateCounter();
+        requestAnimationFrame(updateCounter);
       });
     }
 
@@ -1207,6 +1300,7 @@
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          // Trigger counter animation specifically when stats-section is visible
           if (entry.target.classList.contains('stats-section')) {
             animateCounters();
           }
@@ -1231,11 +1325,18 @@
 
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
+      // Automatically update the copyright year
+      const yearSpan = document.getElementById("current-year");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+      
       calculateLoan();
       showNotification('Welcome to AgriTech Financial Services!');
     });
   </script>
   <script src="theme.js"></script>
+
 </body>
 
 </html>

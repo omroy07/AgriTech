@@ -45,25 +45,35 @@ def validate_input(data):
     return True, "Valid input"
 
 # Initialize Gemini API
-API_KEY = os.environ.get('GEMINI_API_KEY', 'YOUR-API-KEY')
+API_KEY = os.environ.get('GEMINI_API_KEY')
 MODEL_ID = 'gemini-2.5-flash'
+
+if not API_KEY:
+    raise RuntimeError("GEMINI_API_KEY is not set in environment variables")
 
 # Configure Gemini Client
 client = genai.Client(api_key=API_KEY)
 
 
+"""Secure endpoint to provide Firebase configuration to client"""
 @app.route('/api/firebase-config')
 def get_firebase_config():
-    """Secure endpoint to provide Firebase configuration to client"""
-    return jsonify({
-        'apiKey': os.environ.get('FIREBASE_API_KEY'),
-        'authDomain': os.environ.get('FIREBASE_AUTH_DOMAIN'),
-        'projectId': os.environ.get('FIREBASE_PROJECT_ID'),
-        'storageBucket': os.environ.get('FIREBASE_STORAGE_BUCKET'),
-        'messagingSenderId': os.environ.get('FIREBASE_MESSAGING_SENDER_ID'),
-        'appId': os.environ.get('FIREBASE_APP_ID'),
-        'measurementId': os.environ.get('FIREBASE_MEASUREMENT_ID')
-    })
+    try:
+        return jsonify({
+            'apikey': os.environ['FIREBASE_API_KEY'],
+            'authDomain': os.environ['FIREBASE_AUTH_DOMAIN'],
+            'projectId': os.environ['FIREBASE_PROJECT_ID'],
+            'storageBucket': os.environ['FIREBASE_STORAGE_BUCKET'],
+            'messagingSenderId': os.environ['FIREBASE_MESSAGING_SENDER_ID'],
+            'appId': os.environ['FIREBASE_APP_ID'],
+            'measurementId': os.environ['FIREBASE_MEASUREMENT_ID']
+
+        })
+    except KeyError as e:
+        return jsonify({
+            "status": "error",
+            "message":f"Missing environment variable: {str(e)}"
+        }),500
 
 
 @app.route('/process-loan', methods=['POST'])
@@ -74,7 +84,10 @@ def process_loan():
         # Validate and sanitize input
         is_valid, validation_message = validate_input(json_data)
         if not is_valid:
-            return jsonify({"status": "error", "message": validation_message}), 400
+            return jsonify({
+                "status": "error",
+                "message": validation_message
+                }), 400
         
         # Sanitize any text fields in the JSON data
         if isinstance(json_data, dict):
@@ -119,14 +132,24 @@ Do not add assumptions that are not supported by the data provided.
             model=MODEL_ID,
             contents=[{"parts": [{"text": prompt}]}]
         )
+        
+        if not response.candidates:
+            return jsonify({
+                "status": "error",
+                "message": "No response generated from Gemini API"
+          }), 500
 
         reply = response.candidates[0].content.parts[0].text
-        return jsonify({"status": "success", "message": reply}), 200
+        return jsonify({
+            "status": "success",
+            "message": "Loan processes successfully "
+            }), 200
 
-    except Exception as e:
-        print(f"Unexpected Error: {e}")
+    except Exception :
         traceback.print_exc()
-        return jsonify({"status": "error", "message": str(e)}), 500
+        return jsonify({
+            "status": "error",
+            "message": "Failed to process loan request. Please try again later."}), 500
 
 
 # Serve HTML pages
@@ -169,3 +192,18 @@ def serve_static(filename):
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
+
+#Global Error Handling 
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({
+        "status" : "error",
+        "message" :"Resource not found"
+    }),404
+
+@app.errorhandler(500)
+def internal_error(error):
+    return jsonify({
+        "status": "error",
+        "message": "Internal server error"
+    }), 500

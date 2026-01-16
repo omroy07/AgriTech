@@ -46,7 +46,7 @@
             </div>
 
             <div class="blog-grid" id="blogGrid">
-                </div>
+            </div>
 
             <div class="load-more-container">
                 <button class="load-more-btn" id="loadMoreBtn">Load More Posts</button>
@@ -57,11 +57,16 @@
     <div id="blogModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <span class="close">&times;</span>
-                <button class="modal-favorite-btn" id="modalFavoriteBtn">
-                    <i class="far fa-heart"></i>
-                </button>
+                
                 <h2 class="modal-title" id="modalTitle"></h2>
+
+                <div class="icons">
+                    <button class="close">&times;</button>
+                    <button class="modal-favorite-btn" id="modalFavoriteBtn">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                    
                 
                 <div class="modal-meta">
                     <span id="modalAuthor"><i class="fas fa-user"></i> </span>
@@ -79,7 +84,35 @@
     </div>
 
     <script src="js/features/favorites.js"></script>
-    
-    <script src="blog.js"></script> 
+
+    <script src="blog.js"></script>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" title="Go to top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Scroll to Top Functionality
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+        // Show/hide button based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        // Smooth scroll to top when clicked
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+    <script src="blog.js"></script>
 </body>
 </html>
