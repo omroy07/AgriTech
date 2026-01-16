@@ -317,9 +317,21 @@ const blogPosts = [
         // Display posts with favorite buttons
         function displayPosts() {
             const blogGrid = document.getElementById('blogGrid');
+            const emptyState = document.getElementById('empty-blog-state');
             const startIndex = currentPage * postsPerPage;
             const endIndex = startIndex + postsPerPage;
             const postsToShow = filteredPosts.slice(startIndex, endIndex);
+
+            // Check if there are no posts at all (not just filtered)
+            if (blogPosts.length === 0) {
+                emptyState.style.display = 'block';
+                blogGrid.style.display = 'none';
+                document.getElementById('loadMoreBtn').style.display = 'none';
+                return;
+            } else {
+                emptyState.style.display = 'none';
+                blogGrid.style.display = 'grid';
+            }
 
             if (postsToShow.length === 0 && startIndex === 0) {
                 blogGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #666;">No posts found.</div>';
@@ -353,7 +365,7 @@ const blogPosts = [
                 blogGrid.appendChild(postElement);
             });
 
-            document.getElementById('loadMoreBtn').style.display = 
+            document.getElementById('loadMoreBtn').style.display =
                 endIndex >= filteredPosts.length ? 'none' : 'inline-block';
         }
 
