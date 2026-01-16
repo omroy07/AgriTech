@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Favorite Blogs - AgriTech</title>
 
-    <link rel="stylesheet" href="blog.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="blog.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
     <style>
         body {
@@ -15,7 +15,7 @@
             background: linear-gradient(180deg, #eef3f8, #dfe7f0);
         }
 
-        /* ACCESSIBILITY: visible focus for keyboard users */
+        /* ACCESSIBILITY: visible focus */
         button:focus-visible,
         a:focus-visible {
             outline: 3px solid #2c5f2d;
@@ -69,21 +69,14 @@
             border-radius: 999px;
             cursor: pointer;
             font-weight: 600;
-            transition: 0.3s;
             display: flex;
             align-items: center;
             gap: 0.6rem;
-            font-size: 1rem;
         }
 
         .btn-danger { background: #e74c3c; color: #fff; }
         .btn-secondary { background: #6c757d; color: #fff; }
         .btn-primary { background: #4CAF50; color: #fff; text-decoration: none; }
-
-        .action-btn:hover {
-            transform: translateY(-2px);
-            opacity: 0.9;
-        }
 
         #favoritesContainer {
             background: white;
@@ -116,7 +109,6 @@
             padding: 0.5rem 1rem;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 0.9rem;
         }
 
         .back-to-blog {
@@ -143,7 +135,6 @@
                 <i class="fas fa-heart" aria-hidden="true"></i>
                 My Favorite Blogs
             </h1>
-
             <p class="favorites-stats">
                 You have
                 <span id="favoritesCount" aria-live="polite">0</span>
@@ -174,7 +165,7 @@
             </a>
         </div>
 
-        <div id="favoritesContainer"></div>
+        <div id="favoritesContainer" role="region" aria-label="Favorite blogs list"></div>
     </div>
 </section>
 
@@ -196,10 +187,7 @@ class FavoritesPage {
                     <i class="far fa-heart" aria-hidden="true"></i>
                     <h3>No Favorite Blogs Yet</h3>
                     <p>Start exploring our blog section and add favorites.</p>
-                    <a href="blog.html"
-                       class="back-to-blog"
-                       aria-label="Explore all blogs">
-                        <i class="fas fa-newspaper" aria-hidden="true"></i>
+                    <a href="blog.html" class="back-to-blog" aria-label="Explore all blogs">
                         Explore Blogs
                     </a>
                 </div>
@@ -214,37 +202,26 @@ class FavoritesPage {
                         <img src="${blog.image}" alt="${blog.title}">
 
                         <button class="favorite-btn active"
-                                tabindex="0"
                                 aria-label="Remove ${blog.title} from favorites"
+                                aria-pressed="true"
                                 data-id="${blog.id}">
                             <i class="fas fa-heart" aria-hidden="true"></i>
                         </button>
 
                         <div class="card-content">
-                            <span class="card-category">
-                                ${(blog.category || 'Uncategorized').replace('-', ' ')}
-                            </span>
-
                             <h3 class="card-title">${blog.title}</h3>
                             <p class="card-description">${blog.description}</p>
 
                             <div class="favorite-item-actions">
-                                <button class="read-more-btn"
-                                        onclick="viewBlogPost('${blog.id}')"
-                                        aria-label="Read full blog ${blog.title}">
-                                    Read Article
-                                </button>
-
                                 <button class="remove-btn"
                                         onclick="removeFavorite('${blog.id}')"
                                         aria-label="Remove ${blog.title} from favorites">
-                                    <i class="fas fa-trash" aria-hidden="true"></i>
                                     Remove
                                 </button>
                             </div>
                         </div>
                     </div>
-                `).join('')}
+                `).join("")}
             </div>
         `;
 
@@ -303,10 +280,6 @@ function exportFavorites() {
     a.download = 'agritech-favorites.json';
     a.click();
     URL.revokeObjectURL(url);
-}
-
-function viewBlogPost(id) {
-    window.location.href = `blog.html#${id}`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {

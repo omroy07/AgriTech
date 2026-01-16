@@ -4,282 +4,105 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-  <meta name="description" content="AgriTech FAQ - Frequently Asked Questions about our agricultural technology platform. Get answers about registration, usage, payments, and more." />
+  <meta name="description"
+    content="AgriTech FAQ - Frequently Asked Questions about our agricultural technology platform. Get answers about registration, usage, payments, and more." />
   <title>FAQ - AgriTech | Frequently Asked Questions</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="icon" type="image/png" href="images/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
+    rel="stylesheet" />
   <link href="style.css" rel="stylesheet" />
-  
-  <style>
-    /* FIX #476: Remove footer link stroke/underline animations */
-    .site-footer .footer-links a::before,
-    .site-footer .footer-links a::after,
-    .footer-links ul li a::after, 
-    .site-footer .footer-links a:hover::before {
-      display: none !important;
-      width: 0 !important;
-      content: none !important;
-    }
-
-    /* Optional: Keep a simple color change on hover so it's not boring */
-    .site-footer .footer-links a:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateX(5px); /* Simple movement instead of stroke */
-      text-decoration: none !important;
-    }
-
-    /* FAQ Specific Styles */
-    .faq-hero {
-      background: linear-gradient(135deg, var(--light-green) 0%, var(--bg-secondary) 100%);
-      padding: 3rem 2rem;
-      text-align: center;
-    }
-
-    .faq-hero-content {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .faq-hero h1 {
-      font-family: 'Libertinus Serif', serif;
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 1rem;
-      line-height: 1.2;
-    }
-
-    .faq-hero p {
-      font-size: 1.125rem;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      margin-bottom: 2rem;
-    }
-
-    .faq-container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
-      background: var(--bg-primary);
-    }
-
-    .faq-section {
-      margin-bottom: 3rem;
-    }
-
-    .faq-section-title {
-      font-family: 'Libertinus Serif', serif;
-      font-size: 2rem;
-      font-weight: 600;
-      color: var(--primary-green);
-      margin-bottom: 2rem;
-      text-align: center;
-      position: relative;
-    }
-
-    .faq-section-title::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 3px;
-      background: var(--primary-green);
-      border-radius: 2px;
-    }
-
-    .faq-item {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      margin-bottom: 1rem;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-
-    .faq-item:hover {
-      border-color: var(--primary-green);
-      box-shadow: 0 4px 15px var(--shadow-light);
-    }
-
-    .faq-question {
-      padding: 1.5rem;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--bg-secondary);
-      transition: all 0.3s ease;
-      user-select: none;
-    }
-
-    .faq-question:hover {
-      background: var(--bg-tertiary);
-    }
-
-    .faq-question h3 {
-      font-family: 'Libertinus Serif', serif;
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin: 0;
-      padding-right: 1rem;
-      line-height: 1.4;
-    }
-
-    .faq-icon {
-      color: var(--primary-green);
-      font-size: 1.25rem;
-      transition: transform 0.3s ease;
-      flex-shrink: 0;
-    }
-
-    .faq-item.active .faq-icon {
-      transform: rotate(180deg);
-    }
-
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-
-    .faq-item.active .faq-answer {
-      max-height: 500px;
-    }
-
-    .faq-answer-content {
-      padding: 0 1.5rem 1.5rem;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      font-size: 1rem;
-    }
-
-    .faq-answer-content p {
-      margin-bottom: 1rem;
-    }
-
-    .faq-answer-content ul {
-      padding-left: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .faq-answer-content li {
-      margin-bottom: 0.5rem;
-    }
-
-    .faq-answer-content strong {
-      color: var(--primary-green);
-      font-weight: 600;
-    }
-
-    .contact-cta {
-      background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
-      color: white;
-      padding: 3rem 2rem;
-      text-align: center;
-      margin-top: 3rem;
-    }
-
-    .contact-cta h2 {
-      font-family: 'Libertinus Serif', serif;
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .contact-cta p {
-      font-size: 1.125rem;
-      margin-bottom: 2rem;
-      opacity: 0.9;
-    }
-
-    .contact-btn {
-      display: inline-block;
-      background: white;
-      color: var(--primary-green);
-      padding: 1rem 2rem;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.125rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .contact-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .faq-hero {
-        padding: 2rem 1rem;
-      }
-
-      .faq-container {
-        padding: 3rem 1rem;
-      }
-
-      .faq-question {
-        padding: 1.25rem;
-      }
-
-      .faq-question h3 {
-        font-size: 1.125rem;
-      }
-
-      .faq-answer-content {
-        padding: 0 1.25rem 1.25rem;
-      }
-
-      .contact-cta {
-        padding: 2.5rem 1rem;
-      }
-    }
-  </style>
+  <link href="faq.css" rel="stylesheet" />
 </head>
 
 <body>
   <!-- Navigation -->
   <nav class="navbar">
     <div class="navbar-content">
-      <div class="brand">
+      <!-- Left side: Logo and Brand Name -->
+      <div class="brand-section">
+        <img src="images/logo.png" alt="AgriTech Logo" class="nav-logo">
         <a href="index.html" class="logo">AgriTech</a>
       </div>
-      <div class="nav-buttons">
-        <!-- Responsive Search Bar -->
+
+      <!-- Center: Navigation Links -->
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="services.html" class="nav-link">Services</a>
+
+        <!-- Search Bar -->
         <div class="search-container">
-          <input type="text" placeholder="Search..." class="search-input" />
-          <button class="search-button">
+          <input type="text" placeholder="Search..." class="search-input" autocomplete="off"
+            aria-label="Search content" />
+          <button class="search-button" aria-label="Search">
             <i class="fas fa-search"></i>
           </button>
         </div>
+      </div>
 
+      <!-- Right side: Buttons -->
+      <div class="nav-buttons">
         <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
           <i class="fas fa-sun sun-icon"></i>
           <i class="fas fa-moon moon-icon"></i>
-          <span class="theme-text">Dark</span>
+          <span class="theme-text">Light</span>
         </button>
 
-        <a href="about.html" class="btn btn-secondary">About</a>
-        <a href="faq.html" class="btn btn-secondary">FAQ</a>
-        <a href="login.html" class="btn btn-secondary">Login</a>
-        <a href="register.html" class="btn btn-primary">Register</a>
+        <a href="login.html" class="btn btn-secondary login-btn-desktop">Login</a>
+        <a href="faq.html" class="btn btn-secondary active">FAQ</a>
+        <a href="#" class="btn btn-secondary logout-button" style="display: none;">Logout</a>
+        <a href="register.html" class="btn btn-primary register-btn-desktop">Register</a>
       </div>
+
+      <!-- Mobile Hamburger Menu Button -->
+      <button class="nav-toggle btn" id="navToggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
   </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-search">
+      <input type="text" placeholder="Search..." class="mobile-search-input" autocomplete="off"
+        aria-label="Search content" />
+      <button class="mobile-search-btn" aria-label="Search">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+
+    <div class="mobile-nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="services.html" class="nav-link">Services</a>
+    </div>
+
+    <div class="mobile-nav-buttons">
+      <button class="theme-toggle btn" id="mobileThemeToggle" aria-label="Toggle dark/light mode">
+        <i class="fas fa-sun sun-icon"></i>
+        <i class="fas fa-moon moon-icon"></i>
+        <span class="theme-text">Light</span>
+      </button>
+
+      <a href="login.html" class="btn btn-secondary login-btn-mobile">Login</a>
+      <a href="faq.html" class="btn btn-secondary active">FAQ</a>
+      <a href="#" class="btn btn-secondary logout-link-mobile" style="display: none;">Logout</a>
+      <a href="register.html" class="btn btn-primary register-btn-mobile">Register</a>
+    </div>
+  </div>
 
   <!-- FAQ Hero Section -->
   <section class="faq-hero">
     <div class="faq-hero-content">
       <h1 class="serif">Frequently Asked Questions</h1>
       <p>
-        Find quick answers to common questions about AgriTech platform, user registration, 
+        Find quick answers to common questions about AgriTech platform, user registration,
         transactions, and more. We're here to help you navigate our agricultural ecosystem seamlessly.
       </p>
     </div>
@@ -287,11 +110,11 @@
 
   <!-- FAQ Container -->
   <div class="faq-container">
-    
+
     <!-- Getting Started Section -->
     <div class="faq-section">
       <h2 class="faq-section-title serif">Getting Started</h2>
-      
+
       <div class="faq-item">
         <div class="faq-question" onclick="toggleFaq(this)">
           <h3>What is AgriTech and how does it work?</h3>
@@ -299,14 +122,17 @@
         </div>
         <div class="faq-answer">
           <div class="faq-answer-content">
-            <p>AgriTech is a comprehensive agricultural technology platform that connects all stakeholders in India's farming ecosystem. Our platform serves as a digital marketplace and resource hub that brings together:</p>
+            <p>AgriTech is a comprehensive agricultural technology platform that connects all stakeholders in India's
+              farming ecosystem. Our platform serves as a digital marketplace and resource hub that brings together:</p>
             <ul>
               <li><strong>Farmers</strong> - List and sell their produce directly to buyers</li>
               <li><strong>Buyers</strong> - Source fresh produce with transparent pricing</li>
               <li><strong>Equipment Suppliers</strong> - Provide modern agricultural equipment and services</li>
               <li><strong>Grocery Sellers</strong> - Access reliable supply chains for fresh produce</li>
             </ul>
-            <p>The platform works by creating direct connections between these stakeholders, eliminating middlemen, ensuring fair pricing, and providing smart tools for crop recommendation, yield prediction, and disease detection.</p>
+            <p>The platform works by creating direct connections between these stakeholders, eliminating middlemen,
+              ensuring fair pricing, and providing smart tools for crop recommendation, yield prediction, and disease
+              detection.</p>
           </div>
         </div>
       </div>
@@ -327,7 +153,8 @@
               <li>Verify your email address and phone number</li>
               <li>Complete your profile with additional details and preferences</li>
             </ul>
-            <p>Once registered, you'll have access to your personalized dashboard with tools and features specific to your role.</p>
+            <p>Once registered, you'll have access to your personalized dashboard with tools and features specific to
+              your role.</p>
           </div>
         </div>
       </div>
@@ -347,7 +174,9 @@
               <li>Free browsing and search capabilities for buyers</li>
               <li>Free access to market prices and weather information</li>
             </ul>
-            <p>We may introduce <strong>premium features</strong> in the future for advanced analytics, priority listing, or enhanced support, but our core mission is to keep essential farming tools accessible to all.</p>
+            <p>We may introduce <strong>premium features</strong> in the future for advanced analytics, priority
+              listing, or enhanced support, but our core mission is to keep essential farming tools accessible to all.
+            </p>
           </div>
         </div>
       </div>
@@ -356,7 +185,7 @@
     <!-- Using the Platform Section -->
     <div class="faq-section">
       <h2 class="faq-section-title serif">Using the Platform</h2>
-      
+
       <div class="faq-item">
         <div class="faq-question" onclick="toggleFaq(this)">
           <h3>How can I list my produce or agricultural equipment for sale?</h3>
@@ -374,7 +203,8 @@
               <li>Set your location, availability, and preferred contact method</li>
               <li>Review and publish your listing</li>
             </ul>
-            <p>Your listings will be visible to relevant buyers in your area and across the platform. You can edit, update, or remove listings at any time from your dashboard.</p>
+            <p>Your listings will be visible to relevant buyers in your area and across the platform. You can edit,
+              update, or remove listings at any time from your dashboard.</p>
           </div>
         </div>
       </div>
@@ -396,7 +226,8 @@
               <li>Arrange payment and delivery methods with the seller</li>
               <li>Rate and review the transaction after completion</li>
             </ul>
-            <p>Our platform facilitates the connection but allows you to handle transactions directly with sellers for maximum flexibility.</p>
+            <p>Our platform facilitates the connection but allows you to handle transactions directly with sellers for
+              maximum flexibility.</p>
           </div>
         </div>
       </div>
@@ -410,11 +241,16 @@
           <div class="faq-answer-content">
             <p>Currently, payments and deliveries are handled directly between buyers and sellers:</p>
             <ul>
-              <li><strong>Payment Methods:</strong> Cash on delivery, bank transfers, UPI payments, or any method agreed upon by both parties</li>
-              <li><strong>Delivery Options:</strong> Self-pickup, local delivery by seller, or third-party logistics arranged by either party</li>
-              <li><strong>Terms & Conditions:</strong> Both parties negotiate and agree on payment terms, delivery timelines, and quality standards</li>
+              <li><strong>Payment Methods:</strong> Cash on delivery, bank transfers, UPI payments, or any method agreed
+                upon by both parties</li>
+              <li><strong>Delivery Options:</strong> Self-pickup, local delivery by seller, or third-party logistics
+                arranged by either party</li>
+              <li><strong>Terms & Conditions:</strong> Both parties negotiate and agree on payment terms, delivery
+                timelines, and quality standards</li>
             </ul>
-            <p>We provide a secure messaging platform for communication and recommend best practices for safe transactions. Future updates may include integrated payment and delivery services for enhanced security and convenience.</p>
+            <p>We provide a secure messaging platform for communication and recommend best practices for safe
+              transactions. Future updates may include integrated payment and delivery services for enhanced security
+              and convenience.</p>
           </div>
         </div>
       </div>
@@ -423,7 +259,7 @@
     <!-- Safety & Security Section -->
     <div class="faq-section">
       <h2 class="faq-section-title serif">Safety & Security</h2>
-      
+
       <div class="faq-item">
         <div class="faq-question" onclick="toggleFaq(this)">
           <h3>How is my personal and business information kept secure on the platform?</h3>
@@ -433,14 +269,18 @@
           <div class="faq-answer-content">
             <p>We take data security seriously and implement multiple layers of protection:</p>
             <ul>
-              <li><strong>Data Encryption:</strong> All sensitive data is encrypted using industry-standard SSL/TLS protocols</li>
-              <li><strong>Secure Servers:</strong> Your information is stored on secure, regularly monitored servers</li>
+              <li><strong>Data Encryption:</strong> All sensitive data is encrypted using industry-standard SSL/TLS
+                protocols</li>
+              <li><strong>Secure Servers:</strong> Your information is stored on secure, regularly monitored servers
+              </li>
               <li><strong>Privacy Controls:</strong> You control what information is visible to other users</li>
               <li><strong>Verification Process:</strong> We verify user accounts to reduce fraudulent activity</li>
-              <li><strong>Regular Updates:</strong> Our security measures are continuously updated to address new threats</li>
+              <li><strong>Regular Updates:</strong> Our security measures are continuously updated to address new
+                threats</li>
               <li><strong>No Data Selling:</strong> We never sell your personal information to third parties</li>
             </ul>
-            <p>Contact details are only shared with verified users you choose to communicate with, and you can report any suspicious activity to our support team.</p>
+            <p>Contact details are only shared with verified users you choose to communicate with, and you can report
+              any suspicious activity to our support team.</p>
           </div>
         </div>
       </div>
@@ -457,10 +297,13 @@
               <li><strong>Report Immediately:</strong> Use the "Report User" button on any profile or listing</li>
               <li><strong>Contact Support:</strong> Reach out to our support team with details of the incident</li>
               <li><strong>Document Evidence:</strong> Save screenshots, messages, or any relevant information</li>
-              <li><strong>Avoid Direct Payment:</strong> Be cautious about advance payments without proper verification</li>
-              <li><strong>Meet in Safe Locations:</strong> For in-person transactions, meet in public, well-lit areas</li>
+              <li><strong>Avoid Direct Payment:</strong> Be cautious about advance payments without proper verification
+              </li>
+              <li><strong>Meet in Safe Locations:</strong> For in-person transactions, meet in public, well-lit areas
+              </li>
             </ul>
-            <p>Our team investigates all reports promptly and takes appropriate action, including account suspension or removal when necessary.</p>
+            <p>Our team investigates all reports promptly and takes appropriate action, including account suspension or
+              removal when necessary.</p>
           </div>
         </div>
       </div>
@@ -469,7 +312,7 @@
     <!-- Smart Tools Section -->
     <div class="faq-section">
       <h2 class="faq-section-title serif">Smart Tools & Features</h2>
-      
+
       <div class="faq-item">
         <div class="faq-question" onclick="toggleFaq(this)">
           <h3>What are the AI-powered smart tools available on AgriTech?</h3>
@@ -479,14 +322,19 @@
           <div class="faq-answer-content">
             <p>AgriTech offers several AI-powered tools to help farmers make informed decisions:</p>
             <ul>
-              <li><strong>Crop Recommendation:</strong> Get suggestions for the best crops to plant based on soil type, climate, and market demand</li>
-              <li><strong>Yield Prediction:</strong> Estimate expected crop yields using historical data and current conditions</li>
-              <li><strong>Disease Detection:</strong> Upload photos of plants to identify diseases and get treatment recommendations</li>
-              <li><strong>Crop Planning:</strong> Create detailed farming schedules and track progress throughout the season</li>
+              <li><strong>Crop Recommendation:</strong> Get suggestions for the best crops to plant based on soil type,
+                climate, and market demand</li>
+              <li><strong>Yield Prediction:</strong> Estimate expected crop yields using historical data and current
+                conditions</li>
+              <li><strong>Disease Detection:</strong> Upload photos of plants to identify diseases and get treatment
+                recommendations</li>
+              <li><strong>Crop Planning:</strong> Create detailed farming schedules and track progress throughout the
+                season</li>
               <li><strong>Weather Integration:</strong> Access localized weather forecasts and alerts</li>
               <li><strong>Market Price Tracking:</strong> Monitor real-time market prices for various crops</li>
             </ul>
-            <p>These tools are designed to help both new and experienced farmers optimize their farming practices and increase productivity.</p>
+            <p>These tools are designed to help both new and experienced farmers optimize their farming practices and
+              increase productivity.</p>
           </div>
         </div>
       </div>
@@ -500,12 +348,18 @@
           <div class="faq-answer-content">
             <p>Our AI tools are trained on extensive agricultural datasets and continuously improved:</p>
             <ul>
-              <li><strong>Crop Recommendations:</strong> Based on regional agricultural data, soil analysis, and successful farming patterns in similar conditions</li>
-              <li><strong>Disease Detection:</strong> Trained on thousands of plant disease images with accuracy rates continually improving through machine learning</li>
-              <li><strong>Regular Updates:</strong> Our models are updated regularly with new data and feedback from users</li>
-              <li><strong>Local Expertise:</strong> We incorporate knowledge from local agricultural experts and successful farmers</li>
+              <li><strong>Crop Recommendations:</strong> Based on regional agricultural data, soil analysis, and
+                successful farming patterns in similar conditions</li>
+              <li><strong>Disease Detection:</strong> Trained on thousands of plant disease images with accuracy rates
+                continually improving through machine learning</li>
+              <li><strong>Regular Updates:</strong> Our models are updated regularly with new data and feedback from
+                users</li>
+              <li><strong>Local Expertise:</strong> We incorporate knowledge from local agricultural experts and
+                successful farmers</li>
             </ul>
-            <p><strong>Important:</strong> While our tools provide valuable insights, we always recommend consulting with local agricultural experts and following established best practices for critical farming decisions.</p>
+            <p><strong>Important:</strong> While our tools provide valuable insights, we always recommend consulting
+              with local agricultural experts and following established best practices for critical farming decisions.
+            </p>
           </div>
         </div>
       </div>
@@ -514,7 +368,7 @@
     <!-- Support Section -->
     <div class="faq-section">
       <h2 class="faq-section-title serif">Support & Contact</h2>
-      
+
       <div class="faq-item">
         <div class="faq-question" onclick="toggleFaq(this)">
           <h3>How can I contact AgriTech support if I need help?</h3>
@@ -527,10 +381,12 @@
               <li><strong>AI Assistant:</strong> Use our chatbot available on every page for instant answers</li>
               <li><strong>Feedback Form:</strong> Submit detailed questions or issues through our feedback page</li>
               <li><strong>Email Support:</strong> Contact us directly at support@agritech.com</li>
-              <li><strong>Phone Support:</strong> Call our helpline during business hours (details in your dashboard)</li>
+              <li><strong>Phone Support:</strong> Call our helpline during business hours (details in your dashboard)
+              </li>
               <li><strong>Community Forum:</strong> Connect with other users and get peer support</li>
             </ul>
-            <p>Our support team typically responds within 24 hours, and urgent issues are prioritized for faster resolution.</p>
+            <p>Our support team typically responds within 24 hours, and urgent issues are prioritized for faster
+              resolution.</p>
           </div>
         </div>
       </div>
@@ -547,8 +403,10 @@
               <li><strong>English</strong> - Full platform support</li>
               <li><strong>Hindi</strong> - Core features and navigation</li>
             </ul>
-            <p>We're working on expanding language support to include regional languages such as Telugu, Tamil, Marathi, Gujarati, and others based on user demand and regional requirements.</p>
-            <p>Language preferences can be set in your account settings, and our AI assistant can communicate in multiple languages to better serve our diverse user base.</p>
+            <p>We're working on expanding language support to include regional languages such as Telugu, Tamil, Marathi,
+              Gujarati, and others based on user demand and regional requirements.</p>
+            <p>Language preferences can be set in your account settings, and our AI assistant can communicate in
+              multiple languages to better serve our diverse user base.</p>
           </div>
         </div>
       </div>
@@ -559,7 +417,7 @@
   <section class="contact-cta">
     <h2 class="serif">Still Have Questions?</h2>
     <p>
-      Can't find the answer you're looking for? Our support team is ready to help you 
+      Can't find the answer you're looking for? Our support team is ready to help you
       make the most of AgriTech platform.
     </p>
     <a href="feed-back.html" class="contact-btn">Contact Support</a>
@@ -574,16 +432,19 @@
           <h3 class="serif">AgriTech</h3>
         </div>
         <div class="mission-statement">
-          <p>Empowering India's Farming Future with innovative <span class="no-break">technology</span> solutions that connect every stakeholder in the <span class="no-break">agricultural</span> ecosystem</p>
+          <p>Empowering India's Farming Future with innovative <span class="no-break">technology</span> solutions that
+            connect every stakeholder in the <span class="no-break">agricultural</span> ecosystem</p>
         </div>
         <div class="social-media">
-          <a href="https://www.instagram.com/omroy_2005?igsh=eGZqZWZ6MDJqZjdz" target="_blank" aria-label="Follow us on Instagram">
+          <a href="https://www.instagram.com/omroy_2005?igsh=eGZqZWZ6MDJqZjdz" target="_blank"
+            aria-label="Follow us on Instagram">
             <i class="fab fa-instagram"></i>
           </a>
           <a href="https://github.com/omroy07" target="_blank" aria-label="View our GitHub repositories">
             <i class="fab fa-github"></i>
           </a>
-          <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank" aria-label="Connect with us on LinkedIn">
+          <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank"
+            aria-label="Connect with us on LinkedIn">
             <i class="fab fa-linkedin"></i>
           </a>
         </div>
@@ -641,16 +502,115 @@
     function toggleFaq(element) {
       const faqItem = element.parentElement;
       const isActive = faqItem.classList.contains('active');
-      
+
       // Close all FAQ items
       document.querySelectorAll('.faq-item').forEach(item => {
         item.classList.remove('active');
       });
-      
+
       // Open clicked item if it wasn't active
       if (!isActive) {
         faqItem.classList.add('active');
       }
+    }
+
+    // Desktop Search
+    const searchButton = document.querySelector(".search-button");
+    const searchInput = document.querySelector(".search-input");
+
+    searchButton?.addEventListener("click", () => {
+      handleSearch(searchInput.value);
+    });
+
+    searchInput?.addEventListener("keydown", e => {
+      if (e.key === "Enter") handleSearch(e.target.value);
+    });
+
+    // Add focus effect when button is clicked or focused
+    searchButton?.addEventListener("click", () => {
+      searchInput?.classList.add("input-focused");
+    });
+
+    searchButton?.addEventListener("focus", () => {
+      searchInput?.focus(); //Focus the input to show cursor
+      searchInput?.classList.add("input-focused");
+    });
+
+    searchInput?.addEventListener("blur", () => {
+      searchInput.classList.remove("input-focused");
+    });
+
+    // Mobile Search
+    const mobileSearchBtn = document.querySelector(".mobile-search-btn");
+    const mobileSearchInput = document.querySelector(".mobile-search-input");
+
+    mobileSearchBtn?.addEventListener("click", () => {
+      handleSearch(mobileSearchInput.value);
+    });
+
+    mobileSearchInput?.addEventListener("keydown", e => {
+      if (e.key === "Enter") handleSearch(e.target.value);
+    });
+
+    // Add focus effect when button is clicked or focused
+    mobileSearchBtn?.addEventListener("click", () => {
+      mobileSearchInput?.classList.add("input-focused");
+    });
+
+    mobileSearchBtn?.addEventListener("focus", () => {
+      mobileSearchInput?.focus(); // Focus the input to show cursor
+      mobileSearchInput?.classList.add("input-focused");
+    });
+
+    mobileSearchInput?.addEventListener("blur", () => {
+      mobileSearchInput.classList.remove("input-focused");
+    });
+
+    // Mobile Menu Functionality
+    const navToggle = document.getElementById('navToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+
+    // Toggle mobile menu
+    navToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navToggle.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+
+    // Close mobile menu when clicking on a link
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!mobileMenu.contains(e.target) && !navToggle.contains(e.target)) {
+        navToggle.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Sync theme toggle for mobile
+    if (mobileThemeToggle) {
+      mobileThemeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+
+        // Update both theme toggles
+        document.querySelectorAll('.theme-text').forEach(text => {
+          text.textContent = newTheme === 'dark' ? 'Light' : 'Dark';
+        });
+      });
     }
 
     // Theme toggle functionality
@@ -665,7 +625,7 @@
     themeToggle.addEventListener('click', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme');
       const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      
+
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
       themeText.textContent = newTheme === 'dark' ? 'Light' : 'Dark';
@@ -698,8 +658,17 @@
         });
       }
     });
+
+    // Prevent body scroll when menu is open
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+        navToggle.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
   </script>
-  <script src="theme.js"></script>
+  <script src="auth.js"></script>
 </body>
 
 </html>
