@@ -13,11 +13,13 @@
     justify-content: center;
 }
 
+/* Mouse hover */
 .favorite-btn:hover {
     background-color: rgba(231, 76, 60, 0.1);
     transform: scale(1.1);
 }
 
+/* Active (favorited) state */
 .favorite-btn.active {
     color: #e74c3c;
 }
@@ -26,7 +28,34 @@
     background-color: rgba(231, 76, 60, 0.2);
 }
 
-/* Favorites Page Styles */
+/* ======================================================
+   ACCESSIBILITY FIXES – Issue #617
+   ====================================================== */
+
+/* 1️⃣ Visible focus for keyboard navigation (WCAG required) */
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid #2c5f2d;
+    outline-offset: 2px;
+}
+
+/* 2️⃣ Keyboard focus feedback for favorite button */
+.favorite-btn:focus-visible {
+    background-color: rgba(231, 76, 60, 0.1);
+    transform: scale(1.1);
+}
+
+/* 3️⃣ Focus styles for action buttons */
+.remove-favorite:focus-visible,
+.read-favorite:focus-visible {
+    outline: 3px solid #2c5f2d;
+    outline-offset: 2px;
+}
+
+/* ======================================================
+   Favorites Page Styles (UNCHANGED)
+   ====================================================== */
+
 .favorites-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -150,7 +179,7 @@
         grid-template-columns: 1fr;
         gap: 20px;
     }
-    
+
     .favorite-blog-card {
         padding: 15px;
     }
