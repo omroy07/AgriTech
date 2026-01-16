@@ -5,11 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Crop Recommender | AgriTech</title>
-    <link rel="icon" type="image/png" href="images/logo.png">
+    
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         /* -------------------- Root Colors & Fonts -------------------- */
@@ -38,6 +37,7 @@
 
             --font-display: 'Space Grotesk', sans-serif;
             --font-body: 'Inter', sans-serif;
+            --font-serif: 'Libertinus Serif', serif;
 
             --space-xs: 0.25rem;
             --space-sm: 0.5rem;
@@ -62,9 +62,7 @@
         }
 
         /* -------------------- Reset -------------------- */
-        *,
-        *::before,
-        *::after {
+        *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -77,17 +75,12 @@
             color: var(--text-primary);
             line-height: 1.7;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        img {
-            display: block;
-            max-width: 100%;
-        }
+        a { text-decoration: none; color: inherit; }
+        img { display: block; max-width: 100%; }
 
         .container {
             max-width: 1200px;
@@ -95,11 +88,11 @@
             padding: 0 var(--space-lg);
         }
 
-        /* -------------------- Navbar -------------------- */
+        /* -------------------- COMPACT NAVBAR -------------------- */
         .header {
             background: var(--bg-primary);
             border-bottom: 1px solid var(--border);
-            padding: var(--space-md) 0;
+            padding: 0.5rem 0; /* Reduced padding for compact look */
             position: sticky;
             top: 0;
             z-index: 100;
@@ -114,161 +107,136 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        .logo-text {
-            color: #16a34a;
+            padding: 0 1.5rem;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
         }
 
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--primary);
-            border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
+        /* Fixed logo size */
+        .logo img {
+            height: 35px; 
+            width: auto;
         }
 
         .logo-text {
             font-family: var(--font-display);
             font-weight: 700;
-            font-size: 1.75rem;
+            font-size: 1.4rem; /* Reduced font size */
             color: var(--primary1);
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
+            align-items: center;
         }
 
         .nav-links a {
             font-weight: 500;
             color: var(--text-primary);
+            font-size: 0.95rem;
             position: relative;
-            padding: 0.25rem 0;
         }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -3px;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: 0.3s;
+        .nav-links a:hover {
+            color: var(--primary);
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .theme-toggle {
-            background: var(--bg-accent);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-lg);
-            cursor: pointer;
+        /* Compact Header Buttons */
+        .header-btn {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.875rem;
-            box-shadow: var(--shadow);
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: var(--bg-accent);
+            color: var(--text-primary);
+            transition: all 0.2s;
         }
 
-        .theme-toggle:hover {
+        .header-btn:hover {
             background: var(--bg-secondary);
+            border-color: var(--primary);
+            color: var(--primary);
         }
 
         /* -------------------- Hero -------------------- */
+        .main-content { flex: 1; }
+
         .hero {
             background: var(--bg-primary);
-            padding: var(--space-3xl) 0 var(--space-2xl);
+            padding: 3rem 0 2rem;
             text-align: center;
             position: relative;
         }
 
         .hero-title {
             font-family: var(--font-display);
-            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-size: clamp(2rem, 5vw, 3rem);
             font-weight: 800;
             color: var(--text-primary);
-            margin-bottom: var(--space-md);
+            margin-bottom: 1rem;
             line-height: 1.2;
         }
 
         .hero-subtitle {
             color: var(--text-secondary);
             max-width: 700px;
-            margin: 0 auto var(--space-2xl);
-            font-size: 1.125rem;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
         }
 
         .hero-stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: var(--space-lg);
-            margin-top: var(--space-xl);
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
         .stat-card {
             background: var(--bg-secondary);
-            padding: var(--space-lg);
+            padding: 1.5rem;
             border-radius: var(--radius-xl);
             border: 1px solid var(--border);
             text-align: center;
             box-shadow: var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
+        .stat-card:hover { transform: translateY(-5px); }
 
         .stat-icon {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: var(--primary);
-            border-radius: var(--radius-xl);
+            border-radius: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 1.75rem;
-            margin: 0 auto var(--space-sm);
+            font-size: 1.5rem;
+            margin: 0 auto 0.5rem;
         }
 
-        .stat-title {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-            font-size: 1.1rem;
-        }
-
-        .stat-description {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
+        .stat-title { font-weight: 600; margin-bottom: 0.25rem; font-size: 1rem; }
+        .stat-description { font-size: 0.85rem; color: var(--text-secondary); }
 
         /* -------------------- Form Section -------------------- */
         .form-section {
-            padding: var(--space-3xl) 0;
+            padding: 3rem 0;
             background: var(--bg-primary);
         }
 
         .form-card {
             background: var(--bg-secondary);
-            padding: var(--space-2xl);
+            padding: 2.5rem;
             border-radius: var(--radius-xl);
             max-width: 900px;
             margin: 0 auto;
@@ -279,14 +247,11 @@
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: var(--space-lg);
-            margin-bottom: var(--space-xl);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
-        .input-group {
-            position: relative;
-        }
-
+        .input-group { position: relative; }
         .input-label {
             font-weight: 500;
             margin-bottom: 0.5rem;
@@ -295,11 +260,7 @@
             font-size: 0.95rem;
         }
 
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
+        .input-wrapper { position: relative; display: flex; align-items: center; }
 
         .form-input {
             width: 100%;
@@ -335,14 +296,13 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
+            padding: 0.75rem 2rem;
             font-weight: 600;
             border: none;
             border-radius: var(--radius-lg);
             cursor: pointer;
-            min-width: 180px;
             justify-content: center;
-            font-size: 0.95rem;
+            font-size: 1rem;
             transition: 0.3s;
         }
 
@@ -350,6 +310,7 @@
             background: var(--primary);
             color: white;
             box-shadow: var(--shadow);
+            width: 100%;
         }
 
         .btn-primary:hover {
@@ -357,114 +318,141 @@
             transform: translateY(-2px);
         }
 
-        .btn-secondary {
-            background: var(--bg-accent);
-            color: var(--text-primary);
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-        }
-
-        .btn-secondary:hover {
-            background: var(--bg-primary);
-            transform: translateY(-2px);
-        }
-
         /* -------------------- Error Styling -------------------- */
-        .input-error {
-            border: 2px solid #e53935;
-            background-color: #fff5f5;
+        .input-error { border: 2px solid #e53935; background-color: rgba(229, 57, 53, 0.05); }
+        .error-text { color: #e53935; font-size: 0.85rem; margin-top: 4px; display: none; }
+
+        /* -------------------- FOOTER -------------------- */
+        .site-footer {
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 3rem 1.5rem;
+            margin-top: auto;
+            border-top: 1px solid #334155;
         }
 
-        .error-text {
-            color: #e53935;
-            font-size: 0.85rem;
-            margin-top: 4px;
-            display: none;
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
         }
 
-        /* -------------------- Footer -------------------- */
-        .footer {
-            padding: var(--space-lg) 0;
-            text-align: center;
-            background: var(--bg-primary);
-            border-top: 1px solid var(--border);
+        .footer-brand h3 {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .footer-text {
-            color: var(--text-muted);
-            font-size: 0.875rem;
-        }
-
-        /* -------------------- Responsive -------------------- */
-        @media(max-width:768px) {
-            .nav-links {
-                display: none;
-            }
-        }
-
-        .logo img {
-            width: 40px;
+        .footer-brand img {
             height: 40px;
-            margin-left: 25px;
+            width: auto;
+            background: white;
+            padding: 4px;
+            border-radius: 6px;
         }
 
-        .logo a {
-            font-size: 1.3rem;
+        .footer-links h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+        }
+
+        .footer-links ul { list-style: none; padding: 0; }
+        .footer-links a {
+            color: #cbd5e1;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--primary); }
+
+        .social-media { display: flex; gap: 1rem; margin-top: 1rem; }
+        .social-media a {
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.2s;
+        }
+        .social-media a:hover { background: var(--primary); transform: translateY(-2px); }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        @media(max-width:768px) {
+            .nav-links { display: none; }
         }
     </style>
     <script src="../../voice-input.js" defer></script>
 </head>
 
 <body>
-    <!-- Navbar -->
     <header class="header">
         <div class="header-content">
-            <a href="index.html" class="logo">
-                <img src="/images/logo.png" alt="AgriTech logo">
+            <a href="../../index.html" class="logo">
+                <img src="../../images/logo.png" alt="AgriTech logo">
                 <span class="logo-text">AgriTech</span>
             </a>
+            
             <nav class="nav-links">
-                <a href="/index.html">Home</a>
-                <a href="/about.html">About</a>
-                <a href="/blog.html">Blog</a>
+                <a href="../../index.html">Home</a>
+                <a href="../../about.html">About</a>
+                <a href="../../blog.html">Blog</a>
             </nav>
-            <button class="theme-toggle" id="themeToggle">
-                <i class="fas fa-moon" id="themeIcon"></i>
-                <span id="themeText">Dark Mode</span>
-            </button>
+            
+            <div style="display: flex; align-items: center; gap: 0.8rem;">
+                <button class="header-btn" id="themeToggle">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                    <span id="themeText">Dark</span>
+                </button>
+                
+                <a href="../../main.html" class="header-btn" style="background: var(--bg-primary); border-color: var(--primary);">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
         </div>
     </header>
 
-    <!-- Hero -->
     <main class="main-content">
         <section class="hero">
             <div class="container">
-                <h1 class="hero-title">Intelligent Crop Recommendations for Modern Farmers</h1>
+                <h1 class="hero-title">Intelligent Crop Recommendations</h1>
                 <p class="hero-subtitle">Harness data-driven agriculture to optimize crop selection, maximize yields,
-                    and promote sustainable farming practices tailored to your soil and climate conditions.</p>
+                    and promote sustainable farming practices.</p>
                 <div class="hero-stats">
                     <div class="stat-card">
                         <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
                         <div class="stat-title">Optimized Yields</div>
-                        <div class="stat-description">Increase productivity up to 30% with AI-driven recommendations.
-                        </div>
+                        <div class="stat-description">Increase productivity up to 30%.</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon"><i class="fas fa-leaf"></i></div>
-                        <div class="stat-title">Sustainable Farming</div>
-                        <div class="stat-description">Eco-friendly practices to protect soil health and biodiversity.
-                        </div>
+                        <div class="stat-title">Sustainable</div>
+                        <div class="stat-description">Eco-friendly farming practices.</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon"><i class="fas fa-brain"></i></div>
-                        <div class="stat-title">Smart Analytics</div>
-                        <div class="stat-description">AI-powered insights from comprehensive agricultural data.</div>
+                        <div class="stat-title">AI Powered</div>
+                        <div class="stat-description">Data-driven agricultural insights.</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Form -->
         <section class="form-section">
             <div class="container">
                 <div class="form-card">
@@ -473,77 +461,68 @@
                             <div class="input-group">
                                 <label class="input-label" for="nitrogen">Nitrogen Content</label>
                                 <div class="input-wrapper">
-                                    <input type="number" id="nitrogen" name="N" class="form-input" placeholder="0-140"
-                                        min="0" max="140" required>
+                                    <input type="number" id="nitrogen" name="N" class="form-input" placeholder="0-140" min="0" max="140" required>
                                     <i class="fas fa-flask input-icon"></i>
                                 </div>
                                 <div class="input-hint">kg/ha</div>
-                                <p class="error-text" id="nitrogen-error">⚠️ Nitrogen must be between 0-140 kg/ha. Please check your soil test results.</p>
+                                <p class="error-text" id="nitrogen-error">⚠️ Nitrogen must be between 0-140 kg/ha.</p>
                             </div>
                             <div class="input-group">
                                 <label class="input-label" for="phosphorus">Phosphorus Content</label>
                                 <div class="input-wrapper">
-                                    <input type="number" id="phosphorus" name="P" class="form-input" placeholder="5-145"
-                                        min="5" max="145" required>
+                                    <input type="number" id="phosphorus" name="P" class="form-input" placeholder="5-145" min="5" max="145" required>
                                     <i class="fas fa-atom input-icon"></i>
                                 </div>
                                 <div class="input-hint">kg/ha</div>
-                                <p class="error-text" id="phosphorus-error">⚠️ Phosphorus must be between 5-145 kg/ha. This nutrient is crucial for root development and crop health.</p>
+                                <p class="error-text" id="phosphorus-error">⚠️ Phosphorus must be between 5-145 kg/ha.</p>
                             </div>
                             <div class="input-group">
                                 <label class="input-label" for="potassium">Potassium Content</label>
                                 <div class="input-wrapper">
-                                    <input type="number" id="potassium" name="K" class="form-input" placeholder="5-205"
-                                        min="5" max="205" required>
+                                    <input type="number" id="potassium" name="K" class="form-input" placeholder="5-205" min="5" max="205" required>
                                     <i class="fas fa-fire-alt input-icon"></i>
                                 </div>
                                 <div class="input-hint">kg/ha</div>
-                                <p class="error-text" id="potassium-error">⚠️ Potassium must be between 5-205 kg/ha. This nutrient supports overall plant health and disease resistance.</p>
+                                <p class="error-text" id="potassium-error">⚠️ Potassium must be between 5-205 kg/ha.</p>
                             </div>
                             <div class="input-group">
                                 <label class="input-label" for="temperature">Temperature (°C)</label>
                                 <div class="input-wrapper">
-                                    <input type="number" id="temperature" name="temperature" class="form-input"
-                                        placeholder="8-45" min="8" max="45" required>
+                                    <input type="number" id="temperature" name="temperature" class="form-input" placeholder="8-45" min="8" max="45" required>
                                     <i class="fas fa-thermometer-half input-icon"></i>
                                 </div>
-                                <p class="error-text" id="temperature-error">⚠️ Temperature must be between 8-45°C. This affects crop growth and development.</p>
+                                <p class="error-text" id="temperature-error">⚠️ Temperature must be between 8-45°C.</p>
                             </div>
                             <div class="input-group">
                                 <label class="input-label" for="humidity">Humidity (%)</label>
                                 <div class="input-wrapper">
-                                    <input type="number" id="humidity" name="humidity" class="form-input"
-                                        placeholder="14-100" min="14" max="100" required>
+                                    <input type="number" id="humidity" name="humidity" class="form-input" placeholder="14-100" min="14" max="100" required>
                                     <i class="fas fa-tint input-icon"></i>
                                 </div>
-                                <p class="error-text" id="humidity-error">⚠️ Humidity must be between 14-100%. This affects plant transpiration and disease susceptibility.</p>
+                                <p class="error-text" id="humidity-error">⚠️ Humidity must be between 14-100%.</p>
                             </div>
                             <div class="input-group">
                                 <label class="input-label" for="ph">Soil pH</label>
                                 <div class="input-wrapper">
-                                    <input type="number" id="ph" name="ph" class="form-input" placeholder="3.5-10"
-                                        step="0.01" min="3.5" max="10" required>
+                                    <input type="number" id="ph" name="ph" class="form-input" placeholder="3.5-10" step="0.01" min="3.5" max="10" required>
                                     <i class="fas fa-balance-scale input-icon"></i>
                                 </div>
-                                <p class="error-text" id="ph-error">⚠️ Soil pH must be between 3.5-10. This affects nutrient availability and soil health.</p>
+                                <p class="error-text" id="ph-error">⚠️ Soil pH must be between 3.5-10.</p>
                             </div>
                             <div class="input-group">
                                 <label class="input-label" for="rainfall">Rainfall (mm)</label>
                                 <div class="input-wrapper">
-                                    <input type="number" id="rainfall" name="rainfall" class="form-input"
-                                        placeholder="20-300" min="20" max="300" required>
+                                    <input type="number" id="rainfall" name="rainfall" class="form-input" placeholder="20-300" min="20" max="300" required>
                                     <i class="fas fa-cloud-rain input-icon"></i>
                                 </div>
-                                <p class="error-text" id="rainfall-error">⚠️ Rainfall must be between 20-300 mm. This influences irrigation needs and crop water requirements.</p>
+                                <p class="error-text" id="rainfall-error">⚠️ Rainfall must be between 20-300 mm.</p>
                             </div>
                         </div>
-                        <div class="button-group" style="display:flex;gap:1rem;justify-content:center;">
+                        
+                        <div class="button-group" style="text-align: center;">
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-seedling"></i> Get Recommendation
                             </button>
-                            <a href="javascript:history.back()" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left"></i> Back
-                            </a>
                         </div>
                     </form>
                 </div>
@@ -551,14 +530,40 @@
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p class="footer-text">© 2026 AgriTech. Empowering farmers with intelligent agriculture solutions.</p>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <h3><img src="../../images/logo.png" alt="Logo"> AgriTech</h3>
+                <p>Empowering India's Farming Future with technology and data-driven insights.</p>
+                <div class="social-media">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../../main.html">Dashboard</a></li>
+                    <li><a href="../../chat.html">AI Assistant</a></li>
+                    <li><a href="../../feed-back.html">Feedback</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Smart Tools</h4>
+                <ul>
+                    <li><a href="index.html">Crop Recommendation</a></li>
+                    <li><a href="../../Disease prediction/template/index.html">Disease Detector</a></li>
+                    <li><a href="../../Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 AgriTech. All rights reserved.
         </div>
     </footer>
 
-    <!-- JS -->
     <script>
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
@@ -577,148 +582,58 @@
             localStorage.setItem('theme', theme);
             if (theme === 'dark') {
                 themeIcon.className = 'fas fa-sun';
-                themeText.textContent = 'Light Mode';
+                themeText.textContent = 'Light';
             } else {
                 themeIcon.className = 'fas fa-moon';
-                themeText.textContent = 'Dark Mode';
+                themeText.textContent = 'Dark';
             }
         }
 
         // Form validation
         const cropForm = document.getElementById('cropForm');
-        const nitrogen = document.getElementById('nitrogen');
-        const phosphorus = document.getElementById('phosphorus');
-        const potassium = document.getElementById('potassium');
-        const temperature = document.getElementById('temperature');
-        const humidity = document.getElementById('humidity');
-        const ph = document.getElementById('ph');
-        const rainfall = document.getElementById('rainfall');
-
-        const nitrogenError = document.getElementById('nitrogen-error');
-        const phosphorusError = document.getElementById('phosphorus-error');
-        const potassiumError = document.getElementById('potassium-error');
-        const temperatureError = document.getElementById('temperature-error');
-        const humidityError = document.getElementById('humidity-error');
-        const phError = document.getElementById('ph-error');
-        const rainfallError = document.getElementById('rainfall-error');
+        const inputs = [
+            { id: 'nitrogen', min: 0, max: 140 },
+            { id: 'phosphorus', min: 5, max: 145 },
+            { id: 'potassium', min: 5, max: 205 },
+            { id: 'temperature', min: 8, max: 45 },
+            { id: 'humidity', min: 14, max: 100 },
+            { id: 'ph', min: 3.5, max: 10 },
+            { id: 'rainfall', min: 20, max: 300 }
+        ].map(conf => ({ 
+            el: document.getElementById(conf.id), 
+            err: document.getElementById(conf.id + '-error'), 
+            min: conf.min, max: conf.max 
+        }));
 
         function showError(input, messageEl) {
             input.classList.add('input-error');
             messageEl.style.display = 'block';
         }
-
         function clearError(input, messageEl) {
             input.classList.remove('input-error');
             messageEl.style.display = 'none';
         }
 
-        // Real-time validation
-        nitrogen.addEventListener('input', () => {
-            if (nitrogen.value === '' || (nitrogen.value >= 0 && nitrogen.value <= 140)) {
-                clearError(nitrogen, nitrogenError);
-            }
-        });
-
-        phosphorus.addEventListener('input', () => {
-            if (phosphorus.value === '' || (phosphorus.value >= 5 && phosphorus.value <= 145)) {
-                clearError(phosphorus, phosphorusError);
-            }
-        });
-
-        potassium.addEventListener('input', () => {
-            if (potassium.value === '' || (potassium.value >= 5 && potassium.value <= 205)) {
-                clearError(potassium, potassiumError);
-            }
-        });
-
-        temperature.addEventListener('input', () => {
-            if (temperature.value === '' || (temperature.value >= 8 && temperature.value <= 45)) {
-                clearError(temperature, temperatureError);
-            }
-        });
-
-        humidity.addEventListener('input', () => {
-            if (humidity.value === '' || (humidity.value >= 14 && humidity.value <= 100)) {
-                clearError(humidity, humidityError);
-            }
-        });
-
-        ph.addEventListener('input', () => {
-            if (ph.value === '' || (ph.value >= 3.5 && ph.value <= 10)) {
-                clearError(ph, phError);
-            }
-        });
-
-        rainfall.addEventListener('input', () => {
-            if (rainfall.value === '' || (rainfall.value >= 20 && rainfall.value <= 300)) {
-                clearError(rainfall, rainfallError);
-            }
+        inputs.forEach(item => {
+            item.el.addEventListener('input', () => {
+                if (item.el.value === '' || (item.el.value >= item.min && item.el.value <= item.max)) {
+                    clearError(item.el, item.err);
+                }
+            });
         });
 
         cropForm.addEventListener('submit', (e) => {
             let isValid = true;
-
-            // Validate nitrogen
-            if (!nitrogen.value || nitrogen.value < 0 || nitrogen.value > 140) {
-                showError(nitrogen, nitrogenError);
-                isValid = false;
-            } else {
-                clearError(nitrogen, nitrogenError);
-            }
-
-            // Validate phosphorus
-            if (!phosphorus.value || phosphorus.value < 5 || phosphorus.value > 145) {
-                showError(phosphorus, phosphorusError);
-                isValid = false;
-            } else {
-                clearError(phosphorus, phosphorusError);
-            }
-
-            // Validate potassium
-            if (!potassium.value || potassium.value < 5 || potassium.value > 205) {
-                showError(potassium, potassiumError);
-                isValid = false;
-            } else {
-                clearError(potassium, potassiumError);
-            }
-
-            // Validate temperature
-            if (!temperature.value || temperature.value < 8 || temperature.value > 45) {
-                showError(temperature, temperatureError);
-                isValid = false;
-            } else {
-                clearError(temperature, temperatureError);
-            }
-
-            // Validate humidity
-            if (!humidity.value || humidity.value < 14 || humidity.value > 100) {
-                showError(humidity, humidityError);
-                isValid = false;
-            } else {
-                clearError(humidity, humidityError);
-            }
-
-            // Validate pH
-            if (!ph.value || ph.value < 3.5 || ph.value > 10) {
-                showError(ph, phError);
-                isValid = false;
-            } else {
-                clearError(ph, phError);
-            }
-
-            // Validate rainfall
-            if (!rainfall.value || rainfall.value < 20 || rainfall.value > 300) {
-                showError(rainfall, rainfallError);
-                isValid = false;
-            } else {
-                clearError(rainfall, rainfallError);
-            }
-
-            if (!isValid) {
-                e.preventDefault();
-            }
+            inputs.forEach(item => {
+                if (!item.el.value || item.el.value < item.min || item.el.value > item.max) {
+                    showError(item.el, item.err);
+                    isValid = false;
+                } else {
+                    clearError(item.el, item.err);
+                }
+            });
+            if (!isValid) e.preventDefault();
         });
     </script>
 </body>
-
 </html>
