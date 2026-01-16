@@ -6,6 +6,8 @@ import re
 from flask_cors import CORS
 from dotenv import load_dotenv
 from crop_recommendation.routes import crop_bp
+from disease_prediction.routes import disease_bp
+
 
 
 
@@ -16,6 +18,8 @@ app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
 app.register_blueprint(crop_bp)
+app.register_blueprint(disease_bp)
+
 
 
 # Input validation and sanitization functions
@@ -214,3 +218,5 @@ def internal_error(error):
         "status": "error",
         "message": "Internal server error"
     }), 500
+
+
