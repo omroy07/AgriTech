@@ -370,21 +370,21 @@ function displayPosts() {
         const postElement = document.createElement('div');
         postElement.className = 'blog-card';
         postElement.innerHTML = `
-                    <img src="${post.image}" alt="${post.title}">
-                    <button class="${favoriteClass}" data-blog-id="${post.id}">
-                        <i class="${favoriteIcon}"></i>
-                    </button>
-                    <div class="card-content">
-                        <span class="card-category">${post.category.replace('-', ' ')}</span>
-                        <h3 class="card-title">${post.title}</h3>
-                        <p class="card-description">${post.description}</p>
-                        <div class="card-meta">
-                            <span class="card-author">By ${post.author}</span>
-                            <span class="card-date">${post.date}</span>
-                        </div>
-                        <button class="read-more-btn"style="margin-top:16px" onclick="openModal('${post.id}')">Read More</button>
-                    </div>
-                `;
+            <img src="${post.image}" alt="${post.title}">
+            <button class="${favoriteClass}" data-blog-id="${post.id}">
+                <i class="${favoriteIcon}"></i>
+            </button>
+            <div class="card-content">
+                <span class="card-category">${post.category.replace('-', ' ')}</span>
+                <h3 class="card-title">${post.title}</h3>
+                <p class="card-description">${post.description}</p>
+                <div class="card-meta">
+                    <span class="card-author">By ${post.author}</span>
+                    <span class="card-date">${post.date}</span>
+                </div>
+                <button class="read-more-btn"style="margin-top:16px" onclick="openModal('${post.id}')">Read More</button>
+            </div>
+        `;
         blogGrid.appendChild(postElement);
     });
 
