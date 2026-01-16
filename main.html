@@ -4,31 +4,26 @@
 <head>
   <link rel="icon" type="image/png" href="images/logo.png">
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
-  <meta name="description" content="AgriTech - Empowering Agriculture Through Technology."/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <meta name="description" content="AgriTech - Empowering Agriculture Through Technology." />
   <title>AgriTech Dashboard</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="/AgriTech/images/logo.png" />
 
   <!-- CSS -->
-  
+
   <link rel="stylesheet" href="main.css" />
   <link rel="stylesheet" href="theme.css" />
 
   <!-- Font Awesome -->
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    rel="stylesheet"
-  />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
   <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -42,160 +37,163 @@
       color: var(--text-primary, #333);
       transition: background-color 0.3s ease, color 0.3s ease;
     }
+    
 
-     /* Responsive Search bar */
-     .search-container {
-        display: flex;
-        align-items: center;
-        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-        border: 2px solid transparent;
-        border-radius: 30px;
-        padding: 8px 15px;
-        width: 100%;
-        max-width: 320px;
-        margin-left: auto;
-        margin-right: 20px;
-        box-shadow: 0 4px 15px rgba(56, 142, 60, 0.1);
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-      }
+    /* Responsive Search bar */
+    .search-container {
+      display: flex;
+      align-items: center;
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      border: 2px solid transparent;
+      border-radius: 30px;
+      padding: 8px 15px;
+      width: 100%;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: 20px;
+      box-shadow: 0 4px 15px rgba(56, 142, 60, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
 
-      .navbar-content.search-container {
+    .navbar-content.search-container {
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+
     /* Hamburger Button */
-.hamburger {
-  display: none;
-  font-size: 26px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  z-index: 2000; /* ensure clickable */
-}
+    .hamburger {
+      display: none;
+      font-size: 26px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 2000;
+      /* ensure clickable */
+    }
 
-/* Mobile Styles */
-@media (max-width: 768px) {
-  header {
-    flex-wrap: wrap;
-  }
-
-  .hamburger {
-    display: block;
-  }
-
-  .header-buttons {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    gap: 10px;
-    margin-top: 10px;
-  }
-
-  .header-buttons.show {
-    display: flex;
-  }
-
-  .header-buttons a,
-  .theme-toggle,
-  .search-container {
-    width: 100%;
-  }
-
-  .search-input {
-    width: 100%;
-  }
-}
-
-
-      .search-container::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, #4caf50, #388e3c);
-        border-radius: 30px;
-        padding: 2px;
-        z-index: -1;
-        opacity: 0;
-        transition: opacity 0.3s ease;
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      header {
+        flex-wrap: wrap;
       }
 
-      .search-container:focus-within::before {
-        opacity: 1;
+      .hamburger {
+        display: block;
       }
 
-      .search-container:focus-within {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(56, 142, 60, 0.2);
+      .header-buttons {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .header-buttons.show {
+        display: flex;
+      }
+
+      .header-buttons a,
+      .theme-toggle,
+      .search-container {
+        width: 100%;
       }
 
       .search-input {
-        border: none;
-        outline: none;
-        padding: 10px 12px;
-        font-size: 15px;
-        flex: 1;
-        color: #2e7d32;
-        background: transparent;
-        font-family: "Poppins", sans-serif;
-        font-weight: 500;
+        width: 100%;
+      }
+    }
+
+
+    .search-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #4caf50, #388e3c);
+      border-radius: 30px;
+      padding: 2px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .search-container:focus-within::before {
+      opacity: 1;
+    }
+
+    .search-container:focus-within {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(56, 142, 60, 0.2);
+    }
+
+    .search-input {
+      border: none;
+      outline: none;
+      padding: 10px 12px;
+      font-size: 15px;
+      flex: 1;
+      color: #2e7d32;
+      background: transparent;
+      font-family: "Poppins", sans-serif;
+      font-weight: 500;
+    }
+
+    .search-input::placeholder {
+      color: #81c784;
+      font-weight: 400;
+    }
+
+    .search-button {
+      background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      color: white;
+      font-size: 16px;
+      width: 35px;
+      height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(56, 142, 60, 0.2);
+    }
+
+    .search-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 15px rgba(56, 142, 60, 0.4);
+    }
+
+    /* Mobile responsive improvements */
+    @media screen and (max-width: 991.98px) {
+      .navbar {
+        padding: 0.75rem 0;
       }
 
-      .search-input::placeholder {
-        color: #81c784;
-        font-weight: 400;
+      .search-container {
+        max-width: 100%;
+        margin: 1rem 0 0 0;
+        order: 3;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      .search-container {
+        max-width: 100%;
       }
 
-      .search-button {
-        background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-        color: white;
-        font-size: 16px;
-        width: 35px;
-        height: 35px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 8px rgba(56, 142, 60, 0.2);
+      .search-input {
+        font-size: 14px;
       }
-
-      .search-button:hover {
-        transform: scale(1.1);
-        box-shadow: 0 4px 15px rgba(56, 142, 60, 0.4);
-      }
-
-      /* Mobile responsive improvements */
-      @media screen and (max-width: 991.98px) {
-        .navbar {
-          padding: 0.75rem 0;
-        }
-
-        .search-container {
-          max-width: 100%;
-          margin: 1rem 0 0 0;
-          order: 3;
-        }
-      }
-
-      @media screen and (max-width: 600px) {
-        .search-container {
-          max-width: 100%;
-        }
-
-        .search-input {
-          font-size: 14px;
-        }
-      }
+    }
 
     /* Loan Guide section */
     .loan-guide-section {
@@ -222,7 +220,7 @@
       cursor: pointer;
       box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
     }
-   
+
 
 
     .btn-green:hover {
@@ -305,7 +303,7 @@
       color: inherit !important;
     }
 
-   
+
 
     .auth-message {
       position: fixed;
@@ -341,120 +339,135 @@
     .auth-message-content i {
       font-size: 1.2rem;
     }
+
     /* Services Menu Styles */
-.services-menu-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: linear-gradient(135deg, #4caf50, #388e3c);
-  color: #fff;
-  border: none;
-  border-radius: 25px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  margin: 1rem auto 0 auto;
-  transition: background 0.3s;
-}
-.services-menu-toggle:hover {
-  background: linear-gradient(135deg, #388e3c, #4caf50);
-}
+    .services-menu-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #4caf50, #388e3c);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 1rem auto 0 auto;
+      transition: background 0.3s;
+    }
 
-/* Overlay Services Menu Styles */
-.services-menu {
-  display: none;
-  position: absolute;
-  top: 120px; /* Adjust as needed to appear below header */
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2000;
-  flex-direction: column;
-  gap: 0;
-  margin: 0;
-  padding: 0;
-  min-width: 260px;
-  max-width: 90vw;
-  background: var(--bg-primary, #fff);
-  box-shadow: 0 8px 32px rgba(76,175,80,0.18);
-  list-style: none;
-  overflow: hidden;
-  border: 1px solid green;
-  background-color: #afd4af !important;
-  border-radius: 12px;
-}
-.services-menu.active {
-  display: flex;
-}
-.services-menu li {
-  border-bottom: 1px solid green;
-}
-.services-menu li:last-child {
-  border-bottom: none;
-}
-.services-menu a {
-  display: block;
-  padding: 14px 28px;
-  color: var(--text-primary, #333);
-  text-decoration: none;
-  font-weight: 500;
-  transition: background 0.2s;
-}
-.services-menu a:hover {
-  background: #f1f8e9;
-  color: #388e3c;
-}
-@media (max-width: 600px) {
-  .services-menu {
-    left: 5vw;
-    right: 5vw;
-    min-width: unset;
-    max-width: 90vw;
-    transform: none;
-  }
-}
-@media (max-width: 768px) {
-  .brand {
-    width: 100%;
-    justify-content: center;
-    text-align: center;
-  }
+    .services-menu-toggle:hover {
+      background: linear-gradient(135deg, #388e3c, #4caf50);
+    }
 
-  .header-buttons {
-    flex-direction: column;
-    align-items: stretch;
-  }
+    /* Overlay Services Menu Styles */
+    .services-menu {
+      display: none;
+      position: absolute;
+      top: 120px;
+      /* Adjust as needed to appear below header */
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2000;
+      flex-direction: column;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+      min-width: 260px;
+      max-width: 90vw;
+      background: var(--bg-primary, #fff);
+      box-shadow: 0 8px 32px rgba(76, 175, 80, 0.18);
+      list-style: none;
+      overflow: hidden;
+      border: 1px solid green;
+      background-color: #afd4af !important;
+      border-radius: 12px;
+    }
 
-  .header-buttons a,
-  .header-buttons button {
-    width: 100%;
-    text-align: center;
-  }
-}
-@media (max-width: 768px) {
-  .search-container {
-    order: 3;
-  }
-}
-@media (max-width: 600px) {
-  .services-menu {
-    width: 90%;
-    left: 5%;
-    transform: none;
-  }
-}
-@media (max-width: 480px) {
-  .grid-item img {
-    height: 180px;
-    object-fit: cover;
-  }
-}
- /* Auth message styles */
+    .services-menu.active {
+      display: flex;
+    }
+
+    .services-menu li {
+      border-bottom: 1px solid green;
+    }
+
+    .services-menu li:last-child {
+      border-bottom: none;
+    }
+
+    .services-menu a {
+      display: block;
+      padding: 14px 28px;
+      color: var(--text-primary, #333);
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .services-menu a:hover {
+      background: #f1f8e9;
+      color: #388e3c;
+    }
+
+    @media (max-width: 600px) {
+      .services-menu {
+        left: 5vw;
+        right: 5vw;
+        min-width: unset;
+        max-width: 90vw;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .brand {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .header-buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .header-buttons a,
+      .header-buttons button {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .search-container {
+        order: 3;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .services-menu {
+        width: 90%;
+        left: 5%;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .grid-item img {
+        height: 180px;
+        object-fit: cover;
+      }
+    }
+
+    /* Auth message styles */
     @keyframes slideInRight {
       from {
         opacity: 0;
         transform: translateX(100%);
       }
+
       to {
         opacity: 1;
         transform: translateX(0);
@@ -466,6 +479,7 @@
         opacity: 1;
         transform: translateX(0);
       }
+
       to {
         opacity: 0;
         transform: translateX(100%);
@@ -489,47 +503,77 @@
     align-items: stretch;
   }
 }
+          .header-nav-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+}
 
+main {
+  margin-top: 90px; 
+}
+
+
+    @media (max-width: 768px) {
+
+      .calendar-button,
+      .logout-button,
+      .feedback-button,
+      .theme-toggle {
+        width: 100%;
+        justify-content: center;
+        padding: 0.7rem 1rem;
+        font-size: 0.95rem;
+      }
+
+      .header-buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
   </style>
 </head>
 
 <body>
   <div class="header-nav-wrapper">
-  <header>
-    <div class="brand">
-      <img src="images/logo.png" alt="AgriTech logo" class="site-logo">
-      <h2> AgriTech</h2>
-    </div>
-
-    <!-- Hamburger -->
-    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
-      ☰
-    </button>
-
-    <div class="header-buttons" id="navMenu">
-      <a href="cropCalendar.html" class="calendar-button">📅 Calendar</a>
-
-      <div class="search-container">
-        <input type="text" placeholder="Search..." class="search-input" />
-        <button class="search-button">
-          <i class="fas fa-search"></i>
-        </button>
+    <header>
+      <div class="brand">
+        <img src="images/logo.png" alt="AgriTech logo" class="site-logo">
+        <h2> AgriTech</h2>
       </div>
 
-      <a href="feed-back.html" class="feedback-button">Feedback</a>
-      <a href="#" class="logout-button" onclick="showLogoutConfirmation()">Logout</a>
-
-      <button class="theme-toggle">
-        🌞 🌙 <span class="theme-text">Light</span>
+      <!-- Hamburger -->
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        ☰
       </button>
-    </div>
-  </header>
-</div>
- 
+
+      <div class="header-buttons" id="navMenu">
+        <a href="cropCalendar.html" class="calendar-button">📅 Calendar</a>
+
+        <div class="search-container">
+          <input type="text" placeholder="Search..." class="search-input" />
+          <button class="search-button">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+
+        <a href="feed-back.html" class="feedback-button">Feedback</a>
+        <a href="#" class="logout-button" onclick="showLogoutConfirmation()">Logout</a>
+
+        <button class="theme-toggle">
+          🌞 🌙 <span class="theme-text">Light</span>
+        </button>
+      </div>
+    </header>
+  </div>
+
 
 
   <!-- Main Section -->
-   
+
   <main>
     <!-- Services Mega Menu - Original 11 Services -->
     <div class="services-menu-container">
@@ -545,18 +589,18 @@
           <div class="mega-menu-category">
             <h3><i class="fas fa-seedling"></i> Crop Tools</h3>
             <ul>
-              <li><a href="Crop Recommendation/templates/index.html">
+              <li><a href="/crop">
                 <i class="fas fa-leaf"></i> Crop Recommendation
               </a></li>
               <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">
-                <i class="fas fa-chart-line"></i> Yield Prediction
-              </a></li>
+                  <i class="fas fa-chart-line"></i> Yield Prediction
+                </a></li>
               <li><a href="disease.html">
-                <i class="fas fa-bug"></i> Disease Prediction
-              </a></li>
+                  <i class="fas fa-bug"></i> Disease Prediction
+                </a></li>
               <li><a href="organic.html">
-                <i class="fas fa-spa"></i> Organic Farming
-              </a></li>
+                  <i class="fas fa-spa"></i> Organic Farming
+                </a></li>
             </ul>
           </div>
 
@@ -565,14 +609,14 @@
             <h3><i class="fas fa-users"></i> Community</h3>
             <ul>
               <li><a href="farmer.html">
-                <i class="fas fa-network-wired"></i> Farmer Network
-              </a></li>
+                  <i class="fas fa-network-wired"></i> Farmer Network
+                </a></li>
               <li><a href="chat.html">
-                <i class="fas fa-robot"></i> AI ChatBot
-              </a></li>
+                  <i class="fas fa-robot"></i> AI ChatBot
+                </a></li>
               <li><a href="shopkeeper.html">
-                <i class="fas fa-store"></i> Shopkeeper Listings
-              </a></li>
+                  <i class="fas fa-store"></i> Shopkeeper Listings
+                </a></li>
             </ul>
           </div>
 
@@ -581,14 +625,14 @@
             <h3><i class="fas fa-calendar-check"></i> Planning</h3>
             <ul>
               <li><a href="Crop_Planning/templates/cropplan.html">
-                <i class="fas fa-project-diagram"></i> Crop Planning
-              </a></li>
+                  <i class="fas fa-project-diagram"></i> Crop Planning
+                </a></li>
               <li><a href="Labour_Alerts/templates/labour.html">
-                <i class="fas fa-bell"></i> Labour Alerts
-              </a></li>
+                  <i class="fas fa-bell"></i> Labour Alerts
+                </a></li>
               <li><a href="plantation.html">
-                <i class="fas fa-tree"></i> Plantation Guide
-              </a></li>
+                  <i class="fas fa-tree"></i> Plantation Guide
+                </a></li>
             </ul>
           </div>
 
@@ -597,8 +641,8 @@
             <h3><i class="fas fa-cloud-sun"></i> Weather</h3>
             <ul>
               <li><a href="weather.html">
-                <i class="fas fa-thermometer-half"></i> Weather Check
-              </a></li>
+                  <i class="fas fa-thermometer-half"></i> Weather Check
+                </a></li>
             </ul>
           </div>
 
@@ -781,22 +825,20 @@
       </a>
 
       <a href="Forum/forum.html" class="grid-item">
-      <img src="https://cdn-icons-png.flaticon.com/512/3063/3063826.png"
-     alt="Farmer Forum"
-     loading="lazy"
-     style="width:100%; height:200px; object-fit:cover; border-radius:8px;" />
-     
-    <div class="grid-item-content">
-     <h3>Farmer Forum</h3>
-     <p>
-      Connect with other farmers, share advice, and discuss tips for improving yields and efficiency.
-     </p>
-     <div class="grid-item-footer">
-      <span class="feature-badge">Community</span>
-      <span class="arrow-icon">→</span>
-    </div>
-  </div>
-</a>
+        <img src="https://cdn-icons-png.flaticon.com/512/3063/3063826.png" alt="Farmer Forum" loading="lazy"
+          style="width:100%; height:200px; object-fit:cover; border-radius:8px;" />
+
+        <div class="grid-item-content">
+          <h3>Farmer Forum</h3>
+          <p>
+            Connect with other farmers, share advice, and discuss tips for improving yields and efficiency.
+          </p>
+          <div class="grid-item-footer">
+            <span class="feature-badge">Community</span>
+            <span class="arrow-icon">→</span>
+          </div>
+        </div>
+      </a>
 
       <a href="Crop_Prices_Tracker/templates/crop_price_tracker.html" class="grid-item">
         <img src="https://d3nn873nee648n.cloudfront.net/900x600/10734/14-SP305920.jpg" alt="Crop Price Tracker"
@@ -815,21 +857,21 @@
       </a>
 
       <a href="Gov_schemes/index_scheme.html" class="grid-item">
-          <img src="images/Scheme.jpg" alt="Farmer Forum" loading="lazy"
-            style="width:100%; height:200px; object-fit:cover; border-radius:8px;" />
+        <img src="images/Scheme.jpg" alt="Farmer Forum" loading="lazy"
+          style="width:100%; height:200px; object-fit:cover; border-radius:8px;" />
 
-          <div class="grid-item-content">
-            <h3>Schemes </h3>
-            <p>
-              Government schemes provide farmers with financial support, subsidies, insurance, and resources to boost
-              productivity, sustainability, and income.
-            </p>
-            <div class="grid-item-footer">
-              <span class="feature-badge">Scheme</span>
-              <span class="arrow-icon">→</span>
-            </div>
+        <div class="grid-item-content">
+          <h3>Schemes </h3>
+          <p>
+            Government schemes provide farmers with financial support, subsidies, insurance, and resources to boost
+            productivity, sustainability, and income.
+          </p>
+          <div class="grid-item-footer">
+            <span class="feature-badge">Scheme</span>
+            <span class="arrow-icon">→</span>
           </div>
-        </a>
+        </div>
+      </a>
     </section>
 
     <body>
@@ -868,14 +910,20 @@
           <h2>Smart Loan Eligibility Guide</h2>
           <p>Get step-by-step assistance for applying for agricultural loans.</p>
           <div style="margin-top: 20px;">
-            <a href="smart_loan.html" class="btn-green" id="goLoanGuide" style="margin-right: 20px;">Go to Smart Loan Guide</a>
+            <a href="smart_loan.html" class="btn-green" id="goLoanGuide" style="margin-right: 20px;">Go to Smart Loan
+              Guide</a>
             <label for="languageSelect">Language:</label>
             <select id="languageSelect" class="language-select">
               <option value="en">English</option>
               <option value="hi">हिन्दी</option>
             </select>
+            <small class="language-note">
+              Language change applies only to Smart Loan Guide
+            </small>
+
+
           </div>
-          
+
         </section>
       </div>
   </main>
@@ -883,24 +931,102 @@
 
   <!-- Footer -->
   <style>
-    .site-footer {background: linear-gradient(135deg,#2e7d32,#66bb6a); color:#fff; margin-top:auto; padding: 2rem 1.25rem;}
-    .site-footer .footer-inner {max-width:1200px;margin:0 auto; display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1.5rem; align-items:flex-start;}
-    .footer-brand {display:flex;flex-direction:column;gap:.5rem;align-items: center;}
-    .footer-logo {width:48px;height:48px;border-radius:8px;object-fit:cover;background:#fff;padding:4px}
-    .site-footer h3,.site-footer h4{margin:0 0 .5rem 0}
-    .site-footer p {margin:0;opacity:0.9}
-    .site-footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column}
-    .site-footer a{color:#fff;text-decoration:none;opacity:0.9;width:max-content;background-color: none;}
-    .site-footer a:hover{opacity:1;text-decoration:underline}
-    .footer-links{display:flex;flex-direction:column;align-items: center;}
-    .social-media {display:flex;gap:1rem;margin-top:.5rem}
-    .social-media a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:50%;transition:all .3s ease;font-size:1.2rem}
-    .social-media a:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+    .site-footer {
+      background: linear-gradient(135deg, #2e7d32, #66bb6a);
+      color: #fff;
+      margin-top: auto;
+      padding: 2rem 1.25rem;
+    }
+
+    .site-footer .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      align-items: center;
+    }
+
+    .footer-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #fff;
+      padding: 4px
+    }
+
+    .site-footer h3,
+    .site-footer h4 {
+      margin: 0 0 .5rem 0
+    }
+
+    .site-footer p {
+      margin: 0;
+      opacity: 0.9
+    }
+
+    .site-footer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column
+    }
+
+    .site-footer a {
+      color: #fff;
+      text-decoration: none;
+      opacity: 0.9;
+      width: max-content;
+      background-color: none;
+    }
+
+    .site-footer a:hover {
+      opacity: 1;
+      text-decoration: underline
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .social-media {
+      display: flex;
+      gap: 1rem;
+      margin-top: .5rem
+    }
+
+    .social-media a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, .1);
+      border-radius: 50%;
+      transition: all .3s ease;
+      font-size: 1.2rem
+    }
+
+    .social-media a:hover {
+      background: rgba(255, 255, 255, .2);
+      transform: translateY(-2px)
+    }
   </style>
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-brand">
-                 <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
+        <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
         <h3>AgriTech</h3>
         <p>Empowering India's Farming Future</p>
         <div class="social-media">
@@ -910,221 +1036,225 @@
           <a href="https://github.com/omroy07" target="_blank" aria-label="View our GitHub repositories">
             <i class="fab fa-github"></i>
           </a>
-          <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank" aria-label="Connect with us on LinkedIn">
+          <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank"
+            aria-label="Connect with us on LinkedIn">
             <i class="fab fa-linkedin"></i>
           </a>
         </div>
       </div>
-              <div class="footer-links">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="main.html">Dashboard</a></li>
-            <li><a href="feed-back.html">Feedback</a></li>
-            <li><a href="chat.html">AI Assistant</a></li>
-          </ul>
-        </div>
-              <div class="footer-links">
-          <h4>Tools</h4>
-          <ul>
-            <li><a href="Crop Recommendation/templates/index.html">Crop Recommendation</a></li>
-            <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
-            <li><a href="Disease prediction/template/index.html">Disease Detector</a></li>
-            <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
-          </ul>
-        </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="main.html">Dashboard</a></li>
+          <li><a href="feed-back.html">Feedback</a></li>
+          <li><a href="chat.html">AI Assistant</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="Crop Recommendation/templates/index.html">Crop Recommendation</a></li>
+          <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
+          <li><a href="Disease prediction/template/index.html">Disease Detector</a></li>
+          <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
+        </ul>
+      </div>
     </div>
     <p style="margin-top: 2rem; opacity: 0.8">
       &copy; 2025 AgriTech | Empowering India's Farming Future 🇮🇳
     </p>
-    </footer>
-    <!-- Floating Chatbot Button -->
-<a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
-  <i class="fas fa-robot"></i>
-</a>
+  </footer>
+  <!-- Floating Chatbot Button -->
+  <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
+    <i class="fas fa-robot"></i>
+  </a>
 
-    <!-- JavaScript Files -->
-     <script>
-      // Toggle Services Menu
-document.getElementById('servicesMenuToggle').addEventListener('click', function () {
-  document.getElementById('servicesMenu').classList.toggle('active');
-});
-     </script>
-   <script>
-  function toggleMenu() {
-    document.getElementById("navMenu").classList.toggle("show");
-  }
-</script>
+  <!-- JavaScript Files -->
+  <script>
+    // Toggle Services Menu
+    document.getElementById('servicesMenuToggle').addEventListener('click', function () {
+      document.getElementById('servicesMenu').classList.toggle('active');
+    });
+  </script>
+  <script>
+    function toggleMenu() {
+      document.getElementById("navMenu").classList.toggle("show");
+    }
+  </script>
 
 
-    
-    <script src="theme.js"></script>
-    
-    <!-- Authentication Manager Script -->
-    <script>
-      // Simple Authentication Manager for AgriTech
-      class AuthManager {
-        constructor() {
-          this.users = this.loadUsers();
-          this.currentUser = this.getCurrentUser();
-        }
 
-        // Load users from localStorage (fallback to empty array if not available)
-        loadUsers() {
-          try {
-            const users = localStorage.getItem('agritech_users');
-            return users ? JSON.parse(users) : [];
-          } catch (error) {
-            console.error('Error loading users:', error);
-            return [];
-          }
-        }
+  <script src="theme.js"></script>
 
-        // Save users to localStorage
-        saveUsers() {
-          try {
-            localStorage.setItem('agritech_users', JSON.stringify(this.users));
-          } catch (error) {
-            console.error('Error saving users:', error);
-          }
-        }
+  <!-- Authentication Manager Script -->
+  <script src="auth.js"></script>
+  <script>
+    // AuthManager is now loaded from auth.js
+    /*
+    class AuthManager {
+      constructor() {
+        this.users = this.loadUsers();
+        this.currentUser = this.getCurrentUser();
+      }
 
-        // Get current user session
-        getCurrentUser() {
-          try {
-            const user = localStorage.getItem('agritech_current_user');
-            return user ? JSON.parse(user) : null;
-          } catch (error) {
-            console.error('Error getting current user:', error);
-            return null;
-          }
-        }
-
-        // Check if user is logged in
-        isLoggedIn() {
-          return this.currentUser !== null;
-        }
-
-        // Logout user
-        logout() {
-          try {
-            localStorage.removeItem('agritech_current_user');
-            this.currentUser = null;
-            return { success: true, message: 'Logged out successfully' };
-          } catch (error) {
-            console.error('Error during logout:', error);
-            return { success: false, message: 'Error during logout' };
-          }
+      // Load users from localStorage (fallback to empty array if not available)
+      loadUsers() {
+        try {
+          const users = localStorage.getItem('agritech_users');
+          return users ? JSON.parse(users) : [];
+        } catch (error) {
+          console.error('Error loading users:', error);
+          return [];
         }
       }
 
-      // Initialize global auth manager
-      window.authManager = new AuthManager();
-
-      // Utility function to show authentication messages
-      function showAuthMessage(message, type = 'info') {
-        // Remove existing messages
-        const existingMessage = document.querySelector('.auth-message');
-        if (existingMessage) {
-          existingMessage.remove();
+      // Save users to localStorage
+      saveUsers() {
+        try {
+          localStorage.setItem('agritech_users', JSON.stringify(this.users));
+        } catch (error) {
+          console.error('Error saving users:', error);
         }
-
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `auth-message auth-message-${type}`;
-        messageDiv.innerHTML = `
-          <div class="auth-message-content">
-            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-            <span>${message}</span>
-          </div>
-        `;
-
-        messageDiv.style.animation = 'slideInRight 0.3s ease-out';
-        document.body.appendChild(messageDiv);
-
-        // Auto remove after 5 seconds
-        setTimeout(() => {
-          if (messageDiv.parentNode) {
-            messageDiv.style.animation = 'slideOutRight 0.3s ease-out';
-            setTimeout(() => {
-              if (messageDiv.parentNode) {
-                messageDiv.remove();
-              }
-            }, 300);
-          }
-        }, 5000);
       }
 
-      // Check authentication on protected pages
-      function requireAuth() {
-        if (!window.authManager.isLoggedIn()) {
-          showAuthMessage('Please log in to access this page', 'error');
+      // Get current user session
+      getCurrentUser() {
+        try {
+          const user = localStorage.getItem('agritech_current_user');
+          return user ? JSON.parse(user) : null;
+        } catch (error) {
+          console.error('Error getting current user:', error);
+          return null;
+        }
+      }
+
+      // Check if user is logged in
+      isLoggedIn() {
+        return this.currentUser !== null;
+      }
+
+      // Logout user
+      logout() {
+        try {
+          localStorage.removeItem('agritech_current_user');
+          this.currentUser = null;
+          return { success: true, message: 'Logged out successfully' };
+        } catch (error) {
+          console.error('Error during logout:', error);
+          return { success: false, message: 'Error during logout' };
+        }
+      }
+    }
+
+    // Initialize global auth manager
+    window.authManager = new AuthManager();
+
+    // Utility function to show authentication messages
+    function showAuthMessage(message, type = 'info') {
+      // Remove existing messages
+      const existingMessage = document.querySelector('.auth-message');
+      if (existingMessage) {
+        existingMessage.remove();
+      }
+
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `auth-message auth-message-${type}`;
+      messageDiv.innerHTML = `
+        <div class="auth-message-content">
+          <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+          <span>${message}</span>
+        </div>
+      `;
+
+      messageDiv.style.animation = 'slideInRight 0.3s ease-out';
+      document.body.appendChild(messageDiv);
+
+      // Auto remove after 5 seconds
+      setTimeout(() => {
+        if (messageDiv.parentNode) {
+          messageDiv.style.animation = 'slideOutRight 0.3s ease-out';
           setTimeout(() => {
-            window.location.href = 'index.html';
-          }, 2000);
-          return false;
-        }
-        return true;
-      }
-
-      // Logout confirmation function
-      function showLogoutConfirmation() {
-        Swal.fire({
-          title: 'Confirm Logout',
-          text: 'Are you sure you want to logout?',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#d33',
-          cancelButtonColor: '#3085d6',
-          confirmButtonText: 'Yes, logout',
-          cancelButtonText: 'Cancel'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            const logoutResult = window.authManager.logout();
-            if (logoutResult.success) {
-              Swal.fire({
-                title: 'Logged Out!',
-                text: logoutResult.message,
-                icon: 'success',
-                timer: 2000,
-                showConfirmButton: false
-              }).then(() => {
-                // Redirect to index.html after logout
-                window.location.href = 'index.html';
-              });
-            } else {
-              Swal.fire({
-                title: 'Error!',
-                text: logoutResult.message,
-                icon: 'error'
-              });
+            if (messageDiv.parentNode) {
+              messageDiv.remove();
             }
-          }
-        });
+          }, 300);
+        }
+      }, 5000);
+    }
+
+    // Check authentication on protected pages
+    function requireAuth() {
+      if (!window.authManager.isLoggedIn()) {
+        showAuthMessage('Please log in to access this page', 'error');
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 2000);
+        return false;
       }
+      return true;
+    }
 
-      // Check authentication and update UI on page load
-      document.addEventListener('DOMContentLoaded', () => {
-        // For now, we'll comment out the authentication requirement
-        // Uncomment the line below if you want to enforce authentication
-        // if (!requireAuth()) return;
-
-        const currentUser = window.authManager.getCurrentUser();
-        if (currentUser) {
-          // Update header to show user name
-          const headerTitle = document.querySelector('header h2');
-          if (headerTitle) {
-            headerTitle.textContent = `Welcome to AgriTech, ${currentUser.fullname}!`;
+    */
+    // Logout confirmation function
+    function showLogoutConfirmation() {
+      Swal.fire({
+        title: 'Confirm Logout',
+        text: 'Are you sure you want to logout?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, logout',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const logoutResult = window.authManager.logout();
+          if (logoutResult.success) {
+            Swal.fire({
+              title: 'Logged Out!',
+              text: logoutResult.message,
+              icon: 'success',
+              timer: 2000,
+              showConfirmButton: false
+            }).then(() => {
+              // Redirect to index.html after logout
+              window.location.href = 'index.html';
+            });
+          } else {
+            Swal.fire({
+              title: 'Error!',
+              text: logoutResult.message,
+              icon: 'error'
+            });
           }
         }
       });
+    }
 
-      // Loan Guide Language Selection
-      document.getElementById('goLoanGuide').addEventListener('click', function (event) {
-        event.preventDefault();
-        const lang = document.getElementById('languageSelect').value;
-        window.location.href = `smart_loan.html?lang=${lang}`;
-      });
-    </script>
+    // Check authentication and update UI on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      // For now, we'll comment out the authentication requirement
+      // Uncomment the line below if you want to enforce authentication
+      // if (!requireAuth()) return;
+
+      const currentUser = window.authManager.getCurrentUser();
+      if (currentUser) {
+        // Update header to show user name
+        const headerTitle = document.querySelector('header h2');
+        if (headerTitle) {
+          headerTitle.textContent = `Welcome to AgriTech, ${currentUser.fullname}!`;
+        }
+      }
+    });
+
+    // Loan Guide Language Selection
+    document.getElementById('goLoanGuide').addEventListener('click', function (event) {
+      event.preventDefault();
+      const lang = document.getElementById('languageSelect').value;
+      window.location.href = `smart_loan.html?lang=${lang}`;
+    });
+  </script>
 
 
   <!-- Services Mega Menu Toggle Script -->
@@ -1133,14 +1263,14 @@ document.getElementById('servicesMenuToggle').addEventListener('click', function
     const megaMenu = document.getElementById('servicesMegaMenu');
     const dropdownIcon = servicesBtn.querySelector('.dropdown-icon');
 
-    servicesBtn.addEventListener('click', function(e) {
+    servicesBtn.addEventListener('click', function (e) {
       e.stopPropagation();
       megaMenu.classList.toggle('active');
       dropdownIcon.classList.toggle('rotate');
     });
 
     // Close mega menu when clicking outside
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
       if (!megaMenu.contains(e.target) && !servicesBtn.contains(e.target)) {
         megaMenu.classList.remove('active');
         dropdownIcon.classList.remove('rotate');
@@ -1148,11 +1278,12 @@ document.getElementById('servicesMenuToggle').addEventListener('click', function
     });
 
     // Prevent menu from closing when clicking inside it
-    megaMenu.addEventListener('click', function(e) {
+    megaMenu.addEventListener('click', function (e) {
       e.stopPropagation();
     });
   </script>
 
 </body>
+
 
 </html>
