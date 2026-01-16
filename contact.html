@@ -17,20 +17,23 @@
       --text-light: #f8fafc;
       --input-border: #334155;
       --nav-height: 70px;
+      /* Animation transition for theme switching */
+      --theme-transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
-    /* DARK THEME SUPPORT */
+    /* DARK THEME SUPPORT (LIGHT MODE OVERRIDES) */
     [data-theme="light"] {
       --bg-dark: #f1f5f3;
       --card-bg: #ffffff;
-      --text-light: #333333;
-      --input-border: #cccccc;
+      --text-light: #1e293b;
+      --input-border: #cbd5e1;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      transition: var(--theme-transition);
     }
 
     body {
@@ -38,7 +41,6 @@
       background-color: var(--bg-dark);
       color: var(--text-light);
       line-height: 1.6;
-      transition: background 0.3s ease;
     }
 
     /* --- PREMIUM ADAPTIVE GLASSMORPHISM & SMART-SHRINK NAVBAR --- */
@@ -49,7 +51,6 @@
       height: var(--nav-height);
       background: linear-gradient(135deg, var(--primary-green), #1b5e20);
       z-index: 2000;
-      /* Extended transition for premium feel */
       transition: transform 0.3s ease-in-out, height 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s ease, backdrop-filter 0.4s ease;
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
       display: flex;
@@ -57,11 +58,10 @@
       padding: 0 20px;
     }
 
-    /* GLASSMORPHISM STATE: Applied on scroll */
     .header.scrolled {
-      height: 60px; /* Smart-Shrink */
-      background: rgba(46, 125, 50, 0.7); /* 70% opacity */
-      backdrop-filter: blur(10px); /* Adaptive Glassmorphism blur */
+      height: 60px;
+      background: rgba(46, 125, 50, 0.7);
+      backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
 
@@ -85,12 +85,10 @@
       transition: transform 0.3s ease;
     }
 
-    /* Shrink logo/buttons on scroll */
     .header.scrolled .header-left, .header.scrolled .theme-toggle {
       transform: scale(0.9);
     }
 
-    /* --- BOUNCY INTERACTIVE EXIT BUTTON --- */
     .nav-back-btn {
       color: white;
       text-decoration: none;
@@ -102,14 +100,13 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      /* Elastic interaction timing */
       transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease;
     }
 
     .nav-back-btn:hover {
       background: white;
       color: var(--primary-green);
-      transform: scale(1.1) translateY(-2px); /* Bouncy pop-out effect */
+      transform: scale(1.1) translateY(-2px);
     }
 
     .logo {
@@ -118,20 +115,32 @@
       gap: 10px;
       font-size: 1.25rem;
       font-weight: 700;
+      color: white;
     }
 
     .theme-toggle {
-      background: none;
-      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       color: white;
-      font-size: 1.2rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      transition: transform 0.3s ease;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(15deg);
     }
 
     /* --- HERO ADJUSTED --- */
     .hero {
-      padding-top: calc(var(--nav-height) + 60px); /* PREVENTS OVERLAP */
+      padding-top: calc(var(--nav-height) + 60px);
       text-align: center;
       background: linear-gradient(to bottom, #143a18, var(--bg-dark));
       padding-bottom: 80px;
@@ -150,7 +159,7 @@
       opacity: 0.8;
     }
 
-    /* --- FIXED: IMPROVED DARK DROPDOWN STYLING --- */
+    /* --- DROPDOWN STYLING --- */
     select {
       width: 100%;
       padding: 14px;
@@ -162,17 +171,19 @@
       margin-top: 10px;
       appearance: none;
       cursor: pointer;
-      /* Tells the browser to use dark-mode for the pop-up list UI */
       color-scheme: dark; 
     }
 
+    [data-theme="light"] select {
+      color-scheme: light;
+    }
+
     select option {
-      background-color: var(--card-bg); /* Forces dark background */
+      background-color: var(--card-bg);
       color: var(--text-light);
       padding: 10px;
     }
 
-    /* Form Styles */
     .contact-form-section {
       padding: 80px 20px;
     }
@@ -201,7 +212,7 @@
       padding: 14px;
       margin-top: 8px;
       border-radius: 10px;
-      background: rgba(39, 52, 71, 0.5);
+      background: rgba(120, 120, 120, 0.1);
       border: 1px solid var(--input-border);
       color: var(--text-light);
       font-size: 1rem;
@@ -275,7 +286,7 @@
         </div>
       </div>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <i class="fas fa-sun"></i>
+        <i class="fas fa-sun" id="themeIcon"></i>
       </button>
     </div>
   </header>
@@ -292,17 +303,17 @@
       <div class="method-card">
         <div class="method-icon"><i class="fas fa-envelope"></i></div>
         <h3>Email Support</h3>
-        <a href="mailto:support@agritech.com" style="color: var(--accent-green);">support@agritech.com</a>
+        <a href="mailto:support@agritech.com" style="color: var(--accent-green); text-decoration: none;">support@agritech.com</a>
       </div>
       <div class="method-card">
         <div class="method-icon"><i class="fas fa-phone"></i></div>
         <h3>Phone Support</h3>
-        <a href="tel:+1234567890" style="color: var(--accent-green);">+1 (234) 567-890</a>
+        <a href="tel:+1234567890" style="color: var(--accent-green); text-decoration: none;">+1 (234) 567-890</a>
       </div>
       <div class="method-card">
         <div class="method-icon"><i class="fas fa-comments"></i></div>
         <h3>Community</h3>
-        <a href="#community" style="color: var(--accent-green);">Join Now</a>
+        <a href="#community" style="color: var(--accent-green); text-decoration: none;">Join Now</a>
       </div>
     </section>
 
@@ -352,6 +363,38 @@
   </div>
 
   <script>
+    // --- THEME TOGGLE LOGIC (FIXED & PERSISTED) ---
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const root = document.documentElement;
+
+    /**
+     * Updates the UI based on the theme
+     */
+    function updateThemeUI(theme) {
+      root.setAttribute('data-theme', theme);
+      if (theme === 'light') {
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+      } else {
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+      }
+    }
+
+    // Load and apply saved theme on initial page load
+    const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
+    updateThemeUI(savedTheme);
+
+    // Click event listener for the toggle button
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = root.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      
+      localStorage.setItem('agritech-theme', newTheme);
+      updateThemeUI(newTheme);
+    });
+
     // --- PREMIUM NAVIGATION LOGIC ---
     let lastScrollTop = 0;
     const navbar = document.getElementById('navbar');
@@ -359,14 +402,14 @@
     window.addEventListener('scroll', function() {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       
-      // 1. ADAPTIVE GLASSMORPHISM & SMART SHRINK
+      // Glassmorphism effect on scroll
       if (scrollTop > 50) {
         navbar.classList.add('scrolled');
       } else {
         navbar.classList.remove('scrolled');
       }
 
-      // 2. HIDE ON SCROLL DOWN / SHOW ON SCROLL UP
+      // Auto-hide navbar on scroll down, show on scroll up
       if (scrollTop > lastScrollTop && scrollTop > 200) {
         navbar.classList.add('nav-up');
       } else {
@@ -375,27 +418,7 @@
       lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
     }, false);
 
-    // --- THEME TOGGLE LOGIC (FIXED) ---
-    const themeToggle = document.getElementById('themeToggle');
-    const root = document.documentElement;
-
-    themeToggle.addEventListener('click', () => {
-      const currentTheme = localStorage.getItem('agritech-theme') || 'dark';
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      
-      root.setAttribute('data-theme', newTheme);
-      localStorage.setItem('agritech-theme', newTheme);
-      
-      // Update icon
-      themeToggle.querySelector('i').className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-    });
-
-    // Load saved theme on load
-    const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
-    root.setAttribute('data-theme', savedTheme);
-    themeToggle.querySelector('i').className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-
-    // Form logic
+    // Form submission logic
     document.getElementById('contactForm').addEventListener('submit', function(e) {
       e.preventDefault();
       alert('Message sent successfully! 🌱');
