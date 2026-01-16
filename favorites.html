@@ -15,7 +15,7 @@
             background: linear-gradient(180deg, #eef3f8, #dfe7f0);
         }
 
-        /* ACCESSIBILITY: visible focus */
+        /* ACCESSIBILITY: visible focus for keyboard users */
         button:focus-visible,
         a:focus-visible {
             outline: 3px solid #2c5f2d;
@@ -78,6 +78,11 @@
         .btn-secondary { background: #6c757d; color: #fff; }
         .btn-primary { background: #4CAF50; color: #fff; text-decoration: none; }
 
+        .action-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
         #favoritesContainer {
             background: white;
             border-radius: 18px;
@@ -109,6 +114,7 @@
             padding: 0.5rem 1rem;
             border-radius: 20px;
             cursor: pointer;
+            font-size: 0.9rem;
         }
 
         .back-to-blog {
@@ -135,6 +141,7 @@
                 <i class="fas fa-heart" aria-hidden="true"></i>
                 My Favorite Blogs
             </h1>
+
             <p class="favorites-stats">
                 You have
                 <span id="favoritesCount" aria-live="polite">0</span>
@@ -165,7 +172,9 @@
             </a>
         </div>
 
-        <div id="favoritesContainer" role="region" aria-label="Favorite blogs list"></div>
+        <div id="favoritesContainer"
+             role="region"
+             aria-label="Favorite blogs list"></div>
     </div>
 </section>
 
@@ -187,7 +196,10 @@ class FavoritesPage {
                     <i class="far fa-heart" aria-hidden="true"></i>
                     <h3>No Favorite Blogs Yet</h3>
                     <p>Start exploring our blog section and add favorites.</p>
-                    <a href="blog.html" class="back-to-blog" aria-label="Explore all blogs">
+                    <a href="blog.html"
+                       class="back-to-blog"
+                       aria-label="Explore all blogs">
+                        <i class="fas fa-newspaper" aria-hidden="true"></i>
                         Explore Blogs
                     </a>
                 </div>
@@ -202,6 +214,7 @@ class FavoritesPage {
                         <img src="${blog.image}" alt="${blog.title}">
 
                         <button class="favorite-btn active"
+                                tabindex="0"
                                 aria-label="Remove ${blog.title} from favorites"
                                 aria-pressed="true"
                                 data-id="${blog.id}">
