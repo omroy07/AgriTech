@@ -1770,7 +1770,8 @@
   </script>
 
 
-  <script src="index.js"></script>
+
+  <script type="module" src="index.js"></script>
 
   <script>
     // Theme Toggle
@@ -1849,56 +1850,46 @@
     }
 
     // ===== MOBILE MENU (FINAL FIX) =====
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
 
-    function closeMobileMenu() {
-      mobileMenu.classList.remove('active');
-      mobileMenuOverlay.classList.remove('active');
-      document.body.style.overflow = '';
-    }
+function closeMobileMenu() {
+  mobileMenu.classList.remove('active');
+  mobileMenuOverlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
 
-    function openMobileMenu() {
-      mobileMenu.classList.add('active');
-      mobileMenuOverlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
+function openMobileMenu() {
+  mobileMenu.classList.add('active');
+  mobileMenuOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+const mobileCloseBtn = document.querySelector('.mobile-close-btn');
 
-    if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
+if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
+  // OPEN
+  hamburgerBtn.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    openMobileMenu();
+  });
 
-      // OPEN
-      hamburgerBtn.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
-        openMobileMenu();
-      });
+  // CLOSE
+  mobileCloseBtn.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    closeMobileMenu();
+  });
 
-      // ❌ CLOSE — TOUCH SAFE
-      mobileCloseBtn.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        closeMobileMenu();
-      });
+  mobileMenuOverlay.addEventListener('pointerdown', closeMobileMenu);
 
-      // BACKUP FOR OLD MOBILE BROWSERS
-      mobileCloseBtn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        closeMobileMenu();
-      }, { passive: false });
-
-      // OVERLAY CLICK
-      mobileMenuOverlay.addEventListener('pointerdown', () => {
-        closeMobileMenu();
-      });
-
-      // PREVENT BUBBLING INSIDE MENU
-      mobileMenu.addEventListener('pointerdown', (e) => {
-        e.stopPropagation();
-      });
-    }
-
-
+  mobileMenu.addEventListener('pointerdown', (e) => {
+    e.stopPropagation();
+  });
+}
 
     // Mobile Services Toggle
     const mobileServicesToggle = document.getElementById('mobileServicesToggle');
