@@ -1678,40 +1678,7 @@
 
         document.addEventListener('DOMContentLoaded', initializeProducts);
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const themeToggle = document.getElementById('themeToggle');
-            const themeIcon = document.getElementById('themeIcon');
-            const themeText = document.getElementById('themeText');
-
-            // Initial Theme Load
-            const savedTheme = localStorage.getItem('marketplaceTheme') || 'dark';
-            document.body.setAttribute('data-theme', savedTheme);
-            updateThemeButton(savedTheme);
-
-            // Theme Toggle Event
-            themeToggle.addEventListener('click', () => {
-                const currentTheme = document.body.getAttribute('data-theme');
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-                document.body.setAttribute('data-theme', newTheme);
-                localStorage.setItem('marketplaceTheme', newTheme);
-                updateThemeButton(newTheme);
-                showNotification(`Switched to ${newTheme} theme`, 'info');
-            });
-
-            function updateThemeButton(theme) {
-                if (theme === 'dark') {
-                    themeIcon.className = 'fas fa-sun';
-                    themeText.textContent = 'Dark';
-                } else {
-                    themeIcon.className = 'fas fa-moon';
-                    themeText.textContent = 'Light';
-                }
-            }
-        });
-
-    </script>
+   
     <script src="auth.js"></script>
 </body>
-
 </html>
