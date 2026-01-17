@@ -23,37 +23,8 @@ app.register_blueprint(disease_bp)
 
 
 
-# Input validation and sanitization functions
-def sanitize_input(text):
-    """Sanitize user input to prevent XSS and injection attacks"""
-    if not text or not isinstance(text, str):
-        return ""
-    
-    # Remove HTML tags
-    text = re.sub(r'<[^>]+>', '', text)
-    
-    # Escape special characters
-    text = text.replace('&', '&amp;')
-    text = text.replace('<', '&lt;')
-    text = text.replace('>', '&gt;')
-    text = text.replace('"', '&quot;')
-    text = text.replace("'", '&#x27;')
-    
-    # Limit length
-    if len(text) > 1000:
-        text = text[:1000]
-    
-    return text.strip()
-
-def validate_input(data):
-    """Validate input data structure and content"""
-    if not data:
-        return False, "No data provided"
-    
-    # Check for required fields if needed
-    # Add specific validation rules here
-    
-    return True, "Valid input"
+# Initialize Marshmallow Schemas
+loan_schema = LoanRequestSchema()
 
 # Initialize Gemini API
 API_KEY = os.environ.get('GEMINI_API_KEY')
@@ -94,13 +65,14 @@ def process_loan():
     try:
         json_data = request.get_json(force=True)
         
-        # Validate and sanitize input
-        is_valid, validation_message = validate_input(json_data)
-        if not is_valid:
+        # Validate and sanitize input using Marshmallow
+        try:
+            validated_data = loan_schema.load(json_data)
+        except ValidationError as err:
             return jsonify({
                 "status": "error",
-                "message": validation_message
-                }), 400
+                "message": err.messages
+            }), 400
         
         # Sanitize any text fields in the JSON data
         if isinstance(json_data, dict):
