@@ -5,6 +5,7 @@ import os
 import re
 from flask_cors import CORS
 from dotenv import load_dotenv
+from extensions import limiter
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
 from marshmallow import ValidationError
@@ -21,6 +22,9 @@ CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
 app.register_blueprint(crop_bp)
 app.register_blueprint(disease_bp)
+
+# Initialize Limiter
+limiter.init_app(app)
 
 
 
@@ -42,6 +46,7 @@ model = genai.GenerativeModel("gemini-2.5-flash")
 
 """Secure endpoint to provide Firebase configuration to client"""
 @app.route('/api/firebase-config')
+@limiter.limit("10 per minute")
 def get_firebase_config():
     try:
         return jsonify({
@@ -62,6 +67,7 @@ def get_firebase_config():
 
 
 @app.route('/process-loan', methods=['POST'])
+@limiter.limit("5 per minute")
 def process_loan():
     try:
         json_data = request.get_json(force=True)
@@ -161,6 +167,7 @@ def contact():
     return send_from_directory('.', 'contact.html')
 
 @app.route('/chat')
+@limiter.limit("10 per minute")
 def chat():
     return send_from_directory('.', 'chat.html')
 

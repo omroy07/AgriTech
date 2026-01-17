@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, jsonify
 import joblib
 import numpy as np
 import os
+from extensions import limiter
 
 crop_bp = Blueprint(
     'crop',
@@ -29,6 +30,7 @@ def crop_home():
 
 
 @crop_bp.route("/predict", methods=["POST"])
+@limiter.limit("10 per minute")
 def predict():
     try:
         from backend.schemas import CropPredictionSchema

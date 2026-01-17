@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 import os
 from werkzeug.utils import secure_filename
+from extensions import limiter
 
 from .utils import load_pytorch_model, predict_image_pytorch
 
@@ -65,6 +66,7 @@ def disease_home():
 
 
 @disease_bp.route("/predict", methods=["POST"])
+@limiter.limit("10 per minute")
 def predict_disease():
     file = request.files.get("file")
 
