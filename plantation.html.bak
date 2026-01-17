@@ -6,23 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AgriTech</title>
     <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet" />
     <link rel="stylesheet" href="plantation.css" />
     <link rel="stylesheet" href="theme.css" />
   </head>
 
   <body>
+    <!-- Scroll Progress Indicator -->
     <div class="scroll-indicator" id="scrollIndicator"></div>
 
+    <!-- Header -->
     <header>
       <div class="header-content">
         <h1 class="header">AgriTech</h1>
         <div style="display: flex; gap: 1rem; align-items: center;">
-          <button class="theme-toggle" aria-label="Toggle dark/light mode" style="background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
+          <button class="theme-toggle" aria-label="Toggle dark/light mode" 
+            style="background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
             <i class="fas fa-sun sun-icon"></i>
             <i class="fas fa-moon moon-icon"></i>
             <span class="theme-text">Light</span>
@@ -30,854 +33,1534 @@
           <a href="main.html" class="back-button"> ← Back to Main </a>
         </div>
       </div>
-
-      <nav>
-        <ul>
-          <li><a href="#research-development">Research</a></li>
-          <li><a href="#soil-preparation">Soil Preparation</a></li>
-          <li><a href="#seed-sowing">Seed Sowing</a></li>
-          <li>
-            <a href="#irrigation-fertilization">Irrigation & Fertilization</a>
-          </li>
-          <li><a href="#pest-disease-management">Pest Management</a></li>
-          <li><a href="#harvesting">Harvesting</a></li>
-          <li><a href="#post-harvest">Post-Harvest Handling</a></li>
-        </ul>
-      </nav>
     </header>
 
-    <main>
-      <section id="research-development">
-        <h2>Research and Development</h2>
-        <p>
-          Selecting the right crops for cultivation is a critical step in
-          agricultural planning. It involves analyzing various factors such as
-          climate, soil characteristics, and market demand to ensure optimal
-          yield and profitability.
-        </p>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <h2 class="hero-title">Complete Farming Cycle Guide</h2>
+        <p class="hero-subtitle">Navigate through each stage of modern agriculture with expert guidance</p>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <i class="fas fa-book"></i>
+            <span>7 Stages</span>
+          </div>
+          <div class="stat-item">
+            <i class="fas fa-clock"></i>
+            <span>45 min read</span>
+          </div>
+          <div class="stat-item">
+            <i class="fas fa-leaf"></i>
+            <span>Complete Guide</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <h3>1. Assessing Climate Conditions</h3>
-        <p>
-          Climate plays a pivotal role in determining which crops can thrive in
-          a particular region. Key climatic factors to consider include:
-        </p>
-        <ul>
-          <li>
-            <strong>Temperature Ranges:</strong> Understanding the average
-            temperatures helps in selecting crops that can withstand local heat
-            or cold.
-          </li>
-          <li>
-            <strong>Rainfall Patterns:</strong> Analyzing annual precipitation
-            and its distribution is essential, especially for rain-fed
-            agriculture.
-          </li>
-          <li>
-            <strong>Growing Season Length:</strong> The duration between the
-            last and first frost dates influences the types of crops that can be
-            grown.
-          </li>
-        </ul>
-        <p>
-          For instance, in regions like Vidarbha, Maharashtra, farmers are
-          shifting from traditional crops like cotton and soybean to maize due
-          to its higher yield and better market prices, despite challenges like
-          wildlife intrusion.
-        </p>
+    <!-- Main Content Container -->
+    <div class="content-wrapper">
 
-        <h3>2. Analyzing Soil Characteristics</h3>
-        <p>
-          Soil health is fundamental to crop productivity. Key soil factors
-          include:
-        </p>
-        <ul>
-          <li>
-            <strong>Soil Type:</strong> Sandy, loamy, or clay soils have
-            different water retention and nutrient profiles.
-          </li>
-          <li>
-            <strong>pH Levels:</strong> Certain crops require specific pH ranges
-            for optimal nutrient uptake.
-          </li>
-          <li>
-            <strong>Nutrient Content:</strong> Assessing levels of nitrogen,
-            phosphorus, potassium, and other micronutrients is crucial.
-          </li>
-        </ul>
-        <p>
-          Regular soil testing can guide amendments and crop selection. For
-          example, legumes like beans and peas can enrich nitrogen-deficient
-          soils.
-        </p>
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+          <!-- Progress Tracker -->
+          <div class="progress-tracker">
+            <h3>Your Progress</h3>
+            <div class="progress-bar-container">
+              <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <p class="progress-text"><span id="progressPercent">0</span>% Complete</p>
+          </div>
 
-        <h3>3. Evaluating Market Demand</h3>
-        <p>
-          Understanding market trends ensures that the cultivated crops meet
-          consumer needs and fetch profitable prices. Considerations include:
-        </p>
-        <ul>
-          <li>
-            <strong>Local Consumption Patterns:</strong> Growing crops that are
-            staples in the local diet can ensure steady demand.
-          </li>
-          <li>
-            <strong>Export Potential:</strong> Some crops may have higher value
-            in international markets.
-          </li>
-          <li>
-            <strong>Price Volatility:</strong> Analyzing historical price data
-            can help in choosing crops with stable returns.
-          </li>
-        </ul>
-        <p>
-          Incorporating market research into crop planning can enhance
-          profitability.
-        </p>
+          <!-- Quick Navigation -->
+          <nav class="quick-nav">
+            <h3>Quick Navigation</h3>
+            <ul id="quickNavList">
+              <!-- Will be populated by JavaScript -->
+            </ul>
+          </nav>
 
-        <h3>4. Leveraging Technology and Data</h3>
-        <p>Modern tools can assist in making informed decisions:</p>
-        <ul>
-          <li>
-            <strong>Machine Learning Models:</strong> These can predict suitable
-            crops based on historical data, climate forecasts, and soil
-            conditions.
-          </li>
-          <li>
-            <strong>Geographic Information Systems (GIS):</strong> GIS can map
-            soil types, rainfall patterns, and other variables to aid in crop
-            selection.
-          </li>
-          <li>
-            <strong>Mobile Applications:</strong> Apps can provide real-time
-            data on weather, market prices, and best practices.
-          </li>
-        </ul>
-        <p>
-          By integrating these technologies, farmers can optimize crop choices
-          and enhance resilience to climate variability.
-        </p>
-      </section>
+          <!-- Resources -->
+          <div class="sidebar-resources">
+            <h3>Resources</h3>
+            <a href="#" class="resource-link">
+              <i class="fas fa-file-pdf"></i>
+              <span>Download PDF</span>
+            </a>
+            <a href="#" class="resource-link">
+              <i class="fas fa-video"></i>
+              <span>Video Tutorials</span>
+            </a>
+            <a href="#" class="resource-link">
+              <i class="fas fa-bookmark"></i>
+              <span>Bookmark Guide</span>
+            </a>
+          </div>
+        </div>
+      </aside>
 
-      <section id="soil-preparation">
-        <h2>Soil Preparation</h2>
-        <p>
-          Proper soil preparation is essential for successful crop cultivation.
-          It involves several key steps to ensure the soil is fertile,
-          well-structured, and ready to support healthy plant growth.
-        </p>
+      <!-- Main Content Area -->
+      <main class="main-content">
 
-        <h3>1. Soil Testing and Analysis</h3>
-        <p>
-          Begin by testing the soil to determine its pH level, nutrient content,
-          and texture. This information helps in identifying necessary
-          amendments to optimize soil fertility.
-        </p>
+        <!-- Tab Navigation -->
+        <div class="tab-navigation-wrapper">
+          <div class="tab-navigation" role="tablist" id="tabNav">
+            <button class="tab-btn active" role="tab" aria-selected="true" 
+              data-tab="research" id="tab-research">
+              <i class="fas fa-flask"></i>
+              <span>Research</span>
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" 
+              data-tab="soil" id="tab-soil">
+              <i class="fas fa-tractor"></i>
+              <span>Soil Prep</span>
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" 
+              data-tab="sowing" id="tab-sowing">
+              <i class="fas fa-seedling"></i>
+              <span>Sowing</span>
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" 
+              data-tab="irrigation" id="tab-irrigation">
+              <i class="fas fa-tint"></i>
+              <span>Irrigation</span>
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" 
+              data-tab="pest" id="tab-pest">
+              <i class="fas fa-bug"></i>
+              <span>Pest Mgmt</span>
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" 
+              data-tab="harvest" id="tab-harvest">
+              <i class="fas fa-wheat-awn"></i>
+              <span>Harvest</span>
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" 
+              data-tab="postharvest" id="tab-postharvest">
+              <i class="fas fa-boxes-stacked"></i>
+              <span>Post-Harvest</span>
+            </button>
+          </div>
+        </div>
 
-        <h3>2. Clearing the Land</h3>
-        <p>
-          Remove any existing vegetation, rocks, and debris from the field. This
-          can be done manually or with the help of machinery, depending on the
-          size of the land.
-        </p>
+        <!-- Tab Content Panels -->
+        <div class="tab-content-container">
 
-        <h3>3. Ploughing</h3>
-        <p>
-          Ploughing involves turning over the top layer of soil to loosen it,
-          improve aeration, and incorporate organic matter. This process also
-          helps in controlling weeds and pests.
-        </p>
+          <!-- Research & Development Tab -->
+          <div class="tab-panel active" role="tabpanel" id="panel-research">
+            <h2 class="panel-title">Research and Development</h2>
+            <p class="panel-intro">
+              Selecting the right crops for cultivation is a critical step in
+              agricultural planning. It involves analyzing various factors such as
+              climate, soil characteristics, and market demand to ensure optimal
+              yield and profitability.
+            </p>
 
-        <h3>4. Harrowing</h3>
-        <p>
-          After ploughing, harrowing is performed to break up large soil clumps
-          and create a fine tilth suitable for planting. It also aids in
-          leveling the soil surface.
-        </p>
+            <div class="cards-grid">
 
-        <h3>5. Levelling</h3>
-        <p>
-          Level the field to ensure uniform water distribution during irrigation
-          and prevent waterlogging. This can be achieved using leveling tools or
-          machinery.
-        </p>
+              <!-- Card 1 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-cloud-sun"></i>
+                  </div>
+                  <h3>1. Assessing Climate Conditions</h3>
+                </div>
+                <p class="card-summary">
+                  Climate plays a pivotal role in determining which crops can thrive in a particular region.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Key climatic factors to consider include:</p>
+                  <ul>
+                    <li>
+                      <strong>Temperature Ranges:</strong> Understanding the average
+                      temperatures helps in selecting crops that can withstand local heat
+                      or cold.
+                    </li>
+                    <li>
+                      <strong>Rainfall Patterns:</strong> Analyzing annual precipitation
+                      and its distribution is essential, especially for rain-fed
+                      agriculture.
+                    </li>
+                    <li>
+                      <strong>Growing Season Length:</strong> The duration between the
+                      last and first frost dates influences the types of crops that can be
+                      grown.
+                    </li>
+                  </ul>
+                  <p>
+                    For instance, in regions like Vidarbha, Maharashtra, farmers are
+                    shifting from traditional crops like cotton and soybean to maize due
+                    to its higher yield and better market prices, despite challenges like
+                    wildlife intrusion.
+                  </p>
+                </div>
+              </div>
 
-        <h3>6. Incorporating Organic Matter</h3>
-        <p>
-          Add compost, aged manure, or other organic materials to enrich the
-          soil with nutrients, enhance its structure, and promote beneficial
-          microbial activity.
-        </p>
+              <!-- Card 2 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-layer-group"></i>
+                  </div>
+                  <h3>2. Analyzing Soil Characteristics</h3>
+                </div>
+                <p class="card-summary">
+                  Soil health is fundamental to crop productivity.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Key soil factors include:</p>
+                  <ul>
+                    <li>
+                      <strong>Soil Type:</strong> Sandy, loamy, or clay soils have
+                      different water retention and nutrient profiles.
+                    </li>
+                    <li>
+                      <strong>pH Levels:</strong> Certain crops require specific pH ranges
+                      for optimal nutrient uptake.
+                    </li>
+                    <li>
+                      <strong>Nutrient Content:</strong> Assessing levels of nitrogen,
+                      phosphorus, potassium, and other micronutrients is crucial.
+                    </li>
+                  </ul>
+                  <p>
+                    Regular soil testing can guide amendments and crop selection. For
+                    example, legumes like beans and peas can enrich nitrogen-deficient
+                    soils.
+                  </p>
+                </div>
+              </div>
 
-        <h3>7. Moisture Management</h3>
-        <p>
-          Ensure the soil has adequate moisture content before planting. Overly
-          dry or waterlogged soils can hinder seed germination and root
-          development.
-        </p>
+              <!-- Card 3 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-chart-line"></i>
+                  </div>
+                  <h3>3. Evaluating Market Demand</h3>
+                </div>
+                <p class="card-summary">
+                  Understanding market trends ensures profitable pricing.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Understanding market trends ensures that the cultivated crops meet consumer needs and fetch profitable prices. Considerations include:</p>
+                  <ul>
+                    <li>
+                      <strong>Local Consumption Patterns:</strong> Growing crops that are
+                      staples in the local diet can ensure steady demand.
+                    </li>
+                    <li>
+                      <strong>Export Potential:</strong> Some crops may have higher value
+                      in international markets.
+                    </li>
+                    <li>
+                      <strong>Price Volatility:</strong> Analyzing historical price data
+                      can help in choosing crops with stable returns.
+                    </li>
+                  </ul>
+                  <p>
+                    Incorporating market research into crop planning can enhance
+                    profitability.
+                  </p>
+                </div>
+              </div>
 
-        <h3>8. Final Soil Preparation</h3>
-        <p>
-          Before sowing seeds, perform a final check to ensure the soil is
-          well-prepared, free of weeds, and has the appropriate structure and
-          moisture levels for planting.
-        </p>
-      </section>
+              <!-- Card 4 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-microchip"></i>
+                  </div>
+                  <h3>4. Leveraging Technology and Data</h3>
+                </div>
+                <p class="card-summary">
+                  Modern tools assist in making data-driven decisions.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Modern tools can assist in making informed decisions:</p>
+                  <ul>
+                    <li>
+                      <strong>Machine Learning Models:</strong> These can predict suitable
+                      crops based on historical data, climate forecasts, and soil
+                      conditions.
+                    </li>
+                    <li>
+                      <strong>Geographic Information Systems (GIS):</strong> GIS can map
+                      soil types, rainfall patterns, and other variables to aid in crop
+                      selection.
+                    </li>
+                    <li>
+                      <strong>Mobile Applications:</strong> Apps can provide real-time
+                      data on weather, market prices, and best practices.
+                    </li>
+                  </ul>
+                  <p>
+                    By integrating these technologies, farmers can optimize crop choices
+                    and enhance resilience to climate variability.
+                  </p>
+                </div>
+              </div>
 
-      <section id="seed-sowing">
-        <h2>Seed Sowing</h2>
-        <p>
-          Proper seed sowing is crucial for successful crop cultivation. It
-          involves selecting appropriate methods and ensuring optimal seed
-          placement to promote healthy germination and growth.
-        </p>
+            </div>
+          </div>
 
-        <h3>1. Choosing the Right Sowing Method</h3>
-        <p>
-          Different crops and field conditions require specific sowing
-          techniques:
-        </p>
-        <ul>
-          <li>
-            <strong>Broadcast Seeding:</strong> Scattering seeds evenly over the
-            soil surface, suitable for cover crops and lawns. This method is
-            quick but may result in uneven distribution and depth.
-            <a
-              href="https://en.wikipedia.org/wiki/Broadcast_seeding"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-          <li>
-            <strong>Drill Seeding:</strong> Using a seed drill to place seeds at
-            uniform depth and spacing, enhancing seed-to-soil contact and
-            germination rates.
-            <a href="https://en.wikipedia.org/wiki/Seed_drill" target="_blank"
-              >Learn more</a
-            >
-          </li>
-          <li>
-            <strong>Precision Seeding:</strong> Placing individual seeds at
-            exact intervals and depths, reducing seed wastage and ensuring
-            optimal plant spacing.
-            <a
-              href="https://en.wikipedia.org/wiki/Precision_seeding"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-          <li>
-            <strong>Dibbling:</strong> Manually placing seeds into holes at
-            specific depths, commonly used for larger seeds or in small-scale
-            farming.
-            <a
-              href="https://eagri.org/eagri50/FMP211/lec08.html"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
+          <!-- Soil Preparation Tab -->
+          <div class="tab-panel" role="tabpanel" id="panel-soil">
+            <h2 class="panel-title">Soil Preparation</h2>
+            <p class="panel-intro">
+              Proper soil preparation is essential for successful crop cultivation.
+              It involves several key steps to ensure the soil is fertile,
+              well-structured, and ready to support healthy plant growth.
+            </p>
 
-        <h3>2. Ensuring Optimal Seed Placement</h3>
-        <p>Key factors to consider for effective seed placement:</p>
-        <ul>
-          <li>
-            <strong>Depth:</strong> Sow seeds at a depth of 2–3 times their
-            diameter to ensure adequate soil coverage and access to moisture.
-            <a href="https://en.wikipedia.org/wiki/Sowing" target="_blank"
-              >Learn more</a
-            >
-          </li>
-          <li>
-            <strong>Spacing:</strong> Maintain appropriate spacing between seeds
-            to reduce competition for nutrients, light, and water. For example,
-            mark grid lines in the seedbed to guide placement.
-            <a
-              href="https://extension.psu.edu/sowing-annual-seeds"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-          <li>
-            <strong>Seed-to-Soil Contact:</strong> Ensure good contact between
-            seeds and soil to facilitate moisture absorption and germination.
-            Firm the soil gently after sowing.
-            <a
-              href="https://www.nrcs.usda.gov/plantmaterials/azpmctn13355.pdf"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
+            <div class="cards-grid">
 
-        <h3>3. Tools and Equipment</h3>
-        <p>
-          Utilizing appropriate tools can enhance sowing efficiency and
-          accuracy:
-        </p>
-        <ul>
-          <li>
-            <strong>Manual Seeders:</strong> Devices that assist in placing
-            seeds at consistent depths and spacing, suitable for small to
-            medium-scale operations.
-          </li>
-          <li>
-            <strong>Seed Drills:</strong> Mechanized equipment that sows seeds
-            in rows at precise depths and intervals, ideal for large-scale
-            farming.
-          </li>
-          <li>
-            <strong>Seed Trays:</strong> Containers used for starting seeds
-            indoors or in controlled environments before transplanting.
-          </li>
-        </ul>
+              <!-- Card 1 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-flask-vial"></i>
+                  </div>
+                  <h3>1. Soil Testing and Analysis</h3>
+                </div>
+                <p class="card-summary">
+                  Test soil to determine pH, nutrients, and texture.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Begin by testing the soil to determine its pH level, nutrient content, and texture. This information helps in identifying necessary amendments to optimize soil fertility.</p>
+                </div>
+              </div>
 
-        <h3>4. Best Practices</h3>
-        <p>To maximize germination and crop establishment:</p>
-        <ul>
-          <li>
-            <strong>Soil Preparation:</strong> Ensure the seedbed is
-            well-tilled, free of debris, and has adequate moisture.
-          </li>
-          <li>
-            <strong>Timing:</strong> Sow seeds during optimal planting seasons
-            and under favorable weather conditions.
-          </li>
-          <li>
-            <strong>Aftercare:</strong> Monitor soil moisture, protect seedlings
-            from pests, and thin overcrowded areas to promote healthy growth.
-          </li>
-        </ul>
-      </section>
+              <!-- Card 2 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-broom"></i>
+                  </div>
+                  <h3>2. Clearing the Land</h3>
+                </div>
+                <p class="card-summary">
+                  Remove vegetation, rocks, and debris from the field.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Remove any existing vegetation, rocks, and debris from the field. This can be done manually or with the help of machinery, depending on the size of the land.</p>
+                </div>
+              </div>
 
-      <section id="irrigation-fertilization">
-        <h2>Irrigation and Fertilization</h2>
-        <p>
-          Implementing efficient irrigation systems and applying suitable
-          fertilizers are crucial for optimal crop growth and yield. These
-          practices ensure that plants receive the necessary water and nutrients
-          at the right time and in the right amounts.
-        </p>
+              <!-- Card 3 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-tractor"></i>
+                  </div>
+                  <h3>3. Ploughing</h3>
+                </div>
+                <p class="card-summary">
+                  Turn over soil to loosen it and improve aeration.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Ploughing involves turning over the top layer of soil to loosen it, improve aeration, and incorporate organic matter. This process also helps in controlling weeds and pests.</p>
+                </div>
+              </div>
 
-        <h3>1. Efficient Irrigation Systems</h3>
-        <p>
-          Selecting the appropriate irrigation method depends on factors like
-          crop type, soil characteristics, and water availability. Common
-          irrigation systems include:
-        </p>
-        <ul>
-          <li>
-            <strong>Drip Irrigation:</strong> Delivers water directly to the
-            plant's root zone through a network of pipes and emitters,
-            minimizing evaporation and runoff. This method is highly efficient
-            and suitable for various crops.
-            <a
-              href="https://en.wikipedia.org/wiki/Drip_irrigation"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-          <li>
-            <strong>Sprinkler Irrigation:</strong> Distributes water through
-            overhead sprinklers, simulating rainfall. It's adaptable to various
-            field conditions and crop types.
-            <a
-              href="https://www.nrcs.usda.gov/sites/default/files/2023-01/Selecting%20an%20Irrigation%20System-%20Small%20Scale%20Solutions%20for%20your%20Farm.pdf"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-          <li>
-            <strong>Surface Irrigation:</strong> Involves the flow of water over
-            the soil surface to irrigate crops. It's commonly used in flat
-            terrains with specific soil types.
-            <a
-              href="https://www.nrcs.usda.gov/sites/default/files/2023-01/Selecting%20an%20Irrigation%20System-%20Small%20Scale%20Solutions%20for%20your%20Farm.pdf"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
+              <!-- Card 4 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-grip-lines"></i>
+                  </div>
+                  <h3>4. Harrowing</h3>
+                </div>
+                <p class="card-summary">
+                  Break up soil clumps and create fine tilth.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>After ploughing, harrowing is performed to break up large soil clumps and create a fine tilth suitable for planting. It also aids in leveling the soil surface.</p>
+                </div>
+              </div>
 
-        <h3>2. Fertilization Practices</h3>
-        <p>
-          Fertilizers supply essential nutrients required for plant growth. They
-          can be categorized into:
-        </p>
-        <ul>
-          <li>
-            <strong>Organic Fertilizers:</strong> Derived from natural sources
-            like compost and manure. They release nutrients slowly and improve
-            soil health over time.
-            <a href="https://eos.com/blog/types-of-fertilizers/" target="_blank"
-              >Learn more</a
-            >
-          </li>
-          <li>
-            <strong>Inorganic Fertilizers:</strong> Synthetically manufactured
-            to provide immediate nutrient availability. Common types include
-            nitrogen-based, phosphorus-based, and potassium-based fertilizers.
-            <a href="https://eos.com/blog/types-of-fertilizers/" target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
+              <!-- Card 5 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-level-up-alt"></i>
+                  </div>
+                  <h3>5. Levelling</h3>
+                </div>
+                <p class="card-summary">
+                  Level field for uniform water distribution.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Level the field to ensure uniform water distribution during irrigation and prevent waterlogging. This can be achieved using leveling tools or machinery.</p>
+                </div>
+              </div>
 
-        <h3>3. Fertilizer Application Methods</h3>
-        <p>
-          The method of fertilizer application affects nutrient availability and
-          uptake. Common methods include:
-        </p>
-        <ul>
-          <li>
-            <strong>Broadcasting:</strong> Spreading fertilizer uniformly over
-            the field surface. Suitable for pre-planting and top-dressing
-            applications.
-            <a
-              href="https://agritech.tnau.ac.in/agriculture/agri_nutrientmgt_methodsoffertilizerappln.html"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-          <li>
-            <strong>Band Placement:</strong> Placing fertilizer in bands near
-            the seed or plant roots to enhance nutrient uptake efficiency.
-            <a
-              href="https://agritech.tnau.ac.in/agriculture/agri_nutrientmgt_methodsoffertilizerappln.html"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-          <li>
-            <strong>Fertigation:</strong> Integrating fertilizer application
-            with irrigation water, allowing precise nutrient delivery.
-            <a href="https://en.wikipedia.org/wiki/Fertigation" target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
+              <!-- Card 6 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-leaf"></i>
+                  </div>
+                  <h3>6. Incorporating Organic Matter</h3>
+                </div>
+                <p class="card-summary">
+                  Add compost and manure to enrich soil nutrients.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Add compost, aged manure, or other organic materials to enrich the soil with nutrients, enhance its structure, and promote beneficial microbial activity.</p>
+                </div>
+              </div>
 
-        <h3>4. Best Practices</h3>
-        <p>To maximize the benefits of irrigation and fertilization:</p>
-        <ul>
-          <li>Regularly monitor soil moisture and nutrient levels.</li>
-          <li>
-            Adjust irrigation schedules based on weather conditions and crop
-            requirements.
-          </li>
-          <li>
-            Use soil tests to determine nutrient deficiencies and tailor
-            fertilizer applications accordingly.
-          </li>
-          <li>
-            Implement water-saving techniques like mulching to reduce
-            evaporation.
-          </li>
-        </ul>
-      </section>
+              <!-- Card 7 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-droplet"></i>
+                  </div>
+                  <h3>7. Moisture Management</h3>
+                </div>
+                <p class="card-summary">
+                  Ensure adequate soil moisture before planting.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Ensure the soil has adequate moisture content before planting. Overly dry or waterlogged soils can hinder seed germination and root development.</p>
+                </div>
+              </div>
 
-      <section id="pest-disease-management">
-        <h2>Pest and Disease Management</h2>
-        <p>
-          Protecting crops from pests and diseases is crucial for ensuring
-          healthy yields. Integrated Pest Management (IPM) offers a sustainable
-          approach that combines various practices to manage pests effectively
-          while minimizing environmental impact.
-        </p>
+              <!-- Card 8 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-check-circle"></i>
+                  </div>
+                  <h3>8. Final Soil Preparation</h3>
+                </div>
+                <p class="card-summary">
+                  Perform final check before sowing seeds.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Before sowing seeds, perform a final check to ensure the soil is well-prepared, free of weeds, and has the appropriate structure and moisture levels for planting.</p>
+                </div>
+              </div>
 
-        <h3>1. Understanding Integrated Pest Management (IPM)</h3>
-        <p>
-          IPM is an ecosystem-based strategy that focuses on long-term
-          prevention of pests or their damage through a combination of
-          techniques such as biological control, habitat manipulation, and use
-          of resistant varieties. Pesticides are used only after monitoring
-          indicates they are needed, and treatments are made with the goal of
-          removing only the target organism.
-          <a href="https://ipm.ucanr.edu/whatisipm/" target="_blank"
-            >Learn more</a
-          >
-        </p>
+            </div>
+          </div>
 
-        <h3>2. Key Components of IPM</h3>
-        <ul>
-          <li>
-            <strong>Monitoring:</strong> Regularly inspect crops to identify
-            pest presence and assess infestation levels.
-          </li>
-          <li>
-            <strong>Prevention:</strong> Implement cultural practices like crop
-            rotation, intercropping, and selecting disease-resistant varieties
-            to reduce pest establishment.
-            <a
-              href="https://eos.com/blog/integrated-pest-management/"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-          <li>
-            <strong>Control:</strong> When necessary, apply targeted control
-            methods, prioritizing biological and physical controls before
-            chemical options.
-          </li>
-        </ul>
+          <!-- Seed Sowing Tab -->
+          <div class="tab-panel" role="tabpanel" id="panel-sowing">
+            <h2 class="panel-title">Seed Sowing</h2>
+            <p class="panel-intro">
+              Proper seed sowing is crucial for successful crop cultivation. It
+              involves selecting appropriate methods and ensuring optimal seed
+              placement to promote healthy germination and growth.
+            </p>
 
-        <h3>3. Biological Control Methods</h3>
-        <p>
-          Utilize natural predators and parasites to manage pest populations:
-        </p>
-        <ul>
-          <li>
-            <strong>Predators:</strong> Introduce beneficial insects like
-            ladybugs and lacewings that feed on pests.
-          </li>
-          <li>
-            <strong>Parasitoids:</strong> Use wasps that lay eggs in or on
-            pests, leading to their demise.
-          </li>
-          <li>
-            <strong>Pathogens:</strong> Apply microbial agents like Bacillus
-            thuringiensis to target specific pests.
-            <a
-              href="https://en.wikipedia.org/wiki/Biological_pest_control"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
+            <div class="cards-grid">
 
-        <h3>4. Cultural and Mechanical Practices</h3>
-        <p>Modify farming practices to deter pests:</p>
-        <ul>
-          <li>
-            <strong>Crop Rotation:</strong> Change crop species in a field each
-            season to disrupt pest life cycles.
-          </li>
-          <li>
-            <strong>Sanitation:</strong> Remove plant debris and weeds that can
-            harbor pests.
-          </li>
-          <li>
-            <strong>Physical Barriers:</strong> Use row covers or nets to
-            prevent pest access.
-            <a
-              href="https://en.wikipedia.org/wiki/Cultural_control"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
+              <!-- Card 1 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-broadcast-tower"></i>
+                  </div>
+                  <h3>1. Choosing the Right Sowing Method</h3>
+                </div>
+                <p class="card-summary">
+                  Different crops require specific sowing techniques.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Different crops and field conditions require specific sowing techniques:</p>
+                  <ul>
+                    <li>
+                      <strong>Broadcast Seeding:</strong> Scattering seeds evenly over the
+                      soil surface, suitable for cover crops and lawns. This method is
+                      quick but may result in uneven distribution and depth.
+                      <a
+                        href="https://en.wikipedia.org/wiki/Broadcast_seeding"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                    <li>
+                      <strong>Drill Seeding:</strong> Using a seed drill to place seeds at
+                      uniform depth and spacing, enhancing seed-to-soil contact and
+                      germination rates.
+                      <a href="https://en.wikipedia.org/wiki/Seed_drill" target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                    <li>
+                      <strong>Precision Seeding:</strong> Placing individual seeds at
+                      exact intervals and depths, reducing seed wastage and ensuring
+                      optimal plant spacing.
+                      <a
+                        href="https://en.wikipedia.org/wiki/Precision_seeding"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                    <li>
+                      <strong>Dibbling:</strong> Manually placing seeds into holes at
+                      specific depths, commonly used for larger seeds or in small-scale
+                      farming.
+                      <a
+                        href="https://eagri.org/eagri50/FMP211/lec08.html"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
 
-        <h3>5. Chemical Controls</h3>
-        <p>
-          When other methods are insufficient, apply pesticides judiciously:
-        </p>
-        <ul>
-          <li>
-            <strong>Selective Pesticides:</strong> Choose products that target
-            specific pests with minimal impact on beneficial organisms.
-          </li>
-          <li>
-            <strong>Application Timing:</strong> Apply treatments during periods
-            when pests are most vulnerable.
-          </li>
-          <li>
-            <strong>Resistance Management:</strong> Rotate pesticides with
-            different modes of action to prevent resistance development.
-            <a
-              href="https://www.epa.gov/safepestcontrol/integrated-pest-management-ipm-principles"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
+              <!-- Card 2 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-arrows-down-to-line"></i>
+                  </div>
+                  <h3>2. Ensuring Optimal Seed Placement</h3>
+                </div>
+                <p class="card-summary">
+                  Proper depth, spacing, and soil contact are critical.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Key factors to consider for effective seed placement:</p>
+                  <ul>
+                    <li>
+                      <strong>Depth:</strong> Sow seeds at a depth of 2–3 times their
+                      diameter to ensure adequate soil coverage and access to moisture.
+                      <a href="https://en.wikipedia.org/wiki/Sowing" target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                    <li>
+                      <strong>Spacing:</strong> Maintain appropriate spacing between seeds
+                      to reduce competition for nutrients, light, and water. For example,
+                      mark grid lines in the seedbed to guide placement.
+                      <a
+                        href="https://extension.psu.edu/sowing-annual-seeds"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                    <li>
+                      <strong>Seed-to-Soil Contact:</strong> Ensure good contact between
+                      seeds and soil to facilitate moisture absorption and germination.
+                      Firm the soil gently after sowing.
+                      <a
+                        href="https://www.nrcs.usda.gov/plantmaterials/azpmctn13355.pdf"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
 
-        <h3>6. Technological Innovations</h3>
-        <p>Leverage technology to enhance pest management:</p>
-        <ul>
-          <li>
-            <strong>Robotics:</strong> Utilize robots equipped with sensors to
-            detect and treat pest infestations precisely.
-            <a
-              href="https://timesofindia.indiatimes.com/city/kolkata/iit-kgp-robot-to-help-keep-your-crop-pest-free/articleshow/121195143.cms"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-          <li>
-            <strong>Digital Monitoring:</strong> Implement tools like PestTrap
-            and Filiz sensor stations for real-time pest monitoring.
-            <a
-              href="https://www.doktar.com/en/blog/digital-agtech/what-are-the-best-practices-for-managing-agricultural-pests/"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
+              <!-- Card 3 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-toolbox"></i>
+                  </div>
+                  <h3>3. Tools and Equipment</h3>
+                </div>
+                <p class="card-summary">
+                  Appropriate tools enhance sowing efficiency.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Utilizing appropriate tools can enhance sowing efficiency and accuracy:</p>
+                  <ul>
+                    <li>
+                      <strong>Manual Seeders:</strong> Devices that assist in placing
+                      seeds at consistent depths and spacing, suitable for small to
+                      medium-scale operations.
+                    </li>
+                    <li>
+                      <strong>Seed Drills:</strong> Mechanized equipment that sows seeds
+                      in rows at precise depths and intervals, ideal for large-scale
+                      farming.
+                    </li>
+                    <li>
+                      <strong>Seed Trays:</strong> Containers used for starting seeds
+                      indoors or in controlled environments before transplanting.
+                    </li>
+                  </ul>
+                </div>
+              </div>
 
-        <h3>7. Case Study: Mango Crops in Uttar Pradesh</h3>
-        <p>
-          In Uttar Pradesh, mango crops have faced significant pest
-          infestations, notably from the paired fruit borer and semilooper.
-          Rising temperatures have exacerbated the issue, leading to scarring
-          and reduced fruit quality. Effective management strategies include
-          targeted insecticide application, tree trunk spraying, and
-          horticultural practices like frequent light irrigation, mulching, and
-          canopy management.
-          <a
-            href="https://timesofindia.indiatimes.com/city/lucknow/pest-attack-hits-mango-crop-in-up-quality-at-risk/articleshow/121219275.cms"
-            target="_blank"
-            >Learn more</a
-          >
-        </p>
-      </section>
+              <!-- Card 4 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-check-double"></i>
+                  </div>
+                  <h3>4. Best Practices</h3>
+                </div>
+                <p class="card-summary">
+                  Maximize germination and crop establishment.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>To maximize germination and crop establishment:</p>
+                  <ul>
+                    <li>
+                      <strong>Soil Preparation:</strong> Ensure the seedbed is
+                      well-tilled, free of debris, and has adequate moisture.
+                    </li>
+                    <li>
+                      <strong>Timing:</strong> Sow seeds during optimal planting seasons
+                      and under favorable weather conditions.
+                    </li>
+                    <li>
+                      <strong>Aftercare:</strong> Monitor soil moisture, protect seedlings
+                      from pests, and thin overcrowded areas to promote healthy growth.
+                    </li>
+                  </ul>
+                </div>
+              </div>
 
-      <section id="harvesting">
-        <h2>Harvesting</h2>
-        <p>
-          Harvesting crops at the optimal time is crucial to ensure maximum
-          yield, quality, and shelf life. Proper techniques and post-harvest
-          handling further preserve the nutritional value and marketability of
-          the produce.
-        </p>
+            </div>
+          </div>
 
-        <h3>1. Determining Optimal Harvest Time</h3>
-        <p>
-          The ideal harvest time varies depending on the crop type, intended
-          use, and local climate conditions. Key indicators include:
-        </p>
-        <ul>
-          <li>
-            <strong>Visual cues:</strong> Changes in color, size, and texture
-            signify maturity. For instance, grains turn from green to golden
-            brown when ready.
-          </li>
-          <li>
-            <strong>Moisture content:</strong> Measuring moisture levels helps
-            determine readiness, especially for grains and legumes.
-          </li>
-          <li>
-            <strong>Days after planting:</strong> Tracking the number of days
-            since planting provides a general guideline for harvest timing.
-            <a
-              href="https://www.researchgate.net/post/What_is_the_optimal_time_to_harvest_crops"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
+          <!-- Irrigation & Fertilization Tab -->
+          <div class="tab-panel" role="tabpanel" id="panel-irrigation">
+            <h2 class="panel-title">Irrigation and Fertilization</h2>
+            <p class="panel-intro">
+              Implementing efficient irrigation systems and applying suitable
+              fertilizers are crucial for optimal crop growth and yield. These
+              practices ensure that plants receive the necessary water and nutrients
+              at the right time and in the right amounts.
+            </p>
 
-        <h3>2. Best Time of Day to Harvest</h3>
-        <p>
-          Harvesting during the cooler parts of the day helps maintain crop
-          quality:
-        </p>
-        <ul>
-          <li>
-            <strong>Early morning:</strong> Ideal for most vegetables and fruits
-            as they are crisp and hydrated.
-            <a
-              href="https://piedmontmastergardeners.org/article/guidelines-for-harvesting-vegetables/"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-          <li>
-            <strong>Evening:</strong> If morning harvest isn't feasible, evening
-            is the next best option to avoid midday heat stress on produce.
-            <a
-              href="https://www.sare.org/wp-content/uploads/Harvesting_Crops_for_Market.pdf"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
+            <div class="cards-grid">
 
-        <h3>3. Harvesting Techniques</h3>
-        <p>
-          Employing appropriate harvesting methods minimizes damage and
-          preserves quality:
-        </p>
-        <ul>
-          <li>
-            <strong>Manual harvesting:</strong> Suitable for delicate crops; use
-            sharp tools to prevent bruising.
-          </li>
-          <li>
-            <strong>Mechanical harvesting:</strong> Efficient for large-scale
-            operations; ensure machinery is calibrated to reduce crop loss.
-          </li>
-          <li>
-            <strong>Use of harvesting aids:</strong> Tools like Brix meters help
-            assess sugar levels in fruits, indicating ripeness.
-            <a
-              href="https://www.thrivelot.com/resources/how-harvest-timing-impacts-garden-yield-and-flavor"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
+              <!-- Card 1 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-droplet"></i>
+                  </div>
+                  <h3>1. Efficient Irrigation Systems</h3>
+                </div>
+                <p class="card-summary">
+                  Select irrigation methods based on crop type and soil.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Selecting the appropriate irrigation method depends on factors like crop type, soil characteristics, and water availability. Common irrigation systems include:</p>
+                  <ul>
+                    <li>
+                      <strong>Drip Irrigation:</strong> Delivers water directly to the
+                      plant's root zone through a network of pipes and emitters,
+                      minimizing evaporation and runoff. This method is highly efficient
+                      and suitable for various crops.
+                      <a
+                        href="https://en.wikipedia.org/wiki/Drip_irrigation"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                    <li>
+                      <strong>Sprinkler Irrigation:</strong> Distributes water through
+                      overhead sprinklers, simulating rainfall. It's adaptable to various
+                      field conditions and crop types.
+                      <a
+                        href="https://www.nrcs.usda.gov/sites/default/files/2023-01/Selecting%20an%20Irrigation%20System-%20Small%20Scale%20Solutions%20for%20your%20Farm.pdf"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                    <li>
+                      <strong>Surface Irrigation:</strong> Involves the flow of water over
+                      the soil surface to irrigate crops. It's commonly used in flat
+                      terrains with specific soil types.
+                      <a
+                        href="https://www.nrcs.usda.gov/sites/default/files/2023-01/Selecting%20an%20Irrigation%20System-%20Small%20Scale%20Solutions%20for%20your%20Farm.pdf"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
 
-        <h3>4. Post-Harvest Handling</h3>
-        <p>
-          Proper post-harvest practices are essential to maintain quality and
-          extend shelf life:
-        </p>
-        <ul>
-          <li>
-            <strong>Cooling:</strong> Rapidly reduce field heat to slow down
-            respiration and decay.
-            <a
-              href="https://urbanagriculture.horticulture.wisc.edu/postharvest-management/"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-          <li>
-            <strong>Cleaning and sorting:</strong> Remove debris and sort
-            produce based on size and quality.
-          </li>
-          <li>
-            <strong>Packaging:</strong> Use appropriate containers to protect
-            against physical damage and contamination.
-          </li>
-          <li>
-            <strong>Storage:</strong> Maintain optimal temperature and humidity
-            levels specific to each crop to prolong freshness.
-            <a
-              href="https://agriculture.institute/post-harvest-mgt-principles/"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
-      </section>
+              <!-- Card 2 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-seedling"></i>
+                  </div>
+                  <h3>2. Fertilization Practices</h3>
+                </div>
+                <p class="card-summary">
+                  Fertilizers supply essential nutrients for plant growth.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Fertilizers supply essential nutrients required for plant growth. They can be categorized into:</p>
+                  <ul>
+                    <li>
+                      <strong>Organic Fertilizers:</strong> Derived from natural sources
+                      like compost and manure. They release nutrients slowly and improve
+                      soil health over time.
+                      <a href="https://eos.com/blog/types-of-fertilizers/" target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                    <li>
+                      <strong>Inorganic Fertilizers:</strong> Synthetically manufactured
+                      to provide immediate nutrient availability. Common types include
+                      nitrogen-based, phosphorus-based, and potassium-based fertilizers.
+                      <a href="https://eos.com/blog/types-of-fertilizers/" target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
 
-      <section id="post-harvest">
-        <h2>Post-Harvest Handling</h2>
-        <p>
-          Effective post-harvest handling is crucial to maintain the quality,
-          safety, and shelf life of fruits and vegetables. Proper practices
-          reduce losses, preserve nutritional value, and ensure marketability.
-        </p>
+              <!-- Card 3 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-spray-can"></i>
+                  </div>
+                  <h3>3. Fertilizer Application Methods</h3>
+                </div>
+                <p class="card-summary">
+                  Application method affects nutrient availability.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>The method of fertilizer application affects nutrient availability and uptake. Common methods include:</p>
+                  <ul>
+                    <li>
+                      <strong>Broadcasting:</strong> Spreading fertilizer uniformly over
+                      the field surface. Suitable for pre-planting and top-dressing
+                      applications.
+                      <a
+                        href="https://agritech.tnau.ac.in/agriculture/agri_nutrientmgt_methodsoffertilizerappln.html"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                    <li>
+                      <strong>Band Placement:</strong> Placing fertilizer in bands near
+                      the seed or plant roots to enhance nutrient uptake efficiency.
+                      <a
+                        href="https://agritech.tnau.ac.in/agriculture/agri_nutrientmgt_methodsoffertilizerappln.html"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                    <li>
+                      <strong>Fertigation:</strong> Integrating fertilizer application
+                      with irrigation water, allowing precise nutrient delivery.
+                      <a href="https://en.wikipedia.org/wiki/Fertigation" target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
 
-        <h3>1. Cleaning and Washing</h3>
-        <p>Remove soil, debris, and potential contaminants from produce:</p>
-        <ul>
-          <li>
-            <strong>Use clean water:</strong> Employ potable water for washing
-            to prevent microbial contamination.
-          </li>
-          <li>
-            <strong>Sanitize equipment:</strong> Regularly clean and sanitize
-            tools and surfaces to maintain hygiene standards.
-            <a
-              href="https://www.food-safety.com/articles/857-best-practices-in-produce-postharvest-handling-and-sanitation"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
+              <!-- Card 4 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-clipboard-check"></i>
+                  </div>
+                  <h3>4. Best Practices</h3>
+                </div>
+                <p class="card-summary">
+                  Maximize benefits of irrigation and fertilization.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>To maximize the benefits of irrigation and fertilization:</p>
+                  <ul>
+                    <li>Regularly monitor soil moisture and nutrient levels.</li>
+                    <li>
+                      Adjust irrigation schedules based on weather conditions and crop
+                      requirements.
+                    </li>
+                    <li>
+                      Use soil tests to determine nutrient deficiencies and tailor
+                      fertilizer applications accordingly.
+                    </li>
+                    <li>
+                      Implement water-saving techniques like mulching to reduce
+                      evaporation.
+                    </li>
+                  </ul>
+                </div>
+              </div>
 
-        <h3>2. Sorting and Grading</h3>
-        <p>Categorize produce based on quality parameters:</p>
-        <ul>
-          <li>
-            <strong>Remove damaged items:</strong> Discard bruised, overripe, or
-            diseased produce to prevent spoilage.
-          </li>
-          <li>
-            <strong>Grade by size and ripeness:</strong> Ensure uniformity for
-            market preferences and pricing.
-            <a
-              href="https://www.postharvest.com/blog/a-guide-to-post-harvest-treatment-and-handling-of-fruits-and-vegetables"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
+            </div>
+          </div>
 
-        <h3>3. Packaging</h3>
-        <p>Protect produce during transportation and storage:</p>
-        <ul>
-          <li>
-            <strong>Use appropriate materials:</strong> Select packaging that
-            allows ventilation and minimizes physical damage.
-          </li>
-          <li>
-            <strong>Label correctly:</strong> Include information on product
-            type, grade, and handling instructions.
-            <a
-              href="https://farmwella.com/5-best-practices-for-post-harvest-handling-and-processing/"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
+          <!-- Pest & Disease Management Tab -->
+          <div class="tab-panel" role="tabpanel" id="panel-pest">
+            <h2 class="panel-title">Pest and Disease Management</h2>
+            <p class="panel-intro">
+              Protecting crops from pests and diseases is crucial for ensuring
+              healthy yields. Integrated Pest Management (IPM) offers a sustainable
+              approach that combines various practices to manage pests effectively
+              while minimizing environmental impact.
+            </p>
 
-        <h3>4. Storage</h3>
-        <p>Maintain optimal conditions to prolong freshness:</p>
-        <ul>
-          <li>
-            <strong>Temperature control:</strong> Store produce at temperatures
-            suitable for each type to slow down respiration and decay.
-          </li>
-          <li>
-            <strong>Humidity management:</strong> Maintain appropriate humidity
-            levels to prevent dehydration or mold growth.
-          </li>
-          <li>
-            <strong>Ethylene sensitivity:</strong> Store ethylene-producing
-            fruits separately from sensitive vegetables to avoid premature
-            ripening.
-            <a
-              href="https://urbanagriculture.horticulture.wisc.edu/postharvest-management/"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
+            <div class="cards-grid">
 
-        <h3>5. Transportation</h3>
-        <p>Ensure safe and efficient movement of produce:</p>
-        <ul>
-          <li>
-            <strong>Use refrigerated vehicles:</strong> Maintain cold chain
-            during transit to preserve quality.
-          </li>
-          <li>
-            <strong>Handle with care:</strong> Minimize mechanical damage by
-            proper loading and unloading practices.
-            <a href="https://www.mdpi.com/2071-1050/15/2/1331" target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
+              <!-- Card 1 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-shield-alt"></i>
+                  </div>
+                  <h3>1. Understanding Integrated Pest Management (IPM)</h3>
+                </div>
+                <p class="card-summary">
+                  IPM focuses on long-term pest prevention through multiple techniques.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>IPM is an ecosystem-based strategy that focuses on long-term prevention of pests or their damage through a combination of techniques such as biological control, habitat manipulation, and use of resistant varieties. Pesticides are used only after monitoring indicates they are needed, and treatments are made with the goal of removing only the target organism.
+                    <a href="https://ipm.ucanr.edu/whatisipm/" target="_blank">Learn more</a>
+                  </p>
+                </div>
+              </div>
 
-        <h3>6. Innovative Storage Solutions</h3>
-        <p>Explore cost-effective methods for small-scale farmers:</p>
-        <ul>
-          <li>
-            <strong>Zero Energy Cool Chambers (ZECC):</strong> Utilize
-            evaporative cooling techniques to store produce without electricity.
-            <a
-              href="https://en.wikipedia.org/wiki/Evaporative_cooling_chambers"
-              target="_blank"
-              >Learn more</a
-            >
-          </li>
-        </ul>
-      </section>
-    </main>
+              <!-- Card 2 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-tasks"></i>
+                  </div>
+                  <h3>2. Key Components of IPM</h3>
+                </div>
+                <p class="card-summary">
+                  Monitoring, prevention, and control are essential.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <ul>
+                    <li>
+                      <strong>Monitoring:</strong> Regularly inspect crops to identify
+                      pest presence and assess infestation levels.
+                    </li>
+                    <li>
+                      <strong>Prevention:</strong> Implement cultural practices like crop
+                      rotation, intercropping, and selecting disease-resistant varieties
+                      to reduce pest establishment.
+                      <a
+                        href="https://eos.com/blog/integrated-pest-management/"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                    <li>
+                      <strong>Control:</strong> When necessary, apply targeted control
+                      methods, prioritizing biological and physical controls before
+                      chemical options.
+                    </li>
+                  </ul>
+                </div>
+              </div>
 
+              <!-- Card 3 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-dna"></i>
+                  </div>
+                  <h3>3. Biological Control Methods</h3>
+                </div>
+                <p class="card-summary">
+                  Use natural predators to manage pest populations.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Utilize natural predators and parasites to manage pest populations:</p>
+                  <ul>
+                    <li>
+                      <strong>Predators:</strong> Introduce beneficial insects like
+                      ladybugs and lacewings that feed on pests.
+                    </li>
+                    <li>
+                      <strong>Parasitoids:</strong> Use wasps that lay eggs in or on
+                      pests, leading to their demise.
+                    </li>
+                    <li>
+                      <strong>Pathogens:</strong> Apply microbial agents like Bacillus
+                      thuringiensis to target specific pests.
+                      <a
+                        href="https://en.wikipedia.org/wiki/Biological_pest_control"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Card 4 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-hands-holding-circle"></i>
+                  </div>
+                  <h3>4. Cultural and Mechanical Practices</h3>
+                </div>
+                <p class="card-summary">
+                  Modify farming practices to deter pests naturally.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Modify farming practices to deter pests:</p>
+                  <ul>
+                    <li>
+                      <strong>Crop Rotation:</strong> Change crop species in a field each
+                      season to disrupt pest life cycles.
+                    </li>
+                    <li>
+                      <strong>Sanitation:</strong> Remove plant debris and weeds that can
+                      harbor pests.
+                    </li>
+                    <li>
+                      <strong>Physical Barriers:</strong> Use row covers or nets to
+                      prevent pest access.
+                      <a
+                        href="https://en.wikipedia.org/wiki/Cultural_control"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Card 5 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-prescription-bottle"></i>
+                  </div>
+                  <h3>5. Chemical Controls</h3>
+                </div>
+                <p class="card-summary">
+                  Apply pesticides judiciously when needed.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>When other methods are insufficient, apply pesticides judiciously:</p>
+                  <ul>
+                    <li>
+                      <strong>Selective Pesticides:</strong> Choose products that target
+                      specific pests with minimal impact on beneficial organisms.
+                    </li>
+                    <li>
+                      <strong>Application Timing:</strong> Apply treatments during periods
+                      when pests are most vulnerable.
+                    </li>
+                    <li>
+                      <strong>Resistance Management:</strong> Rotate pesticides with
+                      different modes of action to prevent resistance development.
+                      <a
+                        href="https://www.epa.gov/safepestcontrol/integrated-pest-management-ipm-principles"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Card 6 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-robot"></i>
+                  </div>
+                  <h3>6. Technological Innovations</h3>
+                </div>
+                <p class="card-summary">
+                  Leverage robotics and digital monitoring tools.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Leverage technology to enhance pest management:</p>
+                  <ul>
+                    <li>
+                      <strong>Robotics:</strong> Utilize robots equipped with sensors to
+                      detect and treat pest infestations precisely.
+                      <a
+                        href="https://timesofindia.indiatimes.com/city/kolkata/iit-kgp-robot-to-help-keep-your-crop-pest-free/articleshow/121195143.cms"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                    <li>
+                      <strong>Digital Monitoring:</strong> Implement tools like PestTrap
+                      and Filiz sensor stations for real-time pest monitoring.
+                      <a
+                        href="https://www.doktar.com/en/blog/digital-agtech/what-are-the-best-practices-for-managing-agricultural-pests/"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Card 7 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-apple-alt"></i>
+                  </div>
+                  <h3>7. Case Study: Mango Crops in Uttar Pradesh</h3>
+                </div>
+                <p class="card-summary">
+                  Real-world example of effective pest management.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>In Uttar Pradesh, mango crops have faced significant pest infestations, notably from the paired fruit borer and semilooper. Rising temperatures have exacerbated the issue, leading to scarring and reduced fruit quality. Effective management strategies include targeted insecticide application, tree trunk spraying, and horticultural practices like frequent light irrigation, mulching, and canopy management.
+                    <a
+                      href="https://timesofindia.indiatimes.com/city/lucknow/pest-attack-hits-mango-crop-in-up-quality-at-risk/articleshow/121219275.cms"
+                      target="_blank"
+                      >Learn more</a
+                    >
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Harvesting Tab -->
+          <div class="tab-panel" role="tabpanel" id="panel-harvest">
+            <h2 class="panel-title">Harvesting</h2>
+            <p class="panel-intro">
+              Harvesting crops at the optimal time is crucial to ensure maximum
+              yield, quality, and shelf life. Proper techniques and post-harvest
+              handling further preserve the nutritional value and marketability of
+              the produce.
+            </p>
+
+            <div class="cards-grid">
+
+              <!-- Card 1 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-calendar-check"></i>
+                  </div>
+                  <h3>1. Determining Optimal Harvest Time</h3>
+                </div>
+                <p class="card-summary">
+                  Harvest time varies by crop type and climate.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>The ideal harvest time varies depending on the crop type, intended use, and local climate conditions. Key indicators include:</p>
+                  <ul>
+                    <li>
+                      <strong>Visual cues:</strong> Changes in color, size, and texture
+                      signify maturity. For instance, grains turn from green to golden
+                      brown when ready.
+                    </li>
+                    <li>
+                      <strong>Moisture content:</strong> Measuring moisture levels helps
+                      determine readiness, especially for grains and legumes.
+                    </li>
+                    <li>
+                      <strong>Days after planting:</strong> Tracking the number of days
+                      since planting provides a general guideline for harvest timing.
+                      <a
+                        href="https://www.researchgate.net/post/What_is_the_optimal_time_to_harvest_crops"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Card 2 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-clock"></i>
+                  </div>
+                  <h3>2. Best Time of Day to Harvest</h3>
+                </div>
+                <p class="card-summary">
+                  Harvest during cooler parts of the day.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Harvesting during the cooler parts of the day helps maintain crop quality:</p>
+                  <ul>
+                    <li>
+                      <strong>Early morning:</strong> Ideal for most vegetables and fruits
+                      as they are crisp and hydrated.
+                      <a
+                        href="https://piedmontmastergardeners.org/article/guidelines-for-harvesting-vegetables/"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                    <li>
+                      <strong>Evening:</strong> If morning harvest isn't feasible, evening
+                      is the next best option to avoid midday heat stress on produce.
+                      <a
+                        href="https://www.sare.org/wp-content/uploads/Harvesting_Crops_for_Market.pdf"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-hand-holding"></i>
+                  </div>
+                  <h3>3. Harvesting Techniques</h3>
+                </div>
+                <p class="card-summary">
+                  Proper methods minimize damage and preserve quality.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Employing appropriate harvesting methods minimizes damage and preserves quality:</p>
+                  <ul>
+                    <li>
+                      <strong>Manual harvesting:</strong> Suitable for delicate crops; use
+                      sharp tools to prevent bruising.
+                    </li>
+                    <li>
+                      <strong>Mechanical harvesting:</strong> Efficient for large-scale
+                      operations; ensure machinery is calibrated to reduce crop loss.
+                    </li>
+                    <li>
+                      <strong>Use of harvesting aids:</strong> Tools like Brix meters help
+                      assess sugar levels in fruits, indicating ripeness.
+                      <a
+                        href="https://www.thrivelot.com/resources/how-harvest-timing-impacts-garden-yield-and-flavor"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Card 4 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-temperature-low"></i>
+                  </div>
+                  <h3>4. Post-Harvest Handling</h3>
+                </div>
+                <p class="card-summary">
+                  Proper practices maintain quality and extend shelf life.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Proper post-harvest practices are essential to maintain quality and extend shelf life:</p>
+                  <ul>
+                    <li>
+                      <strong>Cooling:</strong> Rapidly reduce field heat to slow down
+                      respiration and decay.
+                      <a
+                        href="https://urbanagriculture.horticulture.wisc.edu/postharvest-management/"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                    <li>
+                      <strong>Cleaning and sorting:</strong> Remove debris and sort
+                      produce based on size and quality.
+                    </li>
+                    <li>
+                      <strong>Packaging:</strong> Use appropriate containers to protect
+                      against physical damage and contamination.
+                    </li>
+                    <li>
+                      <strong>Storage:</strong> Maintain optimal temperature and humidity
+                      levels specific to each crop to prolong freshness.
+                      <a
+                        href="https://agriculture.institute/post-harvest-mgt-principles/"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Post-Harvest Handling Tab -->
+          <div class="tab-panel" role="tabpanel" id="panel-postharvest">
+            <h2 class="panel-title">Post-Harvest Handling</h2>
+            <p class="panel-intro">
+              Effective post-harvest handling is crucial to maintain the quality,
+              safety, and shelf life of fruits and vegetables. Proper practices
+              reduce losses, preserve nutritional value, and ensure marketability.
+            </p>
+
+            <div class="cards-grid">
+
+              <!-- Card 1 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-shower"></i>
+                  </div>
+                  <h3>1. Cleaning and Washing</h3>
+                </div>
+                <p class="card-summary">
+                  Remove contaminants using clean water and sanitized equipment.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Remove soil, debris, and potential contaminants from produce:</p>
+                  <ul>
+                    <li>
+                      <strong>Use clean water:</strong> Employ potable water for washing
+                      to prevent microbial contamination.
+                    </li>
+                    <li>
+                      <strong>Sanitize equipment:</strong> Regularly clean and sanitize
+                      tools and surfaces to maintain hygiene standards.
+                      <a
+                        href="https://www.food-safety.com/articles/857-best-practices-in-produce-postharvest-handling-and-sanitation"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Card 2 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-sort-amount-up"></i>
+                  </div>
+                  <h3>2. Sorting and Grading</h3>
+                </div>
+                <p class="card-summary">
+                  Categorize produce by size, ripeness, and quality.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Categorize produce based on quality parameters:</p>
+                  <ul>
+                    <li>
+                      <strong>Remove damaged items:</strong> Discard bruised, overripe, or
+                      diseased produce to prevent spoilage.
+                    </li>
+                    <li>
+                      <strong>Grade by size and ripeness:</strong> Ensure uniformity for
+                      market preferences and pricing.
+                      <a
+                        href="https://www.postharvest.com/blog/a-guide-to-post-harvest-treatment-and-handling-of-fruits-and-vegetables"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-box-open"></i>
+                  </div>
+                  <h3>3. Packaging</h3>
+                </div>
+                <p class="card-summary">
+                  Use appropriate materials with proper labeling.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Protect produce during transportation and storage:</p>
+                  <ul>
+                    <li>
+                      <strong>Use appropriate materials:</strong> Select packaging that
+                      allows ventilation and minimizes physical damage.
+                    </li>
+                    <li>
+                      <strong>Label correctly:</strong> Include information on product
+                      type, grade, and handling instructions.
+                      <a
+                        href="https://farmwella.com/5-best-practices-for-post-harvest-handling-and-processing/"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Card 4 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-warehouse"></i>
+                  </div>
+                  <h3>4. Storage</h3>
+                </div>
+                <p class="card-summary">
+                  Maintain optimal temperature and humidity levels.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Maintain optimal conditions to prolong freshness:</p>
+                  <ul>
+                    <li>
+                      <strong>Temperature control:</strong> Store produce at temperatures
+                      suitable for each type to slow down respiration and decay.
+                    </li>
+                    <li>
+                      <strong>Humidity management:</strong> Maintain appropriate humidity
+                      levels to prevent dehydration or mold growth.
+                    </li>
+                    <li>
+                      <strong>Ethylene sensitivity:</strong> Store ethylene-producing
+                      fruits separately from sensitive vegetables to avoid premature
+                      ripening.
+                      <a
+                        href="https://urbanagriculture.horticulture.wisc.edu/postharvest-management/"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Card 5 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-truck"></i>
+                  </div>
+                  <h3>5. Transportation</h3>
+                </div>
+                <p class="card-summary">
+                  Use refrigerated vehicles and careful handling.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Ensure safe and efficient movement of produce:</p>
+                  <ul>
+                    <li>
+                      <strong>Use refrigerated vehicles:</strong> Maintain cold chain
+                      during transit to preserve quality.
+                    </li>
+                    <li>
+                      <strong>Handle with care:</strong> Minimize mechanical damage by
+                      proper loading and unloading practices.
+                      <a href="https://www.mdpi.com/2071-1050/15/2/1331" target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Card 6 -->
+              <div class="info-card">
+                <div class="card-header">
+                  <div class="card-icon">
+                    <i class="fas fa-lightbulb"></i>
+                  </div>
+                  <h3>6. Innovative Storage Solutions</h3>
+                </div>
+                <p class="card-summary">
+                  Cost-effective methods for small-scale farmers.
+                </p>
+                <button class="expand-btn" onclick="toggleCard(this)">
+                  <span>Read More</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="card-content">
+                  <p>Explore cost-effective methods for small-scale farmers:</p>
+                  <ul>
+                    <li>
+                      <strong>Zero Energy Cool Chambers (ZECC):</strong> Utilize
+                      evaporative cooling techniques to store produce without electricity.
+                      <a
+                        href="https://en.wikipedia.org/wiki/Evaporative_cooling_chambers"
+                        target="_blank"
+                        >Learn more</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+
+    <!-- Footer -->
     <footer>
-      <p>
-        &copy; 2025 AgriTech Guide. All rights reserved.
-        Future 🌾
-      </p>
+      <p>&copy; 2025 AgriTech Guide. All rights reserved. Future 🌾</p>
     </footer>
-<!-- Floating Chatbot Button -->
-<a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
-  <i class="fas fa-robot"></i>
-</a>
+
+    <!-- Scroll To Top Button -->
+    <button id="scrollTopBtn" aria-label="Back to top">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Floating Chatbot Button -->
+    <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
+      <i class="fas fa-robot"></i>
+    </a>
+
     <script src="plantation.js"></script>
     <script src="theme.js"></script>
   </body>
