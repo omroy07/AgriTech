@@ -31,20 +31,26 @@ def crop_home():
 @crop_bp.route("/predict", methods=["POST"])
 def predict():
     try:
-        # Match frontend + ML column names
-        data = [
-            float(request.form.get("N")),
-            float(request.form.get("P")),
-            float(request.form.get("K")),
-            float(request.form.get("temperature")),
-            float(request.form.get("humidity")),
-            float(request.form.get("ph")),
-            float(request.form.get("rainfall")),
-        ]
+        from backend.schemas import CropPredictionSchema
+        from marshmallow import ValidationError
+        
+        schema = CropPredictionSchema()
+        try:
+            # Convert form data to dictionary and validate
+            form_data = request.form.to_dict()
+            validated_data = schema.load(form_data)
+        except ValidationError as err:
+            return jsonify({"error": err.messages}), 400
 
-        # Validate inputs
-        if any(v is None for v in data):
-            return jsonify({"error": "Missing input fields"}), 400
+        data = [
+            validated_data["N"],
+            validated_data["P"],
+            validated_data["K"],
+            validated_data["temperature"],
+            validated_data["humidity"],
+            validated_data["ph"],
+            validated_data["rainfall"],
+        ]
 
         prediction = model.predict([data])[0]
         crop = label_encoder.inverse_transform([prediction])[0]
