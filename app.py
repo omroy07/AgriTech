@@ -7,14 +7,19 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
-
-
+from backend.utils.logger import logger
+from backend.config import config
 
 
 # Load environment variables
 load_dotenv()
 
 app = Flask(__name__, static_folder='.', static_url_path='')
+
+# Load Configuration
+env_name = os.getenv('FLASK_ENV', 'default')
+app.config.from_object(config[env_name])
+
 CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
 app.register_blueprint(crop_bp)
@@ -55,15 +60,9 @@ def validate_input(data):
     return True, "Valid input"
 
 # Initialize Gemini API
-API_KEY = os.environ.get('GEMINI_API_KEY')
-MODEL_ID = 'gemini-2.5-flash'
-
-if not API_KEY:
-    raise RuntimeError("GEMINI_API_KEY is not set in environment variables")
-
 # Configure Gemini Client
-genai.configure(api_key=API_KEY)
-model = genai.GenerativeModel("gemini-2.5-flash")
+genai.configure(api_key=app.config['GEMINI_API_KEY'])
+model = genai.GenerativeModel(app.config['GEMINI_MODEL_ID'])
 
 
 
@@ -72,13 +71,14 @@ model = genai.GenerativeModel("gemini-2.5-flash")
 def get_firebase_config():
     try:
         return jsonify({
-            'apikey': os.environ['FIREBASE_API_KEY'],
-            'authDomain': os.environ['FIREBASE_AUTH_DOMAIN'],
-            'projectId': os.environ['FIREBASE_PROJECT_ID'],
-            'storageBucket': os.environ['FIREBASE_STORAGE_BUCKET'],
-            'messagingSenderId': os.environ['FIREBASE_MESSAGING_SENDER_ID'],
-            'appId': os.environ['FIREBASE_APP_ID'],
-            'measurementId': os.environ['FIREBASE_MEASUREMENT_ID']
+        return jsonify({
+            'apikey': app.config['FIREBASE_API_KEY'],
+            'authDomain': app.config['FIREBASE_AUTH_DOMAIN'],
+            'projectId': app.config['FIREBASE_PROJECT_ID'],
+            'storageBucket': app.config['FIREBASE_STORAGE_BUCKET'],
+            'messagingSenderId': app.config['FIREBASE_MESSAGING_SENDER_ID'],
+            'appId': app.config['FIREBASE_APP_ID'],
+            'measurementId': app.config['FIREBASE_MEASUREMENT_ID']
 
         })
     except KeyError as e:
