@@ -312,84 +312,10 @@ let blogPosts = [
             description.includes(searchQuery) ||
             content.includes(searchQuery);
 
-        const matchesCategory =
-            currentCategory === 'all' || post.category === currentCategory;
 
         return matchesSearch && matchesCategory;
     });
 
-    currentPage = 0;
-    document.getElementById('blogGrid').innerHTML = '';
-    displayPosts();
-}
-
-        // Display posts with favorite buttons
-       function displayPosts() {
-    const blogGrid = document.getElementById('blogGrid');
-    const loadMoreBtn = document.getElementById('loadMoreBtn');
-    const popup = document.getElementById('noResultsPopup');
-
-    const startIndex = currentPage * postsPerPage;
-    const endIndex = startIndex + postsPerPage;
-    const postsToShow = filteredPosts.slice(startIndex, endIndex);
-
-    /* =========================
-       NO RESULTS HANDLING
-    ========================== */
-    if (filteredPosts.length === 0) {
-        blogGrid.innerHTML = '';
-        loadMoreBtn.style.display = 'none';
-
-        if (popup) popup.classList.add('show');
-        return;
-    } else {
-        if (popup) popup.classList.remove('show');
-    }
-
-    /* =========================
-       RENDER POSTS
-    ========================== */
-    postsToShow.forEach(post => {
-        const isFavorite = window.favoritesManager
-            ? window.favoritesManager.isFavorite(post.id)
-            : false;
-
-        const favoriteIcon = isFavorite ? 'fas fa-heart' : 'far fa-heart';
-        const favoriteClass = isFavorite ? 'favorite-btn active' : 'favorite-btn';
-
-        const postElement = document.createElement('div');
-        postElement.className = 'blog-card';
-        postElement.innerHTML = `
-            <img src="${post.image}" alt="${post.title}">
-            <button class="${favoriteClass}" data-blog-id="${post.id}">
-                <i class="${favoriteIcon}"></i>
-            </button>
-
-            <div class="card-content">
-                <span class="card-category">${post.category.replace('-', ' ')}</span>
-                <h3 class="card-title">${post.title}</h3>
-                <p class="card-description">${post.description}</p>
-
-                <div class="card-meta">
-                    <span class="card-author">By ${post.author}</span>
-                    <span class="card-date">${post.date}</span>
-                </div>
-
-                <button class="read-more-btn" style="margin-top:16px"
-                    onclick="openModal('${post.id}')">
-                    Read More
-                </button>
-            </div>
-        `;
-        blogGrid.appendChild(postElement);
-    });
-
-    /* =========================
-       LOAD MORE VISIBILITY
-    ========================== */
-    loadMoreBtn.style.display =
-        endIndex >= filteredPosts.length ? 'none' : 'inline-block';
-}
 
         // Toggle favorite
         function toggleFavorite(blogId) {
