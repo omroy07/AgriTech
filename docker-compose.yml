@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    container_name: agritech-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    restart: unless-stopped
