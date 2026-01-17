@@ -107,14 +107,13 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      /* Elastic interaction timing */
       transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease;
     }
 
     .nav-back-btn:hover {
       background: white;
       color: var(--primary-green);
-      transform: scale(1.1) translateY(-2px); /* Bouncy pop-out effect */
+      transform: scale(1.1) translateY(-2px);
     }
 
     .logo {
@@ -123,20 +122,32 @@
       gap: 10px;
       font-size: 1.25rem;
       font-weight: 700;
+      color: white;
     }
 
     .theme-toggle {
-      background: none;
-      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       color: white;
-      font-size: 1.2rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      transition: transform 0.3s ease;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(15deg);
     }
 
     /* --- HERO ADJUSTED --- */
     .hero {
-      padding-top: calc(var(--nav-height) + 60px); /* PREVENTS OVERLAP */
+      padding-top: calc(var(--nav-height) + 60px);
       text-align: center;
       background: linear-gradient(to bottom, #143a18, var(--bg-dark));
       padding-bottom: 80px;
@@ -177,7 +188,6 @@
       padding: 10px;
     }
 
-    /* Form Styles */
     .contact-form-section {
       padding: 80px 20px;
     }
@@ -309,8 +319,7 @@
           <i class="fas fa-envelope"></i>
         </div>
         <h3>Email Support</h3>
-        <p>Get detailed assistance with technical questions</p>
-        <a href="mailto:support@agritech.com">support@agritech.com</a>
+        <a href="mailto:support@agritech.com" style="color: var(--accent-green); text-decoration: none;">support@agritech.com</a>
       </div>
 
       <div class="method-card">
@@ -318,17 +327,12 @@
           <i class="fas fa-phone"></i>
         </div>
         <h3>Phone Support</h3>
-        <p>Speak directly with our agricultural experts</p>
-        <a href="tel:+1234567890">+1 (234) 567-890</a>
+        <a href="tel:+1234567890" style="color: var(--accent-green); text-decoration: none;">+1 (234) 567-890</a>
       </div>
-
       <div class="method-card">
-        <div class="method-icon">
-          <i class="fas fa-comments"></i>
-        </div>
-        <h3>Community Chat</h3>
-        <p>Join our farmer community for peer support</p>
-        <a href="#community">Join Community</a>
+        <div class="method-icon"><i class="fas fa-comments"></i></div>
+        <h3>Community</h3>
+        <a href="#community" style="color: var(--accent-green); text-decoration: none;">Join Now</a>
       </div>
       <div class="method-card">
         <div class="method-icon"><i class="fas fa-comments"></i></div>

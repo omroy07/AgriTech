@@ -45,8 +45,8 @@ class FavoritesManager {
         blogData.addedAt = new Date().toISOString();
         this.favorites.push(blogData);
         this.saveFavorites();
-        
-        this.showNotification(`❤️ Added to favorites: ${blogData.title}`);
+
+        this.showNotification(`Added to favorites: ${blogData.title}`);
         this.dispatchFavoriteToggle(blogData.id, true, blogData);
         return true;
     }
@@ -54,10 +54,10 @@ class FavoritesManager {
     removeFromFavorites(blogId) {
         const initialLength = this.favorites.length;
         this.favorites = this.favorites.filter(blog => blog.id !== blogId);
-        
+
         if (this.favorites.length < initialLength) {
             this.saveFavorites();
-            this.showNotification('🗑️ Removed from favorites');
+            this.showNotification('Removed from favorites');
             this.dispatchFavoriteToggle(blogId, false);
             return true;
         }
@@ -71,7 +71,9 @@ class FavoritesManager {
     }
 
     getFavorites() {
-        return [...this.favorites].sort((a, b) => new Date(b.addedAt) - new Date(a.addedAt));
+        return [...this.favorites].sort(
+            (a, b) => new Date(b.addedAt) - new Date(a.addedAt)
+        );
     }
 
     dispatchFavoriteToggle(blogId, isFavorite, blogData = null) {
@@ -82,15 +84,24 @@ class FavoritesManager {
         console.log('📢 Dispatched favorite event:', blogId, isFavorite);
     }
 
+    /* =====================================================
+       ACCESSIBILITY FIX – Issue #617
+       Screen reader announcement for notifications
+       ===================================================== */
     showNotification(message) {
         // Remove existing notifications
         const existing = document.querySelectorAll('.favorite-notification');
         existing.forEach(note => note.remove());
 
-        // Create notification
         const notification = document.createElement('div');
         notification.className = 'favorite-notification';
         notification.textContent = message;
+
+        // ✅ Accessibility additions
+        notification.setAttribute('role', 'status');
+        notification.setAttribute('aria-live', 'polite');
+        notification.setAttribute('aria-atomic', 'true');
+
         notification.style.cssText = `
             position: fixed;
             top: 20px;
@@ -100,9 +111,8 @@ class FavoritesManager {
             padding: 12px 20px;
             border-radius: 8px;
             z-index: 10000;
-            animation: slideInRight 0.3s ease;
         `;
-        
+
         document.body.appendChild(notification);
 
         setTimeout(() => {
