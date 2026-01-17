@@ -633,6 +633,11 @@
             });
             if (!isValid) e.preventDefault();
         });
+
+        // Redirect to result.html and attach the query parameters
+        window.location.href = `result.html?${queryParams.toString()}`;
+    }
+});
     </script>
 </body>
 </html>
