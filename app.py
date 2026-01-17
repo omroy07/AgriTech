@@ -7,6 +7,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
+from backend.utils.logger import logger
 
 
 
@@ -107,7 +108,7 @@ def process_loan():
                 if isinstance(value, str):
                     json_data[key] = sanitize_input(value)
         
-        print(f"Received JSON: {json_data}")
+        logger.info("Received loan processing request for type: %s", json_data.get('loan_type', 'unknown'))
 
         prompt = f"""
 You are a financial loan eligibility advisor specializing in agricultural loans for farmers in India.
@@ -156,8 +157,8 @@ Do not add assumptions that are not supported by the data provided.
             "message": "Loan processes successfully "
             }), 200
 
-    except Exception :
-        traceback.print_exc()
+    except Exception as e:
+        logger.error("Error processing loan request: %s", str(e), exc_info=True)
         return jsonify({
             "status": "error",
             "message": "Failed to process loan request. Please try again later."}), 500
@@ -207,6 +208,7 @@ if __name__ == '__main__':
 #Global Error Handling 
 @app.errorhandler(404)
 def not_found(error):
+    logger.warning("404 Error: %s", request.path)
     return jsonify({
         "status" : "error",
         "message" :"Resource not found"
@@ -214,6 +216,7 @@ def not_found(error):
 
 @app.errorhandler(500)
 def internal_error(error):
+    logger.error("500 Error: %s", str(error), exc_info=True)
     return jsonify({
         "status": "error",
         "message": "Internal server error"

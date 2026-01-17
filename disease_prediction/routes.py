@@ -3,6 +3,7 @@ import os
 from werkzeug.utils import secure_filename
 
 from .utils import load_pytorch_model, predict_image_pytorch
+from backend.utils.logger import logger
 
 # ================= BLUEPRINT =================
 disease_bp = Blueprint(
@@ -55,8 +56,8 @@ CLASS_NAMES = [
 # ================= LOAD MODEL ONCE =================
 model = load_pytorch_model(MODEL_PATH)
 
-print("✅ Disease model loaded successfully")
-print(f"✅ Model supports {len(CLASS_NAMES)} classes")
+logger.info("✅ Disease model loaded successfully")
+logger.info("✅ Model supports %d classes", len(CLASS_NAMES))
 
 # ================= ROUTES =================
 @disease_bp.route("/")
