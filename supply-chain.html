@@ -36,6 +36,7 @@
             --text-cta-sub: #94a3b8;
             --shadow: rgba(0,0,0,0.4);
             --accent-blue: #818cf8;
+        }
         /* ================= THEME VARIABLES ================= */
         :root {
             /* existing light mode colors (unchanged) */
@@ -134,26 +135,50 @@
             box-shadow: 0 10px 30px rgba(15, 23, 42, 0.8);
         }
 
-        /* Theme toggle button – same position & size, only colors refined */
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            z-index: 1200;
-            background: #111827;
-            color: #f9fafb;
-            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.8);
-            transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
-        }
+        /* Theme toggle button – fixed to support icon + text */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+
+    min-width: 56px;
+    height: 56px;
+    padding: 0 14px;
+
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: initial !important;
+    font-weight: 600;
+
+    z-index: 1200;
+    background: #111827;
+    color: #f9fafb;
+
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.8);
+    transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+.theme-toggle i {
+    font-size: 2.2rem !important;    /* increase icon size */
+    line-height: 1;
+}
+.theme-toggle {
+    width: 56px !important;
+    height: 56px !important;
+    padding: 0 !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.theme-toggle span {
+    display: none;
+}
+
 
         .theme-toggle:hover {
             transform: scale(1.08);
@@ -419,6 +444,7 @@
             .flow-step::after { content: '↓'; right: 50%; top: 100%; transform: translateX(50%); }
             .services-grid { grid-template-columns: 1fr; }
         }
+        
     </style>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -430,7 +456,6 @@
         <button class="theme-toggle" id="theme-toggle">
             <i class="fas fa-moon moon-icon"></i>
             <i class="fas fa-sun sun-icon"></i>
-            <span>Mode</span>
         </button>
     </div>
 
