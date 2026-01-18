@@ -135,7 +135,7 @@
       padding: 0 1.5rem;
     }
 
-    /* Filter Section */
+    /* Filter Section - MODIFIED FOR COUNTRY FILTER */
     .filter-container {
       background: var(--surface-color);
       padding: 1.5rem;
@@ -143,7 +143,8 @@
       box-shadow: var(--shadow-sm);
       display: flex;
       align-items: center;
-      gap: 1rem;
+      justify-content: center;
+      gap: 1.5rem;
       margin-bottom: 2rem;
       border: 1px solid var(--border-color);
       flex-wrap: wrap;
@@ -153,24 +154,9 @@
       font-weight: 600;
       font-family: var(--font-serif);
       font-size: 1.1rem;
-    }
-
-    #cropSelect {
-      padding: 0.6rem 1rem;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      font-size: 1rem;
-      outline: none;
-      cursor: pointer;
-      min-width: 200px;
-      transition: border-color 0.2s;
-    }
-
-    #cropSelect:focus {
-      border-color: var(--accent-color);
-      box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     /* Legend */
@@ -213,7 +199,7 @@
       min-width: 800px; /* Ensures grid doesn't squish on small screens */
     }
 
-    /* 5. FOOTER STYLES (Standardized) */
+    /* 5. FOOTER STYLES */
     .site-footer {
       background-color: #1e293b; /* Dark Slate */
       color: #f8fafc;
@@ -322,22 +308,14 @@
 
   <main>
     <div class="filter-container">
-      <label for="cropSelect"><i class="fas fa-filter"></i> Filter by Crop:</label>
+      <label for="countrySelect"><i class="fas fa-globe"></i> Region:</label>
+      <select id="countrySelect">
+        </select>
+
+      <label for="cropSelect"><i class="fas fa-filter"></i> Crop:</label>
       <select id="cropSelect">
         <option value="all">View All Crops</option>
-        <option value="Wheat">Wheat</option>
-        <option value="Rice">Rice</option>
-        <option value="Maize">Maize</option>
-        <option value="Barley">Barley</option>
-        <option value="Sugarcane">Sugarcane</option>
-        <option value="Cotton">Cotton</option>
-        <option value="Groundnut">Groundnut</option>
-        <option value="Soybean">Soybean</option>
-        <option value="Pulses">Pulses</option>
-        <option value="Mustard">Mustard</option>
-        <option value="Sunflower">Sunflower</option>
-        <option value="Jute">Jute</option>
-      </select>
+        </select>
     </div>
 
     <div class="legend">
