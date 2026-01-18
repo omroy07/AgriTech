@@ -665,17 +665,224 @@
       }
 
       /* 🔥 FORCE CLOSE BUTTON TO ALWAYS RECEIVE TOUCH */
-.mobile-menu-header {
-  position: sticky;
-  top: 0;
-  z-index: 1002;
-}
+      .mobile-menu-header {
+        position: sticky;
+        top: 0;
+        z-index: 1002;
+      }
 
-.mobile-close-btn {
-  position: relative;
-  z-index: 1003;
-  pointer-events: auto !important;
-}
+
+      /* ===== ENHANCED MOBILE CLOSE BUTTON - FIXED POSITION ===== */
+      .mobile-close-btn {
+        background: transparent;
+        border: none;
+        color: var(--text-color);
+        font-size: 1rem;
+        /* और छोटा font size */
+        cursor: pointer;
+        width: 40px;
+        /* और छोटा size */
+        height: 40px;
+        /* और छोटा size */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: fixed;
+        /* COMPLETELY FIXED - scroll नहीं होगा */
+        top: 1rem;
+        /* top से fixed */
+        right: 1rem;
+        /* right से fixed */
+        z-index: 1003;
+        pointer-events: auto !important;
+      }
+
+      /* Animated X icon */
+      .mobile-close-btn i {
+        transition: transform 0.3s ease, color 0.3s ease;
+        font-size: 1rem;
+        /* और छोटा icon */
+      }
+
+      /* Hover effects */
+      .mobile-close-btn:hover {
+        background: linear-gradient(135deg, var(--accent-color), rgba(34, 197, 94, 0.2));
+        transform: rotate(90deg) scale(1.05);
+        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+      }
+
+      .mobile-close-btn:hover i {
+        color: white;
+        transform: scale(1.1);
+      }
+
+      /* Active/Click effect */
+      .mobile-close-btn:active {
+        transform: rotate(90deg) scale(0.9);
+        box-shadow: 0 2px 10px rgba(34, 197, 94, 0.2);
+        transition: transform 0.1s ease;
+      }
+
+      /* Pulsing animation */
+      @keyframes pulse-glow {
+
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+        }
+
+        50% {
+          box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+          /* और छोटा glow */
+        }
+      }
+
+      .mobile-close-btn {
+        animation: pulse-glow 2s infinite;
+      }
+
+      /* Tooltip for desktop hover */
+      .mobile-close-btn::before {
+        content: 'Close';
+        position: absolute;
+        bottom: -28px;
+        left: 50%;
+        transform: translateX(-50%) translateY(6px);
+        background: var(--surface-color);
+        color: var(--text-color);
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 0.65rem;
+        /* और छोटा font */
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+      }
+
+      .mobile-close-btn:hover::before {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      /* Arrow pointing to button */
+      .mobile-close-btn::after {
+        content: '';
+        position: absolute;
+        top: -5px;
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+        width: 8px;
+        height: 8px;
+        background: var(--surface-color);
+        border-left: 1px solid var(--border-color);
+        border-top: 1px solid var(--border-color);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .mobile-close-btn:hover::after {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* Mobile-specific touch improvements */
+      @media (max-width: 768px) {
+        .mobile-close-btn {
+          width: 42px;
+          /* मोबाइल के लिए थोड़ा बड़ा */
+          height: 42px;
+          font-size: 1.1rem;
+          background: rgba(255, 255, 255, 0.15);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(255, 255, 255, 0.25);
+          position: fixed;
+          /* अभी भी fixed */
+          top: 1rem;
+          right: 1rem;
+        }
+
+        .mobile-close-btn i {
+          font-size: 1.1rem;
+        }
+
+        .mobile-close-btn:active {
+          background: linear-gradient(135deg, var(--accent-color), rgba(34, 197, 94, 0.4));
+          transform: scale(0.9);
+        }
+
+        /* Remove tooltip on mobile */
+        .mobile-close-btn::before,
+        .mobile-close-btn::after {
+          display: none;
+        }
+
+        /* Better touch feedback */
+        .mobile-close-btn {
+          -webkit-tap-highlight-color: transparent;
+        }
+      }
+
+      /* Dark mode adjustments */
+      [data-theme="dark"] .mobile-close-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+      }
+
+      [data-theme="dark"] .mobile-close-btn:hover {
+        background: linear-gradient(135deg, var(--accent-color), rgba(34, 197, 94, 0.4));
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Light mode adjustments */
+      [data-theme="light"] .mobile-close-btn {
+        background: rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(0, 0, 0, 0.15);
+      }
+
+      [data-theme="light"] .mobile-close-btn:hover {
+        background: linear-gradient(135deg, var(--accent-color), rgba(34, 197, 94, 0.2));
+        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+      }
+
+      /* Accessibility focus styles */
+      .mobile-close-btn:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.5);
+      }
+
+      .mobile-close-btn:focus-visible {
+        outline: 2px solid var(--accent-color);
+        outline-offset: 2px;
+      }
+
+      /* मोबाइल मेनू हेडर को adjust करें */
+      .mobile-menu-header {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 1rem;
+        /* थोड़ा कम padding */
+        border-bottom: 1px solid var(--border-color);
+        position: relative;
+        background: var(--surface-color);
+        z-index: 1002;
+        min-height: 56px;
+        /* और छोटी height */
+      }
+
+      /* मोबाइल मेनू content को थोड़ा adjust करें */
+      .mobile-menu-content {
+        padding-top: 0.5rem;
+        /* header के नीचे थोड़ी space */
+      }
 
       .mobile-search {
         position: relative;
@@ -975,21 +1182,23 @@
       font-size: 0.9rem;
     }
 
-@keyframes pulse {
-  from { box-shadow: 0 0 6px rgba(34,197,94,.5); }
-  to { box-shadow: 0 0 14px rgba(34,197,94,.9); }
-}
-/* 🔥 FORCE CLOSE BUTTON TO BE CLICKABLE */
-.mobile-close-btn {
-  position: relative;
-  z-index: 1001;
-  pointer-events: auto;
-}
+    @keyframes pulse {
+      from {
+        box-shadow: 0 0 6px rgba(34, 197, 94, .5);
+      }
 
-/* Ensure menu captures touches correctly */
-.mobile-menu {
-  pointer-events: auto;
-}
+      to {
+        box-shadow: 0 0 14px rgba(34, 197, 94, .9);
+      }
+    }
+
+    /* 🔥 FORCE CLOSE BUTTON TO BE CLICKABLE */
+
+
+    /* Ensure menu captures touches correctly */
+    .mobile-menu {
+      pointer-events: auto;
+    }
 
     /* Features improvements: responsive grid, card layout, icon styles, focus and hover */
     .feature-intro {
@@ -1007,29 +1216,29 @@
     }
 
     .feature-card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
-      border: 1px solid rgba(255,255,255,0.04);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.00));
+      border: 1px solid rgba(255, 255, 255, 0.04);
       border-radius: 16px;
       padding: 1.25rem;
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
-      transition: transform 0.28s cubic-bezier(.2,.9,.3,1), box-shadow 0.28s ease, border-color 0.28s ease;
+      transition: transform 0.28s cubic-bezier(.2, .9, .3, 1), box-shadow 0.28s ease, border-color 0.28s ease;
       min-height: 220px;
       backdrop-filter: blur(6px) saturate(110%);
     }
 
     .feature-card:focus-visible {
       outline: none;
-      box-shadow: 0 0 0 4px rgba(34,197,94,0.12);
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.12);
       transform: translateY(-4px);
-      border-color: rgba(34,197,94,0.12);
+      border-color: rgba(34, 197, 94, 0.12);
     }
 
     .feature-card:hover {
       transform: translateY(-8px) scale(1.01);
-      box-shadow: 0 18px 40px rgba(2,6,23,0.12);
-      border-color: rgba(34,197,94,0.12);
+      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.12);
+      border-color: rgba(34, 197, 94, 0.12);
     }
 
     .feature-icon {
@@ -1039,24 +1248,34 @@
       display: grid;
       place-items: center;
       border-radius: 12px;
-      background: linear-gradient(180deg, rgba(34,197,94,0.14), rgba(22,163,74,0.06));
+      background: linear-gradient(180deg, rgba(34, 197, 94, 0.14), rgba(22, 163, 74, 0.06));
       color: var(--accent-color);
-      box-shadow: 0 10px 24px rgba(16,185,129,0.06);
+      box-shadow: 0 10px 24px rgba(16, 185, 129, 0.06);
       transition: transform 0.35s ease, box-shadow 0.35s ease;
     }
 
     .feature-card:hover .feature-icon {
       transform: translateY(-3px) rotate(-4deg) scale(1.03);
-      box-shadow: 0 18px 36px rgba(16,185,129,0.09);
+      box-shadow: 0 18px 36px rgba(16, 185, 129, 0.09);
     }
 
     @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
-      100% { transform: translateY(0); }
+      0% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-3px);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
     }
 
-    .feature-card .feature-title { margin: 0.15rem 0; }
+    .feature-card .feature-title {
+      margin: 0.15rem 0;
+    }
 
     .feature-card .feature-description {
       color: var(--text-muted);
@@ -1071,26 +1290,44 @@
       border: none;
       padding: 0.5rem 0.85rem;
       border-radius: 10px;
-      box-shadow: 0 8px 18px rgba(22,163,74,0.12);
+      box-shadow: 0 8px 18px rgba(22, 163, 74, 0.12);
       transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
     }
 
     .feature-card .btn.btn-secondary:hover,
     .feature-card .btn.btn-secondary:focus {
       transform: translateY(-3px);
-      box-shadow: 0 14px 28px rgba(22,163,74,0.18);
+      box-shadow: 0 14px 28px rgba(22, 163, 74, 0.18);
       opacity: 0.98;
     }
 
     @media (max-width: 520px) {
-      .features-grid { grid-template-columns: 1fr; gap: 1rem; }
-      .feature-card { padding: 1rem; min-height: auto; }
-      .feature-icon { width: 46px; height: 46px; font-size: 1.3rem; }
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .feature-card {
+        padding: 1rem;
+        min-height: auto;
+      }
+
+      .feature-icon {
+        width: 46px;
+        height: 46px;
+        font-size: 1.3rem;
+      }
     }
 
     /* Respect reduced motion preferences */
     @media (prefers-reduced-motion: reduce) {
-      .feature-icon, .feature-card, .feature-card .btn { transition: none !important; animation: none !important; }
+
+      .feature-icon,
+      .feature-card,
+      .feature-card .btn {
+        transition: none !important;
+        animation: none !important;
+      }
     }
 
 
@@ -1129,6 +1366,8 @@
         box-shadow: 0 0 14px rgba(34, 197, 94, .9);
       }
     }
+
+    
   </style>
 </head>
 
@@ -1188,7 +1427,12 @@
       </div>
 
       <!-- Hamburger Menu Button for Mobile -->
-      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+      <!-- Hamburger Menu Button for Mobile -->
+      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu" onclick="
+    document.getElementById('mobileMenu').classList.add('active');
+    document.getElementById('mobileMenuOverlay').classList.add('active');
+    document.body.style.overflow='hidden';
+  ">
         <span class="hamburger-icon">
           <span class="bar bar1"></span>
           <span class="bar bar2"></span>
@@ -1204,16 +1448,13 @@
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
-      <button class="mobile-close-btn"
-        type="button"
-        aria-label="Close menu"
-        onclick="
+      <button class="mobile-close-btn" type="button" aria-label="Close menu" onclick="
           document.getElementById('mobileMenu').classList.remove('active');
           document.getElementById('mobileMenuOverlay').classList.remove('active');
           document.body.style.overflow='';
         ">
-  <i class="fas fa-times"></i>
-</button>
+        <i class="fas fa-times"></i>
+      </button>
     </div>
 
     <div class="mobile-menu-content">
@@ -1263,7 +1504,7 @@
             <i class="fas fa-chevron-right link-arrow"></i>
           </a>
           <a href="scheme.html" class="mobile-link">
-            <i class="fas fa-scroll"></i> 
+            <i class="fas fa-scroll"></i>
             <span>Schemes</span>
             <i class="fas fa-chevron-right link-arrow"></i>
           </a>
@@ -1327,48 +1568,58 @@
   <section class="features">
     <div class="features-container">
       <h2 class="features-title serif">Our Platform Benefits</h2>
-      <p class="feature-intro">AgriTech brings tailored tools and services to every stakeholder in the agricultural value chain. Explore targeted benefits below and follow the quick links to learn more.</p>
+      <p class="feature-intro">AgriTech brings tailored tools and services to every stakeholder in the agricultural
+        value chain. Explore targeted benefits below and follow the quick links to learn more.</p>
 
       <div class="features-grid">
         <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-1-title">
           <div class="feature-icon" aria-hidden="true">🌱</div>
           <h3 id="feature-1-title" class="feature-title serif">Farmers</h3>
-          <p class="feature-description">Real-time crop monitoring, weather alerts, and direct-market access to get fair prices for your harvest.</p>
+          <p class="feature-description">Real-time crop monitoring, weather alerts, and direct-market access to get fair
+            prices for your harvest.</p>
           <a class="btn btn-secondary" href="crop.html" aria-label="Learn more about crop monitoring">Learn more</a>
         </article>
 
         <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-2-title">
           <div class="feature-icon" aria-hidden="true">🏪</div>
           <h3 id="feature-2-title" class="feature-title serif">Buyers & Retailers</h3>
-          <p class="feature-description">Source verified produce directly from farmers, schedule deliveries, and manage bulk orders with ease.</p>
-          <a class="btn btn-secondary" href="marketplace.html" aria-label="Browse the marketplace">Browse marketplace</a>
+          <p class="feature-description">Source verified produce directly from farmers, schedule deliveries, and manage
+            bulk orders with ease.</p>
+          <a class="btn btn-secondary" href="marketplace.html" aria-label="Browse the marketplace">Browse
+            marketplace</a>
         </article>
 
         <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-3-title">
           <div class="feature-icon" aria-hidden="true">🚜</div>
           <h3 id="feature-3-title" class="feature-title serif">Equipment Suppliers</h3>
-          <p class="feature-description">List equipment, offer rentals, and connect with nearby farmers who need modern machinery.</p>
-          <a class="btn btn-secondary" href="marketplace.html" aria-label="List equipment on the marketplace">List equipment</a>
+          <p class="feature-description">List equipment, offer rentals, and connect with nearby farmers who need modern
+            machinery.</p>
+          <a class="btn btn-secondary" href="marketplace.html" aria-label="List equipment on the marketplace">List
+            equipment</a>
         </article>
 
         <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-4-title">
           <div class="feature-icon" aria-hidden="true">🛒</div>
           <h3 id="feature-4-title" class="feature-title serif">Grocery Sellers</h3>
-          <p class="feature-description">Integrate reliable suppliers into your supply chain and receive consistent quality produce on schedule.</p>
-          <a class="btn btn-secondary" href="marketplace.html" aria-label="Partner with suppliers">Partner with suppliers</a>
+          <p class="feature-description">Integrate reliable suppliers into your supply chain and receive consistent
+            quality produce on schedule.</p>
+          <a class="btn btn-secondary" href="marketplace.html" aria-label="Partner with suppliers">Partner with
+            suppliers</a>
         </article>
 
         <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-5-title">
           <div class="feature-icon" aria-hidden="true">🧑‍🌾</div>
           <h3 id="feature-5-title" class="feature-title serif">Agronomists & Advisors</h3>
-          <p class="feature-description">Share expertise, provide remote diagnostic services, and recommend data-driven treatments to improve yields.</p>
+          <p class="feature-description">Share expertise, provide remote diagnostic services, and recommend data-driven
+            treatments to improve yields.</p>
           <a class="btn btn-secondary" href="chat.html" aria-label="Offer advisory services">Offer services</a>
         </article>
 
         <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-6-title">
           <div class="feature-icon" aria-hidden="true">💰</div>
           <h3 id="feature-6-title" class="feature-title serif">Finance & Insurance</h3>
-          <p class="feature-description">Access loan options, crop insurance, and financial tools designed for seasonal agriculture cashflows.</p>
+          <p class="feature-description">Access loan options, crop insurance, and financial tools designed for seasonal
+            agriculture cashflows.</p>
           <a class="btn btn-secondary" href="financial-support.html" aria-label="Get financial support">Get support</a>
         </article>
       </div>
@@ -1376,70 +1627,64 @@
   </section>
 
   <footer class="site-footer tech-dark-theme final-match">
-    <div class="footer-top-accent"></div>
+  <div class="footer-top-accent"></div>
 
-    <div class="footer-inner-content">
-        <div class="footer-section footer-brand">
-            <div class="brand-header">
-                <img src="images/logo.png" alt="AgriTech logo" class="brand-logo">
-                <h3>AgriTech</h3>
-            </div>
-            <p class="tagline">Empowering India's Farming Future with innovative technology connecting every stakeholder.</p>
-            
-            <div class="social-icons">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
-                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
-        <p class="tagline">Empowering India's Farming Future with innovative technology connecting every stakeholder.
-        </p>
-
-        <div class="social-icons">
-          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        </div>
+  <div class="footer-inner-content">
+    <div class="footer-section footer-brand">
+      <div class="brand-header">
+        <img src="images/logo.png" alt="AgriTech logo" class="brand-logo">
+        <h3>AgriTech</h3>
       </div>
 
-      <div class="footer-group-links">
-        <div class="footer-section footer-links">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-            <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
-            <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
-            <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
-          </ul>
-        </div>
+      <p class="tagline">
+        Empowering India's Farming Future with innovative technology connecting every stakeholder.
+      </p>
 
-        <div class="footer-section footer-contact">
-          <h4>Contact</h4>
-          <ul>
-            <li>
-              <a href="mailto:contact@agritech.com">
-                <i class="fas fa-envelope"></i> Email Us
-              </a>
-            </li>
-            <li>
-              <a href="tel:+910000000000">
-                <i class="fas fa-phone"></i> Call Us
-              </a>
-            </li>
-          </ul>
-        </div>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
       </div>
     </div>
 
-    <div class="footer-bottom">
-      <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
-    </div>
+    <div class="footer-group-links">
+      <div class="footer-section footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+          <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+          <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
+          <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
+        </ul>
+      </div>
 
-    <div class="footer-wave-overlay"></div>
-  </footer>
+      <div class="footer-section footer-contact">
+        <h4>Contact</h4>
+        <ul>
+          <li>
+            <a href="mailto:contact@agritech.com">
+              <i class="fas fa-envelope"></i> Email Us
+            </a>
+          </li>
+          <li>
+            <a href="tel:+910000000000">
+              <i class="fas fa-phone"></i> Call Us
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
+  </div>
+
+  <div class="footer-wave-overlay"></div>
+</footer>
+
 
   <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
     <i class="fas fa-robot"></i>
@@ -1530,7 +1775,8 @@
   </script>
 
 
-  <script src="index.js"></script>
+
+  <script type="module" src="index.js"></script>
 
   <script>
     // Theme Toggle
@@ -1624,41 +1870,31 @@ function openMobileMenu() {
   mobileMenuOverlay.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+const mobileCloseBtn = document.querySelector('.mobile-close-btn');
 
 if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
-
   // OPEN
   hamburgerBtn.addEventListener('pointerdown', (e) => {
     e.preventDefault();
     openMobileMenu();
   });
 
-  // ❌ CLOSE — TOUCH SAFE
+  // CLOSE
   mobileCloseBtn.addEventListener('pointerdown', (e) => {
     e.preventDefault();
     e.stopPropagation();
     closeMobileMenu();
   });
 
-  // BACKUP FOR OLD MOBILE BROWSERS
-  mobileCloseBtn.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    closeMobileMenu();
-  }, { passive: false });
+  mobileMenuOverlay.addEventListener('pointerdown', closeMobileMenu);
 
-  // OVERLAY CLICK
-  mobileMenuOverlay.addEventListener('pointerdown', () => {
-    closeMobileMenu();
-  });
-
-  // PREVENT BUBBLING INSIDE MENU
   mobileMenu.addEventListener('pointerdown', (e) => {
     e.stopPropagation();
   });
 }
-
-
 
     // Mobile Services Toggle
     const mobileServicesToggle = document.getElementById('mobileServicesToggle');
