@@ -535,19 +535,22 @@
             font-size: 1.5rem;
         }
 
+        /* --- FIXED: CONTRAST AND VISIBILITY FOR ALERTS --- */
         .alert-content h4 {
-            color: var(--text-primary);
+            color: #ffffff; /* Improved Contrast: Explicitly white */
             margin-bottom: 5px;
+            font-weight: 700;
         }
 
         .alert-content p {
-            color: var(--text-muted);
+            color: #ffffff !important; /* Maps to WCAG Requirement: Pure White */
             font-size: 0.9rem;
+            opacity: 1; /* Maximum visibility */
         }
 
         .alert-time {
             font-size: 0.8rem;
-            color: var(--text-muted);
+            color: #f8fafc !important; /* High Contrast off-white */
             margin-left: auto;
         }
 
