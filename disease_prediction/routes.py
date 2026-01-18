@@ -3,6 +3,7 @@ import os
 from werkzeug.utils import secure_filename
 
 from .utils import load_pytorch_model, predict_image_pytorch
+from backend.extensions import cache
 
 # ================= BLUEPRINT =================
 disease_bp = Blueprint(
@@ -65,6 +66,7 @@ def disease_home():
 
 
 @disease_bp.route("/predict", methods=["POST"])
+@cache.memoize(timeout=300)  # Cache for 5 minutes
 def predict_disease():
     file = request.files.get("file")
 

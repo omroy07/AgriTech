@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, jsonify
 import joblib
 import numpy as np
 import os
+from backend.extensions import cache
 
 crop_bp = Blueprint(
     'crop',
@@ -29,6 +30,7 @@ def crop_home():
 
 
 @crop_bp.route("/predict", methods=["POST"])
+@cache.memoize(timeout=300)  # Cache for 5 minutes
 def predict():
     try:
         # Match frontend + ML column names

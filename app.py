@@ -7,6 +7,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
+from backend.extensions import cache
 
 
 
@@ -19,6 +20,9 @@ CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
 app.register_blueprint(crop_bp)
 app.register_blueprint(disease_bp)
+
+# Initialize Cache
+cache.init_app(app)
 
 
 
