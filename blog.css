@@ -437,22 +437,49 @@
 }
 
 .close {
-    color: #aaa;
-    font-size: 2rem;
+    color: #64748b;
+    font-size: 1.5rem;
     font-weight: bold;
     cursor: pointer;
-    line-height: 1;
-    transition: color 0.3s ease;
-    background: transparent;
-    border: none;
+    background: rgba(0, 0, 0, 0.05); /* Subtle circular base */
+    border: 2px solid transparent;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
-    top: 35px;
-    right: 40px;
+    top: 20px;
+    right: 20px;
+    /* Premium bouncy transition */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1100;
+    line-height: 1;
+}
+/* Attractive Hover State: Glow, Rotate, and Scale */
+.close:hover {
+    background: #ef4444; /* High-visibility alert red */
+    color: white;
+    transform: scale(1.15) rotate(90deg); /* Dramatic rotation */
+    border-color: #ef4444;
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
 }
 
-.close:hover,
-.close:focus {
-    color: #2c5f2d;
+.close:active {
+    transform: scale(0.9) rotate(45deg);
+}
+
+/* Dark Mode Support for Close Button */
+[data-theme="dark"] .close {
+    background: rgba(255, 255, 255, 0.1);
+    color: #cbd5e1;
+}
+
+[data-theme="dark"] .close:hover {
+    background: #f87171;
+    color: #0f172a;
+    box-shadow: 0 8px 25px rgba(248, 113, 113, 0.5);
 }
 
 /* Modal Favorite Button */
