@@ -66,9 +66,9 @@ connect-src 'self' http://localhost:3000;
     <header>
       <div class="header-content">
         <div class="nav-left" style="display: flex; align-items: center; gap: 1.5rem;">
-          <a href="index.html" class="nav-back">
+          <button class="nav-back" id="backToHomeBtn">
             <i class="fas fa-arrow-left"></i> Back to Home
-          </a>
+          </button>
           <div class="logo">
             <i class="fas fa-seedling"></i>
             <h1>AgriBot</h1>
@@ -317,5 +317,19 @@ connect-src 'self' http://localhost:3000;
       </div>
       <div class="footer-bottom">© <span id="current-year">2026</span> AgriTech • Made for farmers</div>
     </footer>
+    <script>
+  document.getElementById("backToHomeBtn").addEventListener("click", () => {
+    // Preserve theme
+    const currentTheme =
+      document.documentElement.getAttribute("data-theme") || "light";
+    localStorage.setItem("theme", currentTheme);
+
+    // Preserve scroll position of home page
+    localStorage.setItem("homeScrollY", window.scrollY);
+
+    // Navigate back
+    window.location.href = "index.html";
+  });
+</script>
   </body>
 </html>
