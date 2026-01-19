@@ -510,6 +510,95 @@ const schemesDatabase = [
         ],
         updated: "2024-12-13",
         applyUrl: "#"
+    },
+    // State Specific - Assam
+    {
+        id: 31,
+        title: "Mukhya Mantri Krishi Saajuli Yojana",
+        category: "technology",
+        state: "assam",
+        gender: "all",
+        description: "Financial assistance to farmers for procuring farm tools and implements to promote scientific cultivation.",
+        benefits: [
+            "Financial aid of ₹5,000 per farmer",
+            "Direct Benefit Transfer (DBT)",
+            "Focus on small and marginal farmers",
+            "Promotes farm mechanization"
+        ],
+        updated: "2024-12-10",
+        applyUrl: "#"
+    },
+
+    // State Specific - Bihar
+    {
+        id: 32,
+        title: "Bihar Rajya Fasal Sahayata Yojana",
+        category: "insurance",
+        state: "bihar",
+        gender: "all",
+        description: "A crop assistance scheme that replaces traditional insurance, providing financial aid to farmers in case of crop damage.",
+        benefits: [
+            "₹7,500/hectare for up to 20% loss",
+            "₹10,000/hectare for >20% loss",
+            "No premium required from farmers",
+            "Coverage for both Rabi and Kharif crops"
+        ],
+        updated: "2024-11-28",
+        applyUrl: "#"
+    },
+
+    // State Specific - Chhattisgarh
+    {
+        id: 33,
+        title: "Rajiv Gandhi Kisan Nyay Yojana",
+        category: "subsidy",
+        state: "chhattisgarh",
+        gender: "all",
+        description: "Income support scheme encouraging farmers to cultivate crops other than paddy and ensuring fair prices.",
+        benefits: [
+            "Input subsidy up to ₹10,000 per acre",
+            "Support for crop diversification",
+            "Direct cash transfer to bank accounts",
+            "Coverage for paddy, maize, and sugarcane"
+        ],
+        updated: "2024-12-15",
+        applyUrl: "#"
+    },
+
+    // State Specific - Madhya Pradesh
+    {
+        id: 34,
+        title: "Mukhyamantri Kisan Kalyan Yojana",
+        category: "subsidy",
+        state: "madhya-pradesh",
+        gender: "all",
+        description: "State-level income support scheme that supplements the central PM-KISAN yojana.",
+        benefits: [
+            "Additional ₹4,000 per year",
+            "Paid in two installments of ₹2,000",
+            "Synced with PM-KISAN database",
+            "Total benefit (Central + State): ₹10,000/year"
+        ],
+        updated: "2024-12-05",
+        applyUrl: "#"
+    },
+
+    // State Specific - Odisha
+    {
+        id: 35,
+        title: "KALIA Scheme (Krushak Assistance for Livelihood and Income Augmentation)",
+        category: "subsidy",
+        state: "odisha",
+        gender: "all",
+        description: "Comprehensive welfare package for farmers, sharecroppers, and landless agricultural laborers.",
+        benefits: [
+            "₹25,000 financial assistance over 5 seasons",
+            "Support for landless agricultural households",
+            "Life insurance cover of ₹2 lakh",
+            "Interest-free crop loans"
+        ],
+        updated: "2024-11-30",
+        applyUrl: "#"
     }
 ];
 

@@ -5,6 +5,7 @@ import os
 import re
 from flask_cors import CORS
 from dotenv import load_dotenv
+from extensions import limiter
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
 from backend.tasks import process_loan_task, predict_crop_task
@@ -17,70 +18,46 @@ from backend.celery_app import celery_app
 load_dotenv()
 
 app = Flask(__name__, static_folder='.', static_url_path='')
+
+# Load Configuration
+env_name = os.getenv('FLASK_ENV', 'default')
+app.config.from_object(config[env_name])
+
 CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
 app.register_blueprint(crop_bp)
 app.register_blueprint(disease_bp)
 
+# Initialize Cache
+cache.init_app(app)
 
 
-# Input validation and sanitization functions
-def sanitize_input(text):
-    """Sanitize user input to prevent XSS and injection attacks"""
-    if not text or not isinstance(text, str):
-        return ""
-    
-    # Remove HTML tags
-    text = re.sub(r'<[^>]+>', '', text)
-    
-    # Escape special characters
-    text = text.replace('&', '&amp;')
-    text = text.replace('<', '&lt;')
-    text = text.replace('>', '&gt;')
-    text = text.replace('"', '&quot;')
-    text = text.replace("'", '&#x27;')
-    
-    # Limit length
-    if len(text) > 1000:
-        text = text[:1000]
-    
-    return text.strip()
 
-def validate_input(data):
-    """Validate input data structure and content"""
-    if not data:
-        return False, "No data provided"
-    
-    # Check for required fields if needed
-    # Add specific validation rules here
-    
-    return True, "Valid input"
+
+# Initialize Marshmallow Schemas
+loan_schema = LoanRequestSchema()
 
 # Initialize Gemini API
-API_KEY = os.environ.get('GEMINI_API_KEY')
-MODEL_ID = 'gemini-2.5-flash'
-
-if not API_KEY:
-    raise RuntimeError("GEMINI_API_KEY is not set in environment variables")
-
 # Configure Gemini Client
-genai.configure(api_key=API_KEY)
-model = genai.GenerativeModel("gemini-2.5-flash")
+genai.configure(api_key=app.config['GEMINI_API_KEY'])
+model = genai.GenerativeModel(app.config['GEMINI_MODEL_ID'])
 
 
 
 """Secure endpoint to provide Firebase configuration to client"""
 @app.route('/api/firebase-config')
+@limiter.limit("10 per minute")
 def get_firebase_config():
     try:
         return jsonify({
-            'apikey': os.environ['FIREBASE_API_KEY'],
-            'authDomain': os.environ['FIREBASE_AUTH_DOMAIN'],
-            'projectId': os.environ['FIREBASE_PROJECT_ID'],
-            'storageBucket': os.environ['FIREBASE_STORAGE_BUCKET'],
-            'messagingSenderId': os.environ['FIREBASE_MESSAGING_SENDER_ID'],
-            'appId': os.environ['FIREBASE_APP_ID'],
-            'measurementId': os.environ['FIREBASE_MEASUREMENT_ID']
+        return jsonify({
+            'apikey': app.config['FIREBASE_API_KEY'],
+            'authDomain': app.config['FIREBASE_AUTH_DOMAIN'],
+            'projectId': app.config['FIREBASE_PROJECT_ID'],
+            'storageBucket': app.config['FIREBASE_STORAGE_BUCKET'],
+            'messagingSenderId': app.config['FIREBASE_MESSAGING_SENDER_ID'],
+            'appId': app.config['FIREBASE_APP_ID'],
+            'measurementId': app.config['FIREBASE_MEASUREMENT_ID']
 
         })
     except KeyError as e:
@@ -183,17 +160,19 @@ def process_loan_async():
 
 
 @app.route('/process-loan', methods=['POST'])
+@limiter.limit("5 per minute")
 def process_loan():
     try:
         json_data = request.get_json(force=True)
         
-        # Validate and sanitize input
-        is_valid, validation_message = validate_input(json_data)
-        if not is_valid:
+        # Validate and sanitize input using Marshmallow
+        try:
+            validated_data = loan_schema.load(json_data)
+        except ValidationError as err:
             return jsonify({
                 "status": "error",
-                "message": validation_message
-                }), 400
+                "message": err.messages
+            }), 400
         
         # Sanitize any text fields in the JSON data
         if isinstance(json_data, dict):
@@ -201,7 +180,7 @@ def process_loan():
                 if isinstance(value, str):
                     json_data[key] = sanitize_input(value)
         
-        print(f"Received JSON: {json_data}")
+        logger.info("Received loan processing request for type: %s", json_data.get('loan_type', 'unknown'))
 
         prompt = f"""
 You are a financial loan eligibility advisor specializing in agricultural loans for farmers in India.
@@ -250,8 +229,8 @@ Do not add assumptions that are not supported by the data provided.
             "message": "Loan processes successfully "
             }), 200
 
-    except Exception :
-        traceback.print_exc()
+    except Exception as e:
+        logger.error("Error processing loan request: %s", str(e), exc_info=True)
         return jsonify({
             "status": "error",
             "message": "Failed to process loan request. Please try again later."}), 500
@@ -287,6 +266,7 @@ def contact():
     return send_from_directory('.', 'contact.html')
 
 @app.route('/chat')
+@limiter.limit("10 per minute")
 def chat():
     return send_from_directory('.', 'chat.html')
 
@@ -301,6 +281,7 @@ if __name__ == '__main__':
 #Global Error Handling 
 @app.errorhandler(404)
 def not_found(error):
+    logger.warning("404 Error: %s", request.path)
     return jsonify({
         "status" : "error",
         "message" :"Resource not found"
@@ -308,6 +289,7 @@ def not_found(error):
 
 @app.errorhandler(500)
 def internal_error(error):
+    logger.error("500 Error: %s", str(error), exc_info=True)
     return jsonify({
         "status": "error",
         "message": "Internal server error"

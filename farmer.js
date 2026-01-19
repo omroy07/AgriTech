@@ -1,5 +1,6 @@
 let products = [];
 let requests = [];
+let predictions = [];
 
 // DOM elements
 const tabButtons = document.querySelectorAll(".tab-button");
@@ -8,8 +9,10 @@ const productForm = document.getElementById("product-form");
 const buyForm = document.getElementById("buy-form");
 const productDisplay = document.getElementById("product-display");
 const buyRequestDisplay = document.getElementById("buy-request-display");
+const predictionHistoryDisplay = document.getElementById("prediction-history-display");
 const productCount = document.getElementById("product-count");
 const requestCount = document.getElementById("request-count");
+const historyCount = document.getElementById("history-count");
 
 // Validation functions
 function validateContactNumber(phone) {
@@ -85,6 +88,12 @@ function updateProductCount() {
 function updateRequestCount() {
   requestCount.textContent = `${requests.length} Request${
     requests.length !== 1 ? "s" : ""
+  }`;
+}
+
+function updateHistoryCount() {
+  historyCount.textContent = `${predictions.length} Prediction${
+    predictions.length !== 1 ? "s" : ""
   }`;
 }
 
@@ -286,6 +295,57 @@ buyForm.addEventListener("submit", function (e) {
   );
 });
 
+function renderPredictions() {
+  if (predictions.length === 0) {
+    predictionHistoryDisplay.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>No prediction history yet 📊</h3>
+                        <p>Use our AI tools to get crop recommendations and yield predictions. Your history will appear here.</p>
+                    </div>
+                `;
+  } else {
+    predictionHistoryDisplay.innerHTML = predictions
+      .map((prediction, index) => createPredictionItem(prediction, index))
+      .join("");
+  }
+  updateHistoryCount();
+}
+
+function createPredictionItem(prediction, index) {
+  return `
+                <div class="listing-item">
+                    <div class="listing-header">
+                        <div>
+                            <div class="listing-title">${prediction.crop}</div>
+                            <div class="listing-price">Predicted Yield: ${prediction.yield}</div>
+                        </div>
+                        <button class="delete-btn" onclick="removePrediction(${index})">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                    <div class="listing-details">
+                        <div class="listing-detail">
+                            <i class="fas fa-seedling"></i>
+                            <span>Crop: ${prediction.crop}</span>
+                        </div>
+                        <div class="listing-detail">
+                            <i class="fas fa-clock"></i>
+                            <span>Predicted: ${new Date(prediction.date).toLocaleDateString()}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+}
+
+// Global function for delete prediction
+window.removePrediction = function (index) {
+  predictions.splice(index, 1);
+  renderPredictions();
+  showSuccessMessage(predictionHistoryDisplay, "Prediction removed successfully!");
+};
+
 // Initialize
 renderProducts();
 renderRequests();
+renderPredictions();
