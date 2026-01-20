@@ -1639,6 +1639,48 @@
         .section-header i {
             color: var(--accent-primary);
         }
+        /* Simple popup styles */
+.search-popup {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+.search-popup-content {
+    background: #fff;
+    max-width: 800px;
+    width: 90%;
+    max-height: 80%;
+    overflow-y: auto;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+}
+.search-popup-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+.search-popup-products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+}
+.search-popup-products .product-card {
+    width: calc(33% - 10px); /* 3 per row */
+}
+@media (max-width: 600px) {
+    .search-popup-products .product-card {
+        width: 100%;
+    }
+}
     </style>
 </head>
 
@@ -2086,6 +2128,75 @@
     <button id="scrollToTop" class="scroll-top-btn" aria-label="Scroll to top">
         <i class="fas fa-arrow-up"></i>
     </button>
+    <div id="searchPopup" class="search-popup" style="display:none;">
+    <div class="search-popup-content">
+        <span id="searchPopupClose" class="search-popup-close">&times;</span>
+        <h3 id="searchPopupTitle"></h3>
+        <div id="searchPopupProducts" class="search-popup-products"></div>
+    </div>
+</div>
+<script>
+// --- NEW SEARCH FUNCTION WITH POPUP ---
+function filterProductsWithPopup() {
+    const filters = getFilterValues();
+
+    filteredProducts = allProducts.filter(p => {
+        const matchesSearch = p.title.toLowerCase().includes(filters.search);
+        const matchesCategory = !filters.category || p.category === filters.category;
+        const matchesLocation = !filters.location || p.location === filters.location;
+        return matchesSearch && matchesCategory && matchesLocation;
+    });
+
+    // Reset pagination for main grid
+    visibleCount = 6;
+    currentPage = 1;
+    usePagination = false;
+
+    // Update main grid normally
+    sortAndDisplay(currentSortKey, false);
+
+    // --- SHOW POPUP ---
+    const popup = document.getElementById('searchPopup');
+    const popupProducts = document.getElementById('searchPopupProducts');
+    const popupTitle = document.getElementById('searchPopupTitle');
+
+    // Clear previous content
+    popupProducts.innerHTML = '';
+
+    // If search is empty, hide popup
+    if (filters.search.trim() === "") {
+        popup.style.display = 'none';
+        return;
+    }
+
+    if (filteredProducts.length > 0) {
+        popupTitle.textContent = `Found ${filteredProducts.length} product(s) matching "${filters.search}":`;
+        filteredProducts.forEach(p => {
+            const clone = p.element.cloneNode(true);
+            clone.style.display = 'block';
+            clone.style.order = '';
+            popupProducts.appendChild(clone);
+        });
+    } else {
+        popupTitle.textContent = `No products found for "${filters.search}"`;
+    }
+
+    popup.style.display = 'flex';
+
+    // Close button
+    document.getElementById('searchPopupClose').onclick = () => {
+        popup.style.display = 'none';
+    }
+}
+
+// --- CONNECT SEARCH INPUT TO POPUP FUNCTION ---
+const searchInput = document.getElementById('searchInput');
+if (searchInput) {
+    searchInput.addEventListener('input', () => {
+        filterProductsWithPopup();
+    });
+}
+</script>
 
     <script>
 
