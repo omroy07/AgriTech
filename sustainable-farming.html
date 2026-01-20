@@ -8,11 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
         rel="stylesheet">
-    <!-- Favicon -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
+        rel="stylesheet">
     <link rel="icon" type="image/png" href="images/logo.png">
 
     <style>
@@ -133,6 +134,7 @@
             padding: 20px;
         }
 
+        /* --- UPDATED TOP NAV WITH HIDE ON SCROLL --- */
         .top-nav {
             display: flex;
             justify-content: space-between;
@@ -146,6 +148,13 @@
             position: sticky;
             top: 20px;
             z-index: 100;
+            /* Premium transition timing */
+            transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Class to trigger the hide effect */
+        .nav-hidden {
+            transform: translateY(-150%);
         }
 
         .nav-left {
@@ -229,13 +238,16 @@
         .header h1 {
             font-family: 'Libertinus Serif', serif;
             font-size: 2.5rem;
-            color: #ffffff; /* Improved Contrast: Explicitly white */
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Improved legibility */
+            color: #ffffff;
+            /* Improved Contrast: Explicitly white */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            /* Improved legibility */
             margin-bottom: 10px;
         }
 
         .header p {
-            color: #f1f5f9; /* Improved Contrast: Lighter than secondary text */
+            color: #f1f5f9;
+            /* Improved Contrast: Lighter than secondary text */
             font-size: 1.1rem;
         }
 
@@ -267,8 +279,10 @@
         .tool-header h2 {
             font-family: 'Libertinus Serif', serif;
             font-size: 2rem;
-            color: #ffffff; /* Improved Contrast: Explicitly white */
-            text-shadow: 0 1px 3px rgba(0,0,0,0.2); /* Improved visibility */
+            color: #ffffff;
+            /* Improved Contrast: Explicitly white */
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            /* Improved visibility */
             margin-bottom: 10px;
         }
 
@@ -381,7 +395,7 @@
             color: var(--text-secondary);
             font-weight: 500;
         }
-        
+
         .practices-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -431,7 +445,8 @@
         .practice-card h3 {
             font-family: 'Libertinus Serif', serif;
             font-size: 1.5rem;
-            color: #ffffff; /* Improved Contrast */
+            color: #ffffff;
+            /* Improved Contrast */
             margin-bottom: 15px;
         }
 
@@ -457,41 +472,6 @@
             margin-right: 10px;
         }
 
-        .impact-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin: 30px 0;
-        }
-
-        .impact-stat {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            border-left: 5px solid var(--accent-primary);
-            transition: all 0.3s ease;
-        }
-
-        .impact-stat:hover {
-            background: var(--bg-tertiary);
-            transform: translateX(5px);
-            box-shadow: 0 8px 20px var(--shadow-light);
-        }
-
-        .impact-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--accent-primary);
-            margin-bottom: 10px;
-        }
-
-        .impact-description {
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
         .tips-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -509,13 +489,14 @@
 
         .tip-card:hover {
             transform: scale(1.02);
-            box-shadow: 0 8px 25px rgba(0,184,148,0.2);
+            box-shadow: 0 8px 25px rgba(0, 184, 148, 0.2);
             border-left-width: 8px;
         }
 
         .tip-title {
             font-weight: 600;
-            color: #ffffff; /* Improved Contrast */
+            color: #ffffff;
+            /* Improved Contrast */
             margin-bottom: 10px;
             display: flex;
             align-items: center;
@@ -527,10 +508,21 @@
         }
 
         .tip-card p {
-            color: var(--text-secondary);
+            color: #ffffff;
+            /* Improved Contrast: Explicit pure white */
         }
 
-       
+
+        .assessment-tool {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px var(--shadow-light);
+        }
+
         .assessment-form {
             max-width: 600px;
             margin: 0 auto;
@@ -598,44 +590,6 @@
             display: none;
             animation: fadeInUp 0.5s ease;
         }
-         .tips-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .tip-card {
-            background: linear-gradient(135deg, rgba(0, 184, 148, 0.1), rgba(0, 206, 201, 0.1));
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 25px;
-            border-left: 4px solid var(--accent-primary);
-            transition: all 0.3s ease;
-        }
-
-        .tip-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 25px rgba(0, 184, 148, 0.2);
-            border-left-width: 8px;
-        }
-
-        .tip-title {
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
-
-        .tip-title i {
-            margin-right: 10px;
-            color: var(--accent-primary);
-        }
-
-        .tip-card p {
-            color: var(--text-secondary);
-        }
-
 
         @keyframes fadeInUp {
             from {
@@ -690,20 +644,6 @@
             box-shadow: 0 8px 20px var(--shadow-medium);
         }
 
-       
-
-        .notification.warning {
-            background: var(--accent-warning);
-        }
-
-        .notification.danger {
-            background: var(--accent-danger);
-        }
-
-        .notification.info {
-            background: var(--accent-primary);
-        }
-
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -733,7 +673,8 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-         .notification {
+
+        .notification {
             position: fixed;
             top: 100px;
             right: 20px;
@@ -750,6 +691,18 @@
 
         .notification.show {
             transform: translateX(0);
+        }
+
+        .notification.warning {
+            background: var(--accent-warning);
+        }
+
+        .notification.danger {
+            background: var(--accent-danger);
+        }
+
+        .notification.info {
+            background: var(--accent-primary);
         }
 
         @keyframes spin {
@@ -812,6 +765,8 @@
             .top-nav {
                 position: static;
                 margin-bottom: 1rem;
+                transform: none !important;
+                /* Prevent hiding on mobile for usability */
             }
 
             .floating-tips {
@@ -870,7 +825,7 @@
     </div>
 
     <div class="container">
-        <nav class="top-nav">
+        <nav class="top-nav" id="mainNav">
             <div class="nav-left">
                 <a href="index.html" class="nav-back">
                     <i class="fas fa-arrow-left"></i> Back to Home
@@ -1486,22 +1441,38 @@
     </script>
     <script src="theme.js"></script>
 
-    <!-- Scroll to Top Button -->
     <button id="scrollTopBtn" title="Go to top" aria-label="Scroll to top">
         <i class="fas fa-arrow-up"></i>
     </button>
 
     <script>
-        // Scroll to Top Functionality
+        // Scroll Management
         const scrollTopBtn = document.getElementById('scrollTopBtn');
+        const mainNav = document.getElementById('mainNav');
+        let lastScrollTop = 0;
 
-        // Show/hide button based on scroll position
         window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            // 1. Scroll-to-Top Visibility
+            if (scrollTop > 300) {
                 scrollTopBtn.classList.add('visible');
             } else {
                 scrollTopBtn.classList.remove('visible');
             }
+
+            // 2. PREMIUM HIDE-ON-SCROLL LOGIC
+            // Hide on scroll down, Show on scroll up
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // User is scrolling down
+                mainNav.classList.add('nav-hidden');
+            } else {
+                // User is scrolling up
+                mainNav.classList.remove('nav-hidden');
+            }
+
+            // Update position, ensuring it's not negative
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         });
 
         // Smooth scroll to top when clicked
