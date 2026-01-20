@@ -255,6 +255,11 @@ function setupEventListeners() {
         searchQuery = this.value.toLowerCase();
         filterPosts();
     });
+    // Specific listener for the enhanced modal close button
+    const closeBlogBtn = document.getElementById('closeBlogModal');
+    if (closeBlogBtn) {
+        closeBlogBtn.addEventListener('click', closeModalHandler);
+    }
 
     // Filter buttons
     document.querySelectorAll('.filter-btn').forEach(button => {
