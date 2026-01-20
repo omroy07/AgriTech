@@ -1870,9 +1870,6 @@ function openMobileMenu() {
   mobileMenuOverlay.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
-const hamburgerBtn = document.getElementById('hamburgerBtn');
-const mobileMenu = document.getElementById('mobileMenu');
-const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
 const mobileCloseBtn = document.querySelector('.mobile-close-btn');
 
 if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
@@ -2095,6 +2092,22 @@ if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
       <button onclick="closeSearchPopup()">Got it</button>
     </div>
   </div>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Restore theme
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    }
+
+    // Restore scroll position
+    const scrollY = localStorage.getItem("homeScrollY");
+    if (scrollY) {
+      window.scrollTo(0, parseInt(scrollY, 10));
+      localStorage.removeItem("homeScrollY");
+    }
+  });
+</script>
 
 </body>
 
