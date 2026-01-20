@@ -8,8 +8,10 @@ from dotenv import load_dotenv
 from extensions import limiter
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
-from backend.utils.logger import logger
-from backend.config import config
+from backend.tasks import process_loan_task, predict_crop_task
+from backend.celery_app import celery_app
+
+
 
 
 # Load environment variables
@@ -63,6 +65,98 @@ def get_firebase_config():
             "status": "error",
             "message":f"Missing environment variable: {str(e)}"
         }),500
+
+
+# ==================== ASYNC TASK ENDPOINTS ====================
+
+@app.route('/api/task/<task_id>', methods=['GET'])
+def get_task_status(task_id):
+    """Check the status of an async task."""
+    task = celery_app.AsyncResult(task_id)
+    
+    if task.state == 'PENDING':
+        response = {
+            'status': 'pending',
+            'message': 'Task is waiting to be processed'
+        }
+    elif task.state == 'STARTED':
+        response = {
+            'status': 'processing',
+            'message': 'Task is currently being processed'
+        }
+    elif task.state == 'SUCCESS':
+        response = {
+            'status': 'completed',
+            'result': task.result
+        }
+    elif task.state == 'FAILURE':
+        response = {
+            'status': 'failed',
+            'message': str(task.info)
+        }
+    else:
+        response = {
+            'status': task.state,
+            'message': 'Unknown state'
+        }
+    
+    return jsonify(response)
+
+
+@app.route('/api/crop/predict-async', methods=['POST'])
+def predict_crop_async():
+    """Submit crop prediction as async task."""
+    try:
+        data = request.get_json(force=True)
+        
+        required_fields = ['N', 'P', 'K', 'temperature', 'humidity', 'ph', 'rainfall']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({'status': 'error', 'message': f'Missing field: {field}'}), 400
+        
+        # Submit task to Celery
+        task = predict_crop_task.delay(
+            data['N'], data['P'], data['K'],
+            data['temperature'], data['humidity'],
+            data['ph'], data['rainfall']
+        )
+        
+        return jsonify({
+            'status': 'submitted',
+            'task_id': task.id,
+            'message': 'Task submitted successfully. Poll /api/task/<task_id> for results.'
+        }), 202
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
+@app.route('/api/loan/process-async', methods=['POST'])
+def process_loan_async():
+    """Submit loan processing as async task."""
+    try:
+        json_data = request.get_json(force=True)
+        
+        is_valid, validation_message = validate_input(json_data)
+        if not is_valid:
+            return jsonify({'status': 'error', 'message': validation_message}), 400
+        
+        # Sanitize input
+        if isinstance(json_data, dict):
+            for key, value in json_data.items():
+                if isinstance(value, str):
+                    json_data[key] = sanitize_input(value)
+        
+        # Submit task to Celery
+        task = process_loan_task.delay(json_data)
+        
+        return jsonify({
+            'status': 'submitted',
+            'task_id': task.id,
+            'message': 'Task submitted successfully. Poll /api/task/<task_id> for results.'
+        }), 202
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
 
 
 @app.route('/process-loan', methods=['POST'])

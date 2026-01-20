@@ -1,6 +1,17 @@
 version: '3.8'
 
 services:
+  # Redis for Celery broker and result backend
+  redis:
+    image: redis:7-alpine
+    container_name: agritech-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  # Flask Backend
   backend:
     build: .
     container_name: agritech-backend
@@ -8,8 +19,30 @@ services:
       - "5000:5000"
     environment:
       - FLASK_ENV=development
+      - REDIS_URL=redis://redis:6379/0
     env_file:
       - .env
+    depends_on:
+      - redis
     volumes:
       - .:/app
     restart: unless-stopped
+
+  # Celery Worker
+  celery_worker:
+    build: .
+    container_name: agritech-celery-worker
+    command: celery -A backend.celery_app worker --loglevel=info
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - backend
+    volumes:
+      - .:/app
+    restart: unless-stopped
+
+volumes:
+  redis_data:
