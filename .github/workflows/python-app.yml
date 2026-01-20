@@ -1,4 +1,4 @@
-name: Python package
+name: Python Test Suite
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -25,9 +25,23 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install pytest
+        pip install pytest pytest-cov
 
-    - name: Run backend tests
+    - name: Run backend tests with coverage
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        FIREBASE_API_KEY: test_key
+        FIREBASE_AUTH_DOMAIN: test.firebaseapp.com
+        FIREBASE_PROJECT_ID: test-project
+        FIREBASE_STORAGE_BUCKET: test.appspot.com
+        FIREBASE_MESSAGING_SENDER_ID: "123456"
+        FIREBASE_APP_ID: "1:123:web:abc"
+        FIREBASE_MEASUREMENT_ID: G-TEST
       run: |
-        pytest tests/ -v
+        pytest tests/ -v --cov=. --cov-report=term-missing
 
+    - name: Upload coverage report
+      uses: codecov/codecov-action@v3
+      if: always()
+      with:
+        fail_ci_if_error: false
