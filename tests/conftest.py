@@ -1,12 +1,26 @@
+import pytest
 import sys
 import os
-from unittest.mock import MagicMock
 
-# Add project root to PYTHONPATH
-ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-sys.path.insert(0, ROOT_DIR)
+# Add the project root to the path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Mock external dependencies
-sys.modules["google"] = MagicMock()
-sys.modules["google.generativeai"] = MagicMock()
-sys.modules["jwt"] = MagicMock()
+from app import app as flask_app
+
+@pytest.fixture
+def app():
+    """Create application for testing."""
+    flask_app.config.update({
+        'TESTING': True,
+    })
+    yield flask_app
+
+@pytest.fixture
+def client(app):
+    """Create a test client for the application."""
+    return app.test_client()
+
+@pytest.fixture
+def runner(app):
+    """Create a test runner for the application's CLI commands."""
+    return app.test_cli_runner()
