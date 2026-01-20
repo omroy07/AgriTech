@@ -20,19 +20,25 @@ class JSONChatbot {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+
       const data = await response.json();
       this.responses = data.responses || [];
       this.fallbackResponses = data.fallback_responses || [
-        "Sorry, I didn't understand that. Could you ask about farming topics?"
+        "I’m currently running in offline mode. You can ask me about soil health, crops, irrigation, or fertilizers."
       ];
+
       this.isLoaded = true;
-      console.log('✅ Chatbot responses loaded successfully');
+      console.log('Chatbot responses loaded successfully');
+
     } catch (error) {
-      console.error('❌ Failed to load chatbot responses:', error);
+      console.error('Failed to load chatbot responses:', error);
+
+      // Friendly agriculture-focused fallback
       this.responses = [];
       this.fallbackResponses = [
-        "I'm having trouble accessing my knowledge base. Please try asking about general farming topics!"
+        "I’m currently running in offline mode. Here’s some general advice: focus on soil health, proper irrigation, and timely crop care."
       ];
+
       this.isLoaded = false;
     }
   }
@@ -43,57 +49,57 @@ class JSONChatbot {
   calculateSimilarity(str1, str2) {
     str1 = str1.toLowerCase().trim();
     str2 = str2.toLowerCase().trim();
-    
+
     if (str1 === str2) return 1.0;
-    
+
     const longer = str1.length > str2.length ? str1 : str2;
     const shorter = str1.length > str2.length ? str2 : str1;
-    
+
     if (longer.length === 0) return 1.0;
-    
+
     const distance = this.levenshteinDistance(longer, shorter);
     return (longer.length - distance) / longer.length;
   }
 
   /**
-   * Calculate Levenshtein distance between two strings
+   * Calculate Levenshtein distance
    */
   levenshteinDistance(str1, str2) {
-    const matrix = Array(str2.length + 1).fill(null).map(() => Array(str1.length + 1).fill(null));
-    
+    const matrix = Array(str2.length + 1)
+      .fill(null)
+      .map(() => Array(str1.length + 1).fill(null));
+
     for (let i = 0; i <= str1.length; i++) matrix[0][i] = i;
     for (let j = 0; j <= str2.length; j++) matrix[j][0] = j;
-    
+
     for (let j = 1; j <= str2.length; j++) {
       for (let i = 1; i <= str1.length; i++) {
         const substitutionCost = str1[i - 1] === str2[j - 1] ? 0 : 1;
         matrix[j][i] = Math.min(
-          matrix[j][i - 1] + 1, // insertion
-          matrix[j - 1][i] + 1, // deletion
-          matrix[j - 1][i - 1] + substitutionCost // substitution
+          matrix[j][i - 1] + 1,
+          matrix[j - 1][i] + 1,
+          matrix[j - 1][i - 1] + substitutionCost
         );
       }
     }
-    
+
     return matrix[str2.length][str1.length];
   }
 
   /**
-   * Check if input contains key phrases from the query
+   * Check if input contains key phrases
    */
   containsKeyPhrases(input, query) {
     const inputWords = input.toLowerCase().split(/\s+/);
     const queryWords = query.toLowerCase().split(/\s+/);
-    
-    // Check for exact phrase match
+
     if (input.toLowerCase().includes(query.toLowerCase())) {
       return 1.0;
     }
-    
-    // Check for word matches
+
     let matches = 0;
     for (const queryWord of queryWords) {
-      if (queryWord.length > 2) { // Ignore short words
+      if (queryWord.length > 2) {
         for (const inputWord of inputWords) {
           if (inputWord.includes(queryWord) || queryWord.includes(inputWord)) {
             matches++;
@@ -102,12 +108,12 @@ class JSONChatbot {
         }
       }
     }
-    
+
     return queryWords.length > 0 ? matches / queryWords.length : 0;
   }
 
   /**
-   * Find the best matching response for user input
+   * Find best matching response
    */
   findBestMatch(userInput) {
     if (!this.isLoaded || this.responses.length === 0) {
@@ -117,18 +123,16 @@ class JSONChatbot {
     const input = userInput.toLowerCase().trim();
     let bestMatch = null;
     let bestScore = 0;
-    const threshold = 0.4; // Minimum similarity threshold
+    const threshold = 0.4;
 
     for (const responseObj of this.responses) {
       const query = responseObj.query.toLowerCase();
-      
-      // Calculate multiple similarity metrics
+
       const exactMatch = input === query ? 1.0 : 0;
       const containsMatch = input.includes(query) || query.includes(input) ? 0.8 : 0;
       const levenshteinSimilarity = this.calculateSimilarity(input, query);
       const keyPhraseMatch = this.containsKeyPhrases(input, query);
-      
-      // Weighted score combining different matching methods
+
       const score = Math.max(
         exactMatch,
         containsMatch,
@@ -146,12 +150,11 @@ class JSONChatbot {
   }
 
   /**
-   * Get a random fallback response
-   * (Fixed: Handles empty or undefined fallbackResponses gracefully)
+   * Get random fallback response
    */
   getRandomFallback() {
     if (!Array.isArray(this.fallbackResponses) || this.fallbackResponses.length === 0) {
-      return "Sorry, I didn't understand that.";
+      return "I’m currently running in offline mode. Please ask about farming topics.";
     }
     const randomIndex = Math.floor(Math.random() * this.fallbackResponses.length);
     return this.fallbackResponses[randomIndex];
@@ -161,50 +164,38 @@ class JSONChatbot {
    * Get response for user input
    */
   async getResponse(userInput) {
-    // Wait for responses to load if they haven't already
     if (!this.isLoaded) {
       await this.loadResponses();
     }
-    
-    const response = this.findBestMatch(userInput);
-    return response;
+    return this.findBestMatch(userInput);
   }
 
   /**
-   * Add new response to the system (runtime only, doesn't persist)
+   * Runtime response addition (non-persistent)
    */
   addResponse(query, response) {
     this.responses.push({ query: query.toLowerCase(), response });
-    console.log('✅ Added new response for:', query);
   }
 
   /**
-   * Get all available queries (for debugging/admin purposes)
-   */
-  getAllQueries() {
-    return this.responses.map(r => r.query);
-  }
-
-  /**
-   * Check if chatbot is ready
+   * Check readiness
    */
   isReady() {
     return this.isLoaded;
   }
 
   /**
-   * Reload responses from JSON file
+   * Reload responses
    */
   async reload() {
-    console.log('🔄 Reloading chatbot responses...');
     await this.loadResponses();
   }
 }
 
-// Create and export chatbot instance
+// Export globally
 window.JSONChatbot = JSONChatbot;
 
-// For Node.js compatibility
+// Node.js compatibility
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = JSONChatbot;
 }
