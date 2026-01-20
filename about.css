@@ -53,9 +53,9 @@
 
 [data-theme="dark"] {
   /* Dark mode colors - Updated to match (Untouched) */
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #2d3748;
+  --bg-primary: #091124;
+  --bg-secondary: #35496b;
+  --bg-tertiary: #5b6880;
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
@@ -67,6 +67,7 @@
   /* Adjusted green colors for dark mode */
   --light-green: #1a2e1a;
   --green-hover: #4caf50;
+  --secondary-green: #fdfdfd;
 
   /* ADDED DARK MODE VARIABLES FROM INDEX.HTML */
   --bg-color: #030712;
@@ -83,7 +84,7 @@
   --shadow-color: rgba(0, 0, 0, 0.3);
 }
 
-/* Typography (Untouched) */
+/* Typography */
 body {
   font-family: "Roboto", sans-serif;
   background-color: var(--bg-secondary);
@@ -94,9 +95,7 @@ body {
   flex-direction: column;
 }
 
-/* ============================================
-   REDESIGNED NAVIGATION BAR (Single Row Fix)
-   ============================================ */
+/* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -108,35 +107,75 @@ body {
   top: 0;
   z-index: 1000;
   padding: 0.8rem 2rem;
-  /* Adjusted for better horizontal fit */
 }
 
-.navbar .heading h1 {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.8rem;
-  /* Slightly smaller to fit row better */
-  font-weight: 700;
-  color: var(--primary-green);
+.navbar-left h1 {
   margin: 0;
-  letter-spacing: -0.5px;
-  white-space: nowrap;
+  font-size: 24px;
+  color: var(--secondary-green); 
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
 }
 
-/* FIX: Forces all elements into a single horizontal row */
+/* Nav buttons */
 .nav-buttons {
   display: flex;
-  gap: 1.5rem;
   align-items: center;
+  gap: 12px;
   flex-wrap: nowrap;
-  /* Prevents Register button from dropping to new line */
 }
 
-/* ============================================
-   REDESIGNED BUTTONS (Standardized)
-   ============================================ */
+/* Search bar */
+.search-container {
+  display: flex;
+  align-items: center;
+  background: #f1f8f1;
+  border-radius: 30px;
+  padding: 6px 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(46, 125, 50, 0.1);
+}
+
+.search-container:focus-within {
+  box-shadow: 0 6px 18px rgba(46, 125, 50, 0.3);
+  transform: translateY(-1px);
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 6px 8px;
+  width: 150px;
+  transition: width 0.3s ease;
+}
+
+.search-container:focus-within .search-input {
+  width: 200px; 
+}
+
+.search-button {
+  background: var(--primary-green);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  padding: 6px 8px;
+  margin-left: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.search-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(46, 125, 50, 0.2);
+}
+
+/* Buttons */
 .btn {
   padding: 0.6rem 1.2rem;
-  /* Standardized height/padding */
   border-radius: 8px;
   font-weight: 500;
   font-size: 0.9rem;
@@ -146,23 +185,17 @@ body {
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 0.5rem;
-  font-family: 'Poppins', sans-serif;
   white-space: nowrap;
-  /* Ensures text doesn't wrap inside button */
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
-  color: white !important;
-  box-shadow: 0 4px 15px rgba(46, 125, 50, 0.2);
+  background: var(--primary-green);
+  color: white;
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, var(--dark-green), var(--primary-green));
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(46, 125, 50, 0.3);
 }
 
 .btn-secondary {
@@ -171,14 +204,67 @@ body {
   border: 1px solid var(--border-color);
 }
 
-
+/* Theme toggle */
 .theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   background: var(--light-green);
   border: 1px solid var(--border-color);
-  color: var(--text-primary);
   padding: 0.5rem 1rem;
+  cursor: pointer;
 }
 
+.hamburger {
+  display: none; /* hidden on desktop */
+  background: none;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  color: var(--secondary-green);
+  z-index: 1001; 
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 768px) {
+
+  /* Show hamburger on mobile */
+  .hamburger {
+    display: block;
+  }
+
+  /* Hide nav buttons by default */
+  .nav-buttons {
+    display: none;
+    flex-direction: column;
+    background-color: #2e7d32;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    padding: 10px 0;
+    gap: 10px;
+    z-index: 999;
+  }
+
+  /* Show nav buttons when toggled */
+  .nav-buttons.show {
+    display: flex;
+  }
+
+  /* Expand search bar */
+  .search-container {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+}
 
 /* Main content sections (Untouched) */
 main {
@@ -304,38 +390,6 @@ p {
   box-shadow: 0 5px 15px rgba(76, 175, 80, 0.1);
 }
 
-/* Hide hamburger on tablet & desktop */
-.hamburger {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1.8rem;
-  cursor: pointer;
-}
-
-/* Mobile styles only */
-@media (max-width: 426px) {
-  .hamburger {
-    display: block;
-  }
-
-  .nav-buttons {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    width: 100%;
-    background: inherit;
-    flex-direction: column;
-    padding: 1rem;
-    gap: 0.8rem;
-    z-index: 1000;
-  }
-
-  .nav-buttons.active {
-    display: flex;
-  }
-}
 
 
 /* ============================================
