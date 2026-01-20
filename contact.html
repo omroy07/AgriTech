@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +12,271 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/logo.png">
+  
+  <style>
+    :root {
+      --primary-green: #2e7d32;
+      --accent-green: #22c55e;
+      --bg-dark: #0f172a;
+      --card-bg: #1e293b;
+      --text-light: #f8fafc;
+      --input-border: #334155;
+      --nav-height: 70px;
+    }
+
+    /* DARK THEME SUPPORT */
+    [data-theme="light"] {
+      --bg-dark: #f1f5f3;
+      --card-bg: #ffffff;
+      --text-light: #333333;
+      --input-border: #cccccc;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+      transition: background 0.3s ease;
+    }
+
+    /* --- PREMIUM ADAPTIVE GLASSMORPHISM & SMART-SHRINK NAVBAR --- */
+    .header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: var(--nav-height);
+      background: linear-gradient(135deg, var(--primary-green), #1b5e20);
+      z-index: 2000;
+      /* Extended transition for premium feel */
+      transition: transform 0.3s ease-in-out, height 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s ease, backdrop-filter 0.4s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    /* GLASSMORPHISM STATE: Applied on scroll */
+    .header.scrolled {
+      height: 60px; /* Smart-Shrink */
+      background: rgba(46, 125, 50, 0.7); /* 70% opacity */
+      backdrop-filter: blur(10px); /* Adaptive Glassmorphism blur */
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .nav-up {
+      transform: translateY(-100%);
+    }
+
+    .header-content {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    /* Shrink logo/buttons on scroll */
+    .header.scrolled .header-left, .header.scrolled .theme-toggle {
+      transform: scale(0.9);
+    }
+
+    /* --- BOUNCY INTERACTIVE EXIT BUTTON --- */
+    .nav-back-btn {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease;
+    }
+
+    .nav-back-btn:hover {
+      background: white;
+      color: var(--primary-green);
+      transform: scale(1.1) translateY(-2px);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .theme-toggle {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(15deg);
+    }
+
+    /* --- HERO ADJUSTED --- */
+    .hero {
+      padding-top: calc(var(--nav-height) + 60px);
+      text-align: center;
+      background: linear-gradient(to bottom, #143a18, var(--bg-dark));
+      padding-bottom: 80px;
+      position: relative;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: var(--accent-green);
+    }
+
+    .hero-content p {
+      max-width: 700px;
+      margin: 0 auto;
+      opacity: 0.8;
+    }
+
+    /* --- FIXED: IMPROVED DARK DROPDOWN STYLING --- */
+    select {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      background-color: var(--card-bg) !important;
+      color: var(--text-light) !important;
+      border: 1px solid var(--input-border);
+      font-size: 1rem;
+      margin-top: 10px;
+      appearance: none;
+      cursor: pointer;
+      /* Tells the browser to use dark-mode for the pop-up list UI */
+      color-scheme: dark; 
+    }
+
+    select option {
+      background-color: var(--card-bg); /* Forces dark background */
+      color: var(--text-light);
+      padding: 10px;
+    }
+
+    .contact-form-section {
+      padding: 80px 20px;
+    }
+
+    .form-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    label {
+      font-weight: 600;
+      color: var(--accent-green);
+      display: block;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 14px;
+      margin-top: 8px;
+      border-radius: 10px;
+      background: rgba(39, 52, 71, 0.5);
+      border: 1px solid var(--input-border);
+      color: var(--text-light);
+      font-size: 1rem;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--primary-green);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .submit-btn:hover {
+      transform: scale(1.02) translateY(-3px);
+      background: var(--accent-green);
+      box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3);
+    }
+
+    .contact-methods {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: -40px;
+      padding: 0 20px;
+      position: relative;
+      z-index: 10;
+      flex-wrap: wrap;
+    }
+
+    .method-card {
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      width: 300px;
+      border: 1px solid var(--input-border);
+      transition: transform 0.3s ease;
+    }
+
+    .method-card:hover { transform: translateY(-10px); }
+
+    .method-icon {
+      font-size: 2rem;
+      color: var(--accent-green);
+      margin-bottom: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .form-container { padding: 25px; }
+      .hero-content h1 { font-size: 2rem; }
+    }
+  </style>
 </head>
+
 <body>
   <div class="container">
     <!-- HEADER -->
@@ -25,17 +290,22 @@
           <i class="fas fa-sun"></i>
         </button>
       </div>
-    </header>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-sun"></i>
+      </button>
+    </div>
+  </header>
 
     <!-- HERO -->
     <section class="hero">
       <a href="index.html" class="back-home-btn hero-back">
-  <i class="fas fa-arrow-left"></i> Back to Home
-</a>
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </a>
 
       <div class="hero-content">
         <h1>Get in Touch</h1>
-        <p>Have questions about our AI-powered agricultural solutions? We're here to help farmers, agricultural professionals, and communities grow smarter and more sustainably.</p>
+        <p>Have questions about our AI-powered agricultural solutions? We're here to help farmers, agricultural
+          professionals, and communities grow smarter and more sustainably.</p>
       </div>
       <div class="hero-decoration">
         <i class="fas fa-tractor"></i>
@@ -49,8 +319,7 @@
           <i class="fas fa-envelope"></i>
         </div>
         <h3>Email Support</h3>
-        <p>Get detailed assistance with technical questions</p>
-        <a href="mailto:support@agritech.com">support@agritech.com</a>
+        <a href="mailto:support@agritech.com" style="color: var(--accent-green); text-decoration: none;">support@agritech.com</a>
       </div>
 
       <div class="method-card">
@@ -58,17 +327,17 @@
           <i class="fas fa-phone"></i>
         </div>
         <h3>Phone Support</h3>
-        <p>Speak directly with our agricultural experts</p>
-        <a href="tel:+1234567890">+1 (234) 567-890</a>
+        <a href="tel:+1234567890" style="color: var(--accent-green); text-decoration: none;">+1 (234) 567-890</a>
       </div>
-
       <div class="method-card">
-        <div class="method-icon">
-          <i class="fas fa-comments"></i>
-        </div>
-        <h3>Community Chat</h3>
-        <p>Join our farmer community for peer support</p>
-        <a href="#community">Join Community</a>
+        <div class="method-icon"><i class="fas fa-comments"></i></div>
+        <h3>Community</h3>
+        <a href="#community" style="color: var(--accent-green); text-decoration: none;">Join Now</a>
+      </div>
+      <div class="method-card">
+        <div class="method-icon"><i class="fas fa-comments"></i></div>
+        <h3>Community</h3>
+        <a href="#community" style="color: var(--accent-green);">Join Now</a>
       </div>
     </section>
 
@@ -77,7 +346,8 @@
       <div class="form-container">
         <div class="form-header">
           <h2>Send us a Message</h2>
-          <p>Whether you're a farmer seeking guidance, a researcher interested in collaboration, or someone with questions about our AI-powered tools, we'd love to hear from you.</p>
+          <p>Whether you're a farmer seeking guidance, a researcher interested in collaboration, or someone with
+            questions about our AI-powered tools, we'd love to hear from you.</p>
         </div>
 
         <form class="contact-form" id="contactForm">
@@ -132,13 +402,8 @@
 
           <div class="form-group">
             <label for="message">Message *</label>
-            <textarea 
-              id="message" 
-              name="message" 
-              rows="6" 
-              maxlength="200"
-              placeholder="Please describe your question, issue, or how we can help you..." 
-              required>
+            <textarea id="message" name="message" rows="6" maxlength="200"
+              placeholder="Please describe your question, issue, or how we can help you..." required>
             </textarea>
             <div class="char-counter" id="messageCounter">0 / 200</div>
 
@@ -202,85 +467,77 @@
       <div class="faq-grid">
         <div class="faq-item">
           <h3>How accurate are the crop recommendations?</h3>
-          <p>Our AI models are trained on extensive agricultural data and provide recommendations with high accuracy based on your soil conditions and local weather patterns.</p>
+          <p>Our AI models are trained on extensive agricultural data and provide recommendations with high accuracy
+            based on your soil conditions and local weather patterns.</p>
         </div>
 
         <div class="faq-item">
           <h3>Is AgriTech suitable for small-scale farmers?</h3>
-          <p>Absolutely! AgriTech is designed to be accessible and valuable for farmers of all scales, from small family farms to large agricultural operations.</p>
+          <p>Absolutely! AgriTech is designed to be accessible and valuable for farmers of all scales, from small family
+            farms to large agricultural operations.</p>
         </div>
 
         <div class="faq-item">
           <h3>How do I join the farmer community?</h3>
-          <p>Simply create an account on our platform and you'll have access to our community chat features where you can connect with fellow farmers and share experiences.</p>
+          <p>Simply create an account on our platform and you'll have access to our community chat features where you
+            can connect with fellow farmers and share experiences.</p>
         </div>
 
         <div class="faq-item">
           <h3>Do you offer training on using the platform?</h3>
-          <p>Yes! We provide comprehensive guides, video tutorials, and offer support sessions to help you get the most out of all AgriTech features.</p>
+          <p>Yes! We provide comprehensive guides, video tutorials, and offer support sessions to help you get the most
+            out of all AgriTech features.</p>
         </div>
       </div>
     </section>
   </div>
 
   <script>
-    // Theme toggle functionality with localStorage persistence
+    // --- PREMIUM NAVIGATION LOGIC ---
+    let lastScrollTop = 0;
+    const navbar = document.getElementById('navbar');
+
+    window.addEventListener('scroll', function() {
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      
+      // 1. ADAPTIVE GLASSMORPHISM & SMART SHRINK
+      if (scrollTop > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+
+      // 2. HIDE ON SCROLL DOWN / SHOW ON SCROLL UP
+      if (scrollTop > lastScrollTop && scrollTop > 200) {
+        navbar.classList.add('nav-up');
+      } else {
+        navbar.classList.remove('nav-up');
+      }
+
+    // --- THEME TOGGLE LOGIC (FIXED) ---
     const themeToggle = document.getElementById('themeToggle');
-    const body = document.body;
+    const root = document.documentElement;
 
     themeToggle.addEventListener('click', () => {
       const currentTheme = localStorage.getItem('agritech-theme') || 'dark';
       const newTheme = currentTheme === 'light' ? 'dark' : 'light';
       
-      if (newTheme === 'dark') {
-        body.classList.add('dark-mode');
-        themeToggle.querySelector('i').className = 'fas fa-sun';
-      } else {
-        body.classList.remove('dark-mode');
-        themeToggle.querySelector('i').className = 'fas fa-moon';
-      }
-      
+      root.setAttribute('data-theme', newTheme);
       localStorage.setItem('agritech-theme', newTheme);
-      document.documentElement.setAttribute('data-theme', newTheme);
+      
+      // Update icon
+      themeToggle.querySelector('i').className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
     });
 
-    // Load saved theme
+    // Load saved theme on load
     const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
-    if (savedTheme === 'dark') {
-      body.classList.add('dark-mode');
-      document.documentElement.setAttribute('data-theme', 'dark');
-      themeToggle.querySelector('i').className = 'fas fa-sun';
-    } else {
-      body.classList.remove('dark-mode');
-      document.documentElement.setAttribute('data-theme', 'light');
-      themeToggle.querySelector('i').className = 'fas fa-moon';
-    }
+    root.setAttribute('data-theme', savedTheme);
+    themeToggle.querySelector('i').className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
 
-    // Character counter for message textarea
-    const messageInput = document.getElementById("message");
-    const messageCounter = document.getElementById("messageCounter");
-    const maxLength = 200;
-
-    if (messageInput && messageCounter) {
-      messageInput.addEventListener("input", () => {
-        const length = messageInput.value.length;
-        messageCounter.textContent = `${length} / ${maxLength}`;
-
-        messageCounter.classList.remove("warning", "danger");
-
-        if (length > 150) {
-          messageCounter.classList.add("warning");
-        }
-        if (length > 180) {
-          messageCounter.classList.add("danger");
-        }
-      });
-    }
-
-    // Form submission
+    // Form logic
     document.getElementById('contactForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      alert('Thank you for your message! We\'ll get back to you soon.');
+      alert('Message sent successfully! 🌱');
       this.reset();
 
       // Reset character counter
@@ -305,5 +562,7 @@
     });
   </script>
   <script src="theme.js"></script>
+  <script src="auth.js"></script>
 </body>
+
 </html>

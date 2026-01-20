@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Favorite Blogs - AgriTech</title>
 
-    <link rel="stylesheet" href="blog.css">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="blog.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
     <style>
         body {
@@ -70,28 +69,14 @@
             border-radius: 999px;
             cursor: pointer;
             font-weight: 600;
-            transition: 0.3s;
             display: flex;
             align-items: center;
             gap: 0.6rem;
-            font-size: 1rem;
         }
 
-        .btn-danger {
-            background: #e74c3c;
-            color: #fff;
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-            color: #fff;
-        }
-
-        .btn-primary {
-            background: #4CAF50;
-            color: #fff;
-            text-decoration: none;
-        }
+        .btn-danger { background: #e74c3c; color: #fff; }
+        .btn-secondary { background: #6c757d; color: #fff; }
+        .btn-primary { background: #4CAF50; color: #fff; text-decoration: none; }
 
         .action-btn:hover {
             transform: translateY(-2px);
@@ -102,7 +87,7 @@
             background: white;
             border-radius: 18px;
             padding: 3rem 2rem;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
         }
 
         .no-favorites {
@@ -187,7 +172,9 @@
             </a>
         </div>
 
-        <div id="favoritesContainer"></div>
+        <div id="favoritesContainer"
+             role="region"
+             aria-label="Favorite blogs list"></div>
     </div>
 </section>
 
@@ -229,35 +216,25 @@ class FavoritesPage {
                         <button class="favorite-btn active"
                                 tabindex="0"
                                 aria-label="Remove ${blog.title} from favorites"
+                                aria-pressed="true"
                                 data-id="${blog.id}">
                             <i class="fas fa-heart" aria-hidden="true"></i>
                         </button>
 
                         <div class="card-content">
-                            <span class="card-category">
-                                ${(blog.category || 'Uncategorized').replace('-', ' ')}
-                            </span>
-
                             <h3 class="card-title">${blog.title}</h3>
                             <p class="card-description">${blog.description}</p>
 
                             <div class="favorite-item-actions">
-                                <button class="read-more-btn"
-                                        onclick="viewBlogPost('${blog.id}')"
-                                        aria-label="Read full blog ${blog.title}">
-                                    Read Article
-                                </button>
-
                                 <button class="remove-btn"
                                         onclick="removeFavorite('${blog.id}')"
                                         aria-label="Remove ${blog.title} from favorites">
-                                    <i class="fas fa-trash" aria-hidden="true"></i>
                                     Remove
                                 </button>
                             </div>
                         </div>
                     </div>
-                `).join('')}
+                `).join("")}
             </div>
         `;
 
@@ -284,12 +261,8 @@ class FavoritesPage {
 function removeFavorite(id) {
     let favorites =
         JSON.parse(localStorage.getItem('agritech_favorite_blogs')) || [];
-
     favorites = favorites.filter(b => b.id !== id);
-    localStorage.setItem(
-        'agritech_favorite_blogs',
-        JSON.stringify(favorites)
-    );
+    localStorage.setItem('agritech_favorite_blogs', JSON.stringify(favorites));
     new FavoritesPage();
 }
 
@@ -320,10 +293,6 @@ function exportFavorites() {
     a.download = 'agritech-favorites.json';
     a.click();
     URL.revokeObjectURL(url);
-}
-
-function viewBlogPost(id) {
-    window.location.href = `blog.html#${id}`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
