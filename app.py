@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from extensions import limiter
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
-from backend.monitoring.routes import health_bp
+from backend.api import register_api
 
 
 
@@ -28,8 +28,9 @@ app.register_blueprint(crop_bp)
 app.register_blueprint(disease_bp)
 app.register_blueprint(health_bp)
 
-# Initialize Cache
-cache.init_app(app)
+# Register versioned API
+register_api(app)
+
 
 
 
