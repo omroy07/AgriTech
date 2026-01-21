@@ -563,81 +563,95 @@
         </div>
     </footer>
 
-    <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const themeText = document.getElementById('themeText');
-        const html = document.documentElement;
+<script>
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+    const html = document.documentElement;
 
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        setTheme(savedTheme);
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
 
-        themeToggle.addEventListener('click', () => {
-            setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-        });
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    });
 
-        function setTheme(theme) {
-            html.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-            if (theme === 'dark') {
-                themeIcon.className = 'fas fa-sun';
-                themeText.textContent = 'Light';
-            } else {
-                themeIcon.className = 'fas fa-moon';
-                themeText.textContent = 'Dark';
+    function setTheme(theme) {
+        html.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+
+        if (theme === 'dark') {
+            themeIcon.className = 'fas fa-sun';
+            themeText.textContent = 'Light';
+        } else {
+            themeIcon.className = 'fas fa-moon';
+            themeText.textContent = 'Dark';
+        }
+    }
+
+    // ---------------- FORM VALIDATION ----------------
+    const cropForm = document.getElementById('cropForm');
+
+    const inputs = [
+        { id: 'nitrogen', min: 0, max: 140 },
+        { id: 'phosphorus', min: 5, max: 145 },
+        { id: 'potassium', min: 5, max: 205 },
+        { id: 'temperature', min: 8, max: 45 },
+        { id: 'humidity', min: 14, max: 100 },
+        { id: 'ph', min: 3.5, max: 10 },
+        { id: 'rainfall', min: 20, max: 300 }
+    ].map(conf => ({
+        el: document.getElementById(conf.id),
+        err: document.getElementById(conf.id + '-error'),
+        min: conf.min,
+        max: conf.max
+    }));
+
+    function showError(input, messageEl) {
+        input.classList.add('input-error');
+        messageEl.style.display = 'block';
+    }
+
+    function clearError(input, messageEl) {
+        input.classList.remove('input-error');
+        messageEl.style.display = 'none';
+    }
+
+    inputs.forEach(item => {
+        item.el.addEventListener('input', () => {
+            if (
+                item.el.value === '' ||
+                (item.el.value >= item.min && item.el.value <= item.max)
+            ) {
+                clearError(item.el, item.err);
             }
-        }
+        });
+    });
 
-        // Form validation
-        const cropForm = document.getElementById('cropForm');
-        const inputs = [
-            { id: 'nitrogen', min: 0, max: 140 },
-            { id: 'phosphorus', min: 5, max: 145 },
-            { id: 'potassium', min: 5, max: 205 },
-            { id: 'temperature', min: 8, max: 45 },
-            { id: 'humidity', min: 14, max: 100 },
-            { id: 'ph', min: 3.5, max: 10 },
-            { id: 'rainfall', min: 20, max: 300 }
-        ].map(conf => ({ 
-            el: document.getElementById(conf.id), 
-            err: document.getElementById(conf.id + '-error'), 
-            min: conf.min, max: conf.max 
-        }));
-
-        function showError(input, messageEl) {
-            input.classList.add('input-error');
-            messageEl.style.display = 'block';
-        }
-        function clearError(input, messageEl) {
-            input.classList.remove('input-error');
-            messageEl.style.display = 'none';
-        }
+    cropForm.addEventListener('submit', (e) => {
+        let isValid = true;
 
         inputs.forEach(item => {
-            item.el.addEventListener('input', () => {
-                if (item.el.value === '' || (item.el.value >= item.min && item.el.value <= item.max)) {
-                    clearError(item.el, item.err);
-                }
-            });
+            if (
+                !item.el.value ||
+                item.el.value < item.min ||
+                item.el.value > item.max
+            ) {
+                showError(item.el, item.err);
+                isValid = false;
+            } else {
+                clearError(item.el, item.err);
+            }
         });
 
-        cropForm.addEventListener('submit', (e) => {
-            let isValid = true;
-            inputs.forEach(item => {
-                if (!item.el.value || item.el.value < item.min || item.el.value > item.max) {
-                    showError(item.el, item.err);
-                    isValid = false;
-                } else {
-                    clearError(item.el, item.err);
-                }
-            });
-            if (!isValid) e.preventDefault();
-        });
+        if (!isValid) {
+            e.preventDefault();
+        }
 
-        // Redirect to result.html and attach the query parameters
-        window.location.href = `result.html?${queryParams.toString()}`;
-    }
-});
-    </script>
+    });
+</script>
+
 </body>
 </html>
