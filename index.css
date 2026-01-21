@@ -1,4 +1,11 @@
 /* 1. DEFINE VARIABLES FOR THEMES */
+/* === GLOBAL RESET  === */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
 :root {
   /* DARK MODE DEFAULTS */
   --bg-color: #030712;
@@ -14,6 +21,15 @@
   --btn-text: #ffffff;
   --btn-hover: #475569;
   --shadow-color: rgba(0, 0, 0, 0.3);
+}
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
 }
 
 [data-theme="light"] {
@@ -82,22 +98,55 @@ body {
 /* 3. NAVBAR STYLES */
 .navbar {
   position: relative;
+  width: 100%;
   z-index: 100;
   background: var(--surface-color);
   backdrop-filter: blur(10px);
   padding: 1rem;
   border-bottom: 1px solid var(--border-color);
-  transition: background 0.3s ease, border-color 0.3s ease;
+  box-sizing: border-box;
 }
+/*.navbar {
+  position: relative;
+  z-index: 100;
+  background: var(--surface-color);
+  backdrop-filter: blur(10px);
+  padding: 1rem 0; 
+  border-bottom: 1px solid var(--border-color);
+  transition: background 0.3s ease, border-color 0.3s ease;
 
+  
+  display: flex;
+  justify-content: center;
+  min-height: 72px; 
+}*/
+/* 🔥 Force identical navbar layout on ALL pages */
+.navbar-content,
+.navbar-left,
+.navbar > .nav-buttons {
+  display: flex;
+  align-items: center;
+}
+.navbar-content,
+.navbar-left,
+.navbar > .nav-buttons {
+  max-width: 1400px;
+  width: 100%;
+}
 .navbar-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 1400px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0;
+  padding-right: 0;
   gap: 2rem;
+  box-sizing: border-box;
 }
+
+
 
 .brand {
   display: flex;
@@ -227,6 +276,14 @@ body {
 
 /* Search Container with icon inside */
 .search-container {
+  flex-shrink: 0;
+}
+
+.search-input {
+  width: 160px;
+}
+
+./*search-container {
   position: relative;
   display: flex;
   gap: 0;
@@ -242,7 +299,7 @@ body {
   transition: all 0.3s ease;
   border-right: none;
   font-size: 0.9rem;
-}
+}*/
 
 .search-button {
   padding: 0.5rem 0.75rem;
@@ -636,7 +693,7 @@ body {
 }
 
 .features-container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -654,13 +711,24 @@ body {
 }
 
 .feature-card {
-  background: var(--surface-color);
-  padding: 2rem;
-  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
   border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
+  border-radius: 18px;
+
+  padding: 1.6rem 1.4rem;
+  min-height: 160px;
+  max-height: 160px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   text-align: center;
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
 }
+
 
 .feature-card:hover {
   transform: translateY(-5px);
@@ -669,24 +737,27 @@ body {
 }
 
 .feature-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  color: var(--text-color);
+  font-size: 1.8rem;
+  margin-bottom: 0.6rem;
 }
+
 
 .feature-title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: var(--accent-color);
+  margin: 0.4rem 0 0.3rem;
+  font-size: 1.1rem;
 }
+
 
 .feature-description {
-  color: var(--text-muted);
-  line-height: 1.6;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+  opacity: 0.9;
 }
 
+
 /* 6. FOOTER */
-:root {
+/*:root {
     --dark-bg: #1f2838; 
     --primary-green: #34d399; 
     --link-color: #a3b3c7; 
@@ -850,7 +921,7 @@ body {
 }
 
 /* 7. Footer Bottom (Copyright) */
-.footer-bottom {
+./*footer-bottom {
     padding: 20px 30px;
     text-align: center;
     font-size: 13px;
@@ -860,7 +931,7 @@ body {
 }
 
 /* 8. Responsive Design */
-@media (max-width: 850px) {
+/*@media (max-width: 850px) {
     .footer-inner-content {
         flex-direction: column;
         align-items: center;
@@ -1103,4 +1174,71 @@ body {
     padding: 0.3rem 0.5rem;
     font-size: 0.7rem;
   }
+}
+/* === FORCE PIXEL-PERFECT NAVBAR ALIGNMENT ACROSS PAGES === */
+
+.navbar-content {
+  display: grid !important;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+}
+
+/* Left nav fixed spacing */
+.left-nav {
+  display: flex;
+  justify-content: center;
+  gap: 24px; /* HARD VALUE */
+}
+
+/* Right side fixed spacing */
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 14px; /* HARD VALUE */
+}
+
+/* Nav links exact padding */
+.nav-link {
+  padding: 6px 10px !important;
+}
+/* Center subtitle text under section headings */
+.section-subtitle {
+  text-align: center;
+  max-width: 800px;
+  margin: 20px auto 50px auto;
+  font-size: 1.05rem;
+  color: #d1d5db;
+  line-height: 1.7;
+}
+/* ============================= */
+/* UNIFIED FEATURE CARD TITLES   */
+/* Match Index Page Typography   */
+/* ============================= */
+
+.feature-card .feature-title {
+  font-family: 'Libertinus Serif', serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--accent-color);
+  margin-bottom: 0.6rem;
+  line-height: 1.25;
+  text-align: center;
+}
+/* === HARD LOCK FOOTER LAYOUT (MATCH INDEX PERFECTLY) === */
+
+.footer-container {
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+}
+
+.footer-content {
+  display: grid !important;
+  grid-template-columns: 1.4fr 1fr 1fr !important;
+  gap: 4rem !important;
+  align-items: flex-start !important;
+}
+
+.footer-brand {
+  max-width: 420px !important;
 }
