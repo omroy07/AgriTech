@@ -27,6 +27,7 @@ CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
 app.register_blueprint(crop_bp)
 app.register_blueprint(disease_bp)
+app.register_blueprint(health_bp)
 
 # Initialize SocketIO with app
 socketio.init_app(app)

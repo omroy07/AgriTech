@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
+        rel="stylesheet">
     <link rel="icon" type="image/png" href="images/logo.png">
     <link rel="stylesheet" href="style.css">
     <style>
@@ -21,7 +24,7 @@
             --text-body: #333;
             --text-muted: #555;
             --text-cta-sub: #666;
-            --shadow: rgba(0,0,0,0.1);
+            --shadow: rgba(0, 0, 0, 0.1);
             --accent-blue: #74b9ff;
         }
 
@@ -34,7 +37,7 @@
             --text-body: #e2e8f0;
             --text-muted: #cbd5e1;
             --text-cta-sub: #94a3b8;
-            --shadow: rgba(0,0,0,0.4);
+            --shadow: rgba(0, 0, 0, 0.4);
             --accent-blue: #818cf8;
         }
         /* ================= THEME VARIABLES ================= */
@@ -47,22 +50,33 @@
             --heading: #2c3e50;
         }
 
-        /* Enhanced dark mode – only affects when data-theme="dark" */
-        [data-theme="dark"] {
-            --bg-gradient: linear-gradient(135deg, #020617 0%, #0b1120 40%, #022c22 100%);
-            --card-bg: rgba(15, 23, 42, 0.92);
-            --header-bg: rgba(15, 23, 42, 0.98);
-            --text-main: #e5e7eb;
-            --heading: #f9fafb;
-        }
+            /* ================= THEME VARIABLES ================= */
+            :root {
+                /* existing light mode colors (unchanged) */
+                --bg-gradient: linear-gradient(135deg, #4877b8 0%, #0e745e 100%);
+                --card-bg: rgba(210, 204, 212, 0.95);
+                --header-bg: rgba(190, 208, 212, 0.95);
+                --text-main: #333;
+                --heading: #2c3e50;
+            }
 
-        body {
-            font-family: 'Open Sans', sans-serif;
-            line-height: 1.6;
-            min-height: 100vh;
-            background: var(--bg-gradient);
-            color: var(--text-main);
-            transition: background 0.4s ease, color 0.3s ease;
+            /* Enhanced dark mode – only affects when data-theme="dark" */
+            [data-theme="dark"] {
+                --bg-gradient: linear-gradient(135deg, #020617 0%, #0b1120 40%, #022c22 100%);
+                --card-bg: rgba(15, 23, 42, 0.92);
+                --header-bg: rgba(15, 23, 42, 0.98);
+                --text-main: #e5e7eb;
+                --heading: #f9fafb;
+            }
+
+            body {
+                font-family: 'Open Sans', sans-serif;
+                line-height: 1.6;
+                min-height: 100vh;
+                background: var(--bg-gradient);
+                color: var(--text-main);
+                transition: background 0.4s ease, color 0.3s ease;
+            }
         }
 
         .header,
@@ -190,6 +204,7 @@
             color: #1e293b;
             box-shadow: 0 14px 35px rgba(250, 204, 21, 0.55);
         }
+
         * {
             margin: 0;
             padding: 0;
@@ -216,8 +231,9 @@
             z-index: 1000;
         }
 
-        .nav-back, .theme-toggle {
-           background: var(--bg-nav);
+        .nav-back,
+        .theme-toggle {
+            background: var(--bg-nav);
             color: var(--text-body);
             padding: 10px 22px;
             border-radius: 50px;
@@ -229,23 +245,37 @@
             font-weight: 600;
         }
 
-        .nav-back:hover, .theme-toggle:hover {
+        .nav-back:hover,
+        .theme-toggle:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
         /* Toggle Icon Visibility */
-        .sun-icon { display: none; }
-        [data-theme="dark"] .sun-icon { display: block; }
-        [data-theme="dark"] .moon-icon { display: none; }
+        .sun-icon {
+            display: none;
+        }
+
+        [data-theme="dark"] .sun-icon {
+            display: block;
+        }
+
+        [data-theme="dark"] .moon-icon {
+            display: none;
+        }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 80px 20px 20px 20px; /* Offset for fixed nav */
+            padding: 80px 20px 20px 20px;
+            /* Offset for fixed nav */
         }
 
-        .header, .supply-chain-flow, .service-card, .tracking-dashboard, .cta-section {
+        .header,
+        .supply-chain-flow,
+        .service-card,
+        .tracking-dashboard,
+        .cta-section {
             background: var(--bg-card);
             backdrop-filter: blur(10px);
             border-radius: 15px;
@@ -257,9 +287,9 @@
 
         /* Bouncy Animation Implementation for Service Cards */
         .service-card {
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                        box-shadow 0.3s ease, 
-                        border-color 0.3s ease;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
             border: 1px solid transparent;
         }
 
@@ -270,7 +300,9 @@
             cursor: pointer;
         }
 
-        .header { text-align: center; }
+        .header {
+            text-align: center;
+        }
 
         .header h1 {
             font-family: 'Libertinus Serif', serif;
@@ -279,7 +311,9 @@
             margin-bottom: 10px;
         }
 
-        .supply-chain-flow { margin: 30px 0; }
+        .supply-chain-flow {
+            margin: 30px 0;
+        }
 
         .flow-title {
             text-align: center;
@@ -297,6 +331,7 @@
             gap: 20px;
         }
 
+        /* --- UPDATED: Process Flow Step Pop-Out --- */
         .flow-step {
             background: linear-gradient(135deg, #74b9ff, #0984e3);
             color: white;
@@ -306,12 +341,12 @@
             flex: 1;
             min-width: 180px;
             position: relative;
-            transition: all 0.3s ease;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
         }
 
         .flow-step:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
         .flow-step::after {
@@ -324,11 +359,25 @@
             color: var(--accent-blue);
         }
 
-        .flow-step:last-child::after { display: none; }
+        .flow-step:last-child::after {
+            display: none;
+        }
 
-        .step-icon { font-size: 2.5rem; margin-bottom: 10px; display: block; }
-        .step-title { font-weight: 600; margin-bottom: 5px; }
-        .step-desc { font-size: 0.9rem; opacity: 0.9; }
+        .step-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .step-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
 
         .services-grid {
             display: grid;
@@ -337,7 +386,11 @@
             margin: 30px 0;
         }
 
-        .service-icon { font-size: 3rem; color: var(--accent-blue); margin-bottom: 20px; }
+        .service-icon {
+            font-size: 3rem;
+            color: var(--accent-blue);
+            margin-bottom: 20px;
+        }
 
         .service-card h3 {
             font-family: 'Libertinus Serif', serif;
@@ -346,7 +399,11 @@
             margin-bottom: 15px;
         }
 
-        .service-features { list-style: none; padding: 0; }
+        .service-features {
+            list-style: none;
+            padding: 0;
+        }
+
         .service-features li {
             padding: 8px 0;
             color: var(--text-muted);
@@ -361,7 +418,11 @@
             margin-right: 10px;
         }
 
-        .dashboard-header { text-align: center; margin-bottom: 30px; }
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
         .dashboard-header h2 {
             font-family: 'Libertinus Serif', serif;
             font-size: 2rem;
@@ -376,30 +437,71 @@
             margin: 20px 0;
         }
 
+        /* --- UPDATED: Live Shipment Card Pop-Out --- */
         .shipment-card {
             background: var(--bg-shipment);
             border-radius: 10px;
             padding: 20px;
             border-left: 4px solid var(--accent-blue);
-            transition: all 0.3s ease;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
             color: var(--text-body);
         }
 
         .shipment-card:hover {
-            transform: translateX(5px);
-            box-shadow: 0 4px 15px var(--shadow);
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 12px 30px var(--shadow);
+            cursor: pointer;
         }
 
-        .shipment-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .shipment-id { font-weight: 600; color: var(--text-header); }
+        .shipment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
 
-        .status-badge { padding: 4px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: 500; }
-        .status-in-transit { background: #74b9ff; color: white; }
-        .status-delivered { background: #00b894; color: white; }
-        .status-pending { background: #fdcb6e; color: #2d3436; }
+        .shipment-id {
+            font-weight: 600;
+            color: var(--text-header);
+        }
 
-        .progress-bar { width: 100%; height: 6px; background: #e9ecef; border-radius: 3px; margin: 15px 0; overflow: hidden; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, #74b9ff, #0984e3); border-radius: 3px; transition: width 0.3s ease; }
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-in-transit {
+            background: #74b9ff;
+            color: white;
+        }
+
+        .status-delivered {
+            background: #00b894;
+            color: white;
+        }
+
+        .status-pending {
+            background: #fdcb6e;
+            color: #2d3436;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #74b9ff, #0984e3);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
 
         .metrics-row {
             display: grid;
@@ -408,20 +510,47 @@
             margin: 30px 0;
         }
 
+        /* --- UPDATED: Metric Card Pop-Out --- */
         .metric-box {
             background: linear-gradient(135deg, #74b9ff, #0984e3);
             color: white;
             padding: 20px;
             border-radius: 10px;
             text-align: center;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
         }
 
-        .metric-value { font-size: 2rem; font-weight: 700; margin-bottom: 5px; }
-        .metric-label { font-size: 0.9rem; opacity: 0.9; }
+        .metric-box:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
 
-        .cta-section { text-align: center; margin: 40px 0; }
-        .cta-section h2 { color: var(--text-header); margin-bottom: 20px; }
-        .cta-section p { margin-bottom: 30px; color: var(--text-cta-sub); }
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .cta-section h2 {
+            color: var(--text-header);
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            margin-bottom: 30px;
+            color: var(--text-cta-sub);
+        }
 
         .cta-button {
             background: linear-gradient(135deg, #74b9ff, #0984e3);
@@ -437,17 +566,32 @@
             margin: 10px;
         }
 
-        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
 
         @media (max-width: 768px) {
-            .flow-steps { flex-direction: column; }
-            .flow-step::after { content: '↓'; right: 50%; top: 100%; transform: translateX(50%); }
-            .services-grid { grid-template-columns: 1fr; }
+            .flow-steps {
+                flex-direction: column;
+            }
+
+            .flow-step::after {
+                content: '↓';
+                right: 50%;
+                top: 100%;
+                transform: translateX(50%);
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
         }
         
     </style>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="top-nav">
         <a href="index.html" class="nav-back">
@@ -648,16 +792,16 @@
             const rate = document.getElementById('onTimeRate');
             const avg = document.getElementById('avgDeliveryTime');
 
-            if(active) active.textContent = Math.floor(Math.random() * 50 + 150);
-            if(delivered) delivered.textContent = Math.floor(Math.random() * 20 + 20);
-            if(rate) rate.textContent = Math.floor(Math.random() * 10 + 90) + '%';
-            if(avg) avg.textContent = (Math.random() * 1 + 2).toFixed(1);
+            if (active) active.textContent = Math.floor(Math.random() * 50 + 150);
+            if (delivered) delivered.textContent = Math.floor(Math.random() * 20 + 20);
+            if (rate) rate.textContent = Math.floor(Math.random() * 10 + 90) + '%';
+            if (avg) avg.textContent = (Math.random() * 1 + 2).toFixed(1);
         }
 
         setInterval(updateMetrics, 10000);
 
         // 3. Original Entrance Animations & Progress Bar Load
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Initial Metric Load
             updateMetrics();
 
@@ -676,7 +820,7 @@
             cards.forEach((card, index) => {
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(30px)';
-                
+
                 setTimeout(() => {
                     card.style.transition = 'all 0.6s ease';
                     card.style.opacity = '1';
@@ -688,10 +832,10 @@
         // 4. Original Shipment Update Simulation
         function simulateShipmentUpdate() {
             const shipments = document.querySelectorAll('.shipment-card');
-            if(shipments.length > 0) {
+            if (shipments.length > 0) {
                 const randomShipment = shipments[Math.floor(Math.random() * shipments.length)];
                 const progressBar = randomShipment.querySelector('.progress-fill');
-                if(progressBar) {
+                if (progressBar) {
                     const currentWidth = parseInt(progressBar.style.width) || 0;
                     if (currentWidth < 100) {
                         progressBar.style.width = Math.min(100, currentWidth + Math.floor(Math.random() * 10 + 5)) + '%';
@@ -703,4 +847,5 @@
         setInterval(simulateShipmentUpdate, 15000);
     </script>
 </body>
+
 </html>
