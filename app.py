@@ -8,8 +8,7 @@ from dotenv import load_dotenv
 from extensions import limiter
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
-from backend.tasks import process_loan_task, predict_crop_task
-from backend.celery_app import celery_app
+from backend.monitoring.routes import health_bp
 
 
 
@@ -27,6 +26,7 @@ CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
 app.register_blueprint(crop_bp)
 app.register_blueprint(disease_bp)
+app.register_blueprint(health_bp)
 
 # Initialize Cache
 cache.init_app(app)
