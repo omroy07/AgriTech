@@ -8,7 +8,8 @@ from dotenv import load_dotenv
 from extensions import limiter
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
-from backend.api import register_api
+from backend.extensions.socketio import socketio
+import backend.sockets.task_events  # Register socket event handlers
 
 
 
@@ -28,8 +29,8 @@ app.register_blueprint(crop_bp)
 app.register_blueprint(disease_bp)
 app.register_blueprint(health_bp)
 
-# Register versioned API
-register_api(app)
+# Initialize SocketIO with app
+socketio.init_app(app)
 
 
 
@@ -276,7 +277,8 @@ def serve_static(filename):
 
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    # Use socketio.run instead of app.run for WebSocket support
+    socketio.run(app, port=5000, debug=True)
 
 #Global Error Handling 
 @app.errorhandler(404)
