@@ -5,10 +5,19 @@ import os
 import re
 from flask_cors import CORS
 from dotenv import load_dotenv
-from extensions import limiter
+from extensions import limiter, db, migrate
+from backend.database_config import config
+from backend.auth import auth_bp
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
+from backend.monitoring.routes import health_bp
 from backend.extensions.socketio import socketio
+from backend.schemas.loan_schema import LoanRequestSchema
+from backend.utils.logger import logger
+from backend.celery_app import celery_app
+from backend.tasks import predict_crop_task, process_loan_task
+from backend.api.v1.loan import validate_input, sanitize_input
+from marshmallow import ValidationError
 import backend.sockets.task_events  # Register socket event handlers
 
 
@@ -23,8 +32,18 @@ app = Flask(__name__, static_folder='.', static_url_path='')
 env_name = os.getenv('FLASK_ENV', 'default')
 app.config.from_object(config[env_name])
 
+# Initialize extensions
+db.init_app(app)
+migrate.init_app(app, db)
+limiter.init_app(app)
+
+# Import models after db initialization
+from backend.models import User
+
 CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
+# Register blueprints
+app.register_blueprint(auth_bp)
 app.register_blueprint(crop_bp)
 app.register_blueprint(disease_bp)
 app.register_blueprint(health_bp)
