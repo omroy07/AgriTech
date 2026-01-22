@@ -249,7 +249,6 @@ Read **[CONTRIBUTING.md](CONTRIBUTING.md)** for SWoC 2026 guidelines.
 | Name                    | Role                    |
 | ----------------------- | ----------------------- |
 | Om Roy                  | Project Lead · Web · ML |
-| Kanisha Ravindra Sharma | ML · Backend            |
 | Shubhangi Roy           | ML · Backend            |
 
 ---
