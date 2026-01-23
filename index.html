@@ -1376,87 +1376,112 @@
 
   <canvas id="bg-canvas"></canvas>
 
- <nav class="navbar">
+ <nav class="navbar" data-theme="light">
   <div class="navbar-content">
+
+    <!-- Brand -->
     <div class="brand">
       <img src="images/logo.png" alt="AgriTech logo">
       <a href="#">AgriTech</a>
     </div>
 
-      <!-- Left Navigation Links -->
-      <div class="left-nav">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="about.html" class="nav-link">About</a>
-        <a href="blog.html" class="nav-link">Blog</a>
-        <a href="scheme.html" class="nav-link">Schemes</a>
-        <a href="community_forum.html" class="nav-link">Community Forum</a>
-        <div class="services-toggle-container">
-          <a href="#" class="nav-link services-toggle">
-            Services <i class="fas fa-chevron-down services-arrow"></i>
-          </a>
-          <div class="services-dropdown">
-            <ul class="services-list">
-              <li><a href="crop.html"><i class="fas fa-seedling"></i> Smart Crop Monitoring</a></li>
-              <li><a href="supply-chain.html"><i class="fas fa-truck"></i> Supply Chain Support</a></li>
-              <li><a href="sustainable-farming.html"><i class="fas fa-leaf"></i> Sustainable Farming Guidance</a></li>
-              <li><a href="marketplace.html"><i class="fas fa-store"></i> Marketplace Services</a></li>
-              <li><a href="financial-support.html"><i class="fas fa-dollar-sign"></i> Financial & Insurance Support</a></li>
-            </ul>
-          </div>
+    <!-- Left Nav Links -->
+    <div class="left-nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="scheme.html" class="nav-link">Schemes</a>
+      <a href="community_forum.html" class="nav-link">Community Forum</a>
+
+      <!-- Services Dropdown -->
+      <div class="services-toggle-container">
+        <a href="#" class="nav-link services-toggle">
+          Services <i class="fas fa-chevron-down services-arrow"></i>
+        </a>
+        <div class="services-dropdown">
+          <ul class="services-list">
+            <li><a href="crop.html"><i class="fas fa-seedling"></i> Smart Crop Monitoring</a></li>
+            <li><a href="supply-chain.html"><i class="fas fa-truck"></i> Supply Chain Support</a></li>
+            <li><a href="sustainable-farming.html"><i class="fas fa-leaf"></i> Sustainable Farming Guidance</a></li>
+            <li><a href="marketplace.html"><i class="fas fa-store"></i> Marketplace Services</a></li>
+            <li><a href="financial-support.html"><i class="fas fa-dollar-sign"></i> Financial & Insurance Support</a></li>
+          </ul>
         </div>
       </div>
     </div>
 
+    <!-- Right Nav Buttons -->
     <div class="nav-buttons">
+      <!-- Search -->
       <div class="search-container">
-        <input type="text" data-i18n="search" placeholder="Search..." class="search-input" autocomplete="off" />
+        <input type="text" placeholder="Search..." class="search-input" autocomplete="off" />
         <button class="search-button"><i class="fas fa-search"></i></button>
       </div>
 
+      <!-- Language Selector -->
       <div class="lang-container">
-        <button class="btn btn-secondary lang-btn">
+        <button class="lang-btn">
           <i class="fas fa-globe"></i>
           <span class="selected-lang" id="current-lang-text">English</span>
         </button>
         <div class="lang-dropdown">
-          <div class="lang-option" onclick="window.platformLanguageChange('en')">English</div>
-          <div class="lang-option" onclick="window.platformLanguageChange('hi')">हिन्दी</div>
-          <div class="lang-option" onclick="window.platformLanguageChange('bn')">বাংলা</div>
-          <div class="lang-option" onclick="window.platformLanguageChange('te')">తెలుగు</div>
-          <div class="lang-option" onclick="window.languagePlatformChange('mr')">मराठी</div>
-          <div class="lang-option" onclick="window.platformLanguageChange('ta')">தமிழ்</div>
-          <div class="lang-option" onclick="window.platformLanguageChange('gu')">ગુજરાતી</div>
-          <div class="lang-option" onclick="window.platformLanguageChange('kn')">ಕನ್ನಡ</div>
-          <div class="lang-option" onclick="window.platformLanguageChange('ml')">മലയാളം</div>
-          <div class="lang-option" onclick="window.platformLanguageChange('pa')">ਪੰਜਾਬੀ</div>
+          <div class="lang-option" onclick="setLanguage('en','English')">English</div>
+          <div class="lang-option" onclick="setLanguage('hi','हिन्दी')">हिन्दी</div>
+          <div class="lang-option" onclick="setLanguage('bn','বাংলা')">বাংলা</div>
+          <div class="lang-option" onclick="setLanguage('te','తెలుగు')">తెలుగు</div>
+          <div class="lang-option" onclick="setLanguage('mr','मराठी')">मराठी</div>
+          <div class="lang-option" onclick="setLanguage('ta','தமிழ்')">தமிழ்</div>
+          <div class="lang-option" onclick="setLanguage('gu','ગુજરાતી')">ગુજરાતી</div>
+          <div class="lang-option" onclick="setLanguage('kn','ಕನ್ನಡ')">ಕನ್ನಡ</div>
+          <div class="lang-option" onclick="setLanguage('ml','മലയാളം')">മലയാളം</div>
+          <div class="lang-option" onclick="setLanguage('pa','ਪੰਜਾਬੀ')">ਪੰਜਾਬੀ</div>
         </div>
       </div>
 
-      <button class="theme-toggle btn">
+      <!-- Theme Toggle -->
+      <button class="theme-toggle btn" onclick="toggleTheme()">
         <i class="fas fa-moon"></i>
-        <span class="theme-text" data-i18n="light">Light</span>
+        <span class="theme-text">Light</span>
       </button>
 
-      <a href="login.html" class="btn btn-secondary" data-i18n="login">Login</a>
-      <a href="faq.html" class="btn btn-secondary" data-i18n="faq">FAQ</a>
-      <a href="register.html" class="btn btn-primary" data-i18n="register">Register</a>
+      <!-- Login/Register -->
+      <a href="login.html" class="btn btn-secondary">Login</a>
+      <a href="faq.html" class="btn btn-secondary">FAQ</a>
+      <a href="register.html" class="btn btn-primary">Register</a>
     </div>
+
   </div>
-    <!-- Hamburger Menu Button for Mobile -->
-      <!-- Hamburger Menu Button for Mobile -->
-      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu" onclick="
-    document.getElementById('mobileMenu').classList.add('active');
-    document.getElementById('mobileMenuOverlay').classList.add('active');
-    document.body.style.overflow='hidden';
-  ">
-        <span class="hamburger-icon">
-          <span class="bar bar1"></span>
-          <span class="bar bar2"></span>
-          <span class="bar bar3"></span>
-        </span>
-      </button>
-    </div>
-  </nav>
+</nav>
+
+<script>
+  // Language Selector Function
+  function setLanguage(code, label) {
+    document.getElementById('current-lang-text').innerText = label;
+
+    // Call platform language function if exists
+    if (window.platformLanguageChange) {
+      window.platformLanguageChange(code);
+    } else if (window.languagePlatformChange) {
+      window.languagePlatformChange(code);
+    } else {
+      console.log("Language function not defined. Selected:", code);
+    }
+  }
+
+  // Theme Toggle Function
+  function toggleTheme() {
+    const navbar = document.querySelector('.navbar');
+    const themeText = document.querySelector('.theme-text');
+    if(navbar.getAttribute('data-theme') === 'light') {
+      navbar.setAttribute('data-theme','dark');
+      themeText.innerText = 'Dark';
+    } else {
+      navbar.setAttribute('data-theme','light');
+      themeText.innerText = 'Light';
+    }
+  }
+</script>
+
 
   <!-- Mobile Menu Overlay -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
