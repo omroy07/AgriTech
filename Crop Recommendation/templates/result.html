@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>Crop Recommendation Result</title>
-    <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
+    <link rel="icon" type="image/png" href="/AgriTech/images/logo.png" />
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
@@ -16,7 +16,10 @@
     <style>
       * {
         box-sizing: border-box;
-        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease,
+          border-color 0.3s ease;
       }
 
       body {
@@ -50,7 +53,8 @@
         backdrop-filter: blur(15px);
         padding: 50px 40px;
         border-radius: 24px;
-        box-shadow: 0 25px 50px var(--shadow-medium, rgba(0, 0, 0, 0.1)),
+        box-shadow:
+          0 25px 50px var(--shadow-medium, rgba(0, 0, 0, 0.1)),
           0 15px 30px var(--shadow-light, rgba(0, 0, 0, 0.05)),
           inset 0 1px 0 rgba(255, 255, 255, 0.9);
         text-align: center;
@@ -154,7 +158,7 @@
         text-transform: capitalize;
         position: relative;
         z-index: 1;
-        
+
         animation: bounceIn 1.2s ease-out 0.3s both;
       }
 
@@ -252,7 +256,8 @@
       .btn-primary:hover {
         background: linear-gradient(135deg, #1e6f67, #145a52);
         transform: translateY(-3px);
-        box-shadow: 0 12px 28px rgba(45, 143, 133, 0.3),
+        box-shadow:
+          0 12px 28px rgba(45, 143, 133, 0.3),
           0 6px 16px rgba(45, 143, 133, 0.2);
       }
 
@@ -266,7 +271,8 @@
         background: linear-gradient(135deg, #2d8f85, #1e6f67);
         color: #fff;
         transform: translateY(-3px);
-        box-shadow: 0 12px 28px rgba(45, 143, 133, 0.25),
+        box-shadow:
+          0 12px 28px rgba(45, 143, 133, 0.25),
           0 6px 16px rgba(45, 143, 133, 0.15);
       }
 
@@ -278,7 +284,8 @@
       .btn-back:hover {
         background: linear-gradient(135deg, #ef5502, #f57c00);
         transform: translateY(-3px);
-        box-shadow: 0 12px 28px rgba(245, 124, 0, 0.3),
+        box-shadow:
+          0 12px 28px rgba(245, 124, 0, 0.3),
           0 6px 16px rgba(245, 124, 0, 0.2);
       }
 
@@ -458,14 +465,25 @@
   </head>
   <body>
     <div class="container">
-      <div style="position: absolute; top: 20px; right: 20px;">
-        <button class="theme-toggle" aria-label="Toggle dark/light mode" style="background: rgba(46, 125, 50, 0.1); border: 1px solid rgba(46, 125, 50, 0.3); color: #2e7d32; padding: 8px 12px; border-radius: 20px; font-size: 12px;">
+      <div style="position: absolute; top: 20px; right: 20px">
+        <button
+          class="theme-toggle"
+          aria-label="Toggle dark/light mode"
+          style="
+            background: rgba(46, 125, 50, 0.1);
+            border: 1px solid rgba(46, 125, 50, 0.3);
+            color: #2e7d32;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+          "
+        >
           <i class="fas fa-sun sun-icon"></i>
           <i class="fas fa-moon moon-icon"></i>
           <span class="theme-text">Light</span>
         </button>
       </div>
-      
+
       <div class="success-icon">✓</div>
       <h2>🌿 Recommended Crop</h2>
 
@@ -475,7 +493,11 @@
       </div>
 
       <div class="action-buttons">
-        <form method="post" action="/download_report" style="width: 100%">
+        <form
+          method="post"
+          action="{{ url_for('download_report') }}"
+          style="width: 100%"
+        >
           {% for key, value in params.items() %}
           <input type="hidden" name="{{ key }}" value="{{ value }}" />
           {% endfor %}
@@ -483,15 +505,20 @@
           <button
             type="submit"
             class="btn btn-primary"
-            onclick="this.classList.add('loading'); this.innerHTML='📊 Generating PDF...';"
+            onclick="
+              this.classList.add('loading');
+              this.innerHTML = '📊 Generating PDF...';
+            "
           >
             📄 Download Report
           </button>
         </form>
 
         <a href="/" class="btn btn-secondary"> 🔄 New Analysis </a>
-        
-        <a href="javascript:history.back()" class="btn btn-back">🔙 Back to Main</a>
+
+        <a href="javascript:history.back()" class="btn btn-back"
+          >🔙 Back to Main</a
+        >
       </div>
 
       <div class="stats">
