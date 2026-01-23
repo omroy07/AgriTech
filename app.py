@@ -271,6 +271,10 @@ def contact():
 def chat():
     return send_from_directory('.', 'chat.html')
 
+@app.route('/reset-password/<token>')
+def reset_password_page(token):
+    return send_from_directory('.', 'reset-password.html')
+
 @app.route('/<path:filename>')
 def serve_static(filename):
     return send_from_directory('.', filename)
