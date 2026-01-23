@@ -228,7 +228,7 @@ async function isPlantImage(imgElement) {
 }
 
 // Mock AI analysis function - simulates disease detection
-function simulateAIAnalysis(imageFile) {
+/*function simulateAIAnalysis(imageFile) {
   return new Promise((resolve) => {
     setTimeout(() => {
       const diseaseKeys = Object.keys(diseaseDatabase);
@@ -245,7 +245,7 @@ function simulateAIAnalysis(imageFile) {
       });
     }, 2000 + Math.random() * 1000); 
   });
-}
+}*/
 
 const uploadArea = document.getElementById("uploadArea");
 const fileInput = document.getElementById("fileInput");
@@ -289,7 +289,7 @@ fileInput.addEventListener("change", (e) => {
   }
 });
 
-function handleFileSelect(file) {
+/*function handleFileSelect(file) {
   if (!file.type.startsWith("image/")) {
     alert("Please select a valid image file (JPG, PNG, WebP)");
     return;
@@ -304,7 +304,7 @@ function handleFileSelect(file) {
     resultsDiv.innerHTML = "";
   };
   reader.readAsDataURL(file);
-}
+}*/
 
 // Analysis function
 analyzeBtn.addEventListener("click", async () => {
@@ -312,6 +312,8 @@ analyzeBtn.addEventListener("click", async () => {
 
   loading.style.display = "block";
   resultsDiv.innerHTML = "";
+  document.getElementById("downloadPdfBtn").style.display = "none";
+
   analyzeBtn.disabled = true;
 
   try {
@@ -329,6 +331,7 @@ analyzeBtn.addEventListener("click", async () => {
           <div class="disease-name" style="color: #ffc107;">⚠️ Invalid Image</div>
           <div class="description">Please upload a valid plant image.</div>
         </div>`;
+        document.getElementById("downloadPdfBtn").style.display = "none";
       return;
     }
 
@@ -347,6 +350,9 @@ analyzeBtn.addEventListener("click", async () => {
                         <div class="description">Unable to analyze the image. Please try again with a clearer image.</div>
                     </div>
                 `;
+          document.getElementById("downloadPdfBtn").style.display = "none";
+      analyzeBtn.disabled = false;
+
   }
 
   analyzeBtn.disabled = false;
@@ -381,6 +387,8 @@ function displayResults(result) {
                     </div>
                 </div>
             `;
+           document.getElementById("downloadPdfBtn").style.display = "inline-block";
+
 }
 
 // Modal functionality
@@ -475,6 +483,7 @@ function handleFileSelect(file) {
       previewContainer.innerHTML = `<img src="${e.target.result}" alt="Plant preview" class="preview-image">`;
       analyzeBtn.disabled = false;
       resultsDiv.innerHTML = "";
+      document.getElementById("downloadPdfBtn").style.display = "none";
 
       document.getElementById("modelStatus").innerHTML =
         "🔍 Image loaded - Ready for analysis";
@@ -526,3 +535,34 @@ function simulateAIAnalysis(imageFile) {
     }, 1500 + Math.random() * 1500);
   });
 }
+function downloadPredictionPDF() {
+  const resultsBox = document.getElementById("results");
+  if (!resultsBox || resultsBox.innerText.trim() === "") {
+    alert("No result available to download!");
+    return;
+  }
+
+  const now = new Date().toLocaleString();
+  const originalContent = document.body.innerHTML;
+
+  document.body.innerHTML = `
+    <div style="font-family: Arial; padding: 20px;">
+      <h2>AgriTech - Prediction Result</h2>
+      <p><b>Date/Time:</b> ${now}</p>
+      <hr/>
+      ${resultsBox.innerHTML}
+    </div>
+  `;
+
+  window.print();
+  document.body.innerHTML = originalContent;
+  location.reload();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("downloadPdfBtn");
+  if (btn) {
+    btn.addEventListener("click", downloadPredictionPDF);
+  }
+});
+

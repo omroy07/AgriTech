@@ -1,0 +1,61 @@
+/* 1. Position relative creates an anchor for the menu */
+*.lang-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* 2. Style the button to match your 'Light' and 'Login' buttons */
+.lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 3. The Actual Dropdown Logic */
+.lang-dropdown {
+    display: none;           /* Hide by default */
+    position: absolute;      /* Lifts it off the page flow */
+    top: 100%;              /* Places it directly under the button */
+    right: 0;               /* Aligns it to the right edge */
+    background-color: #0f172a; /* Dark background to match your theme */
+    border: 1px solid #22c55e; /* AgriTech Green border */
+    border-radius: 8px;
+    min-width: 160px;
+    z-index: 10000;          /* High number so it sits ABOVE the hero grid */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    padding: 8px 0;
+    overflow: hidden;
+}
+
+/* 4. Show on Hover */
+.lang-container:hover .lang-dropdown {
+    display: block;
+}
+
+/* 5. Style the clickable items */
+.lang-dropdown div {
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.lang-dropdown div:hover {
+    background-color: #22c55e; /* Green highlight */
+    color: black;              /* Text turns black on green for readability */
+}
+
+/* 4. Styling the Items */
+.lang-dropdown div {
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;      /* Makes it feel clickable */
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.lang-dropdown div:hover {
+    background-color: #22c55e; /* Green highlight on hover */
+    color: black;
+}

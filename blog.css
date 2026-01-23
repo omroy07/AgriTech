@@ -68,7 +68,7 @@
     align-items: center;
     gap: 8px;
     padding: 10px 20px;
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    background: linear-gradient(135deg,#2cc02b,#c0392b);
     color: white;
     text-decoration: none;
     border-radius: 25px;
@@ -160,10 +160,12 @@
     opacity: 1;
     transform: scale(1);
     position: relative;
+     animation: fadeUp 0.4s ease forwards;
 }
 
+
 .blog-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
     box-shadow: 0 15px 40px rgba(0,0,0,0.15);
 }
 
@@ -186,6 +188,10 @@
     padding: 1.5rem;
 }
 
+.read-more-btn{
+    margin-top: auto;
+}
+
 .card-category {
     display: inline-block;
     background: #4CAF50;
@@ -196,6 +202,7 @@
     font-weight: 600;
     margin-bottom: 1rem;
     text-transform: capitalize;
+    align-self: flex-start;
 }
 
 .card-title {
@@ -206,10 +213,41 @@
     line-height: 1.4;
 }
 
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: none;
+}
+
+.blog-card:hover {
+    box-shadow: 0 15px 25px rgb(20, 186, 42)!important;
+    transform: translateY(-8px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  height:100%;
+  justify-content: space-between;
+}
+
 .card-description {
     color: #666;
     line-height: 1.6;
     margin-bottom: 1.5rem;
+}
+
+.card-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.card-date {
+    color: #333;
+    font-size: 13px;
 }
 
 .read-more-btn {
@@ -315,7 +353,7 @@
     background-color: white;
     margin: 2% auto;
     padding: 0;
-    border-radius: 15px;
+    border-radius: 5px;
     width: 90%;
     max-width: 800px;
     max-height: 90vh;
@@ -329,7 +367,7 @@
 .modal-header {
     padding: 2rem;
     border-bottom: 1px solid #eee;
-    position: relative; /* Changed from sticky to relative for better layout */
+    /* position: relative; Changed from sticky to relative for better layout */
     background: white;
     z-index: 10;
     border-radius: 15px 15px 0 0;
@@ -386,12 +424,16 @@
 
 .close {
     color: #aaa;
-    float: right;
     font-size: 2rem;
     font-weight: bold;
     cursor: pointer;
     line-height: 1;
     transition: color 0.3s ease;
+    background: transparent;
+    border: none;
+    position: absolute;
+    top: 35px;
+    right: 40px;
 }
 
 .close:hover,
@@ -402,11 +444,11 @@
 /* Modal Favorite Button */
 .modal-favorite-btn {
     position: absolute;
-    top: 20px;
-    right: 60px;
+    top: 30px;
+    right: 65px;
     background: rgba(255, 255, 255, 0.9);
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     color: #ccc;
     cursor: pointer;
     padding: 10px;
@@ -660,6 +702,108 @@
     color: #e74c3c;
 }
 
+[data-theme="dark"] .blog-card {
+    background: linear-gradient(
+        145deg,
+        rgba(45, 55, 72, 0.95),
+        rgba(26, 32, 44, 0.95)
+    );
+    border: 1px solid rgba(104, 211, 145, 0.15);
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(6px);
+}
+
+[data-theme="dark"] .blog-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(104, 211, 145, 0.3);
+}
+
+[data-theme="dark"] .blog-card img {
+    filter: brightness(0.85) contrast(1.05);
+    transition: filter 0.3s ease;
+}
+
+[data-theme="dark"] .blog-card:hover img {
+    filter: brightness(1) contrast(1.1);
+}
+
+[data-theme="dark"] .card-title {
+    color: #f8fafc;
+    font-weight: 600;
+}
+
+[data-theme="dark"] .card-description {
+    color: #cbd5e1;
+    line-height: 1.7;
+}
+
+[data-theme="dark"] .card-category {
+    background: linear-gradient(135deg, #68d391, #48bb78);
+    color: #0f172a;
+    box-shadow: 0 4px 15px rgba(104, 211, 145, 0.35);
+}
+
+[data-theme="dark"] .read-more-btn {
+    background: linear-gradient(135deg, #68d391, #38a169);
+    box-shadow: 0 6px 18px rgba(104, 211, 145, 0.4);
+}
+
+[data-theme="dark"] .read-more-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(104, 211, 145, 0.55);
+}
+
+[data-theme="dark"] .search-filter-section {
+    background: rgba(45, 55, 72, 0.95);
+    border: 1px solid rgba(104, 211, 145, 0.15);
+    backdrop-filter: blur(8px);
+}
+
+[data-theme="dark"] .search-bar {
+    background: rgba(26, 32, 44, 0.9);
+    border: 1px solid rgba(104, 211, 145, 0.25);
+}
+
+[data-theme="dark"] .search-bar:focus {
+    box-shadow: 0 0 0 3px rgba(104, 211, 145, 0.25);
+}
+
+[data-theme="dark"] .filter-btn {
+    background: rgba(74, 85, 104, 0.7);
+    border: 1px solid rgba(104, 211, 145, 0.25);
+}
+
+[data-theme="dark"] .filter-btn.active {
+    background: linear-gradient(135deg, #68d391, #38a169);
+    color: #0f172a;
+    box-shadow: 0 0 0 2px rgba(104, 211, 145, 0.3);
+}
+
+[data-theme="dark"] .filter-btn {
+    background: rgba(74, 85, 104, 0.7);
+    border: 1px solid rgba(104, 211, 145, 0.25);
+}
+
+[data-theme="dark"] .filter-btn.active {
+    background: linear-gradient(135deg, #68d391, #38a169);
+    color: #0f172a;
+    box-shadow: 0 0 0 2px rgba(104, 211, 145, 0.3);
+}
+
+[data-theme="dark"] .no-results {
+    background: rgba(104, 211, 145, 0.08);
+    color: #c6f6d5;
+}
+
+[data-theme="dark"] .no-results i {
+    color: #68d391;
+}
+
+
 /* Add transition for smooth theme switching */
 .agritech-blog,
 .search-filter-section,
@@ -834,7 +978,7 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        background-color: #2e7d32; /* AgriTech Green */
+        background-color: #17ac1e; /* AgriTech Green */
         color: white;
         text-decoration: none;
         padding: 8px 16px;
@@ -858,3 +1002,85 @@
         gap: 15px;
         flex-wrap: wrap;
     }
+    .no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    border-radius: 20px;
+    background: rgba(46, 204, 113, 0.08);
+    color: #2c5f2d;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.no-results i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #27ae60;
+}
+
+.no-results h3 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+}
+
+.no-results p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.no-results span {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- NEW SCROLL TO TOP BUTTON STYLING (REPLACED ORIGINAL) --- */
+#scrollTopBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    /* Brand-consistent Green Gradient */
+    background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+    color: white;
+    border: none;
+    border-radius: 50%; /* Modern Circular Aesthetic */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    /* Animated Interaction Logic */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Visibility logic triggered by JS classList */
+#scrollTopBtn.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Smooth Hover Lift Effect */
+#scrollTopBtn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+}
+
+#scrollTopBtn:active {
+    transform: translateY(0);
+}

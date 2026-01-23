@@ -488,7 +488,7 @@
       <h2>🌿 Recommended Crop</h2>
 
       <div class="result-container">
-        <div class="result">{{ crop }}</div>
+        <div class="result" id="crop-display">Loading...</div>
         <div class="result-subtitle">Best crop for your soil conditions</div>
       </div>
 
@@ -500,8 +500,8 @@
         >
           {% for key, value in params.items() %}
           <input type="hidden" name="{{ key }}" value="{{ value }}" />
-          {% endfor %}
-          <input type="hidden" name="crop" value="{{ crop }}" />
+          <!-- {% endfor %} -->
+          <input type="hidden" name="crop" value="" id="hidden-crop" />
           <button
             type="submit"
             class="btn btn-primary"
@@ -586,6 +586,30 @@
         });
       });
     </script>
+    <script>
+    // 1. Function to get URL parameters
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // 2. Get the crop name passed from index.html
+        const cropName = getQueryParam('crop');
+        
+        // 3. Update the UI
+        if (cropName) {
+            // Update the big result text
+            document.getElementById('crop-display').innerText = cropName;
+            
+            // Update the hidden input for the PDF downloader
+            const hiddenInput = document.getElementById('hidden-crop');
+            if(hiddenInput) hiddenInput.value = cropName;
+        } else {
+            document.getElementById('crop-display').innerText = "No Data";
+        }
+    });
+</script>
     <script src="../../theme.js"></script>
   </body>
 </html>

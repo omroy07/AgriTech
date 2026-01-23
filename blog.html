@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/png" href="images/logo.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AgriTech Blog</title>
@@ -13,28 +12,25 @@
         <div class="blog-container">
             <div class="blog-header">
                 <div class="header-actions">
-    <a href="index.html" class="home-btn">
-        <i class="fas fa-arrow-left"></i> Back to Home
-    </a>
-
-    <button class="theme-toggle" id="themeToggle">
-        <span id="themeIcon">☀️</span>
-        <span id="themeText">Light Mode</span>
-    </button>
-    
-    <a href="favorites.html" class="favorites-link">
-        <i class="fas fa-heart"></i>
-        <span>My Favorites</span>
-        <span class="favorite-count">0</span>
-    </a>
-</div>
+                    <a href="index.html" class="home-btn">
+                        <i class="fas fa-arrow-left"></i> Back to Home
+                    </a>
+                    <button class="theme-toggle" id="themeToggle">
+                        <span id="themeIcon">☀️</span>
+                        <span id="themeText">Light Mode</span>
+                    </button>
+                    <a href="favorites.html" class="favorites-link">
+                        <i class="fas fa-heart"></i>
+                        <span>My Favorites</span>
+                        <span class="favorite-count">0</span>
+                    </a>
+                </div>
                 <h1 class="blog-title">🌱 AgriTech Blog — Farming Tips & Insights</h1>
                 <p class="blog-subtitle">Stay updated with the latest in agriculture, technology, and sustainability.</p>
             </div>
 
             <div class="search-filter-section">
                 <input type="text" class="search-bar" placeholder="Search blog posts..." id="searchInput">
-                
                 <div class="category-filters">
                     <button class="filter-btn active" data-category="all">All Posts</button>
                     <button class="filter-btn" data-category="farming-tips">Farming Tips</button>
@@ -45,8 +41,13 @@
                 </div>
             </div>
 
-            <div class="blog-grid" id="blogGrid">
-                </div>
+            <div id="empty-blog-state" class="empty-state">
+                <div>🌾</div>
+                <h3>No blogs yet 🌱</h3>
+                <p>New insights will appear here once available.</p>
+            </div>
+
+            <div class="blog-grid" id="blogGrid"></div>
 
             <div class="load-more-container">
                 <button class="load-more-btn" id="loadMoreBtn">Load More Posts</button>
@@ -57,20 +58,19 @@
     <div id="blogModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <span class="close">&times;</span>
-                <button class="modal-favorite-btn" id="modalFavoriteBtn">
-                    <i class="far fa-heart"></i>
-                </button>
                 <h2 class="modal-title" id="modalTitle"></h2>
-                
+                <div class="icons">
+                    <button class="close" id="closeBlogModal" aria-label="Close modal">&times;</button>
+                    <button class="modal-favorite-btn" id="modalFavoriteBtn" title="Toggle favorite">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
                 <div class="modal-meta">
                     <span id="modalAuthor"><i class="fas fa-user"></i> </span>
                     <span id="modalDate"><i class="far fa-calendar-alt"></i> </span>
                 </div>
-
                 <span class="modal-category" id="modalCategory"></span>
             </div>
-            
             <div class="modal-body">
                 <img class="modal-image" id="modalImage" alt="Blog post image">
                 <div class="modal-text" id="modalContent"></div>
@@ -78,8 +78,42 @@
         </div>
     </div>
 
+    <button class="fab-btn" id="createPostBtn" title="Create New Post">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <div id="createPostModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Create New Post</h2>
+                <button class="close" id="closeCreateModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="createPostForm" class="create-post-form">
+                    <div class="form-group">
+                        <label for="postTitle">Title</label>
+                        <input type="text" id="postTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="postCategory">Category</label>
+                        <select id="postCategory" required>
+                            <option value="farming-tips">Farming Tips</option>
+                            <option value="technology">Technology</option>
+                            <option value="sustainability">Sustainability</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="postContent">Content</label>
+                        <textarea id="postContent" required rows="6"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Publish Post</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="js/features/favorites.js"></script>
-    
-    <script src="blog.js"></script> 
+    <script src="blog.js"></script>
+    <script src="auth.js"></script>
 </body>
 </html>
