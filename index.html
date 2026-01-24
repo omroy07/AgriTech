@@ -1444,10 +1444,27 @@
         <span class="theme-text">Light</span>
       </button>
 
-      <!-- Login/Register -->
-      <a href="login.html" class="btn btn-secondary">Login</a>
-      <a href="faq.html" class="btn btn-secondary">FAQ</a>
-      <a href="register.html" class="btn btn-primary">Register</a>
+      <a href="login.html" class="btn btn-secondary" data-i18n="login">Login</a>
+      <a href="faq.html" class="btn btn-secondary" data-i18n="faq">FAQ</a>
+      
+      <!-- Notification Dropdown -->
+      <div class="notification-container" style="position: relative; display: inline-block;">
+        <button class="btn btn-secondary" onclick="document.getElementById('notification-dropdown').classList.toggle('active')">
+          <i class="fas fa-bell"></i>
+          <span id="notification-badge" style="position: absolute; top: -5px; right: -5px; background: #ef4444; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; min-width: 18px; text-align: center; border: 2px solid var(--bg-color); display: none;">0</span>
+        </button>
+        <div id="notification-dropdown" class="services-dropdown" style="right: 0; left: auto; top: 100%; width: 320px; max-height: 450px; overflow-y: auto; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+          <div style="padding: 12px; border-bottom: 1px solid var(--border-color); font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
+            <span>Notifications</span>
+            <span class="text-xs text-blue-500 cursor-pointer" onclick="markAllAsRead()">Mark all as read</span>
+          </div>
+          <div id="notification-list">
+            <div style="padding: 20px; text-align: center; color: var(--text-muted);">No new notifications</div>
+          </div>
+        </div>
+      </div>
+
+      <a href="register.html" class="btn btn-primary" data-i18n="register">Register</a>
     </div>
 
   </div>
@@ -2164,6 +2181,9 @@ if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
 </script>
 <script src="translations.js"></script>
 <script src="scripts/i18n.js"></script>
+<!-- Notification System -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+<script src="js/notifications.js"></script>
 
 </body>
 
