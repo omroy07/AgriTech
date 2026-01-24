@@ -84,6 +84,123 @@ body.dark{background:var(--bg-dark); color:var(--text-dark);}
 body.dark .new-question, body.dark .question-card{background:var(--card-dark);}
 body.dark .reply{background:#2c2c2c; color:#fff;}
 body.dark .search-bar input, body.dark .search-bar button, body.dark .new-question button{background:#333; color:#fff; border:none;}
+/* FOOTER */
+    .site-footer {
+      background: var(--surface-color);
+      color: var(--text-color);
+      position: relative;
+      font-size: 0.95rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+
+    .footer-top-accent {
+      height: 4px;
+      background: linear-gradient(90deg, #16a34a, #22c55e);
+    }
+
+    .footer-inner-content {
+      max-width: 1200px;
+      margin: auto;
+      padding: 3rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      flex: 1 1 280px;
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .brand-logo {
+      width: 42px;
+    }
+
+    .footer-brand h3 {
+      color: var(--accent-color);
+      font-size: 1.3rem;
+    }
+
+    .tagline {
+      margin: 0.8rem 0 1.2rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 0.7rem;
+    }
+
+    .social-icons a {
+      width: 36px;
+      height: 36px;
+      background: #e6f4ea;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #15803d;
+      transition: all 0.25s ease;
+    }
+
+    .social-icons a:hover {
+      background: #22c55e;
+      color: #fff;
+    }
+
+    .footer-group-links {
+      display: flex;
+      gap: 3rem;
+      flex: 1 1 320px;
+    }
+
+    .footer-section h4 {
+      color: var(--accent-color);
+      margin-bottom: 0.9rem;
+      font-size: 1rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-section ul a {
+      color: var(--text-muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.25s ease;
+    }
+
+    .footer-section ul a:hover {
+      color: var(--accent-color);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding: 1rem;
+      background: var(--section-bg);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .footer-wave-overlay {
+      display: none;
+    }
 </style>
 </head>
 <body>
@@ -108,7 +225,64 @@ body.dark .search-bar input, body.dark .search-bar button, body.dark .new-questi
   <!-- Questions List -->
   <div id="questionsList"></div>
 </div>
+<footer class="site-footer tech-dark-theme final-match">
+  <div class="footer-top-accent"></div>
 
+  <div class="footer-inner-content">
+    <div class="footer-section footer-brand">
+      <div class="brand-header" data-i18n="">
+        <img src="images/logo.png" alt="AgriTech logo" class="brand-logo">
+        <h3>AgriTech</h3>
+      </div>
+
+      <p class="tagline">
+        Empowering India's Farming Future with innovative technology connecting every stakeholder.
+      </p>
+
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <div class="footer-group-links">
+      <div class="footer-section footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+          <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+          <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
+          <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section footer-contact">
+        <h4>Contact</h4>
+        <ul>
+          <li>
+            <a href="mailto:contact@agritech.com">
+              <i class="fas fa-envelope"></i> Email Us
+            </a>
+          </li>
+          <li>
+            <a href="tel:+910000000000">
+              <i class="fas fa-phone"></i> Call Us
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>©<span id="current-year"></span>2026 AgriTech. All rights reserved.</p>
+  </div>
+
+  <div class="footer-wave-overlay"></div>
+</footer>
 <script>
 let questions = [];
 let currentUser = '';
