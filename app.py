@@ -41,7 +41,7 @@ from backend.models import User, PredictionHistory, LoanRequest
 
 CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
-app.register_blueprint(crop_bp)
+app.register_blueprint(crop_bp, url_prefix='/crop')
 app.register_blueprint(disease_bp)
 app.register_blueprint(health_bp)
 
