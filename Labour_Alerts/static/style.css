@@ -1,18 +1,21 @@
 /* Import theme system */
-@import url('../../theme.css');
+@import url("../../theme.css");
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 html,
 body {
   height: 100%;
   width: 100%;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   line-height: 1.6;
   letter-spacing: 0.2px;
   background-color: var(--bg-secondary, #f8f9fa);
@@ -30,7 +33,11 @@ body {
 
 /* Enhanced Header */
 header {
-  background: linear-gradient(135deg, var(--header-grad-start, #1b4332) 0%, var(--header-grad-end, #2d6a4f) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--header-grad-start, #1b4332) 0%,
+    var(--header-grad-end, #2d6a4f) 100%
+  );
   color: var(--header-text, #fff);
   padding: 25px 20px;
   text-align: center;
@@ -85,13 +92,18 @@ header h1 {
 }
 
 .back-button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
   transition: left 0.5s;
 }
 
@@ -112,19 +124,29 @@ header h1 {
 }
 
 header::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -50%;
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 70%
+  );
   animation: headerGlow 4s ease-in-out infinite alternate;
 }
 
 @keyframes headerGlow {
-  0% { opacity: 0.5; transform: scale(1); }
-  100% { opacity: 0.8; transform: scale(1.1); }
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
 }
 
 .container {
@@ -179,7 +201,7 @@ header::before {
 }
 
 .tab.active::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 25%;
@@ -213,12 +235,22 @@ header::before {
 
 /* keep underline visible in dark */
 [data-theme="dark"] .tab.active::after {
-  background: linear-gradient(90deg, var(--accent-green), var(--secondary-green));
+  background: linear-gradient(
+    90deg,
+    var(--accent-green),
+    var(--secondary-green)
+  );
 }
 
 @keyframes tabSlide {
-  0% { width: 0; left: 50%; }
-  100% { width: 50%; left: 25%; }
+  0% {
+    width: 0;
+    left: 50%;
+  }
+  100% {
+    width: 50%;
+    left: 25%;
+  }
 }
 
 .content {
@@ -234,8 +266,14 @@ header::before {
 }
 
 @keyframes contentFadeIn {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Cards */
@@ -253,7 +291,7 @@ header::before {
 }
 
 .card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -327,7 +365,7 @@ header::before {
 input,
 textarea,
 select {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   width: 100%;
   padding: 14px 16px;
   border: 2px solid var(--input-border, #e9ecef);
@@ -383,13 +421,18 @@ select:valid {
 }
 
 .enhanced-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
   transition: left 0.5s;
 }
 
@@ -470,10 +513,11 @@ select:valid {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  z-index: 1;
 }
 
 .posted-job::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -486,6 +530,7 @@ select:valid {
 .posted-job:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  z-index: 2;
 }
 
 .posted-job h4 {
@@ -518,11 +563,13 @@ select:valid {
   box-shadow: 0 8px 32px var(--shadow-light, rgba(0, 0, 0, 0.1));
   transition: all 0.3s ease;
   position: relative;
+  z-index: 1;
 }
 
 .alert-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  z-index: 2;
 }
 
 .alert-card h4 {
@@ -538,7 +585,11 @@ select:valid {
 
 .alert-card.urgent {
   border-left-color: #e63946;
-  background: linear-gradient(135deg, rgba(230, 57, 70, 0.05), rgba(255, 255, 255, 0.95));
+  background: linear-gradient(
+    135deg,
+    rgba(230, 57, 70, 0.05),
+    rgba(255, 255, 255, 0.95)
+  );
 }
 
 .alert-card.urgent h4 {
@@ -558,10 +609,11 @@ select:valid {
   border: 1px solid var(--posted-border, rgba(45, 106, 79, 0.1));
   position: relative;
   overflow: hidden;
+  z-index: 1;
 }
 
 .news-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -574,6 +626,7 @@ select:valid {
 .news-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+  z-index: 2;
 }
 
 .news-title {
@@ -778,8 +831,14 @@ select:valid {
 }
 
 @keyframes toastSlideIn {
-  0% { transform: translateX(100%); opacity: 0; }
-  100% { transform: translateX(0); opacity: 1; }
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 /* Responsive Design */
@@ -917,15 +976,33 @@ select:valid {
 
 /* Animations */
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 @keyframes bounce {
-  0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
-  40%, 43% { transform: translate3d(0, -15px, 0); }
-  70% { transform: translate3d(0, -7px, 0); }
-  90% { transform: translate3d(0, -2px, 0); }
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%,
+  43% {
+    transform: translate3d(0, -15px, 0);
+  }
+  70% {
+    transform: translate3d(0, -7px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
 }
 
 .animate-pulse {

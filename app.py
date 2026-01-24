@@ -31,6 +31,14 @@ app = Flask(__name__, static_folder='.', static_url_path='')
 env_name = os.getenv('FLASK_ENV', 'default')
 app.config.from_object(config[env_name])
 
+# Initialize extensions
+db.init_app(app)
+migrate.init_app(app, db)
+limiter.init_app(app)
+
+# Import models after db initialization
+from backend.models import User, PredictionHistory, LoanRequest
+
 CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
 app.register_blueprint(crop_bp)
@@ -429,6 +437,10 @@ def contact():
 @limiter.limit("10 per minute")
 def chat():
     return send_from_directory('.', 'chat.html')
+
+@app.route('/reset-password/<token>')
+def reset_password_page(token):
+    return send_from_directory('.', 'reset-password.html')
 
 @app.route('/<path:filename>')
 def serve_static(filename):

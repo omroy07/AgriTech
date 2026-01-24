@@ -34,20 +34,27 @@ class Config:
 class DevelopmentConfig(Config):
     """Development Configuration"""
     DEBUG = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL', 'sqlite:///agritech_dev.db')
+    SQLALCHEMY_ECHO = True  # Log SQL queries in development
 
 class ProductionConfig(Config):
     """Production Configuration"""
     DEBUG = False
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    
     # Ensure critical keys are present
     @classmethod
     def init_app(cls, app):
         if not os.environ.get('GEMINI_API_KEY'):
             raise RuntimeError("GEMINI_API_KEY is not set in production!")
+        if not os.environ.get('DATABASE_URL'):
+            raise RuntimeError("DATABASE_URL is not set in production!")
 
 class TestingConfig(Config):
     """Testing Configuration"""
     TESTING = True
     DEBUG = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'  # In-memory database for testing
 
 # Configuration Dictionary
 config = {
