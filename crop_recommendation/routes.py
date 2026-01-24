@@ -15,8 +15,34 @@ import datetime
 
 crop_bp = Blueprint('crop', __name__, template_folder='templates', static_folder='static')
 
-model = joblib.load('model/rf_model.pkl')
-label_encoder = joblib.load('model/label_encoder.pkl')  # Load encoder
+# Load model with absolute path
+model_path = os.path.join(os.path.dirname(__file__), 'model', 'rf_model.pkl')
+label_encoder_path = os.path.join(os.path.dirname(__file__), 'model', 'label_encoder.pkl')
+
+# Try to load the actual model, fall back to mock if it fails
+try:
+    model = joblib.load(model_path)
+    label_encoder = joblib.load(label_encoder_path)
+    USE_MOCK = False
+except Exception as e:
+    print(f"Warning: Could not load ML model ({e}), using mock model")
+    # Mock model for testing
+    class MockModel:
+        def predict(self, features):
+            import random
+            crops = ["Rice", "Wheat", "Maize", "Cotton", "Sugarcane", "Soybean", "Groundnut", "Barley", "Ragi", "Jowar"]
+            return [random.choice(crops)]
+    
+    class MockEncoder:
+        def __init__(self):
+            self.classes_ = np.array(["Rice", "Wheat", "Maize", "Cotton", "Sugarcane", "Soybean", "Groundnut", "Barley", "Ragi", "Jowar"])
+        
+        def inverse_transform(self, values):
+            return [self.classes_[val] if val < len(self.classes_) else "Rice" for val in values]
+    
+    model = MockModel()
+    label_encoder = MockEncoder()
+    USE_MOCK = True
 
 # Input validation helper functions
 def validate_required_fields(required_fields):

@@ -10,6 +10,7 @@ from extensions import limiter, db, migrate
 from backend.config import config
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
+from crop_yield_prediction.routes import yield_bp
 from backend.monitoring.routes import health_bp
 from backend.extensions.socketio import socketio
 from backend.schemas.loan_schema import LoanRequestSchema
@@ -42,6 +43,7 @@ from backend.models import User, PredictionHistory, LoanRequest
 CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
 app.register_blueprint(crop_bp, url_prefix='/crop')
+app.register_blueprint(yield_bp, url_prefix='/yield')
 app.register_blueprint(disease_bp)
 app.register_blueprint(health_bp)
 
