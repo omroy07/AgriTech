@@ -38,6 +38,7 @@ services:
       - mailhog
     volumes:
       - .:/app
+      - uploads_data:/app/uploads
     restart: unless-stopped
 
   # Celery Worker
@@ -57,7 +58,9 @@ services:
       - mailhog
     volumes:
       - .:/app
+      - uploads_data:/app/uploads
     restart: unless-stopped
 
 volumes:
   redis_data:
+  uploads_data:

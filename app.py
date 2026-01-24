@@ -37,10 +37,12 @@ migrate.init_app(app, db)
 limiter.init_app(app)
 
 # Import models after db initialization
-from backend.models import User, PredictionHistory, LoanRequest
+from backend.models import User
 
 CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
+# Register blueprints
+app.register_blueprint(auth_bp)
 app.register_blueprint(crop_bp)
 app.register_blueprint(disease_bp)
 app.register_blueprint(health_bp)

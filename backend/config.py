@@ -31,6 +31,21 @@ class Config:
     FIREBASE_APP_ID = os.environ.get('FIREBASE_APP_ID')
     FIREBASE_MEASUREMENT_ID = os.environ.get('FIREBASE_MEASUREMENT_ID')
 
+    # Storage Configuration
+    # Options: 'local', 's3'
+    STORAGE_TYPE = os.environ.get('STORAGE_TYPE', 'local')
+    
+    # Local Storage Settings
+    UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
+    MAX_CONTENT_LENGTH = 10 * 1024 * 1024  # 10MB
+    
+    # S3 Settings
+    S3_BUCKET = os.environ.get('S3_BUCKET')
+    S3_ACCESS_KEY = os.environ.get('S3_ACCESS_KEY')
+    S3_SECRET_KEY = os.environ.get('S3_SECRET_KEY')
+    S3_REGION = os.environ.get('S3_REGION', 'us-east-1')
+    S3_ENDPOINT_URL = os.environ.get('S3_ENDPOINT_URL') # For MinIO
+
 class DevelopmentConfig(Config):
     """Development Configuration"""
     DEBUG = True
@@ -40,9 +55,6 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     """Production Configuration"""
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-    
-    # Ensure critical keys are present
     @classmethod
     def init_app(cls, app):
         if not os.environ.get('GEMINI_API_KEY'):
@@ -56,7 +68,6 @@ class TestingConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'  # In-memory database for testing
 
-# Configuration Dictionary
 config = {
     'development': DevelopmentConfig,
     'production': ProductionConfig,
