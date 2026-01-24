@@ -87,14 +87,8 @@ body.dark .search-bar input, body.dark .search-bar button, body.dark .new-questi
 </style>
 </head>
 <body>
-
-<nav>
-  <h1>AgriTech Forum</h1>
-  <div class="nav-buttons">
-    <a href="index.html"><i class="fa fa-home"></i> Home</a>
-    <button id="modeToggle"><i class="fa fa-moon"></i> Dark Mode</button>
-  </div>
-</nav>
+<!-- Include Navbar -->
+<div w3-include-html="navbar.html"></div>
 
 <div class="forum-container">
   <!-- New Question -->
@@ -278,6 +272,33 @@ questions.push({
   upvotes: 3
 });
 renderQuestions(questions);
+</script>
+
+<!-- Include Navbar Script -->
+<script>
+    function includeHTML() {
+        var z, i, elmnt, file, xhttp;
+        z = document.getElementsByTagName("*");
+        for (i = 0; i < z.length; i++) {
+            elmnt = z[i];
+            file = elmnt.getAttribute("w3-include-html");
+            if (file) {
+                xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4) {
+                        if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+                        if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                        elmnt.removeAttribute("w3-include-html");
+                        includeHTML();
+                    }
+                }
+                xhttp.open("GET", file, true);
+                xhttp.send();
+                return;
+            }
+        }
+    }
+    includeHTML();
 </script>
 
 </body>

@@ -293,6 +293,97 @@
       width: 20px;
     }
 
+    /* Language Selector */
+    .lang-container {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      background: transparent;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-color);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.85rem;
+    }
+
+    .lang-btn:hover {
+      border-color: var(--accent-color);
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    .lang-btn i {
+      font-size: 0.9rem;
+    }
+
+    .lang-dropdown {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      right: 0;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      min-width: 120px;
+      padding: 0.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      box-shadow: 0 4px 12px var(--shadow-color);
+    }
+
+    .lang-dropdown.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .lang-option {
+      display: block;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.5rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .lang-option:hover {
+      background: var(--btn-bg);
+      color: var(--text-color);
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent-color);
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    .theme-toggle i {
+      font-size: 0.9rem;
+    }
+
+    .theme-text {
+      font-size: 0.85rem;
+    }
+
     /* Button Styles */
     .btn {
       padding: 0.5rem 0.85rem;
@@ -1385,6 +1476,15 @@
       <a href="#">AgriTech</a>
     </div>
 
+    <!-- Hamburger Button -->
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+      <div class="hamburger-icon">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </button>
+
     <!-- Left Nav Links -->
     <div class="left-nav">
       <a href="index.html" class="nav-link">Home</a>
@@ -1867,6 +1967,24 @@
         if (container && !container.contains(e.target) && servicesDropdown.classList.contains('active')) {
           servicesDropdown.classList.remove('active');
           servicesArrow.classList.remove('rotated');
+        }
+      });
+    }
+
+    // Language Selector
+    const langBtn = document.querySelector('.lang-btn');
+    const langDropdown = document.querySelector('.lang-dropdown');
+
+    if (langBtn && langDropdown) {
+      langBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        langDropdown.classList.toggle('active');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
+          langDropdown.classList.remove('active');
         }
       });
     }
