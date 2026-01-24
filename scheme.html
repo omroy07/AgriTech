@@ -289,31 +289,6 @@ body.dark .eligible{color:#4ade80}
 body.dark .not-eligible{color:#f87171}
 body.dark .deadline{color:#fb7185}
 
-/* header button */
-.dark-toggle{
-  width:54px;
-  height:30px;
-  border-radius:30px;
-  background:#e5e7eb;
-  position:relative;
-  cursor:pointer;
-  transition:0.3s;
-}
-.dark-toggle::before{
-  content:"☀️";
-  position:absolute;
-  left:5px;
-  top:3px;
-  transition:0.3s;
-}
-body.dark .dark-toggle{
-  background:#020617;
-}
-body.dark .dark-toggle::before{
-  content:"🌙";
-  left:28px;
-}
-
 /* apply button */
 body.dark .apply{background:#2563eb}
 body.dark .apply.disabled{background:#475569}
@@ -532,19 +507,6 @@ function showMsg(msg){
 }
 function closeModal(){
   document.getElementById("modal").style.display="none";
-}
-</script>
-<script>
-function toggleDark(){
-  document.body.classList.toggle("dark");
-  localStorage.setItem(
-    "darkMode",
-    document.body.classList.contains("dark")
-  );
-}
-
-if(localStorage.getItem("darkMode")==="true"){
-  document.body.classList.add("dark");
 }
 </script>
 
