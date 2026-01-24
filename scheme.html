@@ -80,8 +80,6 @@ header h1{font-size:26px;font-weight:800}
   transform: translateY(-2px);
 }
 
-  gap:20px;
-}
 header h1{
   font-size:26px;
   font-weight:800;
@@ -174,14 +172,7 @@ button:hover {
 [data-theme="dark"] .deadline { color: #ff5252; }
 
 .hero::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
-                    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: moveGrid 120s linear infinite;
-  z-index: 0;
+  pointer-events: none;
 }
 .scheme h3{font-size:26px;color:#1b5e20}
 .scheme p{font-size:19px;margin:6px 0}
@@ -339,15 +330,17 @@ body.dark .modal{
 
 <header>
   <h1>📜 Govt Schemes & Subsidy Tracker</h1>
+  <div>
   <div class="nav-actions">
-      <button class="theme-toggle" id="themeToggle">
+      <button class="theme-toggle" id="themeToggle" style="width:150px;">
           <i class="fas fa-moon" id="themeIcon"></i>
           <span id="themeText">Dark</span>
       </button>
-      <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Home</a>
+      <!-- <div style="width:350px;"> -->
+      <a href="index.html" ><i class="fas fa-arrow-left" style="width:30px;"></i> Back to Home</a>
+      <!-- </div> -->
   </div>
-  <div class="dark-toggle" onclick="toggleDark()"></div>
-  <a href="index.html">⬅ Back to Home</a>
+  </div>
 </header>
 
 <section class="hero">

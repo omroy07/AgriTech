@@ -1,643 +1,938 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Crop Recommender | AgriTech</title>
-    <link rel="icon" type="image/png" href="../../images/logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Crop Recommender</title>
+    <link rel="icon" type="image/png" href="/AgriTech/images/logo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <style>
-        /* -------------------- Root Colors & Fonts -------------------- */
-        :root {
-            --primary: #16a34a;
-            --primary-light: #0dda58;
-            --primary1: #ffffff;
-            --primary-dark: #05ba60;
-            --secondary: #f59e0b;
-            --accent: #3b82f6;
+      /* CSS Custom Properties */
+      :root {
+        /* Colors */
+        --primary: #059669;
+        --primary-light: #10b981;
+        --primary-dark: #047857;
+        --secondary: #f59e0b;
+        --secondary-light: #fbbf24;
+        --accent: #3b82f6;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --error: #ef4444;
 
-            --bg-primary: #030137;
-            --bg-secondary: #15253f;
-            --bg-accent: #23334b;
-            --text-primary: #ffffff;
-            --text-secondary: #ced9e7;
-            --text-muted: #b2c1d6;
-            --border: #334155;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            --shadow-lg: 0 20px 30px rgba(0, 0, 0, 0.5);
+        /* Spacing */
+        --space-xs: 0.25rem;
+        --space-sm: 0.5rem;
+        --space-md: 1rem;
+        --space-lg: 1.5rem;
+        --space-xl: 2rem;
+        --space-2xl: 3rem;
+        --space-3xl: 4rem;
 
-            --radius-sm: 0.375rem;
-            --radius-md: 0.5rem;
-            --radius-lg: 0.75rem;
-            --radius-xl: 1rem;
+        /* Border Radius */
+        --radius-sm: 0.375rem;
+        --radius-md: 0.5rem;
+        --radius-lg: 0.75rem;
+        --radius-xl: 1rem;
+        --radius-2xl: 1.5rem;
 
-            --font-display: 'Space Grotesk', sans-serif;
-            --font-body: 'Inter', sans-serif;
-            --font-serif: 'Libertinus Serif', serif;
+        /* Typography */
+        --font-display: "Space Grotesk", system-ui, sans-serif;
+        --font-body: "Inter", system-ui, sans-serif;
 
-            --space-xs: 0.25rem;
-            --space-sm: 0.5rem;
-            --space-md: 1rem;
-            --space-lg: 1.5rem;
-            --space-xl: 2rem;
-            --space-2xl: 3rem;
-            --space-3xl: 4rem;
+        /* Animation */
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --transition-fast: all 0.15s ease-out;
+      }
+
+      /* Light Theme (Default) */
+      :root {
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8fafc;
+        --bg-accent: #f1f5f9;
+        --text-primary: #1e293b;
+        --text-secondary: #64748b;
+        --text-muted: #94a3b8;
+        --border: #e2e8f0;
+        --shadow:
+          0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-lg:
+          0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+
+      /* Dark Mode */
+      [data-theme="dark"] {
+        --bg-primary: #0f172a;
+        --bg-secondary: #1e293b;
+        --bg-accent: #334155;
+        --text-primary: #f1f5f9;
+        --text-secondary: #cbd5e1;
+        --text-muted: #64748b;
+        --border: #334155;
+        --shadow:
+          0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+        --shadow-lg:
+          0 20px 25px -5px rgba(0, 0, 0, 0.3),
+          0 10px 10px -5px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Reset & Base Styles */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        font-size: 16px;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: var(--font-body);
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        line-height: 1.6;
+        transition: var(--transition);
+        min-height: 100vh;
+      }
+
+      /* Ensure all elements inherit color transition */
+      * {
+        transition:
+          background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+          color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+          border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+          box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Layout */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--space-lg);
+      }
+
+      .main-content {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Header */
+      .header {
+        background: var(--bg-primary);
+        border-bottom: 1px solid var(--border);
+        padding: var(--space-lg) 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(8px);
+        transition: var(--transition);
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+        text-decoration: none;
+      }
+
+      .logo-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        border-radius: var(--radius-lg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.25rem;
+      }
+
+      .logo-text {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+
+      .theme-toggle {
+        background: var(--bg-accent);
+        border: 1px solid var(--border);
+        color: var(--text-primary);
+        padding: var(--space-sm) var(--space-md);
+        border-radius: var(--radius-lg);
+        font-size: 0.875rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        transition: var(--transition);
+        box-shadow: var(--shadow);
+      }
+
+      .theme-toggle:hover {
+        background: var(--bg-secondary);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      /* Hero Section */
+      .hero {
+        background: var(--bg-primary);
+        padding: var(--space-3xl) 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(5, 150, 105, 0.03) 50%,
+          transparent 100%
+        );
+        pointer-events: none;
+      }
+
+      [data-theme="dark"] .hero::before {
+        background: linear-gradient(
+          135deg,
+          transparent 0%,
+          rgba(5, 150, 105, 0.08) 50%,
+          transparent 100%
+        );
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-title {
+        font-family: var(--font-display);
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: var(--space-lg);
+        line-height: 1.1;
+      }
+
+      .hero-subtitle {
+        font-size: clamp(1.125rem, 2vw, 1.25rem);
+        color: var(--text-secondary);
+        max-width: 600px;
+        margin: 0 auto var(--space-2xl);
+        line-height: 1.7;
+      }
+
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--space-xl);
+        margin-top: var(--space-2xl);
+      }
+
+      .stat-card {
+        background: var(--bg-secondary);
+        padding: var(--space-xl);
+        border-radius: var(--radius-xl);
+        border: 1px solid var(--border);
+        text-align: center;
+        transition: var(--transition);
+      }
+
+      .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .stat-icon {
+        width: 56px;
+        height: 56px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        border-radius: var(--radius-xl);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto var(--space-md);
+        color: white;
+        font-size: 1.5rem;
+      }
+
+      .stat-title {
+        font-family: var(--font-display);
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: var(--space-xs);
+      }
+
+      .stat-description {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+      }
+
+      /* Form Section */
+      .form-section {
+        background: var(--bg-primary);
+        padding: var(--space-3xl) 0;
+      }
+
+      .form-header {
+        text-align: center;
+        margin-bottom: var(--space-3xl);
+      }
+
+      .form-title {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 4vw, 2.5rem);
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: var(--space-md);
+      }
+
+      .form-description {
+        font-size: 1.125rem;
+        color: var(--text-secondary);
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .form-card {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-2xl);
+        padding: var(--space-2xl);
+        box-shadow: var(--shadow-lg);
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: var(--space-lg);
+        margin-bottom: var(--space-2xl);
+      }
+
+      /* Input Groups */
+      .input-group {
+        position: relative;
+      }
+
+      .input-group.focused .input-icon {
+        color: var(--primary);
+        transform: scale(1.1);
+      }
+
+      .input-label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-primary);
+        margin-bottom: var(--space-sm);
+      }
+
+      .input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .input-icon {
+        position: absolute;
+        left: var(--space-md);
+        color: var(--text-muted);
+        font-size: 1.125rem;
+        z-index: 2;
+        transition: var(--transition);
+      }
+
+      .form-input {
+        width: 100%;
+        padding: var(--space-md) var(--space-md) var(--space-md) 3rem;
+        border: 2px solid var(--border);
+        border-radius: var(--radius-lg);
+        font-size: 1rem;
+        font-family: inherit;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        outline: none;
+        transition: var(--transition);
+      }
+
+      .form-input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+      }
+
+      .form-input:focus + .input-icon {
+        color: var(--primary);
+        transform: scale(1.1);
+      }
+
+      .form-input::placeholder {
+        color: var(--text-muted);
+      }
+
+      .input-hint {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-top: var(--space-xs);
+      }
+
+      /* Validation States */
+      .form-input.valid {
+        border-color: var(--success);
+      }
+
+      .form-input.valid + .input-icon {
+        color: var(--success);
+      }
+
+      .form-input.invalid {
+        border-color: var(--error);
+      }
+
+      .form-input.invalid + .input-icon {
+        color: var(--error);
+      }
+
+      /* Buttons */
+      .button-group {
+        display: flex;
+        gap: var(--space-md);
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-sm);
+        padding: var(--space-md) var(--space-xl);
+        font-size: 1rem;
+        font-weight: 600;
+        text-decoration: none;
+        border: none;
+        border-radius: var(--radius-lg);
+        cursor: pointer;
+        transition: var(--transition);
+        white-space: nowrap;
+        text-align: center;
+        min-width: 180px;
+        justify-content: center;
+      }
+
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        color: white;
+        box-shadow: var(--shadow);
+      }
+
+      .btn-primary:hover {
+        background: linear-gradient(
+          135deg,
+          var(--primary-dark),
+          var(--primary)
+        );
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .btn-secondary {
+        background: var(--bg-accent);
+        color: var(--text-primary);
+        border: 1px solid var(--border);
+      }
+
+      .btn-secondary:hover {
+        background: var(--bg-primary);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+      }
+
+      .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none !important;
+      }
+
+      .btn.loading {
+        pointer-events: none;
+      }
+
+      .btn.loading .btn-icon {
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
         }
-
-        [data-theme="light"] {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --bg-accent: #e2e8f0;
-            --text-primary: #1e293b;
-            --primary1: #16a34a;
-            --text-secondary: #64748b;
-            --text-muted: #94a3b8;
-            --border: #e2e8f0;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 20px 30px rgba(0, 0, 0, 0.1);
+        to {
+          transform: rotate(360deg);
         }
+      }
 
-        /* -------------------- Reset -------------------- */
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            transition: 0.3s ease;
-        }
+      /* Footer */
+      .footer {
+        background: var(--bg-primary);
+        border-top: 1px solid var(--border);
+        padding: var(--space-xl) 0;
+        text-align: center;
+        margin-top: auto;
+      }
 
-        body {
-            font-family: var(--font-body);
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            line-height: 1.7;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+      .footer-text {
+        color: var(--text-muted);
+        font-size: 0.875rem;
+      }
 
-        a { text-decoration: none; color: inherit; }
-        img { display: block; max-width: 100%; }
+      /* Dark Mode Specific Overrides */
+      [data-theme="dark"] .form-input:focus {
+        border-color: var(--primary-light);
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+      }
 
+      /* Remove old dark mode styles */
+      @media (max-width: 768px) {
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--space-lg);
+          padding: 0 var(--space-md);
         }
 
-        /* -------------------- COMPACT NAVBAR -------------------- */
         .header {
-            background: var(--bg-primary);
-            border-bottom: 1px solid var(--border);
-            padding: 0.5rem 0; /* Reduced padding for compact look */
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            justify-content: center;
-            box-shadow: var(--shadow);
+          padding: var(--space-md) 0;
         }
-
-        .header-content {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 1.5rem;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* Fixed logo size */
-        .logo img {
-            height: 35px; 
-            width: auto;
-        }
-
-        .logo-text {
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 1.4rem; /* Reduced font size */
-            color: var(--primary1);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            font-weight: 500;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        /* Compact Header Buttons */
-        .header-btn {
-            padding: 0.4rem 0.8rem;
-            font-size: 0.85rem;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            border: 1px solid var(--border);
-            background: var(--bg-accent);
-            color: var(--text-primary);
-            transition: all 0.2s;
-        }
-
-        .header-btn:hover {
-            background: var(--bg-secondary);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        /* -------------------- Hero -------------------- */
-        .main-content { flex: 1; }
 
         .hero {
-            background: var(--bg-primary);
-            padding: 3rem 0 2rem;
-            text-align: center;
-            position: relative;
+          padding: var(--space-2xl) 0;
         }
 
-        .hero-title {
-            font-family: var(--font-display);
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .hero-subtitle {
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            font-size: 1.1rem;
-        }
-
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .stat-card {
-            background: var(--bg-secondary);
-            padding: 1.5rem;
-            border-radius: var(--radius-xl);
-            border: 1px solid var(--border);
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
-
-        .stat-card:hover { transform: translateY(-5px); }
-
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--primary);
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 1.5rem;
-            margin: 0 auto 0.5rem;
-        }
-
-        .stat-title { font-weight: 600; margin-bottom: 0.25rem; font-size: 1rem; }
-        .stat-description { font-size: 0.85rem; color: var(--text-secondary); }
-
-        /* -------------------- Form Section -------------------- */
         .form-section {
-            padding: 3rem 0;
-            background: var(--bg-primary);
+          padding: var(--space-2xl) 0;
         }
 
         .form-card {
-            background: var(--bg-secondary);
-            padding: 2.5rem;
-            border-radius: var(--radius-xl);
-            max-width: 900px;
-            margin: 0 auto;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-lg);
+          padding: var(--space-lg);
         }
 
         .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+          grid-template-columns: 1fr;
         }
 
-        .input-group { position: relative; }
-        .input-label {
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            display: block;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-        }
-
-        .input-wrapper { position: relative; display: flex; align-items: center; }
-
-        .form-input {
-            width: 100%;
-            padding: 0.75rem 0.75rem 0.75rem 2.5rem;
-            border-radius: var(--radius-lg);
-            border: 2px solid var(--border);
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            font-family: inherit;
-            outline: none;
-            font-size: 0.95rem;
-        }
-
-        .form-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2);
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 0.75rem;
-            color: var(--text-muted);
-            font-size: 1.2rem;
-        }
-
-        .input-hint {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-top: 0.25rem;
+        .button-group {
+          flex-direction: column;
+          align-items: center;
         }
 
         .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 2rem;
-            font-weight: 600;
-            border: none;
-            border-radius: var(--radius-lg);
-            cursor: pointer;
-            justify-content: center;
-            font-size: 1rem;
-            transition: 0.3s;
+          width: 100%;
+          max-width: 280px;
         }
+      }
 
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-            box-shadow: var(--shadow);
-            width: 100%;
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
         }
-
-        .btn-primary:hover {
-            background: var(--primary-light);
-            transform: translateY(-2px);
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
+      }
 
-        /* -------------------- Error Styling -------------------- */
-        .input-error { border: 2px solid #e53935; background-color: rgba(229, 57, 53, 0.05); }
-        .error-text { color: #e53935; font-size: 0.85rem; margin-top: 4px; display: none; }
+      .fade-in-up {
+        animation: fadeInUp 0.6s ease-out forwards;
+      }
 
-        /* -------------------- FOOTER -------------------- */
-        .site-footer {
-            background-color: #1e293b;
-            color: #f8fafc;
-            padding: 3rem 1.5rem;
-            margin-top: auto;
-            border-top: 1px solid #334155;
-        }
-
-        .footer-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-brand h3 {
-            font-family: var(--font-serif);
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .footer-brand img {
-            height: 40px;
-            width: auto;
-            background: white;
-            padding: 4px;
-            border-radius: 6px;
-        }
-
-        .footer-links h4 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-family: var(--font-serif);
-            font-size: 1.1rem;
-        }
-
-        .footer-links ul { list-style: none; padding: 0; }
-        .footer-links a {
-            color: #cbd5e1;
-            display: block;
-            margin-bottom: 0.5rem;
-            transition: color 0.2s;
-        }
-        .footer-links a:hover { color: var(--primary); }
-
-        .social-media { display: flex; gap: 1rem; margin-top: 1rem; }
-        .social-media a {
-            width: 36px; height: 36px;
-            display: flex; align-items: center; justify-content: center;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            color: white;
-            transition: all 0.2s;
-        }
-        .social-media a:hover { background: var(--primary); transform: translateY(-2px); }
-
-        .footer-bottom {
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
-
-        @media(max-width:768px) {
-            .nav-links { display: none; }
-        }
+      .fade-in-up:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .fade-in-up:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .fade-in-up:nth-child(3) {
+        animation-delay: 0.3s;
+      }
     </style>
-    <script src="../../voice-input.js" defer></script>
-</head>
-
-<body>
+  </head>
+  <body>
     <header class="header">
+      <div class="container">
         <div class="header-content">
-            <a href="../../index.html" class="logo">
-                <img src="../../images/logo.png" alt="AgriTech logo">
-                <span class="logo-text">AgriTech</span>
-            </a>
-            
-            <nav class="nav-links">
-                <a href="../../index.html">Home</a>
-                <a href="../../about.html">About</a>
-                <a href="../../blog.html">Blog</a>
-            </nav>
-            
-            <div style="display: flex; align-items: center; gap: 0.8rem;">
-                <button class="header-btn" id="themeToggle">
-                    <i class="fas fa-moon" id="themeIcon"></i>
-                    <span id="themeText">Dark</span>
-                </button>
-                
-                <a href="../../main.html" class="header-btn" style="background: var(--bg-primary); border-color: var(--primary);">
-                    <i class="fas fa-arrow-left"></i> Back to Home
-                </a>
+          <a href="#" class="logo">
+            <div class="logo-icon">
+              <i class="fas fa-seedling"></i>
             </div>
+            <span class="logo-text">AgriTech</span>
+          </a>
+
+          <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon" id="themeIcon"></i>
+            <span id="themeText">Dark Mode</span>
+          </button>
         </div>
+      </div>
     </header>
 
     <main class="main-content">
-        <section class="hero">
-            <div class="container">
-                <h1 class="hero-title">Intelligent Crop Recommendations</h1>
-                <p class="hero-subtitle">Harness data-driven agriculture to optimize crop selection, maximize yields,
-                    and promote sustainable farming practices.</p>
-                <div class="hero-stats">
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
-                        <div class="stat-title">Optimized Yields</div>
-                        <div class="stat-description">Increase productivity up to 30%.</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-leaf"></i></div>
-                        <div class="stat-title">Sustainable</div>
-                        <div class="stat-description">Eco-friendly farming practices.</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-brain"></i></div>
-                        <div class="stat-title">AI Powered</div>
-                        <div class="stat-description">Data-driven agricultural insights.</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <section class="hero">
+        <div class="container">
+          <div class="hero-content">
+            <h1 class="hero-title fade-in-up">
+              Intelligent Crop Recommendations for Modern Farmers
+            </h1>
+            <p class="hero-subtitle fade-in-up">
+              Harness the power of data-driven agriculture to optimize your crop
+              selection, maximize yields, and promote sustainable farming
+              practices tailored to your unique soil and climate conditions.
+            </p>
 
-        <section class="form-section">
-            <div class="container">
-                <div class="form-card">
-                    <form id="cropForm">
-                        <div class="form-grid">
-                            <div class="input-group">
-                                <label class="input-label" for="nitrogen">Nitrogen Content</label>
-                                <div class="input-wrapper">
-                                    <input type="number" id="nitrogen" name="N" class="form-input" placeholder="0-140" min="0" max="140" required>
-                                    <i class="fas fa-flask input-icon"></i>
-                                </div>
-                                <div class="input-hint">kg/ha</div>
-                                <p class="error-text" id="nitrogen-error">⚠️ Nitrogen must be between 0-140 kg/ha.</p>
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label" for="phosphorus">Phosphorus Content</label>
-                                <div class="input-wrapper">
-                                    <input type="number" id="phosphorus" name="P" class="form-input" placeholder="5-145" min="5" max="145" required>
-                                    <i class="fas fa-atom input-icon"></i>
-                                </div>
-                                <div class="input-hint">kg/ha</div>
-                                <p class="error-text" id="phosphorus-error">⚠️ Phosphorus must be between 5-145 kg/ha.</p>
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label" for="potassium">Potassium Content</label>
-                                <div class="input-wrapper">
-                                    <input type="number" id="potassium" name="K" class="form-input" placeholder="5-205" min="5" max="205" required>
-                                    <i class="fas fa-fire-alt input-icon"></i>
-                                </div>
-                                <div class="input-hint">kg/ha</div>
-                                <p class="error-text" id="potassium-error">⚠️ Potassium must be between 5-205 kg/ha.</p>
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label" for="temperature">Temperature (°C)</label>
-                                <div class="input-wrapper">
-                                    <input type="number" id="temperature" name="temperature" class="form-input" placeholder="8-45" min="8" max="45" required>
-                                    <i class="fas fa-thermometer-half input-icon"></i>
-                                </div>
-                                <p class="error-text" id="temperature-error">⚠️ Temperature must be between 8-45°C.</p>
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label" for="humidity">Humidity (%)</label>
-                                <div class="input-wrapper">
-                                    <input type="number" id="humidity" name="humidity" class="form-input" placeholder="14-100" min="14" max="100" required>
-                                    <i class="fas fa-tint input-icon"></i>
-                                </div>
-                                <p class="error-text" id="humidity-error">⚠️ Humidity must be between 14-100%.</p>
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label" for="ph">Soil pH</label>
-                                <div class="input-wrapper">
-                                    <input type="number" id="ph" name="ph" class="form-input" placeholder="3.5-10" step="0.01" min="3.5" max="10" required>
-                                    <i class="fas fa-balance-scale input-icon"></i>
-                                </div>
-                                <p class="error-text" id="ph-error">⚠️ Soil pH must be between 3.5-10.</p>
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label" for="rainfall">Rainfall (mm)</label>
-                                <div class="input-wrapper">
-                                    <input type="number" id="rainfall" name="rainfall" class="form-input" placeholder="20-300" min="20" max="300" required>
-                                    <i class="fas fa-cloud-rain input-icon"></i>
-                                </div>
-                                <p class="error-text" id="rainfall-error">⚠️ Rainfall must be between 20-300 mm.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="button-group" style="text-align: center;">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-seedling"></i> Get Recommendation
-                            </button>
-                        </div>
-                    </form>
+            <div class="hero-stats">
+              <div class="stat-card fade-in-up">
+                <div class="stat-icon">
+                  <i class="fas fa-chart-line"></i>
                 </div>
+                <div class="stat-title">Optimized Yields</div>
+                <div class="stat-description">
+                  Increase crop productivity by up to 30% with data-driven
+                  recommendations
+                </div>
+              </div>
+
+              <div class="stat-card fade-in-up">
+                <div class="stat-icon">
+                  <i class="fas fa-leaf"></i>
+                </div>
+                <div class="stat-title">Sustainable Farming</div>
+                <div class="stat-description">
+                  Promote eco-friendly practices that protect soil health and
+                  biodiversity
+                </div>
+              </div>
+
+              <div class="stat-card fade-in-up">
+                <div class="stat-icon">
+                  <i class="fas fa-brain"></i>
+                </div>
+                <div class="stat-title">Smart Analytics</div>
+                <div class="stat-description">
+                  AI-powered insights based on comprehensive agricultural
+                  research
+                </div>
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <div class="container">
+          <div class="form-header">
+            <h2 class="form-title">Get Your Personalized Recommendation</h2>
+            <p class="form-description">
+              Enter your soil and environmental parameters to receive tailored
+              crop suggestions
+            </p>
+          </div>
+
+          <div class="form-card">
+            <form id="cropForm" action="{{ url_for('predict') }}" method="POST">
+              <div class="form-grid">
+                <div class="input-group">
+                  <label class="input-label" for="nitrogen"
+                    >Nitrogen Content</label
+                  >
+                  <div class="input-wrapper">
+                    <input
+                      type="number"
+                      id="nitrogen"
+                      name="N"
+                      class="form-input"
+                      placeholder="Enter nitrogen level"
+                      min="0"
+                      max="140"
+                      required
+                    />
+                    <i class="fas fa-flask input-icon"></i>
+                  </div>
+                  <div class="input-hint">Range: 0-140 kg/ha</div>
+                </div>
+
+                <div class="input-group">
+                  <label class="input-label" for="phosphorus"
+                    >Phosphorus Content</label
+                  >
+                  <div class="input-wrapper">
+                    <input
+                      type="number"
+                      id="phosphorus"
+                      name="P"
+                      class="form-input"
+                      placeholder="Enter phosphorus level"
+                      min="5"
+                      max="145"
+                      required
+                    />
+                    <i class="fas fa-atom input-icon"></i>
+                  </div>
+                  <div class="input-hint">Range: 5-145 kg/ha</div>
+                </div>
+
+                <div class="input-group">
+                  <label class="input-label" for="potassium"
+                    >Potassium Content</label
+                  >
+                  <div class="input-wrapper">
+                    <input
+                      type="number"
+                      id="potassium"
+                      name="K"
+                      class="form-input"
+                      placeholder="Enter potassium level"
+                      min="5"
+                      max="205"
+                      required
+                    />
+                    <i class="fas fa-fire-alt input-icon"></i>
+                  </div>
+                  <div class="input-hint">Range: 5-205 kg/ha</div>
+                </div>
+
+                <div class="input-group">
+                  <label class="input-label" for="temperature"
+                    >Temperature</label
+                  >
+                  <div class="input-wrapper">
+                    <input
+                      type="number"
+                      id="temperature"
+                      name="temperature"
+                      class="form-input"
+                      placeholder="Average temperature"
+                      step="0.1"
+                      min="8"
+                      max="45"
+                      required
+                    />
+                    <i class="fas fa-thermometer-half input-icon"></i>
+                  </div>
+                  <div class="input-hint">Range: 8-45°C</div>
+                </div>
+
+                <div class="input-group">
+                  <label class="input-label" for="humidity">Humidity</label>
+                  <div class="input-wrapper">
+                    <input
+                      type="number"
+                      id="humidity"
+                      name="humidity"
+                      class="form-input"
+                      placeholder="Relative humidity"
+                      step="0.1"
+                      min="14"
+                      max="100"
+                      required
+                    />
+                    <i class="fas fa-tint input-icon"></i>
+                  </div>
+                  <div class="input-hint">Range: 14-100%</div>
+                </div>
+
+                <div class="input-group">
+                  <label class="input-label" for="ph">Soil pH</label>
+                  <div class="input-wrapper">
+                    <input
+                      type="number"
+                      id="ph"
+                      name="ph"
+                      class="form-input"
+                      placeholder="Soil pH level"
+                      step="0.01"
+                      min="3.5"
+                      max="10"
+                      required
+                    />
+                    <i class="fas fa-balance-scale input-icon"></i>
+                  </div>
+                  <div class="input-hint">Range: 3.5-10.0</div>
+                </div>
+
+                <div class="input-group">
+                  <label class="input-label" for="rainfall">Rainfall</label>
+                  <div class="input-wrapper">
+                    <input
+                      type="number"
+                      id="rainfall"
+                      name="rainfall"
+                      class="form-input"
+                      placeholder="Annual rainfall"
+                      step="0.1"
+                      min="20"
+                      max="300"
+                      required
+                    />
+                    <i class="fas fa-cloud-rain input-icon"></i>
+                  </div>
+                  <div class="input-hint">Range: 20-300mm</div>
+                </div>
+              </div>
+
+              <div class="button-group">
+                <button type="submit" class="btn btn-primary" id="submitBtn">
+                  <i class="fas fa-seedling btn-icon"></i>
+                  <span>Get Recommendation</span>
+                </button>
+                <a href="javascript:history.back()" class="btn btn-secondary">
+                  <i class="fas fa-arrow-left"></i>
+                  <span>Back to Dashboard</span>
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
     </main>
 
-    <footer class="site-footer">
-        <div class="footer-inner">
-            <div class="footer-brand">
-                <h3><img src="../../images/logo.png" alt="Logo"> AgriTech</h3>
-                <p>Empowering India's Farming Future with technology and data-driven insights.</p>
-                <div class="social-media">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-github"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                </div>
-            </div>
-            <div class="footer-links">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="../../index.html">Home</a></li>
-                    <li><a href="../../main.html">Dashboard</a></li>
-                    <li><a href="../../chat.html">AI Assistant</a></li>
-                    <li><a href="../../feed-back.html">Feedback</a></li>
-                </ul>
-            </div>
-            <div class="footer-links">
-                <h4>Smart Tools</h4>
-                <ul>
-                    <li><a href="index.html">Crop Recommendation</a></li>
-                    <li><a href="../../Disease prediction/template/index.html">Disease Detector</a></li>
-                    <li><a href="../../Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            &copy; 2026 AgriTech. All rights reserved.
-        </div>
+    <footer class="footer">
+      <div class="container">
+        <p class="footer-text">
+          © 2024 AgriTech. Empowering farmers with intelligent agriculture
+          solutions.
+        </p>
+      </div>
     </footer>
 
-    <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const themeText = document.getElementById('themeText');
-        const html = document.documentElement;
+<script>
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+    const html = document.documentElement;
 
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        setTheme(savedTheme);
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
 
-        themeToggle.addEventListener('click', () => {
-            setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-        });
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    });
 
-        function setTheme(theme) {
-            html.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-            if (theme === 'dark') {
-                themeIcon.className = 'fas fa-sun';
-                themeText.textContent = 'Light';
-            } else {
-                themeIcon.className = 'fas fa-moon';
-                themeText.textContent = 'Dark';
+    function setTheme(theme) {
+        html.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+
+        if (theme === 'dark') {
+            themeIcon.className = 'fas fa-sun';
+            themeText.textContent = 'Light';
+        } else {
+            themeIcon.className = 'fas fa-moon';
+            themeText.textContent = 'Dark';
+        }
+    }
+
+    // ---------------- FORM VALIDATION ----------------
+    const cropForm = document.getElementById('cropForm');
+
+    const inputs = [
+        { id: 'nitrogen', min: 0, max: 140 },
+        { id: 'phosphorus', min: 5, max: 145 },
+        { id: 'potassium', min: 5, max: 205 },
+        { id: 'temperature', min: 8, max: 45 },
+        { id: 'humidity', min: 14, max: 100 },
+        { id: 'ph', min: 3.5, max: 10 },
+        { id: 'rainfall', min: 20, max: 300 }
+    ].map(conf => ({
+        el: document.getElementById(conf.id),
+        err: document.getElementById(conf.id + '-error'),
+        min: conf.min,
+        max: conf.max
+    }));
+
+    function showError(input, messageEl) {
+        input.classList.add('input-error');
+        messageEl.style.display = 'block';
+    }
+
+    function clearError(input, messageEl) {
+        input.classList.remove('input-error');
+        messageEl.style.display = 'none';
+    }
+
+    inputs.forEach(item => {
+        item.el.addEventListener('input', () => {
+            if (
+                item.el.value === '' ||
+                (item.el.value >= item.min && item.el.value <= item.max)
+            ) {
+                clearError(item.el, item.err);
             }
-        }
+        });
+    });
 
-        // Form validation
-        const cropForm = document.getElementById('cropForm');
-        const inputs = [
-            { id: 'nitrogen', min: 0, max: 140 },
-            { id: 'phosphorus', min: 5, max: 145 },
-            { id: 'potassium', min: 5, max: 205 },
-            { id: 'temperature', min: 8, max: 45 },
-            { id: 'humidity', min: 14, max: 100 },
-            { id: 'ph', min: 3.5, max: 10 },
-            { id: 'rainfall', min: 20, max: 300 }
-        ].map(conf => ({ 
-            el: document.getElementById(conf.id), 
-            err: document.getElementById(conf.id + '-error'), 
-            min: conf.min, max: conf.max 
-        }));
-
-        function showError(input, messageEl) {
-            input.classList.add('input-error');
-            messageEl.style.display = 'block';
-        }
-        function clearError(input, messageEl) {
-            input.classList.remove('input-error');
-            messageEl.style.display = 'none';
-        }
+    cropForm.addEventListener('submit', (e) => {
+        let isValid = true;
 
         inputs.forEach(item => {
-            item.el.addEventListener('input', () => {
-                if (item.el.value === '' || (item.el.value >= item.min && item.el.value <= item.max)) {
-                    clearError(item.el, item.err);
-                }
-            });
+            if (
+                !item.el.value ||
+                item.el.value < item.min ||
+                item.el.value > item.max
+            ) {
+                showError(item.el, item.err);
+                isValid = false;
+            } else {
+                clearError(item.el, item.err);
+            }
         });
 
-        cropForm.addEventListener('submit', (e) => {
-            let isValid = true;
-            inputs.forEach(item => {
-                if (!item.el.value || item.el.value < item.min || item.el.value > item.max) {
-                    showError(item.el, item.err);
-                    isValid = false;
-                } else {
-                    clearError(item.el, item.err);
-                }
-            });
-            if (!isValid) e.preventDefault();
-        });
+        if (!isValid) {
+            e.preventDefault();
+        }
 
-        // Redirect to result.html and attach the query parameters
-        window.location.href = `result.html?${queryParams.toString()}`;
-    }
-});
-    </script>
+    });
+</script>
+
 </body>
 </html>

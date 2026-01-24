@@ -118,6 +118,8 @@ if (servicesToggle && servicesDropdown && servicesArrow) {
         event.stopPropagation();
         servicesDropdown.classList.toggle('active');
         servicesArrow.classList.toggle('rotated');
+        servicesDropdown.style.left = 'auto';
+        servicesDropdown.style.right = '0';
     });
 
     document.addEventListener('click', (e) => {
