@@ -302,21 +302,8 @@ body.dark .modal{
 </head>
 
 <body>
-
-<header>
-  <h1>📜 Govt Schemes & Subsidy Tracker</h1>
-  <div>
-  <div class="nav-actions">
-      <button class="theme-toggle" id="themeToggle" style="width:150px;">
-          <i class="fas fa-moon" id="themeIcon"></i>
-          <span id="themeText">Dark</span>
-      </button>
-      <!-- <div style="width:350px;"> -->
-      <a href="index.html" ><i class="fas fa-arrow-left" style="width:30px;"></i> Back to Home</a>
-      <!-- </div> -->
-  </div>
-  </div>
-</header>
+<!-- Include Navbar -->
+<div w3-include-html="navbar.html"></div>
 
 <section class="hero">
 <div class="form-card">
@@ -508,6 +495,33 @@ function showMsg(msg){
 function closeModal(){
   document.getElementById("modal").style.display="none";
 }
+</script>
+
+<!-- Include Navbar Script -->
+<script>
+    function includeHTML() {
+        var z, i, elmnt, file, xhttp;
+        z = document.getElementsByTagName("*");
+        for (i = 0; i < z.length; i++) {
+            elmnt = z[i];
+            file = elmnt.getAttribute("w3-include-html");
+            if (file) {
+                xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4) {
+                        if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+                        if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                        elmnt.removeAttribute("w3-include-html");
+                        includeHTML();
+                    }
+                }
+                xhttp.open("GET", file, true);
+                xhttp.send();
+                return;
+            }
+        }
+    }
+    includeHTML();
 </script>
 
 </body>
