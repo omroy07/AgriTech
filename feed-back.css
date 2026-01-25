@@ -1,4 +1,3 @@
-
 @import url('theme.css');
 :root {
   --primary-green: #2e7d32;
@@ -754,6 +753,35 @@ main {
     font-size: 16px;
   }
 }
+
+/* Enhanced help button interactions */
+.help-button:focus {
+    outline: 3px solid rgba(76, 175, 80, 0.5);
+    outline-offset: 3px;
+}
+
+.help-button:active {
+    transform: scale(0.95);
+}
+
+.help-button:focus-visible {
+    outline: 3px solid #4caf50;
+    outline-offset: 4px;
+}
+
+/* Improved tooltip visibility and animation */
+.help-tooltip {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-weight: 500;
+    cursor: default;
+}
+
+.floating-help .help-button:focus + .help-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-5px);
+}
+
 
 /* Footer */
 footer {

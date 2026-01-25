@@ -4,10 +4,16 @@
     <link rel="icon" type="image/png" href="images/logo.png">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://generativelanguage.googleapis.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://generativelanguage.googleapis.com;"
-    />
+    <meta http-equiv="Content-Security-Policy"
+content="
+default-src 'self';
+script-src 'self' 'unsafe-inline' https://generativelanguage.googleapis.com;
+style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
+font-src https://cdnjs.cloudflare.com;
+img-src 'self' data: https:;
+connect-src 'self' http://localhost:3000;
+">
+
     <title>AgriTech Assistant - Smart Farming Solutions</title>
     <link
       rel="stylesheet"
@@ -20,31 +26,61 @@
       /* Added styles for light green color on specified text */
 
       .chat-header h2 {
-        color: var(--light-green); /* Light green */
+        color: #22c55e !important; /* Force AgriTech Green */
+        text-shadow: 0 1px 2px rgba(0,0,0,0.3); /* Adds depth for better readability */
       }
 
       .logo h1 {
         color: var(--light-green); /* Light green for AgriBot */
       }
+
+      /* --- NEW STYLES FOR IMAGE UPLOAD --- */
+      #image-preview-container {
+        display: none;
+        padding: 10px;
+        background: rgba(34, 197, 94, 0.1);
+        border-radius: 8px;
+        margin: 0 20px 10px 20px;
+        align-items: center;
+        gap: 15px;
+        border: 1px dashed #22c55e;
+      }
+      .preview-wrapper { position: relative; display: inline-block; }
+      .preview-wrapper img { max-height: 60px; border-radius: 5px; border: 2px solid #22c55e; }
+      .remove-img {
+        position: absolute; top: -8px; right: -8px;
+        background: #ef4444; color: white; border: none;
+        border-radius: 50%; width: 20px; height: 20px;
+        cursor: pointer; font-size: 12px; display: flex;
+        align-items: center; justify-content: center;
+      }
+      .camera-btn {
+        background: none; border: none; color: #22c55e;
+        cursor: pointer; font-size: 1.3rem; margin-right: 10px;
+        transition: transform 0.2s;
+      }
+      .camera-btn:hover { transform: scale(1.1); }
     </style>
   </head>
   <body>
     <header>
       <div class="header-content">
-        <div class="logo">
-          <i class="fas fa-seedling"></i>
-          <h1>AgriBot</h1>
+        <div class="nav-left" style="display: flex; align-items: center; gap: 1.5rem;">
+          <a href="index.html" class="nav-back">
+            <i class="fas fa-arrow-left"></i> Back to Home
+          </a>
+          <div class="logo">
+            <i class="fas fa-seedling"></i>
+            <h1>AgriBot</h1>
+          </div>
         </div>
-        <div style="display: flex; gap: 1rem; align-items: center;">
+        
+        <div class="nav-right" style="display: flex; align-items: center;">
           <button class="theme-toggle" aria-label="Toggle dark/light mode">
             <i class="fas fa-sun sun-icon"></i>
             <i class="fas fa-moon moon-icon"></i>
             <span class="theme-text">Light</span>
           </button>
-
-          <a href="index.html" class="nav-back">
-            <i class="fas fa-arrow-left"></i> Back to Home
-          </a>
         </div>
       </div>
     </header>
@@ -73,12 +109,25 @@
           </div>
         </div>
 
+        <div id="image-preview-container">
+          <div class="preview-wrapper">
+            <img id="image-preview" src="">
+            <button type="button" class="remove-img" onclick="clearImage()">×</button>
+          </div>
+          <span style="font-size: 0.85rem; color: #22c55e;">Image attached for AI analysis</span>
+        </div>
+
         <form id="chat-form">
-          <div class="input-container">
+          <div class="input-container" style="display: flex; align-items: center;">
+            <input type="file" id="image-input" accept="image/*" style="display: none;" onchange="handleImagePreview(event)">
+            <button type="button" class="camera-btn" onclick="document.getElementById('image-input').click()" title="Upload image for diagnosis">
+              <i class="fas fa-camera"></i>
+            </button>
+
             <input
               type="text"
               id="chat-input"
-              placeholder="Ask about crops, weather, fertilizers..."
+              placeholder="Ask about crops or upload a photo..."
               aria-label="Chat input"
               autofocus
               required
@@ -90,9 +139,35 @@
         </form>
       </div>
     </main>
+
+    <script>
+      let selectedImageBase64 = null;
+
+      function handleImagePreview(event) {
+          const file = event.target.files[0];
+          if (file) {
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                  document.getElementById('image-preview').src = e.target.result;
+                  document.getElementById('image-preview-container').style.display = 'flex';
+                  // Store base64 data for Python backend
+                  window.selectedImageBase64 = e.target.result.split(',')[1];
+              };
+              reader.readAsDataURL(file);
+          }
+      }
+
+      function clearImage() {
+          selectedImageBase64 = null;
+          document.getElementById('image-input').value = '';
+          document.getElementById('image-preview-container').style.display = 'none';
+      }
+    </script>
+
     <script src="json-chatbot.js"></script>
     <script src="chat.js"></script>
     <script src="theme.js"></script>
+
     <style>
       .site-footer {
         background: linear-gradient(135deg, #2e7d32, #66bb6a);
@@ -240,8 +315,7 @@
           </ul>
         </div>
       </div>
-      <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div>
+      <div class="footer-bottom">© <span id="current-year">2026</span> AgriTech • Made for farmers</div>
     </footer>
   </body>
 </html>
-
