@@ -844,125 +844,95 @@
       </div>
     </footer>
 
-    <script>
-      // Theme Toggle Functionality
-      const themeToggle = document.getElementById("themeToggle");
-      const themeIcon = document.getElementById("themeIcon");
-      const themeText = document.getElementById("themeText");
-      const html = document.documentElement;
+<script>
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+    const html = document.documentElement;
 
-      // Check for saved theme preference
-      const savedTheme = localStorage.getItem("theme") || "light";
-      setTheme(savedTheme);
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
 
-      themeToggle.addEventListener("click", () => {
-        const currentTheme = html.getAttribute("data-theme") || "light";
-        const newTheme = currentTheme === "dark" ? "light" : "dark";
-        setTheme(newTheme);
-      });
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    });
 
-      function setTheme(theme) {
-        html.setAttribute("data-theme", theme);
-        localStorage.setItem("theme", theme);
-        updateThemeUI(theme === "dark");
-      }
+    function setTheme(theme) {
+        html.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
 
-      function updateThemeUI(isDark) {
-        if (isDark) {
-          themeIcon.className = "fas fa-sun";
-          themeText.textContent = "Light Mode";
+        if (theme === 'dark') {
+            themeIcon.className = 'fas fa-sun';
+            themeText.textContent = 'Light';
         } else {
-          themeIcon.className = "fas fa-moon";
-          themeText.textContent = "Dark Mode";
+            themeIcon.className = 'fas fa-moon';
+            themeText.textContent = 'Dark';
         }
-      }
+    }
 
-      // Form Handling
-      const form = document.getElementById("cropForm");
-      const submitBtn = document.getElementById("submitBtn");
-      const formInputs = document.querySelectorAll(".form-input");
+    // ---------------- FORM VALIDATION ----------------
+    const cropForm = document.getElementById('cropForm');
 
-      // Input validation
-      formInputs.forEach((input) => {
-        input.addEventListener("input", function () {
-          validateInput(this);
+    const inputs = [
+        { id: 'nitrogen', min: 0, max: 140 },
+        { id: 'phosphorus', min: 5, max: 145 },
+        { id: 'potassium', min: 5, max: 205 },
+        { id: 'temperature', min: 8, max: 45 },
+        { id: 'humidity', min: 14, max: 100 },
+        { id: 'ph', min: 3.5, max: 10 },
+        { id: 'rainfall', min: 20, max: 300 }
+    ].map(conf => ({
+        el: document.getElementById(conf.id),
+        err: document.getElementById(conf.id + '-error'),
+        min: conf.min,
+        max: conf.max
+    }));
+
+    function showError(input, messageEl) {
+        input.classList.add('input-error');
+        messageEl.style.display = 'block';
+    }
+
+    function clearError(input, messageEl) {
+        input.classList.remove('input-error');
+        messageEl.style.display = 'none';
+    }
+
+    inputs.forEach(item => {
+        item.el.addEventListener('input', () => {
+            if (
+                item.el.value === '' ||
+                (item.el.value >= item.min && item.el.value <= item.max)
+            ) {
+                clearError(item.el, item.err);
+            }
         });
+    });
 
-        input.addEventListener("blur", function () {
-          validateInput(this);
-        });
-      });
-
-      function validateInput(input) {
-        const value = parseFloat(input.value);
-        const min = parseFloat(input.min);
-        const max = parseFloat(input.max);
-
-        input.classList.remove("valid", "invalid");
-
-        if (input.value === "") {
-          return;
-        }
-
-        if (value >= min && value <= max) {
-          input.classList.add("valid");
-        } else {
-          input.classList.add("invalid");
-        }
-      }
-
-      // Form submission
-      form.addEventListener("submit", function (e) {
-        const submitIcon = submitBtn.querySelector(".btn-icon");
-        const submitText = submitBtn.querySelector("span");
-
-        // Add loading state
-        submitBtn.classList.add("loading");
-        submitBtn.disabled = true;
-        submitIcon.className = "fas fa-sync-alt btn-icon";
-        submitText.textContent = "Analyzing Data...";
-
-        // Validate all inputs before submission
+    cropForm.addEventListener('submit', (e) => {
         let isValid = true;
-        formInputs.forEach((input) => {
-          validateInput(input);
-          if (input.classList.contains("invalid") || input.value === "") {
-            isValid = false;
-          }
+
+        inputs.forEach(item => {
+            if (
+                !item.el.value ||
+                item.el.value < item.min ||
+                item.el.value > item.max
+            ) {
+                showError(item.el, item.err);
+                isValid = false;
+            } else {
+                clearError(item.el, item.err);
+            }
         });
 
         if (!isValid) {
-          e.preventDefault();
-          // Reset button state
-          submitBtn.classList.remove("loading");
-          submitBtn.disabled = false;
-          submitIcon.className = "fas fa-seedling btn-icon";
-          submitText.textContent = "Get Recommendation";
-
-          // Show error message (you can customize this)
-          alert(
-            "Please ensure all fields are filled with valid values within the specified ranges.",
-          );
+            e.preventDefault();
         }
-      });
 
-      // Animation on scroll
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
-      };
+    });
+</script>
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("fade-in-up");
-          }
-        });
-      }, observerOptions);
-
-      // Re-observe elements that are not immediately visible on load
-      const animatedElements = document.querySelectorAll(".fade-in-up");
-      animatedElements.forEach((el) => observer.observe(el));
-    </script>
-  </body>
+</body>
 </html>

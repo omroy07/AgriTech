@@ -1,11 +1,14 @@
 /* Import theme system */
-@import url('../../theme.css');
+@import url("../../theme.css");
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 :root {
@@ -43,7 +46,11 @@
 }
 
 body {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   background-color: var(--bg-secondary, #f8fffe);
   color: var(--text-primary, #333);
   line-height: 1.8;
@@ -247,6 +254,13 @@ body {
   box-shadow: 0 20px 60px var(--shadow-heavy, rgba(0, 0, 0, 0.15));
   border: 1px solid rgba(255, 255, 255, 0.3);
   text-align: center;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.image-card:hover {
+  z-index: 2;
 }
 
 .analyzed-image {
@@ -266,6 +280,12 @@ body {
 .image-info {
   color: var(--text-medium);
   font-size: 0.9rem;
+  margin-top: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 0.75rem;
+  border-radius: 8px;
+  position: relative;
+  z-index: 3;
 }
 
 /* Results section */

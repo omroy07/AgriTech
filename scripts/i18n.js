@@ -135,11 +135,58 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 
 // ATTACH TO WINDOW SO HTML ONCLICK CAN FIND IT
+// GLOBAL TRANSLATIONS OBJECT (ACTIVE)
+window.translations = {
+  en: {
+    nav_home: "Home",
+    nav_about: "About",
+    nav_blog: "Blog",
+    nav_schemes: "Schemes",
+    nav_community: "Community Forum",
+
+    hero_title: "Empowering Agriculture Through Technology",
+    hero_desc: "AgriTech connects Farmers, Buyers, Equipment Suppliers, and Grocery Sellers to revolutionize India's agricultural ecosystem."
+  },
+
+  te: {
+    nav_home: "హోమ్",
+    nav_about: "గురించి",
+    nav_blog: "బ్లాగ్",
+    nav_schemes: "పథకాలు",
+    nav_community: "సముదాయ వేదిక",
+
+    hero_title: "సాంకేతికత ద్వారా వ్యవసాయాన్ని బలోపేతం చేయడం",
+    hero_desc: "అగ్రిటెక్ రైతులు, కొనుగోలుదారులు, సరఫరాదారులను అనుసంధానిస్తుంది."
+  },
+
+  hi: {
+    nav_home: "होम",
+    nav_about: "परिचय",
+    nav_blog: "ब्लॉग",
+    nav_schemes: "योजनाएं",
+    nav_community: "सामुदायिक मंच",
+
+    hero_title: "प्रौद्योगिकी के माध्यम से कृषि को सशक्त बनाना",
+    hero_desc: "एग्रीटेक किसानों और सेवा प्रदाताओं को जोड़ता है।"
+  },
+  ta: {
+  nav_home: "முகப்பு",
+  nav_about: "எங்களை பற்றி",
+  nav_blog: "வலைப்பதிவு",
+  nav_schemes: "திட்டங்கள்",
+  nav_community: "சமூக மன்றம்",
+
+  hero_title: "தொழில்நுட்பத்தின் மூலம் விவசாயத்தை வலுப்படுத்துதல்",
+  hero_desc: "அக்ரிடெக் விவசாயிகள், வாங்குபவர்கள், உபகரண வழங்குநர்கள் மற்றும் மளிகை விற்பனையாளர்களை இணைக்கிறது."
+}
+
+};
+
 window.updateContent = function(lang) {
     console.log("i18n Engine: Attempting to switch to " + lang);
     
     // 1. Save to LocalStorage
-    localStorage.setItem('selectedLang', lang);
+    localStorage.setItem('lang', lang);
     
     // 2. Update the Globe Button label
     const langNames = {
@@ -173,14 +220,8 @@ window.updateContent = function(lang) {
 
 // Auto-run on load
 document.addEventListener('DOMContentLoaded', () => {
-    const saved = localStorage.getItem('selectedLang') || 'en';
-    setTimeout(() => window.updateContent(saved), 50);
+    const saved = localStorage.getItem('lang') || 'en';
+    window.updateContent(saved);
 });
+
 // This forces the click to work even if 'onclick' is blocked
-document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('lang-option')) {
-        const lang = e.target.getAttribute('onclick').match(/'([^']+)'/)[1];
-        console.log("Forced Listener: Switching to " + lang);
-        window.updateContent(lang);
-    }
-});

@@ -3,6 +3,15 @@
  * Reusable component for adding/removing blogs from favorites
  * Accessibility updated for Issue #617
  */
+import languages from "../i18n/languages.js";
+
+let currentLang = localStorage.getItem("lang") || "en";
+
+function t(key) {
+  return languages[currentLang][key] || key;
+}
+
+
 class FavoriteButton {
     constructor(blogId, blogData = {}) {
         this.blogId = blogId;
@@ -26,7 +35,7 @@ class FavoriteButton {
         this.button.className = `favorite-btn ${this.isFavorite ? 'active' : ''}`;
         this.button.setAttribute(
             'aria-label',
-            this.isFavorite ? 'Remove from favorites' : 'Add to favorites'
+            this.isFavorite ? 't("remove_favorite")' : 't("add_favorite")'
         );
 
         /* ACCESSIBILITY: announce toggle state */
