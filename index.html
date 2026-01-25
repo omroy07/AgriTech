@@ -12,6 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="styles/switcher.css"> 
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link
     href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
     rel="stylesheet" />
@@ -1796,6 +1797,63 @@
             agriculture cashflows.</p>
           <a class="btn btn-secondary" href="financial-support.html" aria-label="Get financial support">Get support</a>
         </article>
+      </div>
+    </div>
+  </section>
+  <!-- My Activity Section: Single User Profile with Service Usage Graph -->
+  <section class="activity" id="my-activity" aria-label="My Activity">
+    <div class="activity-container" style="max-width:1400px;margin:2rem auto;padding:1.5rem;background:var(--surface-color);border:1px solid var(--border-color);border-radius:12px;">
+      <h2 class="features-title serif">My Activity</h2>
+      <p class="feature-intro">Track your purchases, sales, and tool usage on AgriTech.</p>
+      
+      <!-- User Selector -->
+      <div style="margin-bottom:1.5rem;display:flex;gap:1rem;align-items:center;">
+        <label for="userSelector" style="color:var(--text-color);font-weight:500;">Select User:</label>
+        <select id="userSelector" class="btn" style="padding:0.5rem 0.85rem;border:1px solid var(--border-color);background:var(--input-bg);color:var(--text-color);cursor:pointer;border-radius:8px;">
+          <option value="">Choose a user...</option>
+        </select>
+        <div style="flex:1"></div>
+        <button class="btn btn-secondary" id="clearUserDataBtn">Clear</button>
+        <button class="btn btn-primary" id="exportUserDataBtn">Export</button>
+      </div>
+
+      <!-- User Profile & Stats -->
+      <div id="profileSection" style="display:none;margin-bottom:1.5rem;padding:1rem;background:var(--section-bg);border-radius:8px;border:1px solid var(--border-color);">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1rem;">
+          <div style="text-align:center;">
+            <div style="font-size:0.9rem;color:var(--text-muted);">Name</div>
+            <div id="profileName" style="font-size:1.2rem;font-weight:600;color:var(--accent-color);margin-top:0.5rem;"></div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:0.9rem;color:var(--text-muted);">Items Sold</div>
+            <div id="profileSold" style="font-size:1.2rem;font-weight:600;color:var(--text-color);margin-top:0.5rem;">0</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:0.9rem;color:var(--text-muted);">Items Purchased</div>
+            <div id="profilePurchased" style="font-size:1.2rem;font-weight:600;color:var(--text-color);margin-top:0.5rem;">0</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:0.9rem;color:var(--text-muted);">Total Revenue</div>
+            <div id="profileRevenue" style="font-size:1.2rem;font-weight:600;color:var(--accent-color);margin-top:0.5rem;">₹0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Graph & History Grid -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;">
+        <!-- Service Usage Chart -->
+        <div style="background:var(--section-bg);border:1px solid var(--border-color);border-radius:8px;padding:1rem;">
+          <h3 style="color:var(--text-color);margin-bottom:1rem;font-size:1.1rem;">Service Usage</h3>
+          <canvas id="serviceChart" height="200"></canvas>
+        </div>
+
+        <!-- Purchase/Sale History -->
+        <div style="background:var(--section-bg);border:1px solid var(--border-color);border-radius:8px;padding:1rem;">
+          <h3 style="color:var(--text-color);margin-bottom:1rem;font-size:1.1rem;">Recent Transactions</h3>
+          <ul id="transactionList" style="list-style:none;padding:0;margin:0;max-height:250px;overflow-y:auto;">
+            <li style="color:var(--text-muted);padding:0.5rem;">No transactions.</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
