@@ -289,31 +289,6 @@ body.dark .eligible{color:#4ade80}
 body.dark .not-eligible{color:#f87171}
 body.dark .deadline{color:#fb7185}
 
-/* header button */
-.dark-toggle{
-  width:54px;
-  height:30px;
-  border-radius:30px;
-  background:#e5e7eb;
-  position:relative;
-  cursor:pointer;
-  transition:0.3s;
-}
-.dark-toggle::before{
-  content:"☀️";
-  position:absolute;
-  left:5px;
-  top:3px;
-  transition:0.3s;
-}
-body.dark .dark-toggle{
-  background:#020617;
-}
-body.dark .dark-toggle::before{
-  content:"🌙";
-  left:28px;
-}
-
 /* apply button */
 body.dark .apply{background:#2563eb}
 body.dark .apply.disabled{background:#475569}
@@ -327,21 +302,8 @@ body.dark .modal{
 </head>
 
 <body>
-
-<header>
-  <h1>📜 Govt Schemes & Subsidy Tracker</h1>
-  <div>
-  <div class="nav-actions">
-      <button class="theme-toggle" id="themeToggle" style="width:150px;">
-          <i class="fas fa-moon" id="themeIcon"></i>
-          <span id="themeText">Dark</span>
-      </button>
-      <!-- <div style="width:350px;"> -->
-      <a href="index.html" ><i class="fas fa-arrow-left" style="width:30px;"></i> Back to Home</a>
-      <!-- </div> -->
-  </div>
-  </div>
-</header>
+<!-- Include Navbar -->
+<div w3-include-html="navbar.html"></div>
 
 <section class="hero">
 <div class="form-card">
@@ -534,18 +496,32 @@ function closeModal(){
   document.getElementById("modal").style.display="none";
 }
 </script>
-<script>
-function toggleDark(){
-  document.body.classList.toggle("dark");
-  localStorage.setItem(
-    "darkMode",
-    document.body.classList.contains("dark")
-  );
-}
 
-if(localStorage.getItem("darkMode")==="true"){
-  document.body.classList.add("dark");
-}
+<!-- Include Navbar Script -->
+<script>
+    function includeHTML() {
+        var z, i, elmnt, file, xhttp;
+        z = document.getElementsByTagName("*");
+        for (i = 0; i < z.length; i++) {
+            elmnt = z[i];
+            file = elmnt.getAttribute("w3-include-html");
+            if (file) {
+                xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4) {
+                        if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+                        if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                        elmnt.removeAttribute("w3-include-html");
+                        includeHTML();
+                    }
+                }
+                xhttp.open("GET", file, true);
+                xhttp.send();
+                return;
+            }
+        }
+    }
+    includeHTML();
 </script>
 
 </body>

@@ -5,12 +5,19 @@ import os
 import re
 from flask_cors import CORS
 from dotenv import load_dotenv
-from extensions import limiter
+from backend.extensions import socketio, db, migrate, mail, limiter
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
+from backend.celery_app import celery_app, make_celery
+from backend.config import config
 from backend.monitoring.routes import health_bp
-from backend.tasks.report_tasks import generate_and_send_report, generate_pdf_report
-from backend.services.pdf_service import generate_loan_report
+from backend.utils.logger import logger
+from backend.api import register_api
+from backend.schemas.loan_schema import LoanRequestSchema
+from marshmallow import ValidationError
+from backend.tasks import predict_crop_task, process_loan_task
+from backend.utils.validation import sanitize_input, validate_input
+import backend.sockets.task_events  # Register socket event handlers
 
 
 
@@ -24,14 +31,30 @@ app = Flask(__name__, static_folder='.', static_url_path='')
 env_name = os.getenv('FLASK_ENV', 'default')
 app.config.from_object(config[env_name])
 
+# Initialize extensions
+db.init_app(app)
+migrate.init_app(app, db)
+limiter.init_app(app)
+
+# Import models after db initialization
+from backend.models import User
+
 CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
-app.register_blueprint(crop_bp)
+app.register_blueprint(crop_bp, url_prefix='/crop')
 app.register_blueprint(disease_bp)
 app.register_blueprint(health_bp)
 
 # Initialize SocketIO with app
 socketio.init_app(app)
+
+# Initialize Database and Mail
+db.init_app(app)
+migrate.init_app(app, db)
+mail.init_app(app)
+
+# Initialize Celery with app context
+celery = make_celery(app)
 
 
 
@@ -39,6 +62,9 @@ socketio.init_app(app)
 
 # Initialize Marshmallow Schemas
 loan_schema = LoanRequestSchema()
+
+with app.app_context():
+    db.create_all()
 
 # Initialize Gemini API
 # Configure Gemini Client
@@ -117,10 +143,12 @@ def predict_crop_async():
                 return jsonify({'status': 'error', 'message': f'Missing field: {field}'}), 400
         
         # Submit task to Celery
+        user_id = data.get('user_id')
         task = predict_crop_task.delay(
             data['N'], data['P'], data['K'],
             data['temperature'], data['humidity'],
-            data['ph'], data['rainfall']
+            data['ph'], data['rainfall'],
+            user_id=user_id
         )
         
         return jsonify({
@@ -149,7 +177,8 @@ def process_loan_async():
                     json_data[key] = sanitize_input(value)
         
         # Submit task to Celery
-        task = process_loan_task.delay(json_data)
+        user_id = json_data.get('user_id')
+        task = process_loan_task.delay(json_data, user_id=user_id)
         
         return jsonify({
             'status': 'submitted',
@@ -408,6 +437,10 @@ def contact():
 @limiter.limit("10 per minute")
 def chat():
     return send_from_directory('.', 'chat.html')
+
+@app.route('/reset-password/<token>')
+def reset_password_page(token):
+    return send_from_directory('.', 'reset-password.html')
 
 @app.route('/<path:filename>')
 def serve_static(filename):
