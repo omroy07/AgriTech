@@ -135,11 +135,41 @@ Note: Backend and frontend must be running simultaneously for proper functionali
 - 🌾 Crop Recommendation
 - 📉 Yield Prediction
 - 🔬 Disease Detection
-- 🤝 Farmer Community
+- � **AI Chatbot** - Platform guidance & agriculture support
+- �🤝 Farmer Community
 - 🛒 Shopkeeper Listings
 
 ---
+## 🤖 AI Chatbot
 
+AgriTech's AI-powered chatbot provides comprehensive support for farmers:
+
+### Features
+- **Platform Guidance**: Explains how to use all AgriTech features and tools
+- **Agriculture Support**: Answers farming questions, crop recommendations, pest control
+- **Decision Making**: Provides region-specific, season-based farming advice
+- **Image Analysis**: Upload plant photos for disease detection and diagnosis
+- **24/7 Support**: Always available for instant farming assistance
+
+### Technical Implementation
+- **Dual Mode**: AI-powered (Google Gemini) + Rule-based fallback
+- **Smart Matching**: Fuzzy search with keyword analysis for accurate responses
+- **Offline Capability**: Works without internet using JSON-based responses
+- **Image Processing**: Analyzes plant photos for disease identification
+
+### Usage
+```bash
+# Start the chatbot server
+npm install
+node server.js
+
+# Access at: http://localhost:3000/chat
+```
+
+### API Endpoints
+- `POST /api/chat` - Send messages and images for AI analysis
+
+---
 ## 🛠️ Tech Stack
 
 ### 🎨 Frontend
@@ -174,9 +204,16 @@ Note: Backend and frontend must be running simultaneously for proper functionali
 ```text
 AGRITECH/
 ├── app.py                      # 🐍 Flask Backend (Main entry point)
-├── server.js                   # 🟢 Node.js Server (Optional)
+├── server.js                   # 🟢 Node.js Chatbot Server
+├── package.json                # Node.js dependencies
 ├── requirements.txt            # Python dependencies
 ├── firebase.js                 # Firebase config fetching
+├── 📁 chatbot/
+│   ├── chat.html               # 🤖 Chatbot interface
+│   ├── chat.js                 # Chatbot client logic
+│   ├── chat.css                # Chatbot styling
+│   ├── json-chatbot.js         # Rule-based chatbot engine
+│   └── chatbot-responses.json  # Predefined responses
 ├── 📁 src/
 │   └── 📁 frontend/            # 🌐 Frontend UI (HTML, CSS, JS)
 │       ├── 📁 pages/           # Individual page files
@@ -229,7 +266,7 @@ FIREBASE_MEASUREMENT_ID=your_measurement_id
 - Cloud Deployment
 - Mobile Application
 - Real-Time Weather API
-- AI Chatbot
+- ~~AI Chatbot~~ ✅ **COMPLETED**
 - Multilingual Support
 
 ---
