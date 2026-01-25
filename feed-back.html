@@ -20,9 +20,12 @@
             --text-primary: #2d5a2d;
             --text-secondary: #5a7a5a;
             --text-muted: #81c784;
+            --text-color: #0f172a;
+            --accent-color: #16a34a;
             --border-color: rgba(139, 195, 74, 0.2);
             --input-bg: rgba(255, 255, 255, 0.8);
             --input-border: rgba(139, 195, 74, 0.2);
+            --search-input-border: #94a3b8;
             --shadow-primary: rgba(76, 175, 80, 0.1);
             --shadow-secondary: rgba(0, 0, 0, 0.05);
             --header-bg: rgba(255, 255, 255, 0.95);
@@ -45,9 +48,11 @@
             --text-primary: #e0e0e0;
             --text-secondary: #b0b0b0;
             --text-muted: #66bb6a;
+            --text-color: #ffffff;
             --border-color: rgba(102, 187, 106, 0.3);
             --input-bg: rgba(50, 50, 50, 0.8);
             --input-border: rgba(102, 187, 106, 0.3);
+            --search-input-border: #555555;
             --shadow-primary: rgba(102, 187, 106, 0.2);
             --shadow-secondary: rgba(0, 0, 0, 0.3);
             --header-bg: rgba(30, 30, 30, 0.95);
@@ -173,74 +178,49 @@
 
         /* Search bar styles */
         .search-container {
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid transparent;
-            border-radius: 30px;
-            padding: 4px 4px 4px 15px;
-            width: 100%;
-            max-width: 280px;
-            margin-left: auto;
-            margin-right: 20px;
-            box-shadow: 0 4px 15px rgba(56, 142, 60, 0.1);
-            transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
-        }
-
-        .dark-theme .search-container {
-            background: rgba(50, 50, 50, 0.8);
-        }
-
-        .search-container:focus-within {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(56, 142, 60, 0.2);
-            border-color: #4caf50;
+            display: flex;
+            gap: 0.25rem;
+            flex-shrink: 1;
+            min-width: 150px;
         }
 
         .search-input {
-            border: none;
-            outline: none;
-            padding: 0 10px 0 0;
-            font-size: 15px;
-            flex: 1;
-            min-width: 0;
-            color: #2e7d32;
+            padding: 0.5rem;
+            padding-right: 40px;
+            border-radius: 8px;
+            border: 1px solid var(--search-input-border);
             background: transparent;
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-        }
-
-        .dark-theme .search-input {
-            color: #e0e0e0;
-        }
-
-        .search-input::placeholder {
-            color: #81c784;
-            font-weight: 400;
+            color: var(--text-color);
+            width: 230px;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
         }
 
         .search-button {
-            flex-shrink: 0;
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            padding: 0.5rem 0.6rem;
+            background: var(--accent-color);
             border: none;
-            border-radius: 50%;
-            cursor: pointer;
+            border-radius: 0 8px 8px 0;
             color: white;
-            font-size: 16px;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(56, 142, 60, 0.2);
+            cursor: pointer;
+            flex-shrink: 0;
         }
 
-        .search-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 15px rgba(56, 142, 60, 0.4);
+        .search-input:focus,
+        .search-input.input-focused {
+            width: 330px;
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .search-input::placeholder {
+            color: #888;
+            opacity: 1;
         }
 
         /* Theme toggle */
@@ -1124,12 +1104,6 @@
             .navbar {
                 padding: 0.75rem 0;
             }
-
-            .search-container {
-                max-width: 100%;
-                margin: 1rem 0 0 0;
-                order: 3;
-            }
         }
 
         @media screen and (max-width: 600px) {
@@ -1155,6 +1129,27 @@
             .nav-buttons {
                 flex-wrap: wrap;
                 justify-content: center;
+            }
+
+            .search-container {
+                order: -1;
+                width: 100%;
+                max-width: 100%;
+                margin: 0 0 1rem 0;
+            }
+
+            .search-input {
+                width: 100%;
+                padding-right: 50px;
+            }
+
+            .search-input:focus,
+            .search-input.input-focused {
+                width: 100%;
+            }
+
+            .search-button {
+                padding: 0.5rem 1rem;
             }
 
             .feedback-container {
@@ -1265,11 +1260,12 @@
                 <div class="brand">
                     <a href="main.html" class="logo">AgriTech</a>
                 </div>
+
                 <div class="nav-buttons">
-                    <!-- Responsive Search Bar -->
                     <div class="search-container">
-                        <input type="text" placeholder="Search..." class="search-input" />
-                        <button class="search-button">
+                        <input type="text" placeholder="Search..." class="search-input" autocomplete="off"
+                            aria-label="Search content" />
+                        <button class="search-button" aria-label="Search">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
@@ -1283,8 +1279,8 @@
                     <a href="blog.html" class="btn btn-secondary">Blog</a>
                     <a href="faq.html" class="btn btn-secondary">FAQ</a>
 
-                    <a href="login.html" class="btn btn-secondary auth-login">Login</a>
-                    <a href="register.html" class="btn btn-primary auth-register">Register</a>
+                    <a href="login.html" class="btn btn-secondary auth-login login-btn-desktop">Login</a>
+                    <a href="register.html" class="btn btn-primary auth-register register-btn-desktop">Register</a>
 
                     <button class="logout-button auth-logout auth-hidden" onclick="showLogoutConfirmation()">
                         <i class="fas fa-sign-out-alt"></i>
@@ -1391,11 +1387,12 @@
         </main>
 
         <div class="floating-help">
-            <button class="help-button" title="Need help?">
-                <i class="fas fa-question"></i>
+            <button class="help-button" title="Need help?" onclick="window.location.href='contact.html'"
+                aria-label="Get help - Opens contact page" tabindex="0" role="button">
+                <i class="fas fa-question" aria-hidden="true"></i>
             </button>
-            <div class="help-tooltip">
-                Need help with feedback? Contact our support team!
+            <div class="help-tooltip" role="tooltip">
+                Need help? Click to contact support or view FAQs!
             </div>
         </div>
 
@@ -1465,6 +1462,32 @@
     </div>
 
     <script>
+        // Desktop Search
+        const searchButton = document.querySelector(".search-button");
+        const searchInput = document.querySelector(".search-input");
+
+        searchButton?.addEventListener("click", () => {
+            handleSearch(searchInput.value);
+        });
+
+        searchInput?.addEventListener("keydown", e => {
+            if (e.key === "Enter") handleSearch(e.target.value);
+        });
+
+        // Add focus effect when button is clicked or focused
+        searchButton?.addEventListener("click", () => {
+            searchInput?.classList.add("input-focused");
+        });
+
+        searchButton?.addEventListener("focus", () => {
+            searchInput?.focus(); //Focus the input to show cursor
+            searchInput?.classList.add("input-focused");
+        });
+
+        searchInput?.addEventListener("blur", () => {
+            searchInput.classList.remove("input-focused");
+        });
+
         // Theme toggle functionality similar to homepage
         function toggleTheme() {
             const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
@@ -1697,6 +1720,7 @@
     </script>
     <script src="theme.js"></script>
 
+    <script src="auth.js"></script>
 </body>
 
 </html>
