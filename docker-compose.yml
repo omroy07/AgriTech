@@ -16,8 +16,8 @@ services:
     image: mailhog/mailhog
     container_name: agritech-mailhog
     ports:
-      - "1025:1025"
-      - "8025:8025"
+      - "1025:1025" # SMTP server
+      - "8025:8025" # Web UI
     restart: unless-stopped
 
   # Flask Backend
@@ -31,8 +31,6 @@ services:
       - REDIS_URL=redis://redis:6379/0
       - MAIL_SERVER=mailhog
       - MAIL_PORT=1025
-      - STORAGE_TYPE=local
-      - UPLOAD_FOLDER=/app/uploads
     env_file:
       - .env
     depends_on:
@@ -52,8 +50,6 @@ services:
       - REDIS_URL=redis://redis:6379/0
       - MAIL_SERVER=mailhog
       - MAIL_PORT=1025
-      - STORAGE_TYPE=local
-      - UPLOAD_FOLDER=/app/uploads
     env_file:
       - .env
     depends_on:

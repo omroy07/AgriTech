@@ -21,6 +21,7 @@
     --shadow: rgba(0,0,0,0.08);
 }
 
+
 /* 🌙 DARK THEME OVERRIDES */
 body.dark-theme {
     --bg-main: linear-gradient(180deg, #121212, #1f1f1f);
@@ -50,22 +51,35 @@ a:focus-visible {
 }
 
 
-        .agritech-blog {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            padding: 3rem 1rem;
-        }
+/* BASE STYLES */
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: var(--bg-main);
+    color: var(--text-main);
+}
 
-        .favorites-container {
-            max-width: 1200px;
-            width: 100%;
-        }
 
-        .favorites-header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
+/* ACCESSIBILITY */
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 3px;
+}
+
+/* LAYOUT */
+.agritech-blog {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1rem;
+}
+
+.favorites-container {
+    max-width: 1200px;
+    width: 100%;
+}
+
 
         .favorites-title {
     font-size: 2.8rem;
@@ -88,13 +102,26 @@ a:focus-visible {
 }
 
 
-        .favorites-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 2.5rem;
-            flex-wrap: wrap;
-        }
+.favorites-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.favorites-title {
+    font-size: 2.8rem;
+    color: var(--primary);
+}
+
+.favorites-title i {
+    color: var(--danger);
+}
+
+
+.favorites-stats {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+}
+
 
         .action-btn {
             padding: 0.9rem 1.6rem;
@@ -120,10 +147,33 @@ a:focus-visible {
 .btn-secondary { background: var(--secondary); color: #fff; }
 .btn-primary { background: var(--primary); color: #fff; }
 
-        .action-btn:hover {
-            transform: translateY(-2px);
-            opacity: 0.9;
-        }
+#favoritesContainer {
+    background: var(--bg-card);
+    box-shadow: 0 15px 35px var(--shadow);
+    border-radius: 18px;
+    padding: 3rem 2rem;
+}
+
+.favorites-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+}
+
+
+.action-btn {
+    padding: 0.9rem 1.6rem;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
 
         /* .no-favorites {
             text-align: center;
@@ -135,11 +185,23 @@ a:focus-visible {
             color: var(--text-muted);
         }
 
-        .favorite-item-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
+.no-favorites {
+    color: var(--text-muted);
+}
+
+.card-description {
+    color: var(--text-muted);
+}
+
+.blog-card {
+    background: var(--bg-card);
+    margin-bottom: 2rem;
+}
+
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-secondary { background: var(--secondary); color: #fff; }
+.btn-primary { background: var(--primary); color: #fff; }
+
 
         .remove-btn {
     background: var(--danger);
@@ -163,13 +225,55 @@ a:focus-visible {
         }
         
 
+.action-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.no-favorites i {
+    font-size: 4.5rem;
+    color: var(--text-muted);
+}
+
+.favorite-item-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.remove-btn {
+    background: var(--danger);
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.back-to-blog {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 1rem 1.8rem;
+    background: var(--primary);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+
 a, button {
     color: inherit;
 }
 
+
 body.dark-theme img {
     filter: brightness(0.9) contrast(1.1);
 }
+
 h1, h2, h3, h4, h5, h6 {
     color: var(--text-main);
 }
@@ -177,6 +281,10 @@ h1, h2, h3, h4, h5, h6 {
 p, span, li {
     color: var(--text-main);
 }
+
+
+
+
 .card-title {
     font-size: 1.2rem;
     font-weight: 700;
@@ -185,6 +293,38 @@ p, span, li {
 }
 
 
+
+
+
+/* ⬆ Back to Top Button */
+#backToTop {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px var(--shadow);
+    z-index: 999;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#backToTop:hover {
+    transform: translateY(-3px);
+    opacity: 0.9;
+}
+
+#backToTop:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 4px;
+}
 
     </style>
 </head>
@@ -241,6 +381,13 @@ p, span, li {
              aria-label="Favorite blogs list"></div>
     </div>
 </section>
+
+<!-- Back to Top Button -->
+<button id="backToTop"
+        aria-label="Back to top"
+        title="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+</button>
 
 <script>
 class FavoritesPage {
@@ -370,6 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
     new FavoritesPage();
 });
 
+
 function toggleTheme() {
     document.body.classList.toggle('dark-theme');
 
@@ -387,6 +535,25 @@ function updateThemeIcon(isDark) {
         ? 'fas fa-sun'
         : 'fas fa-moon';
 }
+
+
+// Back to Top Button
+const backToTopBtn = document.getElementById('backToTop');
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+        backToTopBtn.style.display = 'flex';
+    } else {
+        backToTopBtn.style.display = 'none';
+    }
+});
+
+backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
 
 </script>
 </body>
