@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -642,6 +643,7 @@
     }
 
     @media (min-width: 1201px) {
+
       .mobile-menu,
       .mobile-menu-overlay,
       .hamburger-btn {
@@ -650,6 +652,7 @@
     }
   </style>
 </head>
+
 <body>
   <nav class="navbar" data-theme="dark">
     <div class="navbar-content">
@@ -687,7 +690,8 @@
               <li><a href="supply-chain.html"><i class="fas fa-truck"></i> Supply Chain Support</a></li>
               <li><a href="sustainable-farming.html"><i class="fas fa-leaf"></i> Sustainable Farming Guidance</a></li>
               <li><a href="marketplace.html"><i class="fas fa-store"></i> Marketplace Services</a></li>
-              <li><a href="financial-support.html"><i class="fas fa-dollar-sign"></i> Financial & Insurance Support</a></li>
+              <li><a href="financial-support.html"><i class="fas fa-dollar-sign"></i> Financial & Insurance Support</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -720,12 +724,11 @@
             <div class="lang-option" onclick="setLanguage('pa','ਪੰਜਾਬੀ')">ਪੰਜਾਬੀ</div>
           </div>
         </div>
-
-        <!-- Theme Toggle -->
-        <button class="theme-toggle btn" onclick="toggleTheme()">
+        <button id="themeToggle" class="theme-toggle btn">
           <i class="fas fa-moon"></i>
-          <span class="theme-text">Light</span>
+          <span class="theme-label">Light</span>
         </button>
+
 
         <!-- Login/Register -->
         <a href="login.html" class="btn btn-secondary">Login</a>
@@ -867,11 +870,11 @@
     function toggleTheme() {
       const navbar = document.querySelector('.navbar');
       const themeText = document.querySelector('.theme-text');
-      if(navbar.getAttribute('data-theme') === 'light') {
-        navbar.setAttribute('data-theme','dark');
+      if (navbar.getAttribute('data-theme') === 'light') {
+        navbar.setAttribute('data-theme', 'dark');
         themeText.innerText = 'Dark';
       } else {
-        navbar.setAttribute('data-theme','light');
+        navbar.setAttribute('data-theme', 'light');
         themeText.innerText = 'Light';
       }
     }
@@ -1031,4 +1034,5 @@
     }
   </script>
 </body>
+
 </html>
