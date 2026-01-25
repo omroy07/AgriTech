@@ -9,7 +9,7 @@ const API_KEY = process.env.GEMINI_API_KEY;
 const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
 
 if (!API_KEY) {
-  console.error('❌ GEMINI_API_KEY is missing. Check your .env file.');
+  console.warn('⚠️ GEMINI_API_KEY not found. AI features will be limited. Using rule-based responses only.');
 }
 
 app.use(cors());
@@ -23,6 +23,13 @@ app.post('/api/chat', async (req, res) => {
   }
 
   try {
+    // If no API key, return a helpful message about using the JSON chatbot
+    if (!API_KEY) {
+      return res.json({
+        reply: "🤖 I'm currently running in offline mode. For AI-powered responses, please configure your GEMINI_API_KEY. Meanwhile, try our rule-based chatbot at /chat for instant farming advice!"
+      });
+    }
+
     const payload = {
       contents: [
         {
@@ -55,7 +62,7 @@ app.post('/api/chat', async (req, res) => {
     if (!response.ok) {
       const errText = await response.text();
       console.error('API Error:', errText);
-      return res.status(500).json({ reply: '⚠️ API error. Please try again later.' });
+      return res.status(500).json({ reply: '⚠️ AI service temporarily unavailable. Please try our rule-based chatbot for instant farming advice!' });
     }
 
     const data = await response.json();
@@ -67,14 +74,15 @@ app.post('/api/chat', async (req, res) => {
     res.json({ reply });
   } catch (err) {
     console.error('Server Error:', err);
-    res.status(500).json({ reply: '⚠️ Server error. Please try again later.' });
+    res.status(500).json({ reply: '⚠️ Server error. Please try our rule-based chatbot for instant farming advice!' });
   }
 });
 
 app.use(express.static('.'));
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`🚀 AgriTech Chatbot Server running on http://localhost:${PORT}`);
+  console.log(`🤖 AI Features: ${API_KEY ? 'ENABLED' : 'DISABLED (using fallback mode)'}`);
 });
 
 
