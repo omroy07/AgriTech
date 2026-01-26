@@ -9,6 +9,7 @@ from extensions import limiter
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
 from backend.extensions.socketio import socketio
+from backend.auth import auth_bp
 import backend.sockets.task_events  # Register socket event handlers
 
 
@@ -28,6 +29,7 @@ CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 app.register_blueprint(crop_bp)
 app.register_blueprint(disease_bp)
 app.register_blueprint(health_bp)
+app.register_blueprint(auth_bp)
 
 # Initialize SocketIO with app
 socketio.init_app(app)
