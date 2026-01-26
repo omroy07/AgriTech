@@ -23,28 +23,35 @@
       <div class="scroll-progress" id="scrollProgress"></div>
     </div>
 
-    <header class="compact-header">
-      <div class="header-content">
-        <div class="brand-section">
-          <a href="index.html" class="logo-link">
-            <img src="images/logo.png" alt="AgriTech logo" class="small-logo">
-            <span class="brand-name">AgriTech</span>
-          </a>
-        </div>
+    <header class="sticky-header">
+  <div class="container header-content navbar">
 
-        <div class="nav-actions">
-          <button class="theme-toggle" aria-label="Toggle theme">
-            <i class="fas fa-moon moon-icon"></i>
-            <i class="fas fa-sun sun-icon" style="display: none;"></i>
-            <span class="theme-text">Dark</span>
-          </button>
+    <!-- Left: Logo -->
+    <a href="/" class="logo">
+      <img src="/images/logo.png" alt="AgriTech Logo">
+      <span class="logo-text">AgriTech</span>
+    </a>
 
-          <a href="index.html" class="back-btn">
-            <i class="fas fa-arrow-left"></i> Back to Home
-          </a>
-        </div>
-      </div>
-    </header>
+    <!-- Center: Navigation -->
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/blog">Blog</a>
+    </nav>
+
+    <!-- Right: Theme Toggle -->
+    <button
+      class="theme-toggle"
+      aria-label="Toggle dark/light mode"
+      id="theme-toggle-btn"
+    >
+      <i class="fas fa-sun sun-icon"></i>
+      <i class="fas fa-moon moon-icon"></i>
+      <span class="theme-text"></span>
+    </button>
+
+  </div>
+</header>
 
     <div class="main-wrapper">
       <div class="page-hero">

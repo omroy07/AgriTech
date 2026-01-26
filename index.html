@@ -12,6 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="styles/switcher.css"> 
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link
     href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
     rel="stylesheet" />
@@ -291,6 +292,97 @@
 
     .services-list i {
       width: 20px;
+    }
+
+    /* Language Selector */
+    .lang-container {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      background: transparent;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-color);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.85rem;
+    }
+
+    .lang-btn:hover {
+      border-color: var(--accent-color);
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    .lang-btn i {
+      font-size: 0.9rem;
+    }
+
+    .lang-dropdown {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      right: 0;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      min-width: 120px;
+      padding: 0.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      box-shadow: 0 4px 12px var(--shadow-color);
+    }
+
+    .lang-dropdown.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .lang-option {
+      display: block;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.5rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .lang-option:hover {
+      background: var(--btn-bg);
+      color: var(--text-color);
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent-color);
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    .theme-toggle i {
+      font-size: 0.9rem;
+    }
+
+    .theme-text {
+      font-size: 0.85rem;
     }
 
     /* Button Styles */
@@ -1373,90 +1465,166 @@
 </head>
 
 <body>
+  <div style="padding:10px; text-align:right;">
+  <label for="languageSelect">Language:</label>
+  <select id="languageSelect">
+    <option value="en">English</option>
+    <option value="te">తెలుగు</option>
+    <option value="hi">हिन्दी</option>
+    <option value="ta">தமிழ்</option>
+  </select>
+</div>
+
+
+  <!-- Offline & Cached Notices -->
+  <div id="network-status" class="hidden">
+    ⚠️ Offline or poor connection
+  </div>
+
+  <div id="cached-notice" class="hidden">
+    ⚠️ Showing cached data — may be outdated
+  </div>
+
+  <!-- rest of your page starts here -->
+
+
+
+
 
   <canvas id="bg-canvas"></canvas>
 
  <nav class="navbar">
   <div class="navbar-content">
+
+    <!-- Brand -->
     <div class="brand">
       <img src="images/logo.png" alt="AgriTech logo">
       <a href="#">AgriTech</a>
     </div>
 
-      <!-- Left Navigation Links -->
-      <div class="left-nav">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="about.html" class="nav-link">About</a>
-        <a href="blog.html" class="nav-link">Blog</a>
-        <a href="scheme.html" class="nav-link">Schemes</a>
-        <a href="community_forum.html" class="nav-link">Community Forum</a>
-        <div class="services-toggle-container">
-          <a href="#" class="nav-link services-toggle">
-            Services <i class="fas fa-chevron-down services-arrow"></i>
-          </a>
-          <div class="services-dropdown">
-            <ul class="services-list">
-              <li><a href="crop.html"><i class="fas fa-seedling"></i> Smart Crop Monitoring</a></li>
-              <li><a href="supply-chain.html"><i class="fas fa-truck"></i> Supply Chain Support</a></li>
-              <li><a href="sustainable-farming.html"><i class="fas fa-leaf"></i> Sustainable Farming Guidance</a></li>
-              <li><a href="marketplace.html"><i class="fas fa-store"></i> Marketplace Services</a></li>
-              <li><a href="financial-support.html"><i class="fas fa-dollar-sign"></i> Financial & Insurance Support</a></li>
-            </ul>
-          </div>
+    <!-- Hamburger Button -->
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+      <div class="hamburger-icon">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </button>
+
+    <!-- Left Nav Links -->
+    <div class="left-nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="news.html" class="nav-link">Ag News</a>
+      <a href="scheme.html" class="nav-link">Schemes</a>
+      <a href="community_forum.html" class="nav-link">Community Forum</a>
+      <!-- Services Dropdown -->
+      <div class="services-toggle-container">
+        <a href="#" class="nav-link services-toggle">
+          Services <i class="fas fa-chevron-down services-arrow"></i>
+        </a>
+        <div class="services-dropdown">
+          <ul class="services-list">
+            <li><a href="crop.html"><i class="fas fa-seedling"></i> Smart Crop Monitoring</a></li>
+            <li><a href="supply-chain.html"><i class="fas fa-truck"></i> Supply Chain Support</a></li>
+            <li><a href="sustainable-farming.html"><i class="fas fa-leaf"></i> Sustainable Farming Guidance</a></li>
+            <li><a href="marketplace.html"><i class="fas fa-store"></i> Marketplace Services</a></li>
+            <li><a href="financial-support.html"><i class="fas fa-dollar-sign"></i> Financial & Insurance Support</a></li>
+          </ul>
         </div>
       </div>
     </div>
 
+    <!-- Right Nav Buttons -->
     <div class="nav-buttons">
+      <!-- Search -->
       <div class="search-container">
-        <input type="text" data-i18n="search" placeholder="Search..." class="search-input" autocomplete="off" />
+        <input type="text" placeholder="Search..." class="search-input" autocomplete="off" />
         <button class="search-button"><i class="fas fa-search"></i></button>
       </div>
 
+      <!-- Language Selector -->
       <div class="lang-container">
-        <button class="btn btn-secondary lang-btn">
+        <button class="lang-btn">
           <i class="fas fa-globe"></i>
           <span class="selected-lang" id="current-lang-text">English</span>
         </button>
         <div class="lang-dropdown">
-          <div class="lang-option" onclick="window.platformLanguageChange('en')">English</div>
-          <div class="lang-option" onclick="window.platformLanguageChange('hi')">हिन्दी</div>
-          <div class="lang-option" onclick="window.platformLanguageChange('bn')">বাংলা</div>
-          <div class="lang-option" onclick="window.platformLanguageChange('te')">తెలుగు</div>
-          <div class="lang-option" onclick="window.languagePlatformChange('mr')">मराठी</div>
-          <div class="lang-option" onclick="window.platformLanguageChange('ta')">தமிழ்</div>
-          <div class="lang-option" onclick="window.platformLanguageChange('gu')">ગુજરાતી</div>
-          <div class="lang-option" onclick="window.platformLanguageChange('kn')">ಕನ್ನಡ</div>
-          <div class="lang-option" onclick="window.platformLanguageChange('ml')">മലയാളം</div>
-          <div class="lang-option" onclick="window.platformLanguageChange('pa')">ਪੰਜਾਬੀ</div>
+          <div class="lang-option" onclick="setLanguage('en','English')">English</div>
+          <div class="lang-option" onclick="setLanguage('hi','हिन्दी')">हिन्दी</div>
+          <div class="lang-option" onclick="setLanguage('bn','বাংলা')">বাংলা</div>
+          <div class="lang-option" onclick="setLanguage('te','తెలుగు')">తెలుగు</div>
+          <div class="lang-option" onclick="setLanguage('mr','मराठी')">मराठी</div>
+          <div class="lang-option" onclick="setLanguage('ta','தமிழ்')">தமிழ்</div>
+          <div class="lang-option" onclick="setLanguage('gu','ગુજરાતી')">ગુજરાતી</div>
+          <div class="lang-option" onclick="setLanguage('kn','ಕನ್ನಡ')">ಕನ್ನಡ</div>
+          <div class="lang-option" onclick="setLanguage('ml','മലയാളം')">മലയാളം</div>
+          <div class="lang-option" onclick="setLanguage('pa','ਪੰਜਾਬੀ')">ਪੰਜਾਬੀ</div>
         </div>
       </div>
 
-      <button class="theme-toggle btn">
+      <!-- Theme Toggle -->
+      <button class="theme-toggle btn" onclick="toggleTheme()">
         <i class="fas fa-moon"></i>
-        <span class="theme-text" data-i18n="light">Light</span>
+        <span class="theme-text">Light</span>
       </button>
 
       <a href="login.html" class="btn btn-secondary" data-i18n="login">Login</a>
       <a href="faq.html" class="btn btn-secondary" data-i18n="faq">FAQ</a>
+      
+      <!-- Notification Dropdown -->
+      <div class="notification-container" style="position: relative; display: inline-block;">
+        <button class="btn btn-secondary" onclick="document.getElementById('notification-dropdown').classList.toggle('active')">
+          <i class="fas fa-bell"></i>
+          <span id="notification-badge" style="position: absolute; top: -5px; right: -5px; background: #ef4444; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; min-width: 18px; text-align: center; border: 2px solid var(--bg-color); display: none;">0</span>
+        </button>
+        <div id="notification-dropdown" class="services-dropdown" style="right: 0; left: auto; top: 100%; width: 320px; max-height: 450px; overflow-y: auto; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+          <div style="padding: 12px; border-bottom: 1px solid var(--border-color); font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
+            <span>Notifications</span>
+            <span class="text-xs text-blue-500 cursor-pointer" onclick="markAllAsRead()">Mark all as read</span>
+          </div>
+          <div id="notification-list">
+            <div style="padding: 20px; text-align: center; color: var(--text-muted);">No new notifications</div>
+          </div>
+        </div>
+      </div>
+
       <a href="register.html" class="btn btn-primary" data-i18n="register">Register</a>
     </div>
+
   </div>
-    <!-- Hamburger Menu Button for Mobile -->
-      <!-- Hamburger Menu Button for Mobile -->
-      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu" onclick="
-    document.getElementById('mobileMenu').classList.add('active');
-    document.getElementById('mobileMenuOverlay').classList.add('active');
-    document.body.style.overflow='hidden';
-  ">
-        <span class="hamburger-icon">
-          <span class="bar bar1"></span>
-          <span class="bar bar2"></span>
-          <span class="bar bar3"></span>
-        </span>
-      </button>
-    </div>
-  </nav>
+</nav>
+
+<script>
+  // Language Selector Function
+  function setLanguage(code, label) {
+    document.getElementById('current-lang-text').innerText = label;
+
+    // Call platform language function if exists
+    if (window.platformLanguageChange) {
+      window.platformLanguageChange(code);
+    } else if (window.languagePlatformChange) {
+      window.languagePlatformChange(code);
+    } else {
+      console.log("Language function not defined. Selected:", code);
+    }
+  }
+
+  // Theme Toggle Function
+  function toggleTheme() {
+    const navbar = document.querySelector('.navbar');
+    const themeText = document.querySelector('.theme-text');
+    if(navbar.getAttribute('data-theme') === 'light') {
+      navbar.setAttribute('data-theme','dark');
+      themeText.innerText = 'Dark';
+    } else {
+      navbar.setAttribute('data-theme','light');
+      themeText.innerText = 'Light';
+    }
+  }
+</script>
+
 
   <!-- Mobile Menu Overlay -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
@@ -1641,66 +1809,128 @@
       </div>
     </div>
   </section>
+  <!-- My Activity Section: Single User Profile with Service Usage Graph -->
+  <section class="activity" id="my-activity" aria-label="My Activity">
+    <div class="activity-container" style="max-width:1400px;margin:2rem auto;padding:1.5rem;background:var(--surface-color);border:1px solid var(--border-color);border-radius:12px;">
+      <h2 class="features-title serif">My Activity</h2>
+      <p class="feature-intro">Track your purchases, sales, and tool usage on AgriTech.</p>
+      
+      <!-- User Selector -->
+      <div style="margin-bottom:1.5rem;display:flex;gap:1rem;align-items:center;">
+        <label for="userSelector" style="color:var(--text-color);font-weight:500;">Select User:</label>
+        <select id="userSelector" class="btn" style="padding:0.5rem 0.85rem;border:1px solid var(--border-color);background:var(--input-bg);color:var(--text-color);cursor:pointer;border-radius:8px;">
+          <option value="">Choose a user...</option>
+        </select>
+        <div style="flex:1"></div>
+        <button class="btn btn-secondary" id="clearUserDataBtn">Clear</button>
+        <button class="btn btn-primary" id="exportUserDataBtn">Export</button>
+      </div>
+
+      <!-- User Profile & Stats -->
+      <div id="profileSection" style="display:none;margin-bottom:1.5rem;padding:1rem;background:var(--section-bg);border-radius:8px;border:1px solid var(--border-color);">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1rem;">
+          <div style="text-align:center;">
+            <div style="font-size:0.9rem;color:var(--text-muted);">Name</div>
+            <div id="profileName" style="font-size:1.2rem;font-weight:600;color:var(--accent-color);margin-top:0.5rem;"></div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:0.9rem;color:var(--text-muted);">Items Sold</div>
+            <div id="profileSold" style="font-size:1.2rem;font-weight:600;color:var(--text-color);margin-top:0.5rem;">0</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:0.9rem;color:var(--text-muted);">Items Purchased</div>
+            <div id="profilePurchased" style="font-size:1.2rem;font-weight:600;color:var(--text-color);margin-top:0.5rem;">0</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:0.9rem;color:var(--text-muted);">Total Revenue</div>
+            <div id="profileRevenue" style="font-size:1.2rem;font-weight:600;color:var(--accent-color);margin-top:0.5rem;">₹0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Graph & History Grid -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;">
+        <!-- Service Usage Chart -->
+        <div style="background:var(--section-bg);border:1px solid var(--border-color);border-radius:8px;padding:1rem;">
+          <h3 style="color:var(--text-color);margin-bottom:1rem;font-size:1.1rem;">Service Usage</h3>
+          <canvas id="serviceChart" height="200"></canvas>
+        </div>
+
+        <!-- Purchase/Sale History -->
+        <div style="background:var(--section-bg);border:1px solid var(--border-color);border-radius:8px;padding:1rem;">
+          <h3 style="color:var(--text-color);margin-bottom:1rem;font-size:1.1rem;">Recent Transactions</h3>
+          <ul id="transactionList" style="list-style:none;padding:0;margin:0;max-height:250px;overflow-y:auto;">
+            <li style="color:var(--text-muted);padding:0.5rem;">No transactions.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <footer class="site-footer tech-dark-theme final-match">
-  <div class="footer-top-accent"></div>
 
-  <div class="footer-inner-content">
-    <div class="footer-section footer-brand">
-      <div class="brand-header" data-i18n="">
-        <img src="images/logo.png" alt="AgriTech logo" class="brand-logo">
-        <h3>AgriTech</h3>
-      </div>
+    <div class="footer-top-accent"></div>
 
-      <p class="tagline">
-        Empowering India's Farming Future with innovative technology connecting every stakeholder.
-      </p>
+    <div class="footer-inner-content">
 
-      <div class="social-icons">
-        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
-        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-      </div>
+        <div class="footer-section footer-brand">
+            <div class="brand-header">
+                <img src="images/logo.png" alt="AgriTech logo" class="brand-logo">
+                <h3>AgriTech</h3>
+            </div>
+
+            <p class="tagline">
+                Empowering India's Farming Future with innovative technology connecting every stakeholder.
+            </p>
+
+            <div class="social-icons">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-group-links">
+
+            <div class="footer-section footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+                    <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
+                    <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section footer-contact">
+                <h4>Contact</h4>
+                <ul>
+                    <li>
+                        <a href="mailto:contact@agritech.com">
+                            <i class="fas fa-envelope"></i> contact@agritech.com
+                        </a>
+                    </li>
+                    <li>
+                        <a href="tel:+910000000000">
+                            <i class="fas fa-phone"></i> +91 00000 00000
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
     </div>
 
-    <div class="footer-group-links">
-      <div class="footer-section footer-links">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-          <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-          <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
-          <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
-          <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-section footer-contact">
-        <h4>Contact</h4>
-        <ul>
-          <li>
-            <a href="mailto:contact@agritech.com">
-              <i class="fas fa-envelope"></i> Email Us
-            </a>
-          </li>
-          <li>
-            <a href="tel:+910000000000">
-              <i class="fas fa-phone"></i> Call Us
-            </a>
-          </li>
-        </ul>
-      </div>
+    <div class="footer-bottom">
+        <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
     </div>
-  </div>
 
-  <div class="footer-bottom">
-    <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
-  </div>
-
-  <div class="footer-wave-overlay"></div>
+    <div class="footer-wave-overlay"></div>
 </footer>
 
+  
 
   <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
     <i class="fas fa-robot"></i>
@@ -1789,6 +2019,8 @@
 
     animate();
   </script>
+ 
+
 
 
 
@@ -1846,6 +2078,24 @@
       });
     }
 
+    // Language Selector
+    const langBtn = document.querySelector('.lang-btn');
+    const langDropdown = document.querySelector('.lang-dropdown');
+
+    if (langBtn && langDropdown) {
+      langBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        langDropdown.classList.toggle('active');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
+          langDropdown.classList.remove('active');
+        }
+      });
+    }
+
     // Scroll Button
     const scrollBtn = document.getElementById("scrollBtn");
     const scrollIcon = document.getElementById("scrollIcon");
@@ -1869,6 +2119,8 @@
         }
       });
     }
+
+
 
     // ===== MOBILE MENU (FINAL FIX) =====
 const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -2111,10 +2363,26 @@ if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
   <script>
   document.addEventListener("DOMContentLoaded", () => {
     // Restore theme
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      document.documentElement.setAttribute("data-theme", savedTheme);
-    }
+   const applyTheme = (theme) => {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+
+  if (themeText) themeText.textContent = theme === 'dark' ? 'Dark' : 'Light';
+  if (moonIcon) moonIcon.style.display = theme === 'dark' ? 'none' : 'inline-block';
+  if (sunIcon) sunIcon.style.display = theme === 'dark' ? 'inline-block' : 'none';
+};
+
+// Initialize
+const savedTheme = localStorage.getItem('theme') || 'dark';
+applyTheme(savedTheme);
+
+// Toggle on Click
+if (themeText) {
+  themeText.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+    applyTheme(nextTheme);
+  });}
 
     // Restore scroll position
     const scrollY = localStorage.getItem("homeScrollY");
@@ -2140,6 +2408,57 @@ if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
 <script src="translations.js"></script>
 <script src="scripts/i18n.js"></script>
 
+<script>
+  const languages = {
+    en: {
+      hero_title: "Empowering Agriculture Through Technology",
+      hero_desc:
+        "AgriTech connects Farmers, Buyers, Equipment Suppliers, and Grocery Sellers to revolutionize India's agricultural ecosystem through smart solutions and seamless collaboration."
+    },
+    hi: {
+      hero_title: "प्रौद्योगिकी के माध्यम से कृषि को सशक्त बनाना",
+      hero_desc:
+        "एग्रीटेक किसानों, खरीदारों, उपकरण आपूर्तिकर्ताओं और किराना विक्रेताओं को जोड़ता है।"
+    },
+    te: {
+      hero_title: "సాంకేతికత ద్వారా వ్యవసాయాన్ని బలోపేతం చేయడం",
+      hero_desc:
+        "అగ్రిటెక్ రైతులు, కొనుగోలుదారులు, పరికరాల సరఫరాదారులు మరియు కిరాణా విక్రేతలను అనుసంధానిస్తుంది."
+    },
+    ta: {
+      hero_title: "தொழில்நுட்பத்தின் மூலம் விவசாயத்தை வலுப்படுத்துதல்",
+      hero_desc:
+        "அக்ரிடெக் விவசாயிகள் மற்றும் சேவை வழங்குநர்களை இணைக்கிறது."
+    }
+  };
+
+  const lang = localStorage.getItem("lang") || "en";
+
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (languages[lang] && languages[lang][key]) {
+      el.innerText = languages[lang][key];
+    }
+  });
+</script>
+
+<script>
+  const langSelect = document.getElementById("languageSelect");
+  const savedLang = localStorage.getItem("lang") || "en";
+  langSelect.value = savedLang;
+
+  langSelect.addEventListener("change", () => {
+    localStorage.setItem("lang", langSelect.value);
+    location.reload();
+  });
+</script>
+
+<!-- Notification System -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+<script src="js/notifications.js"></script>
+
 </body>
+
+
 
 </html>

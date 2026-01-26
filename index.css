@@ -1,4 +1,37 @@
 /* 1. DEFINE VARIABLES FOR THEMES */
+
+
+
+/* 💠 Center Offline/Cached Messages */
+/* ============== CENTER OFFLINE/CACHED NOTICE ============== */
+/* ========= OFFLINE / CACHED MESSAGE CENTERED ========= */
+
+#network-status, #cached-notice {
+  position: fixed !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+
+  background: rgba(0, 0, 0, 0.85) !important;
+  color: white !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  padding: 14px 24px !important;
+  text-align: center !important;
+  border-radius: 8px !important;
+  z-index: 99999 !important;
+  max-width: 90% !important;
+  width: auto !important;
+}
+
+/* Different colors optional */
+#network-status { background: #d32f2f !important; }  /* red */
+#cached-notice { background: #f57c00 !important; }   /* amber */
+
+/* hide default */
+.hidden { display: none !important; }
+
+
 :root {
   /* DARK MODE DEFAULTS */
   --bg-color: #030712;
@@ -169,6 +202,7 @@ body {
   transition: all 0.3s ease;
   z-index: 1000;
   box-shadow: 0 4px 12px var(--shadow-color);
+  bottom:auto;
 }
 
 .left-nav .services-dropdown.active {
@@ -1104,3 +1138,54 @@ body {
     font-size: 0.7rem;
   }
 }
+.hidden {
+  display: none;
+}
+
+#network-status,
+#cached-notice {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #f44336; /* or orange for cached */
+  color: white;
+  padding: 12px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 6px;
+  text-align: center;
+  z-index: 9999;
+}
+
+/* Different colors if you want */
+/* ==============================
+   Center Offline / Cached Notices
+   ============================== */
+
+#network-status,
+#cached-notice {
+  position: fixed !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  padding: 14px 25px !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  text-align: center !important;
+  border-radius: 6px !important;
+  z-index: 99999 !important;
+  width: auto !important;
+  max-width: 90% !important;
+}
+
+/* Different colors */
+/* ======== Center Offline + Cached Notices ========== */
+
+html > #network-status,
+html > #cached-notice {
+  position: fixed !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+

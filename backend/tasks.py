@@ -47,15 +47,7 @@ def predict_crop_task(self, n, p, k, temperature, humidity, ph, rainfall, user_i
         prediction = model.predict([data])[0]
         crop = encoder.inverse_transform([prediction])[0]
         
-        if user_id:
-            NotificationService.create_notification(
-                title="Crop Prediction Ready",
-                message=f"The AI has recommended {crop} for your farm.",
-                notification_type="task_completed",
-                user_id=user_id
-            )
-        
-        return {
+        result_payload = {
             'status': 'success',
             'prediction': crop,
             'input_params': {
@@ -66,6 +58,17 @@ def predict_crop_task(self, n, p, k, temperature, humidity, ph, rainfall, user_i
                 'rainfall': rainfall
             }
         }
+        
+        # Trigger Notification
+        if user_id:
+            NotificationService.create_notification(
+                title="Crop Prediction Ready",
+                message=f"The AI has recommended {crop} for your farm.",
+                notification_type="task_completed",
+                user_id=user_id
+            )
+        
+        return result_payload
     except Exception as e:
         return {'status': 'error', 'message': str(e)}
 
@@ -102,9 +105,10 @@ Respond in a structured format with labeled sections: Loan Type, Eligibility Sta
         # Trigger PDF Synthesis Task
         synthesize_loan_pdf_task.delay(json_data, reply, user_id)
         
+        # Trigger Notification
         if user_id:
             NotificationService.create_notification(
-                title="Loan Analysis Complete",
+                title="Loan Eligibility Analysis Complete",
                 message="Your loan eligibility analysis is ready. We are generating your PDF report now.",
                 notification_type="loan_update",
                 user_id=user_id
