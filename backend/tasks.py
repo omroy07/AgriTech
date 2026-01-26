@@ -2,6 +2,7 @@ import joblib
 import os
 import numpy as np
 from backend.celery_app import celery_app
+from backend.utils.i18n import t
 
 # Load models at worker startup
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
