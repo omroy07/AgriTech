@@ -20,12 +20,14 @@ services:
     environment:
       - FLASK_ENV=development
       - REDIS_URL=redis://redis:6379/0
+      - UPLOAD_FOLDER=/app/uploads
     env_file:
       - .env
     depends_on:
       - redis
     volumes:
       - .:/app
+      - uploads_data:/app/uploads
     restart: unless-stopped
 
   # Celery Worker
@@ -35,6 +37,7 @@ services:
     command: celery -A backend.celery_app worker --loglevel=info
     environment:
       - REDIS_URL=redis://redis:6379/0
+      - UPLOAD_FOLDER=/app/uploads
     env_file:
       - .env
     depends_on:
@@ -42,7 +45,9 @@ services:
       - backend
     volumes:
       - .:/app
+      - uploads_data:/app/uploads
     restart: unless-stopped
 
 volumes:
   redis_data:
+  uploads_data:

@@ -116,10 +116,12 @@ def predict_crop_async():
                 return jsonify({'status': 'error', 'message': f'Missing field: {field}'}), 400
         
         # Submit task to Celery
+        user_id = data.get('user_id')
         task = predict_crop_task.delay(
             data['N'], data['P'], data['K'],
             data['temperature'], data['humidity'],
-            data['ph'], data['rainfall']
+            data['ph'], data['rainfall'],
+            user_id=user_id
         )
         
         return jsonify({
@@ -148,7 +150,8 @@ def process_loan_async():
                     json_data[key] = sanitize_input(value)
         
         # Submit task to Celery
-        task = process_loan_task.delay(json_data)
+        user_id = json_data.get('user_id')
+        task = process_loan_task.delay(json_data, user_id=user_id)
         
         return jsonify({
             'status': 'submitted',
