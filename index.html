@@ -1476,6 +1476,21 @@
 </div>
 
 
+  <!-- Offline & Cached Notices -->
+  <div id="network-status" class="hidden">
+    ⚠️ Offline or poor connection
+  </div>
+
+  <div id="cached-notice" class="hidden">
+    ⚠️ Showing cached data — may be outdated
+  </div>
+
+  <!-- rest of your page starts here -->
+
+
+
+
+
   <canvas id="bg-canvas"></canvas>
 
  <nav class="navbar" data-theme="light">
@@ -2068,6 +2083,8 @@
 
     animate();
   </script>
+ 
+
 
 
 
@@ -2166,6 +2183,8 @@
         }
       });
     }
+
+
 
     // ===== MOBILE MENU (FINAL FIX) =====
 const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -2408,10 +2427,26 @@ if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
   <script>
   document.addEventListener("DOMContentLoaded", () => {
     // Restore theme
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      document.documentElement.setAttribute("data-theme", savedTheme);
-    }
+   const applyTheme = (theme) => {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+
+  if (themeText) themeText.textContent = theme === 'dark' ? 'Dark' : 'Light';
+  if (moonIcon) moonIcon.style.display = theme === 'dark' ? 'none' : 'inline-block';
+  if (sunIcon) sunIcon.style.display = theme === 'dark' ? 'inline-block' : 'none';
+};
+
+// Initialize
+const savedTheme = localStorage.getItem('theme') || 'dark';
+applyTheme(savedTheme);
+
+// Toggle on Click
+if (themeText) {
+  themeText.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+    applyTheme(nextTheme);
+  });}
 
     // Restore scroll position
     const scrollY = localStorage.getItem("homeScrollY");
