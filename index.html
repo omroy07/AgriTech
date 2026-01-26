@@ -1476,9 +1476,24 @@
 </div>
 
 
+  <!-- Offline & Cached Notices -->
+  <div id="network-status" class="hidden">
+    ⚠️ Offline or poor connection
+  </div>
+
+  <div id="cached-notice" class="hidden">
+    ⚠️ Showing cached data — may be outdated
+  </div>
+
+  <!-- rest of your page starts here -->
+
+
+
+
+
   <canvas id="bg-canvas"></canvas>
 
- <nav class="navbar" data-theme="light">
+ <nav class="navbar">
   <div class="navbar-content">
 
     <!-- Brand -->
@@ -1504,12 +1519,6 @@
       <a href="news.html" class="nav-link">Ag News</a>
       <a href="scheme.html" class="nav-link">Schemes</a>
       <a href="community_forum.html" class="nav-link">Community Forum</a>
-      <a href="index.html" class="nav-link" data-i18n="nav_home">Home</a>
-<a href="about.html" class="nav-link" data-i18n="nav_about">About</a>
-<a href="blog.html" class="nav-link" data-i18n="nav_blog">Blog</a>
-<a href="scheme.html" class="nav-link" data-i18n="nav_schemes">Schemes</a>
-<a href="community_forum.html" class="nav-link" data-i18n="nav_community">Community Forum</a>
-
       <!-- Services Dropdown -->
       <div class="services-toggle-container">
         <a href="#" class="nav-link services-toggle">
@@ -1876,7 +1885,7 @@
 
             <div class="social-icons">
                 <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
                 <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                 <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
@@ -1921,65 +1930,7 @@
     <div class="footer-wave-overlay"></div>
 </footer>
 
-  <div class="footer-top-accent"></div>
-
-  <div class="footer-inner-content">
-    <div class="footer-section footer-brand">
-      <div class="brand-header" data-i18n="">
-        <img src="images/logo.png" alt="AgriTech logo" class="brand-logo">
-        <h3>AgriTech</h3>
-      </div>
-
-      <p class="tagline">
-        Empowering India's Farming Future with innovative technology connecting every stakeholder.
-      </p>
-
-      <div class="social-icons">
-        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
-        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-      </div>
-    </div>
-
-    <div class="footer-group-links">
-      <div class="footer-section footer-links">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-          <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-          <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
-          <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
-          <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-section footer-contact">
-        <h4>Contact</h4>
-        <ul>
-          <li>
-            <a href="mailto:contact@agritech.com">
-              <i class="fas fa-envelope"></i> Email Us
-            </a>
-          </li>
-          <li>
-            <a href="tel:+910000000000">
-              <i class="fas fa-phone"></i> Call Us
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
-  </div>
-
-  <div class="footer-wave-overlay"></div>
-</footer>
-
-
+  
 
   <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
     <i class="fas fa-robot"></i>
@@ -2068,6 +2019,8 @@
 
     animate();
   </script>
+ 
+
 
 
 
@@ -2166,6 +2119,8 @@
         }
       });
     }
+
+
 
     // ===== MOBILE MENU (FINAL FIX) =====
 const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -2408,10 +2363,26 @@ if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
   <script>
   document.addEventListener("DOMContentLoaded", () => {
     // Restore theme
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      document.documentElement.setAttribute("data-theme", savedTheme);
-    }
+   const applyTheme = (theme) => {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+
+  if (themeText) themeText.textContent = theme === 'dark' ? 'Dark' : 'Light';
+  if (moonIcon) moonIcon.style.display = theme === 'dark' ? 'none' : 'inline-block';
+  if (sunIcon) sunIcon.style.display = theme === 'dark' ? 'inline-block' : 'none';
+};
+
+// Initialize
+const savedTheme = localStorage.getItem('theme') || 'dark';
+applyTheme(savedTheme);
+
+// Toggle on Click
+if (themeText) {
+  themeText.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+    applyTheme(nextTheme);
+  });}
 
     // Restore scroll position
     const scrollY = localStorage.getItem("homeScrollY");
@@ -2485,7 +2456,6 @@ if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
 <!-- Notification System -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
 <script src="js/notifications.js"></script>
- main
 
 </body>
 
