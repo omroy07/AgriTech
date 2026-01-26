@@ -4,7 +4,23 @@ from celery import Celery
 # Redis URL from environment or default
 REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
 
-# Create Celery app
+def make_celery(app):
+    celery = Celery(
+        app.import_name,
+        broker=app.config.get('REDIS_URL', 'redis://localhost:6379/0'),
+        backend=app.config.get('REDIS_URL', 'redis://localhost:6379/0')
+    )
+    celery.conf.update(app.config)
+
+    class ContextTask(celery.Task):
+        def __call__(self, *args, **kwargs):
+            with app.app_context():
+                return self.run(*args, **kwargs)
+
+    celery.Task = ContextTask
+    return celery
+
+# Simple instance for module-level imports
 celery_app = Celery(
     'agritech',
     broker=REDIS_URL,
@@ -12,7 +28,6 @@ celery_app = Celery(
     include=['backend.tasks']
 )
 
-# Celery configuration
 celery_app.conf.update(
     task_serializer='json',
     accept_content=['json'],
@@ -20,6 +35,6 @@ celery_app.conf.update(
     timezone='Asia/Kolkata',
     enable_utc=True,
     task_track_started=True,
-    task_time_limit=300,  # 5 minutes max per task
+    task_time_limit=300,
     worker_prefetch_multiplier=1,
 )

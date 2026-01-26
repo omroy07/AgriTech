@@ -11,6 +11,15 @@ services:
       - redis_data:/data
     restart: unless-stopped
 
+  # MailHog for testing emails
+  mailhog:
+    image: mailhog/mailhog
+    container_name: agritech-mailhog
+    ports:
+      - "1025:1025" # SMTP server
+      - "8025:8025" # Web UI
+    restart: unless-stopped
+
   # Flask Backend
   backend:
     build: .
@@ -20,12 +29,16 @@ services:
     environment:
       - FLASK_ENV=development
       - REDIS_URL=redis://redis:6379/0
+      - MAIL_SERVER=mailhog
+      - MAIL_PORT=1025
     env_file:
       - .env
     depends_on:
       - redis
+      - mailhog
     volumes:
       - .:/app
+      - uploads_data:/app/uploads
     restart: unless-stopped
 
   # Celery Worker
@@ -35,14 +48,19 @@ services:
     command: celery -A backend.celery_app worker --loglevel=info
     environment:
       - REDIS_URL=redis://redis:6379/0
+      - MAIL_SERVER=mailhog
+      - MAIL_PORT=1025
     env_file:
       - .env
     depends_on:
       - redis
       - backend
+      - mailhog
     volumes:
       - .:/app
+      - uploads_data:/app/uploads
     restart: unless-stopped
 
 volumes:
   redis_data:
+  uploads_data:

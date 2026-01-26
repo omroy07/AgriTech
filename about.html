@@ -10,22 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <div class="header-left">
-                <img src="./images/logo.png" alt="AgriTech Logo" class="logo">
-                <h1 class="header-title">AgriTech</h1>
-            </div>
-            <div class="header-right">
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
-                    <i class="fas fa-sun sun-icon"></i>
-                    <i class="fas fa-moon moon-icon"></i>
-                    <span class="theme-label">Light</span>
-                </button>
-                <a href="/" class="back-btn">← Back to Home</a>
-            </div>
-        </div>
-    </header>
+    <!-- Include Navbar -->
+    <div w3-include-html="navbar.html"></div>
 
     <main class="main-content">
         <section class="hero-section">
@@ -104,34 +90,64 @@
     </main>
 
     <footer class="footer">
-        <p>&copy; 2025 AgriTech. All rights reserved. | Built with 💚 for farmers</p>
+        <p>&copy; 2026 AgriTech. All rights reserved. | Built with 💚 for farmers</p>
     </footer>
+<script>
+function applyTheme(theme) {
+    const html = document.documentElement;
+    html.setAttribute('data-theme', theme);
 
-    <script>
-        // Theme Toggle Script
-        const themeToggle = document.getElementById('themeToggle');
+    const themeLabel = document.querySelector('.theme-label');
+    if (themeLabel) themeLabel.textContent = theme === 'light' ? 'Light' : 'Dark';
+}
+
+function initThemeToggle() {
+    const themeToggle = document.getElementById('themeToggle');
+    if (!themeToggle) return; // navbar not loaded yet
+
+    themeToggle.addEventListener('click', () => {
         const html = document.documentElement;
-        const themeLabel = document.querySelector('.theme-label');
+        const current = html.getAttribute('data-theme');
+        const next = current === 'light' ? 'dark' : 'light';
+        applyTheme(next);
+        localStorage.setItem('agritech-theme', next);
+    });
+}
 
-        // Check for saved theme preference or default to 'light'
-        const currentTheme = localStorage.getItem('theme') || 'light';
-        html.setAttribute('data-theme', currentTheme);
+// Initialize theme on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('agritech-theme') || 'light';
+    applyTheme(savedTheme);
+});
 
-        // Update label on load
-        if (currentTheme === 'dark') {
-            themeLabel.textContent = 'Dark';
+// Load navbar and attach toggle AFTER navbar is loaded
+function includeHTML() {
+    var z, i, elmnt, file, xhttp;
+    z = document.getElementsByTagName("*");
+    for (i = 0; i < z.length; i++) {
+        elmnt = z[i];
+        file = elmnt.getAttribute("w3-include-html");
+        if (file) {
+            xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+                    if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                    elmnt.removeAttribute("w3-include-html");
+                    includeHTML();
+
+                    // ✅ Attach theme toggle AFTER navbar loads
+                    initThemeToggle();
+                }
+            }
+            xhttp.open("GET", file, true);
+            xhttp.send();
+            return;
         }
+    }
+}
+includeHTML();
+</script>
 
-        // Theme toggle event listener
-        themeToggle.addEventListener('click', () => {
-            const theme = html.getAttribute('data-theme');
-            const newTheme = theme === 'light' ? 'dark' : 'light';
-            
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            
-            themeLabel.textContent = newTheme === 'light' ? 'Light' : 'Dark';
-        });
-    </script>
 </body>
 </html>

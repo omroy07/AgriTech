@@ -25,7 +25,7 @@ def load_crop_models():
 
 
 @celery_app.task(bind=True, name='tasks.predict_crop')
-def predict_crop_task(self, n, p, k, temperature, humidity, ph, rainfall):
+def predict_crop_task(self, n, p, k, temperature, humidity, ph, rainfall, user_id=None):
     """
     Async task for crop prediction.
     Returns the predicted crop name.
@@ -46,7 +46,7 @@ def predict_crop_task(self, n, p, k, temperature, humidity, ph, rainfall):
         prediction = model.predict([data])[0]
         crop = encoder.inverse_transform([prediction])[0]
         
-        return {
+        result_payload = {
             'status': 'success',
             'prediction': crop,
             'input_params': {
@@ -57,6 +57,16 @@ def predict_crop_task(self, n, p, k, temperature, humidity, ph, rainfall):
                 'rainfall': rainfall
             }
         }
+        
+        # Trigger Notification
+        NotificationService.create_notification(
+            title="Crop Prediction Ready",
+            message=f"The AI has recommended {crop} for your farm.",
+            notification_type="task_completed",
+            user_id=user_id
+        )
+        
+        return result_payload
     except Exception as e:
         return {
             'status': 'error',
@@ -65,7 +75,7 @@ def predict_crop_task(self, n, p, k, temperature, humidity, ph, rainfall):
 
 
 @celery_app.task(bind=True, name='tasks.process_loan')
-def process_loan_task(self, json_data):
+def process_loan_task(self, json_data, user_id=None):
     """
     Async task for loan processing with Gemini API.
     """
@@ -92,6 +102,13 @@ Respond in a structured format with labeled sections: Loan Type, Eligibility Sta
             return {'status': 'error', 'message': 'No response generated from Gemini API'}
         
         reply = response.candidates[0].content.parts[0].text
+        
+        NotificationService.create_notification(
+            title="Loan Eligibility Analysis Complete",
+            message="Your agricultural loan eligibility report is now ready.",
+            notification_type="loan_update",
+            user_id=user_id
+        )
         
         return {
             'status': 'success',

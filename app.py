@@ -5,10 +5,18 @@ import os
 import re
 from flask_cors import CORS
 from dotenv import load_dotenv
-from extensions import limiter
+from backend.extensions import socketio, db, migrate, mail, limiter
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
-from backend.extensions.socketio import socketio
+from backend.celery_app import celery_app, make_celery
+from backend.config import config
+from backend.monitoring.routes import health_bp
+from backend.utils.logger import logger
+from backend.api import register_api
+from backend.schemas.loan_schema import LoanRequestSchema
+from marshmallow import ValidationError
+from backend.tasks import predict_crop_task, process_loan_task
+from backend.utils.validation import sanitize_input, validate_input
 import backend.sockets.task_events  # Register socket event handlers
 from backend.utils.i18n import get_locale, t
 
@@ -24,9 +32,17 @@ app = Flask(__name__, static_folder='.', static_url_path='')
 env_name = os.getenv('FLASK_ENV', 'default')
 app.config.from_object(config[env_name])
 
+# Initialize extensions
+db.init_app(app)
+migrate.init_app(app, db)
+limiter.init_app(app)
+
+# Import models after db initialization
+from backend.models import User
+
 CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
-app.register_blueprint(crop_bp)
+app.register_blueprint(crop_bp, url_prefix='/crop')
 app.register_blueprint(disease_bp)
 app.register_blueprint(health_bp)
 
@@ -45,6 +61,9 @@ def set_request_locale():
 
 # Initialize Marshmallow Schemas
 loan_schema = LoanRequestSchema()
+
+with app.app_context():
+    db.create_all()
 
 # Initialize Gemini API
 # Configure Gemini Client
@@ -123,10 +142,12 @@ def predict_crop_async():
                 return jsonify({'status': 'error', 'message': f'Missing field: {field}'}), 400
         
         # Submit task to Celery
+        user_id = data.get('user_id')
         task = predict_crop_task.delay(
             data['N'], data['P'], data['K'],
             data['temperature'], data['humidity'],
-            data['ph'], data['rainfall']
+            data['ph'], data['rainfall'],
+            user_id=user_id
         )
         
         return jsonify({
@@ -155,7 +176,8 @@ def process_loan_async():
                     json_data[key] = sanitize_input(value)
         
         # Submit task to Celery
-        task = process_loan_task.delay(json_data)
+        user_id = json_data.get('user_id')
+        task = process_loan_task.delay(json_data, user_id=user_id)
         
         return jsonify({
             'status': 'submitted',
@@ -243,11 +265,145 @@ Do not add assumptions that are not supported by the data provided.
             "result": reply
             }), 200
 
-    except Exception as e:
-        logger.error("Error processing loan request: %s", str(e), exc_info=True)
+    except Exception:
+        traceback.print_exc()
         return jsonify({
             "status": "error",
-            "message": "Failed to process loan request. Please try again later."}), 500
+            "message": "Failed to process loan request. Please try again later."
+        }), 500
+
+
+@app.route('/generate-loan-report', methods=['POST'])
+def generate_loan_report_endpoint():
+    """
+    Generate and send loan report via email (async)
+    Request body should contain:
+    - farmer_data: Application data
+    - assessment_result: AI assessment text
+    - email: Farmer's email
+    - name: Farmer's name (optional)
+    - send_email: Boolean to control email sending (default: True)
+    """
+    try:
+        data = request.get_json(force=True)
+        
+        # Validate required fields
+        if not data.get('farmer_data'):
+            return jsonify({
+                "status": "error",
+                "message": "farmer_data is required"
+            }), 400
+        
+        if not data.get('assessment_result'):
+            return jsonify({
+                "status": "error",
+                "message": "assessment_result is required"
+            }), 400
+        
+        if not data.get('email'):
+            return jsonify({
+                "status": "error",
+                "message": "email is required"
+            }), 400
+        
+        farmer_data = data['farmer_data']
+        assessment_result = data['assessment_result']
+        farmer_email = data['email']
+        farmer_name = data.get('name', farmer_data.get('name', 'Valued Farmer'))
+        send_email = data.get('send_email', True)
+        
+        if send_email:
+            # Trigger async task to generate and send report
+            task = generate_and_send_report.delay(
+                farmer_data=farmer_data,
+                assessment_result=assessment_result,
+                farmer_email=farmer_email,
+                farmer_name=farmer_name
+            )
+            
+            return jsonify({
+                "status": "success",
+                "message": f"Report generation started. Email will be sent to {farmer_email}",
+                "task_id": task.id
+            }), 202  # 202 Accepted - processing async
+        else:
+            # Generate PDF only (sync)
+            try:
+                pdf_path = generate_loan_report(farmer_data, assessment_result, farmer_email)
+                return jsonify({
+                    "status": "success",
+                    "message": "Report generated successfully",
+                    "pdf_path": pdf_path,
+                    "download_url": f"/download-report/{os.path.basename(pdf_path)}"
+                }), 200
+            except Exception as e:
+                return jsonify({
+                    "status": "error",
+                    "message": f"Failed to generate report: {str(e)}"
+                }), 500
+    
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({
+            "status": "error",
+            "message": f"Failed to process report request: {str(e)}"
+        }), 500
+
+
+@app.route('/download-report/<filename>', methods=['GET'])
+def download_report(filename):
+    """Download generated PDF report"""
+    try:
+        reports_dir = 'reports'
+        return send_from_directory(reports_dir, filename, as_attachment=True)
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": "Report not found"
+        }), 404
+
+
+@app.route('/task-status/<task_id>', methods=['GET'])
+def get_task_status(task_id):
+    """Check status of async task"""
+    try:
+        from backend.config.celery_config import celery_app
+        task = celery_app.AsyncResult(task_id)
+        
+        if task.state == 'PENDING':
+            response = {
+                'status': 'pending',
+                'message': 'Task is waiting to be processed'
+            }
+        elif task.state == 'STARTED':
+            response = {
+                'status': 'processing',
+                'message': 'Task is being processed'
+            }
+        elif task.state == 'SUCCESS':
+            response = {
+                'status': 'completed',
+                'message': 'Task completed successfully',
+                'result': task.result
+            }
+        elif task.state == 'FAILURE':
+            response = {
+                'status': 'failed',
+                'message': str(task.info)
+            }
+        else:
+            response = {
+                'status': task.state,
+                'message': 'Task status unknown'
+            }
+        
+        return jsonify(response), 200
+    
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": f"Failed to get task status: {str(e)}"
+        }), 500
 
 
 # Serve HTML pages
@@ -283,6 +439,10 @@ def contact():
 @limiter.limit("10 per minute")
 def chat():
     return send_from_directory('.', 'chat.html')
+
+@app.route('/reset-password/<token>')
+def reset_password_page(token):
+    return send_from_directory('.', 'reset-password.html')
 
 @app.route('/<path:filename>')
 def serve_static(filename):
