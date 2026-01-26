@@ -606,7 +606,7 @@
         }
 
         .cta-button {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             border: 2px solid white;
             padding: 18px 35px;
@@ -828,7 +828,7 @@
         }
 
         .cta-button {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             border: 2px solid white;
             padding: 18px 35px;
@@ -1409,7 +1409,7 @@
         }
 
         .cta-button {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             border: 2px solid white;
             padding: 18px 35px;
@@ -1639,47 +1639,117 @@
         .section-header i {
             color: var(--accent-primary);
         }
+
         /* Simple popup styles */
-.search-popup {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
+        .search-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .search-popup-content {
+            background: #fff;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80%;
+            overflow-y: auto;
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .search-popup-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .search-popup-products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .search-popup-products .product-card {
+            width: calc(33% - 10px);
+            /* 3 per row */
+        }
+
+        @media (max-width: 600px) {
+            .search-popup-products .product-card {
+                width: 100%;
+            }
+        }
+
+        .cart-panel {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 300px;
+            height: 100%;
+            background: #fff;
+            border-left: 1px solid #ccc;
+            padding: 1rem;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .cart-panel.open {
+            transform: translateX(0);
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-panel {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 300px;
+            height: 100%;
+            background: #fff;
+            border-left: 1px solid #ccc;
+            padding: 1rem;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .cart-panel.open {
+            transform: translateX(0);
+        }
+        body[data-theme="dark"] .cart-panel {
+    background: #1e1e1e;
+    color: #f0f0f0;
+    border-left: 1px solid #444;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.7);
 }
-.search-popup-content {
-    background: #fff;
-    max-width: 800px;
-    width: 90%;
-    max-height: 80%;
-    overflow-y: auto;
-    padding: 20px;
-    border-radius: 10px;
-    position: relative;
-}
-.search-popup-close {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
-    cursor: pointer;
-}
-.search-popup-products {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 10px;
-}
-.search-popup-products .product-card {
-    width: calc(33% - 10px); /* 3 per row */
-}
-@media (max-width: 600px) {
-    .search-popup-products .product-card {
-        width: 100%;
-    }
+
+body[data-theme="dark"] .cart-panel .close-cart {
+    color: #f0f0f0;
 }
     </style>
 </head>
@@ -1721,7 +1791,8 @@
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
-                <select class="filter-select" id="categoryFilter" onchange="filterProducts()" aria-label="Filter by category">
+                <select class="filter-select" id="categoryFilter" onchange="filterProducts()"
+                    aria-label="Filter by category">
                     <option value="">All Categories</option>
                     <option value="vegetables">Vegetables</option>
                     <option value="fruits">Fruits</option>
@@ -1730,7 +1801,8 @@
                     <option value="dairy">Dairy</option>
                     <option value="pulses">Pulses</option>
                 </select>
-                <select class="filter-select" id="locationFilter" onchange="filterProducts()" aria-label="Filter by location">
+                <select class="filter-select" id="locationFilter" onchange="filterProducts()"
+                    aria-label="Filter by location">
                     <option value="">All Locations</option>
                     <option value="punjab">Punjab</option>
                     <option value="maharashtra">Maharashtra</option>
@@ -1850,12 +1922,13 @@
                             </div>
                         </div>
                         <div class="product-actions">
-                            <button class="btn-primary" onclick="toggleCart()">
+                            <button class="btn-primary" onclick="addToCart('Fresh Organic Carrots')">
                                 <i class="fas fa-cart-plus"></i> Add to Cart
                             </button>
+
                             <button class="btn-primary" onclick="contactSeller('Kumar Farms')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)" aria-label="Add to favorites" title="Add to favorites"><i
-                                    class="far fa-heart"></i></button>
+                            <button class="btn-secondary" onclick="toggleLike(this)" aria-label="Add to favorites"
+                                title="Add to favorites"><i class="far fa-heart"></i></button>
                         </div>
                     </div>
                 </div>
@@ -1884,9 +1957,10 @@
                             </div>
                         </div>
                         <div class="product-actions">
-                            <button class="btn-primary" onclick="toggleCart()">
+                            <button class="btn-primary" onclick="addToCart('Kashmiri Red Apples')">
                                 <i class="fas fa-cart-plus"></i> Add to Cart
                             </button>
+
 
                             <button class="btn-primary" onclick="contactSeller('Mountain Fresh')">Contact the
                                 seller</button>
@@ -1922,7 +1996,7 @@
                             </div>
                         </div>
                         <div class="product-actions">
-                            <button class="btn-primary" onclick="toggleCart()">
+                            <button class="btn-primary" onclick="addToCart('Premium Milling Wheat')">
                                 <i class="fas fa-cart-plus"></i> Add to Cart
                             </button>
 
@@ -1960,9 +2034,10 @@
                             </div>
                         </div>
                         <div class="product-actions">
-                            <button class="btn-primary" onclick="toggleCart()">
+                            <button class="btn-primary" onclick="addToCart('Organic Turmeric Powder')">
                                 <i class="fas fa-cart-plus"></i> Add to Cart
                             </button>
+
                             <button class="btn-primary" onclick="contactSeller('Spice Hub')">Contact Seller</button>
                             <button class="btn-secondary" onclick="toggleLike(this)" aria-label="Add to favorites"><i
                                     class="far fa-heart"></i></button>
@@ -1993,9 +2068,10 @@
                             </div>
                         </div>
                         <div class="product-actions">
-                            <button class="btn-primary" onclick="toggleCart()">
+                            <button class="btn-primary" onclick="addToCart('Nashik Green Apples')">
                                 <i class="fas fa-cart-plus"></i> Add to Cart
                             </button>
+
                             <button class="btn-primary" onclick="contactSeller('Vitis Growers')">Contact Seller</button>
                             <button class="btn-secondary" onclick="toggleLike(this)" aria-label="Add to favorites"><i
                                     class="far fa-heart"></i></button>
@@ -2026,9 +2102,10 @@
                             </div>
                         </div>
                         <div class="product-actions">
-                            <button class="btn-primary" onclick="toggleCart()">
+                            <button class="btn-primary" onclick="addToCart('Farm Cow Milk')">
                                 <i class="fas fa-cart-plus"></i> Add to Cart
                             </button>
+
                             <button class="btn-primary" onclick="contactSeller('Amulya Dairy')">Contact Seller</button>
                             <button class="btn-secondary" onclick="toggleLike(this)" aria-label="Add to favorites"><i
                                     class="far fa-heart"></i></button>
@@ -2062,9 +2139,9 @@
                 </button>
             </div>
 
-                <select class="filter-select" onchange="jumpToPage(this.value)" id="pageJump" aria-label="Jump to page">
-                    <option value="">Jump to page...</option>
-                </select>
+            <select class="filter-select" onchange="jumpToPage(this.value)" id="pageJump" aria-label="Jump to page">
+                <option value="">Jump to page...</option>
+            </select>
 
             <p>
                 Page <span id="currentPageDisplay">1</span> of <span id="totalPagesDisplay">158</span>
@@ -2129,74 +2206,86 @@
         <i class="fas fa-arrow-up"></i>
     </button>
     <div id="searchPopup" class="search-popup" style="display:none;">
-    <div class="search-popup-content">
-        <span id="searchPopupClose" class="search-popup-close">&times;</span>
-        <h3 id="searchPopupTitle"></h3>
-        <div id="searchPopupProducts" class="search-popup-products"></div>
+        <div class="search-popup-content">
+            <span id="searchPopupClose" class="search-popup-close">&times;</span>
+            <h3 id="searchPopupTitle"></h3>
+            <div id="searchPopupProducts" class="search-popup-products"></div>
+        </div>
     </div>
-</div>
-<script>
-// --- NEW SEARCH FUNCTION WITH POPUP ---
-function filterProductsWithPopup() {
-    const filters = getFilterValues();
+    <!-- Cart Panel -->
+    <div id="cartPanel" class="cart-panel">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button id="closeCartBtn" class="close-cart" aria-label="Close Cart">&times;</button>
+        </div>
+        <div id="cartItemsList">
+            <p></p>
+        </div>
+    </div>
 
-    filteredProducts = allProducts.filter(p => {
-        const matchesSearch = p.title.toLowerCase().includes(filters.search);
-        const matchesCategory = !filters.category || p.category === filters.category;
-        const matchesLocation = !filters.location || p.location === filters.location;
-        return matchesSearch && matchesCategory && matchesLocation;
-    });
 
-    // Reset pagination for main grid
-    visibleCount = 6;
-    currentPage = 1;
-    usePagination = false;
+    <script>
+        // --- NEW SEARCH FUNCTION WITH POPUP ---
+        function filterProductsWithPopup() {
+            const filters = getFilterValues();
 
-    // Update main grid normally
-    sortAndDisplay(currentSortKey, false);
+            filteredProducts = allProducts.filter(p => {
+                const matchesSearch = p.title.toLowerCase().includes(filters.search);
+                const matchesCategory = !filters.category || p.category === filters.category;
+                const matchesLocation = !filters.location || p.location === filters.location;
+                return matchesSearch && matchesCategory && matchesLocation;
+            });
 
-    // --- SHOW POPUP ---
-    const popup = document.getElementById('searchPopup');
-    const popupProducts = document.getElementById('searchPopupProducts');
-    const popupTitle = document.getElementById('searchPopupTitle');
+            // Reset pagination for main grid
+            visibleCount = 6;
+            currentPage = 1;
+            usePagination = false;
 
-    // Clear previous content
-    popupProducts.innerHTML = '';
+            // Update main grid normally
+            sortAndDisplay(currentSortKey, false);
 
-    // If search is empty, hide popup
-    if (filters.search.trim() === "") {
-        popup.style.display = 'none';
-        return;
-    }
+            // --- SHOW POPUP ---
+            const popup = document.getElementById('searchPopup');
+            const popupProducts = document.getElementById('searchPopupProducts');
+            const popupTitle = document.getElementById('searchPopupTitle');
 
-    if (filteredProducts.length > 0) {
-        popupTitle.textContent = `Found ${filteredProducts.length} product(s) matching "${filters.search}":`;
-        filteredProducts.forEach(p => {
-            const clone = p.element.cloneNode(true);
-            clone.style.display = 'block';
-            clone.style.order = '';
-            popupProducts.appendChild(clone);
-        });
-    } else {
-        popupTitle.textContent = `No products found for "${filters.search}"`;
-    }
+            // Clear previous content
+            popupProducts.innerHTML = '';
 
-    popup.style.display = 'flex';
+            // If search is empty, hide popup
+            if (filters.search.trim() === "") {
+                popup.style.display = 'none';
+                return;
+            }
 
-    // Close button
-    document.getElementById('searchPopupClose').onclick = () => {
-        popup.style.display = 'none';
-    }
-}
+            if (filteredProducts.length > 0) {
+                popupTitle.textContent = `Found ${filteredProducts.length} product(s) matching "${filters.search}":`;
+                filteredProducts.forEach(p => {
+                    const clone = p.element.cloneNode(true);
+                    clone.style.display = 'block';
+                    clone.style.order = '';
+                    popupProducts.appendChild(clone);
+                });
+            } else {
+                popupTitle.textContent = `No products found for "${filters.search}"`;
+            }
 
-// --- CONNECT SEARCH INPUT TO POPUP FUNCTION ---
-const searchInput = document.getElementById('searchInput');
-if (searchInput) {
-    searchInput.addEventListener('input', () => {
-        filterProductsWithPopup();
-    });
-}
-</script>
+            popup.style.display = 'flex';
+
+            // Close button
+            document.getElementById('searchPopupClose').onclick = () => {
+                popup.style.display = 'none';
+            }
+        }
+
+        // --- CONNECT SEARCH INPUT TO POPUP FUNCTION ---
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', () => {
+                filterProductsWithPopup();
+            });
+        }
+    </script>
 
     <script>
 
@@ -2207,7 +2296,7 @@ if (searchInput) {
         // State variables
         let allProducts = [];
         let filteredProducts = [];
-        let cartItems = 0;
+
         let currentSortKey = 'price';
         let currentSortDirection = 'asc'; // 'asc' for ascending, 'desc' for descending
 
@@ -2552,24 +2641,30 @@ if (searchInput) {
             showNotification(!isLiked ? 'Added to favorites' : 'Removed from favorites');
         }
 
-        function toggleCart() {
-            cartItems++;  // Increment the cart counter
+        let cartItems = 0;
+        function addToCart(productName) {
+            cartItems++;
+            document.getElementById("cartCount").textContent = cartItems;
 
-            const cartCountElement = document.getElementById("cartCount");
-            if (cartCountElement) {
-                cartCountElement.textContent = cartItems;
-            }
-
-            const cartWidget = document.getElementById("cartWidget");
-            if (cartWidget) {
-                cartWidget.style.transform = "scale(1.2)";
-                setTimeout(() => {
-                    cartWidget.style.transform = "scale(1)";
-                }, 150);
+            const cartItemsList = document.getElementById("cartItemsList");
+            if (cartItemsList) {
+                const item = document.createElement("p");
+                item.textContent = productName || "Product";
+                cartItemsList.appendChild(item);
             }
 
             showNotification("Item added to cart!", "success");
         }
+
+
+
+        function toggleCart() {
+            const cartPanel = document.getElementById("cartPanel");
+            if (!cartPanel) return;
+
+            cartPanel.classList.toggle("open"); // Shows/hides cart
+        }
+
 
 
         function contactSeller(name) {
@@ -2578,7 +2673,37 @@ if (searchInput) {
 
         document.addEventListener('DOMContentLoaded', initializeProducts);
     </script>
-   
+    <script>
+        const cartPanel = document.getElementById("cartPanel");
+        const cartWidget = document.getElementById("cartWidget");
+        const closeCartBtn = document.getElementById("closeCartBtn");
+
+        // Toggle cart panel
+        function toggleCart() {
+            cartPanel.classList.toggle("open");
+        }
+
+        // Close cart panel
+        function closeCart() {
+            cartPanel.classList.remove("open");
+        }
+
+        // Close when clicking the "X"
+        closeCartBtn.addEventListener("click", closeCart);
+
+        // Close when clicking outside the panel
+        document.addEventListener("click", (event) => {
+            if (
+                cartPanel.classList.contains("open") &&
+                !cartPanel.contains(event.target) &&
+                !cartWidget.contains(event.target)
+            ) {
+                closeCart();
+            }
+        });
+    </script>
+
     <script src="auth.js"></script>
 </body>
+
 </html>
