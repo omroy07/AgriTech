@@ -37,6 +37,7 @@ class File(db.Model):
     original_name = db.Column(db.String(255), nullable=False)
     file_path = db.Column(db.String(512), nullable=False)
     file_type = db.Column(db.String(100), nullable=False)
+    mime_type = db.Column(db.String(100), nullable=True)
     file_size = db.Column(db.Integer, nullable=False)
     storage_type = db.Column(db.String(20), default='local')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)

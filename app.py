@@ -5,9 +5,10 @@ import os
 import re
 from flask_cors import CORS
 from dotenv import load_dotenv
-from extensions import limiter
+from extensions import limiter, db
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
+from backend.api.v1.files import files_bp
 from backend.extensions.socketio import socketio
 import backend.sockets.task_events  # Register socket event handlers
 
@@ -23,11 +24,22 @@ app = Flask(__name__, static_folder='.', static_url_path='')
 env_name = os.getenv('FLASK_ENV', 'default')
 app.config.from_object(config[env_name])
 
+# Set upload folder
+app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'uploads')
+
+# Database configuration
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///agritech.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Initialize extensions
+db.init_app(app)
+
 CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
 app.register_blueprint(crop_bp)
 app.register_blueprint(disease_bp)
 app.register_blueprint(health_bp)
+app.register_blueprint(files_bp)
 
 # Initialize SocketIO with app
 socketio.init_app(app)
