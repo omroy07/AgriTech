@@ -17,6 +17,7 @@ from backend.schemas.loan_schema import LoanRequestSchema
 from marshmallow import ValidationError
 from backend.tasks import predict_crop_task, process_loan_task
 from backend.utils.validation import sanitize_input, validate_input
+from backend.auth import auth_bp
 import backend.sockets.task_events  # Register socket event handlers
 from backend.utils.i18n import get_locale, t
 
@@ -35,7 +36,11 @@ app.config.from_object(config[env_name])
 # Initialize extensions
 db.init_app(app)
 migrate.init_app(app, db)
+mail.init_app(app)
 limiter.init_app(app)
+
+# Initialize Celery with app context
+celery = make_celery(app)
 
 # Import models after db initialization
 from backend.models import User
@@ -45,6 +50,7 @@ CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 app.register_blueprint(crop_bp, url_prefix='/crop')
 app.register_blueprint(disease_bp)
 app.register_blueprint(health_bp)
+app.register_blueprint(auth_bp)
 
 # Initialize SocketIO with app
 socketio.init_app(app)

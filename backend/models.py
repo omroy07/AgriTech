@@ -9,6 +9,10 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=True) # Changed to nullable for now if needed
     phone = db.Column(db.String(20), unique=True, nullable=True)
+    location = db.Column(db.String(100))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    last_login = db.Column(db.DateTime)
+    is_active = db.Column(db.Boolean, default=True)
     
     # Multilingual preference
     language_preference = db.Column(db.String(10), default='en')
@@ -33,7 +37,7 @@ class User(db.Model):
         return bcrypt.checkpw(password.encode('utf-8'), self.password_hash.encode('utf-8'))
 
     def __repr__(self):
-        return f'<User {self.username}>'
+        return f'<User {self.username} ({self.role})>'
 
 class Notification(db.Model):
     __tablename__ = 'notifications'

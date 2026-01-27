@@ -1,8 +1,8 @@
 """
-Authentication routes for user registration, login, token refresh, and logout.
+Authentication routes for login, register, token refresh, and logout.
 """
 from flask import Blueprint, request, jsonify, make_response
-from extensions import db
+from backend.extensions import db
 from backend.models import User
 from .jwt_utils import jwt_manager
 from .decorators import token_required
@@ -23,14 +23,14 @@ def validate_password(password):
     Requirements: At least 8 characters, 1 uppercase, 1 lowercase, 1 number
     """
     if len(password) < 8:
-        return False, "Password must be at least 8 characters long"
+        return False, "Password must be at least 8 characters"
     if not re.search(r'[A-Z]', password):
         return False, "Password must contain at least one uppercase letter"
     if not re.search(r'[a-z]', password):
         return False, "Password must contain at least one lowercase letter"
     if not re.search(r'[0-9]', password):
         return False, "Password must contain at least one number"
-    return True, "Valid password"
+    return True, "Valid"
 
 
 @auth_bp.route('/register', methods=['POST'])
@@ -58,8 +58,8 @@ def register():
         data = request.get_json()
         
         # Validate required fields
-        required_fields = ['username', 'email', 'password', 'full_name', 'role']
-        for field in required_fields:
+        required = ['username', 'email', 'password', 'full_name', 'role']
+        for field in required:
             if field not in data or not data[field]:
                 return jsonify({
                     'status': 'error',
@@ -74,14 +74,14 @@ def register():
         phone = data.get('phone', '').strip()
         location = data.get('location', '').strip()
         
-        # Validate email format
+        # Validate email
         if not validate_email(email):
             return jsonify({
                 'status': 'error',
                 'message': 'Invalid email format'
             }), 400
         
-        # Validate password strength
+        # Validate password
         is_valid, message = validate_password(password)
         if not is_valid:
             return jsonify({
@@ -96,18 +96,18 @@ def register():
                 'message': 'Invalid role. Must be farmer, shopkeeper, or admin'
             }), 400
         
-        # Check if user already exists
-        existing_user = User.query.filter(
+        # Check if user exists
+        existing = User.query.filter(
             (User.username == username) | (User.email == email)
         ).first()
         
-        if existing_user:
+        if existing:
             return jsonify({
                 'status': 'error',
                 'message': 'User with this username or email already exists'
             }), 409
         
-        # Create new user
+        # Create user
         new_user = User(
             username=username,
             email=email,
@@ -124,13 +124,7 @@ def register():
         return jsonify({
             'status': 'success',
             'message': 'User registered successfully',
-            'user': {
-                'id': new_user.id,
-                'username': new_user.username,
-                'email': new_user.email,
-                'full_name': new_user.full_name,
-                'role': new_user.role
-            }
+            'user': new_user.to_dict()
         }), 201
         
     except Exception as e:
@@ -153,7 +147,7 @@ def login():
         }
     
     Returns:
-        200: Login successful with access token (and refresh token in HTTPOnly cookie)
+        200: Login successful with access token (refresh token in HTTPOnly cookie)
         401: Invalid credentials
     """
     try:
@@ -162,13 +156,13 @@ def login():
         if not data or not data.get('username') or not data.get('password'):
             return jsonify({
                 'status': 'error',
-                'message': 'Username/email and password are required'
+                'message': 'Username/email and password required'
             }), 400
         
         username_or_email = data['username'].strip()
         password = data['password']
         
-        # Find user by username or email
+        # Find user
         user = User.query.filter(
             (User.username == username_or_email) | (User.email == username_or_email)
         ).first()
@@ -191,28 +185,22 @@ def login():
         )
         refresh_token = jwt_manager.generate_refresh_token(user_id=user.id)
         
-        # Create response with HTTPOnly cookie for refresh token
+        # Create response with HTTPOnly cookie
         response = make_response(jsonify({
             'status': 'success',
             'message': 'Login successful',
             'access_token': access_token,
-            'user': {
-                'id': user.id,
-                'username': user.username,
-                'email': user.email,
-                'full_name': user.full_name,
-                'role': user.role
-            }
+            'user': user.to_dict()
         }))
         
-        # Set refresh token in HTTPOnly cookie (more secure)
+        # Set refresh token in secure HTTPOnly cookie
         response.set_cookie(
             'refresh_token',
             refresh_token,
             httponly=True,
             secure=False,  # Set to True in production with HTTPS
             samesite='Lax',
-            max_age=7*24*60*60  # 7 days
+            max_age=30*24*60*60  # 30 days
         )
         
         return response, 200
@@ -239,7 +227,7 @@ def refresh_token():
         if not refresh_token:
             return jsonify({
                 'status': 'error',
-                'message': 'Refresh token is missing'
+                'message': 'Refresh token missing'
             }), 401
         
         is_valid, result = jwt_manager.validate_refresh_token(refresh_token)
@@ -325,17 +313,7 @@ def get_current_user(current_user):
     
     return jsonify({
         'status': 'success',
-        'user': {
-            'id': user.id,
-            'username': user.username,
-            'email': user.email,
-            'full_name': user.full_name,
-            'role': user.role,
-            'phone': user.phone,
-            'location': user.location,
-            'created_at': user.created_at.isoformat() if user.created_at else None,
-            'last_login': user.last_login.isoformat() if user.last_login else None
-        }
+        'user': user.to_dict()
     }), 200
 
 
