@@ -76,7 +76,7 @@
       <span class="logo-text">AgriTech</span>
     </a>
 
-    <nav class="nav-links">
+    <nav class="nav-links" id="navLinks">
       <a href="/index.html">Home</a>
       <a href="/about.html">About</a>
       <a href="/blog.html">Blog</a>
@@ -89,6 +89,10 @@
       <i class="fas fa-moon" id="themeIcon"></i>
       <span id="themeText">Dark Mode</span>
     </button>
+    <button class="hamburger" id="hamburger">
+  <i class="fas fa-bars"></i>
+</button>
+
   </div>
 </header>
 
@@ -210,6 +214,16 @@
         submitBtn.disabled = true;
       });
     </script>
+   <script>
+  const hamburger = document.getElementById("hamburger");
+  const navLinks = document.getElementById("navLinks");
+
+  if (hamburger && navLinks) {
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+    });
+  }
+</script>
 
     <script src="../../theme.js"></script>
 
