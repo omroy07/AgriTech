@@ -4,10 +4,7 @@ import numpy as np
 import tempfile
 from flask import current_app
 from backend.celery_app import celery_app
-from backend.services.pdf_service import PDFService
-from backend.services.file_service import FileService
-from backend.services.notification_service import NotificationService
-from backend.utils.logger import logger
+from backend.utils.i18n import t
 
 # Load models at worker startup
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
