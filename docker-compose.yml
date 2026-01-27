@@ -29,6 +29,7 @@ services:
     environment:
       - FLASK_ENV=development
       - REDIS_URL=redis://redis:6379/0
+      - UPLOAD_FOLDER=/app/uploads
       - MAIL_SERVER=mailhog
       - MAIL_PORT=1025
       - UPLOAD_FOLDER=/app/uploads
@@ -49,6 +50,7 @@ services:
     command: celery -A backend.celery_app worker --loglevel=info
     environment:
       - REDIS_URL=redis://redis:6379/0
+      - UPLOAD_FOLDER=/app/uploads
       - MAIL_SERVER=mailhog
       - MAIL_PORT=1025
       - UPLOAD_FOLDER=/app/uploads

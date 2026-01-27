@@ -28,14 +28,6 @@ class User(db.Model):
     notifications = db.relationship('Notification', backref='user', lazy=True)
     files = db.relationship('File', backref='user', lazy=True)
 
-    def set_password(self, password):
-        self.password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-
-    def check_password(self, password):
-        if not self.password_hash:
-            return False
-        return bcrypt.checkpw(password.encode('utf-8'), self.password_hash.encode('utf-8'))
-
     def __repr__(self):
         return f'<User {self.username} ({self.role})>'
 
@@ -67,6 +59,21 @@ class File(db.Model):
     original_name = db.Column(db.String(255), nullable=False)
     file_path = db.Column(db.String(512), nullable=False)
     file_type = db.Column(db.String(100), nullable=False)
+    mime_type = db.Column(db.String(100), nullable=True)
     file_size = db.Column(db.Integer, nullable=False)
     storage_type = db.Column(db.String(20), default='local')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'filename': self.filename,
+            'original_name': self.original_name,
+            'file_type': self.file_type,
+            'file_size': self.file_size,
+            'storage_type': self.storage_type,
+            'created_at': self.created_at.isoformat()
+        }
+
+    def __repr__(self):
+        return f'<File {self.id} - {self.original_name}>'

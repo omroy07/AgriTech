@@ -6,6 +6,7 @@ import re
 from flask_cors import CORS
 from dotenv import load_dotenv
 from backend.extensions import socketio, db, migrate, mail, limiter
+from backend.api.v1.files import files_bp
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
 from backend.celery_app import celery_app, make_celery
@@ -33,11 +34,15 @@ app = Flask(__name__, static_folder='.', static_url_path='')
 env_name = os.getenv('FLASK_ENV', 'default')
 app.config.from_object(config[env_name])
 
+# Set upload folder
+app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'uploads')
+
 # Initialize extensions
 db.init_app(app)
 migrate.init_app(app, db)
 mail.init_app(app)
 limiter.init_app(app)
+mail.init_app(app)
 
 # Initialize Celery with app context
 celery = make_celery(app)
@@ -50,7 +55,7 @@ CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 app.register_blueprint(crop_bp, url_prefix='/crop')
 app.register_blueprint(disease_bp)
 app.register_blueprint(health_bp)
-app.register_blueprint(auth_bp)
+app.register_blueprint(files_bp)
 
 # Initialize SocketIO with app
 socketio.init_app(app)
