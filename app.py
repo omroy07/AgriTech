@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, g
 import google.generativeai as genai
 import traceback
 import os
@@ -20,6 +20,7 @@ from backend.tasks import predict_crop_task, process_loan_task
 from backend.utils.validation import sanitize_input, validate_input
 from backend.auth import auth_bp
 import backend.sockets.task_events  # Register socket event handlers
+from backend.utils.i18n import get_locale, t
 
 
 
@@ -58,6 +59,12 @@ app.register_blueprint(files_bp)
 
 # Initialize SocketIO with app
 socketio.init_app(app)
+
+@app.before_request
+def set_request_locale():
+    """Set the locale for the current request."""
+    # This will be picked up by get_locale() later
+    g.locale = get_locale()
 
 
 
@@ -216,6 +223,10 @@ def process_loan():
         
         logger.info("Received loan processing request for type: %s", json_data.get('loan_type', 'unknown'))
 
+        from backend.utils.i18n import get_locale, t, LOCALE_TO_NAME
+        locale = get_locale()
+        target_language = LOCALE_TO_NAME.get(locale, 'English')
+
         prompt = f"""
 You are a financial loan eligibility advisor specializing in agricultural loans for farmers in India.
 
@@ -230,6 +241,8 @@ Do not suggest generic or international financing options.
 
 JSON Data = {json_data}
 
+IMPORTANT: You must provide your entire response in {target_language}.
+
 Your task is to:
 1. Identify the loan type and understand which fields are important for assessing that particular loan.
 2. Analyze the farmer's provided details and assess their loan eligibility.
@@ -238,7 +251,7 @@ Your task is to:
 5. Provide simple and actionable suggestions the farmer can follow to improve eligibility.
 6. Suggest the government schemes or subsidies applicable to their loan type.
 7. Ensure the tone is clear, supportive, and easy to understand for farmers.
-8. Respond in a structured format with labeled sections: Loan Type, Eligibility Status, Loan Range, Improvements, Schemes.
+8. Respond in a structured format with labeled sections (in {target_language}): Loan Type, Eligibility Status, Loan Range, Improvements, Schemes.
 9. **IMPORTANT: Return your response in **Markdown format** with:
 Headings for each section (Loan Type, Eligibility Status, Loan Range, Improvements, Schemes)
 Bullet points ( - ) for lists.
@@ -257,14 +270,11 @@ Do not add assumptions that are not supported by the data provided.
                 "message": "No response generated from Gemini API"
           }), 500
 
-        reply = response.candidates[0].content.parts[0].text
-        
-        # Return the assessment result in response
         return jsonify({
             "status": "success",
-            "message": "Loan processed successfully",
-            "assessment": reply
-        }), 200
+            "message": t('loan_processed_success'),
+            "result": reply
+            }), 200
 
     except Exception:
         traceback.print_exc()
@@ -460,7 +470,7 @@ def not_found(error):
     logger.warning("404 Error: %s", request.path)
     return jsonify({
         "status" : "error",
-        "message" :"Resource not found"
+        "message" : t('error_user_not_found') # Using User Not Found as generic for 404 in this context
     }),404
 
 @app.errorhandler(500)

@@ -1,20 +1,25 @@
 from datetime import datetime
 from backend.extensions import db
-from werkzeug.security import generate_password_hash, check_password_hash
+import bcrypt
 
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False, index=True)
-    email = db.Column(db.String(120), unique=True, nullable=False, index=True)
-    password_hash = db.Column(db.String(255), nullable=False)
-    full_name = db.Column(db.String(120))
-    role = db.Column(db.String(20), nullable=False, default='farmer')  # farmer, shopkeeper, admin
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password_hash = db.Column(db.String(128), nullable=True) # Changed to nullable for now if needed
     phone = db.Column(db.String(20), unique=True, nullable=True)
     location = db.Column(db.String(100))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     last_login = db.Column(db.DateTime)
     is_active = db.Column(db.Boolean, default=True)
+    
+    # Multilingual preference
+    language_preference = db.Column(db.String(10), default='en')
+    
+    # Email verification fields
+    is_email_verified = db.Column(db.Boolean, default=False)
+    email_verified_at = db.Column(db.DateTime, nullable=True)
     
     # Notification preferences
     email_enabled = db.Column(db.Boolean, default=True)
@@ -29,17 +34,12 @@ class User(db.Model):
 class Notification(db.Model):
     __tablename__ = 'notifications'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)  # Optional for global notifications
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     title = db.Column(db.String(100), nullable=False)
     message = db.Column(db.Text, nullable=False)
-    type = db.Column(db.String(50), nullable=False)  # loan_update, task_completed, disease_alert, system
+    type = db.Column(db.String(50), nullable=False)
     read_at = db.Column(db.DateTime, nullable=True)
     sent_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
-    # Track delivery status
-    websocket_sent = db.Column(db.Boolean, default=False)
-    email_sent = db.Column(db.Boolean, default=False)
-    sms_sent = db.Column(db.Boolean, default=False)
     
     def to_dict(self):
         return {
@@ -50,9 +50,6 @@ class Notification(db.Model):
             'read_at': self.read_at.isoformat() if self.read_at else None,
             'sent_at': self.sent_at.isoformat()
         }
-
-    def __repr__(self):
-        return f'<Notification {self.id} - {self.type}>'
 
 class File(db.Model):
     __tablename__ = 'files'
