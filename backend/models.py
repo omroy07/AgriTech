@@ -1,12 +1,20 @@
 from datetime import datetime
 from backend.extensions import db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
+    username = db.Column(db.String(80), unique=True, nullable=False, index=True)
+    email = db.Column(db.String(120), unique=True, nullable=False, index=True)
+    password_hash = db.Column(db.String(255), nullable=False)
+    full_name = db.Column(db.String(120))
+    role = db.Column(db.String(20), nullable=False, default='farmer')  # farmer, shopkeeper, admin
     phone = db.Column(db.String(20), unique=True, nullable=True)
+    location = db.Column(db.String(100))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    last_login = db.Column(db.DateTime)
+    is_active = db.Column(db.Boolean, default=True)
     
     # Notification preferences
     email_enabled = db.Column(db.Boolean, default=True)
@@ -16,7 +24,7 @@ class User(db.Model):
     files = db.relationship('File', backref='user', lazy=True)
 
     def __repr__(self):
-        return f'<User {self.username}>'
+        return f'<User {self.username} ({self.role})>'
 
 class Notification(db.Model):
     __tablename__ = 'notifications'
@@ -32,7 +40,7 @@ class Notification(db.Model):
     websocket_sent = db.Column(db.Boolean, default=False)
     email_sent = db.Column(db.Boolean, default=False)
     sms_sent = db.Column(db.Boolean, default=False)
-
+    
     def to_dict(self):
         return {
             'id': self.id,

@@ -1,30 +1,30 @@
 """
-JWT utilities for token generation, validation, and refresh token management.
+JWT token management utilities.
+Handles token generation, validation, and refresh logic.
 """
 import jwt
 import os
 from datetime import datetime, timedelta
-from functools import wraps
-from flask import request, jsonify
+from flask import request
 
 
 class JWTManager:
-    """Manages JWT token generation and validation."""
+    """Manages JWT token operations."""
     
     def __init__(self):
-        self.secret_key = os.getenv('JWT_SECRET_KEY', 'your-secret-key-change-in-production')
-        self.access_token_expiry = timedelta(minutes=15)  # Short-lived
-        self.refresh_token_expiry = timedelta(days=7)  # Long-lived
+        self.secret_key = os.getenv('JWT_SECRET_KEY', 'change-this-secret-key-in-production')
+        self.access_token_expiry = timedelta(minutes=30)  # Short-lived access tokens
+        self.refresh_token_expiry = timedelta(days=30)  # Long-lived refresh tokens
         self.algorithm = 'HS256'
     
     def generate_access_token(self, user_id, username, role):
         """
-        Generate a short-lived access token.
+        Generate short-lived access token.
         
         Args:
-            user_id: User's database ID
-            username: User's username/email
-            role: User's role (farmer, shopkeeper, admin)
+            user_id: User database ID
+            username: Username
+            role: User role (farmer, shopkeeper, admin)
         
         Returns:
             str: JWT access token
@@ -41,10 +41,10 @@ class JWTManager:
     
     def generate_refresh_token(self, user_id):
         """
-        Generate a long-lived refresh token.
+        Generate long-lived refresh token.
         
         Args:
-            user_id: User's database ID
+            user_id: User database ID
         
         Returns:
             str: JWT refresh token
@@ -65,26 +65,20 @@ class JWTManager:
             token: JWT token string
         
         Returns:
-            dict: Decoded token payload
+            dict: Decoded payload
         
         Raises:
-            jwt.ExpiredSignatureError: Token has expired
-            jwt.InvalidTokenError: Token is invalid
+            jwt.ExpiredSignatureError: Token expired
+            jwt.InvalidTokenError: Invalid token
         """
-        try:
-            payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
-            return payload
-        except jwt.ExpiredSignatureError:
-            raise jwt.ExpiredSignatureError('Token has expired')
-        except jwt.InvalidTokenError:
-            raise jwt.InvalidTokenError('Invalid token')
+        return jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
     
     def extract_token_from_header(self):
         """
-        Extract JWT token from Authorization header.
+        Extract JWT from Authorization header.
         
         Returns:
-            str: JWT token or None
+            str: Token or None
         """
         auth_header = request.headers.get('Authorization')
         if auth_header and auth_header.startswith('Bearer '):
@@ -102,7 +96,7 @@ class JWTManager:
     
     def validate_access_token(self, token):
         """
-        Validate access token and return payload.
+        Validate access token.
         
         Args:
             token: JWT access token
@@ -124,7 +118,7 @@ class JWTManager:
     
     def validate_refresh_token(self, token):
         """
-        Validate refresh token and return payload.
+        Validate refresh token.
         
         Args:
             token: JWT refresh token

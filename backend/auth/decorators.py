@@ -1,5 +1,5 @@
 """
-Decorators for route protection and role-based access control.
+Authentication decorators for route protection and RBAC.
 """
 from functools import wraps
 from flask import request, jsonify
@@ -8,14 +8,14 @@ from .jwt_utils import jwt_manager
 
 def token_required(f):
     """
-    Decorator to protect routes that require authentication.
+    Decorator to protect routes requiring authentication.
     Validates JWT access token from Authorization header.
     
     Usage:
         @app.route('/protected')
         @token_required
         def protected_route(current_user):
-            return jsonify({'message': f'Hello {current_user["username"]}'})
+            return jsonify({'user': current_user['username']})
     """
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -24,7 +24,7 @@ def token_required(f):
         if not token:
             return jsonify({
                 'status': 'error',
-                'message': 'Token is missing'
+                'message': 'Authentication token is missing'
             }), 401
         
         is_valid, result = jwt_manager.validate_access_token(token)
@@ -35,37 +35,36 @@ def token_required(f):
                 'message': result
             }), 401
         
-        # Pass decoded token payload as current_user to the route
+        # Pass decoded payload as current_user to the route
         return f(current_user=result, *args, **kwargs)
     
     return decorated
 
 
-def roles_accepted(*allowed_roles):
+def roles_required(*allowed_roles):
     """
     Decorator to restrict access based on user roles.
     Must be used after @token_required decorator.
     
     Args:
-        *allowed_roles: Variable number of role strings (e.g., 'farmer', 'admin', 'shopkeeper')
+        *allowed_roles: Variable number of allowed roles
     
     Usage:
-        @app.route('/admin-only')
+        @app.route('/admin')
         @token_required
-        @roles_accepted('admin')
+        @roles_required('admin')
         def admin_route(current_user):
             return jsonify({'message': 'Admin access granted'})
         
-        @app.route('/farmer-or-admin')
+        @app.route('/dashboard')
         @token_required
-        @roles_accepted('farmer', 'admin')
-        def farmer_route(current_user):
-            return jsonify({'message': 'Welcome farmer or admin'})
+        @roles_required('farmer', 'shopkeeper')
+        def dashboard(current_user):
+            return jsonify({'message': 'Welcome to dashboard'})
     """
     def decorator(f):
         @wraps(f)
         def decorated(*args, **kwargs):
-            # Extract current_user from kwargs (passed by @token_required)
             current_user = kwargs.get('current_user')
             
             if not current_user:
@@ -92,13 +91,12 @@ def roles_accepted(*allowed_roles):
 def optional_auth(f):
     """
     Decorator for routes that work with or without authentication.
-    If token is present and valid, current_user will be available.
-    If no token or invalid token, current_user will be None.
+    If valid token present, current_user is available; otherwise None.
     
     Usage:
-        @app.route('/optional')
+        @app.route('/public')
         @optional_auth
-        def optional_route(current_user=None):
+        def public_route(current_user=None):
             if current_user:
                 return jsonify({'message': f'Hello {current_user["username"]}'})
             return jsonify({'message': 'Hello guest'})
@@ -109,10 +107,7 @@ def optional_auth(f):
         
         if token:
             is_valid, result = jwt_manager.validate_access_token(token)
-            if is_valid:
-                kwargs['current_user'] = result
-            else:
-                kwargs['current_user'] = None
+            kwargs['current_user'] = result if is_valid else None
         else:
             kwargs['current_user'] = None
         
