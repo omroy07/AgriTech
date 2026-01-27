@@ -418,8 +418,8 @@
       </div>
     </div>
     <p style="margin-top: 2rem; opacity: 0.8">
-      &copy; 2025 AgriTech | Empowering India's Farming Future 🇮🇳
-    </p>
+  &copy; <span id="current-year"></span> AgriTech | Empowering India's Farming Future 🇮🇳
+   </p>
   </footer>
 
   <!-- Floating Chatbot Button -->
@@ -511,6 +511,7 @@
         }
       }
     });
+    document.getElementById("current-year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
