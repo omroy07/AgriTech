@@ -31,6 +31,7 @@ services:
       - REDIS_URL=redis://redis:6379/0
       - MAIL_SERVER=mailhog
       - MAIL_PORT=1025
+      - UPLOAD_FOLDER=/app/uploads
     env_file:
       - .env
     depends_on:
@@ -50,6 +51,7 @@ services:
       - REDIS_URL=redis://redis:6379/0
       - MAIL_SERVER=mailhog
       - MAIL_PORT=1025
+      - UPLOAD_FOLDER=/app/uploads
     env_file:
       - .env
     depends_on:
