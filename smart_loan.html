@@ -143,6 +143,34 @@
         [data-theme="dark"] .loan-result-box strong {
             color: #e0ffe0;
         }
+        .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: #2e7d32;
+    color: #fff;
+}
+
+.nav-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    margin-left: 40px;
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+    color: #e0ffe0;
+    
+}
+
         /* Floating Chatbot Button */
 #chatbotBtn {
   position: fixed;
@@ -181,14 +209,16 @@
   <i class="fas fa-robot"></i>
 </a>
 <body>
+    <nav class="navbar">
+    <div class="nav-title">AgriTech</div>
+    <a href="index.html" class="nav-link">Home</a>
+     <a href="about.html" class="nav-link">About</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+       <a href="contact.html" class="nav-link">Contact</a>
+
+</nav>
+
     <div class="container">
-        <div style="position: absolute; top: 20px; right: 20px; z-index: 1000;">
-            <button class="theme-toggle" aria-label="Toggle dark/light mode" style="background: rgba(46, 125, 50, 0.1); border: 1px solid rgba(46, 125, 50, 0.3); color: #2e7d32;">
-                <i class="fas fa-sun sun-icon"></i>
-                <i class="fas fa-moon moon-icon"></i>
-                <span class="theme-text">Light</span>
-            </button>
-        </div>
         
         <h2>Smart Loan Eligibility Guide</h2>
 
