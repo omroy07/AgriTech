@@ -279,43 +279,41 @@ function showDealerDetails(dealerId) {
   modalBody.innerHTML = `
     <div class="dealer-detail-section">
       <h4><i class="fas fa-map-marker-alt"></i> Location</h4>
-      <p>${dealer.address}</p>
+      <p style="font-size: 1.05rem; color: #1e293b; font-weight: 500;">${dealer.address}</p>
     </div>
     
-    <div class="dealer-detail-section">
-      <h4><i class="fas fa-phone"></i> Contact</h4>
-      <p>${dealer.phone.startsWith('+') ? `<a href="tel:${dealer.phone}">${dealer.phone}</a>` : dealer.phone}</p>
+    <div class="dealer-detail-section" style="margin-top: 20px;">
+      <h4><i class="fas fa-certificate"></i> Specialization</h4>
+      <p style="font-style: italic; color: #475569; border-left: 4px solid #10b981; padding-left: 15px;">
+        ${dealer.specialization}
+      </p>
+    </div>
+
+    <div class="dealer-detail-section" style="margin-top: 20px;">
+      <h4><i class="fas fa-tags"></i> Services Offered</h4>
+      <div class="services-pill-container" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
+        ${dealer.services.map(s => `<span class="service-pill">${s}</span>`).join('')}
+      </div>
     </div>
     
-    <div class="dealer-detail-section">
-      <h4><i class="fas fa-cogs"></i> Services</h4>
-      <ul class="services-list">
-        ${dealer.services.map(service => `<li><i class="fas fa-check"></i> ${service}</li>`).join('')}
-      </ul>
-    </div>
-    
-    <div class="dealer-detail-section">
-      <h4><i class="fas fa-clock"></i> Business Hours</h4>
-      <p>${dealer.hours}</p>
-    </div>
-    
-    <div class="dealer-detail-section">
-      <h4><i class="fas fa-calendar"></i> Established</h4>
-      <p>${dealer.established}</p>
-    </div>
-    
-    <div class="dealer-detail-section">
-      <h4><i class="fas fa-star"></i> Specialization</h4>
-      <p>${dealer.specialization}</p>
+    <div class="details-grid">
+        <div class="grid-item">
+          <h4><i class="fas fa-clock"></i> Hours</h4>
+          <p style="margin:0; font-weight: 600; color: #1e293b;">${dealer.hours}</p>
+        </div>
+        <div class="grid-item">
+          <h4><i class="fas fa-calendar-alt"></i> Established</h4>
+          <p style="margin:0; font-weight: 600; color: #1e293b;">${dealer.established}</p>
+        </div>
     </div>
     
     <div class="modal-actions">
-      ${dealer.phone.startsWith('+') ? 
+      ${dealer.phone.includes('+') ? 
         `<a href="tel:${dealer.phone}" class="modal-btn primary">
-          <i class="fas fa-phone"></i> Call Now
+          <i class="fas fa-phone-alt"></i> Call Now
         </a>` : 
-        `<a href="https://maps.google.com/?q=${encodeURIComponent(dealer.address)}" target="_blank" class="modal-btn primary">
-          <i class="fas fa-map-marker-alt"></i> Get Directions
+        `<a href="https://www.google.com/maps/search/${encodeURIComponent(dealer.name + ' ' + dealer.address)}" target="_blank" class="modal-btn primary">
+          <i class="fas fa-location-arrow"></i> Directions
         </a>`
       }
       <button class="modal-btn secondary" onclick="closeDealerModal()">
