@@ -7,8 +7,15 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password_hash = db.Column(db.String(128), nullable=False)
+    password_hash = db.Column(db.String(128), nullable=True) # Changed to nullable for now if needed
     phone = db.Column(db.String(20), unique=True, nullable=True)
+    location = db.Column(db.String(100))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    last_login = db.Column(db.DateTime)
+    is_active = db.Column(db.Boolean, default=True)
+    
+    # Multilingual preference
+    language_preference = db.Column(db.String(10), default='en')
     
     # Email verification fields
     is_email_verified = db.Column(db.Boolean, default=False)
@@ -20,16 +27,9 @@ class User(db.Model):
     
     notifications = db.relationship('Notification', backref='user', lazy=True)
     files = db.relationship('File', backref='user', lazy=True)
-    tokens = db.relationship('Token', backref='user', lazy=True)
-
-    def set_password(self, password):
-        self.password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-
-    def check_password(self, password):
-        return bcrypt.checkpw(password.encode('utf-8'), self.password_hash.encode('utf-8'))
 
     def __repr__(self):
-        return f'<User {self.username}>'
+        return f'<User {self.username} ({self.role})>'
 
 class Notification(db.Model):
     __tablename__ = 'notifications'
@@ -41,10 +41,6 @@ class Notification(db.Model):
     read_at = db.Column(db.DateTime, nullable=True)
     sent_at = db.Column(db.DateTime, default=datetime.utcnow)
     
-    websocket_sent = db.Column(db.Boolean, default=False)
-    email_sent = db.Column(db.Boolean, default=False)
-    sms_sent = db.Column(db.Boolean, default=False)
-
     def to_dict(self):
         return {
             'id': self.id,
@@ -63,6 +59,7 @@ class File(db.Model):
     original_name = db.Column(db.String(255), nullable=False)
     file_path = db.Column(db.String(512), nullable=False)
     file_type = db.Column(db.String(100), nullable=False)
+    mime_type = db.Column(db.String(100), nullable=True)
     file_size = db.Column(db.Integer, nullable=False)
     storage_type = db.Column(db.String(20), default='local')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -78,14 +75,5 @@ class File(db.Model):
             'created_at': self.created_at.isoformat()
         }
 
-class Token(db.Model):
-    __tablename__ = 'tokens'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    token = db.Column(db.String(64), unique=True, nullable=False)
-    type = db.Column(db.String(20), nullable=False) # 'verification', 'reset'
-    expires_at = db.Column(db.DateTime, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
-    def is_expired(self):
-        return datetime.utcnow() > self.expires_at
+    def __repr__(self):
+        return f'<File {self.id} - {self.original_name}>'

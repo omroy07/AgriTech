@@ -5,28 +5,61 @@ const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
 const mobileThemeToggle = document.getElementById('mobileThemeToggle');
 const mobileServicesToggle = document.getElementById('mobileServicesToggle');
 const mobileServicesList = document.getElementById('mobileServicesList');
-const themeToggle = document.querySelector('.theme-toggle');
-const themeText = document.querySelector('.theme-text');
-const sunIcon = document.querySelector('.sun-icon');
-const moonIcon = document.querySelector('.moon-icon');
+const themeText = document.getElementById('themeText');
+const moonIcon = document.getElementById('moonIcon');
+const sunIcon = document.getElementById('sunIcon');
+
 const scrollBtn = document.getElementById('scrollBtn');
 const scrollIcon = document.getElementById('scrollIcon');
 
+
+
+
+
+function showCachedNotice() {
+  const notice = document.getElementById('cached-notice');
+  notice.classList.remove('hidden');
+
+  // Automatically hide after a while if you want:
+  setTimeout(() => {
+    notice.classList.add('hidden');
+  }, 5000); // hides after 5 seconds (optional)
+}
+
+
+// Theme Management
 // Theme Management
 const applyTheme = (theme) => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    
-    if (theme === 'dark') {
-        if (themeText) themeText.textContent = 'Light';
-        if (moonIcon) moonIcon.style.display = 'none';
-        if (sunIcon) sunIcon.style.display = 'inline-block';
-    } else {
-        if (themeText) themeText.textContent = 'Dark';
-        if (moonIcon) moonIcon.style.display = 'inline-block';
-        if (sunIcon) sunIcon.style.display = 'none';
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+
+  const themeText = document.getElementById('themeText');
+  const moonIcon = document.getElementById('moonIcon');
+  const sunIcon = document.getElementById('sunIcon');
+
+  if (theme === 'dark') {
+    if (themeText) themeText.textContent = 'Light';
+
+    if (moonIcon) {
+      moonIcon.style.display = 'none';
     }
+
+    if (sunIcon) {
+      sunIcon.style.display = 'inline-block';
+    }
+  } else {
+    if (themeText) themeText.textContent = 'Dark';
+
+    if (moonIcon) {
+      moonIcon.style.display = 'inline-block';
+    }
+
+    if (sunIcon) {
+      sunIcon.style.display = 'none';
+    }
+  }
 };
+
 
 const savedTheme = localStorage.getItem('theme') || 'dark';
 applyTheme(savedTheme);
@@ -318,6 +351,51 @@ localStorage.setItem(
 );
 
 renderRoadmap(tasks);
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const statusDiv = document.getElementById('network-status');
+  const cachedDiv = document.getElementById('cached-notice');
+
+  function updateNetworkStatus() {
+    if (!navigator.onLine) {
+      statusDiv.textContent = '⚠️ Offline or poor connection';
+      statusDiv.classList.remove('hidden');
+    } else {
+      // Check if slow/limited connection
+      if (navigator.connection && (navigator.connection.effectiveType === '2g' || navigator.connection.effectiveType === '3g')) {
+        statusDiv.textContent = '📶 Poor/slow connection';
+        statusDiv.classList.remove('hidden');
+      } else {
+        statusDiv.classList.add('hidden');
+        cachedDiv.classList.add('hidden'); // clear cached notice too
+      }
+    }
+  }
+
+  window.addEventListener('online', updateNetworkStatus);
+  window.addEventListener('offline', updateNetworkStatus);
+
+  updateNetworkStatus();
+
+  function showCachedNotice() {
+    cachedDiv.classList.remove('hidden');
+  }
+
+  window.addEventListener('online', () => {
+    cachedDiv.classList.add('hidden');
+  });
+
+  // Example fetch wrapper
+  fetch('/some-api')
+    .then(resp => resp.json())
+    .then(data => {
+      // render data
+    })
+    .catch(err => {
+      showCachedNotice();
+    });
+});
 
 // --------------------
 // My Activity: Single User Profile with Service Usage Chart
@@ -951,3 +1029,5 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 });
+});
+ main

@@ -1,23 +1,26 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, g
 import google.generativeai as genai
 import traceback
 import os
 import re
 from flask_cors import CORS
 from dotenv import load_dotenv
-from marshmallow import ValidationError
-from extensions import limiter, db, migrate
-from backend.config import config
+from backend.extensions import socketio, db, migrate, mail, limiter
+from backend.api.v1.files import files_bp
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
+from backend.celery_app import celery_app, make_celery
+from backend.config import config
 from backend.monitoring.routes import health_bp
-from backend.extensions.socketio import socketio
-from backend.schemas.loan_schema import LoanRequestSchema
 from backend.utils.logger import logger
-from backend.celery_app import celery_app
+from backend.api import register_api
+from backend.schemas.loan_schema import LoanRequestSchema
+from marshmallow import ValidationError
 from backend.tasks import predict_crop_task, process_loan_task
-from backend.api.v1.loan import validate_input, sanitize_input
+from backend.utils.validation import sanitize_input, validate_input
+from backend.auth import auth_bp
 import backend.sockets.task_events  # Register socket event handlers
+from backend.utils.i18n import get_locale, t
 
 
 
@@ -31,22 +34,37 @@ app = Flask(__name__, static_folder='.', static_url_path='')
 env_name = os.getenv('FLASK_ENV', 'default')
 app.config.from_object(config[env_name])
 
+# Set upload folder
+app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'uploads')
+
 # Initialize extensions
 db.init_app(app)
 migrate.init_app(app, db)
+mail.init_app(app)
 limiter.init_app(app)
+mail.init_app(app)
+
+# Initialize Celery with app context
+celery = make_celery(app)
 
 # Import models after db initialization
-from backend.models import User, PredictionHistory, LoanRequest
+from backend.models import User
 
 CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
-app.register_blueprint(crop_bp)
+app.register_blueprint(crop_bp, url_prefix='/crop')
 app.register_blueprint(disease_bp)
 app.register_blueprint(health_bp)
+app.register_blueprint(files_bp)
 
 # Initialize SocketIO with app
 socketio.init_app(app)
+
+@app.before_request
+def set_request_locale():
+    """Set the locale for the current request."""
+    # This will be picked up by get_locale() later
+    g.locale = get_locale()
 
 
 
@@ -54,6 +72,9 @@ socketio.init_app(app)
 
 # Initialize Marshmallow Schemas
 loan_schema = LoanRequestSchema()
+
+with app.app_context():
+    db.create_all()
 
 # Initialize Gemini API
 # Configure Gemini Client
@@ -132,10 +153,12 @@ def predict_crop_async():
                 return jsonify({'status': 'error', 'message': f'Missing field: {field}'}), 400
         
         # Submit task to Celery
+        user_id = data.get('user_id')
         task = predict_crop_task.delay(
             data['N'], data['P'], data['K'],
             data['temperature'], data['humidity'],
-            data['ph'], data['rainfall']
+            data['ph'], data['rainfall'],
+            user_id=user_id
         )
         
         return jsonify({
@@ -164,7 +187,8 @@ def process_loan_async():
                     json_data[key] = sanitize_input(value)
         
         # Submit task to Celery
-        task = process_loan_task.delay(json_data)
+        user_id = json_data.get('user_id')
+        task = process_loan_task.delay(json_data, user_id=user_id)
         
         return jsonify({
             'status': 'submitted',
@@ -199,6 +223,10 @@ def process_loan():
         
         logger.info("Received loan processing request for type: %s", json_data.get('loan_type', 'unknown'))
 
+        from backend.utils.i18n import get_locale, t, LOCALE_TO_NAME
+        locale = get_locale()
+        target_language = LOCALE_TO_NAME.get(locale, 'English')
+
         prompt = f"""
 You are a financial loan eligibility advisor specializing in agricultural loans for farmers in India.
 
@@ -213,6 +241,8 @@ Do not suggest generic or international financing options.
 
 JSON Data = {json_data}
 
+IMPORTANT: You must provide your entire response in {target_language}.
+
 Your task is to:
 1. Identify the loan type and understand which fields are important for assessing that particular loan.
 2. Analyze the farmer's provided details and assess their loan eligibility.
@@ -221,7 +251,7 @@ Your task is to:
 5. Provide simple and actionable suggestions the farmer can follow to improve eligibility.
 6. Suggest the government schemes or subsidies applicable to their loan type.
 7. Ensure the tone is clear, supportive, and easy to understand for farmers.
-8. Respond in a structured format with labeled sections: Loan Type, Eligibility Status, Loan Range, Improvements, Schemes.
+8. Respond in a structured format with labeled sections (in {target_language}): Loan Type, Eligibility Status, Loan Range, Improvements, Schemes.
 9. **IMPORTANT: Return your response in **Markdown format** with:
 Headings for each section (Loan Type, Eligibility Status, Loan Range, Improvements, Schemes)
 Bullet points ( - ) for lists.
@@ -240,14 +270,11 @@ Do not add assumptions that are not supported by the data provided.
                 "message": "No response generated from Gemini API"
           }), 500
 
-        reply = response.candidates[0].content.parts[0].text
-        
-        # Return the assessment result in response
         return jsonify({
             "status": "success",
-            "message": "Loan processed successfully",
-            "assessment": reply
-        }), 200
+            "message": t('loan_processed_success'),
+            "result": reply
+            }), 200
 
     except Exception:
         traceback.print_exc()
@@ -443,7 +470,7 @@ def not_found(error):
     logger.warning("404 Error: %s", request.path)
     return jsonify({
         "status" : "error",
-        "message" :"Resource not found"
+        "message" : t('error_user_not_found') # Using User Not Found as generic for 404 in this context
     }),404
 
 @app.errorhandler(500)
