@@ -1369,6 +1369,210 @@
       }
     }
 
+    /* ============================================
+       NEW: PROFIT & LOSS SECTION STYLES
+       ============================================ */
+    
+    .profit-loss-section {
+      position: relative;
+      z-index: 1;
+      padding: 4rem 1rem;
+      background: var(--section-bg);
+      transition: background 0.3s ease;
+    }
+
+    .pl-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+    }
+
+    .pl-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    #plUserSelector {
+      min-width: 200px;
+      padding: 0.5rem 0.85rem;
+      border: 1px solid var(--border-color);
+      background: var(--input-bg);
+      color: var(--text-color);
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    .pl-time-toggle {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .pl-time-toggle .btn.active {
+      background: var(--accent-color);
+      color: white;
+      border-color: var(--accent-color);
+    }
+
+    .pl-summary-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .pl-card {
+      background: var(--section-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .pl-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px var(--shadow-color);
+    }
+
+    .pl-card-icon {
+      font-size: 2rem;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    .pl-card-content {
+      flex: 1;
+    }
+
+    .pl-card-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .pl-card-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-color);
+    }
+
+    .revenue-card .pl-card-icon {
+      background: rgba(34, 197, 94, 0.15);
+    }
+
+    .revenue-card .pl-card-value {
+      color: var(--accent-color);
+    }
+
+    .expense-card .pl-card-icon {
+      background: rgba(239, 68, 68, 0.15);
+    }
+
+    .expense-card .pl-card-value {
+      color: #ef4444;
+    }
+
+    .profit-card .pl-card-value.positive {
+      color: var(--accent-color);
+    }
+
+    .profit-card .pl-card-value.negative {
+      color: #ef4444;
+    }
+
+    .transactions-card .pl-card-icon {
+      background: rgba(59, 130, 246, 0.15);
+    }
+
+    .pl-charts-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .pl-chart-container {
+      background: var(--section-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .pl-chart-container h3 {
+      color: var(--text-color);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .pl-chart-container canvas {
+      max-height: 300px;
+    }
+
+    @media (max-width: 768px) {
+      .pl-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      #plUserSelector {
+        width: 100%;
+      }
+
+      .pl-time-toggle {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .pl-charts-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pl-summary-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .pl-card {
+        padding: 0.85rem;
+      }
+
+      .pl-card-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.75rem;
+      }
+
+      .pl-card-value {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .profit-loss-section {
+        padding: 3rem 0.5rem;
+      }
+
+      .pl-container {
+        padding: 1rem;
+      }
+
+      .pl-time-toggle .btn {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.6rem;
+      }
+    }
     
   </style>
 </head>
@@ -1667,6 +1871,7 @@
       </div>
     </div>
   </section>
+
   <!-- My Activity Section: Single User Profile with Service Usage Graph -->
   <section class="activity" id="my-activity" aria-label="My Activity">
     <div class="activity-container" style="max-width:1400px;margin:2rem auto;padding:1.5rem;background:var(--surface-color);border:1px solid var(--border-color);border-radius:12px;">
@@ -1720,6 +1925,83 @@
           <ul id="transactionList" style="list-style:none;padding:0;margin:0;max-height:250px;overflow-y:auto;">
             <li style="color:var(--text-muted);padding:0.5rem;">No transactions.</li>
           </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       NEW: PROFIT & LOSS ANALYTICS SECTION
+       ============================================ -->
+  <section class="profit-loss-section" id="profit-loss-analytics" aria-label="Profit Loss Analytics">
+    <div class="pl-container">
+      <h2 class="features-title serif">Profit & Loss Analytics</h2>
+      <p class="feature-intro">Track revenue, expenses, and profitability trends for buyers and retailers.</p>
+      
+      <!-- Controls -->
+      <div class="pl-controls">
+        <label for="plUserSelector" style="color:var(--text-color);font-weight:500;">Select Buyer/Retailer:</label>
+        <select id="plUserSelector" class="btn">
+          <option value="">Choose a user...</option>
+        </select>
+        
+        <div class="pl-time-toggle">
+          <button class="btn btn-secondary" data-range="weekly">Weekly</button>
+          <button class="btn btn-secondary active" data-range="monthly">Monthly</button>
+          <button class="btn btn-secondary" data-range="quarterly">Quarterly</button>
+        </div>
+        
+        <div style="flex:1"></div>
+        <button class="btn btn-primary" id="exportPLBtn">
+          <i class="fas fa-download"></i> Export Report
+        </button>
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="pl-summary-cards">
+        <div class="pl-card revenue-card">
+          <div class="pl-card-icon">💰</div>
+          <div class="pl-card-content">
+            <div class="pl-card-label">Total Revenue</div>
+            <div class="pl-card-value" id="plRevenue">₹0</div>
+          </div>
+        </div>
+        
+        <div class="pl-card expense-card">
+          <div class="pl-card-icon">💸</div>
+          <div class="pl-card-content">
+            <div class="pl-card-label">Total Expenses</div>
+            <div class="pl-card-value" id="plExpenses">₹0</div>
+          </div>
+        </div>
+        
+        <div class="pl-card profit-card">
+          <div class="pl-card-icon">📈</div>
+          <div class="pl-card-content">
+            <div class="pl-card-label">Net Profit/Loss</div>
+            <div class="pl-card-value positive" id="plProfit">₹0</div>
+          </div>
+        </div>
+        
+        <div class="pl-card transactions-card">
+          <div class="pl-card-icon">🔢</div>
+          <div class="pl-card-content">
+            <div class="pl-card-label">Transactions</div>
+            <div class="pl-card-value" id="plTransactions">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Grid -->
+      <div class="pl-charts-grid">
+        <div class="pl-chart-container">
+          <h3>Profit/Loss Trend</h3>
+          <canvas id="plTrendChart"></canvas>
+        </div>
+        
+        <div class="pl-chart-container">
+          <h3>Category Breakdown</h3>
+          <canvas id="plCategoryChart"></canvas>
         </div>
       </div>
     </div>

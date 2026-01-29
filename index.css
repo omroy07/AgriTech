@@ -1105,3 +1105,208 @@ body {
     font-size: 0.7rem;
   }
 }
+/* ============================================
+   PROFIT & LOSS SECTION - ADDON STYLES
+   Add these to your existing stylesheet
+   ============================================ */
+
+.profit-loss-section {
+  position: relative;
+  z-index: 1;
+  padding: 4rem 1rem;
+  background: var(--section-bg);
+  transition: background 0.3s ease;
+}
+
+.pl-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.pl-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+#plUserSelector {
+  min-width: 200px;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--border-color);
+  background: var(--input-bg);
+  color: var(--text-color);
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.pl-time-toggle {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pl-time-toggle .btn.active {
+  background: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+.pl-summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.pl-card {
+  background: var(--section-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pl-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px var(--shadow-color);
+}
+
+.pl-card-icon {
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.pl-card-content {
+  flex: 1;
+}
+
+.pl-card-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.pl-card-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.revenue-card .pl-card-icon {
+  background: rgba(34, 197, 94, 0.15);
+}
+
+.revenue-card .pl-card-value {
+  color: var(--accent-color);
+}
+
+.expense-card .pl-card-icon {
+  background: rgba(239, 68, 68, 0.15);
+}
+
+.expense-card .pl-card-value {
+  color: #ef4444;
+}
+
+.profit-card .pl-card-value.positive {
+  color: var(--accent-color);
+}
+
+.profit-card .pl-card-value.negative {
+  color: #ef4444;
+}
+
+.transactions-card .pl-card-icon {
+  background: rgba(59, 130, 246, 0.15);
+}
+
+.pl-charts-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+}
+
+.pl-chart-container {
+  background: var(--section-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.pl-chart-container h3 {
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.pl-chart-container canvas {
+  max-height: 300px;
+}
+
+@media (max-width: 768px) {
+  .pl-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #plUserSelector {
+    width: 100%;
+  }
+
+  .pl-time-toggle {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .pl-charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pl-summary-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .pl-card {
+    padding: 0.85rem;
+  }
+
+  .pl-card-icon {
+    width: 45px;
+    height: 45px;
+    font-size: 1.75rem;
+  }
+
+  .pl-card-value {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profit-loss-section {
+    padding: 3rem 0.5rem;
+  }
+
+  .pl-container {
+    padding: 1rem;
+  }
+
+  .pl-time-toggle .btn {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.6rem;
+  }
+}
