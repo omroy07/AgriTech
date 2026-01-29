@@ -1,0 +1,154 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Libertinus+Serif:wght@400;700&display=swap');
+
+:root {
+  --bg: #f5f7f6;
+  --card: #ffffff;
+  --text: #1f2937;
+  --primary: #228b22;
+  --muted: #6b7280;
+}
+
+[data-theme="dark"] {
+  --bg: #0b1220;
+  --card: #111827;
+  --text: #e5e7eb;
+  --primary: #4caf50;
+  --muted: #9ca3af;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Inter, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: all 0.3s ease;
+}
+
+/* NAVBAR */
+.navbar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 30px;
+  background: var(--card);
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+  z-index: 100;
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.nav-links a {
+  margin: 0 12px;
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+  color: var(--primary);
+}
+
+.theme-toggle {
+  background: none;
+  border: 2px solid var(--primary);
+  padding: 8px 12px;
+  border-radius: 50px;
+  cursor: pointer;
+  color: var(--primary);
+}
+
+/* HERO */
+.mission-hero {
+  max-width: 1200px;
+  margin: auto;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.mission-card {
+  background: var(--card);
+  padding: 50px;
+  border-radius: 22px;
+  box-shadow: 0 15px 40px rgba(0,0,0,.12);
+}
+
+.mission-card h1 {
+  font-size: 2.8rem;
+  color: var(--primary);
+}
+
+.subtitle {
+  margin-top: 15px;
+  font-size: 1.2rem;
+  color: var(--muted);
+}
+
+/* HIGHLIGHTS */
+.mission-highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.highlight i {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 15px;
+}
+
+.highlight h3 {
+  font-size: 1.3rem;
+}
+
+/* STATS */
+.mission-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 30px;
+  margin-top: 60px;
+}
+
+.stat-card {
+  background: var(--card);
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.12);
+}
+
+.stat-card h2 {
+  font-size: 2.4rem;
+  color: var(--primary);
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 30px;
+  color: var(--muted);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .mission-card {
+    padding: 35px 20px;
+  }
+
+  .mission-card h1 {
+    font-size: 2.2rem;
+  }
+}

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="icon" type="image/png" href="images/logo.png">
     <meta charset="UTF-8">
@@ -9,7 +10,7 @@
     <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <style>
         :root {
             /* Light theme variables - matching homepage */
@@ -19,14 +20,17 @@
             --text-primary: #2d5a2d;
             --text-secondary: #5a7a5a;
             --text-muted: #81c784;
+            --text-color: #0f172a;
+            --accent-color: #16a34a;
             --border-color: rgba(139, 195, 74, 0.2);
             --input-bg: rgba(255, 255, 255, 0.8);
             --input-border: rgba(139, 195, 74, 0.2);
+            --search-input-border: #94a3b8;
             --shadow-primary: rgba(76, 175, 80, 0.1);
             --shadow-secondary: rgba(0, 0, 0, 0.05);
             --header-bg: rgba(255, 255, 255, 0.95);
             --header-border: rgba(139, 195, 74, 0.2);
-            
+
             /* Homepage green palette */
             --primary-green: #16a34a;
             --secondary-green: #22c55e;
@@ -44,14 +48,16 @@
             --text-primary: #e0e0e0;
             --text-secondary: #b0b0b0;
             --text-muted: #66bb6a;
+            --text-color: #ffffff;
             --border-color: rgba(102, 187, 106, 0.3);
             --input-bg: rgba(50, 50, 50, 0.8);
             --input-border: rgba(102, 187, 106, 0.3);
+            --search-input-border: #555555;
             --shadow-primary: rgba(102, 187, 106, 0.2);
             --shadow-secondary: rgba(0, 0, 0, 0.3);
             --header-bg: rgba(30, 30, 30, 0.95);
             --header-border: rgba(102, 187, 106, 0.3);
-            
+
             /* Homepage green palette for dark mode */
             --light-green: #1a2e1a;
             --green-hover: #22c55e;
@@ -81,7 +87,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
+            background:
                 radial-gradient(circle at 20% 20%, rgba(139, 195, 74, 0.08) 0%, transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(76, 175, 80, 0.06) 0%, transparent 50%);
             pointer-events: none;
@@ -89,7 +95,7 @@
         }
 
         .dark-theme::before {
-            background: 
+            background:
                 radial-gradient(circle at 20% 20%, rgba(102, 187, 106, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(76, 175, 80, 0.08) 0%, transparent 50%);
         }
@@ -172,72 +178,49 @@
 
         /* Search bar styles */
         .search-container {
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid transparent;
-            border-radius: 30px;
-            padding: 8px 15px;
-            width: 100%;
-            max-width: 280px;
-            margin-left: auto;
-            margin-right: 20px;
-            box-shadow: 0 4px 15px rgba(56, 142, 60, 0.1);
-            transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
-        }
-
-        .dark-theme .search-container {
-            background: rgba(50, 50, 50, 0.8);
-        }
-
-        .search-container:focus-within {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(56, 142, 60, 0.2);
-            border-color: #4caf50;
+            display: flex;
+            gap: 0.25rem;
+            flex-shrink: 1;
+            min-width: 150px;
         }
 
         .search-input {
-            border: none;
-            outline: none;
-            padding: 10px 12px;
-            font-size: 15px;
-            flex: 1;
-            color: #2e7d32;
+            padding: 0.5rem;
+            padding-right: 40px;
+            border-radius: 8px;
+            border: 1px solid var(--search-input-border);
             background: transparent;
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-        }
-
-        .dark-theme .search-input {
-            color: #e0e0e0;
-        }
-
-        .search-input::placeholder {
-            color: #81c784;
-            font-weight: 400;
+            color: var(--text-color);
+            width: 230px;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
         }
 
         .search-button {
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            padding: 0.5rem 0.6rem;
+            background: var(--accent-color);
             border: none;
-            border-radius: 50%;
-            cursor: pointer;
+            border-radius: 0 8px 8px 0;
             color: white;
-            font-size: 16px;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(56, 142, 60, 0.2);
+            cursor: pointer;
+            flex-shrink: 0;
         }
 
-        .search-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 15px rgba(56, 142, 60, 0.4);
+        .search-input:focus,
+        .search-input.input-focused {
+            width: 330px;
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .search-input::placeholder {
+            color: #888;
+            opacity: 1;
         }
 
         /* Theme toggle */
@@ -322,6 +305,48 @@
             display: none;
         }
 
+
+        .back-bar {
+            padding: 1.25rem 2rem;
+
+        }
+
+        .back-bar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 999px;
+            color: #0f172a;
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: 0 12px 25px rgba(15, 23, 42, 0.25);
+            border: 1px solid rgba(22, 163, 74, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .back-home-link i {
+            font-size: 0.95rem;
+        }
+
+        .back-home-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 18px 35px rgba(15, 23, 42, 0.4);
+        }
+
+
+        .dark-theme .back-home-link {
+            color: #e5f9f0;
+            border-color: rgba(45, 212, 191, 0.45);
+        }
+
+
+
         main {
             flex: 1;
             padding: 3rem 2rem;
@@ -337,7 +362,7 @@
             backdrop-filter: blur(20px);
             border-radius: 24px;
             padding: 3rem;
-            box-shadow: 
+            box-shadow:
                 0 20px 40px var(--shadow-primary),
                 0 8px 16px var(--shadow-secondary);
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -455,7 +480,7 @@
             border-color: var(--primary-green);
             outline: none;
             background: var(--bg-secondary);
-            box-shadow: 
+            box-shadow:
                 0 0 0 3px rgba(22, 163, 74, 0.1),
                 0 4px 12px rgba(22, 163, 74, 0.15);
             transform: translateY(-1px);
@@ -726,19 +751,22 @@
             width: 56px;
             height: 56px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--secondary-green), var(--primary-green));
-            border: none;
-            color: white;
-            font-size: 20px;
+            background: #ffffff;
+            color: var(--primary-green);
+            border: 2px solid var(--primary-green);
+            font-size: 22px;
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(22, 163, 74, 0.3);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
             transition: all 0.3s ease;
         }
 
         .help-button:hover {
+            background: #f0fdf4;
+            color: var(--dark-green);
             transform: scale(1.05);
-            box-shadow: 0 8px 28px rgba(22, 163, 74, 0.4);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
         }
+
 
         .help-tooltip {
             position: absolute;
@@ -775,8 +803,8 @@
         .site-footer {
             background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
             color: white;
-            margin-top: auto;
-            padding: 4rem 2rem 2.5rem;
+            margin-top: 0.5rem;
+            padding: 1.5rem 2rem 0.25rem;
             position: relative;
             overflow: hidden;
         }
@@ -788,10 +816,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(255,255,255,0.06) 0%, transparent 50%);
+            background:
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
             pointer-events: none;
         }
 
@@ -800,7 +828,7 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: 2fr 1fr 1fr;
-            gap: 3.5rem;
+            gap: 3rem;
             align-items: flex-start;
             position: relative;
             z-index: 1;
@@ -929,9 +957,10 @@
 
         .footer-bottom {
             max-width: 1200px;
-            margin: 3rem auto 0;
-            padding: 2rem 1rem 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 0.75rem auto 0;
+            ;
+            padding: 0.75rem 1rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.25);
             text-align: center;
         }
 
@@ -939,7 +968,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1.5rem;
         }
 
         .copyright {
@@ -954,16 +982,16 @@
         .footer-bottom-links {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 1rem;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .footer-bottom-links a {
             color: rgba(255, 255, 255, 0.85);
-            text-decoration: none; 
+            text-decoration: none;
             font-size: 0.875rem;
-            padding: 0.5rem 1rem;
+            padding: 0.35rem 0.85rem;
             border-radius: 6px;
             transition: all 0.3s ease;
             background: rgba(255, 255, 255, 0.05);
@@ -1031,31 +1059,50 @@
         }
 
         @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         @keyframes successPulse {
-            0% { transform: scale(0.8); opacity: 0; }
-            50% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); opacity: 1; }
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         /* Mobile responsive styles */
         @media screen and (max-width: 991.98px) {
             .navbar {
                 padding: 0.75rem 0;
-            }
-
-            .search-container {
-                max-width: 100%;
-                margin: 1rem 0 0 0;
-                order: 3;
             }
         }
 
@@ -1084,14 +1131,35 @@
                 justify-content: center;
             }
 
+            .search-container {
+                order: -1;
+                width: 100%;
+                max-width: 100%;
+                margin: 0 0 1rem 0;
+            }
+
+            .search-input {
+                width: 100%;
+                padding-right: 50px;
+            }
+
+            .search-input:focus,
+            .search-input.input-focused {
+                width: 100%;
+            }
+
+            .search-button {
+                padding: 0.5rem 1rem;
+            }
+
             .feedback-container {
                 margin: 1rem;
                 padding: 2rem 1.5rem;
                 border-radius: 20px;
             }
-            
-            .feedback-title { 
-                font-size: 1.5rem; 
+
+            .feedback-title {
+                font-size: 1.5rem;
             }
 
             .action-buttons {
@@ -1154,7 +1222,7 @@
 
             .footer-links ul li a {
                 text-align: center;
-                padding: 10px 16px;  
+                padding: 10px 16px;
             }
 
             .social-media {
@@ -1179,11 +1247,12 @@
             }
 
             .separator {
-                display: none;  
+                display: none;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="page-container">
         <nav class="navbar">
@@ -1191,11 +1260,12 @@
                 <div class="brand">
                     <a href="main.html" class="logo">AgriTech</a>
                 </div>
+
                 <div class="nav-buttons">
-                    <!-- Responsive Search Bar -->
                     <div class="search-container">
-                        <input type="text" placeholder="Search..." class="search-input" />
-                        <button class="search-button">
+                        <input type="text" placeholder="Search..." class="search-input" autocomplete="off"
+                            aria-label="Search content" />
+                        <button class="search-button" aria-label="Search">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
@@ -1206,23 +1276,29 @@
                         <span class="theme-text">Dark</span>
                     </button>
 
-                    <a href="about.html" class="btn btn-secondary">About</a>
                     <a href="blog.html" class="btn btn-secondary">Blog</a>
                     <a href="faq.html" class="btn btn-secondary">FAQ</a>
-                    
-                    <!-- Show these when not authenticated -->
-                    <a href="login.html" class="btn btn-secondary auth-login">Login</a>
-                    <a href="register.html" class="btn btn-primary auth-register">Register</a>
-                    
-                    <!-- Show this when authenticated -->
+
+                    <a href="login.html" class="btn btn-secondary auth-login login-btn-desktop">Login</a>
+                    <a href="register.html" class="btn btn-primary auth-register register-btn-desktop">Register</a>
+
                     <button class="logout-button auth-logout auth-hidden" onclick="showLogoutConfirmation()">
                         <i class="fas fa-sign-out-alt"></i>
                         Logout
                     </button>
                 </div>
+
             </div>
         </nav>
-
+        <!-- Back to Home bar -->
+        <section class="back-bar">
+            <div class="back-bar-inner">
+                <a href="index.html" class="back-home-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Home
+                </a>
+            </div>
+        </section>
         <main>
             <div class="feedback-container">
                 <div class="feedback-header">
@@ -1279,7 +1355,8 @@
                         <i class="fas fa-check-circle success-icon"></i>
                     </div>
                     <h3>Thank You for Your Feedback!</h3>
-                    <p>We truly appreciate you taking the time to share your thoughts with us. Your feedback helps us create better agricultural solutions for everyone.</p>
+                    <p>We truly appreciate you taking the time to share your thoughts with us. Your feedback helps us
+                        create better agricultural solutions for everyone.</p>
                     <div class="action-buttons">
                         <a href="main.html" class="home-button">
                             <i class="fas fa-home"></i>
@@ -1310,12 +1387,12 @@
         </main>
 
         <div class="floating-help">
-            <button class="help-button" title="Need help?">
-                <i class="fas fa-question"></i>
-
+            <button class="help-button" title="Need help?" onclick="window.location.href='contact.html'"
+                aria-label="Get help - Opens contact page" tabindex="0" role="button">
+                <i class="fas fa-question" aria-hidden="true"></i>
             </button>
-            <div class="help-tooltip">
-                Need help with feedback? Contact our support team!
+            <div class="help-tooltip" role="tooltip">
+                Need help? Click to contact support or view FAQs!
             </div>
         </div>
 
@@ -1327,7 +1404,9 @@
                         <h3 class="serif">AgriTech</h3>
                     </div>
                     <div class="mission-statement">
-                        <p>Empowering India's Farming Future with innovative <span class="no-break">technology</span> solutions that connect every stakeholder in the <span class="no-break">agricultural</span> ecosystem</p>
+                        <p>Empowering India's Farming Future with innovative <span class="no-break">technology</span>
+                            solutions that connect every stakeholder in the <span class="no-break">agricultural</span>
+                            ecosystem</p>
                     </div>
                     <div class="social-media">
                         <a href="https://instagram.com" target="_blank" aria-label="Follow us on Instagram">
@@ -1336,7 +1415,8 @@
                         <a href="https://github.com/omroy07" target="_blank" aria-label="View our GitHub repositories">
                             <i class="fab fa-github"></i>
                         </a>
-                        <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank" aria-label="Connect with us on LinkedIn">
+                        <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank"
+                            aria-label="Connect with us on LinkedIn">
                             <i class="fab fa-linkedin"></i>
                         </a>
                     </div>
@@ -1358,7 +1438,8 @@
                     <nav aria-label="Smart tools navigation">
                         <ul>
                             <li><a href="Crop Recommendation/templates/index.html">Crop Recommendation</a></li>
-                            <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
+                            <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a>
+                            </li>
                             <li><a href="Disease prediction/template/index.html">Disease Detector</a></li>
                             <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
                         </ul>
@@ -1367,7 +1448,7 @@
             </div>
             <div class="footer-bottom">
                 <div class="footer-bottom-content">
-                    <p class="copyright">© 2025 AgriTech. All rights reserved.</p>
+                    <p class="copyright">© 2026 AgriTech. All rights reserved.</p>
                     <div class="footer-bottom-links">
                         <a href="terms-and-service.html">Terms of Service</a>
                         <span class="separator">•</span>
@@ -1381,19 +1462,45 @@
     </div>
 
     <script>
+        // Desktop Search
+        const searchButton = document.querySelector(".search-button");
+        const searchInput = document.querySelector(".search-input");
+
+        searchButton?.addEventListener("click", () => {
+            handleSearch(searchInput.value);
+        });
+
+        searchInput?.addEventListener("keydown", e => {
+            if (e.key === "Enter") handleSearch(e.target.value);
+        });
+
+        // Add focus effect when button is clicked or focused
+        searchButton?.addEventListener("click", () => {
+            searchInput?.classList.add("input-focused");
+        });
+
+        searchButton?.addEventListener("focus", () => {
+            searchInput?.focus(); //Focus the input to show cursor
+            searchInput?.classList.add("input-focused");
+        });
+
+        searchInput?.addEventListener("blur", () => {
+            searchInput.classList.remove("input-focused");
+        });
+
         // Theme toggle functionality similar to homepage
         function toggleTheme() {
             const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
             const themeText = document.querySelector('.theme-text');
-            
+
             document.documentElement.setAttribute('data-theme', newTheme);
             document.body.classList.toggle('dark-theme', newTheme === 'dark');
-            
+
             if (themeText) {
                 themeText.textContent = newTheme === 'dark' ? 'Light' : 'Dark';
             }
-            
+
             // Store theme preference
             try {
                 localStorage.setItem('theme', newTheme);
@@ -1410,52 +1517,46 @@
             } catch (e) {
                 currentTheme = window.currentTheme || 'light';
             }
-            
+
             const themeText = document.querySelector('.theme-text');
-            
+
             document.documentElement.setAttribute('data-theme', currentTheme);
             document.body.classList.toggle('dark-theme', currentTheme === 'dark');
-            
+
             if (themeText) {
                 themeText.textContent = currentTheme === 'dark' ? 'Light' : 'Dark';
             }
         }
 
+        // Auth helper: real auth check
+        function isAuthenticated() {
+            const sessionUser = sessionStorage.getItem('agriTechUser');
+            const localUser = localStorage.getItem('agriTechUser');
+            return !!(sessionUser || localUser);
+        }
+
         // Handle authentication state
         function handleAuthState() {
-            // Check if user is authenticated (you can modify this logic based on your auth system)
-            const isAuthenticated = window.location.pathname.includes('feed-back.html') || 
-                                  sessionStorage.getItem('userAuthenticated') || 
-                                  localStorage.getItem('userAuthenticated');
-            
             const loginBtn = document.querySelector('.auth-login');
             const registerBtn = document.querySelector('.auth-register');
             const logoutBtn = document.querySelector('.auth-logout');
-            
-            if (isAuthenticated) {
-                // User is authenticated - show logout, hide login/register
-                if (loginBtn) loginBtn.style.display = 'none';
-                if (registerBtn) registerBtn.style.display = 'none';
-                if (logoutBtn) {
-                    logoutBtn.style.display = 'flex';
-                    logoutBtn.classList.remove('auth-hidden');
-                }
+
+            if (isAuthenticated()) {
+                if (loginBtn) loginBtn.classList.add('auth-hidden');
+                if (registerBtn) registerBtn.classList.add('auth-hidden');
+                if (logoutBtn) logoutBtn.classList.remove('auth-hidden');
             } else {
-                // User is not authenticated - show login/register, hide logout
-                if (loginBtn) loginBtn.style.display = 'inline-flex';
-                if (registerBtn) registerBtn.style.display = 'inline-flex';
-                if (logoutBtn) {
-                    logoutBtn.style.display = 'none';
-                    logoutBtn.classList.add('auth-hidden');
-                }
+                if (loginBtn) loginBtn.classList.remove('auth-hidden');
+                if (registerBtn) registerBtn.classList.remove('auth-hidden');
+                if (logoutBtn) logoutBtn.classList.add('auth-hidden');
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Load theme and authentication state
             loadTheme();
             handleAuthState();
-            
+
             const feedbackForm = document.getElementById('feedbackForm');
             const thankYouMessage = document.getElementById('thankYouMessage');
             const allFeedbacksSection = document.getElementById('allFeedbacks');
@@ -1466,10 +1567,10 @@
 
             // Character count
             if (feedbackTextarea && charCountElement) {
-                feedbackTextarea.addEventListener('input', function() {
+                feedbackTextarea.addEventListener('input', function () {
                     const charCount = this.value.length;
                     charCountElement.textContent = charCount;
-                    
+
                     if (charCount > 500) {
                         charCountElement.style.color = '#ff7043';
                     } else if (charCount > 300) {
@@ -1481,13 +1582,13 @@
             }
 
             // Form submission
-            feedbackForm.addEventListener('submit', function(e) {
+            feedbackForm.addEventListener('submit', function (e) {
                 e.preventDefault();
-                
+
                 const name = document.getElementById('name').value.trim();
                 const email = document.getElementById('email').value.trim();
                 const feedbackText = document.getElementById('feedback').value.trim();
-                
+
                 if (!name || !feedbackText) {
                     Swal.fire({
                         title: 'Missing Information',
@@ -1497,20 +1598,20 @@
                     });
                     return;
                 }
-                
+
                 const submitButton = this.querySelector('.submit-button');
                 const originalText = submitButton.innerHTML;
-                
+
                 submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Sending...</span>';
                 submitButton.disabled = true;
-                
+
                 setTimeout(() => {
                     const feedbackData = {
                         name: name,
                         email: email || 'Not provided',
                         feedback: feedbackText,
                         date: new Date().toLocaleString(),
-                        id: Date.now() 
+                        id: Date.now()
                     };
 
                     // Save feedback in memory (using a global variable since localStorage is not available)
@@ -1524,12 +1625,12 @@
                     document.querySelector('.feedback-header').classList.add('hidden');
                     thankYouMessage.classList.remove('hidden');
                     feedbackForm.reset();
-                    
+
                     if (charCountElement) {
                         charCountElement.textContent = '0';
                         charCountElement.style.color = '#81c784';
                     }
-                    
+
                     submitButton.innerHTML = originalText;
                     submitButton.disabled = false;
                 }, 1500);
@@ -1540,12 +1641,12 @@
             const thankYouMessage = document.getElementById('thankYouMessage');
             const allFeedbacksSection = document.getElementById('allFeedbacks');
             const feedbacksList = document.getElementById('feedbacksList');
-            
+
             thankYouMessage.classList.add('hidden');
             allFeedbacksSection.classList.remove('hidden');
-            
+
             const allFeedbacks = window.agritechFeedbacks || [];
-            
+
             if (allFeedbacks.length === 0) {
                 feedbacksList.innerHTML = `
                     <div class="no-feedback">
@@ -1582,7 +1683,7 @@
             const now = new Date();
             const diffTime = Math.abs(now - date);
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
+
             if (diffDays === 1) return 'Today';
             if (diffDays === 2) return 'Yesterday';
             if (diffDays <= 7) return `${diffDays - 1} days ago`;
@@ -1591,12 +1692,12 @@
 
         function showLogoutConfirmation() {
             Swal.fire({
-                title: 'Confirm Logout',
+                title: 'Logout',
                 text: 'Are you sure you want to logout?',
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#ff7043',
-                cancelButtonColor: '#4caf50',
+                confirmButtonColor: '#16a34a',
+                cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, logout',
                 cancelButtonText: 'Cancel',
                 customClass: {
@@ -1604,11 +1705,22 @@
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = 'index.html';  
+                    // Clear auth data
+                    sessionStorage.removeItem('agriTechUser');
+                    localStorage.removeItem('agriTechUser');
+
+                    // Update nav state
+                    handleAuthState();
+
+                    // Navigate to home
+                    window.location.href = 'index.html';
                 }
             });
         }
     </script>
+    <script src="theme.js"></script>
 
+    <script src="auth.js"></script>
 </body>
+
 </html>

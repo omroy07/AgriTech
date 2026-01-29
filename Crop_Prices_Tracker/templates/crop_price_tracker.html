@@ -1,26 +1,396 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crop Price Tracker</title>
-    <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
+    
     <link rel="stylesheet" href="../static/styles.css">
     <link rel="stylesheet" href="../../theme.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+      /* --- GLOBAL RESET --- */
+      html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+        min-height: 100vh;
+      }
+
+      /* --- 1. THEME VARIABLES --- */
+      :root {
+        --bg-color: #030712;
+        --text-color: #ffffff;
+        --text-muted: #cbd5e1;
+        --surface-color: rgba(15, 23, 42, 0.9);
+        --section-bg: rgba(30, 41, 59, 0.7);
+        --border-color: #334155;
+        --accent-color: #22c55e;
+        --shadow-color: rgba(0, 0, 0, 0.3);
+      }
+
+      [data-theme="light"] {
+        --bg-color: #f8fafc;
+        --text-color: #0f172a;
+        --text-muted: #475569;
+        --surface-color: rgba(255, 255, 255, 0.95);
+        --section-bg: rgba(241, 245, 249, 0.8);
+        --border-color: #cbd5e1;
+        --accent-color: #16a34a;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+      }
+
+      /* --- 2. LAYOUT --- */
+      body {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: 'Open Sans', sans-serif;
+        position: relative;
+      }
+
+      /* Animated Ambient Background */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: 
+          radial-gradient(circle at 15% 50%, rgba(34, 197, 94, 0.08) 0%, transparent 40%),
+          radial-gradient(circle at 85% 30%, rgba(34, 197, 94, 0.05) 0%, transparent 40%);
+        z-index: -1;
+        animation: pulseBg 8s ease-in-out infinite alternate;
+      }
+
+      @keyframes pulseBg {
+        from { opacity: 0.5; }
+        to { opacity: 1; }
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+        box-sizing: border-box;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-color);
+        animation: fadeInDown 0.8s ease-out;
+      }
+      
+      .header h2 {
+        margin: 0;
+        color: var(--accent-color);
+      }
+
+      .back-button {
+        text-decoration: none;
+        color: var(--text-muted);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: transform 0.3s ease;
+      }
+      .back-button:hover {
+        color: var(--accent-color);
+        transform: translateX(-5px);
+      }
+
+      /* --- 3. FORM CARD STYLING --- */
+      .form-container {
+        backdrop-filter: blur(12px);
+        position: relative;
+        z-index: 1;
+        max-width: 600px;
+        width: 90%;
+        margin: 2rem auto;
+        padding: 2.5rem;
+        border-radius: 16px;
+        background: var(--surface-color);
+        border: 1px solid var(--border-color);
+        animation: fadeSlideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      }
+
+      .form-container::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 16px;
+        background: linear-gradient(135deg, rgba(34,197,94,0.1), transparent);
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .form-row {
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: fadeSlideUp 0.5s ease forwards;
+      }
+
+      .form-row:nth-child(1) { animation-delay: 0.2s; }
+      .form-row:nth-child(2) { animation-delay: 0.3s; }
+      .form-row:nth-child(3) { animation-delay: 0.4s; }
+
+      .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--text-color);
+      }
+
+      select {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      select:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+        transform: translateY(-1px);
+      }
+
+      /* --- 4. BUTTON STYLING --- */
+      .submit-button {
+        display: block;
+        margin: 2rem auto 0 auto;
+        width: auto;
+        min-width: 200px;
+        padding: 12px 30px;
+        background-color: var(--accent-color);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .submit-button:hover:not(:disabled) {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 8px 25px rgba(34, 197, 94, 0.5);
+        background-color: #16a34a;
+      }
+
+      .submit-button:active:not(:disabled) {
+        transform: translateY(0) scale(0.95);
+      }
+
+      .submit-button::after {
+        content: "";
+        position: absolute;
+        top: 0; left: -100%;
+        width: 100%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: 0.5s;
+      }
+
+      .submit-button:hover::after {
+        left: 100%;
+      }
+
+      .submit-button:disabled {
+        background-color: var(--border-color);
+        cursor: not-allowed;
+        box-shadow: none;
+        color: var(--text-muted);
+        opacity: 0.7;
+      }
+
+      /* --- 5. RESULTS STYLING --- */
+      .results-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto 3rem auto;
+        padding: 0 20px;
+        box-sizing: border-box;
+        animation: fadeIn 1s ease 0.6s both;
+      }
+
+      .results-container h3 {
+        text-align: center;
+        color: var(--accent-color);
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+      }
+
+      .price-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+      }
+
+      .price-card {
+        background: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 12px var(--shadow-color);
+        border-left: 5px solid var(--accent-color);
+        transition: all 0.3s ease;
+        opacity: 0;
+        animation: cardReveal 0.6s ease forwards;
+      }
+
+      .price-card:nth-child(1) { animation-delay: 0.8s; }
+      .price-card:nth-child(2) { animation-delay: 0.9s; }
+      .price-card:nth-child(3) { animation-delay: 1.0s; }
+
+      .price-card:hover {
+        transform: translateY(-8px) rotate(1deg);
+        box-shadow: 0 12px 24px var(--shadow-color);
+        background: rgba(34, 197, 94, 0.05);
+      }
+
+      .price-date {
+        display: inline-block;
+        font-size: 0.85rem;
+        color: var(--accent-color);
+        background: rgba(34, 197, 94, 0.1);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .price-amount {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--text-color);
+        margin: 5px 0;
+      }
+
+      .price-location {
+        font-size: 1rem;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* --- 6. FLOATING ICONS --- */
+      .floating-icons-wrapper {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .floating-icon {
+        position: absolute;
+        font-size: 1.5rem;
+        color: var(--accent-color);
+        opacity: 0.15;
+        animation: floatAround infinite linear;
+      }
+
+      @keyframes floatAround {
+        0% { transform: translateY(100vh) rotate(0deg); }
+        100% { transform: translateY(-20vh) rotate(360deg); }
+      }
+
+      /* --- 7. KEYFRAMES --- */
+      @keyframes fadeSlideUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      @keyframes cardReveal {
+        from { opacity: 0; transform: scale(0.9) translateY(20px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+      }
+
+      /* --- 8. FOOTER --- */
+      .site-footer {
+        background: var(--surface-color);
+        color: var(--text-color);
+        border-top: 1px solid var(--border-color);
+        margin-top: auto;
+        width: 100%;
+      }
+
+      .footer-inner-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        gap: 3rem;
+        flex-wrap: wrap;
+      }
+
+      .footer-brand { flex: 1 1 280px; }
+      .footer-brand h3 { color: var(--accent-color); margin: 0; }
+      .social-icons { display: flex; gap: 0.7rem; margin-top: 1rem;}
+      .social-icons a {
+        width: 36px; height: 36px; background: rgba(34, 197, 94, 0.1);
+        display: grid; place-items: center; border-radius: 50%;
+        color: var(--accent-color); transition: 0.3s;
+      }
+      .social-icons a:hover { background: var(--accent-color); color: #fff; transform: scale(1.2); }
+
+      .footer-section ul { list-style: none; padding: 0; }
+      .footer-section ul a { color: var(--text-muted); text-decoration: none; transition: 0.3s; }
+      .footer-section ul a:hover { color: var(--accent-color); padding-left: 5px; }
+
+      .footer-bottom { text-align: center; padding: 1rem; background: var(--section-bg); }
+
+      @media (max-width: 768px) {
+        .footer-inner-content { flex-direction: column; }
+        .header h2 { font-size: 1.1rem; }
+      }
+    </style>
   </head>
 
   <body>
+    <div class="floating-icons-wrapper">
+      <div class="floating-icon" style="left: 5%; animation-duration: 15s;"><i class="fas fa-leaf"></i></div>
+      <div class="floating-icon" style="left: 20%; animation-duration: 18s; animation-delay: 2s;"><i class="fas fa-seedling"></i></div>
+      <div class="floating-icon" style="left: 40%; animation-duration: 22s;"><i class="fas fa-coins"></i></div>
+      <div class="floating-icon" style="left: 65%; animation-duration: 14s; animation-delay: 5s;"><i class="fas fa-wheat-awn"></i></div>
+      <div class="floating-icon" style="left: 80%; animation-duration: 20s;"><i class="fas fa-wallet"></i></div>
+      <div class="floating-icon" style="left: 90%; animation-duration: 16s; animation-delay: 1s;"><i class="fas fa-hand-holding-dollar"></i></div>
+    </div>
+
     <div class="header">
-      <button class="theme-toggle" aria-label="Toggle dark/light mode" style="background: rgba(46, 125, 50, 0.1); border: 1px solid rgba(46, 125, 50, 0.3); color: #2e7d32; position: absolute; top: 20px; right: 20px; z-index: 1000;">
+      <button class="theme-toggle" aria-label="Toggle theme" style="background: rgba(46, 125, 50, 0.1); border: 1px solid rgba(46, 125, 50, 0.3); color: #2e7d32; padding: 8px 12px; border-radius: 20px; cursor: pointer; transition: 0.3s;">
         <i class="fas fa-sun sun-icon"></i>
         <i class="fas fa-moon moon-icon"></i>
         <span class="theme-text">Light</span>
       </button>
-      <a href="/main.html" class="back-button">Back to Main</a>
+      <a href="/main.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Main</a>
       <h2>🌾 Crop Price Tracker</h2>
-      <div style="width: 120px"></div>
+      <div style="width: 50px;"></div> 
     </div>
 
     <div class="form-container">
@@ -29,9 +399,9 @@
           <label for="crop" class="form-label">Select Crop</label>
           <select name="crop" id="crop" required>
             <option value="">-- Choose your crop --</option>
-            {% for crop in crops %}
-            <option value="{{ crop }}">{{ crop }}</option>
-            {% endfor %}
+            <option value="Wheat">Wheat</option>
+            <option value="Rice">Rice</option>
+            <option value="Cotton">Cotton</option>
           </select>
         </div>
 
@@ -55,24 +425,62 @@
       </form>
     </div>
 
-    {% if error %}
-    <div class="error"><strong>⚠️ Error:</strong> {{ error }}</div>
-    {% endif %} {% if result %}
     <div class="results-container">
-      <h3>📈 Latest Market Prices</h3>
+      <h3>📈 Latest Market Prices (Preview)</h3>
       <div class="price-grid">
-        {% for row in result %}
         <div class="price-card">
-          <div class="price-date">{{ row['arrival_date'] }}</div>
-          <div class="price-amount">₹{{ row['modal_price'] }} / quintal</div>
-          <div class="price-location">
-            {{ row['market'] }}, {{ row['state'] }}
-          </div>
+          <div class="price-date">14 JAN 2026</div>
+          <div class="price-amount">₹2,450 / quintal</div>
+          <div class="price-location"><i class="fas fa-map-marker-alt"></i> Ahmedabad, Gujarat</div>
         </div>
-        {% endfor %}
+        <div class="price-card">
+          <div class="price-date">13 JAN 2026</div>
+          <div class="price-amount">₹2,380 / quintal</div>
+          <div class="price-location"><i class="fas fa-map-marker-alt"></i> Rajkot, Gujarat</div>
+        </div>
+        <div class="price-card">
+          <div class="price-date">12 JAN 2026</div>
+          <div class="price-amount">₹2,410 / quintal</div>
+          <div class="price-location"><i class="fas fa-map-marker-alt"></i> Surat, Gujarat</div>
+        </div>
       </div>
     </div>
-    {% endif %}
+
+    <footer class="site-footer">
+      <div class="footer-inner-content">
+        <div class="footer-section footer-brand">
+          <div class="brand-header" style="display:flex; align-items:center; gap:10px;">
+            <img src="/images/logo.png" alt="logo" width="30">
+            <h3>AgriTech</h3>
+          </div>
+          <p class="tagline">Empowering India's Farming Future with innovative technology.</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-x-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="#"><i class="fas fa-robot"></i> AI Assistant</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:contact@agritech.com"><i class="fas fa-envelope"></i> Email Us</a></li>
+            <li><a href="tel:+910000000000"><i class="fas fa-phone"></i> Call Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
+      </div>
+    </footer>
 
     <script>
       const cropSelect = document.getElementById("crop");
@@ -80,91 +488,37 @@
       const marketSelect = document.getElementById("market");
       const submitBtn = document.getElementById("submitBtn");
 
-      // Enable/disable submit button based on form completion
+      document.getElementById("current-year").textContent = new Date().getFullYear();
+
       function updateSubmitButton() {
-        const isFormComplete =
-          cropSelect.value && stateSelect.value && marketSelect.value;
+        const isFormComplete = cropSelect.value && stateSelect.value && marketSelect.value;
         submitBtn.disabled = !isFormComplete;
       }
 
       cropSelect.addEventListener("change", function () {
-        const loadingText = "Loading states...";
-        stateSelect.innerHTML = `<option value="">${loadingText}</option>`;
+        stateSelect.innerHTML = `<option value="">Loading...</option>`;
         stateSelect.disabled = true;
-        stateSelect.classList.add("loading");
-
-        fetch("/get_states?crop=" + this.value)
-          .then((res) => res.json())
-          .then((states) => {
-            stateSelect.innerHTML =
-              '<option value="">-- Select State --</option>';
-            states.forEach((state) => {
-              stateSelect.innerHTML += `<option value="${state}">${state}</option>`;
-            });
-            stateSelect.disabled = false;
-            stateSelect.classList.remove("loading");
-
-            marketSelect.innerHTML =
-              '<option value="">-- First select a state --</option>';
-            marketSelect.disabled = true;
-            updateSubmitButton();
-          })
-          .catch((error) => {
-            console.error("Error fetching states:", error);
-            stateSelect.innerHTML =
-              '<option value="">-- Error loading states --</option>';
-            stateSelect.classList.remove("loading");
-          });
+        
+        setTimeout(() => {
+             stateSelect.innerHTML = '<option value="">-- Select State --</option>';
+             stateSelect.innerHTML += `<option value="Gujarat">Gujarat</option>`;
+             stateSelect.innerHTML += `<option value="Punjab">Punjab</option>`;
+             stateSelect.disabled = false;
+             updateSubmitButton();
+        }, 500);
       });
 
-      // Load markets based on selected state
       stateSelect.addEventListener("change", function () {
-        const crop = cropSelect.value;
-        const state = this.value;
-
-        if (state) {
-          const loadingText = "Loading markets...";
-          marketSelect.innerHTML = `<option value="">${loadingText}</option>`;
-          marketSelect.disabled = true;
-          marketSelect.classList.add("loading");
-
-          fetch(`/get_markets?crop=${crop}&state=${state}`)
-            .then((res) => res.json())
-            .then((markets) => {
-              marketSelect.innerHTML =
-                '<option value="">-- Select Market --</option>';
-              markets.forEach((market) => {
-                marketSelect.innerHTML += `<option value="${market}">${market}</option>`;
-              });
-              marketSelect.disabled = false;
-              marketSelect.classList.remove("loading");
-              updateSubmitButton();
-            })
-            .catch((error) => {
-              console.error("Error fetching markets:", error);
-              marketSelect.innerHTML =
-                '<option value="">-- Error loading markets --</option>';
-              marketSelect.classList.remove("loading");
-            });
-        } else {
-          marketSelect.innerHTML =
-            '<option value="">-- First select a state --</option>';
-          marketSelect.disabled = true;
-          updateSubmitButton();
+        if (this.value) {
+            marketSelect.innerHTML = '<option value="">-- Select Market --</option>';
+            marketSelect.innerHTML += `<option value="Ahmedabad">Ahmedabad</option>`;
+            marketSelect.innerHTML += `<option value="Rajkot">Rajkot</option>`;
+            marketSelect.disabled = false;
+            updateSubmitButton();
         }
       });
 
       marketSelect.addEventListener("change", updateSubmitButton);
-
-      // Form submission with loading state
-      document
-        .getElementById("priceForm")
-        .addEventListener("submit", function () {
-          submitBtn.classList.add("loading");
-          submitBtn.textContent = "Fetching Prices...";
-        });
-
-      updateSubmitButton();
     </script>
     <script src="../../theme.js"></script>
   </body>

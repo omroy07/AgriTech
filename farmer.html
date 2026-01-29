@@ -17,25 +17,36 @@
   </head>
   <body>
     <header>
-      <div class="container">
-        <div class="header-content">
-          <h1><i class="fas fa-seedling"></i> Farmer Connection</h1>
-          <p class="header-subtitle">
-            Connecting farmers with buyers across India
-          </p>
-          <div style="display: flex; gap: 1rem; align-items: center;">
-            <button class="theme-toggle" aria-label="Toggle dark/light mode">
-              <i class="fas fa-sun sun-icon"></i>
-              <i class="fas fa-moon moon-icon"></i>
-              <span class="theme-text">Light</span>
-            </button>
-            <a href="main.html" class="back-button">
-              <i class="fas fa-arrow-left"></i> Back to Main
-            </a>
-          </div>
-        </div>
-      </div>
-    </header>
+  <nav class="navbar">
+    <div class="nav-brand">
+      <img src="images/logo.png" alt="AgriTech Logo" class="nav-logo">
+      <span class="brand-name">AgriTech</span>
+    </div>
+    
+    <ul class="nav-menu">
+      <li><a href="main.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="blog.html" class="nav-link">Blog</a></li>
+    </ul>
+    
+    <div class="nav-actions">
+      <button class="theme-toggle" aria-label="Toggle dark/light mode">
+        <i class="fas fa-sun sun-icon"></i>
+        <i class="fas fa-moon moon-icon"></i>
+        <span class="theme-text">Light Mode</span>
+      </button>
+    </div>
+  </nav>
+  
+  <div class="header-hero">
+    <h1 class="hero-title">Optimal Crop yield prediction 🎯</h1>
+    <p class="hero-subtitle">
+      Based on your provided soil and climate data, the following crop is highly recommended
+      for maximum yield and sustainability.
+    </p>
+  </div>
+</header>
+
 
     <div class="container">
       <nav class="nav-tabs">
@@ -44,6 +55,9 @@
         </button>
         <button class="tab-button" data-section="buy">
           <i class="fas fa-shopping-cart"></i> Buy Products
+        </button>
+        <button class="tab-button" data-section="history">
+          <i class="fas fa-history"></i> Prediction History
         </button>
       </nav>
 
@@ -61,7 +75,14 @@
                   </div>
                   <div class="form-group">
                     <label for="seller-contact">Contact Number</label>
-                    <input type="tel" id="seller-contact" required />
+                    <input 
+                      type="tel" 
+                      id="seller-contact" 
+                      placeholder="10-digit mobile number"
+                      maxlength="10"
+                      pattern="[0-9]{10}"
+                      required 
+                    />
                   </div>
                 </div>
 
@@ -79,16 +100,18 @@
                   <div class="form-group">
                     <label for="product-quantity">Quantity Available</label>
                     <input
-                      type="text"
+                      type="number"
                       id="product-quantity"
-                      placeholder="e.g., 500 kg"
+                      placeholder="e.g., 500"
+                      step="0.01"
+                      min="0.01"
                       required
                     />
                   </div>
                   <div class="form-group">
                     <label for="product-price">Price per Unit</label>
                     <input
-                      type="text"
+                      type="number"
                       id="product-price"
                       placeholder="e.g., ₹50/kg"
                       required
@@ -132,7 +155,14 @@
                   </div>
                   <div class="form-group">
                     <label for="buyer-contact">Contact Number</label>
-                    <input type="tel" id="buyer-contact" required />
+                    <input 
+                      type="tel" 
+                      id="buyer-contact" 
+                      placeholder="10-digit mobile number"
+                      maxlength="10"
+                      pattern="[0-9]{10}"
+                      required 
+                    />
                   </div>
                 </div>
 
@@ -149,9 +179,11 @@
                 <div class="form-group">
                   <label for="buy-product-quantity">Quantity Needed</label>
                   <input
-                    type="text"
+                    type="number"
                     id="buy-product-quantity"
-                    placeholder="e.g., 1000 kg"
+                    placeholder="e.g., 1000"
+                    step="0.01"
+                    min="0.01"
                     required
                   />
                 </div>
@@ -173,6 +205,25 @@
                 <div class="empty-state">
                   <i class="fas fa-clipboard-list"></i>
                   <p>No buy requests yet. Submit your first request!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Prediction History Section -->
+        <section id="history-section" class="section">
+          <div class="section-grid">
+            <div class="listings-container">
+              <div class="listings-header">
+                <h3>Prediction History</h3>
+                <span class="listings-count" id="history-count">0 Predictions</span>
+              </div>
+              <div id="prediction-history-display">
+                <div class="empty-state">
+                  <i class="fas fa-chart-line"></i>
+                  <h3>No prediction history yet 📊</h3>
+                  <p>Use our AI tools to get crop recommendations and yield predictions. Your history will appear here.</p>
                 </div>
               </div>
             </div>
@@ -203,13 +254,13 @@
           <h3>AgriTech</h3>
           <p>Empowering India's Farming Future</p>
           <div class="social-media">
-            <a href="https://instagram.com" target="_blank" aria-label="Follow us on Instagram">
+            <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Follow us on Instagram">
               <i class="fab fa-instagram"></i>
             </a>
-            <a href="https://github.com/omroy07" target="_blank" aria-label="View our GitHub repositories">
+            <a href="https://github.com/omroy07" target="_blank" rel="noopener" aria-label="View our GitHub repositories">
               <i class="fab fa-github"></i>
             </a>
-            <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank" aria-label="Connect with us on LinkedIn">
+            <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank" rel="noopener" aria-label="Connect with us on LinkedIn">
               <i class="fab fa-linkedin"></i>
             </a>
           </div>
@@ -239,6 +290,7 @@
 <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
   <i class="fas fa-robot"></i>
 </a>
+    <script src="voice-input.js"></script>
     <script src="farmer.js"></script>
     <script src="theme.js"></script>
   </body>

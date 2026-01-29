@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mission | AgriTech</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <meta name="description" content="AgriTech mission to empower farmers with sustainable technology." />
+
+  <link rel="stylesheet" href="mission.css" />
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="index.html" class="logo">
+      <i class="fa-solid fa-seedling"></i> AgriTech
+    </a>
+  </div>
+
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="mission.html" class="active">Mission</a>
+    <a href="career.html">Careers</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <button class="theme-toggle" onclick="toggleTheme()">
+    <i class="fa-solid fa-sun"></i>
+  </button>
+</nav>
+
+<!-- HERO -->
+<main class="mission-hero">
+  <section class="mission-card">
+    <h1>Our Mission</h1>
+    <p class="subtitle">
+      Empowering farmers through sustainable, data-driven agricultural technology.
+    </p>
+
+    <div class="mission-highlights">
+      <div class="highlight">
+        <i class="fa-solid fa-leaf"></i>
+        <h3>Sustainability</h3>
+        <p>Eco-friendly farming practices</p>
+      </div>
+
+      <div class="highlight">
+        <i class="fa-solid fa-microchip"></i>
+        <h3>Innovation</h3>
+        <p>Smart agri-tech solutions</p>
+      </div>
+
+      <div class="highlight">
+        <i class="fa-solid fa-handshake"></i>
+        <h3>Community</h3>
+        <p>Supporting farmers globally</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="mission-stats">
+    <div class="stat-card">
+      <h2>500+</h2>
+      <p>Farms Joined</p>
+    </div>
+
+    <div class="stat-card">
+      <h2>20k+</h2>
+      <p>Hectares Protected</p>
+    </div>
+
+    <div class="stat-card">
+      <h2>40%</h2>
+      <p>Yield Increase</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  © 2024 AgriTech. All rights reserved.
+</footer>
+
+<script>
+  const root = document.documentElement;
+  const savedTheme = localStorage.getItem("agritech-theme") || "light";
+  root.setAttribute("data-theme", savedTheme);
+
+  function toggleTheme() {
+    const theme = root.getAttribute("data-theme");
+    const newTheme = theme === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", newTheme);
+    localStorage.setItem("agritech-theme", newTheme);
+  }
+</script>
+
+</body>
+</html>

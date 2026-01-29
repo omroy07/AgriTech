@@ -3,7 +3,6 @@
   background: #18321a !important;
   color: #e0ffe0 !important;
 }
-
 [data-theme="dark"] .guide-box h3,
 [data-theme="dark"] .guide-box li {
   color: #b6eab6 !important;
@@ -12,8 +11,8 @@
 [data-theme="dark"] label {
   color: #b6eab6 !important;
 }
-
 /* End Smart Loan Fixes */
+
 /* AgriTech Enhanced Theme System */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap');
 
@@ -30,7 +29,7 @@
   --shadow-light: rgba(0, 0, 0, 0.05);
   --shadow-medium: rgba(0, 0, 0, 0.1);
   --shadow-heavy: rgba(0, 0, 0, 0.15);
-  
+
   /* Agricultural green palette */
   --primary-green: #16a34a;
   --secondary-green: #22c55e;
@@ -38,28 +37,42 @@
   --light-green: #f0fdf4;
   --dark-green: #15803d;
   --green-hover: #15803d;
-  
+
   /* Typography */
   --font-primary: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-serif: 'Libertinus Serif', Georgia, serif;
+
+  /* Extra tokens used later */
+  --border-light: #e2e8f0;
+  --accent-darkgreen: #16a34a;
+  --btn-disabled: #94a3b8;
 }
 
+/* Dark mode – SINGLE source of truth */
 [data-theme="dark"] {
   /* Dark mode colors */
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #334155;
-  --text-primary: #f8fafc;
+  --bg-primary: #020617;      /* main page background */
+  --bg-secondary: #0b1220;
+  --bg-tertiary: #1e293b;
+  --text-primary: #e5e7eb;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
   --border-color: #334155;
+  --border-light: #475569;
   --shadow-light: rgba(0, 0, 0, 0.3);
   --shadow-medium: rgba(0, 0, 0, 0.4);
   --shadow-heavy: rgba(0, 0, 0, 0.6);
-  
+
   /* Adjusted green colors for dark mode */
-  --light-green: #1a2e1a;
+  --primary-green: #22c55e;
+  --secondary-green: #4ade80;
+  --accent-green: #86efac;
+  --accent-darkgreen: #22c55e;
+  --light-green: #052e16;
+  --dark-green: #22c55e;
   --green-hover: #22c55e;
+
+  --btn-disabled: #4b5563;
 }
 
 /* Base Styles */
@@ -79,8 +92,93 @@ body {
   font-family: var(--font-serif);
 }
 
+/* Dark mode specific component overrides (keep them, now use unified vars) */
+[data-theme="dark"] body,
+[data-theme="dark"] .main-content {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .analysis-section,
+[data-theme="dark"] .features-section {
+  background: var(--bg-primary);
+  border: 2px solid var(--border-light);
+  box-shadow: 0 8px 25px var(--shadow-light);
+}
+
+[data-theme="dark"] .upload-area,
+[data-theme="dark"] .preview-container,
+[data-theme="dark"] .result-card,
+[data-theme="dark"] .treatment,
+[data-theme="dark"] .feature-card,
+[data-theme="dark"] .modal-content {
+  background: #020617;
+  border: 2px solid var(--border-light);
+  color: var(--text-primary);
+  box-shadow: 0 4px 15px var(--shadow-light);
+}
+
+[data-theme="dark"] .upload-icon,
+[data-theme="dark"] .feature-icon {
+  color: var(--accent-green);
+}
+
+[data-theme="dark"] .upload-text,
+[data-theme="dark"] .description,
+[data-theme="dark"] .confidence,
+[data-theme="dark"] .disease-name,
+[data-theme="dark"] .feature-card h3,
+[data-theme="dark"] .treatment h4 {
+  color: var(--accent-green);
+}
+
+[data-theme="dark"] .btn {
+  background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-darkgreen) 100%);
+  color: #020617;
+}
+
+[data-theme="dark"] .btn:disabled {
+  background: var(--btn-disabled);
+  color: #9ca3af;
+}
+
+[data-theme="dark"] .severity.low {
+  background: #15803d33;
+  color: var(--accent-green);
+}
+[data-theme="dark"] .severity.medium {
+  background: #ca8a0433;
+  color: #facc15;
+}
+[data-theme="dark"] .severity.high {
+  background: #b91c1c33;
+  color: #fca5a5;
+}
+
+[data-theme="dark"] .no-results {
+  color: #94a3af;
+}
+
+[data-theme="dark"] .upload-area:hover {
+  border-color: var(--accent-darkgreen);
+  background: #020617;
+  box-shadow: 0 8px 25px rgba(34, 197, 94, 0.2);
+}
+
+[data-theme="dark"] .upload-area.dragover {
+  border-color: var(--accent-darkgreen);
+  background: #020617;
+  box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+}
+
+[data-theme="dark"] .spinner {
+  border: 4px solid var(--border-light);
+  border-top: 4px solid var(--accent-green);
+}
+
 /* Theme Toggle Button */
-.theme-toggle,.back-button {
+.theme-toggle,
+.back-button {
   position: relative;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
@@ -119,7 +217,6 @@ body {
 .theme-toggle .moon-icon {
   opacity: 1;
   transform: rotate(0deg);
-  
 }
 
 [data-theme="dark"] .theme-toggle .sun-icon {
@@ -130,7 +227,6 @@ body {
 [data-theme="dark"] .theme-toggle .moon-icon {
   opacity: 0;
   transform: rotate(180deg);
-  
 }
 
 /* Apply theme colors to common elements */
@@ -151,7 +247,6 @@ body {
   border-color: var(--border-color);
   color: var(--text-primary);
 }
-.back-button
 
 /* Secondary backgrounds */
 .chat-header,
@@ -204,7 +299,6 @@ select {
   transition: all 0.3s ease;
 }
 
-input:focus,
 textarea:focus,
 select:focus {
   background-color: var(--bg-primary);
@@ -472,7 +566,6 @@ tr:hover {
 }
 
 button:focus,
-input:focus,
 textarea:focus,
 select:focus {
   outline: none;
@@ -537,24 +630,24 @@ select:focus {
   .theme-toggle {
     min-width: 60px;
   }
-  
+
   .theme-toggle .theme-text {
     display: none;
   }
-  
+
   .btn {
     padding: 0.5rem 0.75rem;
     font-size: 0.8rem;
   }
-  
+
   .card {
     padding: 1rem;
   }
-  
+
   table {
     font-size: 0.875rem;
   }
-  
+
   th, td {
     padding: 0.5rem;
   }
@@ -567,7 +660,7 @@ select:focus {
     color: black !important;
     box-shadow: none !important;
   }
-  
+
   .theme-toggle,
   .scroll-to-top,
   nav,

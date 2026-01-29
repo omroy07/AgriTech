@@ -20,7 +20,7 @@
       /* === THEME VARIABLES AND TOGGLE LOGIC === */
       /* Light Mode (Default) */
       :root {
-          --color-brand: #2d8f85;
+          --color-brand: #0cb642d7;
           --color-highlight: #4caf50;
           --color-highlight-soft: rgba(76, 175, 80, 0.3);
           --color-gradient: linear-gradient(135deg, var(--color-brand), #1e6f67);
@@ -43,13 +43,13 @@
 
       /* Dark Mode */
       :root.dark-mode {
-          --color-brand: #66c7b3; 
-          --color-highlight: #81c784; 
+          --color-brand: #17e65c; 
+          --color-highlight: #57ff5f; 
           --color-highlight-soft: rgba(129, 199, 132, 0.3);
           --color-gradient: linear-gradient(135deg, #449c8f, #2d7a6e);
-          --bg-page: #1a202c; 
-          --bg-card: #2d3748; 
-          --bg-header: rgba(45, 55, 72, 0.9);
+          --bg-page: #011337; 
+          --bg-card: #31405a; 
+          --bg-header: rgba(29, 50, 86, 0.9);
           --bg-secondary-btn: transparent; 
           --bg-hover-soft: #394354;
           --text-primary: #e2e8f0;
@@ -86,11 +86,103 @@
           /*overflow-x: hidden;*/
           padding-top: 80px; /* Space for the sticky header */
       }
+      /* ================= UPDATED NAVBAR ================= */
+
+.navbar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.logo img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.logo-text {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--color-brand);
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+.nav-links a {
+  position: relative;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-decoration: none;
+  padding: 5px 0;
+  transition: var(--transition);
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 3px;
+  background: var(--color-highlight);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--color-brand);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 10px var(--shadow-light);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .navbar {
+    grid-template-columns: auto auto;
+  }
+
+  .nav-links {
+    display: none; /* You can later add a hamburger menu */
+  }
+}
+
 
       .container {
           max-width: 1200px;
           margin: 0 auto;
           padding: 0 2rem; 
+          
       }
 
       /* Header */
@@ -103,6 +195,7 @@
           backdrop-filter: blur(10px);
           box-shadow: 0 2px 15px var(--shadow-header); 
           z-index: 100;
+          
       }
 
       .header-content {
@@ -112,75 +205,17 @@
           padding: 15px 0;
       }
 
-      .app-logo {
-          font-size: 1.8em;
-          font-weight: 700;
-          color: var(--color-brand);
-          text-decoration: none;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-      }
-
+     
       /* Main Layout (Two Columns) */
       .main-layout {
           display: grid;
           grid-template-columns: 2fr 1fr; /* 2/3 width for content, 1/3 for sidebar */
           gap: 40px;
           padding: 40px 2rem;
+          padding: bottom 40px;
       }
 
-      /* Main Heading */
-      .header {
-          text-align: left;
-          margin-bottom: 40px;
-          animation: fadeInUp 0.8s ease-out 0.2s both;
-      }
-
-      .header h1 {
-          font-size: 3em;
-          font-weight: 800;
-          color: var(--color-brand);
-          margin-bottom: 15px;
-          position: relative;
-          display: block; 
-      }
-
-      .header p {
-          font-size: 1.1em;
-          color: var(--text-secondary);
-          max-width: 700px;
-          margin: 0; 
-          font-weight: 400;
-      }
-
-      /* Back Button/Nav Element Styling */
-      .nav-back {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          color: var(--text-secondary);
-          text-decoration: none;
-          font-weight: 500;
-          padding: 10px 18px;
-          background: var(--bg-card);
-          border-radius: 50px;
-          box-shadow: 0 4px 10px var(--shadow-light);
-          transition: var(--transition);
-          border: 1px solid var(--border-color);
-          position: relative;
-          overflow: hidden;
-      }
-
-      .back-btn-top {
-          margin-bottom: 30px;
-      }
-
-      .nav-back:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 20px var(--shadow-medium);
-          color: var(--color-brand);
-      }
+     
 
       .theme-toggle {
           background: var(--bg-card);
@@ -201,6 +236,7 @@
           border-radius: var(--border-radius-large);
           box-shadow: 0 10px 30px var(--shadow-medium);
           padding: 60px 40px;
+          margin-top: 40px ;
           text-align: center;
           border: 1px solid var(--border-color-soft);
           animation: fadeInUp 0.8s ease-out 0.4s both;
@@ -465,35 +501,83 @@
               padding: 10px 1rem;
           }
       }
+      .footer {
+  margin-top: 80px;
+  padding: 32px 0;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(0, 0, 0, 0.04)
+  );
+  border-top: 1px solid var(--border-color-soft);
+}
+
+.footer .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.footer-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+  max-width: 800px;
+}
+
+/* Dark mode polish */
+:root.dark-mode .footer {
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(0, 0, 0, 0.25)
+  );
+  border-top: 1px solid var(--border-color);
+}
+      
     </style>
     </head>
   <body>
-    <header class="sticky-header">
-      <div class="container header-content">
-        <a href="/" class="app-logo">
-          <i class="fas fa-leaf"></i> AgriTech
-        </a>
-        
-        <div class="header-actions">
-          <button
-            class="theme-toggle nav-back"
-            aria-label="Toggle dark/light mode"
-            id="theme-toggle-btn"
-          >
-            <i class="fas fa-sun sun-icon"></i>
-            <i class="fas fa-moon moon-icon"></i>
-            <span class="theme-text"></span> 
-          </button>
-        </div>
-      </div>
-    </header>
+   <header class="sticky-header">
+  <div class="container header-content navbar">
+
+    <!-- Left: Logo -->
+    <a href="/" class="logo">
+      <img src="/images/logo.png" alt="AgriTech Logo">
+      <span class="logo-text">AgriTech</span>
+    </a>
+
+    <!-- Center: Navigation -->
+    <nav class="nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/community_forum.html">Community Forum</a>
+      <a href="/faq.html">FAQ</a>
+      <a href="/news.html">News</a>
+    </nav>
+
+    <!-- Right: Theme Toggle -->
+    <button
+      class="theme-toggle"
+      aria-label="Toggle dark/light mode"
+      id="theme-toggle-btn"
+    >
+      <i class="fas fa-sun sun-icon"></i>
+      <i class="fas fa-moon moon-icon"></i>
+      <span class="theme-text"></span>
+    </button>
+
+  </div>
+</header>
+
 
     <main class="main-layout container">
       <div class="content-left">
-        <a href="javascript:history.back()" class="nav-back back-btn-top">
-          <i class="fas fa-arrow-left"></i> Back to Input
-        </a>
-
+        
         <div class="header">
           <h1>Optimal Crop yield prediction 🎯</h1>
           <p>
@@ -586,6 +670,11 @@
         </div>
       </div>
     </main>
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">© 2026 AgriTech. Empowering farmers with intelligent agriculture solutions.</p>
+        </div>
+    </footer>
     
     <script>
       function createConfetti() {

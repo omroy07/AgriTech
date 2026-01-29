@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Farmer Registration - AgriBot</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<style>
+:root {
+  --primary: #2563eb;
+  --accent: #22c55e;
+  --bg-light: #f4f7fb;
+  --bg-dark: #0b1220;
+  --glass-light: rgba(255,255,255,0.85);
+  --glass-dark: rgba(17,25,40,0.85);
+  --text-light: #1f2937;
+  --text-dark: #e5e7eb;
+  --muted-light: #6b7280;
+  --muted-dark: #9ca3af;
+  --shadow: 0 20px 50px rgba(0,0,0,0.15);
+}
+
+body {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  margin: 0;
+  background: var(--bg-light);
+  color: var(--text-light);
+  transition: all 0.4s;
+}
+
+body[data-theme="dark"] {
+  background: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, var(--primary), #1e40af);
+  color: #fff;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+header h1 { font-size: 1.8rem; margin: 0; font-weight: 700; }
+.nav-back {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: 0.3s;
+}
+.nav-back:hover { background: rgba(255,255,255,0.35); }
+.theme-toggle {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.4rem;
+  margin-left: 1rem;
+}
+
+/* Form Container */
+form {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 3rem;
+  background: var(--glass-light);
+  border-radius: 28px;
+  backdrop-filter: blur(16px);
+  box-shadow: var(--shadow);
+  transition: all 0.4s;
+}
+
+body[data-theme="dark"] form { background: var(--glass-dark); }
+
+h2 { text-align: center; color: var(--primary); margin-bottom: 2rem; font-size: 2.2rem; }
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s;
+  position: relative;
+}
+
+label {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: var(--muted-light);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+body[data-theme="dark"] label { color: var(--muted-dark); }
+
+input, select {
+  padding: 0.9rem 1.2rem;
+  font-size: 1.05rem;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.75);
+  color: var(--text-light);
+  transition: all 0.3s, transform 0.2s;
+}
+
+body[data-theme="dark"] input, body[data-theme="dark"] select {
+  background: rgba(30,41,59,0.95);
+  color: var(--text-dark);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
+  transform: translateY(-2px);
+}
+
+/* Submit Button */
+button[type="submit"] {
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1.25rem;
+  background: linear-gradient(135deg, var(--primary), #1e40af);
+  border: none;
+  border-radius: 18px;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s;
+}
+
+button[type="submit"]::before {
+  content: "";
+  position: absolute;
+  top:0; left:-120%;
+  width:120%; height:100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.5), transparent);
+  transition: left 0.6s;
+}
+button[type="submit"]:hover::before { left: 120%; }
+button[type="submit"]:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+/* Success Modal */
+.success-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.success-modal.active { display: flex; opacity: 1; }
+
+.success-card {
+  background: var(--glass-light);
+  padding: 4rem 4.5rem;
+  border-radius: 28px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  max-width: 550px;
+  width: 95%;
+  animation: popUp 0.5s ease forwards;
+}
+body[data-theme="dark"] .success-card { background: var(--glass-dark); }
+
+.success-card .check { font-size: 5rem; color: var(--accent); margin-bottom: 1.5rem; }
+.success-card h3 { font-size: 2.4rem; margin-bottom: 1rem; color: var(--primary); }
+.success-card p { font-size: 1.4rem; margin-bottom: 2.2rem; color: var(--text-light); }
+body[data-theme="dark"] .success-card p { color: var(--text-dark); }
+
+.success-card button {
+  padding: 1rem 2.5rem;
+  font-size: 1.2rem;
+  border-radius: 14px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.success-card button:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+/* Result Section */
+#resultSection {
+  max-width: 900px;
+  margin: 2.5rem auto;
+  padding: 2.5rem;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #eef2ff, #ffffff);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+  display: none; 
+  transition: all 0.4s;
+}
+#resultSection h2 { text-align: center; color: var(--primary); margin-bottom: 1rem; font-size: 2rem; }
+#resultSection p, #resultSection li { font-size: 1.15rem; line-height: 1.7; }
+#resultSection ul { margin-left: 1.2rem; }
+
+@keyframes popUp {
+  0% { transform: scale(0.7) translateY(-30px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.site-footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.95rem;
+  color: var(--muted-light);
+}
+body[data-theme="dark"] .site-footer { color: var(--muted-dark); }
+</style>
+</head>
+
+<body data-theme="light">
+
+<header>
+  <h1>AgriBot</h1>
+  <div>
+    <button class="theme-toggle"><i class="fas fa-moon"></i></button>
+    <a href="financial-support.html" class="nav-back"><i class="fas fa-arrow-left"></i> Home</a>
+  </div>
+</header>
+
+<form id="farmer-form">
+  <h2>Farmer Registration</h2>
+
+  <!-- Form fields -->
+  <div class="form-group"><label for="name">Farmer Name</label><input type="text" id="name" name="name" required></div>
+  <div class="form-group"><label for="farmer-type">Farmer Type</label><select id="farmer-type" name="farmer-type"><option value="small">Small</option><option value="marginal">Marginal</option><option value="medium">Medium</option><option value="large">Large</option></select></div>
+  <div class="form-group"><label for="state">State</label><input type="text" id="state" name="state"></div>
+  <div class="form-group"><label for="district">District</label><input type="text" id="district" name="district"></div>
+  <div class="form-group"><label for="land-size">Landholding Size (acres)</label><input type="number" id="land-size" name="land-size"></div>
+  <div class="form-group"><label for="crops">Crops Grown</label><input type="text" id="crops" name="crops"></div>
+  <div class="form-group"><label for="farming-method">Farming Method</label><select id="farming-method" name="farming-method"><option value="traditional">Traditional</option><option value="organic">Organic</option><option value="modern">Modern</option></select></div>
+  <div class="form-group"><label for="income">Annual Income (₹)</label><input type="number" id="income" name="income"></div>
+  <div class="form-group"><label for="irrigation">Irrigation Facility</label><select id="irrigation" name="irrigation"><option value="rainfed">Rain-fed</option><option value="canal">Canal</option><option value="borewell">Borewell</option><option value="other">Other</option></select></div>
+  <div class="form-group"><label for="kyc">KYC Status</label><select id="kyc" name="kyc"><option value="completed">Completed</option><option value="not-completed">Not Completed</option><option value="pending">Pending</option></select></div>
+  <div class="form-group"><label for="bank-name">Bank Name</label><input type="text" id="bank-name" name="bank-name"></div>
+  <div class="form-group"><label for="account-type">Account Type</label><select id="account-type" name="account-type"><option value="savings">Savings</option><option value="current">Current</option><option value="jandhan">Jan Dhan</option></select></div>
+  <div class="form-group"><label for="aadhaar-linked">Aadhaar Linked?</label><select id="aadhaar-linked" name="aadhaar-linked"><option value="yes">Yes</option><option value="no">No</option></select></div>
+
+  <button type="submit">Submit</button>
+</form>
+
+<!-- Success Modal -->
+<div class="success-modal" id="successModal">
+  <div class="success-card">
+    <div class="check">✓</div>
+    <h3>Registration Successful</h3>
+    <p>Your details have been saved successfully!</p>
+    <button id="closeSuccess">Done</button>
+  </div>
+</div>
+
+<!-- Result Section -->
+<div id="resultSection">
+  <h2>Recommended Schemes</h2>
+  <div id="resultContent"></div>
+</div>
+
+<footer class="site-footer">
+  © 2026 AgriBot · Empowering Farmers with Technology 🌱
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const body = document.body;
+  const toggle = document.querySelector(".theme-toggle");
+  const form = document.getElementById("farmer-form");
+  const modal = document.getElementById("successModal");
+  const close = document.getElementById("closeSuccess");
+  const resultSection = document.getElementById("resultSection");
+  const resultContent = document.getElementById("resultContent");
+
+  // Theme toggle
+  const savedTheme = localStorage.getItem("theme") || "light";
+  body.setAttribute("data-theme", savedTheme);
+  toggle.innerHTML = savedTheme === "light" ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+  toggle.addEventListener("click", () => {
+    const next = body.getAttribute("data-theme") === "light" ? "dark" : "light";
+    body.setAttribute("data-theme", next);
+    localStorage.setItem("theme", next);
+    toggle.innerHTML = next === "light" ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+  });
+
+  // Load saved form values only
+  const savedData = JSON.parse(localStorage.getItem("farmerData") || "{}");
+  for (const key in savedData) {
+    const field = form.querySelector(`[name="${key}"]`);
+    if (field) field.value = savedData[key];
+  }
+
+  // Submit
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form).entries());
+    localStorage.setItem("farmerData", JSON.stringify(data));
+
+    // Show modal
+    modal.classList.add("active");
+
+    // Show result section
+    resultSection.style.display = "block";
+    resultContent.innerHTML = `
+      <p><strong>Eligibility:</strong> Eligible</p>
+      <p><strong>Income Category:</strong> ${data.income || "Not specified"}</p>
+      <p><strong>Recommended Schemes:</strong></p>
+      <ul>
+        <li>PM Kisan Samman Nidhi</li>
+        <li>PM Fasal Bima Yojana</li>
+        <li>Soil Health Card Scheme</li>
+      </ul>
+    `;
+    resultSection.scrollIntoView({ behavior: "smooth" });
+  });
+
+  close.addEventListener("click", () => modal.classList.remove("active"));
+});
+</script>
+</body>
+</html>

@@ -143,6 +143,34 @@
         [data-theme="dark"] .loan-result-box strong {
             color: #e0ffe0;
         }
+        .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: #2e7d32;
+    color: #fff;
+}
+
+.nav-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    margin-left: 40px;
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+    color: #e0ffe0;
+    
+}
+
         /* Floating Chatbot Button */
 #chatbotBtn {
   position: fixed;
@@ -174,6 +202,496 @@
     display: none;
   }
 }
+/* --- 1. GLOBAL ENHANCEMENTS & KEYFRAMES --- */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes sonarPulse {
+    0% { box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.4); }
+    70% { box-shadow: 0 0 0 15px rgba(46, 125, 50, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(46, 125, 50, 0); }
+}
+
+@keyframes floating {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+/* --- 2. CONTAINER & STRUCTURE --- */
+body {
+    background: radial-gradient(circle at top right, var(--light-green, #e8f5e9), var(--bg-secondary, #f6f9f6));
+    min-height: 100vh;
+}
+
+.container {
+    animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px var(--shadow-medium, rgba(0, 0, 0, 0.15));
+}
+
+/* --- 3. INTERACTIVE ELEMENTS --- */
+.guide-box {
+    animation: slideInLeft 0.6s ease-out 0.2s both;
+    transition: transform 0.3s ease, border-left-width 0.3s ease;
+}
+
+.guide-box:hover {
+    transform: translateX(8px);
+    border-left-width: 10px;
+}
+
+/* Form field animations */
+form label {
+    animation: slideInLeft 0.5s ease-out both;
+}
+form label:nth-of-type(1) { animation-delay: 0.3s; }
+form label:nth-of-type(2) { animation-delay: 0.4s; }
+form label:nth-of-type(3) { animation-delay: 0.5s; }
+form label:nth-of-type(4) { animation-delay: 0.6s; }
+
+form input, form select {
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input:hover, form select:hover {
+    border-color: var(--primary-green, #2e7d32);
+    transform: translateY(-2px);
+}
+
+/* --- 4. THE MAGIC BUTTON --- */
+form button {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+}
+
+form button:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.4);
+    animation: sonarPulse 1.5s infinite;
+}
+
+form button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.15);
+    transform: translate(-50%, -50%) rotate(45deg) translateY(100%);
+    transition: transform 0.6s ease;
+    z-index: -1;
+}
+
+form button:hover::before {
+    transform: translate(-50%, -50%) rotate(45deg) translateY(-100%);
+}
+
+/* --- 5. RESULT & THEME TOGGLE --- */
+.loan-result-box {
+    animation: fadeInUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.theme-toggle {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-toggle:hover {
+    transform: rotate(15deg) scale(1.1);
+    background: rgba(46, 125, 50, 0.2) !important;
+}
+
+/* --- 6. FLOATING CHATBOT & FOOTER --- */
+#chatbotBtn {
+    animation: floating 3s ease-in-out infinite;
+    background: linear-gradient(135deg, #4caf50, #2e7d32) !important;
+}
+
+.social-media a {
+    transition: all 0.3s ease;
+}
+
+.social-media a:hover {
+    background: var(--primary-green) !important;
+    transform: translateY(-5px) rotate(8deg);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.footer-links a {
+    position: relative;
+}
+
+.footer-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: white;
+    transition: width 0.3s ease;
+}
+
+.footer-links a:hover::after {
+    width: 100%;
+}
+/* --- 1. CORE STABILITY SETTINGS --- */
+:root {
+    --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- 2. THE "GLIDE" ENTRANCE (Replaces Bouncing) --- */
+@keyframes glideUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(15px); 
+        filter: blur(4px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+        filter: blur(0);
+    }
+}
+
+.container {
+    animation: glideUp 0.6s ease-out both;
+}
+
+/* --- 3. PRECISION HOVERS (No dancing/scaling) --- */
+.guide-box {
+    transition: var(--transition-smooth);
+    border-left: 4px solid var(--primary-green, #2e7d32);
+}
+
+.guide-box:hover {
+    /* Focuses on depth rather than movement */
+    background: var(--light-green, #e8f5e9);
+    box-shadow: inset 4px 0 0 0 var(--primary-green, #2e7d32);
+    transform: translateX(4px);
+}
+
+/* Input Focus: Clean highlight instead of pop */
+form input, form select {
+    transition: var(--transition-smooth);
+    border: 1px solid var(--border-color, #ccc);
+}
+
+form input:focus, form select:focus {
+    border-color: var(--primary-green, #2e7d32);
+    background: var(--bg-primary, white);
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+    transform: none; /* Removed the scale/lift */
+}
+
+/* --- 4. THE "STEADY" BUTTON --- */
+form button {
+    transition: var(--transition-smooth);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+form button:hover:not(:disabled) {
+    background-color: var(--green-hover, #2e7d32);
+    /* Subtle shadow expansion instead of a bounce */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    filter: brightness(1.05);
+}
+
+form button:active:not(:disabled) {
+    transform: translateY(1px); /* Simple physical click feel */
+}
+
+/* --- 5. CLEAN RESULT REVEAL --- */
+.loan-result-box {
+    display: none;
+    animation: glideUp 0.4s ease-out forwards;
+    border-left: 4px solid var(--accent-green, #81c784);
+}
+
+/* --- 6. STATIC CHATBOT & FOOTER --- */
+#chatbotBtn {
+    /* Removed the floating animation */
+    transition: var(--transition-smooth);
+}
+
+#chatbotBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.social-media a {
+    transition: var(--transition-smooth);
+}
+
+.social-media a:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.2) !important;
+}
+/* --- 1. THE "UNFOLD" ENTRANCE --- */
+@keyframes slideReveal {
+    from { 
+        clip-path: inset(0 0 100% 0); /* Hidden from bottom */
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to { 
+        clip-path: inset(0 0 0% 0); /* Fully revealed */
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideRight {
+    from { 
+        clip-path: inset(0 100% 0 0); /* Hidden from right */
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    to { 
+        clip-path: inset(0 0% 0 0); 
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* --- 2. CONTAINER SLIDE --- */
+.container {
+    animation: slideReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+    overflow: hidden; /* Necessary for the clip-path reveal */
+}
+
+/* --- 3. STAGGERED FORM SLIDING --- */
+/* This makes the form fields slide in one by one like a ladder */
+form label, form input, form select {
+    animation: slideRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+form .form-group:nth-child(1) { animation-delay: 0.1s; }
+form .form-group:nth-child(2) { animation-delay: 0.2s; }
+form .form-group:nth-child(3) { animation-delay: 0.3s; }
+form .form-group:nth-child(4) { animation-delay: 0.4s; }
+
+/* --- 4. PRECISION SLIDING HOVERS --- */
+.guide-box {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.guide-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0%; height: 100%;
+    background: rgba(46, 125, 50, 0.05);
+    transition: width 0.4s ease;
+    z-index: -1;
+}
+
+.guide-box:hover::before {
+    width: 100%; /* Background slides across on hover */
+}
+
+.guide-box:hover {
+    transform: translateX(10px);
+    border-left-width: 8px;
+}
+
+/* --- 5. SLIDING UNDERLINE EFFECT (Links) --- */
+.footer-links a, .site-footer a {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 2px;
+}
+
+.footer-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background-color: currentColor;
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.footer-links a:hover::after {
+    width: 100%; /* Underline slides out from the left */
+}
+
+/* --- 6. THE "REVEAL" BUTTON --- */
+form button {
+    overflow: hidden;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+form button:hover:not(:disabled) {
+    letter-spacing: 2px; /* Text slides slightly apart */
+    background-color: var(--green-hover, #2e7d32);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* --- 7. CLEAN SLIDE-DOWN FOR RESULTS --- */
+.loan-result-box {
+    animation: slideReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    border-top: 1px solid var(--border-color, #eee);
+}
+/* --- 1. CORE ANIMATION ENGINES --- */
+/* Unfolds the main container from top to bottom */
+@keyframes ultimateReveal {
+    0% { 
+        clip-path: inset(0 0 100% 0); 
+        transform: translateY(30px);
+        filter: blur(8px);
+        opacity: 0;
+    }
+    100% { 
+        clip-path: inset(0 0 0% 0); 
+        transform: translateY(0);
+        filter: blur(0);
+        opacity: 1;
+    }
+}
+
+/* Slides individual rows in from the left */
+@keyframes slideInRight {
+    from { 
+        clip-path: inset(0 100% 0 0); 
+        transform: translateX(-30px);
+        opacity: 0;
+    }
+    to { 
+        clip-path: inset(0 0% 0 0); 
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* --- 2. STRUCTURE ENHANCEMENTS --- */
+body {
+    background: radial-gradient(circle at top right, var(--light-green, #e8f5e9), var(--bg-secondary, #f6f9f6));
+    min-height: 100vh;
+}
+
+.container {
+    background: var(--bg-primary, rgba(255, 255, 255, 0.98)) !important;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(46, 125, 50, 0.1) !important;
+    animation: ultimateReveal 1s cubic-bezier(0.19, 1, 0.22, 1) both;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 16px !important;
+}
+
+/* --- 3. THE "LADDER" LOADING SEQUENCE --- */
+/* We target your existing elements to slide in sequence */
+.guide-box, 
+form label, 
+form input, 
+form select, 
+form button {
+    animation: slideInRight 0.8s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+/* Staggering delays for a professional "assembly" feel */
+.guide-box { animation-delay: 0.1s; }
+form label:nth-of-type(1) { animation-delay: 0.2s; }
+form input:nth-of-type(1), form select:nth-of-type(1) { animation-delay: 0.25s; }
+form label:nth-of-type(2) { animation-delay: 0.3s; }
+form input:nth-of-type(2), form select:nth-of-type(2) { animation-delay: 0.35s; }
+form label:nth-of-type(3) { animation-delay: 0.4s; }
+form input:nth-of-type(3), form select:nth-of-type(3) { animation-delay: 0.45s; }
+form button { animation-delay: 0.6s; }
+
+/* --- 4. PRECISION MICRO-INTERACTIONS --- */
+.guide-box {
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1) !important;
+    border-left: 0px solid var(--primary-green, #2e7d32) !important;
+}
+
+.guide-box:hover {
+    transform: translateX(10px);
+    background: var(--light-green, #f1fbf1) !important;
+    /* Insets a sliding green border using shadow */
+    box-shadow: -10px 0 0 0 var(--primary-green, #2e7d32) !important;
+}
+
+form input, form select {
+    border: 1px solid var(--border-color, #ccc) !important;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1) !important;
+    border-radius: 8px !important;
+}
+
+form input:focus, form select:focus {
+    transform: translateX(5px);
+    border-color: var(--primary-green, #2e7d32) !important;
+    outline: none !important;
+    box-shadow: -5px 5px 15px rgba(46, 125, 50, 0.05) !important;
+}
+
+/* --- 5. THE REFLECTIVE BUTTON --- */
+form button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease !important;
+    z-index: 1;
+    border-radius: 8px !important;
+    background-color: var(--primary-green, #388e3c) !important;
+}
+
+/* The light sweep effect */
+form button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+form button:hover:not(:disabled) {
+    background-color: var(--green-hover, #2e7d32) !important;
+    letter-spacing: 1px;
+    box-shadow: 0 10px 20px rgba(46, 125, 50, 0.2) !important;
+}
+
+form button:hover::before {
+    left: 100%; 
+}
+
+/* --- 6. RESULTS REVEAL --- */
+.loan-result-box {
+    border-radius: 12px !important;
+    background: linear-gradient(90deg, var(--light-green, #e8f5e9), transparent) !important;
+    animation: ultimateReveal 0.6s ease-out forwards;
+    border-left: 5px solid var(--accent-green, #81c784) !important;
+}
+
+#chatbotBtn {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+#chatbotBtn:hover {
+    transform: translateY(-5px) scale(1.1) !important;
+}
     </style>
 </head>
 <!-- Floating Chatbot Button -->
@@ -181,14 +699,16 @@
   <i class="fas fa-robot"></i>
 </a>
 <body>
+    <nav class="navbar">
+    <div class="nav-title">AgriTech</div>
+    <a href="index.html" class="nav-link">Home</a>
+     <a href="about.html" class="nav-link">About</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+       <a href="contact.html" class="nav-link">Contact</a>
+
+</nav>
+
     <div class="container">
-        <div style="position: absolute; top: 20px; right: 20px; z-index: 1000;">
-            <button class="theme-toggle" aria-label="Toggle dark/light mode" style="background: rgba(46, 125, 50, 0.1); border: 1px solid rgba(46, 125, 50, 0.3); color: #2e7d32;">
-                <i class="fas fa-sun sun-icon"></i>
-                <i class="fas fa-moon moon-icon"></i>
-                <span class="theme-text">Light</span>
-            </button>
-        </div>
         
         <h2>Smart Loan Eligibility Guide</h2>
 
@@ -334,7 +854,7 @@
     <script>
       function setTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
+        localStorage.setItem('agritech-theme', theme);
         const themeText = document.querySelector('.theme-text');
         if (themeText) themeText.textContent = theme === 'dark' ? 'Dark' : 'Light';
       }
@@ -355,7 +875,7 @@
 
       document.addEventListener('DOMContentLoaded', function () {
         // Initial theme load
-        const savedTheme = localStorage.getItem('theme');
+        const savedTheme = localStorage.getItem('agritech-theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const theme = savedTheme || (prefersDark ? 'dark' : 'light');
         setTheme(theme);
@@ -434,6 +954,7 @@
     <script>
       document.getElementById('year').textContent = new Date().getFullYear();
     </script>
+    <script src="theme.js"></script>
 
 </body>
 
