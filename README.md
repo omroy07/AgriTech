@@ -334,6 +334,19 @@ Found a bug or want a new feature? [Open an issue](https://github.com/omroy07/Ag
 This project is licensed under the [MIT License](LICENSE).
 
 ---
+## 🛠️ Common Issues & Fixes
+
+- ❌ **ModuleNotFoundError**
+  👉 Run `pip install -r requirements.txt`
+
+- ❌ **Firebase config error**
+  👉 Ensure `.env` values match Firebase Console
+
+- ❌ **CORS issue**
+  👉 Make sure backend runs before frontend
+
+- ❌ **Port already in use**
+  👉 Change port in `app.py` or stop previous process
 
 ## ❓ FAQ
 
