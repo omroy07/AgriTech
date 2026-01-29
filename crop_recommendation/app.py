@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.insert(0, os.path.abspath('..'))
+
 from flask import Flask, render_template, request, send_file, jsonify
 from auth_utils import token_required, roles_required
 import joblib
@@ -51,44 +55,56 @@ def sanitize_input(text, max_length=255):
 def home():
     return render_template('index.html')
 
-@app.route('/predict', methods=['POST'])
-@token_required
-@roles_required('farmer', 'admin')
-@validate_required_fields(['N', 'P', 'K', 'temperature', 'humidity', 'ph', 'rainfall'])
+@app.route('/predict', methods=['GET', 'POST']) # Allow GET requests
 def predict():
-    try:
-        # Sanitize and validate all numeric inputs
-        data = [
-            sanitize_numeric_input(request.form['N'], 0, 200, "Nitrogen (N)"),
-            sanitize_numeric_input(request.form['P'], 0, 200, "Phosphorus (P)"),
-            sanitize_numeric_input(request.form['K'], 0, 200, "Potassium (K)"),
-            sanitize_numeric_input(request.form['temperature'], -50, 100, "Temperature"),
-            sanitize_numeric_input(request.form['humidity'], 0, 100, "Humidity"),
-            sanitize_numeric_input(request.form['ph'], 0, 14, "pH"),
-            sanitize_numeric_input(request.form['rainfall'], 0, 1000, "Rainfall")
-        ]
-        
-        input_params = {
-            'N': str(data[0]),
-            'P': str(data[1]),
-            'K': str(data[2]),
-            'temperature': str(data[3]),
-            'humidity': str(data[4]),
-            'ph': str(data[5]),
-            'rainfall': str(data[6])
-        }
-        
-        prediction_num = model.predict([data])[0]
-        prediction_label = label_encoder.inverse_transform([prediction_num])[0]  # Convert to name
-        
-        return render_template('result.html', crop=prediction_label, params=input_params)
-        
-    except ValueError as e:
-        return jsonify({'error': str(e)}), 400
-    except Exception as e:
-        app.logger.error(f"Prediction error: {str(e)}")
-        return jsonify({'error': 'Prediction failed'}), 500
+    # Handle the Page Load (GET)
+    if request.method == 'GET':
+        # Return the index.html which contains the form
+        return render_template('index.html') 
 
+    # Handle the Form Submission (POST)
+    if request.method == 'POST':
+        try:
+            # Manual validation (Moved here so it doesn't block the GET request)
+            required_fields = ['N', 'P', 'K', 'temperature', 'humidity', 'ph', 'rainfall']
+            for field in required_fields:
+                if field not in request.form or not request.form[field].strip():
+                    # Return error with the correct template
+                    return render_template('index.html', error=f"Missing required field: {field}")
+
+            # Sanitize and validate all numeric inputs
+            data = [
+                sanitize_numeric_input(request.form['N'], 0, 200, "Nitrogen (N)"),
+                sanitize_numeric_input(request.form['P'], 0, 200, "Phosphorus (P)"),
+                sanitize_numeric_input(request.form['K'], 0, 200, "Potassium (K)"),
+                sanitize_numeric_input(request.form['temperature'], -50, 100, "Temperature"),
+                sanitize_numeric_input(request.form['humidity'], 0, 100, "Humidity"),
+                sanitize_numeric_input(request.form['ph'], 0, 14, "pH"),
+                sanitize_numeric_input(request.form['rainfall'], 0, 1000, "Rainfall")
+            ]
+            
+            input_params = {
+                'N': str(data[0]),
+                'P': str(data[1]),
+                'K': str(data[2]),
+                'temperature': str(data[3]),
+                'humidity': str(data[4]),
+                'ph': str(data[5]),
+                'rainfall': str(data[6])
+            }
+            
+            prediction_num = model.predict([data])[0]
+            prediction_label = label_encoder.inverse_transform([prediction_num])[0]
+            
+            # Handle the Form Submission (POST)
+            return render_template('result.html', crop=prediction_label, params=input_params)
+            
+        except ValueError as e:
+            # Render the form again with the error message visible
+            return render_template('index.html', error=str(e))
+        except Exception as e:
+            app.logger.error(f"Prediction error: {str(e)}")
+            return jsonify({'error': 'Prediction failed'}), 500
 # PDF download route
 @app.route('/download_report', methods=['POST'])
 @token_required

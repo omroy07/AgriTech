@@ -1,5 +1,6 @@
 from datetime import datetime
 from backend.extensions import db
+import bcrypt
 
 class UserRole:
     FARMER = 'farmer'
@@ -17,6 +18,9 @@ class User(db.Model):
     notifications = db.relationship('Notification', backref='user', lazy=True)
     files = db.relationship('File', backref='user', lazy=True)
 
+    def __repr__(self):
+        return f'<User {self.username} ({self.role})>'
+
 class Notification(db.Model):
     __tablename__ = 'notifications'
     id = db.Column(db.Integer, primary_key=True)
@@ -33,6 +37,7 @@ class Notification(db.Model):
             'title': self.title,
             'message': self.message,
             'type': self.type,
+            'read_at': self.read_at.isoformat() if self.read_at else None,
             'sent_at': self.sent_at.isoformat()
         }
 
@@ -44,6 +49,7 @@ class File(db.Model):
     original_name = db.Column(db.String(255), nullable=False)
     file_path = db.Column(db.String(512), nullable=False)
     file_type = db.Column(db.String(100), nullable=False)
+    mime_type = db.Column(db.String(100), nullable=True)
     file_size = db.Column(db.Integer, nullable=False)
     storage_type = db.Column(db.String(20), default='local')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -58,3 +64,6 @@ class File(db.Model):
             'storage_type': self.storage_type,
             'created_at': self.created_at.isoformat()
         }
+
+    def __repr__(self):
+        return f'<File {self.id} - {self.original_name}>'
