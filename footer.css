@@ -15,6 +15,11 @@
     0 -4px 16px rgba(46, 125, 50, 0.1),
     0 -2px 8px rgba(46, 125, 50, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
+     background: linear-gradient(135deg, #0d1117, #151d27);
+  color: #d1d5db;
+  padding-top: 60px;
+  overflow: hidden;
+  font-family: "Segoe UI", sans-serif;
 }
 
 .site-footer::after {
@@ -60,6 +65,11 @@
   100% { background-position: 0% 0%, 100% 0%, 50% 100%; }
 }
 
+.footer-top-accent {
+  height: 4px;
+  background: linear-gradient(90deg, #00d4ff, #00ffa3);
+}
+
 /* Footer Inner Structure */
 .footer-inner {
   max-width: 1200px;
@@ -72,6 +82,18 @@
   z-index: 1;
 }
 
+.footer-inner-content {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 20px;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+
 /* Footer Brand Section */
 .footer-brand {
   display: flex;
@@ -81,11 +103,28 @@
   position: relative;
 }
 
+.footer-section {
+  flex: 1;
+  min-width: 240px;
+}
+
 .brand-header {
   display: flex;
   align-items: center;
   gap: 1rem;
   margin-bottom: 1.5rem;
+}
+
+
+.brand-logo {
+  width: 42px;
+}
+
+.tagline {
+  margin: 15px 0 20px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #9ca3af;
 }
 
 .footer-logo {
@@ -108,6 +147,101 @@
   box-shadow: 
     0 12px 35px rgba(0, 0, 0, 0.2),
     0 6px 18px rgba(46, 125, 50, 0.3);
+}
+
+.footer-section h4 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: white;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section li {
+  margin-bottom: 10px;
+}
+
+.footer-section a {
+  color: #bfc6d1;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.footer-section a:hover {
+  color: #00d4ff;
+  transform: translateX(6px);
+}
+
+.social-icons {
+  display: flex;
+  gap: 12px;
+}
+
+.social-icons a {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #1f2937;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: 0.3s;
+}
+
+.social-icons a:hover {
+  background: #00d4ff;
+  transform: translateY(-4px);
+}
+
+.footer-group-links {
+  display: flex;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 18px;
+  border-top: 1px solid #222;
+  font-size: 13px;
+  color: #8b949e;
+}
+.footer-wave-overlay {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: radial-gradient(circle at 50% 40px, transparent 40px, #0d1117 41px);
+}
+
+
+@media (max-width: 900px) {
+
+  .footer-inner-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+  }
+
+  .footer-group-links {
+    justify-content: center;
+  }
+
+  .brand-header {
+    justify-content: center;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
 }
 
 /* Mission Statement with Glassmorphism */
