@@ -14,6 +14,7 @@ from backend.extensions.socketio import socketio
 from backend.extensions.cache import cache
 from backend.monitoring.routes import health_bp
 from backend.api import register_api
+from backend.extensions.babel import babel, get_locale
 from backend.config import config
 from backend.schemas.loan_schema import LoanRequestSchema
 from backend.celery_app import celery_app
@@ -46,6 +47,9 @@ socketio.init_app(app)
 
 # Initialize Cache with app
 cache.init_app(app)
+
+# Initialize Babel with app
+babel.init_app(app, locale_selector=get_locale)
 
 
 
@@ -130,13 +134,17 @@ def predict_crop_async():
             if field not in data:
                 return jsonify({'status': 'error', 'message': f'Missing field: {field}'}), 400
         
+        # Get current locale
+        lang = get_locale()
+        
         # Submit task to Celery
         user_id = data.get('user_id')
         task = predict_crop_task.delay(
             data['N'], data['P'], data['K'],
             data['temperature'], data['humidity'],
             data['ph'], data['rainfall'],
-            user_id=user_id
+            user_id=user_id,
+            lang=lang
         )
         
         return jsonify({
@@ -164,9 +172,12 @@ def process_loan_async():
                 if isinstance(value, str):
                     json_data[key] = sanitize_input(value)
         
+        # Get current locale
+        lang = get_locale()
+        
         # Submit task to Celery
         user_id = json_data.get('user_id')
-        task = process_loan_task.delay(json_data, user_id=user_id)
+        task = process_loan_task.delay(json_data, user_id=user_id, lang=lang)
         
         return jsonify({
             'status': 'submitted',
