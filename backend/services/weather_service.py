@@ -4,11 +4,12 @@ Provides weather data processing and agricultural advisories
 for the AgriTech platform
 """
 
-import json
+import requests
+from flask import current_app
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple, Union
 import math
-
+from backend.extensions.cache import cache
 
 class WeatherService:
     """Service class for weather-related operations"""
@@ -75,9 +76,72 @@ class WeatherService:
     }
     
     def __init__(self):
-        self.forecast_cache = {}
-        self.cache_expiry = timedelta(hours=1)
-    
+        self.api_key = None
+        self.api_url = None
+
+    def _get_config(self):
+        """Retrieve config from current_app context."""
+        if not self.api_key:
+            self.api_key = current_app.config.get('WEATHER_API_KEY')
+            self.api_url = current_app.config.get('WEATHER_API_URL', "https://api.weatherapi.com/v1")
+
+    def get_weather_forecast(self, location: str, days: int = 3) -> Dict:
+        """Fetch weather forecast from API with caching."""
+        self._get_config()
+        if not self.api_key:
+            return {"error": "Weather API key not configured"}
+
+        cache_key = f"weather_forecast_{location}_{days}"
+        cached_data = cache.get(cache_key)
+        if cached_data:
+            return cached_data
+
+        try:
+            url = f"{self.api_url}/forecast.json"
+            params = {
+                "key": self.api_key,
+                "q": location,
+                "days": days,
+                "aqi": "no"
+            }
+            response = requests.get(url, params=params, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+            
+            # Cache for 1 hour
+            cache.set(cache_key, data, timeout=3600)
+            return data
+        except Exception as e:
+            return {"error": str(e)}
+
+    def get_farming_analysis(self, location: str) -> Dict:
+        """Fetch current weather and return agricultural analysis with caching."""
+        cache_key = f"farming_analysis_{location}"
+        cached_analysis = cache.get(cache_key)
+        if cached_analysis:
+            return cached_analysis
+
+        weather_data = self.get_weather_forecast(location, days=1)
+        if "error" in weather_data:
+            return weather_data
+
+        current = weather_data.get("current", {})
+        analysis = self.analyze_weather_for_farming(
+            temperature=current.get("temp_c", 0),
+            humidity=current.get("humidity", 0),
+            wind_speed=current.get("wind_kph", 0),
+            rainfall=current.get("precip_mm", 0),
+            condition=current.get("condition", {}).get("text", "clear").lower()
+        )
+        
+        # Add basic info
+        analysis["location"] = weather_data.get("location", {}).get("name")
+        analysis["region"] = weather_data.get("location", {}).get("region")
+        
+        # Cache analysis for 1 hour
+        cache.set(cache_key, analysis, timeout=3600)
+        return analysis
+
     def analyze_weather_for_farming(
         self,
         temperature: float,
@@ -88,16 +152,6 @@ class WeatherService:
     ) -> Dict:
         """
         Comprehensive weather analysis for farming operations
-        
-        Args:
-            temperature: Temperature in Celsius
-            humidity: Relative humidity percentage
-            wind_speed: Wind speed in km/h
-            rainfall: Rainfall in mm
-            condition: Weather condition string
-        
-        Returns:
-            Detailed analysis with recommendations
         """
         analysis = {
             "timestamp": datetime.now().isoformat(),

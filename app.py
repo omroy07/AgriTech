@@ -3,12 +3,21 @@ import google.generativeai as genai
 import traceback
 import os
 import re
+import hashlib
+import json
 from flask_cors import CORS
 from dotenv import load_dotenv
 from extensions import limiter
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
 from backend.extensions.socketio import socketio
+from backend.extensions.cache import cache
+from backend.monitoring.routes import health_bp
+from backend.api import register_api
+from backend.config import config
+from backend.schemas.loan_schema import LoanRequestSchema
+from backend.celery_app import celery_app
+from backend.tasks import predict_crop_task, process_loan_task
 import backend.sockets.task_events  # Register socket event handlers
 
 
@@ -29,8 +38,14 @@ app.register_blueprint(crop_bp)
 app.register_blueprint(disease_bp)
 app.register_blueprint(health_bp)
 
+# Register API v1 (including loan, weather, schemes, etc.)
+register_api(app)
+
 # Initialize SocketIO with app
 socketio.init_app(app)
+
+# Initialize Cache with app
+cache.init_app(app)
 
 
 
@@ -217,6 +232,18 @@ Do not use "\\n" for newlines. Instead, structure properly.
 Do not add assumptions that are not supported by the data provided.
 """
 
+        # Create a cache key based on the prompt
+        cache_key = f"gemini_loan_{hashlib.md5(prompt.encode()).hexdigest()}"
+        cached_response = cache.get(cache_key)
+        
+        if cached_response:
+            logger.info("Serving loan processing from cache")
+            return jsonify({
+                "status": "success",
+                "message": "Loan processed successfully (cached)",
+                "result": cached_response
+            }), 200
+
         response = model.generate_content(prompt)
         reply = response.text
 
@@ -228,10 +255,15 @@ Do not add assumptions that are not supported by the data provided.
           }), 500
 
         reply = response.candidates[0].content.parts[0].text
+        
+        # Cache the result for 24 hours (86400 seconds)
+        cache.set(cache_key, reply, timeout=86400)
+        
         return jsonify({
             "status": "success",
-            "message": "Loan processes successfully "
-            }), 200
+            "message": "Loan processed successfully",
+            "result": reply
+        }), 200
 
     except Exception as e:
         logger.error("Error processing loan request: %s", str(e), exc_info=True)

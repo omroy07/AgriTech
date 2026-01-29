@@ -10,6 +10,10 @@ class Config:
     GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
     GEMINI_MODEL_ID = 'gemini-2.5-flash'
     
+    # Weather API
+    WEATHER_API_KEY = os.environ.get('WEATHER_API_KEY')
+    WEATHER_API_URL = "https://api.weatherapi.com/v1"
+    
     # Firebase
     FIREBASE_API_KEY = os.environ.get('FIREBASE_API_KEY')
     FIREBASE_AUTH_DOMAIN = os.environ.get('FIREBASE_AUTH_DOMAIN')
@@ -18,6 +22,12 @@ class Config:
     FIREBASE_MESSAGING_SENDER_ID = os.environ.get('FIREBASE_MESSAGING_SENDER_ID')
     FIREBASE_APP_ID = os.environ.get('FIREBASE_APP_ID')
     FIREBASE_MEASUREMENT_ID = os.environ.get('FIREBASE_MEASUREMENT_ID')
+
+    # Redis & Caching
+    REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
+    CACHE_TYPE = 'RedisCache'
+    CACHE_REDIS_URL = REDIS_URL
+    CACHE_DEFAULT_TIMEOUT = 3600  # 1 hour default
 
 class DevelopmentConfig(Config):
     """Development Configuration"""
