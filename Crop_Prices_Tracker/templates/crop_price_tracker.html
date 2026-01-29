@@ -51,6 +51,24 @@
         background-color: var(--bg-color);
         color: var(--text-color);
         font-family: 'Open Sans', sans-serif;
+        position: relative;
+      }
+
+      /* Animated Ambient Background */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: 
+          radial-gradient(circle at 15% 50%, rgba(34, 197, 94, 0.08) 0%, transparent 40%),
+          radial-gradient(circle at 85% 30%, rgba(34, 197, 94, 0.05) 0%, transparent 40%);
+        z-index: -1;
+        animation: pulseBg 8s ease-in-out infinite alternate;
+      }
+
+      @keyframes pulseBg {
+        from { opacity: 0.5; }
+        to { opacity: 1; }
       }
 
       .header {
@@ -62,6 +80,9 @@
         margin: 0 auto;
         width: 100%;
         box-sizing: border-box;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-color);
+        animation: fadeInDown 0.8s ease-out;
       }
       
       .header h2 {
@@ -76,29 +97,47 @@
         display: flex;
         align-items: center;
         gap: 5px;
+        transition: transform 0.3s ease;
       }
       .back-button:hover {
         color: var(--accent-color);
+        transform: translateX(-5px);
       }
 
       /* --- 3. FORM CARD STYLING --- */
       .form-container {
-        width: 100%;
-        max-width: 600px; /* Limits form width for better card look */
+        backdrop-filter: blur(12px);
+        position: relative;
+        z-index: 1;
+        max-width: 600px;
+        width: 90%;
         margin: 2rem auto;
-        padding: 2rem;
-        box-sizing: border-box;
-        
-        /* Card Look */
+        padding: 2.5rem;
+        border-radius: 16px;
         background: var(--surface-color);
         border: 1px solid var(--border-color);
+        animation: fadeSlideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      }
+
+      .form-container::before {
+        content: "";
+        position: absolute;
+        inset: 0;
         border-radius: 16px;
-        box-shadow: 0 10px 25px var(--shadow-color);
+        background: linear-gradient(135deg, rgba(34,197,94,0.1), transparent);
+        pointer-events: none;
+        z-index: -1;
       }
 
       .form-row {
         margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: fadeSlideUp 0.5s ease forwards;
       }
+
+      .form-row:nth-child(1) { animation-delay: 0.2s; }
+      .form-row:nth-child(2) { animation-delay: 0.3s; }
+      .form-row:nth-child(3) { animation-delay: 0.4s; }
 
       .form-label {
         display: block;
@@ -116,39 +155,56 @@
         color: var(--text-color);
         font-size: 1rem;
         outline: none;
+        transition: all 0.3s ease;
       }
 
       select:focus {
         border-color: var(--accent-color);
-      }
-      
-      select:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+        transform: translateY(-1px);
       }
 
-      /* --- 4. BUTTON CENTERING (Requested Fix) --- */
+      /* --- 4. BUTTON STYLING --- */
       .submit-button {
-        display: block; /* Allows margin auto to work */
-        margin: 2rem auto 0 auto; /* Top margin, Auto Left/Right to center */
+        display: block;
+        margin: 2rem auto 0 auto;
         width: auto;
         min-width: 200px;
         padding: 12px 30px;
         background-color: var(--accent-color);
         color: white;
         border: none;
-        border-radius: 50px; /* Rounded pill shape */
+        border-radius: 50px;
         font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+        position: relative;
+        overflow: hidden;
       }
 
       .submit-button:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 8px 25px rgba(34, 197, 94, 0.5);
         background-color: #16a34a;
+      }
+
+      .submit-button:active:not(:disabled) {
+        transform: translateY(0) scale(0.95);
+      }
+
+      .submit-button::after {
+        content: "";
+        position: absolute;
+        top: 0; left: -100%;
+        width: 100%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: 0.5s;
+      }
+
+      .submit-button:hover::after {
+        left: 100%;
       }
 
       .submit-button:disabled {
@@ -156,6 +212,7 @@
         cursor: not-allowed;
         box-shadow: none;
         color: var(--text-muted);
+        opacity: 0.7;
       }
 
       /* --- 5. RESULTS STYLING --- */
@@ -165,6 +222,7 @@
         margin: 0 auto 3rem auto;
         padding: 0 20px;
         box-sizing: border-box;
+        animation: fadeIn 1s ease 0.6s both;
       }
 
       .results-container h3 {
@@ -187,54 +245,98 @@
         padding: 20px;
         box-shadow: 0 4px 12px var(--shadow-color);
         border-left: 5px solid var(--accent-color);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition: all 0.3s ease;
+        opacity: 0;
+        animation: cardReveal 0.6s ease forwards;
       }
 
+      .price-card:nth-child(1) { animation-delay: 0.8s; }
+      .price-card:nth-child(2) { animation-delay: 0.9s; }
+      .price-card:nth-child(3) { animation-delay: 1.0s; }
+
       .price-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px var(--shadow-color);
+        transform: translateY(-8px) rotate(1deg);
+        box-shadow: 0 12px 24px var(--shadow-color);
+        background: rgba(34, 197, 94, 0.05);
       }
 
       .price-date {
+        display: inline-block;
         font-size: 0.85rem;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+        color: var(--accent-color);
+        background: rgba(34, 197, 94, 0.1);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
       }
 
       .price-amount {
         font-size: 1.5rem;
         font-weight: bold;
-        color: var(--accent-color);
+        color: var(--text-color);
         margin: 5px 0;
       }
 
       .price-location {
         font-size: 1rem;
-        color: var(--text-color);
+        color: var(--text-muted);
         display: flex;
         align-items: center;
         gap: 8px;
       }
 
-      .price-location i { color: #ff9800; }
+      /* --- 6. FLOATING ICONS --- */
+      .floating-icons-wrapper {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        overflow: hidden;
+      }
 
-      /* --- 6. FOOTER STYLES --- */
+      .floating-icon {
+        position: absolute;
+        font-size: 1.5rem;
+        color: var(--accent-color);
+        opacity: 0.15;
+        animation: floatAround infinite linear;
+      }
+
+      @keyframes floatAround {
+        0% { transform: translateY(100vh) rotate(0deg); }
+        100% { transform: translateY(-20vh) rotate(360deg); }
+      }
+
+      /* --- 7. KEYFRAMES --- */
+      @keyframes fadeSlideUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      @keyframes cardReveal {
+        from { opacity: 0; transform: scale(0.9) translateY(20px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+      }
+
+      /* --- 8. FOOTER --- */
       .site-footer {
         background: var(--surface-color);
         color: var(--text-color);
-        position: relative;
-        font-size: 0.95rem;
         border-top: 1px solid var(--border-color);
         margin-top: auto;
-        width: 100% !important;
-        padding: 0;
-      }
-
-      .footer-top-accent {
-        height: 4px;
         width: 100%;
-        background: linear-gradient(90deg, #16a34a, #22c55e);
       }
 
       .footer-inner-content {
@@ -248,51 +350,48 @@
       }
 
       .footer-brand { flex: 1 1 280px; }
-      .brand-header { display: flex; align-items: center; gap: 0.6rem; }
-      .brand-logo { width: 42px; }
-      .footer-brand h3 { color: var(--accent-color); font-size: 1.3rem; margin: 0; }
-      
-      .tagline { margin: 0.8rem 0 1.2rem; line-height: 1.6; color: var(--text-muted); }
-
-      .social-icons { display: flex; gap: 0.7rem; }
+      .footer-brand h3 { color: var(--accent-color); margin: 0; }
+      .social-icons { display: flex; gap: 0.7rem; margin-top: 1rem;}
       .social-icons a {
         width: 36px; height: 36px; background: rgba(34, 197, 94, 0.1);
         display: grid; place-items: center; border-radius: 50%;
-        color: #15803d; transition: all 0.25s ease; text-decoration: none;
+        color: var(--accent-color); transition: 0.3s;
       }
-      .social-icons a:hover { background: #22c55e; color: #fff; }
+      .social-icons a:hover { background: var(--accent-color); color: #fff; transform: scale(1.2); }
 
-      .footer-group-links { display: flex; gap: 3rem; flex: 1 1 320px; }
-      .footer-section h4 { color: var(--accent-color); margin-bottom: 0.9rem; font-size: 1rem; }
-      .footer-section ul { list-style: none; padding: 0; margin: 0; }
-      .footer-section ul li { margin-bottom: 0.6rem; }
-      .footer-section ul a {
-        color: var(--text-muted); text-decoration: none;
-        display: flex; align-items: center; gap: 0.5rem; transition: color 0.25s ease;
-      }
-      .footer-section ul a:hover { color: var(--accent-color); }
+      .footer-section ul { list-style: none; padding: 0; }
+      .footer-section ul a { color: var(--text-muted); text-decoration: none; transition: 0.3s; }
+      .footer-section ul a:hover { color: var(--accent-color); padding-left: 5px; }
 
-      .footer-bottom {
-        text-align: center; padding: 1rem; background: var(--section-bg);
-        color: var(--text-muted); font-size: 0.85rem; width: 100%;
-      }
+      .footer-bottom { text-align: center; padding: 1rem; background: var(--section-bg); }
 
       @media (max-width: 768px) {
-        .footer-inner-content, .footer-group-links { flex-direction: column; }
+        .footer-inner-content { flex-direction: column; }
+        .header h2 { font-size: 1.1rem; }
       }
     </style>
   </head>
 
   <body>
+    <div class="floating-icons-wrapper">
+      <div class="floating-icon" style="left: 5%; animation-duration: 15s;"><i class="fas fa-leaf"></i></div>
+      <div class="floating-icon" style="left: 20%; animation-duration: 18s; animation-delay: 2s;"><i class="fas fa-seedling"></i></div>
+      <div class="floating-icon" style="left: 40%; animation-duration: 22s;"><i class="fas fa-coins"></i></div>
+      <div class="floating-icon" style="left: 65%; animation-duration: 14s; animation-delay: 5s;"><i class="fas fa-wheat-awn"></i></div>
+      <div class="floating-icon" style="left: 80%; animation-duration: 20s;"><i class="fas fa-wallet"></i></div>
+      <div class="floating-icon" style="left: 90%; animation-duration: 16s; animation-delay: 1s;"><i class="fas fa-hand-holding-dollar"></i></div>
+    </div>
+
     <div class="header">
-      <button class="theme-toggle" aria-label="Toggle theme" style="background: rgba(46, 125, 50, 0.1); border: 1px solid rgba(46, 125, 50, 0.3); color: #2e7d32; padding: 8px 12px; border-radius: 20px; cursor: pointer;">
+      <button class="theme-toggle" aria-label="Toggle theme" style="background: rgba(46, 125, 50, 0.1); border: 1px solid rgba(46, 125, 50, 0.3); color: #2e7d32; padding: 8px 12px; border-radius: 20px; cursor: pointer; transition: 0.3s;">
         <i class="fas fa-sun sun-icon"></i>
         <i class="fas fa-moon moon-icon"></i>
         <span class="theme-text">Light</span>
       </button>
       <a href="/main.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Main</a>
       <h2>🌾 Crop Price Tracker</h2>
-      <div style="width: 100px;"></div> </div>
+      <div style="width: 50px;"></div> 
+    </div>
 
     <div class="form-container">
       <form method="POST" id="priceForm">
@@ -347,12 +446,11 @@
       </div>
     </div>
 
-    <footer class="site-footer tech-dark-theme">
-      <div class="footer-top-accent"></div>
+    <footer class="site-footer">
       <div class="footer-inner-content">
         <div class="footer-section footer-brand">
-          <div class="brand-header">
-            <img src="/images/logo.png" alt="AgriTech logo" class="brand-logo">
+          <div class="brand-header" style="display:flex; align-items:center; gap:10px;">
+            <img src="/images/logo.png" alt="logo" width="30">
             <h3>AgriTech</h3>
           </div>
           <p class="tagline">Empowering India's Farming Future with innovative technology.</p>
@@ -363,22 +461,20 @@
             <a href="#"><i class="fab fa-instagram"></i></a>
           </div>
         </div>
-        <div class="footer-group-links">
-          <div class="footer-section footer-links">
-            <h4>Quick Links</h4>
-            <ul>
-              <li><a href="../index.html"><i class="fas fa-home"></i> Home</a></li>
-              <li><a href="../login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-              <li><a href="../chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
-            </ul>
-          </div>
-          <div class="footer-section footer-contact">
-            <h4>Contact</h4>
-            <ul>
-              <li><a href="mailto:contact@agritech.com"><i class="fas fa-envelope"></i> Email Us</a></li>
-              <li><a href="tel:+910000000000"><i class="fas fa-phone"></i> Call Us</a></li>
-            </ul>
-          </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="#"><i class="fas fa-robot"></i> AI Assistant</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:contact@agritech.com"><i class="fas fa-envelope"></i> Email Us</a></li>
+            <li><a href="tel:+910000000000"><i class="fas fa-phone"></i> Call Us</a></li>
+          </ul>
         </div>
       </div>
       <div class="footer-bottom">
@@ -403,7 +499,6 @@
         stateSelect.innerHTML = `<option value="">Loading...</option>`;
         stateSelect.disabled = true;
         
-        // Simulating Backend Response
         setTimeout(() => {
              stateSelect.innerHTML = '<option value="">-- Select State --</option>';
              stateSelect.innerHTML += `<option value="Gujarat">Gujarat</option>`;
