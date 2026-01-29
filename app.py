@@ -12,6 +12,7 @@ from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
 from backend.extensions.socketio import socketio
 from backend.extensions.cache import cache
+from backend.extensions import db
 from backend.monitoring.routes import health_bp
 from backend.api import register_api
 from backend.extensions.babel import babel, get_locale
@@ -20,6 +21,7 @@ from backend.schemas.loan_schema import LoanRequestSchema
 from backend.celery_app import celery_app
 from backend.tasks import predict_crop_task, process_loan_task
 import backend.sockets.task_events  # Register socket event handlers
+from auth_utils import token_required, roles_required
 
 
 
@@ -47,6 +49,9 @@ socketio.init_app(app)
 
 # Initialize Cache with app
 cache.init_app(app)
+
+# Initialize DB with app
+db.init_app(app)
 
 # Initialize Babel with app
 babel.init_app(app, locale_selector=get_locale)
@@ -90,6 +95,7 @@ def get_firebase_config():
 # ==================== ASYNC TASK ENDPOINTS ====================
 
 @app.route('/api/task/<task_id>', methods=['GET'])
+@token_required
 def get_task_status(task_id):
     """Check the status of an async task."""
     task = celery_app.AsyncResult(task_id)
@@ -124,6 +130,8 @@ def get_task_status(task_id):
 
 
 @app.route('/api/crop/predict-async', methods=['POST'])
+@token_required
+@roles_required('farmer', 'admin', 'consultant')
 def predict_crop_async():
     """Submit crop prediction as async task."""
     try:
@@ -157,6 +165,8 @@ def predict_crop_async():
 
 
 @app.route('/api/loan/process-async', methods=['POST'])
+@token_required
+@roles_required('farmer', 'admin')
 def process_loan_async():
     """Submit loan processing as async task."""
     try:
@@ -191,6 +201,8 @@ def process_loan_async():
 
 @app.route('/process-loan', methods=['POST'])
 @limiter.limit("5 per minute")
+@token_required
+@roles_required('farmer', 'admin')
 def process_loan():
     try:
         json_data = request.get_json(force=True)

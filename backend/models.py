@@ -1,11 +1,18 @@
 from datetime import datetime
 from backend.extensions import db
 
+class UserRole:
+    FARMER = 'farmer'
+    SHOPKEEPER = 'shopkeeper'
+    ADMIN = 'admin'
+    CONSULTANT = 'consultant'
+
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
+    role = db.Column(db.String(20), default=UserRole.FARMER)
     
     notifications = db.relationship('Notification', backref='user', lazy=True)
     files = db.relationship('File', backref='user', lazy=True)

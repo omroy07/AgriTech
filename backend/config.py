@@ -6,6 +6,10 @@ class Config:
     DEBUG = False
     TESTING = False
     
+    # Database
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///agritech.db')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    
     # Gemini API
     GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
     GEMINI_MODEL_ID = 'gemini-2.5-flash'
