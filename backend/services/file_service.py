@@ -28,6 +28,7 @@ class FileService:
                 original_name=filename,
                 file_path=file_path,
                 file_type=file.content_type,
+                mime_type=file.content_type,
                 file_size=os.path.getsize(file_path),
                 storage_type='local'
             )

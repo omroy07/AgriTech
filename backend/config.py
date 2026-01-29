@@ -6,6 +6,18 @@ class Config:
     DEBUG = False
     TESTING = False
     
+    # Database
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///agritech.db')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    # Mail
+    MAIL_SERVER = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
+    MAIL_PORT = int(os.environ.get('MAIL_PORT', 587))
+    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS', 'True').lower() in ['true', 'on', '1']
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
+    
     # Gemini API
     GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
     GEMINI_MODEL_ID = 'gemini-2.5-flash'
@@ -32,22 +44,25 @@ class Config:
 class DevelopmentConfig(Config):
     """Development Configuration"""
     DEBUG = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL', 'sqlite:///agritech_dev.db')
+    SQLALCHEMY_ECHO = True  # Log SQL queries in development
 
 class ProductionConfig(Config):
     """Production Configuration"""
     DEBUG = False
-    # Ensure critical keys are present
     @classmethod
     def init_app(cls, app):
         if not os.environ.get('GEMINI_API_KEY'):
             raise RuntimeError("GEMINI_API_KEY is not set in production!")
+        if not os.environ.get('DATABASE_URL'):
+            raise RuntimeError("DATABASE_URL is not set in production!")
 
 class TestingConfig(Config):
     """Testing Configuration"""
     TESTING = True
     DEBUG = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'  # In-memory database for testing
 
-# Configuration Dictionary
 config = {
     'development': DevelopmentConfig,
     'production': ProductionConfig,
