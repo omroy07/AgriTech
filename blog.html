@@ -101,37 +101,9 @@
     <script src="js/features/favorites.js"></script>
     <script src="blog.js"></script>
     <script src="auth.js"></script>
-    <script>
-function applyTheme(theme) {
-    const html = document.documentElement;
-    html.setAttribute('data-theme', theme);
-
-    // Update labels/icons in navbar if present
-    const themeLabel = document.querySelector('.theme-label');
-    if (themeLabel) themeLabel.textContent = theme === 'light' ? 'Light' : 'Dark';
-}
-
-function initThemeToggle() {
-    const themeToggle = document.getElementById('themeToggle');
-    if (!themeToggle) return; // navbar not loaded yet
-
-    themeToggle.addEventListener('click', () => {
-        const html = document.documentElement;
-        const current = html.getAttribute('data-theme');
-        const next = current === 'light' ? 'dark' : 'light';
-        applyTheme(next);
-        localStorage.setItem('agritech-theme', next);
-    });
-}
-
-// Initialize theme from localStorage
-document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('agritech-theme') || 'light';
-    applyTheme(savedTheme);
-});
-
-// Load navbar and attach toggle AFTER navbar is loaded
-function includeHTML() {
+   <script>
+// Include navbar
+function includeHTML(callback) {
     var z, i, elmnt, file, xhttp;
     z = document.getElementsByTagName("*");
     for (i = 0; i < z.length; i++) {
@@ -144,10 +116,12 @@ function includeHTML() {
                     if (this.status == 200) {elmnt.innerHTML = this.responseText;}
                     if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
                     elmnt.removeAttribute("w3-include-html");
-                    includeHTML();
 
-                    // ✅ Attach theme toggle AFTER navbar loads
-                    initThemeToggle();
+                    // Call again recursively
+                    includeHTML(callback);
+
+                    // After loading navbar, run callback
+                    if (callback) callback();
                 }
             }
             xhttp.open("GET", file, true);
@@ -156,7 +130,56 @@ function includeHTML() {
         }
     }
 }
-includeHTML();
+
+// Initialize theme toggle
+function initThemeToggle() {
+    const themeToggle = document.getElementById('themeToggle');
+    if (!themeToggle) return;
+
+    themeToggle.addEventListener('click', () => {
+        const html = document.documentElement;
+        const current = html.getAttribute('data-theme');
+        const next = current === 'light' ? 'dark' : 'light';
+        html.setAttribute('data-theme', next);
+        const themeLabel = document.querySelector('.theme-label');
+        if (themeLabel) themeLabel.textContent = next === 'light' ? 'Light' : 'Dark';
+        localStorage.setItem('agritech-theme', next);
+    });
+}
+
+// Initialize mobile hamburger
+function initHamburgerMenu() {
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const overlay = document.getElementById('mobileMenuOverlay');
+
+    if (!hamburgerBtn || !mobileMenu || !overlay) return;
+
+    hamburgerBtn.addEventListener('click', () => {
+        mobileMenu.classList.add('active');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+
+    overlay.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+}
+
+// Run after DOM loads
+document.addEventListener('DOMContentLoaded', () => {
+    // Apply saved theme
+    const savedTheme = localStorage.getItem('agritech-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+    // Include navbar and initialize functions
+    includeHTML(() => {
+        initThemeToggle();
+        initHamburgerMenu();
+    });
+});
 </script>
 
 </body>
