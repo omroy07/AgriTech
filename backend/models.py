@@ -41,6 +41,9 @@ class User(db.Model):
             }
         return None
 
+    def __repr__(self):
+        return f'<User {self.username} ({self.role})>'
+
 class Notification(db.Model):
     __tablename__ = 'notifications'
     id = db.Column(db.Integer, primary_key=True)
@@ -57,6 +60,7 @@ class Notification(db.Model):
             'title': self.title,
             'message': self.message,
             'type': self.type,
+            'read_at': self.read_at.isoformat() if self.read_at else None,
             'sent_at': self.sent_at.isoformat()
         }
 
@@ -68,6 +72,7 @@ class File(db.Model):
     original_name = db.Column(db.String(255), nullable=False)
     file_path = db.Column(db.String(512), nullable=False)
     file_type = db.Column(db.String(100), nullable=False)
+    mime_type = db.Column(db.String(100), nullable=True)
     file_size = db.Column(db.Integer, nullable=False)
     storage_type = db.Column(db.String(20), default='local')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)

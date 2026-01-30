@@ -1,33 +1,10 @@
-import os
-import re
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 import google.generativeai as genai
+from backend.utils.validation import sanitize_input, validate_input
 
 from auth_utils import token_required, roles_required
 
 loan_bp = Blueprint('loan', __name__)
-
-
-def sanitize_input(text):
-    """Sanitize user input to prevent XSS and injection attacks"""
-    if not text or not isinstance(text, str):
-        return ""
-    text = re.sub(r'<[^>]+>', '', text)
-    text = text.replace('&', '&amp;')
-    text = text.replace('<', '&lt;')
-    text = text.replace('>', '&gt;')
-    text = text.replace('"', '&quot;')
-    text = text.replace("'", '&#x27;')
-    if len(text) > 1000:
-        text = text[:1000]
-    return text.strip()
-
-
-def validate_input(data):
-    """Validate input data structure and content"""
-    if not data:
-        return False, "No data provided"
-    return True, "Valid input"
 
 
 @loan_bp.route('/loan/process', methods=['POST'])
@@ -50,7 +27,7 @@ def process_loan():
                 if isinstance(value, str):
                     json_data[key] = sanitize_input(value)
         
-        API_KEY = os.environ.get('GEMINI_API_KEY')
+        API_KEY = current_app.config.get('GEMINI_API_KEY')
         if not API_KEY:
             return jsonify({
                 "status": "error",
@@ -58,7 +35,7 @@ def process_loan():
             }), 500
         
         genai.configure(api_key=API_KEY)
-        model = genai.GenerativeModel("gemini-2.5-flash")
+        model = genai.GenerativeModel(current_app.config.get('GEMINI_MODEL_ID', 'gemini-2.5-flash'))
         
         prompt = f"""
 You are a financial loan eligibility advisor specializing in agricultural loans for farmers in India.

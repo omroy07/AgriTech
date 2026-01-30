@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   setTimeout(() => {
     displayMessage(
-      "Hello! 🌱 I’m AgriBot, your agricultural assistant. I can help you with farming questions or identify pests via photos. How can I assist you today?",
+      "Hello! 🌱 I'm AgriBot, your AI assistant for AgriTech platform and farming guidance. I can help you navigate our tools, answer agriculture questions, recommend crops based on your region and season, and provide farming advice. How can I assist you today?",
       'bot'
     );
   }, 500);
