@@ -1036,3 +1036,280 @@ body {
   transform: scale(1);
   pointer-events: auto;
 }
+/* Upgrade: Dealer Card Aesthetic */
+.dealer-card {
+  background: var(--white);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 24px; /* Sweeter, rounder corners */
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Smooth pop effect */
+}
+
+.dealer-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(46, 125, 50, 0.15);
+}
+
+/* Glassmorphism for Info Rows */
+.dealer-info, .dealer-services {
+  background: rgba(76, 175, 80, 0.03); /* Extremely soft green tint */
+  border: 1px solid rgba(76, 175, 80, 0.1);
+  border-left: 4px solid var(--secondary-green); /* Thicker accent line */
+  border-radius: 16px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  transition: 0.3s;
+}
+
+.dealer-card:hover .dealer-info {
+  background: rgba(76, 175, 80, 0.08);
+}
+
+/* Typography Polish */
+.dealer-name {
+  font-size: 1.4rem;
+  letter-spacing: -0.5px;
+  color: var(--dark-green);
+  margin-bottom: 1rem;
+}
+
+/* Button "Sweetness" */
+.contact-btn {
+  border-radius: 14px;
+  padding: 14px 20px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: none; /* Keeps it friendly, not aggressive */
+}
+
+.contact-btn.primary {
+  background: linear-gradient(135deg, #2e7d32, #43a047);
+  box-shadow: 0 8px 20px rgba(46, 125, 50, 0.25);
+}
+
+.contact-btn.secondary {
+  background: #f0fdf4;
+  border: 1.5px solid #dcfce7;
+  color: #166534;
+}.service-pill {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid #c8e6c9;
+  display: inline-block;
+}
+/* Service Pills Styling */
+.services-pill-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.service-pill {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #dcfce7;
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.service-pill:hover {
+  background: #dcfce7;
+  transform: scale(1.05);
+}
+
+/* Modal Inner Grid */
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 15px;
+  margin-top: 10px;
+}
+
+/* Typography & Links */
+.contact-link {
+  color: #2e7d32;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.contact-placeholder {
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+.specialization-text {
+  font-style: italic;
+  color: #34495e;
+  border-left: 3px solid #66bb6a;
+  padding-left: 10px;
+}
+
+/* Action Button Polish */
+.modal-btn.primary {
+  background: linear-gradient(135deg, #2e7d32, #66bb6a);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(46, 125, 50, 0.2);
+}
+
+.modal-btn.secondary {
+  border-radius: 12px;
+  background: #eee;
+}
+/* Glassmorphism Background for the Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.4); /* Darker, modern overlay */
+  backdrop-filter: blur(12px); /* Stronger blur for premium feel */
+}
+
+/* The "Sweet" Popup Box */
+.modal-content {
+  background: #ffffff;
+  margin: 6vh auto;
+  width: 90%;
+  max-width: 520px;
+  border-radius: 32px; /* Extra round for a modern look */
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  animation: sweetSlideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes sweetSlideIn {
+  from { transform: scale(0.9) translateY(40px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Vibrant Header */
+.modal-header {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  padding: 35px 30px;
+  color: white;
+  position: relative;
+  border-bottom: none;
+}
+
+.modal-header h3 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 0;
+}
+
+/* Floating Close Button */
+.modal-close {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: rotate(90deg);
+}
+
+/* Body Content Depth */
+.modal-body {
+  padding: 30px;
+}
+
+.dealer-detail-section h4 {
+  color: #64748b; /* Muted slate for labels */
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* "Since" and "Hours" Mini-Cards */
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.grid-item {
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 18px;
+  border: 1px solid #f1f5f9;
+}
+
+/* Action Buttons */
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.modal-btn {
+  flex: 1;
+  padding: 15px;
+  border-radius: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-btn.primary {
+  background: #059669;
+  color: white;
+  box-shadow: 0 10px 15px -3px rgba(5, 150, 105, 0.3);
+}
+
+.modal-btn.primary:hover {
+  background: #047857;
+  transform: translateY(-3px);
+  box-shadow: 0 20px 25px -5px rgba(5, 150, 105, 0.4);
+}
+
+.modal-btn.secondary {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.modal-btn.secondary:hover {
+  background: #e2e8f0;
+}
