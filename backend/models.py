@@ -1,5 +1,7 @@
 from datetime import datetime
 from backend.extensions import db
+from geoalchemy2 import Geometry
+from sqlalchemy import Index
 
 class UserRole:
     FARMER = 'farmer'
@@ -14,8 +16,30 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     role = db.Column(db.String(20), default=UserRole.FARMER)
     
+    # Geospatial farm location
+    farm_latitude = db.Column(db.Float, nullable=True)
+    farm_longitude = db.Column(db.Float, nullable=True)
+    farm_location = db.Column(Geometry('POINT', srid=4326), nullable=True)  # PostGIS Point
+    farm_address = db.Column(db.String(500), nullable=True)
+    
     notifications = db.relationship('Notification', backref='user', lazy=True)
     files = db.relationship('File', backref='user', lazy=True)
+    disease_incidents = db.relationship('DiseaseIncident', backref='reporter', lazy=True)
+    
+    def set_farm_location(self, latitude, longitude):
+        """Set farm location from lat/lon coordinates"""
+        self.farm_latitude = latitude
+        self.farm_longitude = longitude
+        self.farm_location = f'POINT({longitude} {latitude})'
+    
+    def get_farm_coordinates(self):
+        """Get farm coordinates as dict"""
+        if self.farm_latitude and self.farm_longitude:
+            return {
+                'latitude': self.farm_latitude,
+                'longitude': self.farm_longitude
+            }
+        return None
 
 class Notification(db.Model):
     __tablename__ = 'notifications'
@@ -250,4 +274,273 @@ class AuditTrail(db.Model):
             'ip_address': self.ip_address,
             'location': self.location,
             'notes': self.notes
+        }
+
+
+class DiseaseIncident(db.Model):
+    """
+    Model for geo-tagged pest/disease incidents reported by farmers.
+    Supports spatial clustering and outbreak detection.
+    """
+    __tablename__ = 'disease_incidents'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    incident_id = db.Column(db.String(100), unique=True, nullable=False, index=True)
+    
+    # Reporter information
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    reporter_name = db.Column(db.String(200), nullable=False)
+    reporter_email = db.Column(db.String(120), nullable=False)
+    
+    # Disease/Pest information
+    disease_name = db.Column(db.String(200), nullable=False, index=True)
+    disease_type = db.Column(db.String(100), nullable=False)  # pest, fungal, bacterial, viral
+    crop_affected = db.Column(db.String(200), nullable=False, index=True)
+    severity = db.Column(db.String(20), nullable=False, default='medium')  # low, medium, high, critical
+    
+    # Geospatial data
+    latitude = db.Column(db.Float, nullable=False)
+    longitude = db.Column(db.Float, nullable=False)
+    location = db.Column(Geometry('POINT', srid=4326), nullable=False, index=True)  # PostGIS indexable
+    address = db.Column(db.String(500), nullable=True)
+    
+    # GeoJSON for API responses
+    geojson = db.Column(db.Text, nullable=True)
+    
+    # Additional details
+    description = db.Column(db.Text, nullable=True)
+    affected_area_hectares = db.Column(db.Float, nullable=True)
+    image_url = db.Column(db.String(512), nullable=True)
+    
+    # Status tracking
+    status = db.Column(db.String(50), nullable=False, default='reported')  # reported, verified, resolved
+    verified_by_expert = db.Column(db.Boolean, default=False)
+    expert_notes = db.Column(db.Text, nullable=True)
+    
+    # Outbreak association
+    outbreak_zone_id = db.Column(db.Integer, db.ForeignKey('outbreak_zones.id'), nullable=True)
+    
+    # Timestamps
+    reported_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, index=True)
+    verified_at = db.Column(db.DateTime, nullable=True)
+    resolved_at = db.Column(db.DateTime, nullable=True)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    def set_location(self, latitude, longitude):
+        """Set location from lat/lon coordinates"""
+        self.latitude = latitude
+        self.longitude = longitude
+        self.location = f'POINT({longitude} {latitude})'
+        # Generate GeoJSON
+        self.geojson = f'{{"type":"Point","coordinates":[{longitude},{latitude}]}}'
+    
+    def to_dict(self, include_geojson=True):
+        """Convert incident to dictionary"""
+        result = {
+            'id': self.id,
+            'incident_id': self.incident_id,
+            'user_id': self.user_id,
+            'reporter_name': self.reporter_name,
+            'reporter_email': self.reporter_email,
+            'disease_name': self.disease_name,
+            'disease_type': self.disease_type,
+            'crop_affected': self.crop_affected,
+            'severity': self.severity,
+            'latitude': self.latitude,
+            'longitude': self.longitude,
+            'address': self.address,
+            'description': self.description,
+            'affected_area_hectares': self.affected_area_hectares,
+            'image_url': self.image_url,
+            'status': self.status,
+            'verified_by_expert': self.verified_by_expert,
+            'expert_notes': self.expert_notes,
+            'outbreak_zone_id': self.outbreak_zone_id,
+            'reported_at': self.reported_at.isoformat(),
+            'verified_at': self.verified_at.isoformat() if self.verified_at else None,
+            'resolved_at': self.resolved_at.isoformat() if self.resolved_at else None,
+            'updated_at': self.updated_at.isoformat()
+        }
+        
+        if include_geojson and self.geojson:
+            import json
+            result['geojson'] = json.loads(self.geojson)
+        
+        return result
+    
+    def to_geojson_feature(self):
+        """Convert to GeoJSON Feature for mapping"""
+        import json
+        return {
+            'type': 'Feature',
+            'geometry': json.loads(self.geojson) if self.geojson else None,
+            'properties': {
+                'incident_id': self.incident_id,
+                'disease_name': self.disease_name,
+                'disease_type': self.disease_type,
+                'crop_affected': self.crop_affected,
+                'severity': self.severity,
+                'status': self.status,
+                'reported_at': self.reported_at.isoformat(),
+                'reporter_name': self.reporter_name
+            }
+        }
+
+
+# Create spatial index for efficient geospatial queries
+Index('idx_disease_incidents_location', DiseaseIncident.location, postgresql_using='gist')
+
+
+class OutbreakZone(db.Model):
+    """
+    Model for identified outbreak zones based on spatial clustering.
+    Represents areas with multiple disease incidents within proximity.
+    """
+    __tablename__ = 'outbreak_zones'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    zone_id = db.Column(db.String(100), unique=True, nullable=False, index=True)
+    
+    # Zone details
+    disease_name = db.Column(db.String(200), nullable=False)
+    crop_affected = db.Column(db.String(200), nullable=False)
+    severity_level = db.Column(db.String(20), nullable=False, default='medium')  # low, medium, high, critical
+    
+    # Geospatial data - center point of the cluster
+    center_latitude = db.Column(db.Float, nullable=False)
+    center_longitude = db.Column(db.Float, nullable=False)
+    center_location = db.Column(Geometry('POINT', srid=4326), nullable=False, index=True)
+    
+    # Radius in kilometers
+    radius_km = db.Column(db.Float, nullable=False, default=50.0)
+    
+    # Cluster information
+    incident_count = db.Column(db.Integer, nullable=False, default=0)
+    total_affected_area = db.Column(db.Float, nullable=True)  # Total hectares
+    
+    # Status
+    status = db.Column(db.String(50), nullable=False, default='active')  # active, monitoring, resolved
+    risk_level = db.Column(db.String(20), nullable=False, default='medium')  # low, medium, high, extreme
+    
+    # AI-generated preventative measures
+    preventative_measures = db.Column(db.Text, nullable=True)
+    emergency_recommendations = db.Column(db.Text, nullable=True)
+    
+    # Timestamps
+    detected_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, index=True)
+    last_updated = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    resolved_at = db.Column(db.DateTime, nullable=True)
+    
+    # Relationships
+    incidents = db.relationship('DiseaseIncident', backref='outbreak_zone', lazy='dynamic')
+    alerts = db.relationship('OutbreakAlert', backref='zone', lazy='dynamic', cascade='all, delete-orphan')
+    
+    def set_center_location(self, latitude, longitude):
+        """Set center location from lat/lon coordinates"""
+        self.center_latitude = latitude
+        self.center_longitude = longitude
+        self.center_location = f'POINT({longitude} {latitude})'
+    
+    def to_dict(self, include_incidents=False):
+        """Convert outbreak zone to dictionary"""
+        result = {
+            'id': self.id,
+            'zone_id': self.zone_id,
+            'disease_name': self.disease_name,
+            'crop_affected': self.crop_affected,
+            'severity_level': self.severity_level,
+            'center_latitude': self.center_latitude,
+            'center_longitude': self.center_longitude,
+            'radius_km': self.radius_km,
+            'incident_count': self.incident_count,
+            'total_affected_area': self.total_affected_area,
+            'status': self.status,
+            'risk_level': self.risk_level,
+            'preventative_measures': self.preventative_measures,
+            'emergency_recommendations': self.emergency_recommendations,
+            'detected_at': self.detected_at.isoformat(),
+            'last_updated': self.last_updated.isoformat(),
+            'resolved_at': self.resolved_at.isoformat() if self.resolved_at else None
+        }
+        
+        if include_incidents:
+            result['incidents'] = [inc.to_dict(include_geojson=False) for inc in self.incidents.all()]
+        
+        return result
+    
+    def to_geojson_feature(self):
+        """Convert to GeoJSON Feature with circle radius"""
+        return {
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Point',
+                'coordinates': [self.center_longitude, self.center_latitude]
+            },
+            'properties': {
+                'zone_id': self.zone_id,
+                'disease_name': self.disease_name,
+                'crop_affected': self.crop_affected,
+                'severity_level': self.severity_level,
+                'radius_km': self.radius_km,
+                'incident_count': self.incident_count,
+                'status': self.status,
+                'risk_level': self.risk_level,
+                'detected_at': self.detected_at.isoformat()
+            }
+        }
+
+
+Index('idx_outbreak_zones_location', OutbreakZone.center_location, postgresql_using='gist')
+
+
+class OutbreakAlert(db.Model):
+    """
+    Model for tracking emergency alerts sent to farmers in outbreak zones.
+    """
+    __tablename__ = 'outbreak_alerts'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    alert_id = db.Column(db.String(100), unique=True, nullable=False, index=True)
+    
+    # Alert target
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    outbreak_zone_id = db.Column(db.Integer, db.ForeignKey('outbreak_zones.id'), nullable=False)
+    
+    # Alert details
+    alert_type = db.Column(db.String(50), nullable=False)  # proximity_warning, outbreak_detected, preventive_action
+    priority = db.Column(db.String(20), nullable=False, default='medium')  # low, medium, high, urgent
+    title = db.Column(db.String(200), nullable=False)
+    message = db.Column(db.Text, nullable=False)
+    
+    # Distance of farmer from outbreak center
+    distance_km = db.Column(db.Float, nullable=True)
+    
+    # PDF report if generated
+    pdf_report_id = db.Column(db.Integer, db.ForeignKey('files.id'), nullable=True)
+    
+    # Status tracking
+    sent_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    read_at = db.Column(db.DateTime, nullable=True)
+    acknowledged_at = db.Column(db.DateTime, nullable=True)
+    
+    # Relationships
+    user = db.relationship('User', backref='outbreak_alerts')
+    pdf_report = db.relationship('File', foreign_keys=[pdf_report_id])
+    
+    def to_dict(self):
+        """Convert alert to dictionary"""
+        return {
+            'id': self.id,
+            'alert_id': self.alert_id,
+            'user_id': self.user_id,
+            'outbreak_zone_id': self.outbreak_zone_id,
+            'alert_type': self.alert_type,
+            'priority': self.priority,
+            'title': self.title,
+            'message': self.message,
+            'distance_km': self.distance_km,
+            'pdf_report_id': self.pdf_report_id,
+            'sent_at': self.sent_at.isoformat(),
+            'read_at': self.read_at.isoformat() if self.read_at else None,
+            'acknowledged_at': self.acknowledged_at.isoformat() if self.acknowledged_at else None
         }
