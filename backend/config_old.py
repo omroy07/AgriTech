@@ -32,6 +32,7 @@ class Config:
     FIREBASE_MEASUREMENT_ID = os.environ.get('FIREBASE_MEASUREMENT_ID')
 
     # Storage Configuration
+    # Options: 'local', 's3'
     STORAGE_TYPE = os.environ.get('STORAGE_TYPE', 'local')
     
     # Local Storage Settings
@@ -43,13 +44,13 @@ class Config:
     S3_ACCESS_KEY = os.environ.get('S3_ACCESS_KEY')
     S3_SECRET_KEY = os.environ.get('S3_SECRET_KEY')
     S3_REGION = os.environ.get('S3_REGION', 'us-east-1')
-    S3_ENDPOINT_URL = os.environ.get('S3_ENDPOINT_URL') 
+    S3_ENDPOINT_URL = os.environ.get('S3_ENDPOINT_URL') # For MinIO
 
 class DevelopmentConfig(Config):
     """Development Configuration"""
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL', 'sqlite:///agritech_dev.db')
-    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = True  # Log SQL queries in development
 
 class ProductionConfig(Config):
     """Production Configuration"""
@@ -57,15 +58,15 @@ class ProductionConfig(Config):
     @classmethod
     def init_app(cls, app):
         if not os.environ.get('GEMINI_API_KEY'):
-            pass # Suppress for now to avoid crash? No, print warning.
+            raise RuntimeError("GEMINI_API_KEY is not set in production!")
         if not os.environ.get('DATABASE_URL'):
-            pass 
+            raise RuntimeError("DATABASE_URL is not set in production!")
 
 class TestingConfig(Config):
     """Testing Configuration"""
     TESTING = True
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:' 
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'  # In-memory database for testing
 
 config = {
     'development': DevelopmentConfig,

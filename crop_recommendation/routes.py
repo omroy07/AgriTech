@@ -15,8 +15,13 @@ import datetime
 
 crop_bp = Blueprint('crop', __name__, template_folder='templates', static_folder='static')
 
-model = joblib.load('model/rf_model.pkl')
-label_encoder = joblib.load('model/label_encoder.pkl')  # Load encoder
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, 'model', 'rf_model.pkl')
+ENCODER_PATH = os.path.join(BASE_DIR, 'model', 'label_encoder.pkl')
+
+print(f"DEBUG: Loading model from {MODEL_PATH}")
+model = joblib.load(MODEL_PATH)
+label_encoder = joblib.load(ENCODER_PATH)
 
 # Input validation helper functions
 def validate_required_fields(required_fields):
