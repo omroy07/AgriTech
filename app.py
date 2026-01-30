@@ -8,21 +8,24 @@ import json
 from flask_cors import CORS
 from dotenv import load_dotenv
 from backend.extensions import socketio, db, migrate, mail, limiter
+# from disease_prediction.routes import disease_bp
 from backend.api.v1.files import files_bp
 from crop_recommendation.routes import crop_bp
-from disease_prediction.routes import disease_bp
+# from disease_prediction.routes import disease_bp
+# app.register_blueprint(disease_bp)
 from backend.extensions.socketio import socketio
 from backend.extensions.cache import cache
 from backend.monitoring.routes import health_bp
 from backend.api import register_api
 from backend.config import config
 from backend.schemas.loan_schema import LoanRequestSchema
-from backend.celery_app import celery_app
+from backend.celery_app import celery_app, make_celery
 from backend.tasks import predict_crop_task, process_loan_task
 import backend.sockets.task_events  # Register socket event handlers
 import backend.sockets.market_events # Register market socket events
 from backend.utils.i18n import get_locale, t
-
+# Spatial Analytics Import
+from spatial_analytics import spatial_bp
 
 
 
@@ -54,9 +57,11 @@ from backend.models import User
 CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
 app.register_blueprint(crop_bp, url_prefix='/crop')
-app.register_blueprint(disease_bp)
+# app.register_blueprint(disease_bp)
 app.register_blueprint(health_bp)
 app.register_blueprint(files_bp)
+from spatial_analytics.routes import spatial_bp
+app.register_blueprint(spatial_bp)
 
 # Register API v1 (including loan, weather, schemes, etc.)
 register_api(app)
@@ -400,7 +405,7 @@ def download_report(filename):
 
 
 @app.route('/task-status/<task_id>', methods=['GET'])
-def get_task_status(task_id):
+def check_task_status(task_id):
     """Check status of async task"""
     try:
         from backend.config.celery_config import celery_app
@@ -475,6 +480,10 @@ def contact():
 @limiter.limit("10 per minute")
 def chat():
     return send_from_directory('.', 'chat.html')
+
+@app.route('/spatial')
+def spatial():
+    return send_from_directory('.', 'spatial.html')
 
 @app.route('/reset-password/<token>')
 def reset_password_page(token):
