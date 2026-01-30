@@ -8,9 +8,8 @@ from backend.celery_app import celery_app
 from backend.services.pdf_service import PDFService
 from backend.services.file_service import FileService
 from backend.services.notification_service import NotificationService
-from backend.services.market_service import MarketIntelligenceService
 from backend.utils.logger import logger
-from backend.utils.i18n import t
+from backend.utils.i18n_utils import get_translated_string
 
 # Load models at worker startup
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -33,7 +32,7 @@ def load_crop_models():
 
 
 @celery_app.task(bind=True, name='tasks.predict_crop')
-def predict_crop_task(self, n, p, k, temperature, humidity, ph, rainfall, user_id=None):
+def predict_crop_task(self, n, p, k, temperature, humidity, ph, rainfall, user_id=None, lang='en'):
     """
     Async task for crop prediction.
     Returns the predicted crop name.
@@ -52,8 +51,8 @@ def predict_crop_task(self, n, p, k, temperature, humidity, ph, rainfall, user_i
         
         if user_id:
             NotificationService.create_notification(
-                title="Crop Prediction Ready",
-                message=f"The AI has recommended {crop} for your farm.",
+                title=get_translated_string("crop_prediction_ready_title", lang=lang),
+                message=get_translated_string("crop_prediction_ready_msg", lang=lang, crop=crop),
                 notification_type="task_completed",
                 user_id=user_id
             )
@@ -74,7 +73,7 @@ def predict_crop_task(self, n, p, k, temperature, humidity, ph, rainfall, user_i
 
 
 @celery_app.task(bind=True, name='tasks.process_loan')
-def process_loan_task(self, json_data, user_id=None):
+def process_loan_task(self, json_data, user_id=None, lang='en'):
     """
     Async task for loan processing with Gemini API and PDF generation.
     """
@@ -89,11 +88,13 @@ def process_loan_task(self, json_data, user_id=None):
         model = genai.GenerativeModel("gemini-2.5-flash")
         
         prompt = f"""
-        You are a financial loan eligibility advisor specializing in agricultural loans for farmers in India.
-        JSON Data = {json_data}
-        Analyze the farmer's provided details and assess their loan eligibility.
-        Respond in a structured format with labeled sections: Loan Type, Eligibility Status, Loan Range, Improvements, Schemes.
-        """
+You are a financial loan eligibility advisor specializing in agricultural loans for farmers in India.
+JSON Data = {json_data}
+Analyze the farmer's provided details and assess their loan eligibility.
+Respond in a structured format with labeled sections: Loan Type, Eligibility Status, Loan Range, Improvements, Schemes.
+IMPORTANT: You MUST respond in the following language: {lang}. 
+If the language code is 'hi', respond in Hindi. If 'mr', respond in Marathi. Default is English.
+"""
         
         response = model.generate_content(prompt)
         
@@ -103,12 +104,12 @@ def process_loan_task(self, json_data, user_id=None):
         reply = response.candidates[0].content.parts[0].text
         
         # Trigger PDF Synthesis Task
-        synthesize_loan_pdf_task.delay(json_data, reply, user_id)
+        synthesize_loan_pdf_task.delay(json_data, reply, user_id, lang=lang)
         
         if user_id:
             NotificationService.create_notification(
-                title="Loan Analysis Complete",
-                message="Your loan eligibility analysis is ready. We are generating your PDF report now.",
+                title=get_translated_string("loan_analysis_complete_title", lang=lang),
+                message=get_translated_string("loan_analysis_complete_msg", lang=lang),
                 notification_type="loan_update",
                 user_id=user_id
             )
@@ -122,7 +123,7 @@ def process_loan_task(self, json_data, user_id=None):
 
 
 @celery_app.task(bind=True, name='tasks.synthesize_loan_pdf')
-def synthesize_loan_pdf_task(self, user_data, analysis_result, user_id=None):
+def synthesize_loan_pdf_task(self, user_data, analysis_result, user_id=None, lang='en'):
     """
     Generates a PDF report, saves it, and notifies the user.
     """
@@ -166,8 +167,8 @@ def synthesize_loan_pdf_task(self, user_data, analysis_result, user_id=None):
         # 5. Notify user
         if user_id:
             NotificationService.create_notification(
-                title="PDF Report Ready",
-                message=f"Your professional loan eligibility report ({file_record.original_name}) is now available for download.",
+                title=get_translated_string("pdf_report_ready_title", lang=lang),
+                message=get_translated_string("pdf_report_ready_msg", lang=lang, filename=file_record.original_name),
                 notification_type="loan_update",
                 user_id=user_id
             )
@@ -177,8 +178,8 @@ def synthesize_loan_pdf_task(self, user_data, analysis_result, user_id=None):
         logger.error(f"Async PDF synthesis failed: {str(e)}")
         if user_id:
             NotificationService.create_notification(
-                title="Report Generation Failed",
-                message="We encountered an error while generating your PDF report. Please try again later.",
+                title=get_translated_string("report_generation_failed_title", lang=lang),
+                message=get_translated_string("report_generation_failed_msg", lang=lang),
                 notification_type="system",
                 user_id=user_id
             )
