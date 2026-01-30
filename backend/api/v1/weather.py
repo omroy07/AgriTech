@@ -1,5 +1,4 @@
 from flask import Blueprint, request, jsonify
-from flask_babel import gettext as _
 from backend.services.weather_service import weather_service
 from extensions import limiter
 from auth_utils import token_required
@@ -13,7 +12,7 @@ def get_weather():
     """Get weather forecast for a location."""
     location = request.args.get('location')
     if not location:
-        return jsonify({"status": "error", "message": _("Location is required")}), 400
+        return jsonify({"status": "error", "message": "Location is required"}), 400
     
     days = request.args.get('days', 3, type=int)
     data = weather_service.get_weather_forecast(location, days=days)
@@ -21,7 +20,7 @@ def get_weather():
     if "error" in data:
         return jsonify({"status": "error", "message": data["error"]}), 500
         
-    return jsonify({"status": "success", "data": data, "message": _("Weather forecast successful")}), 200
+    return jsonify({"status": "success", "data": data}), 200
 
 @weather_bp.route('/weather/analysis', methods=['GET'])
 @limiter.limit("5 per minute")
@@ -30,7 +29,7 @@ def get_weather_analysis():
     """Get agricultural weather analysis for a location."""
     location = request.args.get('location')
     if not location:
-        return jsonify({"status": "error", "message": _("Location is required")}), 400
+        return jsonify({"status": "error", "message": "Location is required"}), 400
         
     analysis = weather_service.get_farming_analysis(location)
     
@@ -47,7 +46,7 @@ def get_crop_advice():
     crop = request.args.get('crop')
     
     if not location or not crop:
-        return jsonify({"status": "error", "message": _("Location and crop are required")}), 400
+        return jsonify({"status": "error", "message": "Location and crop are required"}), 400
         
     weather_data = weather_service.get_weather_forecast(location, days=1)
     if "error" in weather_data:

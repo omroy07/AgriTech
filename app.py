@@ -16,7 +16,6 @@ from backend.extensions.cache import cache
 from backend.extensions import db
 from backend.monitoring.routes import health_bp
 from backend.api import register_api
-from backend.extensions.babel import babel, get_locale
 from backend.config import config
 from backend.schemas.loan_schema import LoanRequestSchema
 from backend.celery_app import celery_app
