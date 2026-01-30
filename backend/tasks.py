@@ -2,6 +2,7 @@ import joblib
 import os
 import numpy as np
 import tempfile
+from datetime import datetime
 from flask import current_app
 from backend.celery_app import celery_app
 from backend.services.pdf_service import PDFService
@@ -182,4 +183,24 @@ def synthesize_loan_pdf_task(self, user_data, analysis_result, user_id=None, lan
                 notification_type="system",
                 user_id=user_id
             )
+        return {'status': 'error', 'message': str(e)}
+
+
+@celery_app.task(name='tasks.update_market_prices')
+def update_market_prices_task():
+    """
+    Scheduled task to fetch live prices and broadcast them.
+    """
+    try:
+        updated_prices = MarketIntelligenceService.fetch_live_prices()
+        
+        # Check for watchlist alerts
+        MarketIntelligenceService.check_watchlist_alerts(updated_prices)
+        
+        # Broadcast via SocketIO
+        from backend.extensions.socketio import socketio
+        socketio.emit('market_update', {'prices': updated_prices}, namespace='/market')
+        
+        return {'status': 'success', 'count': len(updated_prices)}
+    except Exception as e:
         return {'status': 'error', 'message': str(e)}
