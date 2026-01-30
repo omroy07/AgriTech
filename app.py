@@ -21,6 +21,7 @@ from backend.schemas.loan_schema import LoanRequestSchema
 from backend.celery_app import celery_app
 from backend.tasks import predict_crop_task, process_loan_task
 import backend.sockets.task_events  # Register socket event handlers
+import backend.sockets.market_events # Register market socket events
 from backend.utils.i18n import get_locale, t
 
 
