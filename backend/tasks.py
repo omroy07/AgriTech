@@ -2,8 +2,14 @@ import joblib
 import os
 import numpy as np
 import tempfile
+from datetime import datetime
 from flask import current_app
 from backend.celery_app import celery_app
+from backend.services.pdf_service import PDFService
+from backend.services.file_service import FileService
+from backend.services.notification_service import NotificationService
+from backend.services.market_service import MarketIntelligenceService
+from backend.utils.logger import logger
 from backend.utils.i18n import t
 
 # Load models at worker startup
@@ -83,11 +89,11 @@ def process_loan_task(self, json_data, user_id=None):
         model = genai.GenerativeModel("gemini-2.5-flash")
         
         prompt = f"""
-You are a financial loan eligibility advisor specializing in agricultural loans for farmers in India.
-JSON Data = {json_data}
-Analyze the farmer's provided details and assess their loan eligibility.
-Respond in a structured format with labeled sections: Loan Type, Eligibility Status, Loan Range, Improvements, Schemes.
-"""
+        You are a financial loan eligibility advisor specializing in agricultural loans for farmers in India.
+        JSON Data = {json_data}
+        Analyze the farmer's provided details and assess their loan eligibility.
+        Respond in a structured format with labeled sections: Loan Type, Eligibility Status, Loan Range, Improvements, Schemes.
+        """
         
         response = model.generate_content(prompt)
         
@@ -176,4 +182,24 @@ def synthesize_loan_pdf_task(self, user_data, analysis_result, user_id=None):
                 notification_type="system",
                 user_id=user_id
             )
+        return {'status': 'error', 'message': str(e)}
+
+
+@celery_app.task(name='tasks.update_market_prices')
+def update_market_prices_task():
+    """
+    Scheduled task to fetch live prices and broadcast them.
+    """
+    try:
+        updated_prices = MarketIntelligenceService.fetch_live_prices()
+        
+        # Check for watchlist alerts
+        MarketIntelligenceService.check_watchlist_alerts(updated_prices)
+        
+        # Broadcast via SocketIO
+        from backend.extensions.socketio import socketio
+        socketio.emit('market_update', {'prices': updated_prices}, namespace='/market')
+        
+        return {'status': 'success', 'count': len(updated_prices)}
+    except Exception as e:
         return {'status': 'error', 'message': str(e)}
