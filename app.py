@@ -3,22 +3,23 @@ import google.generativeai as genai
 import traceback
 import os
 import re
+import hashlib
+import json
 from flask_cors import CORS
 from dotenv import load_dotenv
 from backend.extensions import socketio, db, migrate, mail, limiter
 from backend.api.v1.files import files_bp
 from crop_recommendation.routes import crop_bp
 from disease_prediction.routes import disease_bp
-from backend.celery_app import celery_app, make_celery
-from backend.config import config
+from backend.extensions.socketio import socketio
+from backend.extensions.cache import cache
 from backend.monitoring.routes import health_bp
-from backend.utils.logger import logger
 from backend.api import register_api
+from backend.extensions.babel import babel, get_locale
+from backend.config import config
 from backend.schemas.loan_schema import LoanRequestSchema
-from marshmallow import ValidationError
+from backend.celery_app import celery_app
 from backend.tasks import predict_crop_task, process_loan_task
-from backend.utils.validation import sanitize_input, validate_input
-from backend.auth import auth_bp
 import backend.sockets.task_events  # Register socket event handlers
 import backend.sockets.market_events # Register market socket events
 from backend.utils.i18n import get_locale, t
@@ -58,14 +59,17 @@ app.register_blueprint(disease_bp)
 app.register_blueprint(health_bp)
 app.register_blueprint(files_bp)
 
+# Register API v1 (including loan, weather, schemes, etc.)
+register_api(app)
+
 # Initialize SocketIO with app
 socketio.init_app(app)
 
-@app.before_request
-def set_request_locale():
-    """Set the locale for the current request."""
-    # This will be picked up by get_locale() later
-    g.locale = get_locale()
+# Initialize Cache with app
+cache.init_app(app)
+
+# Initialize Babel with app
+babel.init_app(app, locale_selector=get_locale)
 
 
 
@@ -153,13 +157,17 @@ def predict_crop_async():
             if field not in data:
                 return jsonify({'status': 'error', 'message': f'Missing field: {field}'}), 400
         
+        # Get current locale
+        lang = get_locale()
+        
         # Submit task to Celery
         user_id = data.get('user_id')
         task = predict_crop_task.delay(
             data['N'], data['P'], data['K'],
             data['temperature'], data['humidity'],
             data['ph'], data['rainfall'],
-            user_id=user_id
+            user_id=user_id,
+            lang=lang
         )
         
         return jsonify({
@@ -187,9 +195,12 @@ def process_loan_async():
                 if isinstance(value, str):
                     json_data[key] = sanitize_input(value)
         
+        # Get current locale
+        lang = get_locale()
+        
         # Submit task to Celery
         user_id = json_data.get('user_id')
-        task = process_loan_task.delay(json_data, user_id=user_id)
+        task = process_loan_task.delay(json_data, user_id=user_id, lang=lang)
         
         return jsonify({
             'status': 'submitted',
@@ -261,6 +272,18 @@ Do not use "\\n" for newlines. Instead, structure properly.
 Do not add assumptions that are not supported by the data provided.
 """
 
+        # Create a cache key based on the prompt
+        cache_key = f"gemini_loan_{hashlib.md5(prompt.encode()).hexdigest()}"
+        cached_response = cache.get(cache_key)
+        
+        if cached_response:
+            logger.info("Serving loan processing from cache")
+            return jsonify({
+                "status": "success",
+                "message": "Loan processed successfully (cached)",
+                "result": cached_response
+            }), 200
+
         response = model.generate_content(prompt)
         reply = response.text
 
@@ -271,11 +294,16 @@ Do not add assumptions that are not supported by the data provided.
                 "message": "No response generated from Gemini API"
           }), 500
 
+        reply = response.candidates[0].content.parts[0].text
+        
+        # Cache the result for 24 hours (86400 seconds)
+        cache.set(cache_key, reply, timeout=86400)
+        
         return jsonify({
             "status": "success",
-            "message": t('loan_processed_success'),
+            "message": "Loan processed successfully",
             "result": reply
-            }), 200
+        }), 200
 
     except Exception:
         traceback.print_exc()
