@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from backend.services.scheme_service import scheme_service
+from auth_utils import token_required, roles_required
 
 schemes_bp = Blueprint('schemes', __name__)
 
@@ -20,6 +21,8 @@ def get_schemes():
     }), 200
 
 @schemes_bp.route('/schemes/refresh', methods=['POST'])
+@token_required
+@roles_required('admin')
 def refresh_schemes():
     """Admin endpoint to invalidate cache."""
     scheme_service.invalidate_cache()

@@ -1,11 +1,13 @@
 from flask import Blueprint, request, jsonify
 from backend.services.weather_service import weather_service
 from extensions import limiter
+from auth_utils import token_required
 
 weather_bp = Blueprint('weather', __name__)
 
 @weather_bp.route('/weather/forecast', methods=['GET'])
 @limiter.limit("10 per minute")
+@token_required
 def get_weather():
     """Get weather forecast for a location."""
     location = request.args.get('location')
@@ -22,6 +24,7 @@ def get_weather():
 
 @weather_bp.route('/weather/analysis', methods=['GET'])
 @limiter.limit("5 per minute")
+@token_required
 def get_weather_analysis():
     """Get agricultural weather analysis for a location."""
     location = request.args.get('location')
@@ -36,6 +39,7 @@ def get_weather_analysis():
     return jsonify({"status": "success", "data": analysis}), 200
 
 @weather_bp.route('/weather/crop-advice', methods=['GET'])
+@token_required
 def get_crop_advice():
     """Get crop-specific weather advice."""
     location = request.args.get('location')
