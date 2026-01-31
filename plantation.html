@@ -14,26 +14,43 @@
     <link rel="stylesheet" href="plantation.css" />
     <link rel="stylesheet" href="theme.css" />
   </head>
-
+ 
   <body>
     <!-- Scroll Progress Indicator -->
     <div class="scroll-indicator" id="scrollIndicator"></div>
 
     <!-- Header -->
+
     <header>
-      <div class="header-content">
-        <h1 class="header">AgriTech</h1>
-        <div style="display: flex; gap: 1rem; align-items: center;">
-          <button class="theme-toggle" aria-label="Toggle dark/light mode" 
-            style="background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
-            <i class="fas fa-sun sun-icon"></i>
-            <i class="fas fa-moon moon-icon"></i>
-            <span class="theme-text">Light</span>
-          </button>
-          <a href="main.html" class="back-button"> ← Back to Main </a>
-        </div>
-      </div>
-    </header>
+  <div class="container header-content navbar">
+
+    <!-- Left: Logo -->
+    <a href="/" class="logo">
+      <img src="/images/logo.png" alt="AgriTech Logo">
+      <span class="logo-text">AgriTech</span>
+    </a>
+
+    <!-- Center: Navigation -->
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/blog">Blog</a>
+    </nav>
+
+    <!-- Right: Theme Toggle -->
+    <button
+      class="theme-toggle"
+      aria-label="Toggle dark/light mode"
+      id="theme-toggle-btn"
+    >
+      <i class="fas fa-sun sun-icon"></i>
+      <i class="fas fa-moon moon-icon"></i>
+      <span class="theme-text"></span>
+    </button>
+
+  </div>
+</header>
+
 
     <!-- Hero Section -->
     <section class="hero-section">
