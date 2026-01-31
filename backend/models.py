@@ -1,6 +1,13 @@
 from datetime import datetime
 from backend.extensions import db
-import bcrypt
+from geoalchemy2 import Geometry
+from sqlalchemy import Index
+
+class UserRole:
+    FARMER = 'farmer'
+    SHOPKEEPER = 'shopkeeper'
+    ADMIN = 'admin'
+    CONSULTANT = 'consultant'
 
 class UserRole:
     FARMER = 'farmer'
@@ -17,6 +24,22 @@ class User(db.Model):
     
     notifications = db.relationship('Notification', backref='user', lazy=True)
     files = db.relationship('File', backref='user', lazy=True)
+    disease_incidents = db.relationship('DiseaseIncident', backref='reporter', lazy=True)
+    
+    def set_farm_location(self, latitude, longitude):
+        """Set farm location from lat/lon coordinates"""
+        self.farm_latitude = latitude
+        self.farm_longitude = longitude
+        self.farm_location = f'POINT({longitude} {latitude})'
+    
+    def get_farm_coordinates(self):
+        """Get farm coordinates as dict"""
+        if self.farm_latitude and self.farm_longitude:
+            return {
+                'latitude': self.farm_latitude,
+                'longitude': self.farm_longitude
+            }
+        return None
 
     def __repr__(self):
         return f'<User {self.username} ({self.role})>'
