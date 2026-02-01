@@ -1,32 +1,45 @@
 from datetime import datetime
 from backend.extensions import db
-import bcrypt
+from geoalchemy2 import Geometry
+from sqlalchemy import Index
+
+class UserRole:
+    FARMER = 'farmer'
+    SHOPKEEPER = 'shopkeeper'
+    ADMIN = 'admin'
+    CONSULTANT = 'consultant'
+
+class UserRole:
+    FARMER = 'farmer'
+    SHOPKEEPER = 'shopkeeper'
+    ADMIN = 'admin'
+    CONSULTANT = 'consultant'
 
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password_hash = db.Column(db.String(128), nullable=True) # Changed to nullable for now if needed
-    phone = db.Column(db.String(20), unique=True, nullable=True)
-    location = db.Column(db.String(100))
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    last_login = db.Column(db.DateTime)
-    is_active = db.Column(db.Boolean, default=True)
-    
-    # Multilingual preference
-    language_preference = db.Column(db.String(10), default='en')
-    
-    # Email verification fields
-    is_email_verified = db.Column(db.Boolean, default=False)
-    email_verified_at = db.Column(db.DateTime, nullable=True)
-    
-    # Notification preferences
-    email_enabled = db.Column(db.Boolean, default=True)
-    sms_enabled = db.Column(db.Boolean, default=False)
+    role = db.Column(db.String(20), default=UserRole.FARMER)
     
     notifications = db.relationship('Notification', backref='user', lazy=True)
     files = db.relationship('File', backref='user', lazy=True)
+    disease_incidents = db.relationship('DiseaseIncident', backref='reporter', lazy=True)
+    
+    def set_farm_location(self, latitude, longitude):
+        """Set farm location from lat/lon coordinates"""
+        self.farm_latitude = latitude
+        self.farm_longitude = longitude
+        self.farm_location = f'POINT({longitude} {latitude})'
+    
+    def get_farm_coordinates(self):
+        """Get farm coordinates as dict"""
+        if self.farm_latitude and self.farm_longitude:
+            return {
+                'latitude': self.farm_latitude,
+                'longitude': self.farm_longitude
+            }
+        return None
 
     def __repr__(self):
         return f'<User {self.username} ({self.role})>'
