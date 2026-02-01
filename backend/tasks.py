@@ -177,3 +177,131 @@ def synthesize_loan_pdf_task(self, user_data, analysis_result, user_id=None):
                 user_id=user_id
             )
         return {'status': 'error', 'message': str(e)}
+
+
+@celery_app.task(bind=True, name='tasks.finalize_pool_cycle')
+def finalize_pool_cycle_task(self, pool_id):
+    """
+    Finalize a completed pool cycle: execute profit distribution and
+    transition to DISTRIBUTED state.
+    """
+    try:
+        from backend.services.financial_service import FinancialService
+        from backend.services.pool_service import PoolService
+        from backend.models import YieldPool
+        
+        logger.info(f"Finalizing pool cycle for pool ID: {pool_id}")
+        
+        pool = YieldPool.query.get(pool_id)
+        if not pool:
+            return {'status': 'error', 'message': 'Pool not found'}
+        
+        if pool.status != 'COMPLETED':
+            return {'status': 'error', 'message': f'Pool must be in COMPLETED state, currently {pool.status}'}
+        
+        # Execute profit distribution
+        success, message = FinancialService.execute_distribution(pool_id)
+        
+        if not success:
+            return {'status': 'error', 'message': message}
+        
+        # Transition to DISTRIBUTED state
+        success, error = PoolService.transition_state(pool_id, 'DISTRIBUTED')
+        
+        if not success:
+            return {'status': 'error', 'message': error}
+        
+        logger.info(f"Pool {pool.pool_id} finalized successfully")
+        
+        return {
+            'status': 'success',
+            'pool_id': pool.pool_id,
+            'message': message
+        }
+        
+    except Exception as e:
+        logger.error(f"Failed to finalize pool cycle: {str(e)}")
+        return {'status': 'error', 'message': str(e)}
+
+
+@celery_app.task(bind=True, name='tasks.simulate_batch_payouts')
+def simulate_batch_payouts_task(self, pool_id):
+    """
+    Simulate bank transfers for all pool contributors.
+    """
+    try:
+        from backend.services.financial_service import FinancialService
+        from backend.models import YieldPool, PoolContribution
+        
+        logger.info(f"Simulating batch payouts for pool ID: {pool_id}")
+        
+        pool = YieldPool.query.get(pool_id)
+        if not pool:
+            return {'status': 'error', 'message': 'Pool not found'}
+        
+        contributions = PoolContribution.query.filter_by(pool_id=pool_id).all()
+        
+        results = []
+        successful = 0
+        failed = 0
+        
+        for contribution in contributions:
+            if contribution.payout_status == 'PENDING' and contribution.actual_payout:
+                result = FinancialService.simulate_bank_transfer(contribution.id)
+                results.append({
+                    'user_id': contribution.user_id,
+                    'amount': contribution.actual_payout,
+                    'result': result
+                })
+                
+                if result['success']:
+                    successful += 1
+                else:
+                    failed += 1
+        
+        logger.info(f"Batch payouts complete for pool {pool.pool_id}: {successful} successful, {failed} failed")
+        
+        return {
+            'status': 'success',
+            'pool_id': pool.pool_id,
+            'successful_transfers': successful,
+            'failed_transfers': failed,
+            'details': results
+        }
+        
+    except Exception as e:
+        logger.error(f"Failed to simulate batch payouts: {str(e)}")
+        return {'status': 'error', 'message': str(e)}
+
+
+@celery_app.task(bind=True, name='tasks.check_pool_target_reached')
+def check_pool_target_reached_task(self):
+    """
+    Periodic task to check if any open pools have reached their target quantity
+    and automatically transition them to LOCKED state.
+    """
+    try:
+        from backend.services.pool_service import PoolService
+        from backend.models import YieldPool
+        
+        # Find all open pools that have reached 100% of target
+        pools = YieldPool.query.filter_by(status='OPEN').all()
+        
+        locked_count = 0
+        
+        for pool in pools:
+            if pool.current_quantity >= pool.target_quantity:
+                success, error = PoolService.transition_state(pool.id, 'LOCKED')
+                
+                if success:
+                    locked_count += 1
+                    logger.info(f"Auto-locked pool {pool.pool_id}: target reached")
+        
+        return {
+            'status': 'success',
+            'pools_locked': locked_count
+        }
+        
+    except Exception as e:
+        logger.error(f"Failed to check pool targets: {str(e)}")
+        return {'status': 'error', 'message': str(e)}
