@@ -1,9 +1,11 @@
 from flask import Blueprint, jsonify
+from auth_utils import token_required
 
 tasks_bp = Blueprint('tasks', __name__)
 
 
 @tasks_bp.route('/tasks/<task_id>', methods=['GET'])
+@token_required
 def get_task_status(task_id):
     """Check the status of an async task."""
     try:

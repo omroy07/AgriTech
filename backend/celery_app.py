@@ -37,4 +37,10 @@ celery_app.conf.update(
     task_track_started=True,
     task_time_limit=300,
     worker_prefetch_multiplier=1,
+    beat_schedule={
+        'update-market-prices-every-hour': {
+            'task': 'tasks.update_market_prices',
+            'schedule': 3600.0,  # 1 hour
+        },
+    }
 )
