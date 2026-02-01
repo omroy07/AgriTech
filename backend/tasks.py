@@ -230,6 +230,11 @@ def finalize_pool_cycle_task(self, pool_id):
         logger.error(f"Failed to finalize pool cycle: {str(e)}")
         return {'status': 'error', 'message': str(e)}
 
+CLAIM DETAILS:
+- Claim Number: {claim.claim_number}
+- Claimed Amount: ₹{claim.claimed_amount}
+- Incident Date: {claim.incident_date}
+- Incident Description: {claim.incident_description}
 
 @celery_app.task(bind=True, name='tasks.simulate_batch_payouts')
 def simulate_batch_payouts_task(self, pool_id):

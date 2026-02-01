@@ -150,6 +150,19 @@ class YieldPool(db.Model):
             'fill_percentage': (self.current_quantity / self.target_quantity * 100) if self.target_quantity > 0 else 0
         }
     
+    def get_risk_category(self):
+        """Categorize risk score."""
+        if self.ars_score <= 20:
+            return 'EXCELLENT'
+        elif self.ars_score <= 40:
+            return 'GOOD'
+        elif self.ars_score <= 60:
+            return 'MODERATE'
+        elif self.ars_score <= 80:
+            return 'HIGH'
+        else:
+            return 'CRITICAL'
+    
     def __repr__(self):
         return f'<YieldPool {self.pool_id} - {self.crop_type} ({self.status})>'
 

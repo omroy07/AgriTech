@@ -100,18 +100,16 @@ class PDFService:
             return False
     
     @staticmethod
-    def generate_asset_integrity_report(asset_data, maintenance_history, prediction_data, output_path):
+    def generate_insurance_policy_bond(policy_data, output_path):
         """
-        Generates a comprehensive PDF report for farm asset health and maintenance.
+        Generates a professional insurance policy bond PDF.
         
         Args:
-            asset_data: Dictionary with asset details
-            maintenance_history: List of maintenance log dictionaries
-            prediction_data: AI prediction results
-            output_path: Path to save PDF
+            policy_data: Dictionary containing policy details
+            output_path: Path to save the PDF
             
         Returns:
-            Boolean indicating success
+            bool: True if successful, False otherwise
         """
         try:
             doc = SimpleDocTemplate(output_path, pagesize=A4)
@@ -121,206 +119,193 @@ class PDFService:
             title_style = ParagraphStyle(
                 'TitleStyle',
                 parent=styles['Heading1'],
-                fontSize=22,
-                textColor=colors.hexColor("#0ea5e9"),
+                fontSize=26,
+                textColor=colors.hexColor("#1e40af"),
+                alignment=TA_CENTER,
+                spaceAfter=10
+            )
+            
+            subtitle_style = ParagraphStyle(
+                'SubtitleStyle',
+                parent=styles['Heading2'],
+                fontSize=16,
+                textColor=colors.hexColor("#1e40af"),
                 alignment=TA_CENTER,
                 spaceAfter=20
             )
             
             header_style = ParagraphStyle(
                 'HeaderStyle',
-                parent=styles['Heading2'],
-                fontSize=14,
+                parent=styles['Heading3'],
+                fontSize=13,
                 textColor=colors.black,
                 spaceBefore=12,
                 spaceAfter=6,
-                borderPadding=4,
-                backColor=colors.hexColor("#e0f2fe")
+                backColor=colors.hexColor("#dbeafe")
             )
-            
-            # Health score color coding
-            health_score = asset_data.get('health_score', 0)
-            if health_score >= 85:
-                health_color = colors.hexColor("#16a34a")  # Green
-            elif health_score >= 60:
-                health_color = colors.hexColor("#f59e0b")  # Orange
-            elif health_score >= 30:
-                health_color = colors.hexColor("#dc2626")  # Red
-            else:
-                health_color = colors.hexColor("#7f1d1d")  # Dark red
-            
+
             normal_style = styles['Normal']
+            bold_style = ParagraphStyle('BoldStyle', parent=normal_style, fontName='Helvetica-Bold')
             
             elements = []
 
-            # 1. Header
-            elements.append(Paragraph("AgriTech Asset Management", title_style))
-            elements.append(Paragraph("Farm Equipment Integrity & Maintenance Report", styles['Heading2']))
-            elements.append(Paragraph(f"Report Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", normal_style))
-            elements.append(Spacer(1, 20))
-
-            # 2. Asset Overview
-            elements.append(Paragraph("Asset Information", header_style))
-            asset_info = [
-                ["Field", "Value"],
-                ["Asset ID", asset_data.get('asset_id', 'N/A')],
-                ["Asset Name", asset_data.get('asset_name', 'N/A')],
-                ["Type", asset_data.get('asset_type', 'N/A')],
-                ["Manufacturer", asset_data.get('manufacturer', 'N/A')],
-                ["Model", asset_data.get('model', 'N/A')],
-                ["Purchase Date", asset_data.get('purchase_date', 'N/A')],
-                ["Total Runtime", f"{asset_data.get('total_runtime_hours', 0):.1f} hours"],
-                ["Status", asset_data.get('status', 'N/A')]
+            # Header
+            elements.append(Paragraph("AgriTech Insurance Services", title_style))
+            elements.append(Paragraph("Agricultural Insurance Policy Bond", subtitle_style))
+            elements.append(Spacer(1, 10))
+            
+            # Policy number and date box
+            info_box = [
+                ["Policy Number:", policy_data.get('policy_number', 'N/A')],
+                ["Issue Date:", policy_data.get('issue_date', datetime.now().strftime('%Y-%m-%d'))],
+                ["Status:", policy_data.get('status', 'ACTIVE')]
             ]
             
-            asset_table = Table(asset_info, colWidths=[150, 350])
-            asset_table.setStyle(TableStyle([
-                ('BACKGROUND', (0, 0), (-1, 0), colors.hexColor("#0ea5e9")),
+            t = Table(info_box, colWidths=[120, 380])
+            t.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, -1), colors.hexColor("#f0f9ff")),
+                ('TEXTCOLOR', (0, 0), (-1, -1), colors.black),
+                ('ALIGN', (0, 0), (0, -1), 'RIGHT'),
+                ('ALIGN', (1, 0), (1, -1), 'LEFT'),
+                ('FONTNAME', (0, 0), (-1, -1), 'Helvetica-Bold'),
+                ('FONTSIZE', (0, 0), (-1, -1), 11),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
+                ('TOPPADDING', (0, 0), (-1, -1), 8),
+                ('BOX', (0, 0), (-1, -1), 2, colors.hexColor("#1e40af"))
+            ]))
+            elements.append(t)
+            elements.append(Spacer(1, 20))
+
+            # Policy Holder Details
+            elements.append(Paragraph("Policy Holder Information", header_style))
+            holder_info = [
+                ["Field", "Details"],
+                ["Farmer Name", policy_data.get('farmer_name', 'N/A')],
+                ["Farmer ID", str(policy_data.get('user_id', 'N/A'))],
+                ["Contact", policy_data.get('contact', 'N/A')],
+                ["Farm Location", policy_data.get('farm_location', 'N/A')],
+                ["Farm Size", f"{policy_data.get('farm_size_acres', 'N/A')} acres"]
+            ]
+            
+            t = Table(holder_info, colWidths=[150, 350])
+            t.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.hexColor("#1e40af")),
                 ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
                 ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
                 ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
                 ('FONTSIZE', (0, 0), (-1, -1), 10),
-                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 10),
+                ('BACKGROUND', (0, 1), (-1, -1), colors.whitesmoke),
+                ('GRID', (0, 0), (-1, -1), 1, colors.grey)
+            ]))
+            elements.append(t)
+            elements.append(Spacer(1, 20))
+
+            # Coverage Details
+            elements.append(Paragraph("Coverage Details", header_style))
+            coverage_info = [
+                ["Item", "Details"],
+                ["Crop Type", policy_data.get('crop_type', 'N/A').upper()],
+                ["Coverage Amount", f"₹{policy_data.get('coverage_amount', 'N/A'):,.2f}"],
+                ["Premium Amount", f"₹{policy_data.get('premium_amount', 'N/A'):,.2f}"],
+                ["Coverage Period", f"{policy_data.get('start_date', 'N/A')} to {policy_data.get('end_date', 'N/A')}"]
+            ]
+            
+            t = Table(coverage_info, colWidths=[150, 350])
+            t.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.hexColor("#1e40af")),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                ('FONTSIZE', (0, 0), (-1, -1), 10),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 10),
                 ('BACKGROUND', (0, 1), (-1, -1), colors.whitesmoke),
                 ('GRID', (0, 0), (-1, -1), 1, colors.grey)
             ]))
             elements.append(asset_table)
             elements.append(Spacer(1, 20))
 
-            # 3. Health Score Section
-            elements.append(Paragraph("Current Health Assessment", header_style))
-            
-            health_info = [
-                ["Metric", "Value", "Status"],
-                ["Health Score", f"{health_score:.1f}/100", ""],
-                ["Last Maintenance", asset_data.get('last_maintenance_date', 'Never'), ""],
-                ["Next Maintenance Due", asset_data.get('next_maintenance_due', 'Not Scheduled'), ""]
+            # Risk Assessment
+            elements.append(Paragraph("Risk Assessment", header_style))
+            risk_info = [
+                ["Metric", "Value"],
+                ["Agri-Risk Score (ARS)", f"{policy_data.get('ars_score_at_issuance', 'N/A'):.1f}"],
+                ["Risk Category", policy_data.get('risk_category', 'N/A')],
+                ["Risk Multiplier", f"{policy_data.get('risk_multiplier', 1.0):.2f}x"],
+                ["Premium Rate", f"{policy_data.get('base_rate', 'N/A')}% of coverage"]
             ]
             
-            health_table = Table(health_info, colWidths=[150, 200, 150])
-            health_table.setStyle(TableStyle([
-                ('BACKGROUND', (0, 0), (-1, 0), colors.hexColor("#0ea5e9")),
+            t = Table(risk_info, colWidths=[150, 350])
+            t.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.hexColor("#1e40af")),
                 ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
                 ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
                 ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-                ('FONTNAME', (0, 1), (0, -1), 'Helvetica-Bold'),
                 ('FONTSIZE', (0, 0), (-1, -1), 10),
-                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-                ('BACKGROUND', (0, 1), (1, 1), colors.whitesmoke),
-                ('BACKGROUND', (1, 1), (1, 1), health_color),
-                ('TEXTCOLOR', (1, 1), (1, 1), colors.whitesmoke),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 10),
+                ('BACKGROUND', (0, 1), (-1, -1), colors.whitesmoke),
                 ('GRID', (0, 0), (-1, -1), 1, colors.grey)
             ]))
-            elements.append(health_table)
+            elements.append(t)
             elements.append(Spacer(1, 20))
 
-            # 4. AI Failure Prediction
-            if prediction_data:
-                elements.append(Paragraph("AI-Powered Failure Prediction", header_style))
-                
-                urgency_colors = {
-                    'LOW': colors.hexColor("#16a34a"),
-                    'MEDIUM': colors.hexColor("#f59e0b"),
-                    'HIGH': colors.hexColor("#dc2626"),
-                    'CRITICAL': colors.hexColor("#7f1d1d")
-                }
-                
-                urgency = prediction_data.get('urgency', 'MEDIUM')
-                urgency_color = urgency_colors.get(urgency, colors.grey)
-                
-                pred_info = [
-                    ["Prediction Metric", "Value"],
-                    ["Days to Predicted Failure", f"{prediction_data.get('days_to_failure', 'N/A')} days"],
-                    ["Confidence Level", f"{prediction_data.get('confidence', 0)}%"],
-                    ["Urgency", urgency]
-                ]
-                
-                pred_table = Table(pred_info, colWidths=[200, 300])
-                pred_table.setStyle(TableStyle([
-                    ('BACKGROUND', (0, 0), (-1, 0), colors.hexColor("#0ea5e9")),
-                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-                    ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-                    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-                    ('FONTSIZE', (0, 0), (-1, -1), 10),
-                    ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-                    ('BACKGROUND', (0, 1), (-1, -1), colors.whitesmoke),
-                    ('BACKGROUND', (1, 3), (1, 3), urgency_color),
-                    ('TEXTCOLOR', (1, 3), (1, 3), colors.whitesmoke),
-                    ('GRID', (0, 0), (-1, -1), 1, colors.grey)
-                ]))
-                elements.append(pred_table)
-                elements.append(Spacer(1, 12))
-                
-                # Risk Factors
-                elements.append(Paragraph("Identified Risk Factors:", ParagraphStyle('Bold', parent=normal_style, fontName='Helvetica-Bold', fontSize=11)))
-                risk_factors = prediction_data.get('risk_factors', [])
-                for idx, factor in enumerate(risk_factors, 1):
-                    elements.append(Paragraph(f"{idx}. {factor}", normal_style))
-                elements.append(Spacer(1, 12))
-                
-                # Recommendations
-                elements.append(Paragraph("Recommended Actions:", ParagraphStyle('Bold', parent=normal_style, fontName='Helvetica-Bold', fontSize=11)))
-                recommendations = prediction_data.get('recommendations', [])
-                for idx, rec in enumerate(recommendations, 1):
-                    elements.append(Paragraph(f"• {rec}", normal_style))
-                elements.append(Spacer(1, 20))
-
-            # 5. Maintenance History
-            elements.append(Paragraph("Recent Maintenance History", header_style))
+            # Terms and Conditions
+            elements.append(Paragraph("Terms and Conditions", header_style))
             
-            if maintenance_history and len(maintenance_history) > 0:
-                maint_data = [["Date", "Type", "Description", "Cost"]]
-                
-                for log in maintenance_history[:10]:  # Last 10 entries
-                    maint_data.append([
-                        log.get('completed_date', log.get('scheduled_date', 'N/A'))[:10],
-                        log.get('maintenance_type', 'N/A'),
-                        log.get('description', 'N/A')[:40] + '...' if len(log.get('description', '')) > 40 else log.get('description', 'N/A'),
-                        f"₹{log.get('cost', 0):.2f}"
-                    ])
-                
-                maint_table = Table(maint_data, colWidths=[80, 80, 220, 80])
-                maint_table.setStyle(TableStyle([
-                    ('BACKGROUND', (0, 0), (-1, 0), colors.hexColor("#0ea5e9")),
-                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-                    ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-                    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-                    ('FONTSIZE', (0, 0), (-1, -1), 9),
-                    ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-                    ('BACKGROUND', (0, 1), (-1, -1), colors.whitesmoke),
-                    ('GRID', (0, 0), (-1, -1), 1, colors.grey),
-                    ('VALIGN', (0, 0), (-1, -1), 'TOP')
-                ]))
-                elements.append(maint_table)
-            else:
-                elements.append(Paragraph("No maintenance records found.", normal_style))
+            terms = [
+                "This policy covers crop losses due to natural disasters including drought, flood, pest infestation, and extreme weather events.",
+                "Claims must be submitted within 7 days of the incident with proper evidence documentation.",
+                "The insured amount will be paid after verification of the claim by our assessment team.",
+                "This policy is valid only for the specified coverage period and cannot be transferred.",
+                "Premium payments must be completed before the coverage start date.",
+                "All claims are subject to AI-powered verification and manual review if necessary.",
+                "The policy holder must maintain accurate records of farming activities and crop yields."
+            ]
+            
+            for i, term in enumerate(terms, 1):
+                elements.append(Paragraph(f"{i}. {term}", normal_style))
+                elements.append(Spacer(1, 8))
             
             elements.append(Spacer(1, 20))
 
-            # 6. Summary & Conclusion
-            elements.append(Paragraph("Summary & Recommendations", header_style))
+            # Signatures
+            elements.append(Paragraph("Authorized Signatures", header_style))
+            elements.append(Spacer(1, 30))
             
-            if health_score >= 85:
-                summary = "Your asset is in excellent condition. Continue with routine maintenance schedule."
-            elif health_score >= 60:
-                summary = "Your asset shows moderate wear. Increased monitoring and preventive maintenance recommended."
-            elif health_score >= 30:
-                summary = "⚠️ Your asset requires immediate attention. Schedule comprehensive inspection and repairs."
-            else:
-                summary = "🔴 CRITICAL: Your asset is at high risk of failure. Immediate professional service required."
+            signature_table = [
+                ["_________________________", "_________________________"],
+                ["Policy Holder Signature", "Insurer Signature"],
+                ["", ""],
+                ["Date: ___________", "Date: ___________"]
+            ]
             
-            elements.append(Paragraph(summary, ParagraphStyle('Summary', parent=normal_style, fontSize=11, textColor=health_color, fontName='Helvetica-Bold')))
+            t = Table(signature_table, colWidths=[250, 250])
+            t.setStyle(TableStyle([
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('FONTSIZE', (0, 0), (-1, -1), 10),
+                ('FONTNAME', (0, 1), (-1, 1), 'Helvetica-Bold'),
+                ('TOPPADDING', (0, 0), (-1, -1), 10)
+            ]))
+            elements.append(t)
             elements.append(Spacer(1, 30))
 
-            # 7. Footer
-            footer_text = "Disclaimer: This report is generated using AI prediction models and historical data. Actual asset condition may vary. Professional inspection recommended for critical decisions."
-            elements.append(Paragraph(footer_text, ParagraphStyle('Footer', parent=normal_style, fontSize=8, textColor=colors.grey, alignment=TA_CENTER)))
+            # Footer / Disclaimer
+            footer_text = """
+            <para align=center fontSize=8 textColor=grey>
+            This is a digitally generated insurance policy bond by AgriTech Insurance Services.<br/>
+            For queries or claims, contact: insurance@agritech.com | Helpline: 1800-XXX-XXXX<br/>
+            Registration No: IRDA/AGR/2024/12345 | Valid until {}<br/>
+            <b>Important:</b> Please retain this document for future reference and claim processing.
+            </para>
+            """.format(policy_data.get('end_date', 'N/A'))
+            
+            elements.append(Paragraph(footer_text, normal_style))
 
             doc.build(elements)
             logger.info(f"Asset integrity report generated successfully: {output_path}")
             return True
             
         except Exception as e:
-            logger.error(f"Failed to generate asset integrity report: {str(e)}")
+            logger.error(f"Failed to generate insurance policy PDF: {str(e)}")
             return False
 
