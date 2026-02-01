@@ -92,205 +92,190 @@ class File(db.Model):
         return f'<File {self.id} - {self.original_name}>'
 
 
-class FarmAsset(db.Model):
+class RiskScoreHistory(db.Model):
     """
-    Represents farm machinery and equipment for predictive maintenance tracking.
+    Tracks the historical Agri-Risk Score (ARS) for a farmer over time.
     """
-    __tablename__ = 'farm_assets'
+    __tablename__ = 'risk_score_history'
     
     id = db.Column(db.Integer, primary_key=True)
-    asset_id = db.Column(db.String(50), unique=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     
-    # Asset details
-    asset_type = db.Column(db.String(100), nullable=False)  # tractor, tiller, pump, harvester
-    asset_name = db.Column(db.String(200), nullable=False)
-    manufacturer = db.Column(db.String(100), nullable=True)
-    model = db.Column(db.String(100), nullable=True)
-    serial_number = db.Column(db.String(100), nullable=True)
-    purchase_date = db.Column(db.DateTime, nullable=True)
-    purchase_price = db.Column(db.Float, nullable=True)
+    # Risk Score (0-100, lower is better)
+    ars_score = db.Column(db.Float, nullable=False)
     
-    # Health metrics
-    health_score = db.Column(db.Float, default=100.0)  # 0-100
-    predicted_days_to_failure = db.Column(db.Integer, nullable=True)
-    last_maintenance_date = db.Column(db.DateTime, nullable=True)
-    next_maintenance_due = db.Column(db.DateTime, nullable=True)
-    total_runtime_hours = db.Column(db.Float, default=0.0)
+    # Contributing factors
+    weather_risk_factor = db.Column(db.Float, default=0.0)  # 0-1
+    crop_success_rate = db.Column(db.Float, default=0.0)  # 0-1
+    location_risk_factor = db.Column(db.Float, default=0.0)  # 0-1
+    activity_score = db.Column(db.Float, default=0.0)  # Platform activity
     
-    # Telemetry data (JSON stored as Text)
-    last_telemetry = db.Column(db.Text, nullable=True)  # Store recent telemetry as JSON string
-    
-    # Status
-    status = db.Column(db.String(20), default='ACTIVE')  # ACTIVE, MAINTENANCE, FAILED, RETIRED
-    alert_threshold_days = db.Column(db.Integer, default=7)  # Alert when failure prediction < this
-    
-    # Timestamps
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    # Metadata
+    calculation_version = db.Column(db.String(10), default='1.0')
+    calculated_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Relationships
-    maintenance_logs = db.relationship('MaintenanceLog', backref='asset', lazy=True, cascade='all, delete-orphan')
-    owner = db.relationship('User', backref='farm_assets')
+    user = db.relationship('User', backref='risk_scores')
     
     def to_dict(self):
         return {
             'id': self.id,
-            'asset_id': self.asset_id,
             'user_id': self.user_id,
-            'asset_type': self.asset_type,
-            'asset_name': self.asset_name,
-            'manufacturer': self.manufacturer,
-            'model': self.model,
-            'health_score': self.health_score,
-            'predicted_days_to_failure': self.predicted_days_to_failure,
-            'last_maintenance_date': self.last_maintenance_date.isoformat() if self.last_maintenance_date else None,
-            'next_maintenance_due': self.next_maintenance_due.isoformat() if self.next_maintenance_due else None,
-            'total_runtime_hours': self.total_runtime_hours,
-            'status': self.status,
-            'created_at': self.created_at.isoformat(),
-            'updated_at': self.updated_at.isoformat()
+            'ars_score': self.ars_score,
+            'weather_risk_factor': self.weather_risk_factor,
+            'crop_success_rate': self.crop_success_rate,
+            'location_risk_factor': self.location_risk_factor,
+            'activity_score': self.activity_score,
+            'calculation_version': self.calculation_version,
+            'calculated_at': self.calculated_at.isoformat(),
+            'risk_category': self.get_risk_category()
         }
     
-    def __repr__(self):
-        return f'<FarmAsset {self.asset_id} - {self.asset_name}>'
-
-
-class MaintenanceLog(db.Model):
-    """
-    Tracks maintenance history and issues for farm assets.
-    """
-    __tablename__ = 'maintenance_logs'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    log_id = db.Column(db.String(50), unique=True, nullable=False)
-    asset_id = db.Column(db.Integer, db.ForeignKey('farm_assets.id'), nullable=False)
-    
-    # Maintenance details
-    maintenance_type = db.Column(db.String(50), nullable=False)  # ROUTINE, REPAIR, EMERGENCY, INSPECTION
-    description = db.Column(db.Text, nullable=False)
-    parts_replaced = db.Column(db.Text, nullable=True)  # JSON string of parts
-    cost = db.Column(db.Float, default=0.0)
-    
-    # Condition assessment
-    pre_maintenance_health = db.Column(db.Float, nullable=True)
-    post_maintenance_health = db.Column(db.Float, nullable=True)
-    issues_found = db.Column(db.Text, nullable=True)
-    
-    # Technician info
-    technician_name = db.Column(db.String(200), nullable=True)
-    technician_notes = db.Column(db.Text, nullable=True)
-    
-    # Timestamps
-    scheduled_date = db.Column(db.DateTime, nullable=True)
-    completed_date = db.Column(db.DateTime, nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
-    # Status
-    status = db.Column(db.String(20), default='SCHEDULED')  # SCHEDULED, IN_PROGRESS, COMPLETED, CANCELLED
-    
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'log_id': self.log_id,
-            'asset_id': self.asset_id,
-            'maintenance_type': self.maintenance_type,
-            'description': self.description,
-            'cost': self.cost,
-            'pre_maintenance_health': self.pre_maintenance_health,
-            'post_maintenance_health': self.post_maintenance_health,
-            'technician_name': self.technician_name,
-            'scheduled_date': self.scheduled_date.isoformat() if self.scheduled_date else None,
-            'completed_date': self.completed_date.isoformat() if self.completed_date else None,
-            'status': self.status,
-            'created_at': self.created_at.isoformat()
-        }
+    def get_risk_category(self):
+        """Categorize risk score."""
+        if self.ars_score <= 20:
+            return 'EXCELLENT'
+        elif self.ars_score <= 40:
+            return 'GOOD'
+        elif self.ars_score <= 60:
+            return 'MODERATE'
+        elif self.ars_score <= 80:
+            return 'HIGH'
+        else:
+            return 'CRITICAL'
     
     def __repr__(self):
-        return f'<MaintenanceLog {self.log_id} - {self.maintenance_type}>'
+        return f'<RiskScore User:{self.user_id} ARS:{self.ars_score}>'
 
 
-class LogisticsOrder(db.Model):
+class InsurancePolicy(db.Model):
     """
-    Manages harvest pickup and transportation logistics coordination.
+    Represents an agricultural insurance policy for a farmer.
     """
-    __tablename__ = 'logistics_orders'
+    __tablename__ = 'insurance_policies'
     
     id = db.Column(db.Integer, primary_key=True)
-    order_id = db.Column(db.String(50), unique=True, nullable=False)
+    policy_number = db.Column(db.String(50), unique=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     
-    # Pickup details
+    # Policy details
     crop_type = db.Column(db.String(100), nullable=False)
-    quantity_tons = db.Column(db.Float, nullable=False)
-    pickup_location = db.Column(db.String(300), nullable=False)
-    pickup_latitude = db.Column(db.Float, nullable=True)
-    pickup_longitude = db.Column(db.Float, nullable=True)
+    coverage_amount = db.Column(db.Float, nullable=False)
+    premium_amount = db.Column(db.Float, nullable=False)
     
-    # Destination
-    destination_location = db.Column(db.String(300), nullable=False)
-    destination_latitude = db.Column(db.Float, nullable=True)
-    destination_longitude = db.Column(db.Float, nullable=True)
+    # Risk-based pricing
+    ars_score_at_issuance = db.Column(db.Float, nullable=False)
+    base_premium_rate = db.Column(db.Float, nullable=False)  # Base rate percentage
+    risk_multiplier = db.Column(db.Float, nullable=False)  # Applied multiplier
     
-    # Scheduling
-    requested_pickup_date = db.Column(db.DateTime, nullable=False)
-    scheduled_pickup_date = db.Column(db.DateTime, nullable=True)
-    actual_pickup_date = db.Column(db.DateTime, nullable=True)
-    estimated_delivery_date = db.Column(db.DateTime, nullable=True)
-    actual_delivery_date = db.Column(db.DateTime, nullable=True)
+    # Coverage period
+    start_date = db.Column(db.Date, nullable=False)
+    end_date = db.Column(db.Date, nullable=False)
     
-    # Logistics coordination
-    route_group_id = db.Column(db.String(50), nullable=True)  # Groups nearby pickups
-    transport_vehicle_id = db.Column(db.String(50), nullable=True)
-    driver_name = db.Column(db.String(200), nullable=True)
-    driver_phone = db.Column(db.String(20), nullable=True)
+    # Status: ACTIVE, EXPIRED, CANCELLED, CLAIMED
+    status = db.Column(db.String(20), default='ACTIVE', nullable=False)
     
-    # Cost calculation
-    base_cost = db.Column(db.Float, nullable=True)
-    shared_cost_discount = db.Column(db.Float, default=0.0)  # Discount from route grouping
-    final_cost = db.Column(db.Float, nullable=True)
-    distance_km = db.Column(db.Float, nullable=True)
-    
-    # Status tracking
-    status = db.Column(db.String(30), default='PENDING')  # PENDING, SCHEDULED, IN_TRANSIT, DELIVERED, CANCELLED
-    priority = db.Column(db.String(20), default='NORMAL')  # URGENT, HIGH, NORMAL, LOW
-    
-    # Special instructions
-    special_instructions = db.Column(db.Text, nullable=True)
-    requires_refrigeration = db.Column(db.Boolean, default=False)
-    requires_covered_transport = db.Column(db.Boolean, default=False)
+    # Farm details
+    farm_location = db.Column(db.String(200), nullable=False)
+    farm_size_acres = db.Column(db.Float, nullable=False)
     
     # Timestamps
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    issued_at = db.Column(db.DateTime, default=datetime.utcnow)
+    cancelled_at = db.Column(db.DateTime, nullable=True)
+    renewed_from_policy_id = db.Column(db.Integer, nullable=True)
     
     # Relationships
-    owner = db.relationship('User', backref='logistics_orders')
+    user = db.relationship('User', backref='insurance_policies')
+    claims = db.relationship('ClaimRequest', backref='policy', lazy=True, cascade='all, delete-orphan')
     
     def to_dict(self):
         return {
             'id': self.id,
-            'order_id': self.order_id,
+            'policy_number': self.policy_number,
             'user_id': self.user_id,
             'crop_type': self.crop_type,
-            'quantity_tons': self.quantity_tons,
-            'pickup_location': self.pickup_location,
-            'destination_location': self.destination_location,
-            'requested_pickup_date': self.requested_pickup_date.isoformat(),
-            'scheduled_pickup_date': self.scheduled_pickup_date.isoformat() if self.scheduled_pickup_date else None,
-            'actual_pickup_date': self.actual_pickup_date.isoformat() if self.actual_pickup_date else None,
-            'route_group_id': self.route_group_id,
-            'driver_name': self.driver_name,
-            'driver_phone': self.driver_phone,
-            'base_cost': self.base_cost,
-            'shared_cost_discount': self.shared_cost_discount,
-            'final_cost': self.final_cost,
-            'distance_km': self.distance_km,
+            'coverage_amount': self.coverage_amount,
+            'premium_amount': self.premium_amount,
+            'ars_score_at_issuance': self.ars_score_at_issuance,
+            'base_premium_rate': self.base_premium_rate,
+            'risk_multiplier': self.risk_multiplier,
+            'start_date': self.start_date.isoformat(),
+            'end_date': self.end_date.isoformat(),
             'status': self.status,
-            'priority': self.priority,
-            'created_at': self.created_at.isoformat(),
-            'updated_at': self.updated_at.isoformat()
+            'farm_location': self.farm_location,
+            'farm_size_acres': self.farm_size_acres,
+            'issued_at': self.issued_at.isoformat(),
+            'cancelled_at': self.cancelled_at.isoformat() if self.cancelled_at else None,
+            'days_remaining': (self.end_date - datetime.utcnow().date()).days if self.status == 'ACTIVE' else 0
         }
     
     def __repr__(self):
-        return f'<LogisticsOrder {self.order_id} - {self.status}>'
+        return f'<InsurancePolicy {self.policy_number} - {self.status}>'
+
+
+class ClaimRequest(db.Model):
+    """
+    Represents a crop failure insurance claim request.
+    """
+    __tablename__ = 'claim_requests'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    claim_number = db.Column(db.String(50), unique=True, nullable=False)
+    policy_id = db.Column(db.Integer, db.ForeignKey('insurance_policies.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    
+    # Claim details
+    claim_type = db.Column(db.String(50), nullable=False)  # CROP_FAILURE, WEATHER_DAMAGE, PEST_DAMAGE
+    claimed_amount = db.Column(db.Float, nullable=False)
+    approved_amount = db.Column(db.Float, nullable=True)
+    
+    # Evidence
+    description = db.Column(db.Text, nullable=False)
+    evidence_photo_ids = db.Column(db.Text, nullable=True)  # Comma-separated file IDs
+    
+    # AI Verification
+    ai_verification_status = db.Column(db.String(20), default='PENDING')  # PENDING, VERIFIED, REJECTED, MANUAL_REVIEW
+    ai_confidence_score = db.Column(db.Float, nullable=True)  # 0-1
+    ai_verification_notes = db.Column(db.Text, nullable=True)
+    
+    # Status: SUBMITTED, UNDER_REVIEW, APPROVED, REJECTED, PAID
+    status = db.Column(db.String(20), default='SUBMITTED', nullable=False)
+    
+    # Timestamps
+    submitted_at = db.Column(db.DateTime, default=datetime.utcnow)
+    reviewed_at = db.Column(db.DateTime, nullable=True)
+    approved_at = db.Column(db.DateTime, nullable=True)
+    paid_at = db.Column(db.DateTime, nullable=True)
+    
+    # Reviewer notes
+    reviewer_notes = db.Column(db.Text, nullable=True)
+    rejection_reason = db.Column(db.Text, nullable=True)
+    
+    # Relationships
+    user = db.relationship('User', backref='insurance_claims')
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'claim_number': self.claim_number,
+            'policy_id': self.policy_id,
+            'user_id': self.user_id,
+            'claim_type': self.claim_type,
+            'claimed_amount': self.claimed_amount,
+            'approved_amount': self.approved_amount,
+            'description': self.description,
+            'evidence_photo_ids': self.evidence_photo_ids.split(',') if self.evidence_photo_ids else [],
+            'ai_verification_status': self.ai_verification_status,
+            'ai_confidence_score': self.ai_confidence_score,
+            'ai_verification_notes': self.ai_verification_notes,
+            'status': self.status,
+            'submitted_at': self.submitted_at.isoformat(),
+            'reviewed_at': self.reviewed_at.isoformat() if self.reviewed_at else None,
+            'approved_at': self.approved_at.isoformat() if self.approved_at else None,
+            'paid_at': self.paid_at.isoformat() if self.paid_at else None,
+            'reviewer_notes': self.reviewer_notes,
+            'rejection_reason': self.rejection_reason
+        }
+    
+    def __repr__(self):
+        return f'<ClaimRequest {self.claim_number} - {self.status}>'
