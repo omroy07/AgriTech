@@ -186,53 +186,49 @@ def synthesize_loan_pdf_task(self, user_data, analysis_result, user_id=None, lan
         return {'status': 'error', 'message': str(e)}
 
 
-@celery_app.task(bind=True, name='tasks.verify_claim_with_ai')
-def verify_claim_with_ai_task(self, claim_id):
+@celery_app.task(bind=True, name='tasks.finalize_pool_cycle')
+def finalize_pool_cycle_task(self, pool_id):
     """
-    Async task for AI-powered insurance claim verification using Gemini Vision API.
-    Analyzes evidence photos to verify crop damage claims.
+    Finalize a completed pool cycle: execute profit distribution and
+    transition to DISTRIBUTED state.
     """
     try:
-        from backend.models import db, ClaimRequest
-        import google.generativeai as genai
+        from backend.services.financial_service import FinancialService
+        from backend.services.pool_service import PoolService
+        from backend.models import YieldPool
         
-        claim = ClaimRequest.query.get(claim_id)
-        if not claim:
-            return {'status': 'error', 'message': f'Claim {claim_id} not found'}
+        logger.info(f"Finalizing pool cycle for pool ID: {pool_id}")
         
-        # Update status to under review
-        claim.ai_verification_status = 'UNDER_REVIEW'
-        claim.status = 'UNDER_REVIEW'
-        db.session.commit()
+        pool = YieldPool.query.get(pool_id)
+        if not pool:
+            return {'status': 'error', 'message': 'Pool not found'}
         
-        api_key = os.environ.get('GEMINI_API_KEY')
-        if not api_key:
-            claim.ai_verification_status = 'MANUAL_REVIEW'
-            claim.ai_verification_notes = 'API key not configured - requires manual review'
-            db.session.commit()
-            return {'status': 'error', 'message': 'GEMINI_API_KEY not configured'}
+        if pool.status != 'COMPLETED':
+            return {'status': 'error', 'message': f'Pool must be in COMPLETED state, currently {pool.status}'}
         
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-2.5-flash")
+        # Execute profit distribution
+        success, message = FinancialService.execute_distribution(pool_id)
         
-        # Analyze evidence photos
-        if not claim.evidence_photos or len(claim.evidence_photos) == 0:
-            claim.ai_verification_status = 'MANUAL_REVIEW'
-            claim.ai_verification_confidence = 0.0
-            claim.ai_verification_notes = 'No evidence photos provided - requires manual review'
-            db.session.commit()
-            
-            NotificationService.create_notification(
-                title="Claim Under Manual Review",
-                message=f"Your claim {claim.claim_number} requires manual review due to missing evidence.",
-                notification_type="insurance",
-                user_id=claim.user_id
-            )
-            return {'status': 'manual_review', 'reason': 'No evidence photos'}
+        if not success:
+            return {'status': 'error', 'message': message}
         
-        # Build prompt for Gemini
-        prompt = f"""
-You are an agricultural insurance claims assessor specializing in crop damage verification.
+        # Transition to DISTRIBUTED state
+        success, error = PoolService.transition_state(pool_id, 'DISTRIBUTED')
+        
+        if not success:
+            return {'status': 'error', 'message': error}
+        
+        logger.info(f"Pool {pool.pool_id} finalized successfully")
+        
+        return {
+            'status': 'success',
+            'pool_id': pool.pool_id,
+            'message': message
+        }
+        
+    except Exception as e:
+        logger.error(f"Failed to finalize pool cycle: {str(e)}")
+        return {'status': 'error', 'message': str(e)}
 
 CLAIM DETAILS:
 - Claim Number: {claim.claim_number}
@@ -240,139 +236,85 @@ CLAIM DETAILS:
 - Incident Date: {claim.incident_date}
 - Incident Description: {claim.incident_description}
 
-TASK:
-Analyze the provided evidence photographs and determine:
-1. Whether the damage is consistent with the description
-2. Estimated severity of damage (0-100%)
-3. Whether the claim appears legitimate
-4. Any red flags or concerns
-
-Respond in this EXACT JSON format:
-{{
-    "verdict": "VERIFIED" or "REJECTED" or "MANUAL_REVIEW",
-    "confidence": 0.85,
-    "damage_severity": 65,
-    "findings": "Brief description of what you observed",
-    "concerns": "Any red flags or concerns (or 'None')"
-}}
-
-NOTE: Evidence photos are described below. In production, actual images would be analyzed.
-Photo URLs: {', '.join(claim.evidence_photos)}
-"""
-        
-        # In production, you would pass actual images to the Vision API
-        # For now, we simulate with text analysis
-        response = model.generate_content(prompt)
-        
-        if not response.candidates:
-            claim.ai_verification_status = 'MANUAL_REVIEW'
-            claim.ai_verification_notes = 'AI analysis inconclusive'
-            db.session.commit()
-            return {'status': 'error', 'message': 'No response from AI'}
-        
-        ai_result = response.candidates[0].content.parts[0].text
-        
-        # Parse AI response (simplified - in production, use proper JSON parsing)
-        import re
-        import json
-        
-        try:
-            # Extract JSON from response
-            json_match = re.search(r'\{.*\}', ai_result, re.DOTALL)
-            if json_match:
-                analysis = json.loads(json_match.group())
-                
-                verdict = analysis.get('verdict', 'MANUAL_REVIEW')
-                confidence = float(analysis.get('confidence', 0.5))
-                findings = analysis.get('findings', 'Analysis completed')
-                concerns = analysis.get('concerns', '')
-                
-                claim.ai_verification_status = verdict
-                claim.ai_verification_confidence = confidence
-                claim.ai_verification_notes = f"{findings}\nConcerns: {concerns}"
-                
-                # If confidence is low, flag for manual review
-                if confidence < 0.7:
-                    claim.ai_verification_status = 'MANUAL_REVIEW'
-                
-                db.session.commit()
-                
-                # Notify user
-                if verdict == 'VERIFIED':
-                    message = f"Good news! Your claim {claim.claim_number} has been verified by our AI system and is being processed."
-                    notif_type = "insurance"
-                elif verdict == 'REJECTED':
-                    message = f"Your claim {claim.claim_number} could not be automatically verified. Our team will review it manually."
-                    notif_type = "insurance"
-                else:
-                    message = f"Your claim {claim.claim_number} is under manual review by our team."
-                    notif_type = "insurance"
-                
-                NotificationService.create_notification(
-                    title="Claim Verification Update",
-                    message=message,
-                    notification_type=notif_type,
-                    user_id=claim.user_id
-                )
-                
-                return {
-                    'status': 'success',
-                    'claim_id': claim_id,
-                    'verdict': verdict,
-                    'confidence': confidence
-                }
-            else:
-                raise ValueError("Could not parse AI response")
-                
-        except Exception as parse_error:
-            logger.error(f"Failed to parse AI response: {str(parse_error)}")
-            claim.ai_verification_status = 'MANUAL_REVIEW'
-            claim.ai_verification_notes = f'AI response parsing failed: {str(parse_error)}'
-            db.session.commit()
-            return {'status': 'error', 'message': str(parse_error)}
-        
-    except Exception as e:
-        logger.error(f"AI claim verification failed: {str(e)}")
-        return {'status': 'error', 'message': str(e)}
-
-
-@celery_app.task(bind=True, name='tasks.recalculate_risk_scores')
-def recalculate_risk_scores_task(self, user_ids=None):
+@celery_app.task(bind=True, name='tasks.simulate_batch_payouts')
+def simulate_batch_payouts_task(self, pool_id):
     """
-    Periodic task to recalculate risk scores for all users or specific users.
-    Typically run daily or weekly via Celery Beat.
+    Simulate bank transfers for all pool contributors.
     """
     try:
-        from backend.models import User
-        from backend.services.risk_service import RiskService
+        from backend.services.financial_service import FinancialService
+        from backend.models import YieldPool, PoolContribution
         
-        if user_ids:
-            users = User.query.filter(User.id.in_(user_ids)).all()
-        else:
-            users = User.query.all()
+        logger.info(f"Simulating batch payouts for pool ID: {pool_id}")
         
-        success_count = 0
-        error_count = 0
+        pool = YieldPool.query.get(pool_id)
+        if not pool:
+            return {'status': 'error', 'message': 'Pool not found'}
         
-        for user in users:
-            try:
-                RiskService.calculate_user_risk_score(
-                    user_id=user.id,
-                    force_recalculate=True
-                )
-                success_count += 1
-            except Exception as user_error:
-                logger.error(f"Failed to recalculate score for user {user.id}: {str(user_error)}")
-                error_count += 1
+        contributions = PoolContribution.query.filter_by(pool_id=pool_id).all()
+        
+        results = []
+        successful = 0
+        failed = 0
+        
+        for contribution in contributions:
+            if contribution.payout_status == 'PENDING' and contribution.actual_payout:
+                result = FinancialService.simulate_bank_transfer(contribution.id)
+                results.append({
+                    'user_id': contribution.user_id,
+                    'amount': contribution.actual_payout,
+                    'result': result
+                })
+                
+                if result['success']:
+                    successful += 1
+                else:
+                    failed += 1
+        
+        logger.info(f"Batch payouts complete for pool {pool.pool_id}: {successful} successful, {failed} failed")
         
         return {
             'status': 'success',
-            'processed': success_count + error_count,
-            'success': success_count,
-            'errors': error_count
+            'pool_id': pool.pool_id,
+            'successful_transfers': successful,
+            'failed_transfers': failed,
+            'details': results
         }
         
     except Exception as e:
-        logger.error(f"Risk score recalculation task failed: {str(e)}")
+        logger.error(f"Failed to simulate batch payouts: {str(e)}")
+        return {'status': 'error', 'message': str(e)}
+
+
+@celery_app.task(bind=True, name='tasks.check_pool_target_reached')
+def check_pool_target_reached_task(self):
+    """
+    Periodic task to check if any open pools have reached their target quantity
+    and automatically transition them to LOCKED state.
+    """
+    try:
+        from backend.services.pool_service import PoolService
+        from backend.models import YieldPool
+        
+        # Find all open pools that have reached 100% of target
+        pools = YieldPool.query.filter_by(status='OPEN').all()
+        
+        locked_count = 0
+        
+        for pool in pools:
+            if pool.current_quantity >= pool.target_quantity:
+                success, error = PoolService.transition_state(pool.id, 'LOCKED')
+                
+                if success:
+                    locked_count += 1
+                    logger.info(f"Auto-locked pool {pool.pool_id}: target reached")
+        
+        return {
+            'status': 'success',
+            'pools_locked': locked_count
+        }
+        
+    except Exception as e:
+        logger.error(f"Failed to check pool targets: {str(e)}")
         return {'status': 'error', 'message': str(e)}
 

@@ -92,43 +92,62 @@ class File(db.Model):
         return f'<File {self.id} - {self.original_name}>'
 
 
-class RiskScoreHistory(db.Model):
+class YieldPool(db.Model):
     """
-    Tracks the historical Agri-Risk Score (ARS) for a farmer over time.
+    Represents a collaborative farming pool where multiple farmers
+    combine their produce to sell in bulk.
     """
-    __tablename__ = 'risk_score_history'
+    __tablename__ = 'yield_pools'
     
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    pool_id = db.Column(db.String(50), unique=True, nullable=False)
+    pool_name = db.Column(db.String(200), nullable=False)
+    crop_type = db.Column(db.String(100), nullable=False)
+    target_quantity = db.Column(db.Float, nullable=False)  # in tons
+    current_quantity = db.Column(db.Float, default=0.0)
     
-    # Risk Score (0-100, lower is better)
-    ars_score = db.Column(db.Float, nullable=False)
+    # Pool state: OPEN, LOCKED, COMPLETED, DISTRIBUTED
+    status = db.Column(db.String(20), default='OPEN', nullable=False)
     
-    # Contributing factors
-    weather_risk_factor = db.Column(db.Float, default=0.0)  # 0-1
-    crop_success_rate = db.Column(db.Float, default=0.0)  # 0-1
-    location_risk_factor = db.Column(db.Float, default=0.0)  # 0-1
-    activity_score = db.Column(db.Float, default=0.0)  # Platform activity
+    # Pricing
+    min_price_per_ton = db.Column(db.Float, nullable=False)
+    current_offer_price = db.Column(db.Float, nullable=True)
+    buyer_name = db.Column(db.String(200), nullable=True)
     
-    # Metadata
-    calculation_version = db.Column(db.String(10), default='1.0')
-    calculated_at = db.Column(db.DateTime, default=datetime.utcnow)
+    # Logistics
+    collection_location = db.Column(db.String(200), nullable=False)
+    logistics_overhead_percent = db.Column(db.Float, default=5.0)  # percentage
+    
+    # Timestamps
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    locked_at = db.Column(db.DateTime, nullable=True)
+    completed_at = db.Column(db.DateTime, nullable=True)
+    distributed_at = db.Column(db.DateTime, nullable=True)
     
     # Relationships
-    user = db.relationship('User', backref='risk_scores')
+    contributions = db.relationship('PoolContribution', backref='pool', lazy=True, cascade='all, delete-orphan')
+    votes = db.relationship('PoolVote', backref='pool', lazy=True, cascade='all, delete-orphan')
     
     def to_dict(self):
         return {
             'id': self.id,
-            'user_id': self.user_id,
-            'ars_score': self.ars_score,
-            'weather_risk_factor': self.weather_risk_factor,
-            'crop_success_rate': self.crop_success_rate,
-            'location_risk_factor': self.location_risk_factor,
-            'activity_score': self.activity_score,
-            'calculation_version': self.calculation_version,
-            'calculated_at': self.calculated_at.isoformat(),
-            'risk_category': self.get_risk_category()
+            'pool_id': self.pool_id,
+            'pool_name': self.pool_name,
+            'crop_type': self.crop_type,
+            'target_quantity': self.target_quantity,
+            'current_quantity': self.current_quantity,
+            'status': self.status,
+            'min_price_per_ton': self.min_price_per_ton,
+            'current_offer_price': self.current_offer_price,
+            'buyer_name': self.buyer_name,
+            'collection_location': self.collection_location,
+            'logistics_overhead_percent': self.logistics_overhead_percent,
+            'created_at': self.created_at.isoformat(),
+            'locked_at': self.locked_at.isoformat() if self.locked_at else None,
+            'completed_at': self.completed_at.isoformat() if self.completed_at else None,
+            'distributed_at': self.distributed_at.isoformat() if self.distributed_at else None,
+            'contribution_count': len(self.contributions),
+            'fill_percentage': (self.current_quantity / self.target_quantity * 100) if self.target_quantity > 0 else 0
         }
     
     def get_risk_category(self):
@@ -145,137 +164,136 @@ class RiskScoreHistory(db.Model):
             return 'CRITICAL'
     
     def __repr__(self):
-        return f'<RiskScore User:{self.user_id} ARS:{self.ars_score}>'
+        return f'<YieldPool {self.pool_id} - {self.crop_type} ({self.status})>'
 
 
-class InsurancePolicy(db.Model):
+class PoolContribution(db.Model):
     """
-    Represents an agricultural insurance policy for a farmer.
+    Tracks individual farmer contributions to a yield pool.
     """
-    __tablename__ = 'insurance_policies'
+    __tablename__ = 'pool_contributions'
     
     id = db.Column(db.Integer, primary_key=True)
-    policy_number = db.Column(db.String(50), unique=True, nullable=False)
+    pool_id = db.Column(db.Integer, db.ForeignKey('yield_pools.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     
-    # Policy details
-    crop_type = db.Column(db.String(100), nullable=False)
-    coverage_amount = db.Column(db.Float, nullable=False)
-    premium_amount = db.Column(db.Float, nullable=False)
+    # Contribution details
+    quantity_tons = db.Column(db.Float, nullable=False)
+    quality_grade = db.Column(db.String(20), default='A')  # A, B, C
+    contribution_percentage = db.Column(db.Float, default=0.0)  # calculated
     
-    # Risk-based pricing
-    ars_score_at_issuance = db.Column(db.Float, nullable=False)
-    base_premium_rate = db.Column(db.Float, nullable=False)  # Base rate percentage
-    risk_multiplier = db.Column(db.Float, nullable=False)  # Applied multiplier
-    
-    # Coverage period
-    start_date = db.Column(db.Date, nullable=False)
-    end_date = db.Column(db.Date, nullable=False)
-    
-    # Status: ACTIVE, EXPIRED, CANCELLED, CLAIMED
-    status = db.Column(db.String(20), default='ACTIVE', nullable=False)
-    
-    # Farm details
-    farm_location = db.Column(db.String(200), nullable=False)
-    farm_size_acres = db.Column(db.Float, nullable=False)
+    # Financial tracking
+    estimated_value = db.Column(db.Float, default=0.0)
+    actual_payout = db.Column(db.Float, nullable=True)
+    payout_status = db.Column(db.String(20), default='PENDING')  # PENDING, PAID, FAILED
     
     # Timestamps
-    issued_at = db.Column(db.DateTime, default=datetime.utcnow)
-    cancelled_at = db.Column(db.DateTime, nullable=True)
-    renewed_from_policy_id = db.Column(db.Integer, nullable=True)
-    
-    # Relationships
-    user = db.relationship('User', backref='insurance_policies')
-    claims = db.relationship('ClaimRequest', backref='policy', lazy=True, cascade='all, delete-orphan')
-    
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'policy_number': self.policy_number,
-            'user_id': self.user_id,
-            'crop_type': self.crop_type,
-            'coverage_amount': self.coverage_amount,
-            'premium_amount': self.premium_amount,
-            'ars_score_at_issuance': self.ars_score_at_issuance,
-            'base_premium_rate': self.base_premium_rate,
-            'risk_multiplier': self.risk_multiplier,
-            'start_date': self.start_date.isoformat(),
-            'end_date': self.end_date.isoformat(),
-            'status': self.status,
-            'farm_location': self.farm_location,
-            'farm_size_acres': self.farm_size_acres,
-            'issued_at': self.issued_at.isoformat(),
-            'cancelled_at': self.cancelled_at.isoformat() if self.cancelled_at else None,
-            'days_remaining': (self.end_date - datetime.utcnow().date()).days if self.status == 'ACTIVE' else 0
-        }
-    
-    def __repr__(self):
-        return f'<InsurancePolicy {self.policy_number} - {self.status}>'
-
-
-class ClaimRequest(db.Model):
-    """
-    Represents a crop failure insurance claim request.
-    """
-    __tablename__ = 'claim_requests'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    claim_number = db.Column(db.String(50), unique=True, nullable=False)
-    policy_id = db.Column(db.Integer, db.ForeignKey('insurance_policies.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    
-    # Claim details
-    claim_type = db.Column(db.String(50), nullable=False)  # CROP_FAILURE, WEATHER_DAMAGE, PEST_DAMAGE
-    claimed_amount = db.Column(db.Float, nullable=False)
-    approved_amount = db.Column(db.Float, nullable=True)
-    
-    # Evidence
-    description = db.Column(db.Text, nullable=False)
-    evidence_photo_ids = db.Column(db.Text, nullable=True)  # Comma-separated file IDs
-    
-    # AI Verification
-    ai_verification_status = db.Column(db.String(20), default='PENDING')  # PENDING, VERIFIED, REJECTED, MANUAL_REVIEW
-    ai_confidence_score = db.Column(db.Float, nullable=True)  # 0-1
-    ai_verification_notes = db.Column(db.Text, nullable=True)
-    
-    # Status: SUBMITTED, UNDER_REVIEW, APPROVED, REJECTED, PAID
-    status = db.Column(db.String(20), default='SUBMITTED', nullable=False)
-    
-    # Timestamps
-    submitted_at = db.Column(db.DateTime, default=datetime.utcnow)
-    reviewed_at = db.Column(db.DateTime, nullable=True)
-    approved_at = db.Column(db.DateTime, nullable=True)
+    contributed_at = db.Column(db.DateTime, default=datetime.utcnow)
     paid_at = db.Column(db.DateTime, nullable=True)
     
-    # Reviewer notes
-    reviewer_notes = db.Column(db.Text, nullable=True)
-    rejection_reason = db.Column(db.Text, nullable=True)
-    
     # Relationships
-    user = db.relationship('User', backref='insurance_claims')
+    user = db.relationship('User', backref='pool_contributions')
     
     def to_dict(self):
         return {
             'id': self.id,
-            'claim_number': self.claim_number,
-            'policy_id': self.policy_id,
+            'pool_id': self.pool_id,
             'user_id': self.user_id,
-            'claim_type': self.claim_type,
-            'claimed_amount': self.claimed_amount,
-            'approved_amount': self.approved_amount,
-            'description': self.description,
-            'evidence_photo_ids': self.evidence_photo_ids.split(',') if self.evidence_photo_ids else [],
-            'ai_verification_status': self.ai_verification_status,
-            'ai_confidence_score': self.ai_confidence_score,
-            'ai_verification_notes': self.ai_verification_notes,
-            'status': self.status,
-            'submitted_at': self.submitted_at.isoformat(),
-            'reviewed_at': self.reviewed_at.isoformat() if self.reviewed_at else None,
-            'approved_at': self.approved_at.isoformat() if self.approved_at else None,
-            'paid_at': self.paid_at.isoformat() if self.paid_at else None,
-            'reviewer_notes': self.reviewer_notes,
-            'rejection_reason': self.rejection_reason
+            'username': self.user.username if self.user else None,
+            'quantity_tons': self.quantity_tons,
+            'quality_grade': self.quality_grade,
+            'contribution_percentage': self.contribution_percentage,
+            'estimated_value': self.estimated_value,
+            'actual_payout': self.actual_payout,
+            'payout_status': self.payout_status,
+            'contributed_at': self.contributed_at.isoformat(),
+            'paid_at': self.paid_at.isoformat() if self.paid_at else None
         }
     
     def __repr__(self):
-        return f'<ClaimRequest {self.claim_number} - {self.status}>'
+        return f'<PoolContribution {self.id} - User {self.user_id} - {self.quantity_tons}T>'
+
+
+class ResourceShare(db.Model):
+    """
+    Tracks shared physical resources (equipment, tools) among pool members.
+    """
+    __tablename__ = 'resource_shares'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    pool_id = db.Column(db.Integer, db.ForeignKey('yield_pools.id'), nullable=False)
+    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    
+    # Resource details
+    resource_type = db.Column(db.String(100), nullable=False)  # harvester, tractor, storage
+    resource_name = db.Column(db.String(200), nullable=False)
+    resource_value = db.Column(db.Float, nullable=False)  # estimated value
+    
+    # Sharing terms
+    usage_cost_per_hour = db.Column(db.Float, default=0.0)
+    is_free_for_pool = db.Column(db.Boolean, default=True)
+    availability_status = db.Column(db.String(20), default='AVAILABLE')  # AVAILABLE, IN_USE, MAINTENANCE
+    
+    # Timestamps
+    shared_at = db.Column(db.DateTime, default=datetime.utcnow)
+    last_used_at = db.Column(db.DateTime, nullable=True)
+    
+    # Relationships
+    owner = db.relationship('User', backref='shared_resources')
+    pool = db.relationship('YieldPool', backref='shared_resources')
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'pool_id': self.pool_id,
+            'owner_id': self.owner_id,
+            'owner_username': self.owner.username if self.owner else None,
+            'resource_type': self.resource_type,
+            'resource_name': self.resource_name,
+            'resource_value': self.resource_value,
+            'usage_cost_per_hour': self.usage_cost_per_hour,
+            'is_free_for_pool': self.is_free_for_pool,
+            'availability_status': self.availability_status,
+            'shared_at': self.shared_at.isoformat(),
+            'last_used_at': self.last_used_at.isoformat() if self.last_used_at else None
+        }
+    
+    def __repr__(self):
+        return f'<ResourceShare {self.id} - {self.resource_type}>'
+
+
+class PoolVote(db.Model):
+    """
+    Tracks consensus voting on buyer offers for yield pools.
+    """
+    __tablename__ = 'pool_votes'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    pool_id = db.Column(db.Integer, db.ForeignKey('yield_pools.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    
+    # Voting details
+    vote = db.Column(db.String(10), nullable=False)  # ACCEPT, REJECT
+    offer_price = db.Column(db.Float, nullable=False)  # price at time of vote
+    comment = db.Column(db.Text, nullable=True)
+    
+    # Timestamp
+    voted_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    # Relationships
+    user = db.relationship('User', backref='pool_votes')
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'pool_id': self.pool_id,
+            'user_id': self.user_id,
+            'username': self.user.username if self.user else None,
+            'vote': self.vote,
+            'offer_price': self.offer_price,
+            'comment': self.comment,
+            'voted_at': self.voted_at.isoformat()
+        }
+    
+    def __repr__(self):
+        return f'<PoolVote {self.id} - User {self.user_id} - {self.vote}>'
