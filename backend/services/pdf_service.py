@@ -98,7 +98,7 @@ class PDFService:
         except Exception as e:
             logger.error(f"Failed to generate PDF: {str(e)}")
             return False
-
+    
     @staticmethod
     def generate_insurance_policy_bond(policy_data, output_path):
         """
@@ -222,7 +222,7 @@ class PDFService:
                 ('BACKGROUND', (0, 1), (-1, -1), colors.whitesmoke),
                 ('GRID', (0, 0), (-1, -1), 1, colors.grey)
             ]))
-            elements.append(t)
+            elements.append(asset_table)
             elements.append(Spacer(1, 20))
 
             # Risk Assessment
@@ -302,8 +302,10 @@ class PDFService:
             elements.append(Paragraph(footer_text, normal_style))
 
             doc.build(elements)
+            logger.info(f"Asset integrity report generated successfully: {output_path}")
             return True
             
         except Exception as e:
             logger.error(f"Failed to generate insurance policy PDF: {str(e)}")
             return False
+

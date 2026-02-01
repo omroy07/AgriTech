@@ -375,3 +375,4 @@ def recalculate_risk_scores_task(self, user_ids=None):
     except Exception as e:
         logger.error(f"Risk score recalculation task failed: {str(e)}")
         return {'status': 'error', 'message': str(e)}
+
