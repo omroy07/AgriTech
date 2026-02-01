@@ -177,3 +177,176 @@ def synthesize_loan_pdf_task(self, user_data, analysis_result, user_id=None):
                 user_id=user_id
             )
         return {'status': 'error', 'message': str(e)}
+
+
+# AI-Powered Predictive Asset & Logistics Tasks
+
+@celery_app.task(bind=True, name='tasks.run_predictive_analysis')
+def run_predictive_analysis_task(self):
+    """
+    Weekly scheduled task to run AI failure predictions for all active assets.
+    Identifies assets at risk and creates maintenance alerts.
+    """
+    try:
+        from services.asset_service import AssetService
+        from models import FarmAsset
+        from services.notification_service import NotificationService
+        import logging
+        
+        logger = logging.getLogger(__name__)
+        logger.info("Starting scheduled predictive asset analysis")
+        
+        # Get all active assets
+        active_assets = FarmAsset.query.filter_by(status='ACTIVE').all()
+        
+        predictions_run = 0
+        alerts_created = 0
+        
+        for asset in active_assets:
+            try:
+                # Run AI prediction
+                prediction = AssetService.predict_failure_ai(asset.asset_id)
+                predictions_run += 1
+                
+                # Create alert if urgent
+                if prediction['urgency'] in ['CRITICAL', 'HIGH']:
+                    NotificationService.create_notification(
+                        title=f"⚠️ Asset Alert: {asset.asset_name}",
+                        message=f"Predicted failure in {prediction['days_to_failure']} days. Urgency: {prediction['urgency']}",
+                        notification_type="asset_alert",
+                        user_id=asset.user_id
+                    )
+                    alerts_created += 1
+                    
+            except Exception as e:
+                logger.error(f"Error predicting for asset {asset.asset_id}: {str(e)}")
+                continue
+        
+        logger.info(f"Predictive analysis complete: {predictions_run} predictions, {alerts_created} alerts")
+        
+        return {
+            'status': 'success',
+            'predictions_run': predictions_run,
+            'alerts_created': alerts_created
+        }
+        
+    except Exception as e:
+        logger.error(f"Predictive analysis task failed: {str(e)}")
+        return {'status': 'error', 'message': str(e)}
+
+
+@celery_app.task(bind=True, name='tasks.optimize_daily_routes')
+def optimize_daily_routes_task(self, target_date_str=None):
+    """
+    Daily scheduled task to optimize logistics routes for pending orders.
+    Groups nearby farmers and calculates cost savings.
+    
+    Args:
+        target_date_str: ISO format date string (defaults to tomorrow)
+    """
+    try:
+        from services.logistics_service import LogisticsService
+        from services.notification_service import NotificationService
+        from datetime import datetime, timedelta
+        import logging
+        
+        logger = logging.getLogger(__name__)
+        
+        # Default to tomorrow if no date provided
+        if target_date_str:
+            target_date = datetime.fromisoformat(target_date_str)
+        else:
+            target_date = datetime.utcnow() + timedelta(days=1)
+        
+        logger.info(f"Starting route optimization for {target_date.date()}")
+        
+        # Run optimization
+        routes = LogisticsService.optimize_routes(target_date)
+        
+        # Notify farmers about their optimized routes
+        for route in routes:
+            total_savings = route['total_savings']
+            
+            # Get orders in this route
+            from models import LogisticsOrder
+            orders = LogisticsOrder.query.filter_by(route_group_id=route['route_id']).all()
+            
+            for order in orders:
+                NotificationService.create_notification(
+                    title="🚚 Pickup Scheduled & Cost Optimized",
+                    message=f"Your harvest pickup is scheduled. Grouped route saves you ₹{order.shared_cost_discount:.2f}! Route: {route['route_id']}",
+                    notification_type="logistics_update",
+                    user_id=order.user_id
+                )
+        
+        logger.info(f"Route optimization complete: {len(routes)} routes created")
+        
+        return {
+            'status': 'success',
+            'target_date': target_date.date().isoformat(),
+            'routes_created': len(routes),
+            'total_orders_grouped': sum(r['order_count'] for r in routes)
+        }
+        
+    except Exception as e:
+        logger.error(f"Route optimization task failed: {str(e)}")
+        return {'status': 'error', 'message': str(e)}
+
+
+@celery_app.task(bind=True, name='tasks.send_maintenance_reminders')
+def send_maintenance_reminders_task(self):
+    """
+    Daily task to send maintenance reminders for assets approaching due dates.
+    """
+    try:
+        from models import FarmAsset
+        from services.notification_service import NotificationService
+        from datetime import datetime, timedelta
+        import logging
+        
+        logger = logging.getLogger(__name__)
+        logger.info("Starting maintenance reminder check")
+        
+        # Get assets with maintenance due in next 7 days
+        threshold_date = datetime.utcnow() + timedelta(days=7)
+        
+        assets_due = FarmAsset.query.filter(
+            FarmAsset.next_maintenance_due.isnot(None),
+            FarmAsset.next_maintenance_due <= threshold_date,
+            FarmAsset.status == 'ACTIVE'
+        ).all()
+        
+        reminders_sent = 0
+        
+        for asset in assets_due:
+            days_until_due = (asset.next_maintenance_due - datetime.utcnow()).days
+            
+            if days_until_due <= 0:
+                urgency = "⚠️ OVERDUE"
+                message = f"{asset.asset_name} maintenance is overdue! Schedule service immediately."
+            elif days_until_due <= 3:
+                urgency = "🔴 URGENT"
+                message = f"{asset.asset_name} needs maintenance in {days_until_due} days."
+            else:
+                urgency = "🟡 Reminder"
+                message = f"{asset.asset_name} has maintenance due in {days_until_due} days."
+            
+            NotificationService.create_notification(
+                title=f"{urgency}: Maintenance Due",
+                message=message,
+                notification_type="asset_maintenance",
+                user_id=asset.user_id
+            )
+            reminders_sent += 1
+        
+        logger.info(f"Maintenance reminders sent: {reminders_sent}")
+        
+        return {
+            'status': 'success',
+            'reminders_sent': reminders_sent
+        }
+        
+    except Exception as e:
+        logger.error(f"Maintenance reminder task failed: {str(e)}")
+        return {'status': 'error', 'message': str(e)}
+
