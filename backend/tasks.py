@@ -312,3 +312,4 @@ def check_pool_target_reached_task(self):
     except Exception as e:
         logger.error(f"Failed to check pool targets: {str(e)}")
         return {'status': 'error', 'message': str(e)}
+

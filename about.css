@@ -32,6 +32,8 @@ html[data-theme="dark"] {
 html,
 body {
   width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
   height: 100%;
 }
 
@@ -67,6 +69,7 @@ html[data-theme="dark"] body {
   position: sticky;
   top: 0;
   z-index: 100;
+  width: 100%;
 }
 
 .header-container {
@@ -76,6 +79,7 @@ html[data-theme="dark"] body {
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
+  width: 100%;
 }
 
 .header-left {
@@ -200,6 +204,7 @@ html[data-theme="dark"] .sun-icon {
   max-width: 900px;
   margin: 0 auto;
   padding: 3rem 2rem;
+  width: 100%;
 }
 
 /* Hero Section */
@@ -338,6 +343,7 @@ html[data-theme="dark"] .link:hover {
   padding: 2rem;
   margin-top: 3rem;
   font-size: 0.95rem;
+  width: 100%;
 }
 
 html[data-theme="dark"] .footer {
@@ -455,17 +461,4 @@ html[data-theme="dark"] .footer {
     padding: 0.6rem 0;
     padding-left: 1.2rem;
   }
-}
-
-/* ===== Smooth Transitions ===== */
-* {
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease,
-    border-color 0.3s ease;
-}
-
-button,
-a {
-  transition: all 0.3s ease;
 }

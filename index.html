@@ -24,6 +24,31 @@
       href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
       rel="stylesheet"
     />
+    <script>
+// services dropdown
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.querySelector(".services-toggle-container");
+  const toggle = container.querySelector(".services-toggle");
+  const dropdown = container.querySelector(".services-dropdown");
+  const arrow = container.querySelector(".services-arrow");
+
+  toggle.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dropdown.classList.toggle("active");
+    arrow.classList.toggle("rotated");
+  });
+
+  // Close dropdown if clicking outside
+  document.addEventListener("click", (e) => {
+    if (!container.contains(e.target)) {
+      dropdown.classList.remove("active");
+      arrow.classList.remove("rotated");
+    }
+  });
+});
+</script>
+
     <style>
       /* 1. DEFINE VARIABLES FOR THEMES */
       :root {
@@ -1741,6 +1766,102 @@
       .cursor-hovering {
         transform: translate(-50%, -50%) scale(1.8);
       }
+      /* Hide dropdown by default */
+.services-dropdown {
+  display: none;
+  position: absolute;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  margin-top: 5px;
+  border-radius: 5px;
+  z-index: 1000;
+  transition: all 0.3s ease; /* for smooth effect */
+}
+
+/* Show dropdown when active */
+.services-dropdown.active {
+  display: block;
+}
+
+/* Rotate arrow when active */
+.services-arrow {
+  transition: transform 0.3s ease;
+}
+
+.services-arrow.rotated {
+  transform: rotate(180deg);
+}
+
+/* Optional: style list items */
+.services-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.services-list li a {
+  display: block;
+  padding: 10px 20px;
+  color: #333;
+  text-decoration: none;
+}
+
+.services-list li a:hover {
+  background-color: #f0f0f0;
+  color: #000;
+}
+/* Make sure the container is relative */
+.services-toggle-container {
+  position: relative;
+}
+
+/* Hide dropdown initially */
+.services-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%; /* directly below the toggle */
+  left: 0;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  z-index: 1000;
+  min-width: 220px;
+  transition: all 0.3s ease;
+}
+
+/* Show dropdown when active */
+.services-dropdown.active {
+  display: block;
+}
+
+/* Rotate arrow */
+.services-arrow {
+  transition: transform 0.3s ease;
+}
+
+.services-arrow.rotated {
+  transform: rotate(180deg);
+}
+
+/* Style the list items */
+.services-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.services-list li a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+}
+
+.services-list li a:hover {
+  background: #f0f0f0;
+  color: #000;
+}
+
     </style>
   </head>
 
@@ -2876,35 +2997,6 @@
         const next = current === "light" ? "dark" : "light";
         applyTheme(next);
       });
-
-      // Services Dropdown
-      const servicesToggle = document.querySelector(".services-toggle");
-      const servicesDropdown = document.querySelector(".services-dropdown");
-      const servicesArrow = document.querySelector(".services-arrow");
-
-      if (servicesToggle && servicesDropdown && servicesArrow) {
-        servicesToggle.addEventListener("click", (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          servicesDropdown.classList.toggle("active");
-          servicesArrow.classList.toggle("rotated");
-        });
-
-        document.addEventListener("click", (e) => {
-          const container = document.querySelector(
-            ".services-toggle-container",
-          );
-          if (
-            container &&
-            !container.contains(e.target) &&
-            servicesDropdown.classList.contains("active")
-          ) {
-            servicesDropdown.classList.remove("active");
-            servicesArrow.classList.remove("rotated");
-          }
-        });
-      }
-
       // Language Selector
       const langBtn = document.querySelector(".lang-btn");
       const langDropdown = document.querySelector(".lang-dropdown");
@@ -3028,6 +3120,7 @@
       }
     </script>
     <script>
+      
       if (
         window.location.pathname.endsWith("index.html") ||
         window.location.pathname === "/"
@@ -3339,6 +3432,7 @@
       window.addEventListener("mouseup", () => {
         circles.forEach((c) => c.classList.remove("cursor-clicking"));
       });
+      
     </script>
   </body>
 </html>
