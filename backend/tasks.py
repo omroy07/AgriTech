@@ -186,280 +186,174 @@ def synthesize_loan_pdf_task(self, user_data, analysis_result, user_id=None, lan
         return {'status': 'error', 'message': str(e)}
 
 
-@celery_app.task(bind=True, name='tasks.detect_disease_outbreaks')
-def detect_disease_outbreaks_task(self):
+# AI-Powered Predictive Asset & Logistics Tasks
+
+@celery_app.task(bind=True, name='tasks.run_predictive_analysis')
+def run_predictive_analysis_task(self):
     """
-    Automated task to detect disease outbreaks by analyzing spatial clustering.
-    Runs every hour to identify new outbreak zones and alert at-risk farmers.
+    Weekly scheduled task to run AI failure predictions for all active assets.
+    Identifies assets at risk and creates maintenance alerts.
     """
     try:
-        from backend.services.geospatial_service import GeospatialService
-        from backend.models import OutbreakZone
-        from sqlalchemy import func, and_
-        import uuid
+        from services.asset_service import AssetService
+        from models import FarmAsset
+        from services.notification_service import NotificationService
+        import logging
         
-        logger.info("Starting outbreak detection analysis...")
+        logger = logging.getLogger(__name__)
+        logger.info("Starting scheduled predictive asset analysis")
         
-        # Detect outbreak clusters
-        clusters = GeospatialService.detect_outbreak_clusters(
-            radius_km=50,  # 50km clustering radius
-            min_incidents=3,  # Minimum 3 incidents
-            days_back=30  # Last 30 days
-        )
+        # Get all active assets
+        active_assets = FarmAsset.query.filter_by(status='ACTIVE').all()
         
-        new_outbreaks = []
+        predictions_run = 0
+        alerts_created = 0
         
-        for cluster in clusters:
-            # Check if similar outbreak zone already exists
-            existing_zone = OutbreakZone.query.filter(
-                and_(
-                    OutbreakZone.disease_name == cluster['disease_name'],
-                    OutbreakZone.crop_affected == cluster['crop_affected'],
-                    OutbreakZone.status == 'active',
-                    func.abs(OutbreakZone.center_latitude - cluster['center_lat']) < 0.1,
-                    func.abs(OutbreakZone.center_longitude - cluster['center_lon']) < 0.1
-                )
-            ).first()
-            
-            if existing_zone:
-                # Update existing zone
-                existing_zone.incident_count = cluster['incident_count']
-                existing_zone.total_affected_area = cluster.get('total_affected_area', 0)
-                existing_zone.severity_level = cluster['severity_level']
-                existing_zone.last_updated = datetime.utcnow()
-                logger.info(f"Updated existing outbreak zone: {existing_zone.zone_id}")
-            else:
-                # Create new outbreak zone
-                zone = GeospatialService.create_outbreak_zone(cluster)
-                new_outbreaks.append(zone)
-                logger.info(f"Created new outbreak zone: {zone.zone_id}")
-                
-                # Trigger emergency alerts
-                send_outbreak_emergency_alerts_task.delay(zone.id)
-        
-        db.session.commit()
-        
-        return {
-            'status': 'success',
-            'clusters_detected': len(clusters),
-            'new_outbreaks': len(new_outbreaks),
-            'new_outbreak_ids': [z.zone_id for z in new_outbreaks]
-        }
-    
-    except Exception as e:
-        logger.error(f"Outbreak detection failed: {str(e)}")
-        return {'status': 'error', 'message': str(e)}
-
-
-@celery_app.task(bind=True, name='tasks.send_outbreak_emergency_alerts')
-def send_outbreak_emergency_alerts_task(self, outbreak_zone_id):
-    """
-    Send emergency alerts and generate PDF reports for farmers at risk.
-    """
-    try:
-        from backend.services.geospatial_service import GeospatialService
-        from backend.services.notification_service import NotificationService
-        from backend.models import OutbreakZone, OutbreakAlert
-        from backend.extensions.socketio import socketio
-        from sqlalchemy import and_
-        import uuid
-        
-        zone = OutbreakZone.query.get(outbreak_zone_id)
-        if not zone:
-            return {'status': 'error', 'message': 'Outbreak zone not found'}
-        
-        # Find farmers at risk
-        at_risk_farmers = GeospatialService.find_farmers_at_risk(zone, radius_multiplier=1.5)
-        
-        logger.info(f"Found {len(at_risk_farmers)} farmers at risk for outbreak {zone.zone_id}")
-        
-        alerts_sent = []
-        
-        for farmer, distance in at_risk_farmers:
-            # Skip if already alerted for this zone
-            existing_alert = OutbreakAlert.query.filter(
-                and_(
-                    OutbreakAlert.user_id == farmer.id,
-                    OutbreakAlert.outbreak_zone_id == zone.id
-                )
-            ).first()
-            
-            if existing_alert:
-                continue
-            
-            # Determine priority based on distance and risk level
-            if distance <= zone.radius_km:
-                priority = 'urgent'
-                alert_type = 'outbreak_detected'
-            elif distance <= zone.radius_km * 1.2:
-                priority = 'high'
-                alert_type = 'proximity_warning'
-            else:
-                priority = 'medium'
-                alert_type = 'preventive_action'
-            
-            # Get localized messages
-            lang = 'en'  # TODO: Get user's preferred language
-            title = get_translated_string(f'outbreak_alert_{alert_type}_title', lang=lang,
-                                         disease=zone.disease_name)
-            message = get_translated_string(f'outbreak_alert_{alert_type}_msg', lang=lang,
-                                           disease=zone.disease_name,
-                                           crop=zone.crop_affected,
-                                           distance=f"{distance:.1f}")
-            
-            # Create outbreak alert record
-            alert_id = f"ALERT-{uuid.uuid4().hex[:12].upper()}"
-            alert = OutbreakAlert(
-                alert_id=alert_id,
-                user_id=farmer.id,
-                outbreak_zone_id=zone.id,
-                alert_type=alert_type,
-                priority=priority,
-                title=title,
-                message=message,
-                distance_km=distance
-            )
-            
-            db.session.add(alert)
-            db.session.flush()
-            
-            # Send SocketIO real-time notification
+        for asset in active_assets:
             try:
-                socketio.emit('outbreak_alert', {
-                    'alert_id': alert_id,
-                    'zone_id': zone.zone_id,
-                    'title': title,
-                    'message': message,
-                    'priority': priority,
-                    'distance_km': distance,
-                    'disease_name': zone.disease_name,
-                    'crop_affected': zone.crop_affected
-                }, room=f'user_{farmer.id}')
+                # Run AI prediction
+                prediction = AssetService.predict_failure_ai(asset.asset_id)
+                predictions_run += 1
+                
+                # Create alert if urgent
+                if prediction['urgency'] in ['CRITICAL', 'HIGH']:
+                    NotificationService.create_notification(
+                        title=f"⚠️ Asset Alert: {asset.asset_name}",
+                        message=f"Predicted failure in {prediction['days_to_failure']} days. Urgency: {prediction['urgency']}",
+                        notification_type="asset_alert",
+                        user_id=asset.user_id
+                    )
+                    alerts_created += 1
+                    
             except Exception as e:
-                logger.warning(f"SocketIO emit failed: {str(e)}")
-            
-            # Create regular notification
-            NotificationService.create_notification(
-                title=title,
-                message=message,
-                notification_type='outbreak_alert',
-                user_id=farmer.id
-            )
-            
-            # Generate PDF report asynchronously
-            generate_outbreak_pdf_report_task.delay(alert.id, lang=lang)
-            
-            alerts_sent.append(alert_id)
+                logger.error(f"Error predicting for asset {asset.asset_id}: {str(e)}")
+                continue
         
-        db.session.commit()
+        logger.info(f"Predictive analysis complete: {predictions_run} predictions, {alerts_created} alerts")
         
         return {
             'status': 'success',
-            'alerts_sent': len(alerts_sent),
-            'alert_ids': alerts_sent
+            'predictions_run': predictions_run,
+            'alerts_created': alerts_created
         }
-    
+        
     except Exception as e:
-        logger.error(f"Emergency alert sending failed: {str(e)}")
+        logger.error(f"Predictive analysis task failed: {str(e)}")
         return {'status': 'error', 'message': str(e)}
 
 
-@celery_app.task(bind=True, name='tasks.generate_outbreak_pdf_report')
-def generate_outbreak_pdf_report_task(self, alert_id, lang='en'):
+@celery_app.task(bind=True, name='tasks.optimize_daily_routes')
+def optimize_daily_routes_task(self, target_date_str=None):
     """
-    Generate AI-powered preventative action PDF report for outbreak alert.
+    Daily scheduled task to optimize logistics routes for pending orders.
+    Groups nearby farmers and calculates cost savings.
+    
+    Args:
+        target_date_str: ISO format date string (defaults to tomorrow)
     """
     try:
-        import google.generativeai as genai
-        from backend.services.pdf_service import PDFService
-        from backend.services.file_service import FileService
-        from backend.models import OutbreakAlert
+        from services.logistics_service import LogisticsService
+        from services.notification_service import NotificationService
+        from datetime import datetime, timedelta
+        import logging
         
-        alert = OutbreakAlert.query.get(alert_id)
-        if not alert or not alert.zone:
-            return {'status': 'error', 'message': 'Alert or zone not found'}
+        logger = logging.getLogger(__name__)
         
-        zone = alert.zone
+        # Default to tomorrow if no date provided
+        if target_date_str:
+            target_date = datetime.fromisoformat(target_date_str)
+        else:
+            target_date = datetime.utcnow() + timedelta(days=1)
         
-        # Generate AI preventative measures if not already generated
-        if not zone.preventative_measures or not zone.emergency_recommendations:
-            api_key = os.environ.get('GEMINI_API_KEY')
-            if api_key:
-                genai.configure(api_key=api_key)
-                model = genai.GenerativeModel("gemini-2.0-flash-exp")
-                
-                prompt = f"""
-You are an agricultural disease management expert. Generate a comprehensive emergency response report.
-
-OUTBREAK DETAILS:
-- Disease: {zone.disease_name}
-- Affected Crop: {zone.crop_affected}
-- Severity Level: {zone.severity_level}
-- Risk Level: {zone.risk_level}
-- Number of Incidents: {zone.incident_count}
-- Affected Area: {zone.total_affected_area} hectares
-
-Generate a detailed report with:
-1. IMMEDIATE ACTIONS (next 24-48 hours)
-2. PREVENTATIVE MEASURES (to protect crops)
-3. TREATMENT RECOMMENDATIONS (if infection occurs)
-4. MONITORING GUIDELINES
-5. COMMUNITY COORDINATION STEPS
-
-Language: {lang}
-Format: Use clear sections with bullet points. Be specific and actionable.
-"""
-                
-                response = model.generate_content(prompt)
-                if response.candidates:
-                    recommendations = response.candidates[0].content.parts[0].text
-                    zone.emergency_recommendations = recommendations
-                    zone.preventative_measures = recommendations[:500]  # Store summary
-                    db.session.commit()
+        logger.info(f"Starting route optimization for {target_date.date()}")
         
-        # Generate PDF report
-        with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
-            tmp_path = tmp.name
+        # Run optimization
+        routes = LogisticsService.optimize_routes(target_date)
         
-        pdf_data = {
-            'zone': zone.to_dict(),
-            'alert': alert.to_dict(),
-            'distance_km': alert.distance_km,
-            'recommendations': zone.emergency_recommendations or "Consult local agricultural expert."
+        # Notify farmers about their optimized routes
+        for route in routes:
+            total_savings = route['total_savings']
+            
+            # Get orders in this route
+            from models import LogisticsOrder
+            orders = LogisticsOrder.query.filter_by(route_group_id=route['route_id']).all()
+            
+            for order in orders:
+                NotificationService.create_notification(
+                    title="🚚 Pickup Scheduled & Cost Optimized",
+                    message=f"Your harvest pickup is scheduled. Grouped route saves you ₹{order.shared_cost_discount:.2f}! Route: {route['route_id']}",
+                    notification_type="logistics_update",
+                    user_id=order.user_id
+                )
+        
+        logger.info(f"Route optimization complete: {len(routes)} routes created")
+        
+        return {
+            'status': 'success',
+            'target_date': target_date.date().isoformat(),
+            'routes_created': len(routes),
+            'total_orders_grouped': sum(r['order_count'] for r in routes)
         }
         
-        # Use PDFService to generate report (simplified here)
-        success = PDFService.generate_outbreak_report(pdf_data, tmp_path)
-        
-        if success:
-            # Save PDF file
-            with open(tmp_path, 'rb') as f:
-                class MockFile:
-                    def __init__(self, stream, filename):
-                        self.stream = stream
-                        self.filename = filename
-                        self.content_type = 'application/pdf'
-                    def save(self, path):
-                        with open(path, 'wb') as dest:
-                            dest.write(self.stream.read())
-                    def seek(self, *args):
-                        self.stream.seek(*args)
-                    def tell(self):
-                        return self.stream.tell()
-                
-                mock_file = MockFile(f, f"Outbreak_Alert_{zone.zone_id}_{datetime.now().strftime('%Y%m%d')}.pdf")
-                file_record, error = FileService.save_file(mock_file, user_id=alert.user_id)
-                
-                if not error:
-                    alert.pdf_report_id = file_record.id
-                    db.session.commit()
-        
-        # Cleanup temp file
-        if os.path.exists(tmp_path):
-            os.remove(tmp_path)
-        
-        return {'status': 'success', 'alert_id': alert_id}
-    
     except Exception as e:
-        logger.error(f"PDF report generation failed: {str(e)}")
+        logger.error(f"Route optimization task failed: {str(e)}")
         return {'status': 'error', 'message': str(e)}
+
+
+@celery_app.task(bind=True, name='tasks.send_maintenance_reminders')
+def send_maintenance_reminders_task(self):
+    """
+    Daily task to send maintenance reminders for assets approaching due dates.
+    """
+    try:
+        from models import FarmAsset
+        from services.notification_service import NotificationService
+        from datetime import datetime, timedelta
+        import logging
+        
+        logger = logging.getLogger(__name__)
+        logger.info("Starting maintenance reminder check")
+        
+        # Get assets with maintenance due in next 7 days
+        threshold_date = datetime.utcnow() + timedelta(days=7)
+        
+        assets_due = FarmAsset.query.filter(
+            FarmAsset.next_maintenance_due.isnot(None),
+            FarmAsset.next_maintenance_due <= threshold_date,
+            FarmAsset.status == 'ACTIVE'
+        ).all()
+        
+        reminders_sent = 0
+        
+        for asset in assets_due:
+            days_until_due = (asset.next_maintenance_due - datetime.utcnow()).days
+            
+            if days_until_due <= 0:
+                urgency = "⚠️ OVERDUE"
+                message = f"{asset.asset_name} maintenance is overdue! Schedule service immediately."
+            elif days_until_due <= 3:
+                urgency = "🔴 URGENT"
+                message = f"{asset.asset_name} needs maintenance in {days_until_due} days."
+            else:
+                urgency = "🟡 Reminder"
+                message = f"{asset.asset_name} has maintenance due in {days_until_due} days."
+            
+            NotificationService.create_notification(
+                title=f"{urgency}: Maintenance Due",
+                message=message,
+                notification_type="asset_maintenance",
+                user_id=asset.user_id
+            )
+            reminders_sent += 1
+        
+        logger.info(f"Maintenance reminders sent: {reminders_sent}")
+        
+        return {
+            'status': 'success',
+            'reminders_sent': reminders_sent
+        }
+        
+    except Exception as e:
+        logger.error(f"Maintenance reminder task failed: {str(e)}")
+        return {'status': 'error', 'message': str(e)}
+
