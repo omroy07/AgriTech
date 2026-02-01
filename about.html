@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Include Navbar -->
     <div w3-include-html="navbar.html"></div>
 
     <main class="main-content">
@@ -92,8 +91,9 @@
     <footer class="footer">
         <p>&copy; 2026 AgriTech. All rights reserved. | Built with 💚 for farmers</p>
     </footer>
+
 <script>
-// Include navbar
+// Include navbar (UNCHANGED)
 function includeHTML(callback) {
     var z, i, elmnt, file, xhttp;
     z = document.getElementsByTagName("*");
@@ -107,11 +107,7 @@ function includeHTML(callback) {
                     if (this.status == 200) {elmnt.innerHTML = this.responseText;}
                     if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
                     elmnt.removeAttribute("w3-include-html");
-
-                    // Call again recursively
                     includeHTML(callback);
-
-                    // After loading navbar, run callback
                     if (callback) callback();
                 }
             }
@@ -122,23 +118,47 @@ function includeHTML(callback) {
     }
 }
 
-// Initialize theme toggle
+// Function to fix Services Dropdown (New logic needed for functionality)
+function initServicesDropdown() {
+    const servicesToggle = document.querySelector('.services-toggle');
+    const servicesDropdown = document.querySelector('.services-dropdown');
+    const servicesArrow = document.querySelector('.services-arrow');
+
+    if (servicesToggle && servicesDropdown) {
+        servicesToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            servicesDropdown.classList.toggle('active');
+            if (servicesArrow) servicesArrow.classList.toggle('rotated');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!servicesToggle.contains(e.target) && !servicesDropdown.contains(e.target)) {
+                servicesDropdown.classList.remove('active');
+                if (servicesArrow) servicesArrow.classList.remove('rotated');
+            }
+        });
+    }
+}
+
+// Initialize theme toggle (UNCHANGED)
 function initThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
     if (!themeToggle) return;
 
     themeToggle.addEventListener('click', () => {
-        const html = document.documentElement;
-        const current = html.getAttribute('data-theme');
+        const navbar = document.querySelector('.navbar');
+        if (!navbar) return;
+        const current = navbar.getAttribute('data-theme');
         const next = current === 'light' ? 'dark' : 'light';
-        html.setAttribute('data-theme', next);
+        navbar.setAttribute('data-theme', next);
         const themeLabel = document.querySelector('.theme-label');
         if (themeLabel) themeLabel.textContent = next === 'light' ? 'Light' : 'Dark';
         localStorage.setItem('agritech-theme', next);
     });
 }
 
-// Initialize mobile hamburger
+// Initialize mobile hamburger (UNCHANGED)
 function initHamburgerMenu() {
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -162,13 +182,14 @@ function initHamburgerMenu() {
 // Run after DOM loads
 document.addEventListener('DOMContentLoaded', () => {
     // Apply saved theme
-    const savedTheme = localStorage.getItem('agritech-theme') || 'light';
+    const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
 
-    // Include navbar and initialize functions
+    // Include navbar and initialize all parts
     includeHTML(() => {
         initThemeToggle();
         initHamburgerMenu();
+        initServicesDropdown(); // This starts the dropdown code
     });
 });
 </script>
