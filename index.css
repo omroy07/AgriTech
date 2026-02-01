@@ -940,7 +940,7 @@ body {
     }
 }
 /* FLOATING BUTTONS */
-#chatbotBtn, .scroll-btn {
+#chatbotBtn, #spatialBtn, .scroll-btn {
   position: fixed;
   right: 20px;
   width: 50px;
@@ -958,8 +958,18 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+#spatialBtn {
+  bottom: 140px;
+  background: #6366f1;
+}
+
 #chatbotBtn {
   bottom: 80px;
+}
+
+#spatialBtn:hover {
+  transform: scale(1.1);
+  background: #4f46e5;
 }
 
 #chatbotBtn:hover, .scroll-btn:hover {
@@ -1103,10 +1113,14 @@ body {
     padding: 1.5rem;
   }
 
-  #chatbotBtn, .scroll-btn {
+  #chatbotBtn, #spatialBtn, .scroll-btn {
     width: 45px;
     height: 45px;
     right: 15px;
+  }
+
+  #spatialBtn {
+    bottom: 125px;
   }
 
   #chatbotBtn {

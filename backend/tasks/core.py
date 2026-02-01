@@ -12,7 +12,7 @@ from backend.utils.logger import logger
 from backend.utils.i18n_utils import get_translated_string
 
 # Load models at worker startup
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 CROP_MODEL_PATH = os.path.join(BASE_DIR, "crop_recommendation", "model", "rf_model.pkl")
 CROP_ENCODER_PATH = os.path.join(BASE_DIR, "crop_recommendation", "model", "label_encoder.pkl")
@@ -26,8 +26,11 @@ def load_crop_models():
     """Load crop prediction models."""
     global crop_model, crop_encoder
     if crop_model is None:
-        crop_model = joblib.load(CROP_MODEL_PATH)
-        crop_encoder = joblib.load(CROP_ENCODER_PATH)
+        if os.path.exists(CROP_MODEL_PATH) and os.path.exists(CROP_ENCODER_PATH):
+            crop_model = joblib.load(CROP_MODEL_PATH)
+            crop_encoder = joblib.load(CROP_ENCODER_PATH)
+        else:
+            logger.warning(f"Crop models not found at {CROP_MODEL_PATH}. Prediction task will fail.")
     return crop_model, crop_encoder
 
 
@@ -230,11 +233,6 @@ def finalize_pool_cycle_task(self, pool_id):
         logger.error(f"Failed to finalize pool cycle: {str(e)}")
         return {'status': 'error', 'message': str(e)}
 
-CLAIM DETAILS:
-- Claim Number: {claim.claim_number}
-- Claimed Amount: ₹{claim.claimed_amount}
-- Incident Date: {claim.incident_date}
-- Incident Description: {claim.incident_description}
 
 @celery_app.task(bind=True, name='tasks.simulate_batch_payouts')
 def simulate_batch_payouts_task(self, pool_id):

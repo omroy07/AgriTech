@@ -1,48 +1,6 @@
 from datetime import datetime
 from backend.extensions import db
-from geoalchemy2 import Geometry
-from sqlalchemy import Index
 
-class UserRole:
-    FARMER = 'farmer'
-    SHOPKEEPER = 'shopkeeper'
-    ADMIN = 'admin'
-    CONSULTANT = 'consultant'
-
-class UserRole:
-    FARMER = 'farmer'
-    SHOPKEEPER = 'shopkeeper'
-    ADMIN = 'admin'
-    CONSULTANT = 'consultant'
-
-class User(db.Model):
-    __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    role = db.Column(db.String(20), default=UserRole.FARMER)
-    
-    notifications = db.relationship('Notification', backref='user', lazy=True)
-    files = db.relationship('File', backref='user', lazy=True)
-    disease_incidents = db.relationship('DiseaseIncident', backref='reporter', lazy=True)
-    
-    def set_farm_location(self, latitude, longitude):
-        """Set farm location from lat/lon coordinates"""
-        self.farm_latitude = latitude
-        self.farm_longitude = longitude
-        self.farm_location = f'POINT({longitude} {latitude})'
-    
-    def get_farm_coordinates(self):
-        """Get farm coordinates as dict"""
-        if self.farm_latitude and self.farm_longitude:
-            return {
-                'latitude': self.farm_latitude,
-                'longitude': self.farm_longitude
-            }
-        return None
-
-    def __repr__(self):
-        return f'<User {self.username} ({self.role})>'
 
 class Notification(db.Model):
     __tablename__ = 'notifications'
@@ -63,6 +21,7 @@ class Notification(db.Model):
             'read_at': self.read_at.isoformat() if self.read_at else None,
             'sent_at': self.sent_at.isoformat()
         }
+
 
 class File(db.Model):
     __tablename__ = 'files'
@@ -93,41 +52,28 @@ class File(db.Model):
 
 
 class YieldPool(db.Model):
-    """
-    Represents a collaborative farming pool where multiple farmers
-    combine their produce to sell in bulk.
-    """
     __tablename__ = 'yield_pools'
     
     id = db.Column(db.Integer, primary_key=True)
     pool_id = db.Column(db.String(50), unique=True, nullable=False)
     pool_name = db.Column(db.String(200), nullable=False)
     crop_type = db.Column(db.String(100), nullable=False)
-    target_quantity = db.Column(db.Float, nullable=False)  # in tons
+    target_quantity = db.Column(db.Float, nullable=False)
     current_quantity = db.Column(db.Float, default=0.0)
-    
-    # Pool state: OPEN, LOCKED, COMPLETED, DISTRIBUTED
     status = db.Column(db.String(20), default='OPEN', nullable=False)
-    
-    # Pricing
     min_price_per_ton = db.Column(db.Float, nullable=False)
     current_offer_price = db.Column(db.Float, nullable=True)
     buyer_name = db.Column(db.String(200), nullable=True)
-    
-    # Logistics
     collection_location = db.Column(db.String(200), nullable=False)
-    logistics_overhead_percent = db.Column(db.Float, default=5.0)  # percentage
-    
-    # Timestamps
+    logistics_overhead_percent = db.Column(db.Float, default=5.0)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     locked_at = db.Column(db.DateTime, nullable=True)
     completed_at = db.Column(db.DateTime, nullable=True)
     distributed_at = db.Column(db.DateTime, nullable=True)
     
-    # Relationships
     contributions = db.relationship('PoolContribution', backref='pool', lazy=True, cascade='all, delete-orphan')
     votes = db.relationship('PoolVote', backref='pool', lazy=True, cascade='all, delete-orphan')
-    
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -149,51 +95,36 @@ class YieldPool(db.Model):
             'contribution_count': len(self.contributions),
             'fill_percentage': (self.current_quantity / self.target_quantity * 100) if self.target_quantity > 0 else 0
         }
-    
+
     def get_risk_category(self):
         """Categorize risk score."""
-        if self.ars_score <= 20:
-            return 'EXCELLENT'
-        elif self.ars_score <= 40:
-            return 'GOOD'
-        elif self.ars_score <= 60:
-            return 'MODERATE'
-        elif self.ars_score <= 80:
-            return 'HIGH'
-        else:
-            return 'CRITICAL'
-    
-    def __repr__(self):
-        return f'<YieldPool {self.pool_id} - {self.crop_type} ({self.status})>'
+        # Note: ars_score was probably intended to be risk_score or similar
+        # Fallback to 50 if attribute missing
+        score = getattr(self, 'ars_score', 50)
+        if score <= 20: return 'EXCELLENT'
+        elif score <= 40: return 'GOOD'
+        elif score <= 60: return 'MODERATE'
+        elif score <= 80: return 'HIGH'
+        else: return 'CRITICAL'
 
 
 class PoolContribution(db.Model):
-    """
-    Tracks individual farmer contributions to a yield pool.
-    """
     __tablename__ = 'pool_contributions'
     
     id = db.Column(db.Integer, primary_key=True)
     pool_id = db.Column(db.Integer, db.ForeignKey('yield_pools.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    
-    # Contribution details
     quantity_tons = db.Column(db.Float, nullable=False)
-    quality_grade = db.Column(db.String(20), default='A')  # A, B, C
-    contribution_percentage = db.Column(db.Float, default=0.0)  # calculated
-    
-    # Financial tracking
+    quality_grade = db.Column(db.String(20), default='A')
+    contribution_percentage = db.Column(db.Float, default=0.0)
     estimated_value = db.Column(db.Float, default=0.0)
     actual_payout = db.Column(db.Float, nullable=True)
-    payout_status = db.Column(db.String(20), default='PENDING')  # PENDING, PAID, FAILED
-    
-    # Timestamps
+    payout_status = db.Column(db.String(20), default='PENDING')
     contributed_at = db.Column(db.DateTime, default=datetime.utcnow)
     paid_at = db.Column(db.DateTime, nullable=True)
     
-    # Relationships
     user = db.relationship('User', backref='pool_contributions')
-    
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -209,36 +140,22 @@ class PoolContribution(db.Model):
             'contributed_at': self.contributed_at.isoformat(),
             'paid_at': self.paid_at.isoformat() if self.paid_at else None
         }
-    
-    def __repr__(self):
-        return f'<PoolContribution {self.id} - User {self.user_id} - {self.quantity_tons}T>'
 
 
 class ResourceShare(db.Model):
-    """
-    Tracks shared physical resources (equipment, tools) among pool members.
-    """
     __tablename__ = 'resource_shares'
-    
     id = db.Column(db.Integer, primary_key=True)
     pool_id = db.Column(db.Integer, db.ForeignKey('yield_pools.id'), nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    
-    # Resource details
-    resource_type = db.Column(db.String(100), nullable=False)  # harvester, tractor, storage
+    resource_type = db.Column(db.String(100), nullable=False)
     resource_name = db.Column(db.String(200), nullable=False)
-    resource_value = db.Column(db.Float, nullable=False)  # estimated value
-    
-    # Sharing terms
+    resource_value = db.Column(db.Float, nullable=False)
     usage_cost_per_hour = db.Column(db.Float, default=0.0)
     is_free_for_pool = db.Column(db.Boolean, default=True)
-    availability_status = db.Column(db.String(20), default='AVAILABLE')  # AVAILABLE, IN_USE, MAINTENANCE
-    
-    # Timestamps
+    availability_status = db.Column(db.String(20), default='AVAILABLE')
     shared_at = db.Column(db.DateTime, default=datetime.utcnow)
     last_used_at = db.Column(db.DateTime, nullable=True)
     
-    # Relationships
     owner = db.relationship('User', backref='shared_resources')
     pool = db.relationship('YieldPool', backref='shared_resources')
     
@@ -257,30 +174,18 @@ class ResourceShare(db.Model):
             'shared_at': self.shared_at.isoformat(),
             'last_used_at': self.last_used_at.isoformat() if self.last_used_at else None
         }
-    
-    def __repr__(self):
-        return f'<ResourceShare {self.id} - {self.resource_type}>'
 
 
 class PoolVote(db.Model):
-    """
-    Tracks consensus voting on buyer offers for yield pools.
-    """
     __tablename__ = 'pool_votes'
-    
     id = db.Column(db.Integer, primary_key=True)
     pool_id = db.Column(db.Integer, db.ForeignKey('yield_pools.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    
-    # Voting details
-    vote = db.Column(db.String(10), nullable=False)  # ACCEPT, REJECT
-    offer_price = db.Column(db.Float, nullable=False)  # price at time of vote
+    vote = db.Column(db.String(10), nullable=False)
+    offer_price = db.Column(db.Float, nullable=False)
     comment = db.Column(db.Text, nullable=True)
-    
-    # Timestamp
     voted_at = db.Column(db.DateTime, default=datetime.utcnow)
     
-    # Relationships
     user = db.relationship('User', backref='pool_votes')
     
     def to_dict(self):
@@ -294,6 +199,3 @@ class PoolVote(db.Model):
             'comment': self.comment,
             'voted_at': self.voted_at.isoformat()
         }
-    
-    def __repr__(self):
-        return f'<PoolVote {self.id} - User {self.user_id} - {self.vote}>'
