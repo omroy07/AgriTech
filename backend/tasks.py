@@ -186,280 +186,135 @@ def synthesize_loan_pdf_task(self, user_data, analysis_result, user_id=None, lan
         return {'status': 'error', 'message': str(e)}
 
 
-@celery_app.task(bind=True, name='tasks.detect_disease_outbreaks')
-def detect_disease_outbreaks_task(self):
+@celery_app.task(bind=True, name='tasks.finalize_pool_cycle')
+def finalize_pool_cycle_task(self, pool_id):
     """
-    Automated task to detect disease outbreaks by analyzing spatial clustering.
-    Runs every hour to identify new outbreak zones and alert at-risk farmers.
+    Finalize a completed pool cycle: execute profit distribution and
+    transition to DISTRIBUTED state.
     """
     try:
-        from backend.services.geospatial_service import GeospatialService
-        from backend.models import OutbreakZone
-        from sqlalchemy import func, and_
-        import uuid
+        from backend.services.financial_service import FinancialService
+        from backend.services.pool_service import PoolService
+        from backend.models import YieldPool
         
-        logger.info("Starting outbreak detection analysis...")
+        logger.info(f"Finalizing pool cycle for pool ID: {pool_id}")
         
-        # Detect outbreak clusters
-        clusters = GeospatialService.detect_outbreak_clusters(
-            radius_km=50,  # 50km clustering radius
-            min_incidents=3,  # Minimum 3 incidents
-            days_back=30  # Last 30 days
-        )
+        pool = YieldPool.query.get(pool_id)
+        if not pool:
+            return {'status': 'error', 'message': 'Pool not found'}
         
-        new_outbreaks = []
+        if pool.status != 'COMPLETED':
+            return {'status': 'error', 'message': f'Pool must be in COMPLETED state, currently {pool.status}'}
         
-        for cluster in clusters:
-            # Check if similar outbreak zone already exists
-            existing_zone = OutbreakZone.query.filter(
-                and_(
-                    OutbreakZone.disease_name == cluster['disease_name'],
-                    OutbreakZone.crop_affected == cluster['crop_affected'],
-                    OutbreakZone.status == 'active',
-                    func.abs(OutbreakZone.center_latitude - cluster['center_lat']) < 0.1,
-                    func.abs(OutbreakZone.center_longitude - cluster['center_lon']) < 0.1
-                )
-            ).first()
-            
-            if existing_zone:
-                # Update existing zone
-                existing_zone.incident_count = cluster['incident_count']
-                existing_zone.total_affected_area = cluster.get('total_affected_area', 0)
-                existing_zone.severity_level = cluster['severity_level']
-                existing_zone.last_updated = datetime.utcnow()
-                logger.info(f"Updated existing outbreak zone: {existing_zone.zone_id}")
-            else:
-                # Create new outbreak zone
-                zone = GeospatialService.create_outbreak_zone(cluster)
-                new_outbreaks.append(zone)
-                logger.info(f"Created new outbreak zone: {zone.zone_id}")
-                
-                # Trigger emergency alerts
-                send_outbreak_emergency_alerts_task.delay(zone.id)
+        # Execute profit distribution
+        success, message = FinancialService.execute_distribution(pool_id)
         
-        db.session.commit()
+        if not success:
+            return {'status': 'error', 'message': message}
+        
+        # Transition to DISTRIBUTED state
+        success, error = PoolService.transition_state(pool_id, 'DISTRIBUTED')
+        
+        if not success:
+            return {'status': 'error', 'message': error}
+        
+        logger.info(f"Pool {pool.pool_id} finalized successfully")
         
         return {
             'status': 'success',
-            'clusters_detected': len(clusters),
-            'new_outbreaks': len(new_outbreaks),
-            'new_outbreak_ids': [z.zone_id for z in new_outbreaks]
+            'pool_id': pool.pool_id,
+            'message': message
         }
-    
+        
     except Exception as e:
-        logger.error(f"Outbreak detection failed: {str(e)}")
+        logger.error(f"Failed to finalize pool cycle: {str(e)}")
         return {'status': 'error', 'message': str(e)}
 
+CLAIM DETAILS:
+- Claim Number: {claim.claim_number}
+- Claimed Amount: ₹{claim.claimed_amount}
+- Incident Date: {claim.incident_date}
+- Incident Description: {claim.incident_description}
 
-@celery_app.task(bind=True, name='tasks.send_outbreak_emergency_alerts')
-def send_outbreak_emergency_alerts_task(self, outbreak_zone_id):
+@celery_app.task(bind=True, name='tasks.simulate_batch_payouts')
+def simulate_batch_payouts_task(self, pool_id):
     """
-    Send emergency alerts and generate PDF reports for farmers at risk.
+    Simulate bank transfers for all pool contributors.
     """
     try:
-        from backend.services.geospatial_service import GeospatialService
-        from backend.services.notification_service import NotificationService
-        from backend.models import OutbreakZone, OutbreakAlert
-        from backend.extensions.socketio import socketio
-        from sqlalchemy import and_
-        import uuid
+        from backend.services.financial_service import FinancialService
+        from backend.models import YieldPool, PoolContribution
         
-        zone = OutbreakZone.query.get(outbreak_zone_id)
-        if not zone:
-            return {'status': 'error', 'message': 'Outbreak zone not found'}
+        logger.info(f"Simulating batch payouts for pool ID: {pool_id}")
         
-        # Find farmers at risk
-        at_risk_farmers = GeospatialService.find_farmers_at_risk(zone, radius_multiplier=1.5)
+        pool = YieldPool.query.get(pool_id)
+        if not pool:
+            return {'status': 'error', 'message': 'Pool not found'}
         
-        logger.info(f"Found {len(at_risk_farmers)} farmers at risk for outbreak {zone.zone_id}")
+        contributions = PoolContribution.query.filter_by(pool_id=pool_id).all()
         
-        alerts_sent = []
+        results = []
+        successful = 0
+        failed = 0
         
-        for farmer, distance in at_risk_farmers:
-            # Skip if already alerted for this zone
-            existing_alert = OutbreakAlert.query.filter(
-                and_(
-                    OutbreakAlert.user_id == farmer.id,
-                    OutbreakAlert.outbreak_zone_id == zone.id
-                )
-            ).first()
-            
-            if existing_alert:
-                continue
-            
-            # Determine priority based on distance and risk level
-            if distance <= zone.radius_km:
-                priority = 'urgent'
-                alert_type = 'outbreak_detected'
-            elif distance <= zone.radius_km * 1.2:
-                priority = 'high'
-                alert_type = 'proximity_warning'
-            else:
-                priority = 'medium'
-                alert_type = 'preventive_action'
-            
-            # Get localized messages
-            lang = 'en'  # TODO: Get user's preferred language
-            title = get_translated_string(f'outbreak_alert_{alert_type}_title', lang=lang,
-                                         disease=zone.disease_name)
-            message = get_translated_string(f'outbreak_alert_{alert_type}_msg', lang=lang,
-                                           disease=zone.disease_name,
-                                           crop=zone.crop_affected,
-                                           distance=f"{distance:.1f}")
-            
-            # Create outbreak alert record
-            alert_id = f"ALERT-{uuid.uuid4().hex[:12].upper()}"
-            alert = OutbreakAlert(
-                alert_id=alert_id,
-                user_id=farmer.id,
-                outbreak_zone_id=zone.id,
-                alert_type=alert_type,
-                priority=priority,
-                title=title,
-                message=message,
-                distance_km=distance
-            )
-            
-            db.session.add(alert)
-            db.session.flush()
-            
-            # Send SocketIO real-time notification
-            try:
-                socketio.emit('outbreak_alert', {
-                    'alert_id': alert_id,
-                    'zone_id': zone.zone_id,
-                    'title': title,
-                    'message': message,
-                    'priority': priority,
-                    'distance_km': distance,
-                    'disease_name': zone.disease_name,
-                    'crop_affected': zone.crop_affected
-                }, room=f'user_{farmer.id}')
-            except Exception as e:
-                logger.warning(f"SocketIO emit failed: {str(e)}")
-            
-            # Create regular notification
-            NotificationService.create_notification(
-                title=title,
-                message=message,
-                notification_type='outbreak_alert',
-                user_id=farmer.id
-            )
-            
-            # Generate PDF report asynchronously
-            generate_outbreak_pdf_report_task.delay(alert.id, lang=lang)
-            
-            alerts_sent.append(alert_id)
+        for contribution in contributions:
+            if contribution.payout_status == 'PENDING' and contribution.actual_payout:
+                result = FinancialService.simulate_bank_transfer(contribution.id)
+                results.append({
+                    'user_id': contribution.user_id,
+                    'amount': contribution.actual_payout,
+                    'result': result
+                })
+                
+                if result['success']:
+                    successful += 1
+                else:
+                    failed += 1
         
-        db.session.commit()
+        logger.info(f"Batch payouts complete for pool {pool.pool_id}: {successful} successful, {failed} failed")
         
         return {
             'status': 'success',
-            'alerts_sent': len(alerts_sent),
-            'alert_ids': alerts_sent
+            'pool_id': pool.pool_id,
+            'successful_transfers': successful,
+            'failed_transfers': failed,
+            'details': results
         }
-    
+        
     except Exception as e:
-        logger.error(f"Emergency alert sending failed: {str(e)}")
+        logger.error(f"Failed to simulate batch payouts: {str(e)}")
         return {'status': 'error', 'message': str(e)}
 
 
-@celery_app.task(bind=True, name='tasks.generate_outbreak_pdf_report')
-def generate_outbreak_pdf_report_task(self, alert_id, lang='en'):
+@celery_app.task(bind=True, name='tasks.check_pool_target_reached')
+def check_pool_target_reached_task(self):
     """
-    Generate AI-powered preventative action PDF report for outbreak alert.
+    Periodic task to check if any open pools have reached their target quantity
+    and automatically transition them to LOCKED state.
     """
     try:
-        import google.generativeai as genai
-        from backend.services.pdf_service import PDFService
-        from backend.services.file_service import FileService
-        from backend.models import OutbreakAlert
+        from backend.services.pool_service import PoolService
+        from backend.models import YieldPool
         
-        alert = OutbreakAlert.query.get(alert_id)
-        if not alert or not alert.zone:
-            return {'status': 'error', 'message': 'Alert or zone not found'}
+        # Find all open pools that have reached 100% of target
+        pools = YieldPool.query.filter_by(status='OPEN').all()
         
-        zone = alert.zone
+        locked_count = 0
         
-        # Generate AI preventative measures if not already generated
-        if not zone.preventative_measures or not zone.emergency_recommendations:
-            api_key = os.environ.get('GEMINI_API_KEY')
-            if api_key:
-                genai.configure(api_key=api_key)
-                model = genai.GenerativeModel("gemini-2.0-flash-exp")
+        for pool in pools:
+            if pool.current_quantity >= pool.target_quantity:
+                success, error = PoolService.transition_state(pool.id, 'LOCKED')
                 
-                prompt = f"""
-You are an agricultural disease management expert. Generate a comprehensive emergency response report.
-
-OUTBREAK DETAILS:
-- Disease: {zone.disease_name}
-- Affected Crop: {zone.crop_affected}
-- Severity Level: {zone.severity_level}
-- Risk Level: {zone.risk_level}
-- Number of Incidents: {zone.incident_count}
-- Affected Area: {zone.total_affected_area} hectares
-
-Generate a detailed report with:
-1. IMMEDIATE ACTIONS (next 24-48 hours)
-2. PREVENTATIVE MEASURES (to protect crops)
-3. TREATMENT RECOMMENDATIONS (if infection occurs)
-4. MONITORING GUIDELINES
-5. COMMUNITY COORDINATION STEPS
-
-Language: {lang}
-Format: Use clear sections with bullet points. Be specific and actionable.
-"""
-                
-                response = model.generate_content(prompt)
-                if response.candidates:
-                    recommendations = response.candidates[0].content.parts[0].text
-                    zone.emergency_recommendations = recommendations
-                    zone.preventative_measures = recommendations[:500]  # Store summary
-                    db.session.commit()
+                if success:
+                    locked_count += 1
+                    logger.info(f"Auto-locked pool {pool.pool_id}: target reached")
         
-        # Generate PDF report
-        with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
-            tmp_path = tmp.name
-        
-        pdf_data = {
-            'zone': zone.to_dict(),
-            'alert': alert.to_dict(),
-            'distance_km': alert.distance_km,
-            'recommendations': zone.emergency_recommendations or "Consult local agricultural expert."
+        return {
+            'status': 'success',
+            'pools_locked': locked_count
         }
         
-        # Use PDFService to generate report (simplified here)
-        success = PDFService.generate_outbreak_report(pdf_data, tmp_path)
-        
-        if success:
-            # Save PDF file
-            with open(tmp_path, 'rb') as f:
-                class MockFile:
-                    def __init__(self, stream, filename):
-                        self.stream = stream
-                        self.filename = filename
-                        self.content_type = 'application/pdf'
-                    def save(self, path):
-                        with open(path, 'wb') as dest:
-                            dest.write(self.stream.read())
-                    def seek(self, *args):
-                        self.stream.seek(*args)
-                    def tell(self):
-                        return self.stream.tell()
-                
-                mock_file = MockFile(f, f"Outbreak_Alert_{zone.zone_id}_{datetime.now().strftime('%Y%m%d')}.pdf")
-                file_record, error = FileService.save_file(mock_file, user_id=alert.user_id)
-                
-                if not error:
-                    alert.pdf_report_id = file_record.id
-                    db.session.commit()
-        
-        # Cleanup temp file
-        if os.path.exists(tmp_path):
-            os.remove(tmp_path)
-        
-        return {'status': 'success', 'alert_id': alert_id}
-    
     except Exception as e:
-        logger.error(f"PDF report generation failed: {str(e)}")
+        logger.error(f"Failed to check pool targets: {str(e)}")
         return {'status': 'error', 'message': str(e)}
+

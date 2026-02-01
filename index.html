@@ -2875,6 +2875,74 @@
           `No results found for "${query}". Try different keywords.`;
         document.getElementById("searchPopup").style.display = "flex";
       }
+    </script>
+    <script>
+      
+      if (
+        window.location.pathname.endsWith("index.html") ||
+        window.location.pathname === "/"
+      ) {
+        const pageMap = {
+          home: "index.html",
+          about: "about.html",
+          blog: "blog.html",
+          crop: "crop.html",
+          marketplace: "marketplace.html",
+          supply: "supply-chain.html",
+          sustainable: "sustainable-farming.html",
+          finance: "financial-support.html",
+          login: "login.html",
+          register: "register.html",
+          faq: "faq.html",
+          feedback: "feed-back.html",
+          chat: "chat.html",
+        };
+
+        function clearHighlights() {
+          document.querySelectorAll(".search-highlight").forEach((span) => {
+            span.replaceWith(span.textContent);
+          });
+        }
+
+        function highlightAll(query) {
+          clearHighlights();
+          let found = false;
+          let firstMatch = null;
+
+          const walker = document.createTreeWalker(
+            document.body,
+            NodeFilter.SHOW_TEXT,
+          );
+          const nodes = [];
+
+          while (walker.nextNode()) nodes.push(walker.currentNode);
+
+          nodes.forEach((node) => {
+            const text = node.nodeValue;
+            const lower = text.toLowerCase();
+
+            if (!lower.includes(query)) return;
+
+            const parent = node.parentNode;
+            const fragment = document.createDocumentFragment();
+            let lastIndex = 0;
+
+            lower.replace(new RegExp(query, "gi"), (match, index) => {
+              found = true;
+
+              fragment.append(
+                document.createTextNode(text.slice(lastIndex, index)),
+              );
+
+              const span = document.createElement("span");
+              span.className = "search-highlight";
+              span.textContent = text.slice(index, index + match.length);
+
+              if (!firstMatch) firstMatch = span;
+
+              fragment.append(span);
+              lastIndex = index + match.length;
+            });
 
       window.closeSearchPopup = () => {
         document.getElementById("searchPopup").style.display = "none";
@@ -3109,4 +3177,14 @@
   </script>
 </body>
 
+      window.addEventListener("mousedown", () => {
+        circles.forEach((c) => c.classList.add("cursor-clicking"));
+      });
+
+      window.addEventListener("mouseup", () => {
+        circles.forEach((c) => c.classList.remove("cursor-clicking"));
+      });
+      
+    </script>
+  </body>
 </html>
