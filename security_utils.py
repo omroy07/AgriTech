@@ -9,8 +9,14 @@ import hashlib
 import uuid
 import datetime
 from functools import wraps
-from flask import request, jsonify
+from flask import request, jsonify, g
 from email_validator import validate_email, EmailNotValidError
+import logging
+
+# Configure security logger
+security_logger = logging.getLogger('security')
+security_logger.setLevel(logging.INFO)
+# In production, add a FileHandler or SocketHandler here
 
 # Input validation patterns
 EMAIL_PATTERN = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -151,20 +157,43 @@ def rate_limit(max_requests, window_seconds):
         return decorated_function
     return decorator
 
+def roles_required(*allowed_roles):
+    """Decorator to enforce role-based access control"""
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            # request.user is expected to be populated by the authentication middleware (e.g., token_required)
+            user = getattr(request, 'user', None)
+            
+            if not user:
+                log_security_event('UNAUTHORIZED_ACCESS', 'Anonymous user attempted to access protected resource')
+                return jsonify({'status': 'error', 'message': 'Authentication required'}), 401
+            
+            user_role = user.get('role')
+            if user_role not in allowed_roles:
+                log_security_event('FORBIDDEN_ACCESS', f"User {user.get('email')} with role {user_role} attempted to access {request.path}")
+                return jsonify({'status': 'error', 'message': 'Access forbidden: insufficient permissions'}), 403
+            
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator
+
 def log_security_event(event_type, details, user_ip=None):
-    """Log security events"""
+    """Log security events for audit trail"""
     if user_ip is None:
         user_ip = request.remote_addr
     
-    log_entry = {
-        'timestamp': str(datetime.datetime.now()),
-        'event_type': event_type,
-        'user_ip': user_ip,
-        'details': details
-    }
+    user_email = "anonymous"
+    if hasattr(request, 'user') and request.user:
+        user_email = request.user.get('email', 'unknown')
+
+    log_entry = f"[{datetime.datetime.now()}] TYPE: {event_type} | IP: {user_ip} | USER: {user_email} | DETAILS: {details}"
     
-    # In production, log to a secure logging service
-    print(f"SECURITY EVENT: {log_entry}")
+    # Log to our security logger
+    security_logger.warning(log_entry)
+    
+    # Fallback to print if no handlers configured
+    print(f"SECURITY AUDIT: {log_entry}")
 
 def sanitize_sql_input(value):
     """Sanitize input for SQL queries (use parameterized queries instead)"""

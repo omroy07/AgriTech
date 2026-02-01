@@ -2,10 +2,14 @@ from flask import Blueprint, request, jsonify, current_app
 import google.generativeai as genai
 from backend.utils.validation import sanitize_input, validate_input
 
+from auth_utils import token_required, roles_required
+
 loan_bp = Blueprint('loan', __name__)
 
 
 @loan_bp.route('/loan/process', methods=['POST'])
+@token_required
+@roles_required('farmer', 'admin')
 def process_loan():
     """Process loan eligibility request."""
     try:

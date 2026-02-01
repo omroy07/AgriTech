@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AgriTech | Privacy Policy</title>
+
+  <style>
+    :root {
+      --bg-color: #030712;
+      --text-color: #ffffff;
+      --text-muted: #cbd5e1;
+      --surface-color: rgba(15, 23, 42, 0.9);
+      --section-bg: rgba(30, 41, 59, 0.7);
+      --border-color: #334155;
+      --accent-color: #22c55e;
+    }
+
+    [data-theme="light"] {
+      --bg-color: #f8fafc;
+      --text-color: #0f172a;
+      --text-muted: #475569;
+      --surface-color: #ffffff;
+      --section-bg: #f1f5f9;
+      --border-color: #cbd5e1;
+      --accent-color: #16a34a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.7;
+    }
+
+    header {
+      padding: 1.2rem 2rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      color: var(--accent-color);
+      font-size: 1.6rem;
+    }
+
+    button {
+      background: var(--surface-color);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 2rem;
+    }
+
+    section {
+      background: var(--section-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    h2 {
+      color: var(--accent-color);
+      margin-bottom: 0.6rem;
+    }
+
+    p {
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      color: var(--text-muted);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Privacy Policy</h1>
+  <button onclick="toggleTheme()">Toggle Theme</button>
+</header>
+
+<main>
+
+  <section>
+    <p>
+      This Privacy Policy describes how <strong>AgriTech</strong> collects, uses,
+      and protects your information when you use our website and services.
+    </p>
+  </section>
+
+  <section>
+    <h2>1. Information We Collect</h2>
+    <p>We may collect the following types of information:</p>
+    <ul>
+      <li>Basic user information (if provided voluntarily)</li>
+      <li>Images uploaded for plant disease detection</li>
+      <li>Usage data such as pages visited and interactions</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>2. How We Use Your Information</h2>
+    <ul>
+      <li>To provide and improve AgriTech services</li>
+      <li>To analyze platform usage and enhance user experience</li>
+      <li>To support AI-based features such as crop analysis</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>3. Data Protection</h2>
+    <p>
+      We take reasonable security measures to protect user data.
+      Sensitive data such as API keys are never stored on the client side.
+    </p>
+  </section>
+
+  <section>
+    <h2>4. Third-Party Services</h2>
+    <p>
+      AgriTech may use third-party services such as Firebase or AI APIs.
+      These services have their own privacy policies governing data usage.
+    </p>
+  </section>
+
+  <section>
+    <h2>5. Cookies</h2>
+    <p>
+      AgriTech may use cookies or local storage to improve functionality
+      and enhance user experience. You can disable cookies in your browser
+      settings if you prefer.
+    </p>
+  </section>
+
+  <section>
+    <h2>6. Changes to This Policy</h2>
+    <p>
+      This Privacy Policy may be updated from time to time.
+      Any changes will be reflected on this page.
+    </p>
+  </section>
+
+  <section>
+    <h2>7. Contact Us</h2>
+    <p>
+      If you have any questions regarding this Privacy Policy, please contact us at:
+      <br><strong>agritech.opensource@gmail.com</strong>
+    </p>
+  </section>
+  <section style="text-align: center;">
+    <a href="index.html"
+       style="
+         display: inline-block;
+         margin-top: 1rem;
+         padding: 0.6rem 1.2rem;
+         background: var(--accent-color);
+         color: #ffffff;
+         text-decoration: none;
+         border-radius: 8px;
+         font-weight: 500;
+       ">
+      ← Back to Homepage
+    </a>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 AgriTech · Privacy matters 🌱
+</footer>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    html.setAttribute(
+      "data-theme",
+      html.getAttribute("data-theme") === "dark" ? "light" : "dark"
+    );
+  }
+</script>
+
+</body>
+</html>
