@@ -203,7 +203,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2026 AgriTech. All rights reserved.</p>
+        <p>© <span id="currentYear"></span> AgriTech. All rights reserved.</p>
       </div>
     </footer>
 
@@ -241,6 +241,10 @@
         const next = current === 'light' ? 'dark' : 'light';
         applyTheme(next);
       });
+    </script>
+    <script>
+      document.getElementById("currentYear").textContent =
+        new Date().getFullYear();
     </script>
   </body>
 </html>
