@@ -1,4 +1,5 @@
 from .socketio import socketio
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from .database import db, migrate
+from .mail import mail
+from .limiter import limiter
+from .babel import babel, get_locale

@@ -1,423 +1,373 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <link rel="icon" type="image/png" href="images/logo.png" />
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <meta
-      name="description"
-      content="AgriTech - Empowering Agriculture Through Technology. Connect farmers, buyers, and suppliers in India's agricultural ecosystem."
-    />
-    <title>AgriTech - Revolutionizing Agriculture with Technology</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="stylesheet" href="styles/switcher.css" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
-    <script>
-// services dropdown
-document.addEventListener("DOMContentLoaded", () => {
-  const container = document.querySelector(".services-toggle-container");
-  const toggle = container.querySelector(".services-toggle");
-  const dropdown = container.querySelector(".services-dropdown");
-  const arrow = container.querySelector(".services-arrow");
 
-  toggle.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    dropdown.classList.toggle("active");
-    arrow.classList.toggle("rotated");
-  });
+<head>
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description"
+    content="AgriTech - Empowering Agriculture Through Technology. Connect farmers, buyers, and suppliers in India's agricultural ecosystem." />
+  <title>AgriTech - Revolutionizing Agriculture with Technology</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="styles/switcher.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <script>
+    // services dropdown
+    document.addEventListener("DOMContentLoaded", () => {
+      const container = document.querySelector(".services-toggle-container");
+      const toggle = container.querySelector(".services-toggle");
+      const dropdown = container.querySelector(".services-dropdown");
+      const arrow = container.querySelector(".services-arrow");
 
-  // Close dropdown if clicking outside
-  document.addEventListener("click", (e) => {
-    if (!container.contains(e.target)) {
-      dropdown.classList.remove("active");
-      arrow.classList.remove("rotated");
+      toggle.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropdown.classList.toggle("active");
+        arrow.classList.toggle("rotated");
+      });
+
+      // Close dropdown if clicking outside
+      document.addEventListener("click", (e) => {
+        if (!container.contains(e.target)) {
+          dropdown.classList.remove("active");
+          arrow.classList.remove("rotated");
+        }
+      });
+    });
+  </script>
+
+  <style>
+    /* 1. DEFINE VARIABLES FOR THEMES */
+    :root {
+      /* DARK MODE DEFAULTS */
+      --bg-color: #030712;
+      --text-color: #ffffff;
+      --text-muted: #cbd5e1;
+      --surface-color: rgba(15, 23, 42, 0.9);
+      --section-bg: rgba(30, 41, 59, 0.7);
+      --border-color: #334155;
+      --accent-color: #22c55e;
+      --input-bg: #333333;
+      --input-border: #555555;
+      --btn-bg: #334155;
+      --btn-text: #ffffff;
+      --btn-hover: #475569;
+      --shadow-color: rgba(0, 0, 0, 0.3);
     }
-  });
-});
-</script>
 
-    <style>
-      /* 1. DEFINE VARIABLES FOR THEMES */
-      :root {
-        /* DARK MODE DEFAULTS */
-        --bg-color: #030712;
-        --text-color: #ffffff;
-        --text-muted: #cbd5e1;
-        --surface-color: rgba(15, 23, 42, 0.9);
-        --section-bg: rgba(30, 41, 59, 0.7);
-        --border-color: #334155;
-        --accent-color: #22c55e;
-        --input-bg: #333333;
-        --input-border: #555555;
-        --btn-bg: #334155;
-        --btn-text: #ffffff;
-        --btn-hover: #475569;
-        --shadow-color: rgba(0, 0, 0, 0.3);
-      }
+    [data-theme="light"] {
+      /* LIGHT MODE OVERRIDES */
+      --bg-color: #f8fafc;
+      --text-color: #0f172a;
+      --text-muted: #475569;
+      --surface-color: rgba(255, 255, 255, 0.95);
+      --section-bg: rgba(241, 245, 249, 0.8);
+      --border-color: #cbd5e1;
+      --accent-color: #16a34a;
+      --input-bg: #ffffff;
+      --input-border: #94a3b8;
+      --btn-bg: #e2e8f0;
+      --btn-text: #0f172a;
+      --btn-hover: #cbd5e1;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+    }
 
-      [data-theme="light"] {
-        /* LIGHT MODE OVERRIDES */
-        --bg-color: #f8fafc;
-        --text-color: #0f172a;
-        --text-muted: #475569;
-        --surface-color: rgba(255, 255, 255, 0.95);
-        --section-bg: rgba(241, 245, 249, 0.8);
-        --border-color: #cbd5e1;
-        --accent-color: #16a34a;
-        --input-bg: #ffffff;
-        --input-border: #94a3b8;
-        --btn-bg: #e2e8f0;
-        --btn-text: #0f172a;
-        --btn-hover: #cbd5e1;
-        --shadow-color: rgba(0, 0, 0, 0.1);
-      }
+    /* 2. RESET & BASE STYLES */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-      /* 2. RESET & BASE STYLES */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
 
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-      }
+    body {
+      background-color: var(--bg-color);
+      font-family: "Open Sans", sans-serif;
+      color: var(--text-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+      touch-action: pan-y;
+      -ms-touch-action: pan-y;
+      transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+    }
 
-      body {
-        background-color: var(--bg-color);
-        font-family: "Open Sans", sans-serif;
-        color: var(--text-color);
-        line-height: 1.6;
-        overflow-x: hidden;
-        touch-action: pan-y;
-        -ms-touch-action: pan-y;
-        transition:
-          background-color 0.3s ease,
-          color 0.3s ease;
-      }
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: -1;
+    }
 
-      #bg-canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        z-index: -1;
-      }
+    .serif {
+      font-family: "Libertinus Serif", serif;
+    }
 
-      .serif {
-        font-family: "Libertinus Serif", serif;
-      }
+    /* 3. NAVBAR STYLES */
+    .navbar {
+      position: relative;
+      width: 100%;
+      z-index: 100;
+      background: var(--surface-color);
+      backdrop-filter: blur(10px);
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      transition:
+        background 0.3s ease,
+        border-color 0.3s ease;
+    }
 
-      /* 3. NAVBAR STYLES */
-      .navbar {
-        position: relative;
-        width: 100%;
-        z-index: 100;
-        background: var(--surface-color);
-        backdrop-filter: blur(10px);
-        padding: 1rem;
-        border-bottom: 1px solid var(--border-color);
-        transition:
-          background 0.3s ease,
-          border-color 0.3s ease;
-      }
+    .navbar-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+      gap: 1rem;
+      flex-wrap: nowrap;
+    }
 
-      .navbar-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 1400px;
-        margin: 0 auto;
-        gap: 1rem;
-        flex-wrap: nowrap;
-      }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
 
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        flex-shrink: 0;
-      }
+    .brand img {
+      width: 45px;
+      height: 45px;
+      background: white;
+      padding: 5px;
+      border-radius: 8px;
+    }
 
-      .brand img {
-        width: 45px;
-        height: 45px;
-        background: white;
-        padding: 5px;
-        border-radius: 8px;
-      }
+    .brand a {
+      color: var(--accent-color);
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
 
-      .brand a {
-        color: var(--accent-color);
-        text-decoration: none;
-        font-size: 1.5rem;
-        font-weight: bold;
-      }
+    /* Left Navigation */
+    .left-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-shrink: 0;
+    }
 
-      /* Left Navigation */
-      .left-nav {
-        display: flex;
-        align-items: center;
-        gap: 1.2rem;
-        flex-shrink: 0;
-      }
+    .nav-link {
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--text-color);
+      position: relative;
+      transition: color 0.3s ease;
+      white-space: nowrap;
+    }
 
-      .nav-link {
-        font-size: 0.9rem;
-        font-weight: 500;
-        text-decoration: none;
-        color: var(--text-color);
-        position: relative;
-        transition: color 0.3s ease;
-        white-space: nowrap;
-      }
+    .nav-link:hover {
+      color: var(--accent-color);
+    }
 
-      .nav-link:hover {
-        color: var(--accent-color);
-      }
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent-color);
+      transition: width 0.3s ease;
+    }
 
-      .nav-link::after {
-        content: "";
-        position: absolute;
-        bottom: -6px;
-        left: 0;
-        width: 0;
-        height: 2px;
-        background: var(--accent-color);
-        transition: width 0.3s ease;
-      }
+    .nav-link:hover::after {
+      width: 100%;
+    }
 
-      .nav-link:hover::after {
-        width: 100%;
-      }
+    /* Right Side Navigation */
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: nowrap;
+      flex-shrink: 0;
+    }
 
-      /* Right Side Navigation */
-      .nav-buttons {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        flex-wrap: nowrap;
-        flex-shrink: 0;
-      }
+    /* Search Container*/
+    .search-container {
+      position: relative;
+      display: flex;
+      gap: 0.25rem;
+      flex-shrink: 1;
+      min-width: 150px;
+    }
 
-      /* Search Container*/
-      .search-container {
-        position: relative;
-        display: flex;
-        gap: 0.25rem;
-        flex-shrink: 1;
-        min-width: 150px;
-      }
+    .search-input {
+      padding: 0.5rem;
+      padding-right: 40px;
+      border-radius: 8px;
+      border: 1px solid var(--input-border);
+      background: transparent;
+      color: var(--text-color);
+      width: 230px;
+      transition: all 0.3s ease;
+      font-size: 0.85rem;
+    }
 
-      .search-input {
-        padding: 0.5rem;
-        padding-right: 40px;
-        border-radius: 8px;
-        border: 1px solid var(--input-border);
-        background: transparent;
-        color: var(--text-color);
-        width: 230px;
-        transition: all 0.3s ease;
-        font-size: 0.85rem;
-      }
+    .search-button {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      padding: 0.5rem 0.6rem;
+      background: var(--accent-color);
+      border: none;
+      border-radius: 0 8px 8px 0;
+      color: white;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
 
-      .search-button {
-        position: absolute;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        padding: 0.5rem 0.6rem;
-        background: var(--accent-color);
-        border: none;
-        border-radius: 0 8px 8px 0;
-        color: white;
-        cursor: pointer;
-        flex-shrink: 0;
-      }
+    .search-input:focus,
+    .search-input.input-focused {
+      width: 330px;
+      outline: none;
+      border-color: var(--accent-color);
+    }
 
-      .search-input:focus,
-      .search-input.input-focused {
-        width: 330px;
-        outline: none;
-        border-color: var(--accent-color);
-      }
+    /* Services Dropdown */
+    .services-toggle-container {
+      position: relative;
+    }
 
-      /* Services Dropdown */
-      .services-toggle-container {
-        position: relative;
-      }
+    .services-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
 
-      .services-toggle {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
+    .services-arrow {
+      transition: transform 0.3s;
+      font-size: 0.75rem;
+    }
 
-      .services-arrow {
-        transition: transform 0.3s;
-        font-size: 0.75rem;
-      }
+    .services-arrow.rotated {
+      transform: rotate(180deg);
+    }
 
-      .services-arrow.rotated {
-        transform: rotate(180deg);
-      }
+    .services-dropdown {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      left: 0;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      min-width: 250px;
+      padding: 0.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      box-shadow: 0 4px 12px var(--shadow-color);
+    }
 
-      .services-dropdown {
-        position: absolute;
-        top: calc(100% + 0.5rem);
-        left: 0;
-        background: var(--surface-color);
-        border: 1px solid var(--border-color);
-        border-radius: 0.5rem;
-        min-width: 250px;
-        padding: 0.5rem;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: all 0.3s ease;
-        z-index: 1000;
-        box-shadow: 0 4px 12px var(--shadow-color);
-      }
+    .services-dropdown.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
 
-      .services-dropdown.active {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-      }
+    .services-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
 
-      .services-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
+    .services-list li {
+      margin: 0.25rem 0;
+    }
 
-      .services-list li {
-        margin: 0.25rem 0;
-      }
+    .services-list a {
+      color: var(--text-muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
 
-      .services-list a {
-        color: var(--text-muted);
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem;
-        border-radius: 4px;
-        transition: all 0.2s;
-      }
+    .services-list a:hover {
+      background: var(--btn-bg);
+      color: var(--text-color);
+    }
 
-      .services-list a:hover {
-        background: var(--btn-bg);
-        color: var(--text-color);
-      }
+    .services-list i {
+      width: 20px;
+    }
 
-      .services-list i {
-        width: 20px;
-      }
+    /* Language Selector */
+    .lang-container {
+      position: relative;
+      flex-shrink: 0;
+    }
 
-      /* Language Selector */
-      .lang-container {
-        position: relative;
-        flex-shrink: 0;
-      }
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      background: transparent;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-color);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.85rem;
+    }
 
-      .lang-btn {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem;
-        background: transparent;
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        color: var(--text-color);
-        cursor: pointer;
-        transition: all 0.2s;
-        font-size: 0.85rem;
-      }
+    .lang-btn:hover {
+      border-color: var(--accent-color);
+      background: rgba(34, 197, 94, 0.1);
+    }
 
-      .lang-btn:hover {
-        border-color: var(--accent-color);
-        background: rgba(34, 197, 94, 0.1);
-      }
+    .lang-btn i {
+      font-size: 0.9rem;
+    }
 
-      .lang-btn i {
-        font-size: 0.9rem;
-      }
-
-      .lang-dropdown {
-        position: absolute;
-        top: calc(100% + 0.5rem);
-        right: 0;
-        background: var(--surface-color);
-        border: 1px solid var(--border-color);
-        border-radius: 0.5rem;
-        min-width: 120px;
-        padding: 0.5rem;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: all 0.3s ease;
-        z-index: 1000;
-        box-shadow: 0 4px 12px var(--shadow-color);
-      }
-
-      .lang-dropdown.active {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-      }
-
-      .lang-option {
-        display: block;
-        color: var(--text-muted);
-        text-decoration: none;
-        padding: 0.5rem;
-        border-radius: 4px;
-        transition: all 0.2s;
-        cursor: pointer;
-        font-size: 0.85rem;
-      }
-
-      .lang-option:hover {
-        background: var(--btn-bg);
-        color: var(--text-color);
-      }
-
-      /* Theme Toggle */
-      .theme-toggle {
-        background: transparent;
-        border: 1px solid var(--border-color);
-        color: var(--text-color);
-        padding: 0.5rem;
-        border-radius: 8px;
-        transition: all 0.2s;
-      }
-
-      .theme-toggle:hover {
-        border-color: var(--accent-color);
-        background: rgba(34, 197, 94, 0.1);
-      }
-
-      .theme-toggle i {
-        font-size: 0.9rem;
-      }
-
+    .lang-dropdown {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      right: 0;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      min-width: 120px;
+      padding: 0.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      box-shadow: 0 4px 12px var(--shadow-color);
+    }
       .theme-text {
         font-size: 0.85rem;
       }
@@ -466,1457 +416,1456 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
 
-      /* Button Styles */
-      .btn {
-        padding: 0.5rem 0.85rem;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: 500;
-        font-size: 0.85rem;
-        transition: all 0.2s ease;
-        border: none;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        white-space: nowrap;
-        background: var(--btn-bg);
-        color: var(--btn-text);
-        flex-shrink: 0;
+    .lang-dropdown.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+
+    .lang-option {
+      display: block;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.5rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .lang-option:hover {
+      background: var(--btn-bg);
+      color: var(--text-color);
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent-color);
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    .theme-toggle i {
+      font-size: 0.9rem;
+    }
+
+    .theme-text {
+      font-size: 0.85rem;
+    }
+
+    /* Button Styles */
+    .btn {
+      padding: 0.5rem 0.85rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      flex-shrink: 0;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px var(--shadow-color);
+      background: var(--btn-hover);
+    }
+
+    .btn-primary {
+      background: var(--accent-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #15803d;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent-color);
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    /* 4. HERO SECTION */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .hero-content {
+      background: var(--surface-color);
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 800px;
+      margin: 0 auto;
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color);
+      transition: background 0.3s ease;
+    }
+
+    .hero-content h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent-color);
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--text-color);
+    }
+
+    /* 5. FEATURES SECTION */
+    .features {
+      position: relative;
+      z-index: 1;
+      padding: 4rem 1rem;
+      background: var(--section-bg);
+      transition: background 0.3s ease;
+    }
+
+    .features-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .features-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      color: var(--accent-color);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: var(--surface-color);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-color);
+      box-shadow: 0 8px 24px rgba(34, 197, 94, 0.2);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--text-color);
+    }
+
+    .feature-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent-color);
+    }
+
+    .feature-description {
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* FOOTER */
+    .site-footer {
+      background: var(--surface-color);
+      color: var(--text-color);
+      position: relative;
+      font-size: 0.95rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .footer-top-accent {
+      height: 4px;
+      background: linear-gradient(90deg, #16a34a, #22c55e);
+    }
+
+    .footer-inner-content {
+      max-width: 1200px;
+      margin: auto;
+      padding: 3rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      flex: 1 1 280px;
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .brand-logo {
+      width: 42px;
+    }
+
+    .footer-brand h3 {
+      color: var(--accent-color);
+      font-size: 1.3rem;
+    }
+
+    .tagline {
+      margin: 0.8rem 0 1.2rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 0.7rem;
+    }
+
+    .social-icons a {
+      width: 36px;
+      height: 36px;
+      background: #e6f4ea;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #15803d;
+      transition: all 0.25s ease;
+    }
+
+    .social-icons a:hover {
+      background: #22c55e;
+      color: #fff;
+    }
+
+    .footer-group-links {
+      display: flex;
+      gap: 3rem;
+      flex: 1 1 320px;
+    }
+
+    .footer-section h4 {
+      color: var(--accent-color);
+      margin-bottom: 0.9rem;
+      font-size: 1rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-section ul a {
+      color: var(--text-muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.25s ease;
+    }
+
+    .footer-section ul a:hover {
+      color: var(--accent-color);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding: 1rem;
+      background: var(--section-bg);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .footer-wave-overlay {
+      display: none;
+    }
+
+    /* FLOATING BUTTONS */
+    #chatbotBtn,
+    #spatialBtn,
+    .scroll-btn {
+      position: fixed;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #16a34a;
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    #spatialBtn {
+      bottom: 140px;
+      background: #6366f1;
+    }
+
+    #chatbotBtn {
+      bottom: 80px;
+    }
+
+    #spatialBtn:hover {
+      transform: scale(1.1);
+      background: #4f46e5;
+    }
+
+    #chatbotBtn:hover,
+    .scroll-btn:hover {
+      transform: scale(1.1);
+      background: #15803d;
+    }
+
+    .scroll-btn {
+      bottom: 20px;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .scroll-btn.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* HAMBURGER BUTTON */
+    .hamburger-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .hamburger-icon {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .bar {
+      width: 25px;
+      height: 3px;
+      background: var(--text-color);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* MOBILE MENU */
+    .mobile-menu,
+    .mobile-menu-overlay {
+      display: none;
+    }
+
+    @media (max-width: 1200px) {
+      .hamburger-btn {
+        display: block;
       }
 
-      .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px var(--shadow-color);
-        background: var(--btn-hover);
-      }
-
-      .btn-primary {
-        background: var(--accent-color);
-        color: white;
-      }
-
-      .btn-primary:hover {
-        background: #15803d;
-      }
-
-      .btn-secondary {
-        background: transparent;
-        border: 1px solid var(--border-color);
-        color: var(--text-color);
-      }
-
-      .btn-secondary:hover {
-        border-color: var(--accent-color);
-        background: rgba(34, 197, 94, 0.1);
-      }
-
-      /* 4. HERO SECTION */
-      .hero {
-        position: relative;
-        z-index: 1;
-        min-height: 60vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 2rem 1rem;
-      }
-
-      .hero-content {
-        background: var(--surface-color);
-        padding: 2rem;
-        border-radius: 12px;
-        max-width: 800px;
-        margin: 0 auto;
-        backdrop-filter: blur(10px);
-        border: 1px solid var(--border-color);
-        transition: background 0.3s ease;
-      }
-
-      .hero-content h2 {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-        color: var(--accent-color);
-      }
-
-      .hero-content p {
-        font-size: 1.1rem;
-        line-height: 1.8;
-        color: var(--text-color);
-      }
-
-      /* 5. FEATURES SECTION */
-      .features {
-        position: relative;
-        z-index: 1;
-        padding: 4rem 1rem;
-        background: var(--section-bg);
-        transition: background 0.3s ease;
-      }
-
-      .features-container {
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-
-      .features-title {
-        text-align: center;
-        font-size: 2.5rem;
-        margin-bottom: 3rem;
-        color: var(--accent-color);
-      }
-
-      .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-      }
-
-      .feature-card {
-        background: var(--surface-color);
-        padding: 2rem;
-        border-radius: 12px;
-        border: 1px solid var(--border-color);
-        transition: all 0.3s ease;
-        text-align: center;
-      }
-
-      .feature-card:hover {
-        transform: translateY(-5px);
-        border-color: var(--accent-color);
-        box-shadow: 0 8px 24px rgba(34, 197, 94, 0.2);
-      }
-
-      .feature-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        color: var(--text-color);
-      }
-
-      .feature-title {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-        color: var(--accent-color);
-      }
-
-      .feature-description {
-        color: var(--text-muted);
-        line-height: 1.6;
-      }
-
-      /* FOOTER */
-      .site-footer {
-        background: var(--surface-color);
-        color: var(--text-color);
-        position: relative;
-        font-size: 0.95rem;
-        border-top: 1px solid var(--border-color);
-      }
-
-      .footer-top-accent {
-        height: 4px;
-        background: linear-gradient(90deg, #16a34a, #22c55e);
-      }
-
-      .footer-inner-content {
-        max-width: 1200px;
-        margin: auto;
-        padding: 3rem 1.5rem;
-        display: flex;
-        justify-content: space-between;
-        gap: 3rem;
-        flex-wrap: wrap;
-      }
-
-      .footer-brand {
-        flex: 1 1 280px;
-      }
-
-      .brand-header {
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-      }
-
-      .brand-logo {
-        width: 42px;
-      }
-
-      .footer-brand h3 {
-        color: var(--accent-color);
-        font-size: 1.3rem;
-      }
-
-      .tagline {
-        margin: 0.8rem 0 1.2rem;
-        line-height: 1.6;
-        color: var(--text-muted);
-      }
-
-      .social-icons {
-        display: flex;
-        gap: 0.7rem;
-      }
-
-      .social-icons a {
-        width: 36px;
-        height: 36px;
-        background: #e6f4ea;
-        display: grid;
-        place-items: center;
-        border-radius: 50%;
-        color: #15803d;
-        transition: all 0.25s ease;
-      }
-
-      .social-icons a:hover {
-        background: #22c55e;
-        color: #fff;
-      }
-
-      .footer-group-links {
-        display: flex;
-        gap: 3rem;
-        flex: 1 1 320px;
-      }
-
-      .footer-section h4 {
-        color: var(--accent-color);
-        margin-bottom: 0.9rem;
-        font-size: 1rem;
-      }
-
-      .footer-section ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      .footer-section ul li {
-        margin-bottom: 0.6rem;
-      }
-
-      .footer-section ul a {
-        color: var(--text-muted);
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        transition: color 0.25s ease;
-      }
-
-      .footer-section ul a:hover {
-        color: var(--accent-color);
-      }
-
-      .footer-bottom {
-        text-align: center;
-        padding: 1rem;
-        background: var(--section-bg);
-        color: var(--text-muted);
-        font-size: 0.85rem;
-      }
-
-      .footer-wave-overlay {
+      .left-nav,
+      .nav-buttons {
         display: none;
       }
 
-      /* FLOATING BUTTONS */
-      #chatbotBtn,
-      .scroll-btn {
+      .mobile-menu-overlay {
+        display: block;
         position: fixed;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background: #16a34a;
-        color: white;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        z-index: 998;
+      }
+
+      .mobile-menu {
+        display: block;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 280px;
+        height: 100vh;
+        background: var(--surface-color);
+        transform: translateX(100%);
+        transition: transform 0.35s ease;
+        z-index: 999;
+        overflow-y: auto;
+        padding: 1rem;
+      }
+
+      .mobile-menu.active {
+        transform: translateX(0);
+      }
+
+      .mobile-menu-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* 🔥 FORCE CLOSE BUTTON TO ALWAYS RECEIVE TOUCH */
+      .mobile-menu-header {
+        position: sticky;
+        top: 0;
+        z-index: 1002;
+      }
+
+      /* ===== ENHANCED MOBILE CLOSE BUTTON - FIXED POSITION ===== */
+      .mobile-close-btn {
+        background: transparent;
         border: none;
+        color: var(--text-color);
+        font-size: 1rem;
+        /* और छोटा font size */
         cursor: pointer;
+        width: 40px;
+        /* और छोटा size */
+        height: 40px;
+        /* और छोटा size */
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 1000;
-        transition: all 0.3s;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: fixed;
+        /* COMPLETELY FIXED - scroll नहीं होगा */
+        top: 1rem;
+        /* top से fixed */
+        right: 1rem;
+        /* right से fixed */
+        z-index: 1003;
+        pointer-events: auto !important;
       }
 
-      #chatbotBtn {
-        bottom: 80px;
+      /* Animated X icon */
+      .mobile-close-btn i {
+        transition:
+          transform 0.3s ease,
+          color 0.3s ease;
+        font-size: 1rem;
+        /* और छोटा icon */
       }
 
-      #chatbotBtn:hover,
-      .scroll-btn:hover {
+      /* Hover effects */
+      .mobile-close-btn:hover {
+        background: linear-gradient(135deg,
+            var(--accent-color),
+            rgba(34, 197, 94, 0.2));
+        transform: rotate(90deg) scale(1.05);
+        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+      }
+
+      .mobile-close-btn:hover i {
+        color: white;
         transform: scale(1.1);
-        background: #15803d;
       }
 
-      .scroll-btn {
-        bottom: 20px;
+      /* Active/Click effect */
+      .mobile-close-btn:active {
+        transform: rotate(90deg) scale(0.9);
+        box-shadow: 0 2px 10px rgba(34, 197, 94, 0.2);
+        transition: transform 0.1s ease;
+      }
+
+      /* Pulsing animation */
+      @keyframes pulse-glow {
+
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+        }
+
+        50% {
+          box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+          /* और छोटा glow */
+        }
+      }
+
+      .mobile-close-btn {
+        animation: pulse-glow 2s infinite;
+      }
+
+      /* Tooltip for desktop hover */
+      .mobile-close-btn::before {
+        content: "Close";
+        position: absolute;
+        bottom: -28px;
+        left: 50%;
+        transform: translateX(-50%) translateY(6px);
+        background: var(--surface-color);
+        color: var(--text-color);
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 0.65rem;
+        /* और छोटा font */
+        white-space: nowrap;
         opacity: 0;
         visibility: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
       }
 
-      .scroll-btn.visible {
+      .mobile-close-btn:hover::before {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      /* Arrow pointing to button */
+      .mobile-close-btn::after {
+        content: "";
+        position: absolute;
+        top: -5px;
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+        width: 8px;
+        height: 8px;
+        background: var(--surface-color);
+        border-left: 1px solid var(--border-color);
+        border-top: 1px solid var(--border-color);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .mobile-close-btn:hover::after {
         opacity: 1;
         visibility: visible;
       }
 
-      /* HAMBURGER BUTTON */
-      .hamburger-btn {
-        display: none;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 0.5rem;
-      }
-
-      .hamburger-icon {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-      }
-
-      .bar {
-        width: 25px;
-        height: 3px;
-        background: var(--text-color);
-        border-radius: 2px;
-        transition: all 0.3s ease;
-      }
-
-      /* MOBILE MENU */
-      .mobile-menu,
-      .mobile-menu-overlay {
-        display: none;
-      }
-
-      @media (max-width: 1200px) {
-        .hamburger-btn {
-          display: block;
-        }
-
-        .left-nav,
-        .nav-buttons {
-          display: none;
-        }
-
-        .mobile-menu-overlay {
-          display: block;
-          position: fixed;
-          inset: 0;
-          background: rgba(0, 0, 0, 0.5);
-          opacity: 0;
-          pointer-events: none;
-          transition: opacity 0.3s ease;
-          z-index: 998;
-        }
-
-        .mobile-menu {
-          display: block;
-          position: fixed;
-          top: 0;
-          right: 0;
-          width: 280px;
-          height: 100vh;
-          background: var(--surface-color);
-          transform: translateX(100%);
-          transition: transform 0.35s ease;
-          z-index: 999;
-          overflow-y: auto;
-          padding: 1rem;
-        }
-
-        .mobile-menu.active {
-          transform: translateX(0);
-        }
-
-        .mobile-menu-overlay.active {
-          opacity: 1;
-          pointer-events: auto;
-        }
-
-        /* 🔥 FORCE CLOSE BUTTON TO ALWAYS RECEIVE TOUCH */
-        .mobile-menu-header {
-          position: sticky;
-          top: 0;
-          z-index: 1002;
-        }
-
-        /* ===== ENHANCED MOBILE CLOSE BUTTON - FIXED POSITION ===== */
-        .mobile-close-btn {
-          background: transparent;
-          border: none;
-          color: var(--text-color);
-          font-size: 1rem;
-          /* और छोटा font size */
-          cursor: pointer;
-          width: 40px;
-          /* और छोटा size */
-          height: 40px;
-          /* और छोटा size */
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 50%;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          position: fixed;
-          /* COMPLETELY FIXED - scroll नहीं होगा */
-          top: 1rem;
-          /* top से fixed */
-          right: 1rem;
-          /* right से fixed */
-          z-index: 1003;
-          pointer-events: auto !important;
-        }
-
-        /* Animated X icon */
-        .mobile-close-btn i {
-          transition:
-            transform 0.3s ease,
-            color 0.3s ease;
-          font-size: 1rem;
-          /* और छोटा icon */
-        }
-
-        /* Hover effects */
-        .mobile-close-btn:hover {
-          background: linear-gradient(
-            135deg,
-            var(--accent-color),
-            rgba(34, 197, 94, 0.2)
-          );
-          transform: rotate(90deg) scale(1.05);
-          box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
-        }
-
-        .mobile-close-btn:hover i {
-          color: white;
-          transform: scale(1.1);
-        }
-
-        /* Active/Click effect */
-        .mobile-close-btn:active {
-          transform: rotate(90deg) scale(0.9);
-          box-shadow: 0 2px 10px rgba(34, 197, 94, 0.2);
-          transition: transform 0.1s ease;
-        }
-
-        /* Pulsing animation */
-        @keyframes pulse-glow {
-          0%,
-          100% {
-            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
-          }
-
-          50% {
-            box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
-            /* और छोटा glow */
-          }
-        }
-
-        .mobile-close-btn {
-          animation: pulse-glow 2s infinite;
-        }
-
-        /* Tooltip for desktop hover */
-        .mobile-close-btn::before {
-          content: "Close";
-          position: absolute;
-          bottom: -28px;
-          left: 50%;
-          transform: translateX(-50%) translateY(6px);
-          background: var(--surface-color);
-          color: var(--text-color);
-          padding: 3px 8px;
-          border-radius: 4px;
-          font-size: 0.65rem;
-          /* और छोटा font */
-          white-space: nowrap;
-          opacity: 0;
-          visibility: hidden;
-          transition: all 0.3s ease;
-          border: 1px solid var(--border-color);
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-          z-index: 1000;
-        }
-
-        .mobile-close-btn:hover::before {
-          opacity: 1;
-          visibility: visible;
-          transform: translateX(-50%) translateY(0);
-        }
-
-        /* Arrow pointing to button */
-        .mobile-close-btn::after {
-          content: "";
-          position: absolute;
-          top: -5px;
-          left: 50%;
-          transform: translateX(-50%) rotate(45deg);
-          width: 8px;
-          height: 8px;
-          background: var(--surface-color);
-          border-left: 1px solid var(--border-color);
-          border-top: 1px solid var(--border-color);
-          opacity: 0;
-          visibility: hidden;
-          transition: all 0.3s ease;
-        }
-
-        .mobile-close-btn:hover::after {
-          opacity: 1;
-          visibility: visible;
-        }
-
-        /* Mobile-specific touch improvements */
-        @media (max-width: 768px) {
-          .mobile-close-btn {
-            width: 42px;
-            /* मोबाइल के लिए थोड़ा बड़ा */
-            height: 42px;
-            font-size: 1.1rem;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            position: fixed;
-            /* अभी भी fixed */
-            top: 1rem;
-            right: 1rem;
-          }
-
-          .mobile-close-btn i {
-            font-size: 1.1rem;
-          }
-
-          .mobile-close-btn:active {
-            background: linear-gradient(
-              135deg,
-              var(--accent-color),
-              rgba(34, 197, 94, 0.4)
-            );
-            transform: scale(0.9);
-          }
-
-          /* Remove tooltip on mobile */
-          .mobile-close-btn::before,
-          .mobile-close-btn::after {
-            display: none;
-          }
-
-          /* Better touch feedback */
-          .mobile-close-btn {
-            -webkit-tap-highlight-color: transparent;
-          }
-        }
-
-        /* Dark mode adjustments */
-        [data-theme="dark"] .mobile-close-btn {
-          background: rgba(255, 255, 255, 0.1);
-          border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        [data-theme="dark"] .mobile-close-btn:hover {
-          background: linear-gradient(
-            135deg,
-            var(--accent-color),
-            rgba(34, 197, 94, 0.4)
-          );
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Light mode adjustments */
-        [data-theme="light"] .mobile-close-btn {
-          background: rgba(0, 0, 0, 0.08);
-          border: 1px solid rgba(0, 0, 0, 0.15);
-        }
-
-        [data-theme="light"] .mobile-close-btn:hover {
-          background: linear-gradient(
-            135deg,
-            var(--accent-color),
-            rgba(34, 197, 94, 0.2)
-          );
-          box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
-        }
-
-        /* Accessibility focus styles */
-        .mobile-close-btn:focus {
-          outline: none;
-          box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.5);
-        }
-
-        .mobile-close-btn:focus-visible {
-          outline: 2px solid var(--accent-color);
-          outline-offset: 2px;
-        }
-
-        /* मोबाइल मेनू हेडर को adjust करें */
-        .mobile-menu-header {
-          display: flex;
-          justify-content: flex-end;
-          align-items: center;
-          padding: 1rem;
-          /* थोड़ा कम padding */
-          border-bottom: 1px solid var(--border-color);
-          position: relative;
-          background: var(--surface-color);
-          z-index: 1002;
-          min-height: 56px;
-          /* और छोटी height */
-        }
-
-        /* मोबाइल मेनू content को थोड़ा adjust करें */
-        .mobile-menu-content {
-          padding-top: 0.5rem;
-          /* header के नीचे थोड़ी space */
-        }
-
-        .mobile-search {
-          position: relative;
-          display: flex;
-          margin-bottom: 1.5rem;
-        }
-
-        .mobile-search-input {
-          flex: 1;
-          padding: 0.5rem;
-          padding-right: 40px;
-          border-radius: 8px;
-          border: 1px solid var(--input-border);
-          background: transparent;
-          color: var(--text-color);
-          outline: none;
-        }
-
-        .mobile-search-btn {
-          position: absolute;
-          right: 0;
-          top: 0;
-          bottom: 0;
-          padding: 0.5rem 0.6rem;
-          background: var(--accent-color);
-          border: none;
-          border-radius: 0 8px 8px 0;
-          color: white;
-          cursor: pointer;
-        }
-
-        .mobile-search-input:focus,
-        .mobile-search-input.input-focused {
-          outline: none;
-          border-color: var(--accent-color);
-        }
-
-        .mobile-buttons {
-          display: flex;
-          flex-direction: column;
-          gap: 0.75rem;
-        }
-
-        .mobile-theme-toggle {
-          width: 100%;
-          justify-content: center;
-        }
-
-        .mobile-links {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-        }
-
-        .mobile-link {
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-          padding: 0.75rem;
-          color: var(--text-color);
-          text-decoration: none;
-          border-radius: 8px;
-          transition: all 0.2s;
-        }
-
-        .mobile-link:hover {
-          background: var(--btn-bg);
-        }
-
-        .link-arrow {
-          margin-left: auto;
-          font-size: 0.8rem;
-        }
-
-        .mobile-services-section {
-          display: flex;
-          flex-direction: column;
-        }
-
-        .mobile-services-list {
-          display: none;
-          flex-direction: column;
-          gap: 0.25rem;
-          padding-left: 1rem;
-          margin-top: 0.5rem;
-        }
-
-        .mobile-services-list.active {
-          display: flex;
-        }
-
-        .mobile-sublink {
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-          padding: 0.5rem;
-          color: var(--text-muted);
-          text-decoration: none;
-          border-radius: 4px;
-          font-size: 0.9rem;
-          transition: all 0.2s;
-        }
-
-        .mobile-sublink:hover {
-          background: var(--btn-bg);
-          color: var(--text-color);
-        }
-
-        .mobile-register {
-          background: var(--accent-color);
-          color: white !important;
-        }
-
-        .mobile-footer-links {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-          margin-top: 2rem;
-          padding-top: 1rem;
-          border-top: 1px solid var(--border-color);
-        }
-
-        .mobile-footer-link {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          padding: 0.5rem;
-          color: var(--text-muted);
-          text-decoration: none;
-          font-size: 0.9rem;
-        }
-      }
-
+      /* Mobile-specific touch improvements */
       @media (max-width: 768px) {
-        .navbar {
-          padding: 0.75rem;
+        .mobile-close-btn {
+          width: 42px;
+          /* मोबाइल के लिए थोड़ा बड़ा */
+          height: 42px;
+          font-size: 1.1rem;
+          background: rgba(255, 255, 255, 0.15);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(255, 255, 255, 0.25);
+          position: fixed;
+          /* अभी भी fixed */
+          top: 1rem;
+          right: 1rem;
         }
 
-        .brand img {
-          width: 40px;
-          height: 40px;
-        }
-
-        .brand a {
-          font-size: 1.3rem;
-        }
-
-        .hero-content {
-          padding: 1.5rem;
-        }
-
-        .hero-content h2 {
-          font-size: 1.8rem;
-        }
-
-        .hero-content p {
-          font-size: 1rem;
-        }
-
-        .features {
-          padding: 3rem 1rem;
-        }
-
-        .features-title {
-          font-size: 2rem;
-        }
-
-        .features-grid {
-          gap: 1.5rem;
-        }
-
-        .footer-inner-content {
-          flex-direction: column;
-        }
-
-        .footer-group-links {
-          flex-direction: column;
-          gap: 2rem;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .brand img {
-          width: 35px;
-          height: 35px;
-        }
-
-        .brand a {
+        .mobile-close-btn i {
           font-size: 1.1rem;
         }
 
-        .hero-content {
-          padding: 1.25rem;
+        .mobile-close-btn:active {
+          background: linear-gradient(135deg,
+              var(--accent-color),
+              rgba(34, 197, 94, 0.4));
+          transform: scale(0.9);
         }
 
-        .hero-content h2 {
-          font-size: 1.5rem;
+        /* Remove tooltip on mobile */
+        .mobile-close-btn::before,
+        .mobile-close-btn::after {
+          display: none;
         }
 
-        .hero-content p {
-          font-size: 0.95rem;
-        }
-
-        .features-title {
-          font-size: 1.75rem;
-        }
-
-        .feature-card {
-          padding: 1.5rem;
-        }
-
-        #chatbotBtn,
-        .scroll-btn {
-          width: 45px;
-          height: 45px;
-          right: 15px;
-        }
-
-        #chatbotBtn {
-          bottom: 70px;
+        /* Better touch feedback */
+        .mobile-close-btn {
+          -webkit-tap-highlight-color: transparent;
         }
       }
 
-      @media (min-width: 1201px) {
-        .mobile-menu,
-        .mobile-menu-overlay,
-        .hamburger-btn {
-          display: none !important;
-        }
+      /* Dark mode adjustments */
+      [data-theme="dark"] .mobile-close-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.15);
       }
 
-      .search-highlight {
-        background: rgba(34, 197, 94, 0.4);
-        padding: 2px 4px;
-        border-radius: 4px;
+      [data-theme="dark"] .mobile-close-btn:hover {
+        background: linear-gradient(135deg,
+            var(--accent-color),
+            rgba(34, 197, 94, 0.4));
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
       }
 
-      /* Search Not Found Popup */
-      .search-popup-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.55);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        z-index: 2000;
+      /* Light mode adjustments */
+      [data-theme="light"] .mobile-close-btn {
+        background: rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(0, 0, 0, 0.15);
       }
 
-      .search-popup {
-        background: var(--surface-color);
-        color: var(--text-color);
-        padding: 2rem;
-        border-radius: 16px;
-        max-width: 380px;
-        width: 90%;
-        text-align: center;
-        border: 1px solid var(--border-color);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
-        animation: popupScale 0.35s ease;
+      [data-theme="light"] .mobile-close-btn:hover {
+        background: linear-gradient(135deg,
+            var(--accent-color),
+            rgba(34, 197, 94, 0.2));
+        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
       }
 
-      @keyframes popupScale {
-        from {
-          transform: scale(0.85);
-          opacity: 0;
-        }
-
-        to {
-          transform: scale(1);
-          opacity: 1;
-        }
-      }
-
-      .search-popup i {
-        font-size: 3rem;
-        color: var(--accent-color);
-        margin-bottom: 1rem;
-      }
-
-      .search-popup h3 {
-        margin-bottom: 0.5rem;
-      }
-
-      .search-popup p {
-        color: var(--text-muted);
-        margin-bottom: 1.5rem;
-      }
-
-      .search-popup button {
-        background: var(--accent-color);
-        color: white;
-        border: none;
-        padding: 0.6rem 1.2rem;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 0.9rem;
-      }
-
-      @keyframes pulse {
-        from {
-          box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
-        }
-
-        to {
-          box-shadow: 0 0 14px rgba(34, 197, 94, 0.9);
-        }
-      }
-
-      /* 🔥 FORCE CLOSE BUTTON TO BE CLICKABLE */
-
-      /* Ensure menu captures touches correctly */
-      .mobile-menu {
-        pointer-events: auto;
-      }
-
-      /* Features improvements: responsive grid, card layout, icon styles, focus and hover */
-      .feature-intro {
-        color: var(--text-muted);
-        margin: 0.5rem 0 1.25rem;
-        max-width: 900px;
-        line-height: 1.5;
-      }
-
-      .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 1.5rem;
-        align-items: stretch;
-      }
-
-      .feature-card {
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.02),
-          rgba(255, 255, 255, 0)
-        );
-        border: 1px solid rgba(255, 255, 255, 0.04);
-        border-radius: 16px;
-        padding: 1.25rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-        transition:
-          transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1),
-          box-shadow 0.28s ease,
-          border-color 0.28s ease;
-        min-height: 220px;
-        backdrop-filter: blur(6px) saturate(110%);
-      }
-
-      .feature-card:focus-visible {
+      /* Accessibility focus styles */
+      .mobile-close-btn:focus {
         outline: none;
-        box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.12);
-        transform: translateY(-4px);
-        border-color: rgba(34, 197, 94, 0.12);
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.5);
       }
 
-      .feature-card:hover {
-        transform: translateY(-8px) scale(1.01);
-        box-shadow: 0 18px 40px rgba(2, 6, 23, 0.12);
-        border-color: rgba(34, 197, 94, 0.12);
+      .mobile-close-btn:focus-visible {
+        outline: 2px solid var(--accent-color);
+        outline-offset: 2px;
       }
 
-      .feature-icon {
-        font-size: 1.6rem;
-        width: 56px;
-        height: 56px;
-        display: grid;
-        place-items: center;
-        border-radius: 12px;
-        background: linear-gradient(
-          180deg,
-          rgba(34, 197, 94, 0.14),
-          rgba(22, 163, 74, 0.06)
-        );
-        color: var(--accent-color);
-        box-shadow: 0 10px 24px rgba(16, 185, 129, 0.06);
-        transition:
-          transform 0.35s ease,
-          box-shadow 0.35s ease;
-      }
-
-      .feature-card:hover .feature-icon {
-        transform: translateY(-3px) rotate(-4deg) scale(1.03);
-        box-shadow: 0 18px 36px rgba(16, 185, 129, 0.09);
-      }
-
-      @keyframes float {
-        0% {
-          transform: translateY(0);
-        }
-
-        50% {
-          transform: translateY(-3px);
-        }
-
-        100% {
-          transform: translateY(0);
-        }
-      }
-
-      .feature-card .feature-title {
-        margin: 0.15rem 0;
-      }
-
-      .feature-card .feature-description {
-        color: var(--text-muted);
-        flex: 1 1 auto;
-        margin-bottom: 0.5rem;
-      }
-
-      /* stronger CTA inside cards without affecting global .btn styles elsewhere */
-      .feature-card .btn.btn-secondary {
-        background: linear-gradient(90deg, #22c55e, #16a34a);
-        color: #fff;
-        border: none;
-        padding: 0.5rem 0.85rem;
-        border-radius: 10px;
-        box-shadow: 0 8px 18px rgba(22, 163, 74, 0.12);
-        transition:
-          transform 0.18s ease,
-          box-shadow 0.18s ease,
-          opacity 0.18s ease;
-      }
-
-      .feature-card .btn.btn-secondary:hover,
-      .feature-card .btn.btn-secondary:focus {
-        transform: translateY(-3px);
-        box-shadow: 0 14px 28px rgba(22, 163, 74, 0.18);
-        opacity: 0.98;
-      }
-
-      @media (max-width: 520px) {
-        .features-grid {
-          grid-template-columns: 1fr;
-          gap: 1rem;
-        }
-
-        .feature-card {
-          padding: 1rem;
-          min-height: auto;
-        }
-
-        .feature-icon {
-          width: 46px;
-          height: 46px;
-          font-size: 1.3rem;
-        }
-      }
-
-      /* Respect reduced motion preferences */
-      @media (prefers-reduced-motion: reduce) {
-        .feature-icon,
-        .feature-card,
-        .feature-card .btn {
-          transition: none !important;
-          animation: none !important;
-        }
-      }
-
-      .search-highlight {
-        background: linear-gradient(90deg, #22c55e, #16a34a);
-        color: #fff;
-        padding: 2px 6px;
-        border-radius: 6px;
-        animation: glow 1.5s ease-in-out infinite alternate;
-      }
-
-      @keyframes glow {
-        from {
-          box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
-        }
-
-        to {
-          box-shadow: 0 0 14px rgba(34, 197, 94, 0.9);
-        }
-      }
-
-      .search-highlight {
-        background: linear-gradient(90deg, #22c55e, #16a34a);
-        color: #fff;
-        padding: 2px 4px;
-        border-radius: 4px;
-        animation: pulse 1.2s ease-in-out infinite alternate;
-      }
-
-      @keyframes pulse {
-        from {
-          box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
-        }
-
-        to {
-          box-shadow: 0 0 14px rgba(34, 197, 94, 0.9);
-        }
-      }
-
-      /* ============================================
-       NEW: PROFIT & LOSS SECTION STYLES
-       ============================================ */
-
-      .profit-loss-section {
-        position: relative;
-        z-index: 1;
-        padding: 4rem 1rem;
-        background: var(--section-bg);
-        transition: background 0.3s ease;
-      }
-
-      .pl-container {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 1.5rem;
-        background: var(--surface-color);
-        border: 1px solid var(--border-color);
-        border-radius: 12px;
-      }
-
-      .pl-controls {
+      /* मोबाइल मेनू हेडर को adjust करें */
+      .mobile-menu-header {
         display: flex;
-        gap: 1rem;
+        justify-content: flex-end;
         align-items: center;
-        margin-bottom: 1.5rem;
-        flex-wrap: wrap;
+        padding: 1rem;
+        /* थोड़ा कम padding */
+        border-bottom: 1px solid var(--border-color);
+        position: relative;
+        background: var(--surface-color);
+        z-index: 1002;
+        min-height: 56px;
+        /* और छोटी height */
       }
 
-      #plUserSelector {
-        min-width: 200px;
-        padding: 0.5rem 0.85rem;
-        border: 1px solid var(--border-color);
-        background: var(--input-bg);
-        color: var(--text-color);
-        cursor: pointer;
-        border-radius: 8px;
+      /* मोबाइल मेनू content को थोड़ा adjust करें */
+      .mobile-menu-content {
+        padding-top: 0.5rem;
+        /* header के नीचे थोड़ी space */
       }
 
-      .pl-time-toggle {
+      .mobile-search {
+        position: relative;
         display: flex;
-        gap: 0.5rem;
+        margin-bottom: 1.5rem;
       }
 
-      .pl-time-toggle .btn.active {
+      .mobile-search-input {
+        flex: 1;
+        padding: 0.5rem;
+        padding-right: 40px;
+        border-radius: 8px;
+        border: 1px solid var(--input-border);
+        background: transparent;
+        color: var(--text-color);
+        outline: none;
+      }
+
+      .mobile-search-btn {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        padding: 0.5rem 0.6rem;
         background: var(--accent-color);
+        border: none;
+        border-radius: 0 8px 8px 0;
         color: white;
+        cursor: pointer;
+      }
+
+      .mobile-search-input:focus,
+      .mobile-search-input.input-focused {
+        outline: none;
         border-color: var(--accent-color);
       }
 
-      .pl-summary-cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
-        margin-bottom: 2rem;
-      }
-
-      .pl-card {
-        background: var(--section-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        padding: 1rem;
+      .mobile-buttons {
         display: flex;
-        align-items: center;
-        gap: 1rem;
-        transition:
-          transform 0.2s ease,
-          box-shadow 0.2s ease;
+        flex-direction: column;
+        gap: 0.75rem;
       }
 
-      .pl-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 16px var(--shadow-color);
-      }
-
-      .pl-card-icon {
-        font-size: 2rem;
-        width: 50px;
-        height: 50px;
-        display: flex;
-        align-items: center;
+      .mobile-theme-toggle {
+        width: 100%;
         justify-content: center;
+      }
+
+      .mobile-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .mobile-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem;
+        color: var(--text-color);
+        text-decoration: none;
         border-radius: 8px;
-        background: rgba(34, 197, 94, 0.1);
+        transition: all 0.2s;
       }
 
-      .pl-card-content {
-        flex: 1;
+      .mobile-link:hover {
+        background: var(--btn-bg);
       }
 
-      .pl-card-label {
-        font-size: 0.85rem;
+      .link-arrow {
+        margin-left: auto;
+        font-size: 0.8rem;
+      }
+
+      .mobile-services-section {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .mobile-services-list {
+        display: none;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding-left: 1rem;
+        margin-top: 0.5rem;
+      }
+
+      .mobile-services-list.active {
+        display: flex;
+      }
+
+      .mobile-sublink {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.5rem;
         color: var(--text-muted);
-        margin-bottom: 0.25rem;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        transition: all 0.2s;
       }
 
-      .pl-card-value {
-        font-size: 1.4rem;
-        font-weight: 700;
+      .mobile-sublink:hover {
+        background: var(--btn-bg);
         color: var(--text-color);
       }
 
-      .revenue-card .pl-card-icon {
-        background: rgba(34, 197, 94, 0.15);
+      .mobile-register {
+        background: var(--accent-color);
+        color: white !important;
       }
 
-      .revenue-card .pl-card-value {
-        color: var(--accent-color);
+      .mobile-footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
       }
 
-      .expense-card .pl-card-icon {
-        background: rgba(239, 68, 68, 0.15);
+      .mobile-footer-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0.75rem;
       }
 
-      .expense-card .pl-card-value {
-        color: #ef4444;
+      .brand img {
+        width: 40px;
+        height: 40px;
       }
 
-      .profit-card .pl-card-value.positive {
-        color: var(--accent-color);
+      .brand a {
+        font-size: 1.3rem;
       }
 
-      .profit-card .pl-card-value.negative {
-        color: #ef4444;
+      .hero-content {
+        padding: 1.5rem;
       }
 
-      .transactions-card .pl-card-icon {
-        background: rgba(59, 130, 246, 0.15);
+      .hero-content h2 {
+        font-size: 1.8rem;
       }
 
-      .pl-charts-grid {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
+      .hero-content p {
+        font-size: 1rem;
+      }
+
+      .features {
+        padding: 3rem 1rem;
+      }
+
+      .features-title {
+        font-size: 2rem;
+      }
+
+      .features-grid {
         gap: 1.5rem;
       }
 
-      .pl-chart-container {
-        background: var(--section-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
+      .footer-inner-content {
+        flex-direction: column;
+      }
+
+      .footer-group-links {
+        flex-direction: column;
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .brand img {
+        width: 35px;
+        height: 35px;
+      }
+
+      .brand a {
+        font-size: 1.1rem;
+      }
+
+      .hero-content {
+        padding: 1.25rem;
+      }
+
+      .hero-content h2 {
+        font-size: 1.5rem;
+      }
+
+      .hero-content p {
+        font-size: 0.95rem;
+      }
+
+      .features-title {
+        font-size: 1.75rem;
+      }
+
+      .feature-card {
+        padding: 1.5rem;
+      }
+
+      #chatbotBtn,
+      #spatialBtn,
+      .scroll-btn {
+        width: 45px;
+        height: 45px;
+        right: 15px;
+      }
+
+      #spatialBtn {
+        bottom: 125px;
+      }
+
+      #chatbotBtn {
+        bottom: 70px;
+      }
+    }
+
+    @media (min-width: 1201px) {
+
+      .mobile-menu,
+      .mobile-menu-overlay,
+      .hamburger-btn {
+        display: none !important;
+      }
+    }
+
+    .search-highlight {
+      background: rgba(34, 197, 94, 0.4);
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    /* Search Not Found Popup */
+    .search-popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .search-popup {
+      background: var(--surface-color);
+      color: var(--text-color);
+      padding: 2rem;
+      border-radius: 16px;
+      max-width: 380px;
+      width: 90%;
+      text-align: center;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+      animation: popupScale 0.35s ease;
+    }
+
+    @keyframes popupScale {
+      from {
+        transform: scale(0.85);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .search-popup i {
+      font-size: 3rem;
+      color: var(--accent-color);
+      margin-bottom: 1rem;
+    }
+
+    .search-popup h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    .search-popup p {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .search-popup button {
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    @keyframes pulse {
+      from {
+        box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+      }
+
+      to {
+        box-shadow: 0 0 14px rgba(34, 197, 94, 0.9);
+      }
+    }
+
+    /* 🔥 FORCE CLOSE BUTTON TO BE CLICKABLE */
+
+    /* Ensure menu captures touches correctly */
+    .mobile-menu {
+      pointer-events: auto;
+    }
+
+    /* Features improvements: responsive grid, card layout, icon styles, focus and hover */
+    .feature-intro {
+      color: var(--text-muted);
+      margin: 0.5rem 0 1.25rem;
+      max-width: 900px;
+      line-height: 1.5;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .feature-card {
+      background: linear-gradient(180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0));
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 16px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition:
+        transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1),
+        box-shadow 0.28s ease,
+        border-color 0.28s ease;
+      min-height: 220px;
+      backdrop-filter: blur(6px) saturate(110%);
+    }
+
+    .feature-card:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.12);
+      transform: translateY(-4px);
+      border-color: rgba(34, 197, 94, 0.12);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.12);
+      border-color: rgba(34, 197, 94, 0.12);
+    }
+
+    .feature-icon {
+      font-size: 1.6rem;
+      width: 56px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: linear-gradient(180deg,
+          rgba(34, 197, 94, 0.14),
+          rgba(22, 163, 74, 0.06));
+      color: var(--accent-color);
+      box-shadow: 0 10px 24px rgba(16, 185, 129, 0.06);
+      transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: translateY(-3px) rotate(-4deg) scale(1.03);
+      box-shadow: 0 18px 36px rgba(16, 185, 129, 0.09);
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-3px);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    .feature-card .feature-title {
+      margin: 0.15rem 0;
+    }
+
+    .feature-card .feature-description {
+      color: var(--text-muted);
+      flex: 1 1 auto;
+      margin-bottom: 0.5rem;
+    }
+
+    /* stronger CTA inside cards without affecting global .btn styles elsewhere */
+    .feature-card .btn.btn-secondary {
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      color: #fff;
+      border: none;
+      padding: 0.5rem 0.85rem;
+      border-radius: 10px;
+      box-shadow: 0 8px 18px rgba(22, 163, 74, 0.12);
+      transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        opacity 0.18s ease;
+    }
+
+    .feature-card .btn.btn-secondary:hover,
+    .feature-card .btn.btn-secondary:focus {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 28px rgba(22, 163, 74, 0.18);
+      opacity: 0.98;
+    }
+
+    @media (max-width: 520px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .feature-card {
+        padding: 1rem;
+        min-height: auto;
+      }
+
+      .feature-icon {
+        width: 46px;
+        height: 46px;
+        font-size: 1.3rem;
+      }
+    }
+
+    /* Respect reduced motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+
+      .feature-icon,
+      .feature-card,
+      .feature-card .btn {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+
+    .search-highlight {
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 6px;
+      animation: glow 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+      }
+
+      to {
+        box-shadow: 0 0 14px rgba(34, 197, 94, 0.9);
+      }
+    }
+
+    .search-highlight {
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      color: #fff;
+      padding: 2px 4px;
+      border-radius: 4px;
+      animation: pulse 1.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse {
+      from {
+        box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+      }
+
+      to {
+        box-shadow: 0 0 14px rgba(34, 197, 94, 0.9);
+      }
+    }
+
+    /* ============================================
+       NEW: PROFIT & LOSS SECTION STYLES
+       ============================================ */
+
+    .profit-loss-section {
+      position: relative;
+      z-index: 1;
+      padding: 4rem 1rem;
+      background: var(--section-bg);
+      transition: background 0.3s ease;
+    }
+
+    .pl-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+    }
+
+    .pl-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    #plUserSelector {
+      min-width: 200px;
+      padding: 0.5rem 0.85rem;
+      border: 1px solid var(--border-color);
+      background: var(--input-bg);
+      color: var(--text-color);
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    .pl-time-toggle {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .pl-time-toggle .btn.active {
+      background: var(--accent-color);
+      color: white;
+      border-color: var(--accent-color);
+    }
+
+    .pl-summary-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .pl-card {
+      background: var(--section-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .pl-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px var(--shadow-color);
+    }
+
+    .pl-card-icon {
+      font-size: 2rem;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    .pl-card-content {
+      flex: 1;
+    }
+
+    .pl-card-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .pl-card-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-color);
+    }
+
+    .revenue-card .pl-card-icon {
+      background: rgba(34, 197, 94, 0.15);
+    }
+
+    .revenue-card .pl-card-value {
+      color: var(--accent-color);
+    }
+
+    .expense-card .pl-card-icon {
+      background: rgba(239, 68, 68, 0.15);
+    }
+
+    .expense-card .pl-card-value {
+      color: #ef4444;
+    }
+
+    .profit-card .pl-card-value.positive {
+      color: var(--accent-color);
+    }
+
+    .profit-card .pl-card-value.negative {
+      color: #ef4444;
+    }
+
+    .transactions-card .pl-card-icon {
+      background: rgba(59, 130, 246, 0.15);
+    }
+
+    .pl-charts-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .pl-chart-container {
+      background: var(--section-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .pl-chart-container h3 {
+      color: var(--text-color);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .pl-chart-container canvas {
+      max-height: 300px;
+    }
+
+    @media (max-width: 768px) {
+      .pl-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      #plUserSelector {
+        width: 100%;
+      }
+
+      .pl-time-toggle {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .pl-charts-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pl-summary-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .pl-card {
+        padding: 0.85rem;
+      }
+
+      .pl-card-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.75rem;
+      }
+
+      .pl-card-value {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .profit-loss-section {
+        padding: 3rem 0.5rem;
+      }
+
+      .pl-container {
         padding: 1rem;
       }
 
-      .pl-chart-container h3 {
-        color: var(--text-color);
-        margin-bottom: 1rem;
-        font-size: 1.1rem;
-        font-weight: 600;
+      .pl-time-toggle .btn {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.6rem;
       }
+    }
 
-      .pl-chart-container canvas {
-        max-height: 300px;
-      }
+    /* --- Cursor Trail --- */
+    .circle-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999999;
+    }
 
-      @media (max-width: 768px) {
-        .pl-controls {
-          flex-direction: column;
-          align-items: stretch;
-        }
+    .cursor-circle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #ff8c00;
+      box-shadow: 0 0 15px rgba(255, 140, 0, 0.7);
+      transform: translate(-50%, -50%);
+      will-change: transform;
+      mix-blend-mode: screen;
+    }
 
-        #plUserSelector {
-          width: 100%;
-        }
+    .cursor-circle:first-child {
+      width: 14px;
+      height: 14px;
+      background-color: #ffcc00;
+      box-shadow:
+        0 0 20px #ff8c00,
+        0 0 40px rgba(255, 140, 0, 0.5);
+    }
 
-        .pl-time-toggle {
-          width: 100%;
-          justify-content: space-between;
-        }
+    .cursor-clicking {
+      transform: translate(-50%, -50%) scale(2.5);
+    }
 
-        .pl-charts-grid {
-          grid-template-columns: 1fr;
-        }
+    .cursor-hovering {
+      transform: translate(-50%, -50%) scale(1.8);
+    }
 
-        .pl-summary-cards {
-          grid-template-columns: 1fr;
-        }
+    /* Hide dropdown by default */
+    .services-dropdown {
+      display: none;
+      position: absolute;
+      background: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      margin-top: 5px;
+      border-radius: 5px;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      /* for smooth effect */
+    }
 
-        .pl-card {
-          padding: 0.85rem;
-        }
+    /* Show dropdown when active */
+    .services-dropdown.active {
+      display: block;
+    }
 
-        .pl-card-icon {
-          width: 45px;
-          height: 45px;
-          font-size: 1.75rem;
-        }
+    /* Rotate arrow when active */
+    .services-arrow {
+      transition: transform 0.3s ease;
+    }
 
-        .pl-card-value {
-          font-size: 1.2rem;
-        }
-      }
+    .services-arrow.rotated {
+      transform: rotate(180deg);
+    }
 
-      @media (max-width: 480px) {
-        .profit-loss-section {
-          padding: 3rem 0.5rem;
-        }
+    /* Optional: style list items */
+    .services-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
 
-        .pl-container {
-          padding: 1rem;
-        }
+    .services-list li a {
+      display: block;
+      padding: 10px 20px;
+      color: #333;
+      text-decoration: none;
+    }
 
-        .pl-time-toggle .btn {
-          font-size: 0.75rem;
-          padding: 0.4rem 0.6rem;
-        }
-      }
-      /* --- Cursor Trail --- */
-      .circle-container {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        z-index: 999999;
-      }
+    .services-list li a:hover {
+      background-color: #f0f0f0;
+      color: #000;
+    }
 
-      .cursor-circle {
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: #ff8c00;
-        box-shadow: 0 0 15px rgba(255, 140, 0, 0.7);
-        transform: translate(-50%, -50%);
-        will-change: transform;
-        mix-blend-mode: screen;
-      }
+    /* Make sure the container is relative */
+    .services-toggle-container {
+      position: relative;
+    }
 
-      .cursor-circle:first-child {
-        width: 14px;
-        height: 14px;
-        background-color: #ffcc00;
-        box-shadow:
-          0 0 20px #ff8c00,
-          0 0 40px rgba(255, 140, 0, 0.5);
-      }
-
-      .cursor-clicking {
-        transform: translate(-50%, -50%) scale(2.5);
-      }
-
-      .cursor-hovering {
-        transform: translate(-50%, -50%) scale(1.8);
-      }
-      /* Hide dropdown by default */
-.services-dropdown {
-  display: none;
-  position: absolute;
-  background: #fff;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  margin-top: 5px;
-  border-radius: 5px;
-  z-index: 1000;
-  transition: all 0.3s ease; /* for smooth effect */
-}
-
-/* Show dropdown when active */
-.services-dropdown.active {
-  display: block;
-}
-
-/* Rotate arrow when active */
-.services-arrow {
-  transition: transform 0.3s ease;
-}
-
-.services-arrow.rotated {
-  transform: rotate(180deg);
-}
-
-/* Optional: style list items */
-.services-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.services-list li a {
-  display: block;
-  padding: 10px 20px;
-  color: #333;
-  text-decoration: none;
-}
-
-.services-list li a:hover {
-  background-color: #f0f0f0;
-  color: #000;
-}
-/* Make sure the container is relative */
-.services-toggle-container {
-  position: relative;
-}
-
-/* Hide dropdown initially */
-.services-dropdown {
-  display: none;
-  position: absolute;
-  top: 100%; /* directly below the toggle */
-  left: 0;
-  background: #fff;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  border-radius: 5px;
-  z-index: 1000;
-  min-width: 220px;
-  transition: all 0.3s ease;
-}
-
-/* Show dropdown when active */
-.services-dropdown.active {
-  display: block;
-}
-
-/* Rotate arrow */
-.services-arrow {
-  transition: transform 0.3s ease;
-}
-
-.services-arrow.rotated {
-  transform: rotate(180deg);
-}
-
-/* Style the list items */
-.services-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.services-list li a {
-  display: block;
-  padding: 10px 15px;
-  text-decoration: none;
-  color: #333;
-}
-
-.services-list li a:hover {
-  background: #f0f0f0;
-  color: #000;
-}
-
-    </style>
-  </head>
-
-  <body>
-    <div class="circle-container" id="cursorTrail">
-      <div class="cursor-circle"></div>
-      <div class="cursor-circle"></div>
-      <div class="cursor-circle"></div>
-      <div class="cursor-circle"></div>
-      <div class="cursor-circle"></div>
-    </div>
 
     <div style="padding: 10px; text-align: right">
       <label for="languageSelect" class="language-label">Language:</label>
@@ -1928,165 +1877,190 @@ document.addEventListener("DOMContentLoaded", () => {
       </select>
     </div>
 
-    <!-- Offline & Cached Notices -->
-    <div id="network-status" class="hidden">⚠️ Offline or poor connection</div>
+    /* Show dropdown when active */
+    .services-dropdown.active {
+      display: block;
+    }
 
-    <div id="cached-notice" class="hidden">
-      ⚠️ Showing cached data — may be outdated
-    </div>
+    /* Rotate arrow */
+    .services-arrow {
+      transition: transform 0.3s ease;
+    }
 
-    <!-- rest of your page starts here -->
+    .services-arrow.rotated {
+      transform: rotate(180deg);
+    }
 
-    <canvas id="bg-canvas"></canvas>
+    /* Style the list items */
+    .services-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
 
-    <nav class="navbar">
-      <div class="navbar-content">
-        <!-- Brand -->
-        <div class="brand">
-          <img src="images/logo.png" alt="AgriTech logo" />
-          <a href="#">AgriTech</a>
+    .services-list li a {
+      display: block;
+      padding: 10px 15px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .services-list li a:hover {
+      background: #f0f0f0;
+      color: #000;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="circle-container" id="cursorTrail">
+    <div class="cursor-circle"></div>
+    <div class="cursor-circle"></div>
+    <div class="cursor-circle"></div>
+    <div class="cursor-circle"></div>
+    <div class="cursor-circle"></div>
+  </div>
+
+  <div style="padding: 10px; text-align: right">
+    <label for="languageSelect">Language:</label>
+    <select id="languageSelect">
+      <option value="en">English</option>
+      <option value="te">తెలుగు</option>
+      <option value="hi">हिन्दी</option>
+      <option value="ta">தமிழ்</option>
+    </select>
+  </div>
+
+  <!-- Offline & Cached Notices -->
+  <div id="network-status" class="hidden">⚠️ Offline or poor connection</div>
+
+  <div id="cached-notice" class="hidden">
+    ⚠️ Showing cached data — may be outdated
+  </div>
+
+  <!-- rest of your page starts here -->
+
+  <canvas id="bg-canvas"></canvas>
+
+  <nav class="navbar">
+    <div class="navbar-content">
+      <!-- Brand -->
+      <div class="brand">
+        <img src="images/logo.png" alt="AgriTech logo" />
+        <a href="#">AgriTech</a>
+      </div>
+
+      <!-- Hamburger Button -->
+      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+        <div class="hamburger-icon">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </button>
+
+      <!-- Left Nav Links -->
+      <div class="left-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="news.html" class="nav-link">Ag News</a>
+        <a href="scheme.html" class="nav-link">Schemes</a>
+        <a href="community_forum.html" class="nav-link">Community Forum</a>
+        <!-- Services Dropdown -->
+        <div class="services-toggle-container">
+          <a href="#" class="nav-link services-toggle">
+            Services <i class="fas fa-chevron-down services-arrow"></i>
+          </a>
+          <div class="services-dropdown">
+            <ul class="services-list">
+              <li>
+                <a href="crop.html"><i class="fas fa-seedling"></i> Smart Crop Monitoring</a>
+              </li>
+              <li>
+                <a href="supply-chain.html"><i class="fas fa-truck"></i> Supply Chain Support</a>
+              </li>
+              <li>
+                <a href="sustainable-farming.html"><i class="fas fa-leaf"></i> Sustainable Farming Guidance</a>
+              </li>
+              <li>
+                <a href="marketplace.html"><i class="fas fa-store"></i> Marketplace Services</a>
+              </li>
+              <li>
+                <a href="financial-support.html"><i class="fas fa-dollar-sign"></i> Financial & Insurance
+                  Support</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Nav Buttons -->
+      <div class="nav-buttons">
+        <!-- Search -->
+        <div class="search-container">
+          <input type="text" placeholder="Search..." class="search-input" autocomplete="off" />
+          <button class="search-button"><i class="fas fa-search"></i></button>
         </div>
 
-        <!-- Hamburger Button -->
-        <button
-          class="hamburger-btn"
-          id="hamburgerBtn"
-          aria-label="Toggle menu"
-        >
-          <div class="hamburger-icon">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
+        <!-- Language Selector -->
+        <div class="lang-container">
+          <button class="lang-btn">
+            <i class="fas fa-globe"></i>
+            <span class="selected-lang" id="current-lang-text">English</span>
+          </button>
+          <div class="lang-dropdown">
+            <div class="lang-option" onclick="setLanguage('en', 'English')">
+              English
+            </div>
+            <div class="lang-option" onclick="setLanguage('hi', 'हिन्दी')">
+              हिन्दी
+            </div>
+            <div class="lang-option" onclick="setLanguage('bn', 'বাংলা')">
+              বাংলা
+            </div>
+            <div class="lang-option" onclick="setLanguage('te', 'తెలుగు')">
+              తెలుగు
+            </div>
+            <div class="lang-option" onclick="setLanguage('mr', 'मराठी')">
+              मराठी
+            </div>
+            <div class="lang-option" onclick="setLanguage('ta', 'தமிழ்')">
+              தமிழ்
+            </div>
+            <div class="lang-option" onclick="setLanguage('gu', 'ગુજરાતી')">
+              ગુજરાતી
+            </div>
+            <div class="lang-option" onclick="setLanguage('kn', 'ಕನ್ನಡ')">
+              ಕನ್ನಡ
+            </div>
+            <div class="lang-option" onclick="setLanguage('ml', 'മലയാളം')">
+              മലയാളം
+            </div>
+            <div class="lang-option" onclick="setLanguage('pa', 'ਪੰਜਾਬੀ')">
+              ਪੰਜਾਬੀ
+            </div>
           </div>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button class="theme-toggle btn" onclick="toggleTheme()">
+          <i class="fas fa-moon"></i>
+          <span class="theme-text">Light</span>
         </button>
 
-        <!-- Left Nav Links -->
-        <div class="left-nav">
-          <a href="index.html" class="nav-link">Home</a>
-          <a href="about.html" class="nav-link">About</a>
-          <a href="blog.html" class="nav-link">Blog</a>
-          <a href="news.html" class="nav-link">Ag News</a>
-          <a href="scheme.html" class="nav-link">Schemes</a>
-          <a href="community_forum.html" class="nav-link">Community Forum</a>
-          <!-- Services Dropdown -->
-          <div class="services-toggle-container">
-            <a href="#" class="nav-link services-toggle">
-              Services <i class="fas fa-chevron-down services-arrow"></i>
-            </a>
-            <div class="services-dropdown">
-              <ul class="services-list">
-                <li>
-                  <a href="crop.html"
-                    ><i class="fas fa-seedling"></i> Smart Crop Monitoring</a
-                  >
-                </li>
-                <li>
-                  <a href="supply-chain.html"
-                    ><i class="fas fa-truck"></i> Supply Chain Support</a
-                  >
-                </li>
-                <li>
-                  <a href="sustainable-farming.html"
-                    ><i class="fas fa-leaf"></i> Sustainable Farming Guidance</a
-                  >
-                </li>
-                <li>
-                  <a href="marketplace.html"
-                    ><i class="fas fa-store"></i> Marketplace Services</a
-                  >
-                </li>
-                <li>
-                  <a href="financial-support.html"
-                    ><i class="fas fa-dollar-sign"></i> Financial & Insurance
-                    Support</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <a href="login.html" class="btn btn-secondary" data-i18n="login">Login</a>
+        <a href="faq.html" class="btn btn-secondary" data-i18n="faq">FAQ</a>
 
-        <!-- Right Nav Buttons -->
-        <div class="nav-buttons">
-          <!-- Search -->
-          <div class="search-container">
-            <input
-              type="text"
-              placeholder="Search..."
-              class="search-input"
-              autocomplete="off"
-            />
-            <button class="search-button"><i class="fas fa-search"></i></button>
-          </div>
-
-          <!-- Language Selector -->
-          <div class="lang-container">
-            <button class="lang-btn">
-              <i class="fas fa-globe"></i>
-              <span class="selected-lang" id="current-lang-text">English</span>
-            </button>
-            <div class="lang-dropdown">
-              <div class="lang-option" onclick="setLanguage('en', 'English')">
-                English
-              </div>
-              <div class="lang-option" onclick="setLanguage('hi', 'हिन्दी')">
-                हिन्दी
-              </div>
-              <div class="lang-option" onclick="setLanguage('bn', 'বাংলা')">
-                বাংলা
-              </div>
-              <div class="lang-option" onclick="setLanguage('te', 'తెలుగు')">
-                తెలుగు
-              </div>
-              <div class="lang-option" onclick="setLanguage('mr', 'मराठी')">
-                मराठी
-              </div>
-              <div class="lang-option" onclick="setLanguage('ta', 'தமிழ்')">
-                தமிழ்
-              </div>
-              <div class="lang-option" onclick="setLanguage('gu', 'ગુજરાતી')">
-                ગુજરાતી
-              </div>
-              <div class="lang-option" onclick="setLanguage('kn', 'ಕನ್ನಡ')">
-                ಕನ್ನಡ
-              </div>
-              <div class="lang-option" onclick="setLanguage('ml', 'മലയാളം')">
-                മലയാളം
-              </div>
-              <div class="lang-option" onclick="setLanguage('pa', 'ਪੰਜਾਬੀ')">
-                ਪੰਜਾਬੀ
-              </div>
-            </div>
-          </div>
-
-          <!-- Theme Toggle -->
-          <button class="theme-toggle btn" onclick="toggleTheme()">
-            <i class="fas fa-moon"></i>
-            <span class="theme-text">Light</span>
-          </button>
-
-          <a href="login.html" class="btn btn-secondary" data-i18n="login"
-            >Login</a
-          >
-          <a href="faq.html" class="btn btn-secondary" data-i18n="faq">FAQ</a>
-
-          <!-- Notification Dropdown -->
-          <div
-            class="notification-container"
-            style="position: relative; display: inline-block"
-          >
-            <button
-              class="btn btn-secondary"
-              onclick="
+        <!-- Notification Dropdown -->
+        <div class="notification-container" style="position: relative; display: inline-block">
+          <button class="btn btn-secondary" onclick="
                 document
                   .getElementById('notification-dropdown')
                   .classList.toggle('active')
-              "
-            >
-              <i class="fas fa-bell"></i>
-              <span
-                id="notification-badge"
-                style="
+              ">
+            <i class="fas fa-bell"></i>
+            <span id="notification-badge" style="
                   position: absolute;
                   top: -5px;
                   right: -5px;
@@ -2099,14 +2073,9 @@ document.addEventListener("DOMContentLoaded", () => {
                   text-align: center;
                   border: 2px solid var(--bg-color);
                   display: none;
-                "
-                >0</span
-              >
-            </button>
-            <div
-              id="notification-dropdown"
-              class="services-dropdown"
-              style="
+                ">0</span>
+          </button>
+          <div id="notification-dropdown" class="services-dropdown" style="
                 right: 0;
                 left: auto;
                 top: 100%;
@@ -2117,812 +2086,613 @@ document.addEventListener("DOMContentLoaded", () => {
                 border: 1px solid var(--border-color);
                 border-radius: 12px;
                 box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-              "
-            >
-              <div
-                style="
+              ">
+            <div style="
                   padding: 12px;
                   border-bottom: 1px solid var(--border-color);
                   font-weight: bold;
                   display: flex;
                   justify-content: space-between;
                   align-items: center;
-                "
-              >
-                <span>Notifications</span>
-                <span
-                  class="text-xs text-blue-500 cursor-pointer"
-                  onclick="markAllAsRead()"
-                  >Mark all as read</span
-                >
-              </div>
-              <div id="notification-list">
-                <div
-                  style="
+                ">
+              <span>Notifications</span>
+              <span class="text-xs text-blue-500 cursor-pointer" onclick="markAllAsRead()">Mark all as read</span>
+            </div>
+            <div id="notification-list">
+              <div style="
                     padding: 20px;
                     text-align: center;
                     color: var(--text-muted);
-                  "
-                >
-                  No new notifications
-                </div>
+                  ">
+                No new notifications
               </div>
             </div>
           </div>
-
-          <a href="register.html" class="btn btn-primary" data-i18n="register"
-            >Register</a
-          >
         </div>
+
+        <a href="register.html" class="btn btn-primary" data-i18n="register">Register</a>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    <script>
-      // Language Selector Function
-      function setLanguage(code, label) {
-        document.getElementById("current-lang-text").innerText = label;
+  <script>
+    // Language Selector Function
+    function setLanguage(code, label) {
+      document.getElementById("current-lang-text").innerText = label;
 
-        // Call platform language function if exists
-        if (window.platformLanguageChange) {
-          window.platformLanguageChange(code);
-        } else if (window.languagePlatformChange) {
-          window.languagePlatformChange(code);
-        } else {
-          console.log("Language function not defined. Selected:", code);
-        }
+      // Call platform language function if exists
+      if (window.platformLanguageChange) {
+        window.platformLanguageChange(code);
+      } else if (window.languagePlatformChange) {
+        window.languagePlatformChange(code);
+      } else {
+        console.log("Language function not defined. Selected:", code);
       }
+    }
 
-      // Theme Toggle Function
-      function toggleTheme() {
-        const navbar = document.querySelector(".navbar");
-        const themeText = document.querySelector(".theme-text");
-        if (navbar.getAttribute("data-theme") === "light") {
-          navbar.setAttribute("data-theme", "dark");
-          themeText.innerText = "Dark";
-        } else {
-          navbar.setAttribute("data-theme", "light");
-          themeText.innerText = "Light";
-        }
+    // Theme Toggle Function
+    function toggleTheme() {
+      const navbar = document.querySelector(".navbar");
+      const themeText = document.querySelector(".theme-text");
+      if (navbar.getAttribute("data-theme") === "light") {
+        navbar.setAttribute("data-theme", "dark");
+        themeText.innerText = "Dark";
+      } else {
+        navbar.setAttribute("data-theme", "light");
+        themeText.innerText = "Light";
       }
-    </script>
+    }
+  </script>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-      <div class="mobile-menu-header">
-        <button
-          class="mobile-close-btn"
-          type="button"
-          aria-label="Close menu"
-          onclick="
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <button class="mobile-close-btn" type="button" aria-label="Close menu" onclick="
             document.getElementById('mobileMenu').classList.remove('active');
             document
               .getElementById('mobileMenuOverlay')
               .classList.remove('active');
             document.body.style.overflow = '';
-          "
-        >
-          <i class="fas fa-times"></i>
+          ">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="mobile-menu-content">
+      <div class="mobile-search">
+        <input type="text" placeholder="Search..." class="mobile-search-input" autocomplete="off" />
+        <button class="mobile-search-btn" aria-label="Search">
+          <i class="fas fa-search"></i>
         </button>
       </div>
 
-      <div class="mobile-menu-content">
-        <div class="mobile-search">
-          <input
-            type="text"
-            placeholder="Search..."
-            class="mobile-search-input"
-            autocomplete="off"
-          />
-          <button class="mobile-search-btn" aria-label="Search">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
+      <div class="mobile-buttons">
+        <button class="mobile-theme-toggle btn" id="mobileThemeToggle" aria-label="Toggle theme">
+          <i class="fas fa-sun mobile-sun-icon" style="display: none"></i>
+          <i class="fas fa-moon mobile-moon-icon"></i>
+          <span class="mobile-theme-text">Dark Mode</span>
+        </button>
 
-        <div class="mobile-buttons">
-          <button
-            class="mobile-theme-toggle btn"
-            id="mobileThemeToggle"
-            aria-label="Toggle theme"
-          >
-            <i class="fas fa-sun mobile-sun-icon" style="display: none"></i>
-            <i class="fas fa-moon mobile-moon-icon"></i>
-            <span class="mobile-theme-text">Dark Mode</span>
-          </button>
-
-          <div class="mobile-links">
-            <a href="index.html" data-i18n="home" class="mobile-link">
-              <i class="fas fa-home"></i>
-              <span>Home</span>
-              <i class="fas fa-chevron-right link-arrow"></i>
+        <div class="mobile-links">
+          <a href="index.html" data-i18n="home" class="mobile-link">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
+          <a href="about.html" data-i18n="about" class="mobile-link">
+            <i class="fas fa-info-circle"></i>
+            <span>About</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
+          <a href="blog.html" data-i18n="blog" class="mobile-link">
+            <i class="fas fa-blog"></i>
+            <span>Blog</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
+          <a href="login.html" data-i18n="login" class="mobile-link">
+            <i class="fas fa-sign-in-alt"></i>
+            <span>Login</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
+          <a href="faq.html" data-i18n="faq" class="mobile-link">
+            <i class="fas fa-question-circle"></i>
+            <span>FAQ</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
+          <a href="register.html" data-i18n="register" class="mobile-link mobile-register">
+            <i class="fas fa-user-plus"></i>
+            <span>Register</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
+          <a href="scheme.html" data-i18n="schemes" class="mobile-link">
+            <i class="fas fa-scroll"></i>
+            <span>Schemes</span>
+            <i class="fas fa-chevron-right link-arrow"></i>
+          </a>
+          <!-- Mobile Services Dropdown -->
+          <div class="mobile-services-section">
+            <a href="#" class="mobile-link mobile-services-toggle" id="mobileServicesToggle">
+              <i class="fas fa-cogs"></i>
+              <span>Services</span>
+              <i class="fas fa-chevron-down services-arrow" id="mobileServicesArrow"></i>
             </a>
-            <a href="about.html" data-i18n="about" class="mobile-link">
-              <i class="fas fa-info-circle"></i>
-              <span>About</span>
-              <i class="fas fa-chevron-right link-arrow"></i>
-            </a>
-            <a href="blog.html" data-i18n="blog" class="mobile-link">
-              <i class="fas fa-blog"></i>
-              <span>Blog</span>
-              <i class="fas fa-chevron-right link-arrow"></i>
-            </a>
-            <a href="login.html" data-i18n="login" class="mobile-link">
-              <i class="fas fa-sign-in-alt"></i>
-              <span>Login</span>
-              <i class="fas fa-chevron-right link-arrow"></i>
-            </a>
-            <a href="faq.html" data-i18n="faq" class="mobile-link">
-              <i class="fas fa-question-circle"></i>
-              <span>FAQ</span>
-              <i class="fas fa-chevron-right link-arrow"></i>
-            </a>
-            <a
-              href="register.html"
-              data-i18n="register"
-              class="mobile-link mobile-register"
-            >
-              <i class="fas fa-user-plus"></i>
-              <span>Register</span>
-              <i class="fas fa-chevron-right link-arrow"></i>
-            </a>
-            <a href="scheme.html" data-i18n="schemes" class="mobile-link">
-              <i class="fas fa-scroll"></i>
-              <span>Schemes</span>
-              <i class="fas fa-chevron-right link-arrow"></i>
-            </a>
-            <!-- Mobile Services Dropdown -->
-            <div class="mobile-services-section">
-              <a
-                href="#"
-                class="mobile-link mobile-services-toggle"
-                id="mobileServicesToggle"
-              >
-                <i class="fas fa-cogs"></i>
-                <span>Services</span>
-                <i
-                  class="fas fa-chevron-down services-arrow"
-                  id="mobileServicesArrow"
-                ></i>
+            <div class="mobile-services-list" id="mobileServicesList">
+              <a href="crop.html" data-i18n="service_crop" class="mobile-sublink">
+                <i class="fas fa-seedling"></i>
+                <span data-i18n="service_crop">Smart Crop Monitoring</span>
               </a>
-              <div class="mobile-services-list" id="mobileServicesList">
-                <a
-                  href="crop.html"
-                  data-i18n="service_crop"
-                  class="mobile-sublink"
-                >
-                  <i class="fas fa-seedling"></i>
-                  <span data-i18n="service_crop">Smart Crop Monitoring</span>
-                </a>
-                <a
-                  href="supply-chain.html"
-                  data-i18n="service_supply"
-                  class="mobile-sublink"
-                >
-                  <i class="fas fa-truck"></i>
-                  <span data-i18n="service_supply">Supply Chain Support</span>
-                </a>
-                <a
-                  href="sustainable-farming.html"
-                  data-i18n="service_sustainable"
-                  class="mobile-sublink"
-                >
-                  <i class="fas fa-leaf"></i>
-                  <span data-i18n="service_sustainable"
-                    >Sustainable Farming Guidance</span
-                  >
-                </a>
-                <a
-                  href="marketplace.html"
-                  data-i18n="service_market"
-                  class="mobile-sublink"
-                >
-                  <i class="fas fa-store"></i>
-                  <span data-i18n="service_market">Marketplace Services</span>
-                </a>
-                <a
-                  href="financial-support.html"
-                  data-i18n="service_finance"
-                  class="mobile-sublink"
-                >
-                  <i class="fas fa-dollar-sign"></i>
-                  <span data-i18n="service_finance"
-                    >Financial & Insurance Support</span
-                  >
-                </a>
-              </div>
+              <a href="supply-chain.html" data-i18n="service_supply" class="mobile-sublink">
+                <i class="fas fa-truck"></i>
+                <span data-i18n="service_supply">Supply Chain Support</span>
+              </a>
+              <a href="sustainable-farming.html" data-i18n="service_sustainable" class="mobile-sublink">
+                <i class="fas fa-leaf"></i>
+                <span data-i18n="service_sustainable">Sustainable Farming Guidance</span>
+              </a>
+              <a href="marketplace.html" data-i18n="service_market" class="mobile-sublink">
+                <i class="fas fa-store"></i>
+                <span data-i18n="service_market">Marketplace Services</span>
+              </a>
+              <a href="financial-support.html" data-i18n="service_finance" class="mobile-sublink">
+                <i class="fas fa-dollar-sign"></i>
+                <span data-i18n="service_finance">Financial & Insurance Support</span>
+              </a>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="mobile-footer-links">
-          <a
-            href="terms-and-service.html"
-            data-i18n="footer_terms"
-            class="mobile-footer-link"
-          >
-            <i class="fas fa-file-contract"></i> Terms & Service
-          </a>
-          <a
-            href="feed-back.html"
-            data-i18n="footer_contact"
-            class="mobile-footer-link"
-          >
-            <i class="fas fa-comment-dots"></i> Feedback
-          </a>
-          <a href="chat.html" data-i18n="footer_ai" class="mobile-footer-link">
-            <i class="fas fa-robot"></i> AI Assistant
-          </a>
-        </div>
+      <div class="mobile-footer-links">
+        <a href="terms-and-service.html" data-i18n="footer_terms" class="mobile-footer-link">
+          <i class="fas fa-file-contract"></i> Terms & Service
+        </a>
+        <a href="feed-back.html" data-i18n="footer_contact" class="mobile-footer-link">
+          <i class="fas fa-comment-dots"></i> Feedback
+        </a>
+        <a href="chat.html" data-i18n="footer_ai" class="mobile-footer-link">
+          <i class="fas fa-robot"></i> AI Assistant
+        </a>
       </div>
     </div>
+  </div>
 
-    <section class="hero">
-      <div class="hero-content">
-        <h2 class="serif" data-i18n="hero_title">
-          Empowering Agriculture Through Technology
-        </h2>
-        <p data-i18n="hero_desc">
-          AgriTech connects <strong>Farmers</strong>, <strong>Buyers</strong>,
-          <strong>Equipment Suppliers</strong>, and
-          <strong>Grocery Sellers</strong>
-          to revolutionize India's agricultural ecosystem through smart
-          solutions and seamless collaboration.
-        </p>
+  <section class="hero">
+    <div class="hero-content">
+      <h2 class="serif" data-i18n="hero_title">
+        Empowering Agriculture Through Technology
+      </h2>
+      <p data-i18n="hero_desc">
+        AgriTech connects <strong>Farmers</strong>, <strong>Buyers</strong>,
+        <strong>Equipment Suppliers</strong>, and
+        <strong>Grocery Sellers</strong>
+        to revolutionize India's agricultural ecosystem through smart
+        solutions and seamless collaboration.
+      </p>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="features-container">
+      <h2 class="features-title serif" data-i18n="benefits_title">
+        Our Platform Benefits
+      </h2>
+      <p class="feature-intro" data-i18n="benefits_desc">
+        AgriTech brings tailored tools and services to every stakeholder in
+        the agricultural value chain. Explore targeted benefits below and
+        follow the quick links to learn more.
+      </p>
+
+      <div class="features-grid" data-i18n="features_list">
+        <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-1-title">
+          <div class="feature-icon" aria-hidden="true">🌱</div>
+          <h3 id="feature-1-title" data-i18n="feature_farmers" class="feature-title serif">
+            Farmers
+          </h3>
+          <p class="feature-description">
+            Real-time crop monitoring, weather alerts, and direct-market
+            access to get fair prices for your harvest.
+          </p>
+          <a class="btn btn-secondary" href="crop.html" data-i18n="crop_monitoring"
+            aria-label="Learn more about crop monitoring">Learn more</a>
+        </article>
+
+        <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-2-title">
+          <div class="feature-icon" aria-hidden="true">🏪</div>
+          <h3 id="feature-2-title" class="feature-title serif">
+            Buyers & Retailers
+          </h3>
+          <p class="feature-description">
+            Source verified produce directly from farmers, schedule
+            deliveries, and manage bulk orders with ease.
+          </p>
+          <a class="btn btn-secondary" href="marketplace.html" data-i18n="marketplace"
+            aria-label="Browse the marketplace">Browse marketplace</a>
+        </article>
+
+        <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-3-title">
+          <div class="feature-icon" aria-hidden="true">🚜</div>
+          <h3 id="feature-3-title" class="feature-title serif">
+            Equipment Suppliers
+          </h3>
+          <p class="feature-description">
+            List equipment, offer rentals, and connect with nearby farmers who
+            need modern machinery.
+          </p>
+          <a class="btn btn-secondary" href="equipments.html" data-i18n="marketplace"
+            aria-label="List equipment on the marketplace">List equipment</a>
+        </article>
+
+        <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-4-title">
+          <div class="feature-icon" aria-hidden="true">🛒</div>
+          <h3 id="feature-4-title" class="feature-title serif">
+            Grocery Sellers
+          </h3>
+          <p class="feature-description">
+            Integrate reliable suppliers into your supply chain and receive
+            consistent quality produce on schedule.
+          </p>
+          <a class="btn btn-secondary" href="marketplace.html" aria-label="Partner with suppliers">Partner with
+            suppliers</a>
+        </article>
+
+        <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-5-title">
+          <div class="feature-icon" aria-hidden="true">🧑‍🌾</div>
+          <h3 id="feature-5-title" class="feature-title serif">
+            Agronomists & Advisors
+          </h3>
+          <p class="feature-description">
+            Share expertise, provide remote diagnostic services, and recommend
+            data-driven treatments to improve yields.
+          </p>
+          <a class="btn btn-secondary" href="chat.html" aria-label="Offer advisory services">Offer services</a>
+        </article>
+
+        <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-6-title">
+          <div class="feature-icon" aria-hidden="true">💰</div>
+          <h3 id="feature-6-title" class="feature-title serif">
+            Finance & Insurance
+          </h3>
+          <p class="feature-description">
+            Access loan options, crop insurance, and financial tools designed
+            for seasonal agriculture cashflows.
+          </p>
+          <a class="btn btn-secondary" href="financial-support.html" aria-label="Get financial support">Get support</a>
+        </article>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="features">
-      <div class="features-container">
-        <h2 class="features-title serif" data-i18n="benefits_title">
-          Our Platform Benefits
-        </h2>
-        <p class="feature-intro" data-i18n="benefits_desc">
-          AgriTech brings tailored tools and services to every stakeholder in
-          the agricultural value chain. Explore targeted benefits below and
-          follow the quick links to learn more.
-        </p>
-
-        <div class="features-grid" data-i18n="features_list">
-          <article
-            class="feature-card"
-            role="article"
-            tabindex="0"
-            aria-labelledby="feature-1-title"
-          >
-            <div class="feature-icon" aria-hidden="true">🌱</div>
-            <h3
-              id="feature-1-title"
-              data-i18n="feature_farmers"
-              class="feature-title serif"
-            >
-              Farmers
-            </h3>
-            <p class="feature-description">
-              Real-time crop monitoring, weather alerts, and direct-market
-              access to get fair prices for your harvest.
-            </p>
-            <a
-              class="btn btn-secondary"
-              href="crop.html"
-              data-i18n="crop_monitoring"
-              aria-label="Learn more about crop monitoring"
-              >Learn more</a
-            >
-          </article>
-
-          <article
-            class="feature-card"
-            role="article"
-            tabindex="0"
-            aria-labelledby="feature-2-title"
-          >
-            <div class="feature-icon" aria-hidden="true">🏪</div>
-            <h3 id="feature-2-title" class="feature-title serif">
-              Buyers & Retailers
-            </h3>
-            <p class="feature-description">
-              Source verified produce directly from farmers, schedule
-              deliveries, and manage bulk orders with ease.
-            </p>
-            <a
-              class="btn btn-secondary"
-              href="marketplace.html"
-              data-i18n="marketplace"
-              aria-label="Browse the marketplace"
-              >Browse marketplace</a
-            >
-          </article>
-
-          <article
-            class="feature-card"
-            role="article"
-            tabindex="0"
-            aria-labelledby="feature-3-title"
-          >
-            <div class="feature-icon" aria-hidden="true">🚜</div>
-            <h3 id="feature-3-title" class="feature-title serif">
-              Equipment Suppliers
-            </h3>
-            <p class="feature-description">
-              List equipment, offer rentals, and connect with nearby farmers who
-              need modern machinery.
-            </p>
-            <a
-              class="btn btn-secondary"
-              href="equipments.html"
-              data-i18n="marketplace"
-              aria-label="List equipment on the marketplace"
-              >List equipment</a
-            >
-          </article>
-
-          <article
-            class="feature-card"
-            role="article"
-            tabindex="0"
-            aria-labelledby="feature-4-title"
-          >
-            <div class="feature-icon" aria-hidden="true">🛒</div>
-            <h3 id="feature-4-title" class="feature-title serif">
-              Grocery Sellers
-            </h3>
-            <p class="feature-description">
-              Integrate reliable suppliers into your supply chain and receive
-              consistent quality produce on schedule.
-            </p>
-            <a
-              class="btn btn-secondary"
-              href="marketplace.html"
-              aria-label="Partner with suppliers"
-              >Partner with suppliers</a
-            >
-          </article>
-
-          <article
-            class="feature-card"
-            role="article"
-            tabindex="0"
-            aria-labelledby="feature-5-title"
-          >
-            <div class="feature-icon" aria-hidden="true">🧑‍🌾</div>
-            <h3 id="feature-5-title" class="feature-title serif">
-              Agronomists & Advisors
-            </h3>
-            <p class="feature-description">
-              Share expertise, provide remote diagnostic services, and recommend
-              data-driven treatments to improve yields.
-            </p>
-            <a
-              class="btn btn-secondary"
-              href="chat.html"
-              aria-label="Offer advisory services"
-              >Offer services</a
-            >
-          </article>
-
-          <article
-            class="feature-card"
-            role="article"
-            tabindex="0"
-            aria-labelledby="feature-6-title"
-          >
-            <div class="feature-icon" aria-hidden="true">💰</div>
-            <h3 id="feature-6-title" class="feature-title serif">
-              Finance & Insurance
-            </h3>
-            <p class="feature-description">
-              Access loan options, crop insurance, and financial tools designed
-              for seasonal agriculture cashflows.
-            </p>
-            <a
-              class="btn btn-secondary"
-              href="financial-support.html"
-              aria-label="Get financial support"
-              >Get support</a
-            >
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- My Activity Section: Single User Profile with Service Usage Graph -->
-    <section class="activity" id="my-activity" aria-label="My Activity">
-      <div
-        class="activity-container"
-        style="
+  <!-- My Activity Section: Single User Profile with Service Usage Graph -->
+  <section class="activity" id="my-activity" aria-label="My Activity">
+    <div class="activity-container" style="
           max-width: 1400px;
           margin: 2rem auto;
           padding: 1.5rem;
           background: var(--surface-color);
           border: 1px solid var(--border-color);
           border-radius: 12px;
-        "
-      >
-        <h2 class="features-title serif">My Activity</h2>
-        <p class="feature-intro">
-          Track your purchases, sales, and tool usage on AgriTech.
-        </p>
+        ">
+      <h2 class="features-title serif">My Activity</h2>
+      <p class="feature-intro">
+        Track your purchases, sales, and tool usage on AgriTech.
+      </p>
 
-        <!-- User Selector -->
-        <div
-          style="
+      <!-- User Selector -->
+      <div style="
             margin-bottom: 1.5rem;
             display: flex;
             gap: 1rem;
             align-items: center;
-          "
-        >
-          <label
-            for="userSelector"
-            style="color: var(--text-color); font-weight: 500"
-            >Select User:</label
-          >
-          <select
-            id="userSelector"
-            class="btn"
-            style="
+          ">
+        <label for="userSelector" style="color: var(--text-color); font-weight: 500">Select User:</label>
+        <select id="userSelector" class="btn" style="
               padding: 0.5rem 0.85rem;
               border: 1px solid var(--border-color);
               background: var(--input-bg);
               color: var(--text-color);
               cursor: pointer;
               border-radius: 8px;
-            "
-          >
-            <option value="">Choose a user...</option>
-          </select>
-          <div style="flex: 1"></div>
-          <button class="btn btn-secondary" id="clearUserDataBtn">Clear</button>
-          <button class="btn btn-primary" id="exportUserDataBtn">Export</button>
-        </div>
+            ">
+          <option value="">Choose a user...</option>
+        </select>
+        <div style="flex: 1"></div>
+        <button class="btn btn-secondary" id="clearUserDataBtn">Clear</button>
+        <button class="btn btn-primary" id="exportUserDataBtn">Export</button>
+      </div>
 
-        <!-- User Profile & Stats -->
-        <div
-          id="profileSection"
-          style="
+      <!-- User Profile & Stats -->
+      <div id="profileSection" style="
             display: none;
             margin-bottom: 1.5rem;
             padding: 1rem;
             background: var(--section-bg);
             border-radius: 8px;
             border: 1px solid var(--border-color);
-          "
-        >
-          <div
-            style="
+          ">
+        <div style="
               display: grid;
               grid-template-columns: 1fr 1fr 1fr 1fr;
               gap: 1rem;
-            "
-          >
-            <div style="text-align: center">
-              <div style="font-size: 0.9rem; color: var(--text-muted)">
-                Name
-              </div>
-              <div
-                id="profileName"
-                style="
+            ">
+          <div style="text-align: center">
+            <div style="font-size: 0.9rem; color: var(--text-muted)">
+              Name
+            </div>
+            <div id="profileName" style="
                   font-size: 1.2rem;
                   font-weight: 600;
                   color: var(--accent-color);
                   margin-top: 0.5rem;
-                "
-              ></div>
+                "></div>
+          </div>
+          <div style="text-align: center">
+            <div style="font-size: 0.9rem; color: var(--text-muted)">
+              Items Sold
             </div>
-            <div style="text-align: center">
-              <div style="font-size: 0.9rem; color: var(--text-muted)">
-                Items Sold
-              </div>
-              <div
-                id="profileSold"
-                style="
+            <div id="profileSold" style="
                   font-size: 1.2rem;
                   font-weight: 600;
                   color: var(--text-color);
                   margin-top: 0.5rem;
-                "
-              >
-                0
-              </div>
+                ">
+              0
             </div>
-            <div style="text-align: center">
-              <div style="font-size: 0.9rem; color: var(--text-muted)">
-                Items Purchased
-              </div>
-              <div
-                id="profilePurchased"
-                style="
+          </div>
+          <div style="text-align: center">
+            <div style="font-size: 0.9rem; color: var(--text-muted)">
+              Items Purchased
+            </div>
+            <div id="profilePurchased" style="
                   font-size: 1.2rem;
                   font-weight: 600;
                   color: var(--text-color);
                   margin-top: 0.5rem;
-                "
-              >
-                0
-              </div>
+                ">
+              0
             </div>
-            <div style="text-align: center">
-              <div style="font-size: 0.9rem; color: var(--text-muted)">
-                Total Revenue
-              </div>
-              <div
-                id="profileRevenue"
-                style="
+          </div>
+          <div style="text-align: center">
+            <div style="font-size: 0.9rem; color: var(--text-muted)">
+              Total Revenue
+            </div>
+            <div id="profileRevenue" style="
                   font-size: 1.2rem;
                   font-weight: 600;
                   color: var(--accent-color);
                   margin-top: 0.5rem;
-                "
-              >
-                ₹0
-              </div>
+                ">
+              ₹0
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Graph & History Grid -->
-        <div
-          style="
+      <!-- Graph & History Grid -->
+      <div style="
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
             margin-bottom: 1.5rem;
-          "
-        >
-          <!-- Service Usage Chart -->
-          <div
-            style="
+          ">
+        <!-- Service Usage Chart -->
+        <div style="
               background: var(--section-bg);
               border: 1px solid var(--border-color);
               border-radius: 8px;
               padding: 1rem;
-            "
-          >
-            <h3
-              style="
+            ">
+          <h3 style="
                 color: var(--text-color);
                 margin-bottom: 1rem;
                 font-size: 1.1rem;
-              "
-            >
-              Service Usage
-            </h3>
-            <canvas id="serviceChart" height="200"></canvas>
-          </div>
+              ">
+            Service Usage
+          </h3>
+          <canvas id="serviceChart" height="200"></canvas>
+        </div>
 
-          <!-- Purchase/Sale History -->
-          <div
-            style="
+        <!-- Purchase/Sale History -->
+        <div style="
               background: var(--section-bg);
               border: 1px solid var(--border-color);
               border-radius: 8px;
               padding: 1rem;
-            "
-          >
-            <h3
-              style="
+            ">
+          <h3 style="
                 color: var(--text-color);
                 margin-bottom: 1rem;
                 font-size: 1.1rem;
-              "
-            >
-              Recent Transactions
-            </h3>
-            <ul
-              id="transactionList"
-              style="
+              ">
+            Recent Transactions
+          </h3>
+          <ul id="transactionList" style="
                 list-style: none;
                 padding: 0;
                 margin: 0;
                 max-height: 250px;
                 overflow-y: auto;
-              "
-            >
-              <li style="color: var(--text-muted); padding: 0.5rem">
-                No transactions.
-              </li>
-            </ul>
-          </div>
+              ">
+            <li style="color: var(--text-muted); padding: 0.5rem">
+              No transactions.
+            </li>
+          </ul>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ============================================
+  <!-- ============================================
        NEW: PROFIT & LOSS ANALYTICS SECTION
        ============================================ -->
-    <section
-      class="profit-loss-section"
-      id="profit-loss-analytics"
-      aria-label="Profit Loss Analytics"
-    >
-      <div class="pl-container">
-        <h2 class="features-title serif">Profit & Loss Analytics</h2>
-        <p class="feature-intro">
-          Track revenue, expenses, and profitability trends for buyers and
-          retailers.
-        </p>
+  <section class="profit-loss-section" id="profit-loss-analytics" aria-label="Profit Loss Analytics">
+    <div class="pl-container">
+      <h2 class="features-title serif">Profit & Loss Analytics</h2>
+      <p class="feature-intro">
+        Track revenue, expenses, and profitability trends for buyers and
+        retailers.
+      </p>
 
-        <!-- Controls -->
-        <div class="pl-controls">
-          <label
-            for="plUserSelector"
-            style="color: var(--text-color); font-weight: 500"
-            >Select Buyer/Retailer:</label
-          >
-          <select id="plUserSelector" class="btn">
-            <option value="">Choose a user...</option>
-          </select>
+      <!-- Controls -->
+      <div class="pl-controls">
+        <label for="plUserSelector" style="color: var(--text-color); font-weight: 500">Select Buyer/Retailer:</label>
+        <select id="plUserSelector" class="btn">
+          <option value="">Choose a user...</option>
+        </select>
 
-          <div class="pl-time-toggle">
-            <button class="btn btn-secondary" data-range="weekly">
-              Weekly
-            </button>
-            <button class="btn btn-secondary active" data-range="monthly">
-              Monthly
-            </button>
-            <button class="btn btn-secondary" data-range="quarterly">
-              Quarterly
-            </button>
-          </div>
-
-          <div style="flex: 1"></div>
-          <button class="btn btn-primary" id="exportPLBtn">
-            <i class="fas fa-download"></i> Export Report
+        <div class="pl-time-toggle">
+          <button class="btn btn-secondary" data-range="weekly">
+            Weekly
+          </button>
+          <button class="btn btn-secondary active" data-range="monthly">
+            Monthly
+          </button>
+          <button class="btn btn-secondary" data-range="quarterly">
+            Quarterly
           </button>
         </div>
 
-        <!-- Summary Cards -->
-        <div class="pl-summary-cards">
-          <div class="pl-card revenue-card">
-            <div class="pl-card-icon">💰</div>
-            <div class="pl-card-content">
-              <div class="pl-card-label">Total Revenue</div>
-              <div class="pl-card-value" id="plRevenue">₹0</div>
-            </div>
-          </div>
-
-          <div class="pl-card expense-card">
-            <div class="pl-card-icon">💸</div>
-            <div class="pl-card-content">
-              <div class="pl-card-label">Total Expenses</div>
-              <div class="pl-card-value" id="plExpenses">₹0</div>
-            </div>
-          </div>
-
-          <div class="pl-card profit-card">
-            <div class="pl-card-icon">📈</div>
-            <div class="pl-card-content">
-              <div class="pl-card-label">Net Profit/Loss</div>
-              <div class="pl-card-value positive" id="plProfit">₹0</div>
-            </div>
-          </div>
-
-          <div class="pl-card transactions-card">
-            <div class="pl-card-icon">🔢</div>
-            <div class="pl-card-content">
-              <div class="pl-card-label">Transactions</div>
-              <div class="pl-card-value" id="plTransactions">0</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Charts Grid -->
-        <div class="pl-charts-grid">
-          <div class="pl-chart-container">
-            <h3>Profit/Loss Trend</h3>
-            <canvas id="plTrendChart"></canvas>
-          </div>
-
-          <div class="pl-chart-container">
-            <h3>Category Breakdown</h3>
-            <canvas id="plCategoryChart"></canvas>
-          </div>
-        </div>
+        <div style="flex: 1"></div>
+        <button class="btn btn-primary" id="exportPLBtn">
+          <i class="fas fa-download"></i> Export Report
+        </button>
       </div>
-    </section>
 
-    <footer class="site-footer tech-dark-theme final-match">
-      <div class="footer-top-accent"></div>
-
-      <div class="footer-inner-content">
-        <div class="footer-section footer-brand">
-          <div class="brand-header">
-            <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
-            <h3>AgriTech</h3>
-          </div>
-
-          <p class="tagline">
-            Empowering India's Farming Future with innovative technology
-            connecting every stakeholder.
-          </p>
-
-          <div class="social-icons">
-            <a href="#" aria-label="Facebook"
-              ><i class="fab fa-facebook-f"></i
-            ></a>
-            <a href="#" aria-label="Twitter"
-              ><i class="fab fa-x-twitter"></i
-            ></a>
-            <a href="#" aria-label="LinkedIn"
-              ><i class="fab fa-linkedin-in"></i
-            ></a>
-            <a href="#" aria-label="Instagram"
-              ><i class="fab fa-instagram"></i
-            ></a>
+      <!-- Summary Cards -->
+      <div class="pl-summary-cards">
+        <div class="pl-card revenue-card">
+          <div class="pl-card-icon">💰</div>
+          <div class="pl-card-content">
+            <div class="pl-card-label">Total Revenue</div>
+            <div class="pl-card-value" id="plRevenue">₹0</div>
           </div>
         </div>
 
-        <div class="footer-group-links">
-          <div class="footer-section footer-links">
-            <h4>Quick Links</h4>
-            <ul>
-              <li>
-                <a href="index.html"><i class="fas fa-home"></i> Home</a>
-              </li>
-              <li>
-                <a href="login.html"
-                  ><i class="fas fa-tachometer-alt"></i> Dashboard</a
-                >
-              </li>
-              <li>
-                <a href="feed-back.html"
-                  ><i class="fas fa-comment-dots"></i> Feedback</a
-                >
-              </li>
-              <li>
-                <a href="chat.html"
-                  ><i class="fas fa-robot"></i> AI Assistant</a
-                >
-              </li>
-              <li>
-                <a href="terms-and-service.html"
-                  ><i class="fas fa-file-contract"></i> Terms & Service</a
-                >
-              </li>
-            </ul>
+        <div class="pl-card expense-card">
+          <div class="pl-card-icon">💸</div>
+          <div class="pl-card-content">
+            <div class="pl-card-label">Total Expenses</div>
+            <div class="pl-card-value" id="plExpenses">₹0</div>
           </div>
+        </div>
 
-          <div class="footer-section footer-contact">
-            <h4>Contact</h4>
-            <ul>
-              <li>
-                <a href="mailto:contact@agritech.com">
-                  <i class="fas fa-envelope"></i> contact@agritech.com
-                </a>
-              </li>
-              <li>
-                <a href="tel:+910000000000">
-                  <i class="fas fa-phone"></i> +91 00000 00000
-                </a>
-              </li>
-            </ul>
+        <div class="pl-card profit-card">
+          <div class="pl-card-icon">📈</div>
+          <div class="pl-card-content">
+            <div class="pl-card-label">Net Profit/Loss</div>
+            <div class="pl-card-value positive" id="plProfit">₹0</div>
+          </div>
+        </div>
+
+        <div class="pl-card transactions-card">
+          <div class="pl-card-icon">🔢</div>
+          <div class="pl-card-content">
+            <div class="pl-card-label">Transactions</div>
+            <div class="pl-card-value" id="plTransactions">0</div>
           </div>
         </div>
       </div>
 
-      <div class="footer-bottom">
-        <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
+      <!-- Charts Grid -->
+      <div class="pl-charts-grid">
+        <div class="pl-chart-container">
+          <h3>Profit/Loss Trend</h3>
+          <canvas id="plTrendChart"></canvas>
+        </div>
+
+        <div class="pl-chart-container">
+          <h3>Category Breakdown</h3>
+          <canvas id="plCategoryChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer tech-dark-theme final-match">
+    <div class="footer-top-accent"></div>
+
+    <div class="footer-inner-content">
+      <div class="footer-section footer-brand">
+        <div class="brand-header">
+          <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
+          <h3>AgriTech</h3>
+        </div>
+
+        <p class="tagline">
+          Empowering India's Farming Future with innovative technology
+          connecting every stakeholder.
+        </p>
+
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
       </div>
 
-      <div class="footer-wave-overlay"></div>
-    </footer>
+      <div class="footer-group-links">
+        <div class="footer-section footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>
+              <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li>
+              <a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+            </li>
+            <li>
+              <a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a>
+            </li>
+            <li>
+              <a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a>
+            </li>
+          </ul>
+        </div>
 
-    <a
-      href="chat.html"
-      id="chatbotBtn"
-      title="Chat with us"
-      aria-label="AI Assistant"
-    >
-      <i class="fas fa-robot"></i>
-    </a>
+        <div class="footer-section footer-contact">
+          <h4>Contact</h4>
+          <ul>
+            <li>
+              <a href="mailto:contact@agritech.com">
+                <i class="fas fa-envelope"></i> contact@agritech.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+910000000000">
+                <i class="fas fa-phone"></i> +91 00000 00000
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-    <button class="scroll-btn" id="scrollBtn" title="Scroll">
-      <i class="fas fa-arrow-down" id="scrollIcon"></i>
-    </button>
+    <div class="footer-bottom">
+      <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
+    </div>
 
-    <script type="importmap">
+    <div class="footer-wave-overlay"></div>
+  </footer>
+
+  <a href="spatial.html" id="spatialBtn" title="Field Analysis" aria-label="Spatial Analytics">
+    <i class="fas fa-map-marked-alt"></i>
+  </a>
+
+  <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
+    <i class="fas fa-robot"></i>
+  </a>
+
+  <button class="scroll-btn" id="scrollBtn" title="Scroll">
+    <i class="fas fa-arrow-down" id="scrollIcon"></i>
+  </button>
+
+  <script type="importmap">
       {
         "imports": {
           "three": "https://unpkg.com/three@0.158.0/build/three.module.js"
@@ -2930,553 +2700,554 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     </script>
 
-    <script>
-      document.getElementById("current-year").textContent =
-        new Date().getFullYear();
-    </script>
+  <script>
+    document.getElementById("current-year").textContent =
+      new Date().getFullYear();
+  </script>
 
-    <script type="module">
-      import * as THREE from "three";
+  <script type="module">
+    import * as THREE from "three";
 
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(
-        75,
-        window.innerWidth / window.innerHeight,
-        0.1,
-        1000,
-      );
-      camera.position.set(0, 3, 10);
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000,
+    );
+    camera.position.set(0, 3, 10);
 
-      const renderer = new THREE.WebGLRenderer({
-        canvas: document.querySelector("#bg-canvas"),
-        alpha: true,
-      });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    const renderer = new THREE.WebGLRenderer({
+      canvas: document.querySelector("#bg-canvas"),
+      alpha: true,
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-      const geometry = new THREE.PlaneGeometry(20, 20, 40, 40);
-      const material = new THREE.MeshBasicMaterial({
-        color: 0x22c55e,
-        wireframe: true,
-      });
-      const plane = new THREE.Mesh(geometry, material);
-      plane.rotation.x = -Math.PI / 2;
-      scene.add(plane);
+    const geometry = new THREE.PlaneGeometry(20, 20, 40, 40);
+    const material = new THREE.MeshBasicMaterial({
+      color: 0x22c55e,
+      wireframe: true,
+    });
+    const plane = new THREE.Mesh(geometry, material);
+    plane.rotation.x = -Math.PI / 2;
+    scene.add(plane);
 
-      const originalPositions =
-        plane.geometry.attributes.position.array.slice();
-      const clock = new THREE.Clock();
+    const originalPositions =
+      plane.geometry.attributes.position.array.slice();
+    const clock = new THREE.Clock();
 
-      const mouse = new THREE.Vector2(0, 0);
-      const targetMouse = new THREE.Vector2(0, 0);
+    const mouse = new THREE.Vector2(0, 0);
+    const targetMouse = new THREE.Vector2(0, 0);
 
-      window.addEventListener("mousemove", (event) => {
-        targetMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        targetMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-      });
+    window.addEventListener("mousemove", (event) => {
+      targetMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      targetMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    });
 
-      function animate() {
-        const t = clock.getElapsedTime();
-        mouse.x += (targetMouse.x - mouse.x) * 0.05;
-        mouse.y += (targetMouse.y - mouse.y) * 0.05;
+    function animate() {
+      const t = clock.getElapsedTime();
+      mouse.x += (targetMouse.x - mouse.x) * 0.05;
+      mouse.y += (targetMouse.y - mouse.y) * 0.05;
 
-        const positions = plane.geometry.attributes.position.array;
-        const mouseWorld = new THREE.Vector2(mouse.x * 10, mouse.y * 10);
+      const positions = plane.geometry.attributes.position.array;
+      const mouseWorld = new THREE.Vector2(mouse.x * 10, mouse.y * 10);
 
-        for (let i = 0; i < positions.length; i += 3) {
-          const x = originalPositions[i];
-          const y = originalPositions[i + 1];
-          const baseWave =
-            Math.sin(x * 0.5 + t * 0.5) * 0.1 +
-            Math.sin(y * 0.5 + t * 0.5) * 0.1;
-          const dist = new THREE.Vector2(x, y).distanceTo(mouseWorld);
-          const influence = Math.max(0, 1 - dist / 5);
-          const ripple = Math.sin(dist * 2 - t * 2) * influence * 0.3;
-          positions[i + 2] = baseWave + ripple;
-        }
-
-        plane.geometry.attributes.position.needsUpdate = true;
-        renderer.render(scene, camera);
-        requestAnimationFrame(animate);
+      for (let i = 0; i < positions.length; i += 3) {
+        const x = originalPositions[i];
+        const y = originalPositions[i + 1];
+        const baseWave =
+          Math.sin(x * 0.5 + t * 0.5) * 0.1 +
+          Math.sin(y * 0.5 + t * 0.5) * 0.1;
+        const dist = new THREE.Vector2(x, y).distanceTo(mouseWorld);
+        const influence = Math.max(0, 1 - dist / 5);
+        const ripple = Math.sin(dist * 2 - t * 2) * influence * 0.3;
+        positions[i + 2] = baseWave + ripple;
       }
 
-      window.addEventListener("resize", () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      plane.geometry.attributes.position.needsUpdate = true;
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    });
+
+    animate();
+  </script>
+
+  <script type="module" src="index.js"></script>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.querySelector(".theme-toggle");
+    const themeText = document.querySelector(".theme-text");
+    const sunIcon = document.querySelector(".sun-icon");
+    const moonIcon = document.querySelector(".moon-icon");
+
+    const applyTheme = (theme) => {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("agritech-theme", theme);
+      if (theme === "dark") {
+        themeText.textContent = "Light";
+        moonIcon.style.display = "none";
+        sunIcon.style.display = "inline-block";
+      } else {
+        themeText.textContent = "Dark";
+        moonIcon.style.display = "inline-block";
+        sunIcon.style.display = "none";
+      }
+    };
+
+    const savedTheme = localStorage.getItem("agritech-theme") || "dark";
+    applyTheme(savedTheme);
+
+    themeToggle.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      const next = current === "light" ? "dark" : "light";
+      applyTheme(next);
+    });
+    // Language Selector
+    const langBtn = document.querySelector(".lang-btn");
+    const langDropdown = document.querySelector(".lang-dropdown");
+
+    if (langBtn && langDropdown) {
+      langBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        langDropdown.classList.toggle("active");
       });
 
-      animate();
-    </script>
-
-    <script type="module" src="index.js"></script>
-
-    <script>
-      // Theme Toggle
-      const themeToggle = document.querySelector(".theme-toggle");
-      const themeText = document.querySelector(".theme-text");
-      const sunIcon = document.querySelector(".sun-icon");
-      const moonIcon = document.querySelector(".moon-icon");
-
-      const applyTheme = (theme) => {
-        document.documentElement.setAttribute("data-theme", theme);
-        localStorage.setItem("agritech-theme", theme);
-        if (theme === "dark") {
-          themeText.textContent = "Light";
-          moonIcon.style.display = "none";
-          sunIcon.style.display = "inline-block";
-        } else {
-          themeText.textContent = "Dark";
-          moonIcon.style.display = "inline-block";
-          sunIcon.style.display = "none";
+      document.addEventListener("click", (e) => {
+        if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
+          langDropdown.classList.remove("active");
         }
-      };
+      });
+    }
 
-      const savedTheme = localStorage.getItem("agritech-theme") || "dark";
-      applyTheme(savedTheme);
+    // Scroll Button
+    const scrollBtn = document.getElementById("scrollBtn");
+    const scrollIcon = document.getElementById("scrollIcon");
 
-      themeToggle.addEventListener("click", () => {
+    if (scrollBtn && scrollIcon) {
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+          scrollBtn.classList.add("visible");
+          scrollIcon.classList.remove("fa-arrow-down");
+          scrollIcon.classList.add("fa-arrow-up");
+        } else {
+          scrollBtn.classList.remove("visible");
+          scrollIcon.classList.remove("fa-arrow-up");
+          scrollIcon.classList.add("fa-arrow-down");
+        }
+      });
+
+      scrollBtn.addEventListener("click", () => {
+        if (scrollIcon.classList.contains("fa-arrow-up")) {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      });
+    }
+
+    // ===== MOBILE MENU (FINAL FIX) =====
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
+
+    function closeMobileMenu() {
+      mobileMenu.classList.remove("active");
+      mobileMenuOverlay.classList.remove("active");
+      document.body.style.overflow = "";
+    }
+
+    function openMobileMenu() {
+      mobileMenu.classList.add("active");
+      mobileMenuOverlay.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+    const mobileCloseBtn = document.querySelector(".mobile-close-btn");
+
+    if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
+      // OPEN
+      hamburgerBtn.addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        openMobileMenu();
+      });
+
+      // CLOSE
+      mobileCloseBtn.addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closeMobileMenu();
+      });
+
+      mobileMenuOverlay.addEventListener("pointerdown", closeMobileMenu);
+
+      mobileMenu.addEventListener("pointerdown", (e) => {
+        e.stopPropagation();
+      });
+    }
+
+    // Mobile Services Toggle
+    const mobileServicesToggle = document.getElementById(
+      "mobileServicesToggle",
+    );
+    const mobileServicesList = document.getElementById("mobileServicesList");
+    const mobileServicesArrow = document.getElementById(
+      "mobileServicesArrow",
+    );
+
+    if (mobileServicesToggle && mobileServicesList && mobileServicesArrow) {
+      mobileServicesToggle.addEventListener("click", (e) => {
+        e.preventDefault();
+        mobileServicesList.classList.toggle("active");
+        mobileServicesArrow.classList.toggle("rotated");
+      });
+    }
+
+    // Mobile Theme Toggle
+    const mobileThemeToggle = document.getElementById("mobileThemeToggle");
+    const mobileThemeText = document.querySelector(".mobile-theme-text");
+    const mobileSunIcon = document.querySelector(".mobile-sun-icon");
+    const mobileMoonIcon = document.querySelector(".mobile-moon-icon");
+
+    if (mobileThemeToggle) {
+      mobileThemeToggle.addEventListener("click", () => {
         const current = document.documentElement.getAttribute("data-theme");
         const next = current === "light" ? "dark" : "light";
         applyTheme(next);
-      });
-      // Language Selector
-      const langBtn = document.querySelector(".lang-btn");
-      const langDropdown = document.querySelector(".lang-dropdown");
 
-      if (langBtn && langDropdown) {
-        langBtn.addEventListener("click", (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          langDropdown.classList.toggle("active");
-        });
-
-        document.addEventListener("click", (e) => {
-          if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
-            langDropdown.classList.remove("active");
-          }
-        });
-      }
-
-      // Scroll Button
-      const scrollBtn = document.getElementById("scrollBtn");
-      const scrollIcon = document.getElementById("scrollIcon");
-
-      if (scrollBtn && scrollIcon) {
-        window.addEventListener("scroll", () => {
-          if (window.scrollY > 300) {
-            scrollBtn.classList.add("visible");
-            scrollIcon.classList.remove("fa-arrow-down");
-            scrollIcon.classList.add("fa-arrow-up");
-          } else {
-            scrollBtn.classList.remove("visible");
-            scrollIcon.classList.remove("fa-arrow-up");
-            scrollIcon.classList.add("fa-arrow-down");
-          }
-        });
-
-        scrollBtn.addEventListener("click", () => {
-          if (scrollIcon.classList.contains("fa-arrow-up")) {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }
-        });
-      }
-
-      // ===== MOBILE MENU (FINAL FIX) =====
-      const hamburgerBtn = document.getElementById("hamburgerBtn");
-      const mobileMenu = document.getElementById("mobileMenu");
-      const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
-
-      function closeMobileMenu() {
-        mobileMenu.classList.remove("active");
-        mobileMenuOverlay.classList.remove("active");
-        document.body.style.overflow = "";
-      }
-
-      function openMobileMenu() {
-        mobileMenu.classList.add("active");
-        mobileMenuOverlay.classList.add("active");
-        document.body.style.overflow = "hidden";
-      }
-      const mobileCloseBtn = document.querySelector(".mobile-close-btn");
-
-      if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
-        // OPEN
-        hamburgerBtn.addEventListener("pointerdown", (e) => {
-          e.preventDefault();
-          openMobileMenu();
-        });
-
-        // CLOSE
-        mobileCloseBtn.addEventListener("pointerdown", (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          closeMobileMenu();
-        });
-
-        mobileMenuOverlay.addEventListener("pointerdown", closeMobileMenu);
-
-        mobileMenu.addEventListener("pointerdown", (e) => {
-          e.stopPropagation();
-        });
-      }
-
-      // Mobile Services Toggle
-      const mobileServicesToggle = document.getElementById(
-        "mobileServicesToggle",
-      );
-      const mobileServicesList = document.getElementById("mobileServicesList");
-      const mobileServicesArrow = document.getElementById(
-        "mobileServicesArrow",
-      );
-
-      if (mobileServicesToggle && mobileServicesList && mobileServicesArrow) {
-        mobileServicesToggle.addEventListener("click", (e) => {
-          e.preventDefault();
-          mobileServicesList.classList.toggle("active");
-          mobileServicesArrow.classList.toggle("rotated");
-        });
-      }
-
-      // Mobile Theme Toggle
-      const mobileThemeToggle = document.getElementById("mobileThemeToggle");
-      const mobileThemeText = document.querySelector(".mobile-theme-text");
-      const mobileSunIcon = document.querySelector(".mobile-sun-icon");
-      const mobileMoonIcon = document.querySelector(".mobile-moon-icon");
-
-      if (mobileThemeToggle) {
-        mobileThemeToggle.addEventListener("click", () => {
-          const current = document.documentElement.getAttribute("data-theme");
-          const next = current === "light" ? "dark" : "light";
-          applyTheme(next);
-
-          if (next === "dark") {
-            mobileThemeText.textContent = "Light Mode";
-            mobileMoonIcon.style.display = "none";
-            mobileSunIcon.style.display = "inline-block";
-          } else {
-            mobileThemeText.textContent = "Dark Mode";
-            mobileMoonIcon.style.display = "inline-block";
-            mobileSunIcon.style.display = "none";
-          }
-        });
-      }
-    </script>
-    <script>
-      
-      if (
-        window.location.pathname.endsWith("index.html") ||
-        window.location.pathname === "/"
-      ) {
-        const pageMap = {
-          home: "index.html",
-          about: "about.html",
-          blog: "blog.html",
-          crop: "crop.html",
-          marketplace: "marketplace.html",
-          supply: "supply-chain.html",
-          sustainable: "sustainable-farming.html",
-          finance: "financial-support.html",
-          login: "login.html",
-          register: "register.html",
-          faq: "faq.html",
-          feedback: "feed-back.html",
-          chat: "chat.html",
-        };
-
-        function clearHighlights() {
-          document.querySelectorAll(".search-highlight").forEach((span) => {
-            span.replaceWith(span.textContent);
-          });
-        }
-
-        function highlightAll(query) {
-          clearHighlights();
-          let found = false;
-          let firstMatch = null;
-
-          const walker = document.createTreeWalker(
-            document.body,
-            NodeFilter.SHOW_TEXT,
-          );
-          const nodes = [];
-
-          while (walker.nextNode()) nodes.push(walker.currentNode);
-
-          nodes.forEach((node) => {
-            const text = node.nodeValue;
-            const lower = text.toLowerCase();
-
-            if (!lower.includes(query)) return;
-
-            const parent = node.parentNode;
-            const fragment = document.createDocumentFragment();
-            let lastIndex = 0;
-
-            lower.replace(new RegExp(query, "gi"), (match, index) => {
-              found = true;
-
-              fragment.append(
-                document.createTextNode(text.slice(lastIndex, index)),
-              );
-
-              const span = document.createElement("span");
-              span.className = "search-highlight";
-              span.textContent = text.slice(index, index + match.length);
-
-              if (!firstMatch) firstMatch = span;
-
-              fragment.append(span);
-              lastIndex = index + match.length;
-            });
-
-            fragment.append(document.createTextNode(text.slice(lastIndex)));
-            parent.replaceChild(fragment, node);
-          });
-
-          if (firstMatch) {
-            firstMatch.scrollIntoView({ behavior: "smooth", block: "center" });
-          }
-
-          return found;
-        }
-
-        function showSearchPopup(query) {
-          document.getElementById("searchPopupText").textContent =
-            `No results found for "${query}". Try different keywords.`;
-          document.getElementById("searchPopup").style.display = "flex";
-        }
-
-        window.closeSearchPopup = () => {
-          document.getElementById("searchPopup").style.display = "none";
-        };
-
-        function handleSearch(value) {
-          if (!value) return;
-          const query = value.trim().toLowerCase();
-
-          // 1️⃣ Page redirect
-          for (const key in pageMap) {
-            if (query.includes(key)) {
-              window.location.href = pageMap[key];
-              return;
-            }
-          }
-
-          // 2️⃣ Highlight ALL matches
-          if (highlightAll(query)) return;
-
-          // 3️⃣ Popup if nothing found
-          showSearchPopup(value);
-        }
-
-        // Desktop Search
-        const searchButton = document.querySelector(".search-button");
-        const searchInput = document.querySelector(".search-input");
-
-        searchButton?.addEventListener("click", () => {
-          handleSearch(searchInput.value);
-        });
-
-        searchInput?.addEventListener("keydown", (e) => {
-          if (e.key === "Enter") handleSearch(e.target.value);
-        });
-
-        // Add focus effect when button is clicked or focused
-        searchButton?.addEventListener("click", () => {
-          searchInput?.classList.add("input-focused");
-        });
-
-        searchButton?.addEventListener("focus", () => {
-          searchInput?.focus(); //Focus the input to show cursor
-          searchInput?.classList.add("input-focused");
-        });
-
-        searchInput?.addEventListener("blur", () => {
-          searchInput.classList.remove("input-focused");
-        });
-
-        // Mobile Search
-        const mobileSearchBtn = document.querySelector(".mobile-search-btn");
-        const mobileSearchInput = document.querySelector(
-          ".mobile-search-input",
-        );
-
-        mobileSearchBtn?.addEventListener("click", () => {
-          handleSearch(mobileSearchInput.value);
-        });
-
-        mobileSearchInput?.addEventListener("keydown", (e) => {
-          if (e.key === "Enter") handleSearch(e.target.value);
-        });
-
-        // Add focus effect when button is clicked or focused
-        mobileSearchBtn?.addEventListener("click", () => {
-          mobileSearchInput?.classList.add("input-focused");
-        });
-
-        mobileSearchBtn?.addEventListener("focus", () => {
-          mobileSearchInput?.focus(); // Focus the input to show cursor
-          mobileSearchInput?.classList.add("input-focused");
-        });
-
-        mobileSearchInput?.addEventListener("blur", () => {
-          mobileSearchInput.classList.remove("input-focused");
-        });
-      }
-    </script>
-
-    <div class="search-popup-overlay" id="searchPopup">
-      <div class="search-popup">
-        <i class="fas fa-search"></i>
-        <h3>No Results Found</h3>
-        <p id="searchPopupText"></p>
-        <button onclick="closeSearchPopup()">Got it</button>
-      </div>
-    </div>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        // Restore theme
-        const applyTheme = (theme) => {
-          document.documentElement.setAttribute("data-theme", theme);
-          localStorage.setItem("theme", theme);
-
-          if (themeText)
-            themeText.textContent = theme === "dark" ? "Dark" : "Light";
-          if (moonIcon)
-            moonIcon.style.display = theme === "dark" ? "none" : "inline-block";
-          if (sunIcon)
-            sunIcon.style.display = theme === "dark" ? "inline-block" : "none";
-        };
-
-        // Initialize
-        const savedTheme = localStorage.getItem("theme") || "dark";
-        applyTheme(savedTheme);
-
-        // Toggle on Click
-        if (themeText) {
-          themeText.addEventListener("click", () => {
-            const currentTheme =
-              document.documentElement.getAttribute("data-theme");
-            const nextTheme = currentTheme === "light" ? "dark" : "light";
-            applyTheme(nextTheme);
-          });
-        }
-
-        // Restore scroll position
-        const scrollY = localStorage.getItem("homeScrollY");
-        if (scrollY) {
-          window.scrollTo(0, parseInt(scrollY, 10));
-          localStorage.removeItem("homeScrollY");
+        if (next === "dark") {
+          mobileThemeText.textContent = "Light Mode";
+          mobileMoonIcon.style.display = "none";
+          mobileSunIcon.style.display = "inline-block";
+        } else {
+          mobileThemeText.textContent = "Dark Mode";
+          mobileMoonIcon.style.display = "inline-block";
+          mobileSunIcon.style.display = "none";
         }
       });
-    </script>
+    }
+  </script>
+  <script>
 
-    <script src="main.js"></script>
-
-    <script>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker
-            .register("/service-worker.js")
-            .then(() => console.log("Service Worker registered"))
-            .catch((err) => console.error("Service Worker failed", err));
-        });
-      }
-    </script>
-    <script src="translations.js"></script>
-    <script src="scripts/i18n.js"></script>
-
-    <script>
-      const languages = {
-        en: {
-          hero_title: "Empowering Agriculture Through Technology",
-          hero_desc:
-            "AgriTech connects Farmers, Buyers, Equipment Suppliers, and Grocery Sellers to revolutionize India's agricultural ecosystem through smart solutions and seamless collaboration.",
-        },
-        hi: {
-          hero_title: "प्रौद्योगिकी के माध्यम से कृषि को सशक्त बनाना",
-          hero_desc:
-            "एग्रीटेक किसानों, खरीदारों, उपकरण आपूर्तिकर्ताओं और किराना विक्रेताओं को जोड़ता है।",
-        },
-        te: {
-          hero_title: "సాంకేతికత ద్వారా వ్యవసాయాన్ని బలోపేతం చేయడం",
-          hero_desc:
-            "అగ్రిటెక్ రైతులు, కొనుగోలుదారులు, పరికరాల సరఫరాదారులు మరియు కిరాణా విక్రేతలను అనుసంధానిస్తుంది.",
-        },
-        ta: {
-          hero_title: "தொழில்நுட்பத்தின் மூலம் விவசாயத்தை வலுப்படுத்துதல்",
-          hero_desc:
-            "அக்ரிடெக் விவசாயிகள் மற்றும் சேவை வழங்குநர்களை இணைக்கிறது.",
-        },
+    if (
+      window.location.pathname.endsWith("index.html") ||
+      window.location.pathname === "/"
+    ) {
+      const pageMap = {
+        home: "index.html",
+        about: "about.html",
+        blog: "blog.html",
+        crop: "crop.html",
+        marketplace: "marketplace.html",
+        supply: "supply-chain.html",
+        sustainable: "sustainable-farming.html",
+        finance: "financial-support.html",
+        login: "login.html",
+        register: "register.html",
+        faq: "faq.html",
+        feedback: "feed-back.html",
+        chat: "chat.html",
       };
 
-      const lang = localStorage.getItem("lang") || "en";
-
-      document.querySelectorAll("[data-i18n]").forEach((el) => {
-        const key = el.getAttribute("data-i18n");
-        if (languages[lang] && languages[lang][key]) {
-          el.innerText = languages[lang][key];
-        }
-      });
-    </script>
-
-    <script>
-      const langSelect = document.getElementById("languageSelect");
-      const savedLang = localStorage.getItem("lang") || "en";
-      langSelect.value = savedLang;
-
-      langSelect.addEventListener("change", () => {
-        localStorage.setItem("lang", langSelect.value);
-        location.reload();
-      });
-    </script>
-
-    <!-- Notification System -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
-    <script src="js/notifications.js"></script>
-    <script>
-      const circles = document.querySelectorAll(".cursor-circle");
-      let mouseX = 0,
-        mouseY = 0;
-      let positions = Array.from(circles).map(() => ({ x: 0, y: 0 }));
-
-      window.addEventListener("mousemove", (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-      });
-
-      function animateCursor() {
-        let x = mouseX;
-        let y = mouseY;
-
-        circles.forEach((circle, index) => {
-          const pos = positions[index];
-
-          pos.x += (x - pos.x) * 0.3;
-          pos.y += (y - pos.y) * 0.3;
-
-          circle.style.left = pos.x + "px";
-          circle.style.top = pos.y + "px";
-
-          x = pos.x;
-          y = pos.y;
+      function clearHighlights() {
+        document.querySelectorAll(".search-highlight").forEach((span) => {
+          span.replaceWith(span.textContent);
         });
-
-        requestAnimationFrame(animateCursor);
       }
 
-      animateCursor();
+      function highlightAll(query) {
+        clearHighlights();
+        let found = false;
+        let firstMatch = null;
 
-      window.addEventListener("mousedown", () => {
-        circles.forEach((c) => c.classList.add("cursor-clicking"));
+        const walker = document.createTreeWalker(
+          document.body,
+          NodeFilter.SHOW_TEXT,
+        );
+        const nodes = [];
+
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+
+        nodes.forEach((node) => {
+          const text = node.nodeValue;
+          const lower = text.toLowerCase();
+
+          if (!lower.includes(query)) return;
+
+          const parent = node.parentNode;
+          const fragment = document.createDocumentFragment();
+          let lastIndex = 0;
+
+          lower.replace(new RegExp(query, "gi"), (match, index) => {
+            found = true;
+
+            fragment.append(
+              document.createTextNode(text.slice(lastIndex, index)),
+            );
+
+            const span = document.createElement("span");
+            span.className = "search-highlight";
+            span.textContent = text.slice(index, index + match.length);
+
+            if (!firstMatch) firstMatch = span;
+
+            fragment.append(span);
+            lastIndex = index + match.length;
+          });
+
+          fragment.append(document.createTextNode(text.slice(lastIndex)));
+          parent.replaceChild(fragment, node);
+        });
+
+        if (firstMatch) {
+          firstMatch.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+
+        return found;
+      }
+
+      function showSearchPopup(query) {
+        document.getElementById("searchPopupText").textContent =
+          `No results found for "${query}". Try different keywords.`;
+        document.getElementById("searchPopup").style.display = "flex";
+      }
+
+      window.closeSearchPopup = () => {
+        document.getElementById("searchPopup").style.display = "none";
+      };
+
+      function handleSearch(value) {
+        if (!value) return;
+        const query = value.trim().toLowerCase();
+
+        // 1️⃣ Page redirect
+        for (const key in pageMap) {
+          if (query.includes(key)) {
+            window.location.href = pageMap[key];
+            return;
+          }
+        }
+
+        // 2️⃣ Highlight ALL matches
+        if (highlightAll(query)) return;
+
+        // 3️⃣ Popup if nothing found
+        showSearchPopup(value);
+      }
+
+      // Desktop Search
+      const searchButton = document.querySelector(".search-button");
+      const searchInput = document.querySelector(".search-input");
+
+      searchButton?.addEventListener("click", () => {
+        handleSearch(searchInput.value);
       });
 
-      window.addEventListener("mouseup", () => {
-        circles.forEach((c) => c.classList.remove("cursor-clicking"));
+      searchInput?.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") handleSearch(e.target.value);
       });
-      
-    </script>
-  </body>
+
+      // Add focus effect when button is clicked or focused
+      searchButton?.addEventListener("click", () => {
+        searchInput?.classList.add("input-focused");
+      });
+
+      searchButton?.addEventListener("focus", () => {
+        searchInput?.focus(); //Focus the input to show cursor
+        searchInput?.classList.add("input-focused");
+      });
+
+      searchInput?.addEventListener("blur", () => {
+        searchInput.classList.remove("input-focused");
+      });
+
+      // Mobile Search
+      const mobileSearchBtn = document.querySelector(".mobile-search-btn");
+      const mobileSearchInput = document.querySelector(
+        ".mobile-search-input",
+      );
+
+      mobileSearchBtn?.addEventListener("click", () => {
+        handleSearch(mobileSearchInput.value);
+      });
+
+      mobileSearchInput?.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") handleSearch(e.target.value);
+      });
+
+      // Add focus effect when button is clicked or focused
+      mobileSearchBtn?.addEventListener("click", () => {
+        mobileSearchInput?.classList.add("input-focused");
+      });
+
+      mobileSearchBtn?.addEventListener("focus", () => {
+        mobileSearchInput?.focus(); // Focus the input to show cursor
+        mobileSearchInput?.classList.add("input-focused");
+      });
+
+      mobileSearchInput?.addEventListener("blur", () => {
+        mobileSearchInput.classList.remove("input-focused");
+      });
+    }
+  </script>
+
+  <div class="search-popup-overlay" id="searchPopup">
+    <div class="search-popup">
+      <i class="fas fa-search"></i>
+      <h3>No Results Found</h3>
+      <p id="searchPopupText"></p>
+      <button onclick="closeSearchPopup()">Got it</button>
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Restore theme
+      const applyTheme = (theme) => {
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+
+        if (themeText)
+          themeText.textContent = theme === "dark" ? "Dark" : "Light";
+        if (moonIcon)
+          moonIcon.style.display = theme === "dark" ? "none" : "inline-block";
+        if (sunIcon)
+          sunIcon.style.display = theme === "dark" ? "inline-block" : "none";
+      };
+
+      // Initialize
+      const savedTheme = localStorage.getItem("theme") || "dark";
+      applyTheme(savedTheme);
+
+      // Toggle on Click
+      if (themeText) {
+        themeText.addEventListener("click", () => {
+          const currentTheme =
+            document.documentElement.getAttribute("data-theme");
+          const nextTheme = currentTheme === "light" ? "dark" : "light";
+          applyTheme(nextTheme);
+        });
+      }
+
+      // Restore scroll position
+      const scrollY = localStorage.getItem("homeScrollY");
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY, 10));
+        localStorage.removeItem("homeScrollY");
+      }
+    });
+  </script>
+
+  <script src="main.js"></script>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("/service-worker.js")
+          .then(() => console.log("Service Worker registered"))
+          .catch((err) => console.error("Service Worker failed", err));
+      });
+    }
+  </script>
+  <script src="translations.js"></script>
+  <script src="scripts/i18n.js"></script>
+
+  <script>
+    const languages = {
+      en: {
+        hero_title: "Empowering Agriculture Through Technology",
+        hero_desc:
+          "AgriTech connects Farmers, Buyers, Equipment Suppliers, and Grocery Sellers to revolutionize India's agricultural ecosystem through smart solutions and seamless collaboration.",
+      },
+      hi: {
+        hero_title: "प्रौद्योगिकी के माध्यम से कृषि को सशक्त बनाना",
+        hero_desc:
+          "एग्रीटेक किसानों, खरीदारों, उपकरण आपूर्तिकर्ताओं और किराना विक्रेताओं को जोड़ता है।",
+      },
+      te: {
+        hero_title: "సాంకేతికత ద్వారా వ్యవసాయాన్ని బలోపేతం చేయడం",
+        hero_desc:
+          "అగ్రిటెక్ రైతులు, కొనుగోలుదారులు, పరికరాల సరఫరాదారులు మరియు కిరాణా విక్రేతలను అనుసంధానిస్తుంది.",
+      },
+      ta: {
+        hero_title: "தொழில்நுட்பத்தின் மூலம் விவசாயத்தை வலுப்படுத்துதல்",
+        hero_desc:
+          "அக்ரிடெக் விவசாயிகள் மற்றும் சேவை வழங்குநர்களை இணைக்கிறது.",
+      },
+    };
+
+    const lang = localStorage.getItem("lang") || "en";
+
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
+      if (languages[lang] && languages[lang][key]) {
+        el.innerText = languages[lang][key];
+      }
+    });
+  </script>
+
+  <script>
+    const langSelect = document.getElementById("languageSelect");
+    const savedLang = localStorage.getItem("lang") || "en";
+    langSelect.value = savedLang;
+
+    langSelect.addEventListener("change", () => {
+      localStorage.setItem("lang", langSelect.value);
+      location.reload();
+    });
+  </script>
+
+  <!-- Notification System -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+  <script src="js/notifications.js"></script>
+  <script>
+    const circles = document.querySelectorAll(".cursor-circle");
+    let mouseX = 0,
+      mouseY = 0;
+    let positions = Array.from(circles).map(() => ({ x: 0, y: 0 }));
+
+    window.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animateCursor() {
+      let x = mouseX;
+      let y = mouseY;
+
+      circles.forEach((circle, index) => {
+        const pos = positions[index];
+
+        pos.x += (x - pos.x) * 0.3;
+        pos.y += (y - pos.y) * 0.3;
+
+        circle.style.left = pos.x + "px";
+        circle.style.top = pos.y + "px";
+
+        x = pos.x;
+        y = pos.y;
+      });
+
+      requestAnimationFrame(animateCursor);
+    }
+
+    animateCursor();
+
+    window.addEventListener("mousedown", () => {
+      circles.forEach((c) => c.classList.add("cursor-clicking"));
+    });
+
+    window.addEventListener("mouseup", () => {
+      circles.forEach((c) => c.classList.remove("cursor-clicking"));
+    });
+
+  </script>
+</body>
+
 </html>

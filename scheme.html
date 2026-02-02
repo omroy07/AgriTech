@@ -11,7 +11,6 @@
   --primary:#2e7d32;
   --secondary:#1b5e20;
   --bg:#f1f5f3;
-  --card:#ffffff;
   --card: rgba(255, 255, 255, 0.9);
   --text:#333333;
   --label:#1b5e20;
@@ -40,6 +39,70 @@ body{
   background:var(--bg);
   color:var(--text);
   transition: background 0.3s ease, color 0.3s ease;
+}
+
+.serif { font-family: 'Libertinus Serif', serif; }
+
+/* HEADER */
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:#fff;
+  padding:24px 30px;
+  display:flex;
+  align-items:center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+header h1{font-size:26px;font-weight:800}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* THEME TOGGLE STYLE */
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+header h1{
+  font-size:26px;
+  font-weight:800;
+  flex:1; /* pushes right items safely */
+}
+header a{
+  background:#fff;
+  color:var(--primary);
+  padding:10px 22px;
+  border-radius:40px;
+  text-decoration:none;
+  font-weight:800;
+  transition: all 0.3s ease;
+}
+
+header a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 
@@ -162,34 +225,11 @@ input:focus {
   }
 }
 
-/* SCHEMES */
-.container{max-width:1200px;margin:auto;padding:50px 20px}
-.scheme{
-  background:var(--card);
-  border-left:10px solid var(--primary);
-  padding:32px;
-  border-radius:22px;
-  box-shadow:var(--shadow);
-  margin-bottom:30px;
-  transition: background 0.3s ease;
-}
-.scheme h3{font-size:26px;color:var(--label)}
-.scheme p{font-size:19px;margin:6px 0}
-
 .eligible{color:var(--success);font-weight:900;font-size:20px}
 .not-eligible{color:var(--danger);font-weight:900;font-size:20px}
 .deadline{color:#b71c1c;font-weight:800}
 [data-theme="dark"] .deadline { color: #ff5252; }
 
-.hero::before {
-  pointer-events: none;
-}
-.scheme h3{font-size:26px;color:#1b5e20}
-.scheme p{font-size:19px;margin:6px 0}
-
-.eligible{color:var(--success);font-weight:900;font-size:20px}
-.not-eligible{color:var(--danger);font-weight:900;font-size:20px}
-.deadline{color:#b71c1c;font-weight:800}
 
 .actions{
   display:flex;
@@ -267,6 +307,7 @@ input:focus {
 </head>
 
 <body>
+
 <!-- Include Navbar -->
 <div w3-include-html="navbar.html"></div>
 
@@ -431,39 +472,6 @@ function showMsg(msg){
 function closeModal(){
   document.getElementById("modal").style.display="none";
 }
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  const applyTheme = (theme) => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("agritech-theme", theme);
-
-    const icon = document.getElementById("themeIcon");
-    const text = document.getElementById("themeText");
-
-    if (!icon || !text) return;
-
-    if (theme === "dark") {
-      icon.className = "fas fa-sun";
-      text.innerText = "Light";
-    } else {
-      icon.className = "fas fa-moon";
-      text.innerText = "Dark";
-    }
-  };
-
-  const savedTheme = localStorage.getItem("agritech-theme") || "light";
-  applyTheme(savedTheme);
-
-  document.addEventListener("click", (e) => {
-    if (e.target.closest("#themeToggle")) {
-      const current = document.documentElement.getAttribute("data-theme");
-      applyTheme(current === "dark" ? "light" : "dark");
-    }
-  });
-
-});
 </script>
 
 

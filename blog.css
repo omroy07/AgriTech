@@ -1044,6 +1044,233 @@
     }
 }
 
+/* 6. FOOTER */
+:root {
+    --dark-bg: #1f2838; 
+    --primary-green: #34d399; 
+    --link-color: #a3b3c7; 
+    --link-hover-color: #ffffff;
+    --grid-line-color: rgba(52, 211, 153, 0.15); 
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+.site-footer.final-match {
+    background-color: var(--dark-bg); 
+    color: var(--link-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 0;
+    position: relative;
+    overflow: hidden; 
+}
+
+.footer-top-accent {
+    height: 5px;
+    background: linear-gradient(to right, #059669, var(--primary-green), #06b6d4);
+    width: 100%;
+    position: relative;
+    z-index: 3;
+}
+
+.footer-wave-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        repeating-linear-gradient(0deg, transparent 0, transparent 29px, var(--grid-line-color) 30px),
+        repeating-linear-gradient(90deg, transparent 0, transparent 29px, var(--grid-line-color) 30px);
+    background-size: 30px 30px;
+    opacity: 0.8;
+    z-index: 1; 
+    mask-image: radial-gradient(ellipse 70% 50% at 50% 50%, #000 70%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 50%, #000 70%, transparent 100%);
+}
+
+.footer-inner-content, .footer-bottom {
+    position: relative;
+    z-index: 2;
+}
+
+.footer-brand {
+    flex: 0 0 40%; 
+    min-width: 300px;
+}
+
+.brand-logo {
+    width: 30px; 
+    height: 30px;
+    margin-right: 10px;
+}
+
+.site-footer h3 {
+    color: var(--primary-green);
+    font-size: 20px; 
+    font-weight: 700;
+}
+
+.brand-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.footer-inner-content {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 30px;
+    border-bottom: 1px solid var(--border-color); 
+}
+
+.footer-section {
+    padding: 0 15px;
+    margin-bottom: 30px;
+}
+
+.footer-group-links {
+    flex: 0 0 50%; 
+    display: flex; 
+    justify-content: space-between;
+}
+
+.footer-links {
+    flex: 1; 
+    margin-right: 40px; 
+}
+.footer-contact {
+    flex: 1; 
+}
+.site-footer h4 {
+    color: var(--link-hover-color);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--primary-green); 
+    padding-bottom: 5px;
+    width: fit-content; 
+}
+
+.site-footer a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.site-footer a:hover {
+    color: var(--primary-green);
+    transform: translateX(4px);
+}
+
+.site-footer i {
+    margin-right: 12px;
+    width: 18px; 
+    color: var(--primary-green); 
+    text-align: center;
+    font-size: 16px;
+}
+
+
+.social-icons {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: row; 
+    gap: 20px; 
+}
+
+.social-icons a {
+
+    color: var(--link-color);
+    font-size: 18px;
+    transition: color 0.3s, transform 0.3s;
+    padding: 0; 
+    width: auto;
+    display: block; 
+}
+
+.social-icons a:hover {
+    color: var(--primary-green);
+    transform: scale(1.1); 
+}
+.social-icons i {
+
+    color: var(--link-color); 
+    width: auto;
+    margin: 0;
+    font-size: 18px;
+}
+.social-icons a:hover i {
+     color: var(--primary-green);
+}
+
+/* 7. Footer Bottom (Copyright) */
+.footer-bottom {
+    padding: 20px 30px;
+    text-align: center;
+    font-size: 13px;
+    opacity: 0.8;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 8. Responsive Design */
+@media (max-width: 850px) {
+    .footer-inner-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .footer-brand {
+        flex: 0 0 100%;
+    }
+    .footer-group-links {
+        flex: 0 0 100%;
+        padding-left: 0;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+    
+    .brand-header {
+        justify-content: center;
+    }
+
+    .site-footer h4 {
+        margin: 20px auto 25px auto;
+    }
+    
+    .site-footer a {
+        justify-content: center;
+    }
+    
+    .social-icons {
+        justify-content: center; 
+        gap: 25px;
+    }
+}
+
+@media (max-width: 500px) {
+    .footer-group-links {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .footer-links, .footer-contact {
+        min-width: 100%;
+        flex: 0 0 100%;
+    }
+}
+
+/* Remove bullet points from footer lists */
+.site-footer ul {
+    list-style: none;
+    padding-left: 0;
+}
+
 /* --- NEW SCROLL TO TOP BUTTON STYLING (REPLACED ORIGINAL) --- */
 #scrollTopBtn {
     position: fixed;
@@ -1083,4 +1310,48 @@
 
 #scrollTopBtn:active {
     transform: translateY(0);
+}
+/* --- Cursor Trail Container --- */
+.circle-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999999;
+}
+
+/* --- Individual Trail Circles --- */
+.cursor-circle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ff8c00;
+  box-shadow: 0 0 15px rgba(255, 140, 0, 0.7);
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  mix-blend-mode: screen;
+  transition: transform 0.1s ease-out;
+}
+
+/* --- The Leading "Head" Circle --- */
+.cursor-circle:first-child {
+  width: 14px;
+  height: 14px;
+  background-color: #ffcc00;
+  box-shadow:
+    0 0 20px #ff8c00,
+    0 0 40px rgba(255, 140, 0, 0.5);
+}
+
+/* --- Interaction States --- */
+.cursor-clicking {
+  transform: translate(-50%, -50%) scale(2.5) !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 0 30px #ffffff !important;
+}
+
+.cursor-hovering {
+  transform: translate(-50%, -50%) scale(1.8);
+  background-color: #22c55e; /* Changes to AgriTech green on hover */
+  box-shadow: 0 0 20px #22c55e;
 }

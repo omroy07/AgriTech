@@ -30,34 +30,19 @@ function showCachedNotice() {
 // Theme Management
 // Theme Management
 const applyTheme = (theme) => {
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
+document.documentElement.setAttribute('data-theme', theme);
+localStorage.setItem('theme', theme);
 
-  const themeText = document.getElementById('themeText');
-  const moonIcon = document.getElementById('moonIcon');
-  const sunIcon = document.getElementById('sunIcon');
+if (theme === 'dark') {
+    if (themeText) themeText.textContent = 'Light Mode';
+    if (moonIcon) moonIcon.style.display = 'none';
+    if (sunIcon) sunIcon.style.display = 'inline-block';
+} else {
+    if (themeText) themeText.textContent = 'Dark Mode';
+    if (moonIcon) moonIcon.style.display = 'inline-block';
+    if (sunIcon) sunIcon.style.display = 'none';
+}
 
-  if (theme === 'dark') {
-    if (themeText) themeText.textContent = 'Light';
-
-    if (moonIcon) {
-      moonIcon.style.display = 'none';
-    }
-
-    if (sunIcon) {
-      sunIcon.style.display = 'inline-block';
-    }
-  } else {
-    if (themeText) themeText.textContent = 'Dark';
-
-    if (moonIcon) {
-      moonIcon.style.display = 'inline-block';
-    }
-
-    if (sunIcon) {
-      sunIcon.style.display = 'none';
-    }
-  }
 };
 
 
@@ -192,7 +177,9 @@ const mobileSearchInput = document.querySelector('.mobile-search-input');
 if (mobileSearchInput) {
     mobileSearchInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-            alert('Searching for: ' + mobileSearchInput.value);
+            // console.log('Searching for:', mobileSearchInput.value);
+            closeMobileMenu();
+
             closeMobileMenu();
         }
     });
@@ -1027,7 +1014,6 @@ document.addEventListener('DOMContentLoaded', () => {
     attributes: true,
     attributeFilter: ['data-theme']
   });
-});
 });
 });
  main
