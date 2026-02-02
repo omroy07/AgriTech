@@ -1,9 +1,16 @@
 """
 User model for authentication and RBAC.
 """
-from extensions import db
+from backend.extensions import db
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+
+
+class UserRole:
+    FARMER = 'farmer'
+    SHOPKEEPER = 'shopkeeper'
+    ADMIN = 'admin'
+    CONSULTANT = 'consultant'
 
 
 class User(db.Model):
@@ -18,20 +25,41 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String(255), nullable=False)
     full_name = db.Column(db.String(120), nullable=False)
-    role = db.Column(db.String(20), nullable=False, default='farmer')  # farmer, shopkeeper, admin
+    role = db.Column(db.String(20), nullable=False, default=UserRole.FARMER)  # farmer, shopkeeper, admin
     phone = db.Column(db.String(20))
     location = db.Column(db.String(100))
+    farm_latitude = db.Column(db.Float)
+    farm_longitude = db.Column(db.Float)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     last_login = db.Column(db.DateTime)
     is_active = db.Column(db.Boolean, default=True)
+    language_preference = db.Column(db.String(10), default='en')
     
-    def __init__(self, username, email, full_name, role='farmer', phone=None, location=None):
+    # Relationships
+    notifications = db.relationship('Notification', backref='user', lazy=True)
+    files = db.relationship('File', backref='user', lazy=True)
+    
+    def __init__(self, username, email, full_name=None, role='farmer', phone=None, location=None):
         self.username = username
         self.email = email
-        self.full_name = full_name
+        self.full_name = full_name or username
         self.role = role
         self.phone = phone
         self.location = location
+    
+    def set_farm_location(self, latitude, longitude):
+        """Set farm location from lat/lon coordinates"""
+        self.farm_latitude = latitude
+        self.farm_longitude = longitude
+    
+    def get_farm_coordinates(self):
+        """Get farm coordinates as dict"""
+        if self.farm_latitude and self.farm_longitude:
+            return {
+                'latitude': self.farm_latitude,
+                'longitude': self.farm_longitude
+            }
+        return None
     
     def set_password(self, password):
         """

@@ -1052,6 +1052,34 @@ select.language-select:focus {
 }
 
 /* Floating Chatbot Button */
+#spatialBtn {
+  position: fixed;
+  bottom: 170px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: #6366f1;
+  color: #fff;
+  font-size: 28px;
+  text-align: center;
+  line-height: 60px;
+  border-radius: 50%;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+#spatialBtn:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+  background-color: #4f46e5;
+}
+
 #chatbotBtn {
   position: fixed;
   bottom: 100px;
@@ -1137,7 +1165,8 @@ select.language-select:focus {
     margin-bottom: 15px;
   }
 
-  #chatbotBtn {
+  #chatbotBtn,
+  #spatialBtn {
     display: none;
   }
 }
