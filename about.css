@@ -190,19 +190,65 @@ main {
 }
 
 section {
-  background: var(--bg-primary);
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 30, 55, 0.95),
+    rgba(12, 20, 40, 0.95)
+  );
+
   border-radius: 20px;
   padding: 2.5rem;
   margin: 2rem 0;
-  box-shadow: 0 10px 30px var(--shadow-light);
-  border: 1px solid var(--border-color);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    0 1px 0 rgba(255, 255, 255, 0.04) inset;
+
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.45s ease,
+    border-color 0.45s ease;
 }
 
+
+
 section:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 15px 40px var(--shadow-medium);
+  transform: translateY(-10px) scale(1.04);
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.55),
+    0 10px 25px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(46, 204, 113, 0.45);
+
+  border-color: rgba(46, 204, 113, 0.6);
 }
+
+
+section::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(46, 204, 113, 0.35),
+    transparent 70%
+  );
+
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+
+section:hover::before {
+  opacity: 1;
+}
+
 
 /* Headings (Untouched) */
 h2 {
