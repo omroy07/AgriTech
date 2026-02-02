@@ -5,9 +5,6 @@
 <title>Govt Schemes & Subsidy Tracker</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600;800&display=swap" rel="stylesheet" />
 
 <style>
 :root{
@@ -15,6 +12,7 @@
   --secondary:#1b5e20;
   --bg:#f1f5f3;
   --card:#ffffff;
+  --card: rgba(255, 255, 255, 0.9);
   --text:#333333;
   --label:#1b5e20;
   --input-bg:#ffffff;
@@ -22,8 +20,6 @@
   --danger:#d32f2f;
   --success:#2e7d32;
   --shadow:0 18px 45px rgba(0,0,0,0.12);
-  /* BRAND GRADIENT FOR BUTTONS */
-  --btn-gradient: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
 }
 
 /* DARK THEME VARIABLES */
@@ -40,73 +36,12 @@
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  font-family:"Open Sans", sans-serif;
+  font-family:"Segoe UI",sans-serif;
   background:var(--bg);
   color:var(--text);
   transition: background 0.3s ease, color 0.3s ease;
 }
 
-.serif { font-family: 'Libertinus Serif', serif; }
-
-/* HEADER */
-header{
-  background:linear-gradient(135deg,var(--primary),var(--secondary));
-  color:#fff;
-  padding:24px 30px;
-  display:flex;
-  align-items:center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-header h1{font-size:26px;font-weight:800}
-
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-/* THEME TOGGLE STYLE */
-.theme-toggle {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 40px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 800;
-  transition: all 0.3s ease;
-}
-
-.theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
-}
-
-  gap:20px;
-}
-header h1{
-  font-size:26px;
-  font-weight:800;
-  flex:1; /* pushes right items safely */
-}
-header a{
-  background:#fff;
-  color:var(--primary);
-  padding:10px 22px;
-  border-radius:40px;
-  text-decoration:none;
-  font-weight:800;
-  transition: all 0.3s ease;
-}
-
-header a:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
 
 /* FORM */
 .hero{display:flex;justify-content:center;padding:40px 20px}
@@ -130,44 +65,101 @@ header a:hover {
     color: var(--label);
 }
 
-label{font-size:19px;font-weight:800;margin-top:24px;display:block; color: var(--label);}
-select,input{
-  width:100%;
-  padding:18px;
-  margin-top:10px;
-  font-size:18px;
-  border-radius:16px;
-  border:1px solid var(--input-border);
+label {
+  display: block;
+  margin-top: 1.6rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--primary);
+}
+
+select,
+input {
+  width: 100%;
+  margin-top: 0.6rem;
+  padding: 1rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 16px;
+  border: 1px solid var(--input-border);
   background: var(--input-bg);
   color: var(--text);
+  outline: none;
+  transition: border 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* --- BOUNCY "FIND ELIGIBLE SCHEMES" BUTTON --- */
-button{
-  margin-top:38px;
-  width:100%;
-  padding:20px;
-  background: var(--btn-gradient);
-  color:#fff;
-  border:none;
-  border-radius:50px;
-  font-size:21px;
-  font-weight:900;
-  cursor:pointer;
-  /* UPGRADED: Elastic Transition */
-  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
-  box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
+select:focus,
+input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
 }
 
-button:hover {
-  /* UPGRADED: Hover lift and scale */
-  transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 15px 30px rgba(46, 125, 50, 0.4);
+/* ===============================
+   SUBMIT BUTTON
+================================ */
+.form-card button {
+  width: 100%;
+  margin-top: 2.5rem;
+  padding: 1.2rem;
+  font-size: 1.15rem;
+  font-weight: 900;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-button:active {
-  /* Tactile click effect */
-  transform: translateY(0) scale(0.98);
+.form-card button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* ===============================
+   SCHEME LIST
+================================ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.scheme {
+  background: var(--card);
+  border-left: 8px solid var(--primary);
+  padding: 2rem;
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.scheme:hover {
+  transform: translateY(-4px);
+}
+
+.scheme h3 {
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
+  color: var(--primary);
+}
+
+.scheme p {
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+  .form-card {
+    padding: 2.2rem;
+  }
+
+  .form-card h2 {
+    font-size: 1.7rem;
+  }
 }
 
 /* SCHEMES */
@@ -190,14 +182,20 @@ button:active {
 [data-theme="dark"] .deadline { color: #ff5252; }
 
 .hero::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
-                    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: moveGrid 120s linear infinite;
-  z-index: 0;
+  pointer-events: none;
+}
+.scheme h3{font-size:26px;color:#1b5e20}
+.scheme p{font-size:19px;margin:6px 0}
+
+.eligible{color:var(--success);font-weight:900;font-size:20px}
+.not-eligible{color:var(--danger);font-weight:900;font-size:20px}
+.deadline{color:#b71c1c;font-weight:800}
+
+.actions{
+  display:flex;
+  gap:14px;
+  margin-top:18px;
+  flex-wrap:wrap;
 }
 
 /* BUTTONS */
@@ -209,14 +207,7 @@ button:active {
   text-decoration:none;
   background:#1976d2;
   color:#fff;
-  transition: all 0.3s ease;
 }
-
-.apply:hover:not(.disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
-}
-
 .apply.disabled{
   background:#bdbdbd;
   pointer-events:none;
@@ -230,13 +221,7 @@ button:active {
   font-weight:800;
   border:none;
   cursor:pointer;
-  transition: all 0.3s ease;
 }
-
-.docs:hover, .reminder:hover {
-    transform: translateY(-2px);
-}
-
 .docs{background:#6a1b9a;color:#fff}
 .reminder{background:var(--primary);color:#fff}
 
@@ -277,133 +262,44 @@ button:active {
   .form-card{padding:30px}
   .form-card h2{font-size:26px}
 }
-/* ========= PREMIUM DARK MODE ========= */
-body.dark{
-  --bg:#0b1220;
-  --card:#111827;
-  --text:#e5e7eb;
-  --primary:#22c55e;
-  --secondary:#16a34a;
-  --shadow:0 20px 50px rgba(0,0,0,0.7);
-}
-
-/* text fix */
-body.dark,
-body.dark p,
-body.dark label{
-  color:var(--text);
-}
-
-/* inputs */
-body.dark select,
-body.dark input{
-  background:#020617;
-  color:#e5e7eb;
-  border:1px solid #334155;
-}
-
-/* cards */
-body.dark .form-card,
-body.dark .scheme,
-body.dark .modal-content{
-  background:var(--card);
-}
-
-/* eligibility visibility */
-body.dark .eligible{color:#4ade80}
-body.dark .not-eligible{color:#f87171}
-body.dark .deadline{color:#fb7185}
-
-/* header button */
-.dark-toggle{
-  width:54px;
-  height:30px;
-  border-radius:30px;
-  background:#e5e7eb;
-  position:relative;
-  cursor:pointer;
-  transition:0.3s;
-}
-.dark-toggle::before{
-  content:"☀️";
-  position:absolute;
-  left:5px;
-  top:3px;
-  transition:0.3s;
-}
-body.dark .dark-toggle{
-  background:#020617;
-}
-body.dark .dark-toggle::before{
-  content:"🌙";
-  left:28px;
-}
-
-/* apply button */
-body.dark .apply{background:#2563eb}
-body.dark .apply.disabled{background:#475569}
-
-/* modal overlay */
-body.dark .modal{
-  background:rgba(2,6,23,0.85);
-}
 
 </style>
-<script src="voice-input.js" defer></script>
 </head>
 
 <body>
-
-<header>
-  <h1 class="serif">📜 Subsidy Tracker</h1>
-  <div class="nav-actions">
-      <button class="theme-toggle" id="themeToggle">
-          <i class="fas fa-moon" id="themeIcon"></i>
-          <span id="themeText">Dark</span>
-      </button>
-      <a href="index.html"><i class="fas fa-arrow-left"></i> Home</a>
-  </div>
-  <h1>📜 Govt Schemes & Subsidy Tracker</h1>
-  <div class="nav-actions">
-      <button class="theme-toggle" id="themeToggle">
-          <i class="fas fa-moon" id="themeIcon"></i>
-          <span id="themeText">Dark</span>
-      </button>
-      <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Home</a>
-  </div>
-  <div class="dark-toggle" onclick="toggleDark()"></div>
-  <a href="index.html">⬅ Back to Home</a>
-</header>
+<!-- Include Navbar -->
+<div w3-include-html="navbar.html"></div>
 
 <section class="hero">
-  <div class="form-card">
-    <h2 class="serif">Check Your Scheme Eligibility</h2>
+<div class="form-card">
+<h2>Check Your Scheme Eligibility</h2>
 
-    <label>State</label>
-    <select id="state">
-      <option>India</option>
-      <option>Karnataka</option>
-      <option>Maharashtra</option>
-      <option>Tamil Nadu</option>
-      <option>Uttar Pradesh</option>
-      <option>Bihar</option>
-      <option>Punjab</option>
-      <option>Haryana</option>
-      <option>Rajasthan</option>
-      <option>Madhya Pradesh</option>
-      <option>Telangana</option>
-      <option>Andhra Pradesh</option>
-    </select>
+<label>State</label>
+<select id="state">
+<option>India</option>
+<option>Karnataka</option>
+<option>Maharashtra</option>
+<option>Tamil Nadu</option>
+<option>Uttar Pradesh</option>
+<option>Bihar</option>
+<option>Punjab</option>
+<option>Haryana</option>
+<option>Rajasthan</option>
+<option>Madhya Pradesh</option>
+<option>Telangana</option>
+<option>Andhra Pradesh</option>
+</select>
 
-    <label>Land Holding (acres)</label>
-    <input type="number" id="land" placeholder="Example: 2.5">
+<label>Land Holding (acres)</label>
+<input type="number" id="land" placeholder="Example: 2.5">
 
-    <button class="btn-primary-cta" onclick="checkEligibility()">Find Eligible Schemes</button>
-  </div>
+<button onclick="checkEligibility()">Find Eligible Schemes</button>
+</div>
 </section>
 
 <div class="container" id="schemeList"></div>
 
+<!-- MODAL -->
 <div class="modal" id="modal">
   <div class="modal-content">
     <h3 id="modalTitle"></h3>
@@ -492,34 +388,6 @@ docs:["Aadhaar Card","Bank Passbook","Fisheries Registration"]
 }
 ];
 
-// --- THEME MANAGEMENT LOGIC ---
-const themeToggle = document.getElementById('themeToggle');
-const themeIcon = document.getElementById('themeIcon');
-const themeText = document.getElementById('themeText');
-
-const currentTheme = localStorage.getItem('agritech-theme') || 'light';
-document.documentElement.setAttribute('data-theme', currentTheme);
-updateToggleUI(currentTheme);
-
-themeToggle.addEventListener('click', () => {
-    let theme = document.documentElement.getAttribute('data-theme');
-    let newTheme = theme === 'light' ? 'dark' : 'light';
-    
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('agritech-theme', newTheme);
-    updateToggleUI(newTheme);
-});
-
-function updateToggleUI(theme) {
-    if (theme === 'dark') {
-        themeIcon.className = 'fas fa-sun';
-        themeText.innerText = 'Light';
-    } else {
-        themeIcon.className = 'fas fa-moon';
-        themeText.innerText = 'Dark';
-    }
-}
-
 function checkEligibility(){
   const state=document.getElementById("state").value;
   const land=parseFloat(document.getElementById("land").value||0);
@@ -530,7 +398,7 @@ function checkEligibility(){
     const eligible=land<=s.max&&(s.states.includes(state)||s.states.includes("India"));
     list.innerHTML+=`
     <div class="scheme">
-      <h3 class="serif">${s.name}</h3>
+      <h3>${s.name}</h3>
       <p>${s.desc}</p>
       <p class="${eligible?'eligible':'not-eligible'}">
         ${eligible?'✔ Eligible':'✖ Not Eligible'}
@@ -565,18 +433,130 @@ function closeModal(){
 }
 </script>
 <script>
-function toggleDark(){
-  document.body.classList.toggle("dark");
-  localStorage.setItem(
-    "darkMode",
-    document.body.classList.contains("dark")
-  );
-}
+document.addEventListener("DOMContentLoaded", () => {
 
-if(localStorage.getItem("darkMode")==="true"){
-  document.body.classList.add("dark");
-}
+  const applyTheme = (theme) => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("agritech-theme", theme);
+
+    const icon = document.getElementById("themeIcon");
+    const text = document.getElementById("themeText");
+
+    if (!icon || !text) return;
+
+    if (theme === "dark") {
+      icon.className = "fas fa-sun";
+      text.innerText = "Light";
+    } else {
+      icon.className = "fas fa-moon";
+      text.innerText = "Dark";
+    }
+  };
+
+  const savedTheme = localStorage.getItem("agritech-theme") || "light";
+  applyTheme(savedTheme);
+
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("#themeToggle")) {
+      const current = document.documentElement.getAttribute("data-theme");
+      applyTheme(current === "dark" ? "light" : "dark");
+    }
+  });
+
+});
 </script>
 
+
+<!-- Include Navbar Script -->
+<script>
+    function includeHTML() {
+        var z, i, elmnt, file, xhttp;
+        z = document.getElementsByTagName("*");
+        for (i = 0; i < z.length; i++) {
+            elmnt = z[i];
+            file = elmnt.getAttribute("w3-include-html");
+            if (file) {
+                xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4) {
+                        if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+                        if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                        elmnt.removeAttribute("w3-include-html");
+                        includeHTML();
+                    }
+                }
+                xhttp.open("GET", file, true);
+                xhttp.send();
+                return;
+            }
+        }
+    }
+    includeHTML();
+</script>
+<script>
+// Include navbar
+function includeHTML(callback) {
+    var z, i, elmnt, file, xhttp;
+    z = document.getElementsByTagName("*");
+    for (i = 0; i < z.length; i++) {
+        elmnt = z[i];
+        file = elmnt.getAttribute("w3-include-html");
+        if (file) {
+            xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+                    if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                    elmnt.removeAttribute("w3-include-html");
+
+                    // Call again recursively
+                    includeHTML(callback);
+
+                    // After loading navbar, run callback
+                    if (callback) callback();
+                }
+            }
+            xhttp.open("GET", file, true);
+            xhttp.send();
+            return;
+        }
+    }
+}
+
+
+// Initialize mobile hamburger
+function initHamburgerMenu() {
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const overlay = document.getElementById('mobileMenuOverlay');
+
+    if (!hamburgerBtn || !mobileMenu || !overlay) return;
+
+    hamburgerBtn.addEventListener('click', () => {
+        mobileMenu.classList.add('active');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+
+    overlay.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+}
+
+// Run after DOM loads
+document.addEventListener('DOMContentLoaded', () => {
+    // Apply saved theme
+    const savedTheme = localStorage.getItem('agritech-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+    // Include navbar and initialize functions
+    includeHTML(() => {
+      
+        initHamburgerMenu();
+    });
+});
+</script>
 </body>
 </html>

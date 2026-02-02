@@ -75,7 +75,7 @@
             padding: 20px;
         }
 
-         .top-nav{
+        .top-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -189,7 +189,7 @@
             margin: 2rem 0;
         }
 
-       .control-btn {
+        .control-btn {
             background: var(--accent-green-light);
             color: white;
             border: none;
@@ -399,9 +399,17 @@
             z-index: 2;
         }
 
-        .trend-up { color: #22c55e; }
-        .trend-down { color: #ef4444; }
-        .trend-stable { color: #f59e0b; }
+        .trend-up {
+            color: #22c55e;
+        }
+
+        .trend-down {
+            color: #ef4444;
+        }
+
+        .trend-stable {
+            color: #f59e0b;
+        }
 
         .chart-container {
             background: var(--bg-primary);
@@ -527,19 +535,22 @@
             font-size: 1.5rem;
         }
 
+        /* --- FIXED: CONTRAST AND VISIBILITY FOR ALERTS --- */
         .alert-content h4 {
-            color: var(--text-primary);
+            color: #ffffff; /* Improved Contrast: Explicitly white */
             margin-bottom: 5px;
+            font-weight: 700;
         }
 
         .alert-content p {
-            color: var(--text-muted);
+            color: #ffffff !important; /* Maps to WCAG Requirement: Pure White */
             font-size: 0.9rem;
+            opacity: 1; /* Maximum visibility */
         }
 
         .alert-time {
             font-size: 0.8rem;
-            color: var(--text-muted);
+            color: #f8fafc !important; /* High Contrast off-white */
             margin-left: auto;
         }
 
@@ -1174,15 +1185,15 @@
 
         /* 1. High-Contrast Emerald Gradient Heading for Light Mode */
         body[data-theme="light"] .cta-section h2 {
-    background: linear-gradient(135deg, #064e3b 0%, #10b981 100%) !important;
+            background: linear-gradient(135deg, #064e3b 0%, #10b981 100%) !important;
 
-    /* Standard property (fixes VS Code warning) */
-    background-clip: text !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    font-weight: 800 !important;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
-}
+            /* Standard property (fixes VS Code warning) */
+            background-clip: text !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            font-weight: 800 !important;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
+        }
 
 
         /* 2. Enhanced Subtitle Visibility */
@@ -2050,6 +2061,7 @@
         window.onload = initTooltips;
     </script>
     <script src="theme.js"></script>
+    <script src="auth.js"></script>
 </body>
 
 </html>

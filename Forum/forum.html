@@ -1,112 +1,504 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <link rel="icon" type="image/png" href="../images/logo.png">
   <meta charset="UTF-8" />
-  <title>Farmer Forum</title>
-  <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
-  <link rel="stylesheet" href="farmer.css" />
-  <link rel="stylesheet" href="../theme.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 30px;
-    background-color: var(--bg-secondary, #f7f7f7);
-    color: var(--text-primary, #333);
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-
-  h1, h2 {
-    color: var(--text-primary, #2c3e50);
-  }
-
-
-  form {
-    margin-bottom: 20px;
-    background: var(--bg-primary, white);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px var(--shadow-light, rgba(0, 0, 0, 0.1));
-  }
-
-
-  input[type="text"],
-  textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: vertical;
-    background: var(--bg-primary, white);
-    color: var(--text-primary, #333);
-  }
-
-
-  button {
-    padding: 10px 20px;
-    background-color: #2ecc71;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-
-  button:hover {
-    background-color: #27ae60;
-  }
-
-
-  .forum-post {
-    background: var(--bg-primary, white);
-    margin-bottom: 10px;
-    padding: 15px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-  }
-
-
-  .forum-post strong {
-    color: #34495e;
-  }
-</style>
-
-
-</head>
-<body>
-  <h1>Farmer Forum</h1>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community Forum - AgriTech</title>
   
-  <div style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
-    <button class="theme-toggle" aria-label="Toggle dark/light mode" style="background: rgba(46, 125, 50, 0.1); border: 1px solid rgba(46, 125, 50, 0.3); color: #2e7d32; padding: 8px 12px; border-radius: 20px; font-size: 12px;">
-      <i class="fas fa-sun sun-icon"></i>
-      <i class="fas fa-moon moon-icon"></i>
-      <span class="theme-text">Light</span>
-    </button>
-  </div>
+  <link rel="icon" type="image/png" href="../images/logo.png" />
 
-  <a href="../main.html" style="text-decoration: none;">
-  <button type="button">Back to Main Page</button>
-</a>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
+  <link rel="stylesheet" href="../theme.css" />
+  <style>
+    /* 1. LAYOUT & RESET */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  <form id="forumForm">
-    <input type="text" name="name" placeholder="Your Name" required />
-    <textarea name="message" placeholder="Share your experience..." required></textarea>
-    <button type="submit">Post</button>
-  </form>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--bg-secondary, #f8fafc);
+      color: var(--text-primary, #333);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
+    }
 
+    /* 2. HEADER (Matches Index/Blog) */
+    .navbar {
+      background: var(--bg-primary, #ffffff);
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border-color, #e2e8f0);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
 
-  <h2>Recent Posts</h2>
-  <div id="forumPosts"></div>
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Libertinus Serif', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-green, #16a34a);
+      text-decoration: none;
+    }
 
+    .brand img {
+      height: 40px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* 3. BUTTONS */
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border-color: var(--border-color, #cbd5e1);
+      color: var(--text-primary, #333);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-secondary, #f1f5f9);
+      border-color: var(--primary-green, #16a34a);
+    }
+
+    .btn-primary {
+      background: var(--primary-green, #16a34a);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #15803d;
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--border-color, #cbd5e1);
+      color: var(--text-primary);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    /* 4. MAIN CONTAINER */
+    .forum-container {
+      max-width: 900px;
+      width: 100%;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      flex: 1;
+    }
+
+    .forum-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .forum-header h1 {
+      font-family: 'Libertinus Serif', serif;
+      font-size: 2.5rem;
+      color: var(--primary-green, #16a34a);
+      margin-bottom: 0.5rem;
+    }
+
+    .forum-header p {
+      color: var(--text-secondary, #64748b);
+      font-size: 1.1rem;
+    }
+
+    /* 5. CREATE POST FORM */
+    .create-post-card {
+      background: var(--bg-primary, #ffffff);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      border: 1px solid var(--border-color, #e2e8f0);
+      margin-bottom: 3rem;
+    }
+
+    .create-post-card h2 {
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1px solid var(--border-color, #cbd5e1);
+      border-radius: 8px;
+      font-family: inherit;
+      background: var(--bg-secondary, #f8fafc);
+      color: var(--text-primary, #333);
+      transition: border 0.2s;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-green, #16a34a);
+      box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    /* 6. POSTS FEED */
+    .feed-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--border-color, #e2e8f0);
+      padding-bottom: 1rem;
+    }
+
+    .forum-post {
+      background: var(--bg-primary, #ffffff);
+      border: 1px solid var(--border-color, #e2e8f0);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .forum-post:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary, #64748b);
+    }
+
+    .author-avatar {
+      width: 32px;
+      height: 32px;
+      background: var(--bg-secondary, #e2e8f0);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-green, #16a34a);
+    }
+
+    .post-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--primary-green, #16a34a);
+    }
+
+    .post-content {
+      color: var(--text-primary, #333);
+      line-height: 1.7;
+    }
+
+    /* 7. FOOTER (Standardized) */
+    .site-footer {
+      background: #1e293b; /* Dark Slate */
+      color: #f8fafc;
+      padding: 4rem 2rem 2rem;
+      margin-top: auto;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+    }
+
+    .footer-brand h3 {
+      font-family: 'Libertinus Serif', serif;
+      font-size: 1.8rem;
+      color: var(--accent-green, #4ade80);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-brand p {
+      opacity: 0.8;
+      line-height: 1.6;
+    }
+
+    .footer-links h4 {
+      color: #fff;
+      margin-bottom: 1.5rem;
+      font-family: 'Libertinus Serif', serif;
+      font-size: 1.2rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .footer-links h4::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--accent-green, #4ade80);
+    }
+
+    .footer-links ul {
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: #cbd5e1;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.8rem;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-green, #4ade80);
+      transform: translateX(5px);
+    }
+
+    .social-media {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .social-media a {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .social-media a:hover {
+      background: var(--accent-green, #4ade80);
+      color: #1e293b;
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 1rem;
+      }
+      .brand span {
+        display: none;
+      }
+      .forum-container {
+        padding: 0 1rem;
+      }
+      .forum-header h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <a href="../index.html" class="brand">
+      <img src="../images/logo.png" alt="Logo">
+      <span>AgriTech</span>
+    </a>
+
+    <div class="nav-actions">
+      <a href="../index.html" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Home
+      </a>
+      
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </nav>
+
+  <main class="forum-container">
+    <div class="forum-header">
+      <h1>Community Forum</h1>
+      <p>Connect, share, and learn from fellow farmers.</p>
+    </div>
+
+    <section class="create-post-card">
+      <h2><i class="fas fa-pen-to-square"></i> Start a Discussion</h2>
+      <form id="forumForm">
+        <div class="form-group">
+          <label for="title">Discussion Title</label>
+          <input type="text" id="title" name="title" class="form-control" placeholder="e.g., Best organic fertilizer for wheat?" required maxlength="200">
+        </div>
+
+        <div class="form-group">
+          <label for="author">Your Name</label>
+          <input type="text" id="author" name="author" class="form-control" placeholder="Enter your name" required maxlength="100">
+        </div>
+
+        <div class="form-group">
+          <label for="content">Message</label>
+          <textarea id="content" name="content" class="form-control" placeholder="Share your experience or ask a question..." required maxlength="5000"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-paper-plane"></i> Post Discussion
+        </button>
+      </form>
+    </section>
+
+    <section>
+      <div class="feed-header">
+        <h2>Recent Discussions</h2>
+        <button class="btn btn-secondary" onclick="loadPosts()">
+          <i class="fas fa-sync-alt"></i> Refresh
+        </button>
+      </div>
+      
+      <div id="forumPosts">
+        <div style="text-align: center; padding: 2rem; color: #64748b;">
+          <i class="fas fa-spinner fa-spin"></i> Loading discussions...
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h3><i class="fas fa-leaf"></i> AgriTech</h3>
+        <p>Empowering India's Farming Future with innovative technology solutions that connect every stakeholder in the agricultural ecosystem.</p>
+        <div class="social-media">
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="../index.html"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="../main.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+          <li><a href="../chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
+          <li><a href="../feed-back.html"><i class="fas fa-comment"></i> Feedback</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-links">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="../terms-and-service.html"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
+          <li><a href="../privacy-policy.html"><i class="fas fa-user-shield"></i> Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 AgriTech. All rights reserved.
+    </div>
+  </footer>
 
   <script src="forum.js"></script>
-  <script src="../theme.js"></script>
+  
+  <script>
+    const toggle = document.getElementById('themeToggle');
+    const icon = toggle.querySelector('i');
+    
+    // Check saved theme
+    if(localStorage.getItem('theme') === 'dark') {
+      document.body.setAttribute('data-theme', 'dark');
+      icon.classList.remove('fa-moon');
+      icon.classList.add('fa-sun');
+    }
+
+    toggle.addEventListener('click', () => {
+      const isDark = document.body.getAttribute('data-theme') === 'dark';
+      if(isDark) {
+        document.body.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      } else {
+        document.body.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      }
+    });
+  </script>
 </body>
 </html>
-
-
-

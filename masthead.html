@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgriTech | Masthead</title>
+
+<style>
+:root {
+  --bg-color:#030712;
+  --text-color:#fff;
+  --text-muted:#cbd5e1;
+  --surface-color:rgba(15,23,42,.9);
+  --section-bg:rgba(30,41,59,.7);
+  --border-color:#334155;
+  --accent-color:#22c55e;
+  --shadow-color:rgba(0,0,0,.3);
+}
+[data-theme="light"] {
+  --bg-color:#f8fafc;
+  --text-color:#0f172a;
+  --text-muted:#475569;
+  --surface-color:#fff;
+  --section-bg:#f1f5f9;
+  --border-color:#cbd5e1;
+  --accent-color:#16a34a;
+  --shadow-color:rgba(0,0,0,.1);
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Segoe UI,sans-serif}
+body{background:var(--bg-color);color:var(--text-color)}
+header{
+  padding:1.2rem 2rem;
+  display:flex;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border-color);
+}
+button{
+  background:var(--surface-color);
+  color:var(--text-color);
+  border:1px solid var(--border-color);
+  padding:.4rem .8rem;
+  border-radius:6px;
+  cursor:pointer;
+}
+main{max-width:1100px;margin:auto;padding:2rem}
+section{
+  background:var(--section-bg);
+  padding:1.5rem;
+  margin-bottom:1.5rem;
+  border-radius:12px;
+}
+h2{color:var(--accent-color);margin-bottom:.8rem}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:1rem;
+}
+.card{
+  background:var(--surface-color);
+  border:1px solid var(--border-color);
+  padding:1rem;
+  border-radius:10px;
+  text-align:center;
+}
+.card img{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  margin-bottom:.5rem;
+}
+.card small{color:var(--text-muted)}
+.card a{
+  display:block;
+  margin-top:.4rem;
+  color:var(--accent-color);
+  text-decoration:none;
+  font-size:.9rem;
+}
+.toggle{
+  text-align:right;
+  margin-top:1rem;
+}
+footer{text-align:center;color:var(--text-muted);padding:1rem}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1 style="color:var(--accent-color)">AgriTech Masthead</h1>
+  <button onclick="toggleTheme()">Toggle Theme</button>
+</header>
+
+<main>
+
+<section>
+<h2>🌱 Project Overview</h2>
+<p style="color:var(--text-muted)">
+AI-powered smart farming platform offering crop recommendations, disease detection,
+yield prediction, and community collaboration.
+</p>
+</section>
+
+<section>
+<h2>🎯 Vision & Mission</h2>
+<p><b>Vision:</b> Empower farmers with AI-driven sustainable agriculture.</p>
+<p><b>Mission:</b> Bridge modern technology with traditional farming.</p>
+</section>
+
+<section>
+<h2>🧑‍💼 Project Admin</h2>
+<div class="grid">
+  <div class="card"><h3>Om Roy</h3><small>Project Lead · Web · ML</small></div>
+  <div class="card"><h3>Shubhangi Roy</h3><small>ML · Backend</small></div>
+</div>
+</section>
+
+<section>
+<h2>🤝 Contributors</h2>
+<div id="contributors" class="grid"></div>
+
+<div class="toggle">
+  <a href="#" onclick="toggleContributors()" style="color:var(--accent-color)">
+    View all contributors →
+  </a>
+</div>
+</section>
+
+<section>
+<h2>📬 Contact</h2>
+<p>
+📧 agritech.opensource@gmail.com <br>
+🌐 <a href="https://github.com/omroy07/AgriTech" target="_blank"
+     style="color:var(--accent-color)">GitHub Repository</a>
+</p>
+</section>
+
+</main>
+
+<footer>
+Made with ❤️ by the AgriTech Community · SWoC 2026
+</footer>
+
+<script>
+const OWNER = "omroy07";
+const REPO = "AgriTech";
+let showAll = false;
+let contributorsData = [];
+
+async function fetchContributors() {
+  const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contributors?per_page=100`);
+  contributorsData = await res.json();
+  renderContributors();
+}
+
+function renderContributors() {
+  const container = document.getElementById("contributors");
+  container.innerHTML = "";
+
+  const list = showAll ? contributorsData : contributorsData.slice(0,12);
+
+  list.forEach(c => {
+    container.innerHTML += `
+      <div class="card">
+        <img src="${c.avatar_url}" alt="${c.login}">
+        <h3>${c.login}</h3>
+        <small>Commits: ${c.contributions}</small>
+        <a href="${c.html_url}" target="_blank">GitHub Profile →</a>
+      </div>
+    `;
+  });
+}
+
+function toggleContributors(){
+  showAll = !showAll;
+  renderContributors();
+}
+
+function toggleTheme(){
+  const html=document.documentElement;
+  html.setAttribute("data-theme",
+    html.getAttribute("data-theme")==="dark"?"light":"dark");
+}
+
+fetchContributors();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Produce - AgriTech Traceability</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .search-section {
+            text-align: center;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .result-section {
+            display: none;
+        }
+
+        .result-section.show {
+            display: block;
+        }
+
+        .passport-header {
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .passport-header h2 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .batch-id {
+            font-family: monospace;
+            background: #f0f0f0;
+            padding: 8px 15px;
+            border-radius: 5px;
+            display: inline-block;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-card h3 {
+            color: #667eea;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .info-card p {
+            color: #333;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .status-harvested {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-quality_check {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-logistics {
+            background: #e0e7ff;
+            color: #4338ca;
+        }
+
+        .status-in_shop {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .journey-section {
+            margin-top: 30px;
+        }
+
+        .journey-section h3 {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .journey-section h3::before {
+            content: '🛤️';
+            margin-right: 10px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #667eea;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -47px;
+            top: 0;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #667eea;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #667eea;
+        }
+
+        .timeline-date {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .timeline-event {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .timeline-role {
+            font-size: 0.9rem;
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .timeline-notes {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c00;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #c00;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            background: #d1fae5;
+            color: #065f46;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .verified-badge::before {
+            content: '✓';
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌾 AgriTech Traceability</h1>
+            <p>Verify the origin and journey of your produce</p>
+        </div>
+
+        <div class="card search-section">
+            <h2 style="margin-bottom: 20px; color: #333;">Enter Batch ID</h2>
+            <input 
+                type="text" 
+                id="batchIdInput" 
+                class="search-input" 
+                placeholder="Enter Batch ID (e.g., BATCH-A1B2C3D4E5F6G7H8)"
+                onkeypress="handleKeyPress(event)"
+            >
+            <button class="btn" onclick="verifyBatch()">Verify Batch</button>
+            <div id="errorMessage"></div>
+        </div>
+
+        <div id="loadingSection" class="card loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Verifying batch...</p>
+        </div>
+
+        <div id="resultSection" class="card result-section">
+            <div class="passport-header">
+                <h2>Traceability Passport</h2>
+                <span class="batch-id" id="displayBatchId"></span>
+                <div class="verified-badge">Verified Authentic</div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Produce</h3>
+                    <p id="produceName"></p>
+                    <p style="font-size: 0.9rem; color: #666;" id="produceType"></p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Quantity</h3>
+                    <p id="quantity"></p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Origin</h3>
+                    <p id="origin"></p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Harvest Date</h3>
+                    <p id="harvestDate"></p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Quality Grade</h3>
+                    <p id="qualityGrade"></p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Current Status</h3>
+                    <p id="currentStatus"></p>
+                </div>
+
+                <div class="info-card" id="certificationCard" style="display: none;">
+                    <h3>Certification</h3>
+                    <p id="certification"></p>
+                </div>
+            </div>
+
+            <div class="journey-section">
+                <h3>Supply Chain Journey</h3>
+                <div class="timeline" id="journeyTimeline"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                verifyBatch();
+            }
+        }
+
+        async function verifyBatch() {
+            const batchId = document.getElementById('batchIdInput').value.trim();
+            const errorDiv = document.getElementById('errorMessage');
+            const loadingSection = document.getElementById('loadingSection');
+            const resultSection = document.getElementById('resultSection');
+
+            // Clear previous errors
+            errorDiv.innerHTML = '';
+            resultSection.classList.remove('show');
+
+            // Validate input
+            if (!batchId) {
+                errorDiv.innerHTML = '<div class="error-message">Please enter a Batch ID</div>';
+                return;
+            }
+
+            // Show loading
+            loadingSection.style.display = 'block';
+
+            try {
+                // Call API
+                const response = await fetch(`/api/v1/traceability/verify/${batchId}`);
+                const data = await response.json();
+
+                loadingSection.style.display = 'none';
+
+                if (data.status === 'success' && data.data.passport) {
+                    displayPassport(data.data.passport);
+                } else {
+                    errorDiv.innerHTML = `<div class="error-message">${data.message || 'Batch not found'}</div>`;
+                }
+            } catch (error) {
+                loadingSection.style.display = 'none';
+                errorDiv.innerHTML = `<div class="error-message">Error verifying batch: ${error.message}</div>`;
+            }
+        }
+
+        function displayPassport(passport) {
+            // Display batch ID
+            document.getElementById('displayBatchId').textContent = passport.batch_id;
+
+            // Display produce info
+            document.getElementById('produceName').textContent = passport.produce.name;
+            document.getElementById('produceType').textContent = passport.produce.type;
+            document.getElementById('quantity').textContent = `${passport.produce.quantity} kg`;
+
+            // Display origin
+            document.getElementById('origin').textContent = passport.origin.location;
+            document.getElementById('harvestDate').textContent = formatDate(passport.origin.harvest_date);
+
+            // Display quality
+            document.getElementById('qualityGrade').textContent = passport.quality.grade || 'Not graded yet';
+
+            // Display status with badge
+            const statusElement = document.getElementById('currentStatus');
+            const statusClass = `status-${passport.current_status.toLowerCase().replace('_', '')}`;
+            statusElement.innerHTML = `<span class="status-badge ${statusClass}">${passport.current_status}</span>`;
+
+            // Display certification if available
+            if (passport.produce.certification) {
+                document.getElementById('certificationCard').style.display = 'block';
+                document.getElementById('certification').textContent = passport.produce.certification;
+            } else {
+                document.getElementById('certificationCard').style.display = 'none';
+            }
+
+            // Display journey
+            displayJourney(passport.journey);
+
+            // Show result section
+            document.getElementById('resultSection').classList.add('show');
+        }
+
+        function displayJourney(journey) {
+            const timeline = document.getElementById('journeyTimeline');
+            timeline.innerHTML = '';
+
+            journey.forEach(step => {
+                const item = document.createElement('div');
+                item.className = 'timeline-item';
+
+                const eventLabel = getEventLabel(step.event, step.to_status);
+
+                item.innerHTML = `
+                    <div class="timeline-date">${formatDateTime(step.timestamp)}</div>
+                    <div class="timeline-event">${eventLabel}</div>
+                    <div class="timeline-role">By: ${formatRole(step.handler_role)}</div>
+                    ${step.notes ? `<div class="timeline-notes">"${step.notes}"</div>` : ''}
+                    ${step.location ? `<div class="timeline-notes">📍 ${step.location}</div>` : ''}
+                `;
+
+                timeline.appendChild(item);
+            });
+        }
+
+        function getEventLabel(event, toStatus) {
+            const labels = {
+                'BATCH_CREATED': '🌱 Batch Created',
+                'STATUS_CHANGE': `➡️ ${toStatus ? toStatus.replace('_', ' ') : 'Status Updated'}`,
+                'QUALITY_UPDATE': '✓ Quality Inspected'
+            };
+            return labels[event] || event;
+        }
+
+        function formatRole(role) {
+            return role.charAt(0).toUpperCase() + role.slice(1).toLowerCase();
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+        }
+
+        function formatDateTime(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Check if batch ID is in URL
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const batchId = urlParams.get('batch');
+            
+            if (batchId) {
+                document.getElementById('batchIdInput').value = batchId;
+                verifyBatch();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
+    <div w3-include-html="navbar.html"></div>
 
     <main>
         <section class="career-section">
@@ -160,6 +161,156 @@
             </div>
         </section>
     </main>
+    
+    <style>
+      .site-footer {
+        background: linear-gradient(135deg, #2e7d32, #66bb6a);
+        color: #fff;
+        margin-top: auto;
+        padding: 2rem 1.25rem;
+      }
+      .site-footer .footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+        align-items: flex-start;
+      }
+      .footer-brand {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .footer-logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        object-fit: cover;
+        background: #fff;
+        padding: 4px;
+      }
+      .site-footer h3,
+      .site-footer h4 {
+        margin: 0 0 0.5rem 0;
+      }
+      .site-footer p {
+        margin: 0;
+        opacity: 0.9;
+      }
+      .site-footer ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .site-footer a {
+        color: #fff;
+        text-decoration: none;
+        opacity: 0.9;
+        transition: opacity 0.2s;
+      }
+      .site-footer a:hover {
+        opacity: 1;
+        text-decoration: underline;
+      }
+      .footer-bottom {
+        max-width: 1200px;
+        margin: 1rem auto 0;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.25);
+        text-align: center;
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+      .social-media {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.5rem;
+      }
+      .social-media a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        font-size: 1.2rem;
+      }
+      .social-media a:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+    </style>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <img src="images/logo.png" alt="AgriTech logo" class="footer-logo" />
+          <h3>AgriTech</h3>
+          <p>Empowering India's Farming Future</p>
+          <div class="social-media">
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Follow us on Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a
+              href="https://github.com/omroy07"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View our GitHub repositories"
+              ><i class="fab fa-github"></i
+            ></a>
+            <a
+              href="https://www.linkedin.com/in/om-roy-3b809628a/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Connect with us on LinkedIn"
+              ><i class="fab fa-linkedin"></i
+            ></a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="main.html">Dashboard</a></li>
+            <li><a href="feed-back.html">Feedback</a></li>
+            <li><a href="chat.html">AI Assistant</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Tools</h4>
+          <ul>
+            <li>
+              <a href="Crop Recommendation/templates/index.html"
+                >Crop Recommendation</a
+              >
+            </li>
+            <li>
+              <a href="Crop Yield Prediction/crop_yield_app/templates/index.html"
+                >Yield Prediction</a
+              >
+            </li>
+            <li>
+              <a href="Disease prediction/template/index.html"
+                >Disease Detector</a
+              >
+            </li>
+            <li>
+              <a href="Crop_Planning/templates/cropplan.html">Crop Planner</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">© <span id="current-year">2026</span> AgriTech • Made for farmers</div>
+    </footer>
 
     <!-- Optional: Add theme toggle script if needed -->
     <script>
@@ -178,6 +329,64 @@
              });
         });
     </script>
+    <script src="auth.js"></script>
+    <script>
+function applyTheme(theme) {
+    const html = document.documentElement;
+    html.setAttribute('data-theme', theme);
+
+    // Update labels/icons in navbar if present
+    const themeLabel = document.querySelector('.theme-label');
+    if (themeLabel) themeLabel.textContent = theme === 'light' ? 'Light' : 'Dark';
+}
+
+function initThemeToggle() {
+    const themeToggle = document.getElementById('themeToggle');
+    if (!themeToggle) return; // navbar not loaded yet
+
+    themeToggle.addEventListener('click', () => {
+        const html = document.documentElement;
+        const current = html.getAttribute('data-theme');
+        const next = current === 'light' ? 'dark' : 'light';
+        applyTheme(next);
+        localStorage.setItem('agritech-theme', next);
+    });
+}
+
+// Initialize theme from localStorage
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('agritech-theme') || 'light';
+    applyTheme(savedTheme);
+});
+
+// Load navbar and attach toggle AFTER navbar is loaded
+function includeHTML() {
+    var z, i, elmnt, file, xhttp;
+    z = document.getElementsByTagName("*");
+    for (i = 0; i < z.length; i++) {
+        elmnt = z[i];
+        file = elmnt.getAttribute("w3-include-html");
+        if (file) {
+            xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+                    if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                    elmnt.removeAttribute("w3-include-html");
+                    includeHTML();
+
+                    // ✅ Attach theme toggle AFTER navbar loads
+                    initThemeToggle();
+                }
+            }
+            xhttp.open("GET", file, true);
+            xhttp.send();
+            return;
+        }
+    }
+}
+includeHTML();
+</script>
 
 </body>
 </html>

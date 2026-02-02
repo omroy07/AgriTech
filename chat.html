@@ -66,9 +66,9 @@ connect-src 'self' http://localhost:3000;
     <header>
       <div class="header-content">
         <div class="nav-left" style="display: flex; align-items: center; gap: 1.5rem;">
-          <a href="index.html" class="nav-back">
+          <button class="nav-back" id="backToHomeBtn">
             <i class="fas fa-arrow-left"></i> Back to Home
-          </a>
+          </button>
           <div class="logo">
             <i class="fas fa-seedling"></i>
             <h1>AgriBot</h1>
@@ -89,7 +89,7 @@ connect-src 'self' http://localhost:3000;
       <div id="chat-container">
         <div class="chat-header">
           <i class="fas fa-robot"></i>
-          <h2>Ask me anything about agriculture, crops, or farming techniques</h2>
+          <h2>Ask me about AgriTech features or agriculture support</h2>
         </div>
 
         <div id="chat-window">
@@ -97,10 +97,12 @@ connect-src 'self' http://localhost:3000;
             <h3><i class="fas fa-leaf"></i> Welcome to AgriTech Assistant!</h3>
             <p>
               I'm powered by Google Gemini AI to help with all your farming
-              questions.
+              questions and guide you through AgriTech platform features.
             </p>
 
             <div class="suggestions">
+              <div class="suggestion">What can I do on AgriTech?</div>
+              <div class="suggestion">How to use crop recommendation?</div>
               <div class="suggestion">Best crops for this season?</div>
               <div class="suggestion">Organic pest control methods</div>
               <div class="suggestion">Water conservation techniques</div>
@@ -317,5 +319,19 @@ connect-src 'self' http://localhost:3000;
       </div>
       <div class="footer-bottom">© <span id="current-year">2026</span> AgriTech • Made for farmers</div>
     </footer>
+    <script>
+  document.getElementById("backToHomeBtn").addEventListener("click", () => {
+    // Preserve theme
+    const currentTheme =
+      document.documentElement.getAttribute("data-theme") || "light";
+    localStorage.setItem("theme", currentTheme);
+
+    // Preserve scroll position of home page
+    localStorage.setItem("homeScrollY", window.scrollY);
+
+    // Navigate back
+    window.location.href = "index.html";
+  });
+</script>
   </body>
 </html>

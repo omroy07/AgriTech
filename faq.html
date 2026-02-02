@@ -53,9 +53,10 @@
           <span class="theme-text">Light</span>
         </button>
 
-        <a href="login.html" class="btn btn-secondary">Login</a>
+        <a href="login.html" class="btn btn-secondary login-btn-desktop">Login</a>
         <a href="faq.html" class="btn btn-secondary active">FAQ</a>
-        <a href="register.html" class="btn btn-primary">Register</a>
+        <a href="#" class="btn btn-secondary logout-button" style="display: none;">Logout</a>
+        <a href="register.html" class="btn btn-primary register-btn-desktop">Register</a>
       </div>
 
       <!-- Mobile Hamburger Menu Button -->
@@ -68,7 +69,8 @@
   <!-- Mobile Menu Overlay -->
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-search">
-      <input type="text" placeholder="Search..." class="mobile-search-input" autocomplete="off" aria-label="Search content" />
+      <input type="text" placeholder="Search..." class="mobile-search-input" autocomplete="off"
+        aria-label="Search content" />
       <button class="mobile-search-btn" aria-label="Search">
         <i class="fas fa-search"></i>
       </button>
@@ -88,9 +90,10 @@
         <span class="theme-text">Light</span>
       </button>
 
-      <a href="login.html" class="btn btn-secondary">Login</a>
+      <a href="login.html" class="btn btn-secondary login-btn-mobile">Login</a>
       <a href="faq.html" class="btn btn-secondary active">FAQ</a>
-      <a href="register.html" class="btn btn-primary">Register</a>
+      <a href="#" class="btn btn-secondary logout-link-mobile" style="display: none;">Logout</a>
+      <a href="register.html" class="btn btn-primary register-btn-mobile">Register</a>
     </div>
   </div>
 
@@ -472,7 +475,7 @@
     </div>
     <div class="footer-bottom">
       <div class="footer-bottom-content">
-        <p class="copyright">© 2025 AgriTech. All rights reserved.</p>
+        <p class="copyright">© 2026 AgriTech. All rights reserved.</p>
         <div class="footer-bottom-links">
           <a href="terms-and-service.html">Terms of Service</a>
           <span class="separator">•</span>
@@ -512,56 +515,56 @@
     }
 
     // Desktop Search
-      const searchButton = document.querySelector(".search-button");
-      const searchInput = document.querySelector(".search-input");
+    const searchButton = document.querySelector(".search-button");
+    const searchInput = document.querySelector(".search-input");
 
-      searchButton?.addEventListener("click", () => {
-        handleSearch(searchInput.value);
-      });
+    searchButton?.addEventListener("click", () => {
+      handleSearch(searchInput.value);
+    });
 
-      searchInput?.addEventListener("keydown", e => {
-        if (e.key === "Enter") handleSearch(e.target.value);
-      });
+    searchInput?.addEventListener("keydown", e => {
+      if (e.key === "Enter") handleSearch(e.target.value);
+    });
 
-      // Add focus effect when button is clicked or focused
-      searchButton?.addEventListener("click", () => {
-        searchInput?.classList.add("input-focused");
-      });
+    // Add focus effect when button is clicked or focused
+    searchButton?.addEventListener("click", () => {
+      searchInput?.classList.add("input-focused");
+    });
 
-      searchButton?.addEventListener("focus", () => {
-        searchInput?.focus(); //Focus the input to show cursor
-        searchInput?.classList.add("input-focused");
-      });
+    searchButton?.addEventListener("focus", () => {
+      searchInput?.focus(); //Focus the input to show cursor
+      searchInput?.classList.add("input-focused");
+    });
 
-      searchInput?.addEventListener("blur", () => {
-        searchInput.classList.remove("input-focused");
-      });
+    searchInput?.addEventListener("blur", () => {
+      searchInput.classList.remove("input-focused");
+    });
 
-      // Mobile Search
-      const mobileSearchBtn = document.querySelector(".mobile-search-btn");
-      const mobileSearchInput = document.querySelector(".mobile-search-input");
+    // Mobile Search
+    const mobileSearchBtn = document.querySelector(".mobile-search-btn");
+    const mobileSearchInput = document.querySelector(".mobile-search-input");
 
-      mobileSearchBtn?.addEventListener("click", () => {
-        handleSearch(mobileSearchInput.value);
-      });
+    mobileSearchBtn?.addEventListener("click", () => {
+      handleSearch(mobileSearchInput.value);
+    });
 
-      mobileSearchInput?.addEventListener("keydown", e => {
-        if (e.key === "Enter") handleSearch(e.target.value);
-      });
+    mobileSearchInput?.addEventListener("keydown", e => {
+      if (e.key === "Enter") handleSearch(e.target.value);
+    });
 
-      // Add focus effect when button is clicked or focused
-      mobileSearchBtn?.addEventListener("click", () => {
-        mobileSearchInput?.classList.add("input-focused");
-      });
+    // Add focus effect when button is clicked or focused
+    mobileSearchBtn?.addEventListener("click", () => {
+      mobileSearchInput?.classList.add("input-focused");
+    });
 
-      mobileSearchBtn?.addEventListener("focus", () => {
-        mobileSearchInput?.focus(); // Focus the input to show cursor
-        mobileSearchInput?.classList.add("input-focused");
-      });
+    mobileSearchBtn?.addEventListener("focus", () => {
+      mobileSearchInput?.focus(); // Focus the input to show cursor
+      mobileSearchInput?.classList.add("input-focused");
+    });
 
-      mobileSearchInput?.addEventListener("blur", () => {
-        mobileSearchInput.classList.remove("input-focused");
-      });
+    mobileSearchInput?.addEventListener("blur", () => {
+      mobileSearchInput.classList.remove("input-focused");
+    });
 
     // Mobile Menu Functionality
     const navToggle = document.getElementById('navToggle');
@@ -665,6 +668,7 @@
       }
     });
   </script>
+  <script src="auth.js"></script>
 </body>
 
 </html>
