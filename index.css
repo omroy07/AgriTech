@@ -289,6 +289,36 @@ body {
   align-items: center;
   justify-content: center;
 }
+/* Language Dropdown (Top Bar) */
+.language-select {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
+  color: var(--text-color);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  transition: all 0.25s ease;
+  outline: none;
+}
+
+.language-select:hover {
+  border-color: var(--accent-color);
+  background: rgba(34, 197, 94, 0.1);
+  transform: translateY(-1px);
+}
+
+.language-select:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+}
+.language-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-right: 6px;
+}
 
 /* Button Styles */
 .btn {

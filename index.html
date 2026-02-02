@@ -421,6 +421,50 @@ document.addEventListener("DOMContentLoaded", () => {
       .theme-text {
         font-size: 0.85rem;
       }
+      /* ====================================
+        Language Select (Top Bar)
+        ==================================== */
+
+      .language-select {
+        padding: 8px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--border-color);
+        background: var(--surface-color);
+        color: var(--text-color);
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: 0 2px 8px var(--shadow-color);
+        transition: all 0.25s ease;
+        outline: none;
+      }
+      .language-label {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-right: 6px;
+      }
+
+      /* Hover */
+      .language-select:hover {
+        border-color: var(--accent-color);
+        background: rgba(34, 197, 94, 0.1);
+        transform: translateY(-1px);
+      }
+
+      /* Focus */
+      .language-select:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+      }
+
+      /* Mobile */
+      @media (max-width: 600px) {
+        .language-select {
+          width: 100%;
+          margin-top: 6px;
+        }
+      }
+
 
       /* Button Styles */
       .btn {
@@ -1875,8 +1919,8 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
 
     <div style="padding: 10px; text-align: right">
-      <label for="languageSelect">Language:</label>
-      <select id="languageSelect">
+      <label for="languageSelect" class="language-label">Language:</label>
+      <select id="languageSelect" class="language-select">
         <option value="en">English</option>
         <option value="te">తెలుగు</option>
         <option value="hi">हिन्दी</option>
