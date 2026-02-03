@@ -15,8 +15,13 @@ import datetime
 
 crop_bp = Blueprint('crop', __name__, template_folder='templates', static_folder='static')
 
-model = joblib.load('model/rf_model.pkl')
-label_encoder = joblib.load('model/label_encoder.pkl')  # Load encoder
+try:
+    model = joblib.load('model/rf_model.pkl')
+    label_encoder = joblib.load('model/label_encoder.pkl')  # Load encoder
+except (FileNotFoundError, IndexError):
+    model = None
+    label_encoder = None
+    print("Warning: Crop models not found. Prediction disabled.")
 
 # Input validation helper functions
 def validate_required_fields(required_fields):
@@ -94,6 +99,9 @@ def predict():
                 'rainfall': str(data[6])
             }
             
+            if model is None or label_encoder is None:
+                return render_template('index.html', error="Prediction model is currently unavailable.")
+
             prediction_num = model.predict([data])[0]
             prediction_label = label_encoder.inverse_transform([prediction_num])[0]
             
