@@ -248,6 +248,41 @@ function initHamburgerMenu() {
         document.body.style.overflow = '';
     });
 }
+function initNavbarInteractions() {
+  // Desktop Services Dropdown
+  const servicesToggle = document.querySelector('.services-toggle');
+  const servicesDropdown = document.querySelector('.services-dropdown');
+  const servicesArrow = document.querySelector('.services-arrow');
+
+  if (servicesToggle && servicesDropdown) {
+    servicesToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      servicesDropdown.classList.toggle('active');
+      servicesArrow?.classList.toggle('rotated');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!servicesToggle.contains(e.target) && !servicesDropdown.contains(e.target)) {
+        servicesDropdown.classList.remove('active');
+        servicesArrow?.classList.remove('rotated');
+      }
+    });
+  }
+
+  // Mobile Services Dropdown
+  const mobServToggle = document.getElementById('mobileServicesToggle');
+  const mobServList = document.getElementById('mobileServicesList');
+
+  if (mobServToggle && mobServList) {
+    mobServToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      mobServList.classList.toggle('active');
+    });
+  }
+}
+
+
 
 // Run after DOM loads
 document.addEventListener('DOMContentLoaded', () => {
@@ -259,7 +294,9 @@ document.addEventListener('DOMContentLoaded', () => {
     includeHTML(() => {
         initThemeToggle();
         initHamburgerMenu();
+        initServicesDropdown(); // ✅ ADD THIS
     });
+
 });
 </script>
 <!-- Cursor Trail -->
