@@ -23,6 +23,7 @@ from backend.schemas.loan_schema import LoanRequestSchema
 from backend.celery_app import celery_app, make_celery
 from backend.tasks import predict_crop_task, process_loan_task
 import backend.sockets.task_events  # Register socket event handlers
+import backend.sockets.supply_events # Register supply chain events
 from auth_utils import token_required, roles_required
 
 # Set up logging
