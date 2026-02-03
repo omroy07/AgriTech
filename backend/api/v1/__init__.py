@@ -5,6 +5,7 @@ from .tasks import tasks_bp
 from .notifications import notifications_bp
 from .assets import assets_bp
 from .logistics import logistics_bp
+from .forum import forum_bp
 
 # Create v1 API blueprint
 api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1')
@@ -16,4 +17,5 @@ api_v1.register_blueprint(tasks_bp)
 api_v1.register_blueprint(notifications_bp)
 api_v1.register_blueprint(assets_bp)
 api_v1.register_blueprint(logistics_bp)
+api_v1.register_blueprint(forum_bp)
 

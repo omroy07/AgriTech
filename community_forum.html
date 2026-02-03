@@ -1,479 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgriTech Community Forum</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<style>
-:root {
-  --bg-light: #f5f7fb;
-  --bg-dark: #121212;
-  --card-light: #fff;
-  --card-dark: #1e1e1e;
-  --text-light: #333;
-  --text-dark: #fff;
-  --primary: #2e7d32;
-  --primary-dark: #27632a;
-  --danger: #e53935;
-  --danger-dark: #c62828;
-  --accent: #81c784;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Hub | AgriTech Forum</title>
 
-/* RESET */
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
-body{background:var(--bg-light); color:var(--text-light); transition:0.3s;}
+  <!-- Icons & Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-nav{background:var(--primary); color:#fff; display:flex; justify-content:space-between; align-items:center; padding:0.8rem 2rem;}
-nav h1{font-size:1.5rem;}
-.nav-buttons{display:flex; gap:1rem;}
-.nav-buttons button, .nav-buttons a{background:#fff; color:var(--primary); border:none; padding:0.4rem 0.8rem; border-radius:6px; cursor:pointer; text-decoration:none; font-weight:500;}
-.nav-buttons button:hover, .nav-buttons a:hover{background:#ddd;}
-
-.forum-container{max-width:1000px; margin:2rem auto; padding:0 1rem;}
-
-/* NEW QUESTION AREA */
-.new-question{
-  background:var(--card-light); padding:1.2rem; border-radius:12px; margin-bottom:2rem;
-  box-shadow:0 4px 12px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s;
-}
-.new-question:hover{transform:translateY(-3px); box-shadow:0 6px 20px rgba(0,0,0,0.15);}
-.new-question textarea{width:100%; padding:0.8rem; border-radius:10px; border:1px solid #ccc; resize:vertical; font-size:0.95rem; transition:0.3s;}
-.new-question textarea:focus{border-color:var(--primary); outline:none; box-shadow:0 0 8px rgba(46,125,50,0.3);}
-.new-question button{background:var(--accent); color:#fff; border:none; padding:0.6rem 1.2rem; border-radius:8px; cursor:pointer; margin-top:0.5rem; font-size:0.95rem; transition:0.3s;}
-.new-question button:hover{background:var(--primary); transform:scale(1.05);}
-
-/* SEARCH BAR */
-.search-bar{margin-bottom:2rem; display:flex; gap:1rem;}
-.search-bar input{flex:1; padding:0.6rem 1rem; border-radius:8px; border:1px solid #ccc; font-size:0.95rem; transition:0.3s;}
-.search-bar input:focus{border-color:var(--primary); outline:none; box-shadow:0 0 8px rgba(46,125,50,0.3);}
-.search-bar button{background:var(--primary); color:#fff; border:none; padding:0.6rem 1.2rem; border-radius:8px; cursor:pointer; font-size:0.95rem; transition:0.3s;}
-.search-bar button:hover{background:var(--primary-dark); transform:scale(1.05);}
-
-/* QUESTION CARD */
-.question-card{
-  background:var(--card-light); padding:1rem 1.5rem; border-radius:12px; margin-bottom:1rem;
-  box-shadow:0 4px 10px rgba(0,0,0,0.08); position:relative; overflow:hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-.question-card:hover{transform:translateY(-4px); box-shadow:0 6px 20px rgba(0,0,0,0.15);}
-.question-card h3{font-size:1.15rem; margin-bottom:0.5rem; color:var(--primary);}
-.question-card .meta{font-size:0.85rem; color:#777; display:flex; gap:1rem; margin-bottom:0.5rem;}
-.question-card .actions{opacity:0; transition: opacity 0.3s;}
-.question-card:hover .actions{opacity:1;}
-.question-card button{background:#f0f0f0; border:none; padding:0.3rem 0.8rem; border-radius:6px; cursor:pointer; margin-right:0.5rem; font-size:0.85rem; transition:0.3s;}
-.question-card button:hover{background:#ddd; transform:scale(1.05);}
-.question-card .delete-btn{background:var(--danger); color:#fff; font-size:0.8rem; padding:0.3rem 0.6rem; border-radius:6px; transition:0.3s;}
-.question-card .delete-btn:hover{background:var(--danger-dark); transform:scale(1.05);}
-
-/* REPLIES */
-.replies{margin-left:1.5rem; margin-top:0.5rem;}
-.reply{
-  background:#f9f9f9; padding:0.5rem 1rem; border-radius:10px; margin-bottom:0.5rem;
-  font-size:0.9rem; position:relative; opacity:0; animation:fadeIn 0.5s forwards; transition:0.3s;
-}
-.reply:hover{background:#e8f5e9; transform:translateX(2px);}
-.reply button{position:absolute; right:8px; top:5px; background:var(--danger); color:#fff; border:none; border-radius:5px; padding:0 5px; font-size:0.75rem; cursor:pointer; transition:0.3s;}
-.reply button:hover{background:var(--danger-dark); transform:scale(1.1);}
-
-@keyframes fadeIn{from{opacity:0; transform:translateY(-5px);} to{opacity:1; transform:translateY(0);}}
-
-/* DARK MODE */
-body.dark{background:var(--bg-dark); color:var(--text-dark);}
-body.dark .new-question, body.dark .question-card{background:var(--card-dark);}
-body.dark .reply{background:#2c2c2c; color:#fff;}
-body.dark .search-bar input, body.dark .search-bar button, body.dark .new-question button{background:#333; color:#fff; border:none;}
-/* FOOTER */
-    .site-footer {
-      background: var(--surface-color);
-      color: var(--text-color);
-      position: relative;
-      font-size: 0.95rem;
-      border-top: 1px solid var(--border-color);
-    }
-
-
-    .footer-top-accent {
-      height: 4px;
-      background: linear-gradient(90deg, #16a34a, #22c55e);
-    }
-
-    .footer-inner-content {
-      max-width: 1200px;
-      margin: auto;
-      padding: 3rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      gap: 3rem;
-      flex-wrap: wrap;
-    }
-
-    .footer-brand {
-      flex: 1 1 280px;
-    }
-
-    .brand-header {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .brand-logo {
-      width: 42px;
-    }
-
-    .footer-brand h3 {
-      color: var(--accent-color);
-      font-size: 1.3rem;
-    }
-
-    .tagline {
-      margin: 0.8rem 0 1.2rem;
-      line-height: 1.6;
-      color: var(--text-muted);
-    }
-
-    .social-icons {
-      display: flex;
-      gap: 0.7rem;
-    }
-
-    .social-icons a {
-      width: 36px;
-      height: 36px;
-      background: #e6f4ea;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      color: #15803d;
-      transition: all 0.25s ease;
-    }
-
-    .social-icons a:hover {
-      background: #22c55e;
-      color: #fff;
-    }
-
-    .footer-group-links {
-      display: flex;
-      gap: 3rem;
-      flex: 1 1 320px;
-    }
-
-    .footer-section h4 {
-      color: var(--accent-color);
-      margin-bottom: 0.9rem;
-      font-size: 1rem;
-    }
-
-    .footer-section ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .footer-section ul li {
-      margin-bottom: 0.6rem;
-    }
-
-    .footer-section ul a {
-      color: var(--text-muted);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: color 0.25s ease;
-    }
-
-    .footer-section ul a:hover {
-      color: var(--accent-color);
-    }
-
-    .footer-bottom {
-      text-align: center;
-      padding: 1rem;
-      background: var(--section-bg);
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
-    .footer-wave-overlay {
-      display: none;
-    }
-</style>
+  <!-- Custom Theme -->
+  <link rel="stylesheet" href="forum.css">
 </head>
+
 <body>
-<!-- Include Navbar -->
-<div w3-include-html="navbar.html"></div>
 
-<div class="forum-container">
-  <!-- New Question -->
-  <div class="new-question">
-    <h2>Ask a Question</h2>
-    <textarea id="questionInput" rows="3" placeholder="Type your question here..."></textarea>
-    <br>
-    <button onclick="postQuestion()">Post Question</button>
-  </div>
-
-  <!-- Search -->
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search questions...">
-    <button onclick="searchQuestions()">Search</button>
-  </div>
-
-  <!-- Questions List -->
-  <div id="questionsList"></div>
-</div>
-<footer class="site-footer tech-dark-theme final-match">
-  <div class="footer-top-accent"></div>
-
-  <div class="footer-inner-content">
-    <div class="footer-section footer-brand">
-      <div class="brand-header" data-i18n="">
-        <img src="images/logo.png" alt="AgriTech logo" class="brand-logo">
-        <h3>AgriTech</h3>
+  <div class="forum-layout">
+    <!-- Left Sidebar: Navigation & Filters -->
+    <aside class="sidebar">
+      <div class="card">
+        <h3><i class="fas fa-compass"></i> Discover</h3>
+        <div id="categories-list">
+          <div class="loader">Fetching categories...</div>
+        </div>
       </div>
 
-      <p class="tagline">
-        Empowering India's Farming Future with innovative technology connecting every stakeholder.
-      </p>
+      <div class="card">
+        <h3><i class="fas fa-trophy"></i> My Reputation</h3>
+        <div class="user-rep-panel">
+          <div class="score-display">
+            <span id="user-score">--</span>
+            <small>Total Points</small>
+          </div>
+          <div id="user-badge" class="badge-status">
+            Loading...
+          </div>
+        </div>
+      </div>
+    </aside>
 
-      <div class="social-icons">
-        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
-        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <!-- Main Feed: Discussions -->
+    <main class="feed">
+      <header class="feed-header">
+        <div class="search-container">
+          <i class="fas fa-search"></i>
+          <input type="text" id="forum-search" class="search-input"
+            placeholder="Search for experts, topics, or solutions...">
+        </div>
+        <button class="btn-ask" id="btn-new-thread">
+          <i class="fas fa-plus"></i> New Topic
+        </button>
+      </header>
+
+      <div id="threads-feed">
+        <!-- Threads will be injected here -->
+      </div>
+    </main>
+
+    <!-- Right Widgets: Trends & AI -->
+    <aside class="widgets">
+      <div class="card">
+        <h3><i class="fas fa-robot"></i> AgriAI Insights</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+          AI is currently monitoring the forum for spam and helpful opportunities.
+        </p>
+        <div class="ai-status">
+          <span class="ai-badge">Active</span>
+          <small>Moderating Content</small>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><i class="fas fa-fire"></i> Trending Topics</h3>
+        <div id="trending-list">
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Real-time trends appearing soon...</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Create Thread Modal -->
+  <div class="modal-overlay" id="create-thread-modal">
+    <div class="card modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h2 style="font-size: 1.5rem;">Start a Conversation</h2>
+        <button onclick="forum.toggleModal('create-thread-modal', false)"
+          style="background: none; border: none; cursor: pointer; font-size: 1.2rem; color: var(--text-muted);">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 1.25rem;">
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Discussion Category</label>
+        <select id="thread-category-select" class="search-input" style="padding-left: 1rem; width: 100%;">
+          <option value="1">General Farming</option>
+          <option value="2">Crop Protection</option>
+          <option value="3">Soil Health</option>
+          <option value="4">Equipment Advice</option>
+        </select>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 1.25rem;">
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Topic Title</label>
+        <input type="text" id="thread-title-input" class="search-input" style="padding-left: 1rem;"
+          placeholder="e.g. Best organic fertilizer for Wheat?">
+      </div>
+
+      <div class="form-group" style="margin-bottom: 1.5rem;">
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Content Details</label>
+        <textarea id="thread-content-input" class="search-input"
+          style="padding-left: 1rem; min-height: 150px; resize: vertical;"
+          placeholder="Describe your question or share your knowledge here..."></textarea>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+        <button onclick="forum.toggleModal('create-thread-modal', false)" class="btn-ask"
+          style="background: var(--bg-main); color: var(--text-main);">Cancel</button>
+        <button onclick="forum.createThread()" class="btn-ask">Post Discussion</button>
       </div>
     </div>
-
-    <div class="footer-group-links">
-      <div class="footer-section footer-links">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-          <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-          <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
-          <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
-          <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-section footer-contact">
-        <h4>Contact</h4>
-        <ul>
-          <li>
-            <a href="mailto:contact@agritech.com">
-              <i class="fas fa-envelope"></i> Email Us
-            </a>
-          </li>
-          <li>
-            <a href="tel:+910000000000">
-              <i class="fas fa-phone"></i> Call Us
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
   </div>
 
-  <div class="footer-bottom">
-    <p>©<span id="current-year"></span>2026 AgriTech. All rights reserved.</p>
-  </div>
-
-  <div class="footer-wave-overlay"></div>
-</footer>
-<script>
-let questions = [];
-let currentUser = '';
-
-// ASK USER NAME ON PAGE LOAD
-window.onload = () => {
-  Swal.fire({
-    title: 'Enter your name',
-    input: 'text',
-    inputPlaceholder: 'Your name...',
-    allowOutsideClick: false,
-    showCancelButton: false
-  }).then(result => {
-    currentUser = result.value.trim() || 'Anonymous';
-    Swal.fire('Welcome', `Hello ${currentUser}!`, 'success');
-  });
-};
-
-// DARK MODE TOGGLE
-document.getElementById('modeToggle').addEventListener('click', () => {
-  document.body.classList.toggle('dark');
-  const btn = document.getElementById('modeToggle');
-  btn.innerHTML = document.body.classList.contains('dark')
-    ? '<i class="fa fa-sun"></i> Light Mode'
-    : '<i class="fa fa-moon"></i> Dark Mode';
-});
-
-// POST QUESTION
-function postQuestion() {
-  const input = document.getElementById('questionInput');
-  const text = input.value.trim();
-  if (!text) return Swal.fire('Error', 'Please type a question!', 'error');
-
-  const question = {
-    id: Date.now(),
-    text,
-    author: currentUser,
-    date: new Date().toLocaleString(),
-    replies: [],
-    upvotes: 0
-  };
-  questions.unshift(question);
-  input.value = '';
-  renderQuestions(questions);
-  Swal.fire('Success', 'Question posted!', 'success');
-}
-
-// RENDER QUESTIONS
-function renderQuestions(list) {
-  const container = document.getElementById('questionsList');
-  container.innerHTML = '';
-  list.forEach(q => {
-    const card = document.createElement('div');
-    card.className = 'question-card';
-
-    const deleteButtonHTML = (q.author === currentUser)
-      ? `<button onclick="deleteQuestion(${q.id})"><i class="fa fa-trash"></i> Delete</button>`
-      : '';
-
-    card.innerHTML = `
-      <h3>${q.text}</h3>
-      <div class="meta">Posted by: ${q.author} | ${q.date} | Upvotes: ${q.upvotes}</div>
-      <div class="actions">
-        <button onclick="upvote(${q.id})"><i class="fa fa-thumbs-up"></i> Upvote</button>
-        <button onclick="replyPrompt(${q.id})"><i class="fa fa-reply"></i> Reply</button>
-        ${deleteButtonHTML}
-      </div>
-      <div class="replies" id="replies-${q.id}">
-        ${q.replies.map((r,i) => `<div class="reply">${r}<button onclick="deleteReply(${q.id},${i})">x</button></div>`).join('')}
-      </div>
-    `;
-    container.appendChild(card);
-  });
-}
-
-// UPVOTE
-function upvote(id){
-  const q = questions.find(q => q.id === id);
-  q.upvotes++;
-  renderQuestions(questions);
-}
-
-// REPLY
-function replyPrompt(id){
-  Swal.fire({
-    title: 'Your Reply',
-    input: 'textarea',
-    inputPlaceholder: 'Type your reply here...',
-    showCancelButton: true
-  }).then(result => {
-    if(result.isConfirmed && result.value.trim() !== ''){
-      const q = questions.find(q => q.id === id);
-      q.replies.push(result.value);
-      renderQuestions(questions);
-      Swal.fire('Success','Reply added!','success');
-    }
-  });
-}
-
-// DELETE QUESTION
-function deleteQuestion(id){
-  Swal.fire({
-    title: 'Are you sure?',
-    text: 'This will delete the question!',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#e53935',
-    confirmButtonText: 'Yes, delete it!'
-  }).then(result => {
-    if(result.isConfirmed){
-      questions = questions.filter(q => q.id !== id);
-      renderQuestions(questions);
-      Swal.fire('Deleted!', 'Question has been deleted.', 'success');
-    }
-  });
-}
-
-// DELETE REPLY
-function deleteReply(qId, rIndex){
-  Swal.fire({
-    title:'Delete reply?',
-    icon:'warning',
-    showCancelButton:true,
-    confirmButtonColor:'#e53935',
-    confirmButtonText:'Yes'
-  }).then(result=>{
-    if(result.isConfirmed){
-      const q=questions.find(q=>q.id===qId);
-      q.replies.splice(rIndex,1);
-      renderQuestions(questions);
-      Swal.fire('Deleted!','Reply deleted.','success');
-    }
-  });
-}
-
-// SEARCH
-function searchQuestions(){
-  const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
-  if(!keyword) return renderQuestions(questions);
-
-  const filtered = questions.filter(q => q.text.toLowerCase().includes(keyword));
-  if(filtered.length === 0){
-    Swal.fire({
-      icon: 'info',
-      title: 'No posts found',
-      text: `No questions match "${keyword}"`,
-      timer: 2000,
-      showConfirmButton: false
-    });
-  }
-  renderQuestions(filtered);
-}
-
-// DEMO QUESTION
-questions.push({
-  id: Date.now(),
-  text: 'How can I increase crop yield sustainably?',
-  author: 'Farmer John',
-  date: new Date().toLocaleString(),
-  replies: ['Use crop rotation and organic compost.','Check soil pH regularly.'],
-  upvotes: 3
-});
-renderQuestions(questions);
-</script>
-
-<!-- Include Navbar Script -->
-<script>
-    function includeHTML() {
-        var z, i, elmnt, file, xhttp;
-        z = document.getElementsByTagName("*");
-        for (i = 0; i < z.length; i++) {
-            elmnt = z[i];
-            file = elmnt.getAttribute("w3-include-html");
-            if (file) {
-                xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4) {
-                        if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-                        if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-                        elmnt.removeAttribute("w3-include-html");
-                        includeHTML();
-                    }
-                }
-                xhttp.open("GET", file, true);
-                xhttp.send();
-                return;
-            }
-        }
-    }
-    includeHTML();
-</script>
-
+  <!-- Scripts -->
+  <script src="forum.js"></script>
 </body>
+
 </html>

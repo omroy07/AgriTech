@@ -20,6 +20,7 @@ from backend.tasks import predict_crop_task, process_loan_task
 from backend.utils.validation import sanitize_input, validate_input
 from backend.auth import auth_bp
 import backend.sockets.task_events  # Register socket event handlers
+import backend.sockets.forum_events # Register forum socket events
 from backend.utils.i18n import get_locale, t
 
 
