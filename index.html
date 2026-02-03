@@ -1867,15 +1867,6 @@
     }
 
 
-    <div style="padding: 10px; text-align: right">
-      <label for="languageSelect" class="language-label">Language:</label>
-      <select id="languageSelect" class="language-select">
-        <option value="en">English</option>
-        <option value="te">తెలుగు</option>
-        <option value="hi">हिन्दी</option>
-        <option value="ta">தமிழ்</option>
-      </select>
-    </div>
 
     /* Show dropdown when active */
     .services-dropdown.active {
@@ -1921,7 +1912,7 @@
     <div class="cursor-circle"></div>
   </div>
 
-  <div style="padding: 10px; text-align: right">
+  <!-- <div style="padding: 10px; text-align: right">
     <label for="languageSelect">Language:</label>
     <select id="languageSelect">
       <option value="en">English</option>
@@ -1929,7 +1920,21 @@
       <option value="hi">हिन्दी</option>
       <option value="ta">தமிழ்</option>
     </select>
-  </div>
+  </div> -->
+  <div style="padding: 10px; text-align: right">
+  <label for="languageSelect" class="language-label">Language:</label>
+  <select
+    id="languageSelect"
+    class="language-select"
+    onchange="setLanguage(this.value, this.options[this.selectedIndex].text)"
+  >
+    <option value="en">English</option>
+    <option value="te">తెలుగు</option>
+    <option value="hi">हिन्दी</option>
+    <option value="ta">தமிழ்</option>
+  </select>
+</div>
+
 
   <!-- Offline & Cached Notices -->
   <div id="network-status" class="hidden">⚠️ Offline or poor connection</div>
@@ -1961,15 +1966,15 @@
 
       <!-- Left Nav Links -->
       <div class="left-nav">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="about.html" class="nav-link">About</a>
-        <a href="blog.html" class="nav-link">Blog</a>
-        <a href="news.html" class="nav-link">Ag News</a>
-        <a href="scheme.html" class="nav-link">Schemes</a>
-        <a href="community_forum.html" class="nav-link">Community Forum</a>
+        <a href="index.html" class="nav-link" data-i18n="home">Home</a>
+        <a href="about.html" class="nav-link" data-i18n="about">About</a>
+        <a href="blog.html" class="nav-link" data-i18n="blog">Blog</a>
+        <a href="news.html" class="nav-link" data-i18n="ag_news">Ag News</a>
+        <a href="scheme.html" class="nav-link" data-i18n="schemes">Schemes</a>
+        <a href="community_forum.html" class="nav-link" data-i18n="community_forum">Community Forum</a>
         <!-- Services Dropdown -->
         <div class="services-toggle-container">
-          <a href="#" class="nav-link services-toggle">
+          <a href="#" class="nav-link services-toggle" data-i18n="services">
             Services <i class="fas fa-chevron-down services-arrow"></i>
           </a>
           <div class="services-dropdown">
@@ -3248,6 +3253,8 @@
     });
 
   </script>
+  <script src="javascript/i18n.js"></script>
+
 </body>
 
 </html>
