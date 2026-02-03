@@ -468,31 +468,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 <!-- Include Navbar Script -->
-<script>
-    function includeHTML() {
-        var z, i, elmnt, file, xhttp;
-        z = document.getElementsByTagName("*");
-        for (i = 0; i < z.length; i++) {
-            elmnt = z[i];
-            file = elmnt.getAttribute("w3-include-html");
-            if (file) {
-                xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4) {
-                        if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-                        if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-                        elmnt.removeAttribute("w3-include-html");
-                        includeHTML();
-                    }
-                }
-                xhttp.open("GET", file, true);
-                xhttp.send();
-                return;
-            }
-        }
-    }
-    includeHTML();
-</script>
+
 <script>
 // Include navbar
 function includeHTML(callback) {
@@ -526,24 +502,34 @@ function includeHTML(callback) {
 
 // Initialize mobile hamburger
 function initHamburgerMenu() {
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const overlay = document.getElementById('mobileMenuOverlay');
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const overlay = document.getElementById("mobileMenuOverlay");
 
     if (!hamburgerBtn || !mobileMenu || !overlay) return;
 
-    hamburgerBtn.addEventListener('click', () => {
-        mobileMenu.classList.add('active');
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
+    hamburgerBtn.addEventListener("click", () => {
+        mobileMenu.classList.add("active");
+        overlay.classList.add("active");
+        document.body.style.overflow = "hidden";
     });
 
-    overlay.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-        overlay.classList.remove('active');
-        document.body.style.overflow = '';
+    overlay.addEventListener("click", () => {
+        mobileMenu.classList.remove("active");
+        overlay.classList.remove("active");
+        document.body.style.overflow = "";
     });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem("agritech-theme") || "light";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+
+    includeHTML(() => {
+        initHamburgerMenu(); // ✅ runs AFTER navbar.html is injected
+    });
+});
+
 
 // Run after DOM loads
 document.addEventListener('DOMContentLoaded', () => {

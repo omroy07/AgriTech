@@ -3059,23 +3059,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
         // OPEN
-        hamburgerBtn.addEventListener("pointerdown", (e) => {
+        hamburgerBtn.addEventListener("click", (e) => {
           e.preventDefault();
           openMobileMenu();
         });
 
+
         // CLOSE
-        mobileCloseBtn.addEventListener("pointerdown", (e) => {
+        mobileCloseBtn.addEventListener("click", (e) => {
           e.preventDefault();
           e.stopPropagation();
           closeMobileMenu();
         });
 
-        mobileMenuOverlay.addEventListener("pointerdown", closeMobileMenu);
+        mobileMenuOverlay.addEventListener("click", closeMobileMenu);
 
-        mobileMenu.addEventListener("pointerdown", (e) => {
+        mobileMenu.addEventListener("click", (e) => {
           e.stopPropagation();
         });
+
       }
 
       // Mobile Services Toggle
@@ -3433,6 +3435,32 @@ document.addEventListener("DOMContentLoaded", () => {
         circles.forEach((c) => c.classList.remove("cursor-clicking"));
       });
       
+      document.addEventListener("DOMContentLoaded", () => {
+        const hamburgerBtn = document.getElementById("hamburgerBtn");
+        const mobileMenu = document.getElementById("mobileMenu");
+        const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
+        const mobileCloseBtn = document.querySelector(".mobile-close-btn");
+
+        if (!hamburgerBtn || !mobileMenu || !mobileMenuOverlay) return;
+
+        function openMobileMenu() {
+          mobileMenu.classList.add("active");
+          mobileMenuOverlay.classList.add("active");
+          document.body.style.overflow = "hidden";
+        }
+
+        function closeMobileMenu() {
+          mobileMenu.classList.remove("active");
+          mobileMenuOverlay.classList.remove("active");
+          document.body.style.overflow = "";
+        }
+
+        hamburgerBtn.addEventListener("click", openMobileMenu);
+        mobileCloseBtn?.addEventListener("click", closeMobileMenu);
+        mobileMenuOverlay.addEventListener("click", closeMobileMenu);
+      });
+
     </script>
+    
   </body>
 </html>
