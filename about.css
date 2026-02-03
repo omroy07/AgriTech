@@ -557,3 +557,63 @@ html[data-theme="dark"] .footer {
     padding-left: 1.2rem;
   }
 }
+
+/* ===== Smooth Transitions ===== */
+* {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+button,
+a {
+  transition: all 0.3s ease;
+}
+/* --- Cursor Container --- */
+.circle-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;   /* VERY IMPORTANT */
+  z-index: 999999;        /* Keep above everything */
+}
+
+/* --- Individual Trail Circles --- */
+.cursor-circle {
+  position: fixed;       /* FIX: was absolute */
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ff8c00;
+  box-shadow: 0 0 15px rgba(255, 140, 0, 0.7);
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  mix-blend-mode: screen;
+  transition: transform 0.1s ease-out;
+}
+
+/* --- The Leading "Head" Circle --- */
+.cursor-circle:first-child {
+  width: 14px;
+  height: 14px;
+  background-color: #ffcc00;
+  box-shadow:
+    0 0 20px #ff8c00,
+    0 0 40px rgba(255, 140, 0, 0.5);
+}
+
+/* --- Interaction States --- */
+.cursor-clicking {
+  transform: translate(-50%, -50%) scale(2.5) !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 0 30px #ffffff !important;
+}
+
+.cursor-hovering {
+  transform: translate(-50%, -50%) scale(1.8);
+  background-color: #22c55e;
+  box-shadow: 0 0 20px #22c55e;
+}
