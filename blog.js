@@ -1,4 +1,76 @@
-// Simple Favorites Manager - Include it directly to ensure it loads
+/* =========================================
+   FAVORITES MANAGER
+   (Restored logic to make the Heart buttons work)
+   ========================================= */
+class FavoritesManager {
+    constructor() {
+        this.storageKey = 'agritech_favorite_blogs';
+        this.favorites = JSON.parse(localStorage.getItem(this.storageKey)) || [];
+        window.favoritesManager = this;
+    }
+
+    isFavorite(blogId) {
+        return this.favorites.some(blog => blog.id === blogId);
+    }
+
+    addToFavorites(blogData) {
+        if (this.isFavorite(blogData.id)) return false;
+
+        blogData.addedAt = new Date().toISOString();
+        this.favorites.push(blogData);
+        this.save();
+
+        this.showNotification(`Added to favorites: ${blogData.title}`, 'success');
+        this.dispatchEvent(blogData.id, true);
+        return true;
+    }
+
+    removeFromFavorites(blogId) {
+        this.favorites = this.favorites.filter(blog => blog.id !== blogId);
+        this.save();
+
+        this.showNotification('Removed from favorites', 'error');
+        this.dispatchEvent(blogId, false);
+        return true;
+    }
+
+    getFavorites() {
+        return this.favorites;
+    }
+
+    save() {
+        localStorage.setItem(this.storageKey, JSON.stringify(this.favorites));
+    }
+
+    dispatchEvent(blogId, isFavorite) {
+        const event = new CustomEvent('favoriteToggle', {
+            detail: { blogId, isFavorite }
+        });
+        document.dispatchEvent(event);
+    }
+
+    showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.textContent = message;
+
+        Object.assign(notification.style, {
+            position: 'fixed',
+            top: '20px',
+            right: '20px',
+            padding: '12px 20px',
+            borderRadius: '8px',
+            color: 'white',
+            fontWeight: '500',
+            zIndex: '10000',
+            background: type === 'success' ? '#2c5f2d' : '#e74c3c',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
+        });
+
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 3000);
+    }
+}
+
 if (!window.favoritesManager) {
     class FavoritesManager {
         constructor() {
@@ -209,7 +281,7 @@ const defaultBlogPosts = [
     },
 
     {
-        id: 5,
+        id: "5",
         title: "Agri-Market Trends: Wheat Prices Soar",
         category: "market-trends", // Matches the button data-category="market-trends"
         author: "Market Watch Team",
@@ -218,7 +290,7 @@ const defaultBlogPosts = [
         content: "The global wheat market is experiencing a significant upturn this quarter due to changing climate patterns in major export zones. Farmers in India are seeing a 15% increase in MSP..."
     },
     {
-        id: 6,
+        id: "6",
         title: "Starting an Organic Fertilizer Business",
         category: "business", // Matches the button data-category="business"
         author: "Amit Patel",
@@ -240,13 +312,21 @@ let currentCategory = 'all';
 let searchQuery = '';
 let currentModalPostId = null;
 
-// Initialize the blog
+// Wait for DOM and FavoritesManager to be ready
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('📄 Blog initialized');
-    displayPosts();
-    setupEventListeners();
-    updateFavoriteCounter();
+    // Slight delay to ensure FavoritesManager is attached
+    setTimeout(() => {
+        if (!window.favoritesManager) {
+            window.favoritesManager = new FavoritesManager();
+        }
+
+        displayPosts();
+        setupEventListeners();
+        updateFavoriteCounter();
+    }, 50);
 });
+
+
 
 // Setup event listeners
 function setupEventListeners() {
@@ -293,7 +373,8 @@ function setupEventListeners() {
             e.stopPropagation();
             const button = e.target.closest('.favorite-btn');
             const blogId = button.getAttribute('data-blog-id');
-            console.log('❤️ Favorite button clicked:', blogId);
+
+            // console.log('🎯 Favorite button clicked:', blogId);
             toggleFavorite(blogId);
         }
     });
@@ -382,7 +463,10 @@ function displayPosts() {
             <div class="card-content">
                 <span class="card-category">${post.category.replace('-', ' ')}</span>
                 <h3 class="card-title">${post.title}</h3>
-                <p class="card-description">${post.description}</p>
+
+                <p class="card-description">${post.description || ''}</p>
+    
+                <div class="card-footer">
                 <div class="card-meta">
                     <span class="card-author">By ${post.author}</span>
                     <span class="card-date">${post.date}</span>
@@ -393,8 +477,12 @@ function displayPosts() {
         blogGrid.appendChild(postElement);
     });
 
-    document.getElementById('loadMoreBtn').style.display =
-        endIndex >= filteredPosts.length ? 'none' : 'inline-block';
+    
+
+    if (loadMoreBtn) {
+        loadMoreBtn.style.display = 
+            (currentPage + 1) * postsPerPage >= filteredPosts.length ? 'none' : 'inline-block';
+    }
 }
 
 // Toggle favorite
@@ -408,7 +496,7 @@ function toggleFavorite(blogId) {
 
     const post = blogPosts.find(p => p.id === blogId);
     if (!post) {
-        console.error('❌ Post not found:', blogId);
+        // console.error('❌ Post not found:', blogId);
         return;
     }
 

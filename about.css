@@ -32,6 +32,8 @@ html[data-theme="dark"] {
 html,
 body {
   width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
   height: 100%;
 }
 
@@ -67,6 +69,7 @@ html[data-theme="dark"] body {
   position: sticky;
   top: 0;
   z-index: 100;
+  width: 100%;
 }
 
 .header-container {
@@ -76,6 +79,7 @@ html[data-theme="dark"] body {
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
+  width: 100%;
 }
 
 .header-left {
@@ -133,6 +137,13 @@ html[data-theme="dark"] body {
   transform: translateY(0);
 }
 
+.theme-toggle {
+  background: var(--light-green);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.5rem 1rem;
+}
+
 /* Theme Toggle Icons */
 .sun-icon,
 .moon-icon {
@@ -143,6 +154,94 @@ html[data-theme="dark"] body {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+/* Main content sections */
+main {
+  flex: 1;
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+section {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 30, 55, 0.95),
+    rgba(12, 20, 40, 0.95)
+  );
+  border-radius: 20px;
+  padding: 2.5rem;
+  margin: 2rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    0 1px 0 rgba(255, 255, 255, 0.04) inset;
+
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.45s ease,
+    border-color 0.45s ease;
+}
+
+section:hover {
+  transform: translateY(-10px) scale(1.04);
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.55),
+    0 10px 25px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(46, 204, 113, 0.45);
+  border-color: rgba(46, 204, 113, 0.6);
+}
+
+section::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(46, 204, 113, 0.35),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+
+section:hover::before {
+  opacity: 1;
+}
+
+/* Headings */
+h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  color: var(--primary-green);
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--secondary-green),
+    var(--accent-green)
+  );
+  border-radius: 2px;
+}
+
 }
 
 /* Hide moon icon in light mode, show sun */
@@ -200,6 +299,7 @@ html[data-theme="dark"] .sun-icon {
   max-width: 900px;
   margin: 0 auto;
   padding: 3rem 2rem;
+  width: 100%;
 }
 
 /* Hero Section */
@@ -338,6 +438,7 @@ html[data-theme="dark"] .link:hover {
   padding: 2rem;
   margin-top: 3rem;
   font-size: 0.95rem;
+  width: 100%;
 }
 
 html[data-theme="dark"] .footer {
@@ -468,4 +569,51 @@ html[data-theme="dark"] .footer {
 button,
 a {
   transition: all 0.3s ease;
+}
+/* --- Cursor Container --- */
+.circle-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;   /* VERY IMPORTANT */
+  z-index: 999999;        /* Keep above everything */
+}
+
+/* --- Individual Trail Circles --- */
+.cursor-circle {
+  position: fixed;       /* FIX: was absolute */
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ff8c00;
+  box-shadow: 0 0 15px rgba(255, 140, 0, 0.7);
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  mix-blend-mode: screen;
+  transition: transform 0.1s ease-out;
+}
+
+/* --- The Leading "Head" Circle --- */
+.cursor-circle:first-child {
+  width: 14px;
+  height: 14px;
+  background-color: #ffcc00;
+  box-shadow:
+    0 0 20px #ff8c00,
+    0 0 40px rgba(255, 140, 0, 0.5);
+}
+
+/* --- Interaction States --- */
+.cursor-clicking {
+  transform: translate(-50%, -50%) scale(2.5) !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 0 30px #ffffff !important;
+}
+
+.cursor-hovering {
+  transform: translate(-50%, -50%) scale(1.8);
+  background-color: #22c55e;
+  box-shadow: 0 0 20px #22c55e;
 }

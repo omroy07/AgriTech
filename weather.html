@@ -137,5 +137,47 @@
     </a>
     
     <script src="weather.js"></script>
+    
+    <!-- Voice Button Fix Script -->
+    <script>
+      // Fix voice button positioning after page loads
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          const voiceBtn = document.querySelector('.voice-btn');
+          const cityInput = document.getElementById('cityInput');
+          const searchContainer = document.querySelector('.search-container');
+          
+          if (voiceBtn && cityInput) {
+            // Force button inside the search container
+            voiceBtn.style.cssText = `
+              position: absolute !important;
+              right: 8px !important;
+              top: 50% !important;
+              transform: translateY(-50%) !important;
+              width: 30px !important;
+              height: 30px !important;
+              min-width: 30px !important;
+              min-height: 30px !important;
+              background: linear-gradient(135deg, #4caf50, #66bb6a) !important;
+              border: none !important;
+              border-radius: 50% !important;
+              z-index: 10 !important;
+              display: flex !important;
+              align-items: center !important;
+              justify-content: center !important;
+              cursor: pointer !important;
+              padding: 0 !important;
+              color: white !important;
+              font-size: 13px !important;
+            `;
+            
+            // Force input padding
+            cityInput.style.paddingRight = '45px';
+            
+            console.log('✓ Voice button positioned correctly');
+          }
+        }, 300);
+      });
+    </script>
   </body>
 </html>

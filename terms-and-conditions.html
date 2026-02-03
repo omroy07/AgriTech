@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AgriTech | Terms & Conditions</title>
+
+  <style>
+    :root {
+      --bg-color: #030712;
+      --text-color: #ffffff;
+      --text-muted: #cbd5e1;
+      --surface-color: rgba(15, 23, 42, 0.9);
+      --section-bg: rgba(30, 41, 59, 0.7);
+      --border-color: #334155;
+      --accent-color: #22c55e;
+    }
+
+    [data-theme="light"] {
+      --bg-color: #f8fafc;
+      --text-color: #0f172a;
+      --text-muted: #475569;
+      --surface-color: #ffffff;
+      --section-bg: #f1f5f9;
+      --border-color: #cbd5e1;
+      --accent-color: #16a34a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.7;
+    }
+
+    header {
+      padding: 1.2rem 2rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      color: var(--accent-color);
+      font-size: 1.6rem;
+    }
+
+    button {
+      background: var(--surface-color);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 2rem;
+    }
+
+    section {
+      background: var(--section-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    h2 {
+      color: var(--accent-color);
+      margin-bottom: 0.6rem;
+    }
+
+    p {
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      color: var(--text-muted);
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background: var(--accent-color);
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Terms & Conditions</h1>
+  <button onclick="toggleTheme()">Toggle Theme</button>
+</header>
+
+<main>
+
+  <section>
+    <p>
+      These Terms and Conditions govern the use of the <strong>AgriTech</strong>
+      website and services. By accessing or using this platform, you agree to
+      comply with these terms.
+    </p>
+  </section>
+
+  <section>
+    <h2>1. Use of the Platform</h2>
+    <p>
+      AgriTech is intended for educational and informational purposes related
+      to agriculture and smart farming technologies.
+    </p>
+    <ul>
+      <li>You agree not to misuse the platform or its services</li>
+      <li>You must not attempt to disrupt or harm the system</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>2. User Responsibilities</h2>
+    <ul>
+      <li>Users are responsible for the accuracy of the information they provide</li>
+      <li>Uploaded images or data should not violate any laws or rights</li>
+      <li>Users must respect community guidelines and other contributors</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>3. Intellectual Property</h2>
+    <p>
+      All content, code, and materials available on AgriTech are protected by
+      applicable intellectual property laws unless stated otherwise.
+    </p>
+  </section>
+
+  <section>
+    <h2>4. Limitation of Liability</h2>
+    <p>
+      AgriTech is provided "as is" without warranties of any kind.
+      We are not responsible for any losses or damages resulting from the use
+      of the platform.
+    </p>
+  </section>
+
+  <section>
+    <h2>5. Third-Party Services</h2>
+    <p>
+      The platform may use third-party services such as APIs or cloud providers.
+      AgriTech is not responsible for the content or policies of these services.
+    </p>
+  </section>
+
+  <section>
+    <h2>6. Changes to Terms</h2>
+    <p>
+      These Terms and Conditions may be updated from time to time.
+      Continued use of the platform implies acceptance of the updated terms.
+    </p>
+  </section>
+
+  <section>
+    <h2>7. Contact Information</h2>
+    <p>
+      If you have any questions regarding these Terms and Conditions, please
+      contact us at:<br>
+      <strong>agritech.opensource@gmail.com</strong>
+    </p>
+  </section>
+
+  <!-- Back to Home -->
+  <section style="text-align: center;">
+    <a href="../index.html" class="back-btn">← Back to Homepage</a>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 AgriTech · All rights reserved 🌱
+</footer>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    html.setAttribute(
+      "data-theme",
+      html.getAttribute("data-theme") === "dark" ? "light" : "dark"
+    );
+  }
+</script>
+
+</body>
+</html>

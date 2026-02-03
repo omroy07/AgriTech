@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="icon" type="image/png" href="images/logo.png" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="description"
@@ -10,12 +10,37 @@
   <title>AgriTech - Revolutionizing Agriculture with Technology</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="stylesheet" href="styles/switcher.css"> 
+  <link rel="stylesheet" href="styles/switcher.css" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link
     href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
     rel="stylesheet" />
+  <script>
+    // services dropdown
+    document.addEventListener("DOMContentLoaded", () => {
+      const container = document.querySelector(".services-toggle-container");
+      const toggle = container.querySelector(".services-toggle");
+      const dropdown = container.querySelector(".services-dropdown");
+      const arrow = container.querySelector(".services-arrow");
+
+      toggle.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropdown.classList.toggle("active");
+        arrow.classList.toggle("rotated");
+      });
+
+      // Close dropdown if clicking outside
+      document.addEventListener("click", (e) => {
+        if (!container.contains(e.target)) {
+          dropdown.classList.remove("active");
+          arrow.classList.remove("rotated");
+        }
+      });
+    });
+  </script>
+
   <style>
     /* 1. DEFINE VARIABLES FOR THEMES */
     :root {
@@ -67,13 +92,15 @@
 
     body {
       background-color: var(--bg-color);
-      font-family: 'Open Sans', sans-serif;
+      font-family: "Open Sans", sans-serif;
       color: var(--text-color);
       line-height: 1.6;
       overflow-x: hidden;
       touch-action: pan-y;
       -ms-touch-action: pan-y;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
     }
 
     #bg-canvas {
@@ -86,7 +113,7 @@
     }
 
     .serif {
-      font-family: 'Libertinus Serif', serif;
+      font-family: "Libertinus Serif", serif;
     }
 
     /* 3. NAVBAR STYLES */
@@ -98,7 +125,9 @@
       backdrop-filter: blur(10px);
       padding: 1rem;
       border-bottom: 1px solid var(--border-color);
-      transition: background 0.3s ease, border-color 0.3s ease;
+      transition:
+        background 0.3s ease,
+        border-color 0.3s ease;
     }
 
     .navbar-content {
@@ -339,12 +368,59 @@
       z-index: 1000;
       box-shadow: 0 4px 12px var(--shadow-color);
     }
+      .theme-text {
+        font-size: 0.85rem;
+      }
+      /* ====================================
+        Language Select (Top Bar)
+        ==================================== */
 
+      .language-select {
+        padding: 8px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--border-color);
+        background: var(--surface-color);
+        color: var(--text-color);
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: 0 2px 8px var(--shadow-color);
+        transition: all 0.25s ease;
+        outline: none;
+      }
+      .language-label {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-right: 6px;
+      }
+
+      /* Hover */
+      .language-select:hover {
+        border-color: var(--accent-color);
+        background: rgba(34, 197, 94, 0.1);
+        transform: translateY(-1px);
+      }
+
+      /* Focus */
+      .language-select:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+      }
+
+     
+      /* Mobile */
+      @media (max-width: 600px) {
+        .language-select {
+          width: 100%;
+          margin-top: 6px;
+        }
+      }
     .lang-dropdown.active {
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
     }
+
 
     .lang-option {
       display: block;
@@ -533,7 +609,6 @@
       border-top: 1px solid var(--border-color);
     }
 
-
     .footer-top-accent {
       height: 4px;
       background: linear-gradient(90deg, #16a34a, #22c55e);
@@ -644,6 +719,7 @@
 
     /* FLOATING BUTTONS */
     #chatbotBtn,
+    #spatialBtn,
     .scroll-btn {
       position: fixed;
       right: 20px;
@@ -662,8 +738,18 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
+    #spatialBtn {
+      bottom: 140px;
+      background: #6366f1;
+    }
+
     #chatbotBtn {
       bottom: 80px;
+    }
+
+    #spatialBtn:hover {
+      transform: scale(1.1);
+      background: #4f46e5;
     }
 
     #chatbotBtn:hover,
@@ -764,7 +850,6 @@
         z-index: 1002;
       }
 
-
       /* ===== ENHANCED MOBILE CLOSE BUTTON - FIXED POSITION ===== */
       .mobile-close-btn {
         background: transparent;
@@ -794,14 +879,18 @@
 
       /* Animated X icon */
       .mobile-close-btn i {
-        transition: transform 0.3s ease, color 0.3s ease;
+        transition:
+          transform 0.3s ease,
+          color 0.3s ease;
         font-size: 1rem;
         /* और छोटा icon */
       }
 
       /* Hover effects */
       .mobile-close-btn:hover {
-        background: linear-gradient(135deg, var(--accent-color), rgba(34, 197, 94, 0.2));
+        background: linear-gradient(135deg,
+            var(--accent-color),
+            rgba(34, 197, 94, 0.2));
         transform: rotate(90deg) scale(1.05);
         box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
       }
@@ -838,7 +927,7 @@
 
       /* Tooltip for desktop hover */
       .mobile-close-btn::before {
-        content: 'Close';
+        content: "Close";
         position: absolute;
         bottom: -28px;
         left: 50%;
@@ -866,7 +955,7 @@
 
       /* Arrow pointing to button */
       .mobile-close-btn::after {
-        content: '';
+        content: "";
         position: absolute;
         top: -5px;
         left: 50%;
@@ -907,7 +996,9 @@
         }
 
         .mobile-close-btn:active {
-          background: linear-gradient(135deg, var(--accent-color), rgba(34, 197, 94, 0.4));
+          background: linear-gradient(135deg,
+              var(--accent-color),
+              rgba(34, 197, 94, 0.4));
           transform: scale(0.9);
         }
 
@@ -930,7 +1021,9 @@
       }
 
       [data-theme="dark"] .mobile-close-btn:hover {
-        background: linear-gradient(135deg, var(--accent-color), rgba(34, 197, 94, 0.4));
+        background: linear-gradient(135deg,
+            var(--accent-color),
+            rgba(34, 197, 94, 0.4));
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
       }
 
@@ -941,7 +1034,9 @@
       }
 
       [data-theme="light"] .mobile-close-btn:hover {
-        background: linear-gradient(135deg, var(--accent-color), rgba(34, 197, 94, 0.2));
+        background: linear-gradient(135deg,
+            var(--accent-color),
+            rgba(34, 197, 94, 0.2));
         box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
       }
 
@@ -1188,10 +1283,15 @@
       }
 
       #chatbotBtn,
+      #spatialBtn,
       .scroll-btn {
         width: 45px;
         height: 45px;
         right: 15px;
+      }
+
+      #spatialBtn {
+        bottom: 125px;
       }
 
       #chatbotBtn {
@@ -1277,16 +1377,15 @@
 
     @keyframes pulse {
       from {
-        box-shadow: 0 0 6px rgba(34, 197, 94, .5);
+        box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
       }
 
       to {
-        box-shadow: 0 0 14px rgba(34, 197, 94, .9);
+        box-shadow: 0 0 14px rgba(34, 197, 94, 0.9);
       }
     }
 
     /* 🔥 FORCE CLOSE BUTTON TO BE CLICKABLE */
-
 
     /* Ensure menu captures touches correctly */
     .mobile-menu {
@@ -1309,14 +1408,19 @@
     }
 
     .feature-card {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.00));
+      background: linear-gradient(180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0));
       border: 1px solid rgba(255, 255, 255, 0.04);
       border-radius: 16px;
       padding: 1.25rem;
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
-      transition: transform 0.28s cubic-bezier(.2, .9, .3, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+      transition:
+        transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1),
+        box-shadow 0.28s ease,
+        border-color 0.28s ease;
       min-height: 220px;
       backdrop-filter: blur(6px) saturate(110%);
     }
@@ -1341,10 +1445,14 @@
       display: grid;
       place-items: center;
       border-radius: 12px;
-      background: linear-gradient(180deg, rgba(34, 197, 94, 0.14), rgba(22, 163, 74, 0.06));
+      background: linear-gradient(180deg,
+          rgba(34, 197, 94, 0.14),
+          rgba(22, 163, 74, 0.06));
       color: var(--accent-color);
       box-shadow: 0 10px 24px rgba(16, 185, 129, 0.06);
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
     }
 
     .feature-card:hover .feature-icon {
@@ -1384,7 +1492,10 @@
       padding: 0.5rem 0.85rem;
       border-radius: 10px;
       box-shadow: 0 8px 18px rgba(22, 163, 74, 0.12);
-      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+      transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        opacity 0.18s ease;
     }
 
     .feature-card .btn.btn-secondary:hover,
@@ -1423,7 +1534,6 @@
       }
     }
 
-
     .search-highlight {
       background: linear-gradient(90deg, #22c55e, #16a34a);
       color: #fff;
@@ -1452,18 +1562,18 @@
 
     @keyframes pulse {
       from {
-        box-shadow: 0 0 6px rgba(34, 197, 94, .5);
+        box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
       }
 
       to {
-        box-shadow: 0 0 14px rgba(34, 197, 94, .9);
+        box-shadow: 0 0 14px rgba(34, 197, 94, 0.9);
       }
     }
 
     /* ============================================
        NEW: PROFIT & LOSS SECTION STYLES
        ============================================ */
-    
+
     .profit-loss-section {
       position: relative;
       z-index: 1;
@@ -1525,7 +1635,9 @@
       display: flex;
       align-items: center;
       gap: 1rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
     }
 
     .pl-card:hover {
@@ -1664,26 +1776,161 @@
         padding: 0.4rem 0.6rem;
       }
     }
-    
+
+    /* --- Cursor Trail --- */
+    .circle-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999999;
+    }
+
+    .cursor-circle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #ff8c00;
+      box-shadow: 0 0 15px rgba(255, 140, 0, 0.7);
+      transform: translate(-50%, -50%);
+      will-change: transform;
+      mix-blend-mode: screen;
+    }
+
+    .cursor-circle:first-child {
+      width: 14px;
+      height: 14px;
+      background-color: #ffcc00;
+      box-shadow:
+        0 0 20px #ff8c00,
+        0 0 40px rgba(255, 140, 0, 0.5);
+    }
+
+    .cursor-clicking {
+      transform: translate(-50%, -50%) scale(2.5);
+    }
+
+    .cursor-hovering {
+      transform: translate(-50%, -50%) scale(1.8);
+    }
+
+    /* Hide dropdown by default */
+    .services-dropdown {
+      display: none;
+      position: absolute;
+      background: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      margin-top: 5px;
+      border-radius: 5px;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      /* for smooth effect */
+    }
+
+    /* Show dropdown when active */
+    .services-dropdown.active {
+      display: block;
+    }
+
+    /* Rotate arrow when active */
+    .services-arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .services-arrow.rotated {
+      transform: rotate(180deg);
+    }
+
+    /* Optional: style list items */
+    .services-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .services-list li a {
+      display: block;
+      padding: 10px 20px;
+      color: #333;
+      text-decoration: none;
+    }
+
+    .services-list li a:hover {
+      background-color: #f0f0f0;
+      color: #000;
+    }
+
+    /* Make sure the container is relative */
+    .services-toggle-container {
+      position: relative;
+    }
+
+    <div style="padding: 10px; text-align: right">
+      <label for="languageSelect" class="language-label">Language:</label>
+      <select id="languageSelect" class="language-select">
+        <option value="en">English</option>
+        <option value="te">తెలుగు</option>
+        <option value="hi">हिन्दी</option>
+        <option value="ta">தமிழ்</option>
+      </select>
+    </div>
+
+    /* Show dropdown when active */
+    .services-dropdown.active {
+      display: block;
+    }
+
+    /* Rotate arrow */
+    .services-arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .services-arrow.rotated {
+      transform: rotate(180deg);
+    }
+
+    /* Style the list items */
+    .services-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .services-list li a {
+      display: block;
+      padding: 10px 15px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .services-list li a:hover {
+      background: #f0f0f0;
+      color: #000;
+    }
   </style>
 </head>
 
 <body>
-  <div style="padding:10px; text-align:right;">
-  <label for="languageSelect">Language:</label>
-  <select id="languageSelect">
-    <option value="en">English</option>
-    <option value="te">తెలుగు</option>
-    <option value="hi">हिन्दी</option>
-    <option value="ta">தமிழ்</option>
-  </select>
-</div>
+  <div class="circle-container" id="cursorTrail">
+    <div class="cursor-circle"></div>
+    <div class="cursor-circle"></div>
+    <div class="cursor-circle"></div>
+    <div class="cursor-circle"></div>
+    <div class="cursor-circle"></div>
+  </div>
 
+  <div style="padding: 10px; text-align: right">
+    <label for="languageSelect">Language:</label>
+    <select id="languageSelect">
+      <option value="en">English</option>
+      <option value="te">తెలుగు</option>
+      <option value="hi">हिन्दी</option>
+      <option value="ta">தமிழ்</option>
+    </select>
+  </div>
 
   <!-- Offline & Cached Notices -->
-  <div id="network-status" class="hidden">
-    ⚠️ Offline or poor connection
-  </div>
+  <div id="network-status" class="hidden">⚠️ Offline or poor connection</div>
 
   <div id="cached-notice" class="hidden">
     ⚠️ Showing cached data — may be outdated
@@ -1691,144 +1938,209 @@
 
   <!-- rest of your page starts here -->
 
-
-
-
-
   <canvas id="bg-canvas"></canvas>
 
- <nav class="navbar">
-  <div class="navbar-content">
-
-    <!-- Brand -->
-    <div class="brand">
-      <img src="images/logo.png" alt="AgriTech logo">
-      <a href="#">AgriTech</a>
-    </div>
-
-    <!-- Hamburger Button -->
-    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
-      <div class="hamburger-icon">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
+  <nav class="navbar">
+    <div class="navbar-content">
+      <!-- Brand -->
+      <div class="brand">
+        <img src="images/logo.png" alt="AgriTech logo" />
+        <a href="#">AgriTech</a>
       </div>
-    </button>
 
-    <!-- Left Nav Links -->
-    <div class="left-nav">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="about.html" class="nav-link">About</a>
-      <a href="blog.html" class="nav-link">Blog</a>
-      <a href="news.html" class="nav-link">Ag News</a>
-      <a href="scheme.html" class="nav-link">Schemes</a>
-      <a href="community_forum.html" class="nav-link">Community Forum</a>
-      <!-- Services Dropdown -->
-      <div class="services-toggle-container">
-        <a href="#" class="nav-link services-toggle">
-          Services <i class="fas fa-chevron-down services-arrow"></i>
-        </a>
-        <div class="services-dropdown">
-          <ul class="services-list">
-            <li><a href="crop.html"><i class="fas fa-seedling"></i> Smart Crop Monitoring</a></li>
-            <li><a href="supply-chain.html"><i class="fas fa-truck"></i> Supply Chain Support</a></li>
-            <li><a href="sustainable-farming.html"><i class="fas fa-leaf"></i> Sustainable Farming Guidance</a></li>
-            <li><a href="marketplace.html"><i class="fas fa-store"></i> Marketplace Services</a></li>
-            <li><a href="financial-support.html"><i class="fas fa-dollar-sign"></i> Financial & Insurance Support</a></li>
-          </ul>
+      <!-- Hamburger Button -->
+      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+        <div class="hamburger-icon">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
         </div>
-      </div>
-    </div>
-
-    <!-- Right Nav Buttons -->
-    <div class="nav-buttons">
-      <!-- Search -->
-      <div class="search-container">
-        <input type="text" placeholder="Search..." class="search-input" autocomplete="off" />
-        <button class="search-button"><i class="fas fa-search"></i></button>
-      </div>
-
-      <!-- Language Selector -->
-      <div class="lang-container">
-        <button class="lang-btn">
-          <i class="fas fa-globe"></i>
-          <span class="selected-lang" id="current-lang-text">English</span>
-        </button>
-        <div class="lang-dropdown">
-          <div class="lang-option" onclick="setLanguage('en','English')">English</div>
-          <div class="lang-option" onclick="setLanguage('hi','हिन्दी')">हिन्दी</div>
-          <div class="lang-option" onclick="setLanguage('bn','বাংলা')">বাংলা</div>
-          <div class="lang-option" onclick="setLanguage('te','తెలుగు')">తెలుగు</div>
-          <div class="lang-option" onclick="setLanguage('mr','मराठी')">मराठी</div>
-          <div class="lang-option" onclick="setLanguage('ta','தமிழ்')">தமிழ்</div>
-          <div class="lang-option" onclick="setLanguage('gu','ગુજરાતી')">ગુજરાતી</div>
-          <div class="lang-option" onclick="setLanguage('kn','ಕನ್ನಡ')">ಕನ್ನಡ</div>
-          <div class="lang-option" onclick="setLanguage('ml','മലയാളം')">മലയാളം</div>
-          <div class="lang-option" onclick="setLanguage('pa','ਪੰਜਾਬੀ')">ਪੰਜਾਬੀ</div>
-        </div>
-      </div>
-
-      <!-- Theme Toggle -->
-      <button class="theme-toggle btn" onclick="toggleTheme()">
-        <i class="fas fa-moon"></i>
-        <span class="theme-text">Light</span>
       </button>
 
-      <a href="login.html" class="btn btn-secondary" data-i18n="login">Login</a>
-      <a href="faq.html" class="btn btn-secondary" data-i18n="faq">FAQ</a>
-      
-      <!-- Notification Dropdown -->
-      <div class="notification-container" style="position: relative; display: inline-block;">
-        <button class="btn btn-secondary" onclick="document.getElementById('notification-dropdown').classList.toggle('active')">
-          <i class="fas fa-bell"></i>
-          <span id="notification-badge" style="position: absolute; top: -5px; right: -5px; background: #ef4444; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; min-width: 18px; text-align: center; border: 2px solid var(--bg-color); display: none;">0</span>
-        </button>
-        <div id="notification-dropdown" class="services-dropdown" style="right: 0; left: auto; top: 100%; width: 320px; max-height: 450px; overflow-y: auto; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
-          <div style="padding: 12px; border-bottom: 1px solid var(--border-color); font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
-            <span>Notifications</span>
-            <span class="text-xs text-blue-500 cursor-pointer" onclick="markAllAsRead()">Mark all as read</span>
-          </div>
-          <div id="notification-list">
-            <div style="padding: 20px; text-align: center; color: var(--text-muted);">No new notifications</div>
+      <!-- Left Nav Links -->
+      <div class="left-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="news.html" class="nav-link">Ag News</a>
+        <a href="scheme.html" class="nav-link">Schemes</a>
+        <a href="community_forum.html" class="nav-link">Community Forum</a>
+        <!-- Services Dropdown -->
+        <div class="services-toggle-container">
+          <a href="#" class="nav-link services-toggle">
+            Services <i class="fas fa-chevron-down services-arrow"></i>
+          </a>
+          <div class="services-dropdown">
+            <ul class="services-list">
+              <li>
+                <a href="crop.html"><i class="fas fa-seedling"></i> Smart Crop Monitoring</a>
+              </li>
+              <li>
+                <a href="supply-chain.html"><i class="fas fa-truck"></i> Supply Chain Support</a>
+              </li>
+              <li>
+                <a href="sustainable-farming.html"><i class="fas fa-leaf"></i> Sustainable Farming Guidance</a>
+              </li>
+              <li>
+                <a href="marketplace.html"><i class="fas fa-store"></i> Marketplace Services</a>
+              </li>
+              <li>
+                <a href="financial-support.html"><i class="fas fa-dollar-sign"></i> Financial & Insurance
+                  Support</a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
 
-      <a href="register.html" class="btn btn-primary" data-i18n="register">Register</a>
+      <!-- Right Nav Buttons -->
+      <div class="nav-buttons">
+        <!-- Search -->
+        <div class="search-container">
+          <input type="text" placeholder="Search..." class="search-input" autocomplete="off" />
+          <button class="search-button"><i class="fas fa-search"></i></button>
+        </div>
+
+        <!-- Language Selector -->
+        <div class="lang-container">
+          <button class="lang-btn">
+            <i class="fas fa-globe"></i>
+            <span class="selected-lang" id="current-lang-text">English</span>
+          </button>
+          <div class="lang-dropdown">
+            <div class="lang-option" onclick="setLanguage('en', 'English')">
+              English
+            </div>
+            <div class="lang-option" onclick="setLanguage('hi', 'हिन्दी')">
+              हिन्दी
+            </div>
+            <div class="lang-option" onclick="setLanguage('bn', 'বাংলা')">
+              বাংলা
+            </div>
+            <div class="lang-option" onclick="setLanguage('te', 'తెలుగు')">
+              తెలుగు
+            </div>
+            <div class="lang-option" onclick="setLanguage('mr', 'मराठी')">
+              मराठी
+            </div>
+            <div class="lang-option" onclick="setLanguage('ta', 'தமிழ்')">
+              தமிழ்
+            </div>
+            <div class="lang-option" onclick="setLanguage('gu', 'ગુજરાતી')">
+              ગુજરાતી
+            </div>
+            <div class="lang-option" onclick="setLanguage('kn', 'ಕನ್ನಡ')">
+              ಕನ್ನಡ
+            </div>
+            <div class="lang-option" onclick="setLanguage('ml', 'മലയാളം')">
+              മലയാളം
+            </div>
+            <div class="lang-option" onclick="setLanguage('pa', 'ਪੰਜਾਬੀ')">
+              ਪੰਜਾਬੀ
+            </div>
+          </div>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button class="theme-toggle btn" onclick="toggleTheme()">
+          <i class="fas fa-moon"></i>
+          <span class="theme-text">Light</span>
+        </button>
+
+        <a href="login.html" class="btn btn-secondary" data-i18n="login">Login</a>
+        <a href="faq.html" class="btn btn-secondary" data-i18n="faq">FAQ</a>
+
+        <!-- Notification Dropdown -->
+        <div class="notification-container" style="position: relative; display: inline-block">
+          <button class="btn btn-secondary" onclick="
+                document
+                  .getElementById('notification-dropdown')
+                  .classList.toggle('active')
+              ">
+            <i class="fas fa-bell"></i>
+            <span id="notification-badge" style="
+                  position: absolute;
+                  top: -5px;
+                  right: -5px;
+                  background: #ef4444;
+                  color: white;
+                  border-radius: 50%;
+                  padding: 2px 6px;
+                  font-size: 10px;
+                  min-width: 18px;
+                  text-align: center;
+                  border: 2px solid var(--bg-color);
+                  display: none;
+                ">0</span>
+          </button>
+          <div id="notification-dropdown" class="services-dropdown" style="
+                right: 0;
+                left: auto;
+                top: 100%;
+                width: 320px;
+                max-height: 450px;
+                overflow-y: auto;
+                background: var(--surface-color);
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+              ">
+            <div style="
+                  padding: 12px;
+                  border-bottom: 1px solid var(--border-color);
+                  font-weight: bold;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                ">
+              <span>Notifications</span>
+              <span class="text-xs text-blue-500 cursor-pointer" onclick="markAllAsRead()">Mark all as read</span>
+            </div>
+            <div id="notification-list">
+              <div style="
+                    padding: 20px;
+                    text-align: center;
+                    color: var(--text-muted);
+                  ">
+                No new notifications
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="register.html" class="btn btn-primary" data-i18n="register">Register</a>
+      </div>
     </div>
+  </nav>
 
-  </div>
-</nav>
+  <script>
+    // Language Selector Function
+    function setLanguage(code, label) {
+      document.getElementById("current-lang-text").innerText = label;
 
-<script>
-  // Language Selector Function
-  function setLanguage(code, label) {
-    document.getElementById('current-lang-text').innerText = label;
-
-    // Call platform language function if exists
-    if (window.platformLanguageChange) {
-      window.platformLanguageChange(code);
-    } else if (window.languagePlatformChange) {
-      window.languagePlatformChange(code);
-    } else {
-      console.log("Language function not defined. Selected:", code);
+      // Call platform language function if exists
+      if (window.platformLanguageChange) {
+        window.platformLanguageChange(code);
+      } else if (window.languagePlatformChange) {
+        window.languagePlatformChange(code);
+      } else {
+        console.log("Language function not defined. Selected:", code);
+      }
     }
-  }
 
-  // Theme Toggle Function
-  function toggleTheme() {
-    const navbar = document.querySelector('.navbar');
-    const themeText = document.querySelector('.theme-text');
-    if(navbar.getAttribute('data-theme') === 'light') {
-      navbar.setAttribute('data-theme','dark');
-      themeText.innerText = 'Dark';
-    } else {
-      navbar.setAttribute('data-theme','light');
-      themeText.innerText = 'Light';
+    // Theme Toggle Function
+    function toggleTheme() {
+      const navbar = document.querySelector(".navbar");
+      const themeText = document.querySelector(".theme-text");
+      if (navbar.getAttribute("data-theme") === "light") {
+        navbar.setAttribute("data-theme", "dark");
+        themeText.innerText = "Dark";
+      } else {
+        navbar.setAttribute("data-theme", "light");
+        themeText.innerText = "Light";
+      }
     }
-  }
-</script>
-
+  </script>
 
   <!-- Mobile Menu Overlay -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
@@ -1837,10 +2149,12 @@
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
       <button class="mobile-close-btn" type="button" aria-label="Close menu" onclick="
-          document.getElementById('mobileMenu').classList.remove('active');
-          document.getElementById('mobileMenuOverlay').classList.remove('active');
-          document.body.style.overflow='';
-        ">
+            document.getElementById('mobileMenu').classList.remove('active');
+            document
+              .getElementById('mobileMenuOverlay')
+              .classList.remove('active');
+            document.body.style.overflow = '';
+          ">
         <i class="fas fa-times"></i>
       </button>
     </div>
@@ -1855,7 +2169,7 @@
 
       <div class="mobile-buttons">
         <button class="mobile-theme-toggle btn" id="mobileThemeToggle" aria-label="Toggle theme">
-          <i class="fas fa-sun mobile-sun-icon" style="display: none;"></i>
+          <i class="fas fa-sun mobile-sun-icon" style="display: none"></i>
           <i class="fas fa-moon mobile-moon-icon"></i>
           <span class="mobile-theme-text">Dark Mode</span>
         </button>
@@ -1945,69 +2259,104 @@
 
   <section class="hero">
     <div class="hero-content">
-      <h2 class="serif" data-i18n="hero_title">Empowering Agriculture Through Technology</h2>
-      <p data-i18n="hero_desc">AgriTech connects <strong>Farmers</strong>, <strong>Buyers</strong>,
-        <strong>Equipment Suppliers</strong>, and <strong>Grocery Sellers</strong>
-        to revolutionize India's agricultural ecosystem through smart solutions and seamless collaboration.
+      <h2 class="serif" data-i18n="hero_title">
+        Empowering Agriculture Through Technology
+      </h2>
+      <p data-i18n="hero_desc">
+        AgriTech connects <strong>Farmers</strong>, <strong>Buyers</strong>,
+        <strong>Equipment Suppliers</strong>, and
+        <strong>Grocery Sellers</strong>
+        to revolutionize India's agricultural ecosystem through smart
+        solutions and seamless collaboration.
       </p>
     </div>
   </section>
 
   <section class="features">
-    <div class="features-container" >
-      <h2 class="features-title serif" data-i18n="benefits_title">Our Platform Benefits</h2>
-      <p class="feature-intro" data-i18n="benefits_desc">AgriTech brings tailored tools and services to every stakeholder in the agricultural
-        value chain. Explore targeted benefits below and follow the quick links to learn more.</p>
+    <div class="features-container">
+      <h2 class="features-title serif" data-i18n="benefits_title">
+        Our Platform Benefits
+      </h2>
+      <p class="feature-intro" data-i18n="benefits_desc">
+        AgriTech brings tailored tools and services to every stakeholder in
+        the agricultural value chain. Explore targeted benefits below and
+        follow the quick links to learn more.
+      </p>
 
       <div class="features-grid" data-i18n="features_list">
         <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-1-title">
           <div class="feature-icon" aria-hidden="true">🌱</div>
-          <h3 id="feature-1-title" data-i18n="feature_farmers" class="feature-title serif">Farmers</h3>
-          <p class="feature-description">Real-time crop monitoring, weather alerts, and direct-market access to get fair
-            prices for your harvest.</p>
-          <a class="btn btn-secondary" href="crop.html" data-i18n="crop_monitoring" aria-label="Learn more about crop monitoring">Learn more</a>
+          <h3 id="feature-1-title" data-i18n="feature_farmers" class="feature-title serif">
+            Farmers
+          </h3>
+          <p class="feature-description">
+            Real-time crop monitoring, weather alerts, and direct-market
+            access to get fair prices for your harvest.
+          </p>
+          <a class="btn btn-secondary" href="crop.html" data-i18n="crop_monitoring"
+            aria-label="Learn more about crop monitoring">Learn more</a>
         </article>
 
         <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-2-title">
           <div class="feature-icon" aria-hidden="true">🏪</div>
-          <h3 id="feature-2-title" class="feature-title serif">Buyers & Retailers</h3>
-          <p class="feature-description">Source verified produce directly from farmers, schedule deliveries, and manage
-            bulk orders with ease.</p>
-          <a class="btn btn-secondary" href="marketplace.html" data-i18n="marketplace" aria-label="Browse the marketplace">Browse
-            marketplace</a>
+          <h3 id="feature-2-title" class="feature-title serif">
+            Buyers & Retailers
+          </h3>
+          <p class="feature-description">
+            Source verified produce directly from farmers, schedule
+            deliveries, and manage bulk orders with ease.
+          </p>
+          <a class="btn btn-secondary" href="marketplace.html" data-i18n="marketplace"
+            aria-label="Browse the marketplace">Browse marketplace</a>
         </article>
 
         <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-3-title">
           <div class="feature-icon" aria-hidden="true">🚜</div>
-          <h3 id="feature-3-title" class="feature-title serif">Equipment Suppliers</h3>
-          <p class="feature-description">List equipment, offer rentals, and connect with nearby farmers who need modern
-            machinery.</p>
-          <a class="btn btn-secondary" href="marketplace.html" data-i18n="marketplace" aria-label="List equipment on the marketplace">List
-            equipment</a>
+          <h3 id="feature-3-title" class="feature-title serif">
+            Equipment Suppliers
+          </h3>
+          <p class="feature-description">
+            List equipment, offer rentals, and connect with nearby farmers who
+            need modern machinery.
+          </p>
+          <a class="btn btn-secondary" href="equipments.html" data-i18n="marketplace"
+            aria-label="List equipment on the marketplace">List equipment</a>
         </article>
 
         <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-4-title">
           <div class="feature-icon" aria-hidden="true">🛒</div>
-          <h3 id="feature-4-title" class="feature-title serif">Grocery Sellers</h3>
-          <p class="feature-description">Integrate reliable suppliers into your supply chain and receive consistent
-            quality produce on schedule.</p>
+          <h3 id="feature-4-title" class="feature-title serif">
+            Grocery Sellers
+          </h3>
+          <p class="feature-description">
+            Integrate reliable suppliers into your supply chain and receive
+            consistent quality produce on schedule.
+          </p>
           <a class="btn btn-secondary" href="marketplace.html" aria-label="Partner with suppliers">Partner with
             suppliers</a>
         </article>
 
         <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-5-title">
           <div class="feature-icon" aria-hidden="true">🧑‍🌾</div>
-          <h3 id="feature-5-title" class="feature-title serif">Agronomists & Advisors</h3>
-          <p class="feature-description">Share expertise, provide remote diagnostic services, and recommend data-driven
-            treatments to improve yields.</p>
+          <h3 id="feature-5-title" class="feature-title serif">
+            Agronomists & Advisors
+          </h3>
+          <p class="feature-description">
+            Share expertise, provide remote diagnostic services, and recommend
+            data-driven treatments to improve yields.
+          </p>
           <a class="btn btn-secondary" href="chat.html" aria-label="Offer advisory services">Offer services</a>
         </article>
 
         <article class="feature-card" role="article" tabindex="0" aria-labelledby="feature-6-title">
           <div class="feature-icon" aria-hidden="true">💰</div>
-          <h3 id="feature-6-title" class="feature-title serif">Finance & Insurance</h3>
-          <p class="feature-description">Access loan options, crop insurance, and financial tools designed for seasonal
-            agriculture cashflows.</p>
+          <h3 id="feature-6-title" class="feature-title serif">
+            Finance & Insurance
+          </h3>
+          <p class="feature-description">
+            Access loan options, crop insurance, and financial tools designed
+            for seasonal agriculture cashflows.
+          </p>
           <a class="btn btn-secondary" href="financial-support.html" aria-label="Get financial support">Get support</a>
         </article>
       </div>
@@ -2016,56 +2365,157 @@
 
   <!-- My Activity Section: Single User Profile with Service Usage Graph -->
   <section class="activity" id="my-activity" aria-label="My Activity">
-    <div class="activity-container" style="max-width:1400px;margin:2rem auto;padding:1.5rem;background:var(--surface-color);border:1px solid var(--border-color);border-radius:12px;">
+    <div class="activity-container" style="
+          max-width: 1400px;
+          margin: 2rem auto;
+          padding: 1.5rem;
+          background: var(--surface-color);
+          border: 1px solid var(--border-color);
+          border-radius: 12px;
+        ">
       <h2 class="features-title serif">My Activity</h2>
-      <p class="feature-intro">Track your purchases, sales, and tool usage on AgriTech.</p>
-      
+      <p class="feature-intro">
+        Track your purchases, sales, and tool usage on AgriTech.
+      </p>
+
       <!-- User Selector -->
-      <div style="margin-bottom:1.5rem;display:flex;gap:1rem;align-items:center;">
-        <label for="userSelector" style="color:var(--text-color);font-weight:500;">Select User:</label>
-        <select id="userSelector" class="btn" style="padding:0.5rem 0.85rem;border:1px solid var(--border-color);background:var(--input-bg);color:var(--text-color);cursor:pointer;border-radius:8px;">
+      <div style="
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+          ">
+        <label for="userSelector" style="color: var(--text-color); font-weight: 500">Select User:</label>
+        <select id="userSelector" class="btn" style="
+              padding: 0.5rem 0.85rem;
+              border: 1px solid var(--border-color);
+              background: var(--input-bg);
+              color: var(--text-color);
+              cursor: pointer;
+              border-radius: 8px;
+            ">
           <option value="">Choose a user...</option>
         </select>
-        <div style="flex:1"></div>
+        <div style="flex: 1"></div>
         <button class="btn btn-secondary" id="clearUserDataBtn">Clear</button>
         <button class="btn btn-primary" id="exportUserDataBtn">Export</button>
       </div>
 
       <!-- User Profile & Stats -->
-      <div id="profileSection" style="display:none;margin-bottom:1.5rem;padding:1rem;background:var(--section-bg);border-radius:8px;border:1px solid var(--border-color);">
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1rem;">
-          <div style="text-align:center;">
-            <div style="font-size:0.9rem;color:var(--text-muted);">Name</div>
-            <div id="profileName" style="font-size:1.2rem;font-weight:600;color:var(--accent-color);margin-top:0.5rem;"></div>
+      <div id="profileSection" style="
+            display: none;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--section-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+          ">
+        <div style="
+              display: grid;
+              grid-template-columns: 1fr 1fr 1fr 1fr;
+              gap: 1rem;
+            ">
+          <div style="text-align: center">
+            <div style="font-size: 0.9rem; color: var(--text-muted)">
+              Name
+            </div>
+            <div id="profileName" style="
+                  font-size: 1.2rem;
+                  font-weight: 600;
+                  color: var(--accent-color);
+                  margin-top: 0.5rem;
+                "></div>
           </div>
-          <div style="text-align:center;">
-            <div style="font-size:0.9rem;color:var(--text-muted);">Items Sold</div>
-            <div id="profileSold" style="font-size:1.2rem;font-weight:600;color:var(--text-color);margin-top:0.5rem;">0</div>
+          <div style="text-align: center">
+            <div style="font-size: 0.9rem; color: var(--text-muted)">
+              Items Sold
+            </div>
+            <div id="profileSold" style="
+                  font-size: 1.2rem;
+                  font-weight: 600;
+                  color: var(--text-color);
+                  margin-top: 0.5rem;
+                ">
+              0
+            </div>
           </div>
-          <div style="text-align:center;">
-            <div style="font-size:0.9rem;color:var(--text-muted);">Items Purchased</div>
-            <div id="profilePurchased" style="font-size:1.2rem;font-weight:600;color:var(--text-color);margin-top:0.5rem;">0</div>
+          <div style="text-align: center">
+            <div style="font-size: 0.9rem; color: var(--text-muted)">
+              Items Purchased
+            </div>
+            <div id="profilePurchased" style="
+                  font-size: 1.2rem;
+                  font-weight: 600;
+                  color: var(--text-color);
+                  margin-top: 0.5rem;
+                ">
+              0
+            </div>
           </div>
-          <div style="text-align:center;">
-            <div style="font-size:0.9rem;color:var(--text-muted);">Total Revenue</div>
-            <div id="profileRevenue" style="font-size:1.2rem;font-weight:600;color:var(--accent-color);margin-top:0.5rem;">₹0</div>
+          <div style="text-align: center">
+            <div style="font-size: 0.9rem; color: var(--text-muted)">
+              Total Revenue
+            </div>
+            <div id="profileRevenue" style="
+                  font-size: 1.2rem;
+                  font-weight: 600;
+                  color: var(--accent-color);
+                  margin-top: 0.5rem;
+                ">
+              ₹0
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Graph & History Grid -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;">
+      <div style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+          ">
         <!-- Service Usage Chart -->
-        <div style="background:var(--section-bg);border:1px solid var(--border-color);border-radius:8px;padding:1rem;">
-          <h3 style="color:var(--text-color);margin-bottom:1rem;font-size:1.1rem;">Service Usage</h3>
+        <div style="
+              background: var(--section-bg);
+              border: 1px solid var(--border-color);
+              border-radius: 8px;
+              padding: 1rem;
+            ">
+          <h3 style="
+                color: var(--text-color);
+                margin-bottom: 1rem;
+                font-size: 1.1rem;
+              ">
+            Service Usage
+          </h3>
           <canvas id="serviceChart" height="200"></canvas>
         </div>
 
         <!-- Purchase/Sale History -->
-        <div style="background:var(--section-bg);border:1px solid var(--border-color);border-radius:8px;padding:1rem;">
-          <h3 style="color:var(--text-color);margin-bottom:1rem;font-size:1.1rem;">Recent Transactions</h3>
-          <ul id="transactionList" style="list-style:none;padding:0;margin:0;max-height:250px;overflow-y:auto;">
-            <li style="color:var(--text-muted);padding:0.5rem;">No transactions.</li>
+        <div style="
+              background: var(--section-bg);
+              border: 1px solid var(--border-color);
+              border-radius: 8px;
+              padding: 1rem;
+            ">
+          <h3 style="
+                color: var(--text-color);
+                margin-bottom: 1rem;
+                font-size: 1.1rem;
+              ">
+            Recent Transactions
+          </h3>
+          <ul id="transactionList" style="
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                max-height: 250px;
+                overflow-y: auto;
+              ">
+            <li style="color: var(--text-muted); padding: 0.5rem">
+              No transactions.
+            </li>
           </ul>
         </div>
       </div>
@@ -2078,22 +2528,31 @@
   <section class="profit-loss-section" id="profit-loss-analytics" aria-label="Profit Loss Analytics">
     <div class="pl-container">
       <h2 class="features-title serif">Profit & Loss Analytics</h2>
-      <p class="feature-intro">Track revenue, expenses, and profitability trends for buyers and retailers.</p>
-      
+      <p class="feature-intro">
+        Track revenue, expenses, and profitability trends for buyers and
+        retailers.
+      </p>
+
       <!-- Controls -->
       <div class="pl-controls">
-        <label for="plUserSelector" style="color:var(--text-color);font-weight:500;">Select Buyer/Retailer:</label>
+        <label for="plUserSelector" style="color: var(--text-color); font-weight: 500">Select Buyer/Retailer:</label>
         <select id="plUserSelector" class="btn">
           <option value="">Choose a user...</option>
         </select>
-        
+
         <div class="pl-time-toggle">
-          <button class="btn btn-secondary" data-range="weekly">Weekly</button>
-          <button class="btn btn-secondary active" data-range="monthly">Monthly</button>
-          <button class="btn btn-secondary" data-range="quarterly">Quarterly</button>
+          <button class="btn btn-secondary" data-range="weekly">
+            Weekly
+          </button>
+          <button class="btn btn-secondary active" data-range="monthly">
+            Monthly
+          </button>
+          <button class="btn btn-secondary" data-range="quarterly">
+            Quarterly
+          </button>
         </div>
-        
-        <div style="flex:1"></div>
+
+        <div style="flex: 1"></div>
         <button class="btn btn-primary" id="exportPLBtn">
           <i class="fas fa-download"></i> Export Report
         </button>
@@ -2108,7 +2567,7 @@
             <div class="pl-card-value" id="plRevenue">₹0</div>
           </div>
         </div>
-        
+
         <div class="pl-card expense-card">
           <div class="pl-card-icon">💸</div>
           <div class="pl-card-content">
@@ -2116,7 +2575,7 @@
             <div class="pl-card-value" id="plExpenses">₹0</div>
           </div>
         </div>
-        
+
         <div class="pl-card profit-card">
           <div class="pl-card-icon">📈</div>
           <div class="pl-card-content">
@@ -2124,7 +2583,7 @@
             <div class="pl-card-value positive" id="plProfit">₹0</div>
           </div>
         </div>
-        
+
         <div class="pl-card transactions-card">
           <div class="pl-card-icon">🔢</div>
           <div class="pl-card-content">
@@ -2140,7 +2599,7 @@
           <h3>Profit/Loss Trend</h3>
           <canvas id="plTrendChart"></canvas>
         </div>
-        
+
         <div class="pl-chart-container">
           <h3>Category Breakdown</h3>
           <canvas id="plCategoryChart"></canvas>
@@ -2150,69 +2609,78 @@
   </section>
 
   <footer class="site-footer tech-dark-theme final-match">
-
     <div class="footer-top-accent"></div>
 
     <div class="footer-inner-content">
-
-        <div class="footer-section footer-brand">
-            <div class="brand-header">
-                <img src="images/logo.png" alt="AgriTech logo" class="brand-logo">
-                <h3>AgriTech</h3>
-            </div>
-
-            <p class="tagline">
-                Empowering India's Farming Future with innovative technology connecting every stakeholder.
-            </p>
-
-            <div class="social-icons">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
-                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            </div>
+      <div class="footer-section footer-brand">
+        <div class="brand-header">
+          <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
+          <h3>AgriTech</h3>
         </div>
 
-        <div class="footer-group-links">
+        <p class="tagline">
+          Empowering India's Farming Future with innovative technology
+          connecting every stakeholder.
+        </p>
 
-            <div class="footer-section footer-links">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
-                    <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
-                    <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section footer-contact">
-                <h4>Contact</h4>
-                <ul>
-                    <li>
-                        <a href="mailto:contact@agritech.com">
-                            <i class="fas fa-envelope"></i> contact@agritech.com
-                        </a>
-                    </li>
-                    <li>
-                        <a href="tel:+910000000000">
-                            <i class="fas fa-phone"></i> +91 00000 00000
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         </div>
+      </div>
+
+      <div class="footer-group-links">
+        <div class="footer-section footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>
+              <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li>
+              <a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+            </li>
+            <li>
+              <a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a>
+            </li>
+            <li>
+              <a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-contact">
+          <h4>Contact</h4>
+          <ul>
+            <li>
+              <a href="mailto:contact@agritech.com">
+                <i class="fas fa-envelope"></i> contact@agritech.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+910000000000">
+                <i class="fas fa-phone"></i> +91 00000 00000
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
 
     <div class="footer-bottom">
-        <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
+      <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
     </div>
 
     <div class="footer-wave-overlay"></div>
-</footer>
+  </footer>
 
-  
+  <a href="spatial.html" id="spatialBtn" title="Field Analysis" aria-label="Spatial Analytics">
+    <i class="fas fa-map-marked-alt"></i>
+  </a>
 
   <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
     <i class="fas fa-robot"></i>
@@ -2223,12 +2691,12 @@
   </button>
 
   <script type="importmap">
-    {
-      "imports": {
-        "three": "https://unpkg.com/three@0.158.0/build/three.module.js"
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.158.0/build/three.module.js"
+        }
       }
-    }
-  </script>
+    </script>
 
   <script>
     document.getElementById("current-year").textContent =
@@ -2236,15 +2704,20 @@
   </script>
 
   <script type="module">
-    import * as THREE from 'three';
+    import * as THREE from "three";
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000,
+    );
     camera.position.set(0, 3, 10);
 
     const renderer = new THREE.WebGLRenderer({
-      canvas: document.querySelector('#bg-canvas'),
-      alpha: true
+      canvas: document.querySelector("#bg-canvas"),
+      alpha: true,
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -2252,19 +2725,20 @@
     const geometry = new THREE.PlaneGeometry(20, 20, 40, 40);
     const material = new THREE.MeshBasicMaterial({
       color: 0x22c55e,
-      wireframe: true
+      wireframe: true,
     });
     const plane = new THREE.Mesh(geometry, material);
     plane.rotation.x = -Math.PI / 2;
     scene.add(plane);
 
-    const originalPositions = plane.geometry.attributes.position.array.slice();
+    const originalPositions =
+      plane.geometry.attributes.position.array.slice();
     const clock = new THREE.Clock();
 
     const mouse = new THREE.Vector2(0, 0);
     const targetMouse = new THREE.Vector2(0, 0);
 
-    window.addEventListener('mousemove', (event) => {
+    window.addEventListener("mousemove", (event) => {
       targetMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
       targetMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     });
@@ -2280,7 +2754,9 @@
       for (let i = 0; i < positions.length; i += 3) {
         const x = originalPositions[i];
         const y = originalPositions[i + 1];
-        const baseWave = Math.sin(x * 0.5 + t * 0.5) * 0.1 + Math.sin(y * 0.5 + t * 0.5) * 0.1;
+        const baseWave =
+          Math.sin(x * 0.5 + t * 0.5) * 0.1 +
+          Math.sin(y * 0.5 + t * 0.5) * 0.1;
         const dist = new THREE.Vector2(x, y).distanceTo(mouseWorld);
         const influence = Math.max(0, 1 - dist / 5);
         const ripple = Math.sin(dist * 2 - t * 2) * influence * 0.3;
@@ -2292,7 +2768,7 @@
       requestAnimationFrame(animate);
     }
 
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -2301,79 +2777,52 @@
 
     animate();
   </script>
- 
-
-
-
 
   <script type="module" src="index.js"></script>
 
   <script>
     // Theme Toggle
-    const themeToggle = document.querySelector('.theme-toggle');
-    const themeText = document.querySelector('.theme-text');
-    const sunIcon = document.querySelector('.sun-icon');
-    const moonIcon = document.querySelector('.moon-icon');
+    const themeToggle = document.querySelector(".theme-toggle");
+    const themeText = document.querySelector(".theme-text");
+    const sunIcon = document.querySelector(".sun-icon");
+    const moonIcon = document.querySelector(".moon-icon");
 
     const applyTheme = (theme) => {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('agritech-theme', theme);
-      if (theme === 'dark') {
-        themeText.textContent = 'Light';
-        moonIcon.style.display = 'none';
-        sunIcon.style.display = 'inline-block';
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("agritech-theme", theme);
+      if (theme === "dark") {
+        themeText.textContent = "Light";
+        moonIcon.style.display = "none";
+        sunIcon.style.display = "inline-block";
       } else {
-        themeText.textContent = 'Dark';
-        moonIcon.style.display = 'inline-block';
-        sunIcon.style.display = 'none';
+        themeText.textContent = "Dark";
+        moonIcon.style.display = "inline-block";
+        sunIcon.style.display = "none";
       }
     };
 
-    const savedTheme = localStorage.getItem('agritech-theme') || 'dark';
+    const savedTheme = localStorage.getItem("agritech-theme") || "dark";
     applyTheme(savedTheme);
 
-    themeToggle.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'light' ? 'dark' : 'light';
+    themeToggle.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      const next = current === "light" ? "dark" : "light";
       applyTheme(next);
     });
-
-    // Services Dropdown
-    const servicesToggle = document.querySelector('.services-toggle');
-    const servicesDropdown = document.querySelector('.services-dropdown');
-    const servicesArrow = document.querySelector('.services-arrow');
-
-    if (servicesToggle && servicesDropdown && servicesArrow) {
-      servicesToggle.addEventListener('click', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        servicesDropdown.classList.toggle('active');
-        servicesArrow.classList.toggle('rotated');
-      });
-
-      document.addEventListener('click', (e) => {
-        const container = document.querySelector('.services-toggle-container');
-        if (container && !container.contains(e.target) && servicesDropdown.classList.contains('active')) {
-          servicesDropdown.classList.remove('active');
-          servicesArrow.classList.remove('rotated');
-        }
-      });
-    }
-
     // Language Selector
-    const langBtn = document.querySelector('.lang-btn');
-    const langDropdown = document.querySelector('.lang-dropdown');
+    const langBtn = document.querySelector(".lang-btn");
+    const langDropdown = document.querySelector(".lang-dropdown");
 
     if (langBtn && langDropdown) {
-      langBtn.addEventListener('click', (event) => {
+      langBtn.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
-        langDropdown.classList.toggle('active');
+        langDropdown.classList.toggle("active");
       });
 
-      document.addEventListener('click', (e) => {
+      document.addEventListener("click", (e) => {
         if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
-          langDropdown.classList.remove('active');
+          langDropdown.classList.remove("active");
         }
       });
     }
@@ -2385,11 +2834,11 @@
     if (scrollBtn && scrollIcon) {
       window.addEventListener("scroll", () => {
         if (window.scrollY > 300) {
-          scrollBtn.classList.add('visible');
+          scrollBtn.classList.add("visible");
           scrollIcon.classList.remove("fa-arrow-down");
           scrollIcon.classList.add("fa-arrow-up");
         } else {
-          scrollBtn.classList.remove('visible');
+          scrollBtn.classList.remove("visible");
           scrollIcon.classList.remove("fa-arrow-up");
           scrollIcon.classList.add("fa-arrow-down");
         }
@@ -2402,87 +2851,92 @@
       });
     }
 
-
-
     // ===== MOBILE MENU (FINAL FIX) =====
-const hamburgerBtn = document.getElementById('hamburgerBtn');
-const mobileMenu = document.getElementById('mobileMenu');
-const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
 
-function closeMobileMenu() {
-  mobileMenu.classList.remove('active');
-  mobileMenuOverlay.classList.remove('active');
-  document.body.style.overflow = '';
-}
+    function closeMobileMenu() {
+      mobileMenu.classList.remove("active");
+      mobileMenuOverlay.classList.remove("active");
+      document.body.style.overflow = "";
+    }
 
-function openMobileMenu() {
-  mobileMenu.classList.add('active');
-  mobileMenuOverlay.classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-const mobileCloseBtn = document.querySelector('.mobile-close-btn');
+    function openMobileMenu() {
+      mobileMenu.classList.add("active");
+      mobileMenuOverlay.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+    const mobileCloseBtn = document.querySelector(".mobile-close-btn");
 
-if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
-  // OPEN
-  hamburgerBtn.addEventListener('pointerdown', (e) => {
-    e.preventDefault();
-    openMobileMenu();
-  });
+    if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
+      // OPEN
+      hamburgerBtn.addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        openMobileMenu();
+      });
 
-  // CLOSE
-  mobileCloseBtn.addEventListener('pointerdown', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    closeMobileMenu();
-  });
+      // CLOSE
+      mobileCloseBtn.addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closeMobileMenu();
+      });
 
-  mobileMenuOverlay.addEventListener('pointerdown', closeMobileMenu);
+      mobileMenuOverlay.addEventListener("pointerdown", closeMobileMenu);
 
-  mobileMenu.addEventListener('pointerdown', (e) => {
-    e.stopPropagation();
-  });
-}
+      mobileMenu.addEventListener("pointerdown", (e) => {
+        e.stopPropagation();
+      });
+    }
 
     // Mobile Services Toggle
-    const mobileServicesToggle = document.getElementById('mobileServicesToggle');
-    const mobileServicesList = document.getElementById('mobileServicesList');
-    const mobileServicesArrow = document.getElementById('mobileServicesArrow');
+    const mobileServicesToggle = document.getElementById(
+      "mobileServicesToggle",
+    );
+    const mobileServicesList = document.getElementById("mobileServicesList");
+    const mobileServicesArrow = document.getElementById(
+      "mobileServicesArrow",
+    );
 
     if (mobileServicesToggle && mobileServicesList && mobileServicesArrow) {
-      mobileServicesToggle.addEventListener('click', (e) => {
+      mobileServicesToggle.addEventListener("click", (e) => {
         e.preventDefault();
-        mobileServicesList.classList.toggle('active');
-        mobileServicesArrow.classList.toggle('rotated');
+        mobileServicesList.classList.toggle("active");
+        mobileServicesArrow.classList.toggle("rotated");
       });
     }
 
     // Mobile Theme Toggle
-    const mobileThemeToggle = document.getElementById('mobileThemeToggle');
-    const mobileThemeText = document.querySelector('.mobile-theme-text');
-    const mobileSunIcon = document.querySelector('.mobile-sun-icon');
-    const mobileMoonIcon = document.querySelector('.mobile-moon-icon');
+    const mobileThemeToggle = document.getElementById("mobileThemeToggle");
+    const mobileThemeText = document.querySelector(".mobile-theme-text");
+    const mobileSunIcon = document.querySelector(".mobile-sun-icon");
+    const mobileMoonIcon = document.querySelector(".mobile-moon-icon");
 
     if (mobileThemeToggle) {
-      mobileThemeToggle.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme');
-        const next = current === 'light' ? 'dark' : 'light';
+      mobileThemeToggle.addEventListener("click", () => {
+        const current = document.documentElement.getAttribute("data-theme");
+        const next = current === "light" ? "dark" : "light";
         applyTheme(next);
 
-        if (next === 'dark') {
-          mobileThemeText.textContent = 'Light Mode';
-          mobileMoonIcon.style.display = 'none';
-          mobileSunIcon.style.display = 'inline-block';
+        if (next === "dark") {
+          mobileThemeText.textContent = "Light Mode";
+          mobileMoonIcon.style.display = "none";
+          mobileSunIcon.style.display = "inline-block";
         } else {
-          mobileThemeText.textContent = 'Dark Mode';
-          mobileMoonIcon.style.display = 'inline-block';
-          mobileSunIcon.style.display = 'none';
+          mobileThemeText.textContent = "Dark Mode";
+          mobileMoonIcon.style.display = "inline-block";
+          mobileSunIcon.style.display = "none";
         }
       });
     }
   </script>
   <script>
-    if (window.location.pathname.endsWith("index.html") || window.location.pathname === "/") {
 
+    if (
+      window.location.pathname.endsWith("index.html") ||
+      window.location.pathname === "/"
+    ) {
       const pageMap = {
         home: "index.html",
         about: "about.html",
@@ -2496,11 +2950,11 @@ if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
         register: "register.html",
         faq: "faq.html",
         feedback: "feed-back.html",
-        chat: "chat.html"
+        chat: "chat.html",
       };
 
       function clearHighlights() {
-        document.querySelectorAll(".search-highlight").forEach(span => {
+        document.querySelectorAll(".search-highlight").forEach((span) => {
           span.replaceWith(span.textContent);
         });
       }
@@ -2510,12 +2964,15 @@ if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
         let found = false;
         let firstMatch = null;
 
-        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        const walker = document.createTreeWalker(
+          document.body,
+          NodeFilter.SHOW_TEXT,
+        );
         const nodes = [];
 
         while (walker.nextNode()) nodes.push(walker.currentNode);
 
-        nodes.forEach(node => {
+        nodes.forEach((node) => {
           const text = node.nodeValue;
           const lower = text.toLowerCase();
 
@@ -2528,7 +2985,9 @@ if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
           lower.replace(new RegExp(query, "gi"), (match, index) => {
             found = true;
 
-            fragment.append(document.createTextNode(text.slice(lastIndex, index)));
+            fragment.append(
+              document.createTextNode(text.slice(lastIndex, index)),
+            );
 
             const span = document.createElement("span");
             span.className = "search-highlight";
@@ -2588,7 +3047,7 @@ if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
         handleSearch(searchInput.value);
       });
 
-      searchInput?.addEventListener("keydown", e => {
+      searchInput?.addEventListener("keydown", (e) => {
         if (e.key === "Enter") handleSearch(e.target.value);
       });
 
@@ -2608,13 +3067,15 @@ if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
 
       // Mobile Search
       const mobileSearchBtn = document.querySelector(".mobile-search-btn");
-      const mobileSearchInput = document.querySelector(".mobile-search-input");
+      const mobileSearchInput = document.querySelector(
+        ".mobile-search-input",
+      );
 
       mobileSearchBtn?.addEventListener("click", () => {
         handleSearch(mobileSearchInput.value);
       });
 
-      mobileSearchInput?.addEventListener("keydown", e => {
+      mobileSearchInput?.addEventListener("keydown", (e) => {
         if (e.key === "Enter") handleSearch(e.target.value);
       });
 
@@ -2643,104 +3104,148 @@ if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
     </div>
   </div>
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // Restore theme
-   const applyTheme = (theme) => {
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
+    document.addEventListener("DOMContentLoaded", () => {
+      // Restore theme
+      const applyTheme = (theme) => {
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
 
-  if (themeText) themeText.textContent = theme === 'dark' ? 'Dark' : 'Light';
-  if (moonIcon) moonIcon.style.display = theme === 'dark' ? 'none' : 'inline-block';
-  if (sunIcon) sunIcon.style.display = theme === 'dark' ? 'inline-block' : 'none';
-};
+        if (themeText)
+          themeText.textContent = theme === "dark" ? "Dark" : "Light";
+        if (moonIcon)
+          moonIcon.style.display = theme === "dark" ? "none" : "inline-block";
+        if (sunIcon)
+          sunIcon.style.display = theme === "dark" ? "inline-block" : "none";
+      };
 
-// Initialize
-const savedTheme = localStorage.getItem('theme') || 'dark';
-applyTheme(savedTheme);
+      // Initialize
+      const savedTheme = localStorage.getItem("theme") || "dark";
+      applyTheme(savedTheme);
 
-// Toggle on Click
-if (themeText) {
-  themeText.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
-    applyTheme(nextTheme);
-  });}
+      // Toggle on Click
+      if (themeText) {
+        themeText.addEventListener("click", () => {
+          const currentTheme =
+            document.documentElement.getAttribute("data-theme");
+          const nextTheme = currentTheme === "light" ? "dark" : "light";
+          applyTheme(nextTheme);
+        });
+      }
 
-    // Restore scroll position
-    const scrollY = localStorage.getItem("homeScrollY");
-    if (scrollY) {
-      window.scrollTo(0, parseInt(scrollY, 10));
-      localStorage.removeItem("homeScrollY");
-    }
-  });
-</script>
+      // Restore scroll position
+      const scrollY = localStorage.getItem("homeScrollY");
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY, 10));
+        localStorage.removeItem("homeScrollY");
+      }
+    });
+  </script>
 
   <script src="main.js"></script>
 
   <script>
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker
-        .register("/service-worker.js")
-        .then(() => console.log("Service Worker registered"))
-        .catch(err => console.error("Service Worker failed", err));
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("/service-worker.js")
+          .then(() => console.log("Service Worker registered"))
+          .catch((err) => console.error("Service Worker failed", err));
+      });
+    }
+  </script>
+  <script src="translations.js"></script>
+  <script src="scripts/i18n.js"></script>
+
+  <script>
+    const languages = {
+      en: {
+        hero_title: "Empowering Agriculture Through Technology",
+        hero_desc:
+          "AgriTech connects Farmers, Buyers, Equipment Suppliers, and Grocery Sellers to revolutionize India's agricultural ecosystem through smart solutions and seamless collaboration.",
+      },
+      hi: {
+        hero_title: "प्रौद्योगिकी के माध्यम से कृषि को सशक्त बनाना",
+        hero_desc:
+          "एग्रीटेक किसानों, खरीदारों, उपकरण आपूर्तिकर्ताओं और किराना विक्रेताओं को जोड़ता है।",
+      },
+      te: {
+        hero_title: "సాంకేతికత ద్వారా వ్యవసాయాన్ని బలోపేతం చేయడం",
+        hero_desc:
+          "అగ్రిటెక్ రైతులు, కొనుగోలుదారులు, పరికరాల సరఫరాదారులు మరియు కిరాణా విక్రేతలను అనుసంధానిస్తుంది.",
+      },
+      ta: {
+        hero_title: "தொழில்நுட்பத்தின் மூலம் விவசாயத்தை வலுப்படுத்துதல்",
+        hero_desc:
+          "அக்ரிடெக் விவசாயிகள் மற்றும் சேவை வழங்குநர்களை இணைக்கிறது.",
+      },
+    };
+
+    const lang = localStorage.getItem("lang") || "en";
+
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
+      if (languages[lang] && languages[lang][key]) {
+        el.innerText = languages[lang][key];
+      }
     });
-  }
-</script>
-<script src="translations.js"></script>
-<script src="scripts/i18n.js"></script>
+  </script>
 
-<script>
-  const languages = {
-    en: {
-      hero_title: "Empowering Agriculture Through Technology",
-      hero_desc:
-        "AgriTech connects Farmers, Buyers, Equipment Suppliers, and Grocery Sellers to revolutionize India's agricultural ecosystem through smart solutions and seamless collaboration."
-    },
-    hi: {
-      hero_title: "प्रौद्योगिकी के माध्यम से कृषि को सशक्त बनाना",
-      hero_desc:
-        "एग्रीटेक किसानों, खरीदारों, उपकरण आपूर्तिकर्ताओं और किराना विक्रेताओं को जोड़ता है।"
-    },
-    te: {
-      hero_title: "సాంకేతికత ద్వారా వ్యవసాయాన్ని బలోపేతం చేయడం",
-      hero_desc:
-        "అగ్రిటెక్ రైతులు, కొనుగోలుదారులు, పరికరాల సరఫరాదారులు మరియు కిరాణా విక్రేతలను అనుసంధానిస్తుంది."
-    },
-    ta: {
-      hero_title: "தொழில்நுட்பத்தின் மூலம் விவசாயத்தை வலுப்படுத்துதல்",
-      hero_desc:
-        "அக்ரிடெக் விவசாயிகள் மற்றும் சேவை வழங்குநர்களை இணைக்கிறது."
+  <script>
+    const langSelect = document.getElementById("languageSelect");
+    const savedLang = localStorage.getItem("lang") || "en";
+    langSelect.value = savedLang;
+
+    langSelect.addEventListener("change", () => {
+      localStorage.setItem("lang", langSelect.value);
+      location.reload();
+    });
+  </script>
+
+  <!-- Notification System -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+  <script src="js/notifications.js"></script>
+  <script>
+    const circles = document.querySelectorAll(".cursor-circle");
+    let mouseX = 0,
+      mouseY = 0;
+    let positions = Array.from(circles).map(() => ({ x: 0, y: 0 }));
+
+    window.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animateCursor() {
+      let x = mouseX;
+      let y = mouseY;
+
+      circles.forEach((circle, index) => {
+        const pos = positions[index];
+
+        pos.x += (x - pos.x) * 0.3;
+        pos.y += (y - pos.y) * 0.3;
+
+        circle.style.left = pos.x + "px";
+        circle.style.top = pos.y + "px";
+
+        x = pos.x;
+        y = pos.y;
+      });
+
+      requestAnimationFrame(animateCursor);
     }
-  };
 
-  const lang = localStorage.getItem("lang") || "en";
+    animateCursor();
 
-  document.querySelectorAll("[data-i18n]").forEach(el => {
-    const key = el.getAttribute("data-i18n");
-    if (languages[lang] && languages[lang][key]) {
-      el.innerText = languages[lang][key];
-    }
-  });
-</script>
+    window.addEventListener("mousedown", () => {
+      circles.forEach((c) => c.classList.add("cursor-clicking"));
+    });
 
-<script>
-  const langSelect = document.getElementById("languageSelect");
-  const savedLang = localStorage.getItem("lang") || "en";
-  langSelect.value = savedLang;
+    window.addEventListener("mouseup", () => {
+      circles.forEach((c) => c.classList.remove("cursor-clicking"));
+    });
 
-  langSelect.addEventListener("change", () => {
-    localStorage.setItem("lang", langSelect.value);
-    location.reload();
-  });
-</script>
-
-<!-- Notification System -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
-<script src="js/notifications.js"></script>
-
+  </script>
 </body>
-
-
 
 </html>
