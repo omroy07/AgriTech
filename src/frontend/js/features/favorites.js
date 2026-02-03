@@ -9,7 +9,17 @@ class FavoritesManager {
     init() {
         window.favoritesManager = this;
         console.log('✅ FavoritesManager loaded with', this.favorites.length, 'favorites');
+        // 🔥 NEW: notify favorites page that data is ready
+        document.dispatchEvent(
+            new CustomEvent('favoritesLoaded', {
+                detail: { favorites: this.getFavorites() }
+            })
+        );
     }
+    getFavoritesSafe() {
+        return this.getFavorites();
+    }
+
 
     loadFavorites() {
         try {
@@ -49,6 +59,8 @@ class FavoritesManager {
         this.showNotification(`Added to favorites: ${blogData.title}`);
         this.dispatchFavoriteToggle(blogData.id, true, blogData);
         return true;
+
+        
     }
 
     removeFromFavorites(blogId) {
