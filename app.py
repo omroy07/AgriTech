@@ -7,21 +7,28 @@ import hashlib
 import json
 from flask_cors import CORS
 from dotenv import load_dotenv
-from backend.extensions import socketio, db, migrate, mail, limiter
+import logging
+from marshmallow import ValidationError
+from backend.utils.validation import validate_input, sanitize_input
+from backend.extensions import socketio, db, migrate, mail, limiter, babel, get_locale
 from backend.api.v1.files import files_bp
 from crop_recommendation.routes import crop_bp
-from disease_prediction.routes import disease_bp
-from backend.extensions.socketio import socketio
+# from disease_prediction.routes import disease_bp
+from spatial_analytics.routes import spatial_bp
 from backend.extensions.cache import cache
-from backend.extensions import db
 from backend.monitoring.routes import health_bp
 from backend.api import register_api
 from backend.config import config
 from backend.schemas.loan_schema import LoanRequestSchema
-from backend.celery_app import celery_app
+from backend.celery_app import celery_app, make_celery
 from backend.tasks import predict_crop_task, process_loan_task
 import backend.sockets.task_events  # Register socket event handlers
+import backend.sockets.rental_events # Register rental marketplace events
 from auth_utils import token_required, roles_required
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 
@@ -43,7 +50,7 @@ db.init_app(app)
 migrate.init_app(app, db)
 mail.init_app(app)
 limiter.init_app(app)
-mail.init_app(app)
+
 
 # Initialize Celery with app context
 celery = make_celery(app)
@@ -54,9 +61,10 @@ from backend.models import User
 CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
 app.register_blueprint(crop_bp, url_prefix='/crop')
-app.register_blueprint(disease_bp)
+# app.register_blueprint(disease_bp)
 app.register_blueprint(health_bp)
 app.register_blueprint(files_bp)
+app.register_blueprint(spatial_bp)
 
 # Register API v1 (including loan, weather, schemes, etc.)
 register_api(app)
@@ -67,8 +75,6 @@ socketio.init_app(app)
 # Initialize Cache with app
 cache.init_app(app)
 
-# Initialize DB with app
-db.init_app(app)
 
 # Initialize Babel with app
 babel.init_app(app, locale_selector=get_locale)
@@ -413,7 +419,7 @@ def download_report(filename):
 
 
 @app.route('/task-status/<task_id>', methods=['GET'])
-def get_task_status(task_id):
+def get_task_status_public(task_id):
     """Check status of async task"""
     try:
         from backend.config.celery_config import celery_app

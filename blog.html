@@ -93,6 +93,92 @@
         </div>
     </div>
 
+    <footer class="site-footer tech-dark-theme final-match">
+      <div class="footer-top-accent"></div>
+
+      <div class="footer-inner-content">
+        <div class="footer-section footer-brand">
+          <div class="brand-header">
+            <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
+            <h3>AgriTech</h3>
+          </div>
+
+          <p class="tagline">
+            Empowering India's Farming Future with innovative technology
+            connecting every stakeholder.
+          </p>
+
+          <div class="social-icons">
+            <a href="#" aria-label="Facebook"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" aria-label="Twitter"
+              ><i class="fab fa-x-twitter"></i
+            ></a>
+            <a href="#" aria-label="LinkedIn"
+              ><i class="fab fa-linkedin-in"></i
+            ></a>
+            <a href="#" aria-label="Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="footer-group-links">
+          <div class="footer-section footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li>
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+              </li>
+              <li>
+                <a href="login.html"
+                  ><i class="fas fa-tachometer-alt"></i> Dashboard</a
+                >
+              </li>
+              <li>
+                <a href="feed-back.html"
+                  ><i class="fas fa-comment-dots"></i> Feedback</a
+                >
+              </li>
+              <li>
+                <a href="chat.html"
+                  ><i class="fas fa-robot"></i> AI Assistant</a
+                >
+              </li>
+              <li>
+                <a href="terms-and-service.html"
+                  ><i class="fas fa-file-contract"></i> Terms & Service</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-section footer-contact">
+            <h4>Contact</h4>
+            <ul>
+              <li>
+                <a href="mailto:contact@agritech.com">
+                  <i class="fas fa-envelope"></i> contact@agritech.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:+910000000000">
+                  <i class="fas fa-phone"></i> +91 00000 00000
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
+      </div>
+
+      <div class="footer-wave-overlay"></div>
+    </footer>
+
     <script src="js/features/favorites.js"></script>
     <script src="blog.js"></script>
     <script src="auth.js"></script>
@@ -162,6 +248,41 @@ function initHamburgerMenu() {
         document.body.style.overflow = '';
     });
 }
+function initNavbarInteractions() {
+  // Desktop Services Dropdown
+  const servicesToggle = document.querySelector('.services-toggle');
+  const servicesDropdown = document.querySelector('.services-dropdown');
+  const servicesArrow = document.querySelector('.services-arrow');
+
+  if (servicesToggle && servicesDropdown) {
+    servicesToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      servicesDropdown.classList.toggle('active');
+      servicesArrow?.classList.toggle('rotated');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!servicesToggle.contains(e.target) && !servicesDropdown.contains(e.target)) {
+        servicesDropdown.classList.remove('active');
+        servicesArrow?.classList.remove('rotated');
+      }
+    });
+  }
+
+  // Mobile Services Dropdown
+  const mobServToggle = document.getElementById('mobileServicesToggle');
+  const mobServList = document.getElementById('mobileServicesList');
+
+  if (mobServToggle && mobServList) {
+    mobServToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      mobServList.classList.toggle('active');
+    });
+  }
+}
+
+
 
 // Run after DOM loads
 document.addEventListener('DOMContentLoaded', () => {
@@ -173,8 +294,77 @@ document.addEventListener('DOMContentLoaded', () => {
     includeHTML(() => {
         initThemeToggle();
         initHamburgerMenu();
+        initServicesDropdown(); // ✅ ADD THIS
     });
+
 });
+</script>
+<!-- Cursor Trail -->
+<div class="circle-container" id="cursorTrail"></div>
+<script>
+  const container = document.getElementById('cursorTrail');
+  const circleCount = 12;
+  const circles = [];
+
+  let mouseX = 0;
+  let mouseY = 0;
+
+  // Create circles
+  for (let i = 0; i < circleCount; i++) {
+    const circle = document.createElement('div');
+    circle.classList.add('cursor-circle');
+    container.appendChild(circle);
+    circles.push({ el: circle, x: 0, y: 0 });
+  }
+
+  // Track mouse
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  // Click effect
+  document.addEventListener('mousedown', () => {
+    circles.forEach(c => c.el.classList.add('cursor-clicking'));
+  });
+
+  document.addEventListener('mouseup', () => {
+    circles.forEach(c => c.el.classList.remove('cursor-clicking'));
+  });
+
+  // Hover effect on links & buttons
+  document.addEventListener('mouseover', (e) => {
+    if (e.target.closest('a, button, .btn, .card, .filter-btn')) {
+      circles.forEach(c => c.el.classList.add('cursor-hovering'));
+    }
+  });
+
+  document.addEventListener('mouseout', (e) => {
+    if (e.target.closest('a, button, .btn, .card, .filter-btn')) {
+      circles.forEach(c => c.el.classList.remove('cursor-hovering'));
+    }
+  });
+
+  // Smooth trailing animation
+  function animate() {
+    let x = mouseX;
+    let y = mouseY;
+
+    circles.forEach((circle, index) => {
+      circle.x += (x - circle.x) * 0.25;
+      circle.y += (y - circle.y) * 0.25;
+
+      circle.el.style.left = circle.x + 'px';
+      circle.el.style.top = circle.y + 'px';
+
+      x = circle.x;
+      y = circle.y;
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
 </script>
 
 </body>

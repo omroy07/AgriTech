@@ -949,6 +949,7 @@
           top: 1rem;
           right: 1rem;
         }
+      }
 
         .mobile-close-btn i {
           font-size: 1.1rem;
@@ -1767,6 +1768,101 @@
     .cursor-hovering {
       transform: translate(-50%, -50%) scale(1.8);
     }
+
+    /* Hide dropdown by default */
+    .services-dropdown {
+      display: none;
+      position: absolute;
+      background: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      margin-top: 5px;
+      border-radius: 5px;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      /* for smooth effect */
+    }
+
+    /* Show dropdown when active */
+    .services-dropdown.active {
+      display: block;
+    }
+
+    /* Rotate arrow when active */
+    .services-arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .services-arrow.rotated {
+      transform: rotate(180deg);
+    }
+
+    /* Optional: style list items */
+    .services-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .services-list li a {
+      display: block;
+      padding: 10px 20px;
+      color: #333;
+      text-decoration: none;
+    }
+
+    .services-list li a:hover {
+      background-color: #f0f0f0;
+      color: #000;
+    }
+
+    /* Make sure the container is relative */
+    .services-toggle-container {
+      position: relative;
+    }
+
+
+    <div style="padding: 10px; text-align: right">
+      <label for="languageSelect" class="language-label">Language:</label>
+      <select id="languageSelect" class="language-select">
+        <option value="en">English</option>
+        <option value="te">తెలుగు</option>
+        <option value="hi">हिन्दी</option>
+        <option value="ta">தமிழ்</option>
+      </select>
+    </div>
+
+    /* Show dropdown when active */
+    .services-dropdown.active {
+      display: block;
+    }
+
+    /* Rotate arrow */
+    .services-arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .services-arrow.rotated {
+      transform: rotate(180deg);
+    }
+
+    /* Style the list items */
+    .services-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .services-list li a {
+      display: block;
+      padding: 10px 15px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .services-list li a:hover {
+      background: #f0f0f0;
+      color: #000;
+    }
   </style>
 </head>
 
@@ -1779,7 +1875,7 @@
     <div class="cursor-circle"></div>
   </div>
 
-  <div style="padding: 10px; text-align: right">
+  <!-- <div style="padding: 10px; text-align: right">
     <label for="languageSelect">Language:</label>
     <select id="languageSelect">
       <option value="en">English</option>
@@ -1787,6 +1883,27 @@
       <option value="hi">हिन्दी</option>
       <option value="ta">தமிழ்</option>
     </select>
+  </div> -->
+  <div style="padding: 10px; text-align: right">
+  <label for="languageSelect" class="language-label">Language:</label>
+  <select
+    id="languageSelect"
+    class="language-select"
+    onchange="setLanguage(this.value, this.options[this.selectedIndex].text)"
+  >
+    <option value="en">English</option>
+    <option value="te">తెలుగు</option>
+    <option value="hi">हिन्दी</option>
+    <option value="ta">தமிழ்</option>
+  </select>
+</div>
+
+
+  <!-- Offline & Cached Notices -->
+  <div id="network-status" class="hidden">⚠️ Offline or poor connection</div>
+
+  <div id="cached-notice" class="hidden">
+    ⚠️ Showing cached data — may be outdated
   </div>
 
   <!-- rest of your page starts here -->
@@ -2736,6 +2853,7 @@
         e.preventDefault();
         openMobileMenu();
       });
+    }
 
       // CLOSE
       mobileCloseBtn.addEventListener("pointerdown", (e) => {
@@ -2875,74 +2993,42 @@
           `No results found for "${query}". Try different keywords.`;
         document.getElementById("searchPopup").style.display = "flex";
       }
-    </script>
-    <script>
-      
-      if (
-        window.location.pathname.endsWith("index.html") ||
-        window.location.pathname === "/"
-      ) {
-        const pageMap = {
-          home: "index.html",
-          about: "about.html",
-          blog: "blog.html",
-          crop: "crop.html",
-          marketplace: "marketplace.html",
-          supply: "supply-chain.html",
-          sustainable: "sustainable-farming.html",
-          finance: "financial-support.html",
-          login: "login.html",
-          register: "register.html",
-          faq: "faq.html",
-          feedback: "feed-back.html",
-          chat: "chat.html",
-        };
 
-        function clearHighlights() {
-          document.querySelectorAll(".search-highlight").forEach((span) => {
-            span.replaceWith(span.textContent);
-          });
-        }
+      function highlightAll(query) {
+        clearHighlights();
+        let found = false;
+        let firstMatch = null;
 
-        function highlightAll(query) {
-          clearHighlights();
-          let found = false;
-          let firstMatch = null;
+        const walker = document.createTreeWalker(
+          document.body,
+          NodeFilter.SHOW_TEXT,
+        );
+        const nodes = [];
 
-          const walker = document.createTreeWalker(
-            document.body,
-            NodeFilter.SHOW_TEXT,
-          );
-          const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
 
-          while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach((node) => {
+          const text = node.nodeValue;
+          const lower = text.toLowerCase();
 
-          nodes.forEach((node) => {
-            const text = node.nodeValue;
-            const lower = text.toLowerCase();
+          if (!lower.includes(query)) return;
 
-            if (!lower.includes(query)) return;
+          const parent = node.parentNode;
+          const fragment = document.createDocumentFragment();
+          let lastIndex = 0;
 
-            const parent = node.parentNode;
-            const fragment = document.createDocumentFragment();
-            let lastIndex = 0;
+          lower.replace(new RegExp(query, "gi"), (match, index) => {
+            found = true;
 
-            lower.replace(new RegExp(query, "gi"), (match, index) => {
-              found = true;
+            fragment.append(
+              document.createTextNode(text.slice(lastIndex, index)),
+            );
 
-              fragment.append(
-                document.createTextNode(text.slice(lastIndex, index)),
-              );
+            const span = document.createElement("span");
+            span.className = "search-highlight";
+            span.textContent = text.slice(index, index + match.length);
 
-              const span = document.createElement("span");
-              span.className = "search-highlight";
-              span.textContent = text.slice(index, index + match.length);
-
-              if (!firstMatch) firstMatch = span;
-
-              fragment.append(span);
-              lastIndex = index + match.length;
-            });
+            if (!firstMatch) firstMatch = span;
 
       window.closeSearchPopup = () => {
         document.getElementById("searchPopup").style.display = "none";
@@ -3177,14 +3263,17 @@
   </script>
 </body>
 
-      window.addEventListener("mousedown", () => {
-        circles.forEach((c) => c.classList.add("cursor-clicking"));
-      });
+    function closeMobileMenu() {
+      mobileMenu.classList.remove("active");
+      mobileMenuOverlay.classList.remove("active");
+      document.body.style.overflow = "";
+    }
 
-      window.addEventListener("mouseup", () => {
-        circles.forEach((c) => c.classList.remove("cursor-clicking"));
-      });
-      
-    </script>
-  </body>
+    hamburgerBtn.addEventListener("click", openMobileMenu);
+    mobileCloseBtn?.addEventListener("click", closeMobileMenu);
+    mobileMenuOverlay.addEventListener("click", closeMobileMenu);
+  });
+</script>
+</body>
 </html>
+

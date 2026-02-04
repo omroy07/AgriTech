@@ -80,6 +80,34 @@ footer {
   font-size: 0.9rem;
   color: #555;
 }
+/* ============================
+   Primary Button Styles
+   ============================ */
+button,
+.primary-btn {
+  background: #4CAF50;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.25s ease,
+              box-shadow 0.25s ease,
+              transform 0.2s ease;
+}
+button:hover,
+.primary-btn:hover {
+  background: #388E3C;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+button:focus-visible,
+.primary-btn:focus-visible {
+  outline: 3px solid rgba(76, 175, 80, 0.4);
+  outline-offset: 2px;
+}
 
 /* Responsive */
 @media (max-width: 768px) {

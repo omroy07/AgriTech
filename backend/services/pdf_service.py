@@ -222,7 +222,7 @@ class PDFService:
                 ('BACKGROUND', (0, 1), (-1, -1), colors.whitesmoke),
                 ('GRID', (0, 0), (-1, -1), 1, colors.grey)
             ]))
-            elements.append(asset_table)
+            elements.append(t)
             elements.append(Spacer(1, 20))
 
             # Risk Assessment
