@@ -8,11 +8,13 @@ from .misc import Notification, File, YieldPool, PoolContribution, ResourceShare
 from .gews import DiseaseIncident, OutbreakZone, OutbreakAlert
 from .traceability import ProduceBatch, AuditTrail, BatchStatus
 from .insurance import InsurancePolicy, ClaimRequest, RiskScoreHistory
+from .equipment import Equipment, RentalBooking, AvailabilityCalendar, PaymentEscrow
 
 __all__ = [
     'User', 'UserRole', 'LoanRequest', 'PredictionHistory', 
     'Notification', 'File', 'YieldPool', 'PoolContribution', 
     'ResourceShare', 'PoolVote', 'DiseaseIncident', 'OutbreakZone', 'OutbreakAlert',
     'ProduceBatch', 'AuditTrail', 'BatchStatus',
-    'InsurancePolicy', 'ClaimRequest', 'RiskScoreHistory'
+    'InsurancePolicy', 'ClaimRequest', 'RiskScoreHistory',
+    'Equipment', 'RentalBooking', 'AvailabilityCalendar', 'PaymentEscrow'
 ]
