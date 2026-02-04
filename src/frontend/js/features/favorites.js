@@ -8,7 +8,7 @@ class FavoritesManager {
 
     init() {
         window.favoritesManager = this;
-        console.log('✅ FavoritesManager loaded with', this.favorites.length, 'favorites');
+        // console.log('✅ FavoritesManager loaded with', this.favorites.length, 'favorites');
         // 🔥 NEW: notify favorites page that data is ready
         document.dispatchEvent(
             new CustomEvent('favoritesLoaded', {
@@ -24,7 +24,7 @@ class FavoritesManager {
     loadFavorites() {
         try {
             const favs = JSON.parse(localStorage.getItem(this.storageKey)) || [];
-            console.log('📁 Loaded favorites:', favs);
+            // console.log('📁 Loaded favorites:', favs);
             return favs;
         } catch (error) {
             console.error('❌ Error loading favorites:', error);
@@ -35,7 +35,7 @@ class FavoritesManager {
     saveFavorites() {
         try {
             localStorage.setItem(this.storageKey, JSON.stringify(this.favorites));
-            console.log('💾 Saved favorites:', this.favorites);
+            // console.log('💾 Saved favorites:', this.favorites);
         } catch (error) {
             console.error('❌ Error saving favorites:', error);
         }
@@ -48,7 +48,7 @@ class FavoritesManager {
         }
 
         if (this.isFavorite(blogData.id)) {
-            console.log('⚠️ Blog already in favorites');
+            // console.log('⚠️ Blog already in favorites');
             return false;
         }
 
@@ -77,10 +77,9 @@ class FavoritesManager {
     }
 
     isFavorite(blogId) {
-        const isFav = this.favorites.some(blog => blog.id === blogId);
-        console.log('🔍 Checking favorite:', blogId, '->', isFav);
-        return isFav;
+        return this.favorites.some(blog => blog.id === blogId);
     }
+
 
     getFavorites() {
         return [...this.favorites].sort(
@@ -93,7 +92,7 @@ class FavoritesManager {
             detail: { blogId, isFavorite, blogData }
         });
         document.dispatchEvent(event);
-        console.log('📢 Dispatched favorite event:', blogId, isFavorite);
+        // console.log('📢 Dispatched favorite event:', blogId, isFavorite);
     }
 
     /* =====================================================
@@ -138,10 +137,10 @@ class FavoritesManager {
 // Initialize when DOM is loaded
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        console.log('🚀 Initializing FavoritesManager...');
+        // console.log('🚀 Initializing FavoritesManager...');
         new FavoritesManager();
     });
 } else {
-    console.log('🚀 DOM already loaded, initializing FavoritesManager...');
+    // console.log('🚀 DOM already loaded, initializing FavoritesManager...');
     new FavoritesManager();
 }
