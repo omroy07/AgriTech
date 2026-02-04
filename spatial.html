@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Field Analytics | AgriTech</title>
+
+    <!-- CSS Dependencies -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/spatial.css">
+</head>
+
+<body>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="logo">
+            <i class="fa-solid fa-satellite-dish"></i> AgriSpatial
+        </div>
+        <ul class="nav-links">
+            <li class="active"><a href="#"><i class="fa-solid fa-map"></i> Dashboard</a></li>
+            <li><a href="/"><i class="fa-solid fa-home"></i> Home</a></li>
+            <li><a href="#" id="draw-btn"><i class="fa-solid fa-draw-polygon"></i> Draw Field</a></li>
+            <li><a href="#" id="save-sidebar-btn"><i class="fa-solid fa-floppy-disk"></i> Save Field</a></li>
+            <li><a href="#" id="analyze-btn"><i class="fa-solid fa-chart-line"></i> Analyze</a></li>
+        </ul>
+        <div class="user-profile">
+            <img src="https://via.placeholder.com/40" alt="User">
+            <span>Farmer John</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Header -->
+        <header class="top-bar">
+            <h1>Precision Agriculture Dashboard</h1>
+            <div class="controls">
+                <select id="layer-select" class="glass-input">
+                    <option value="satellite">Satellite View</option>
+                    <option value="ndvi">NDVI Analysis</option>
+                    <option value="soil">Soil Moisture</option>
+                </select>
+                <button class="btn-primary" onclick="saveCurrentField()">Save Field</button>
+            </div>
+        </header>
+
+        <!-- Content Grid -->
+        <div class="dashboard-grid">
+
+            <!-- Map Container -->
+            <div class="card map-card">
+                <div id="map"></div>
+            </div>
+
+            <!-- Side Panel: Stats -->
+            <div class="card stats-panel">
+                <h2>Field Insights</h2>
+
+                <div class="stat-box">
+                    <span class="label">Field Health</span>
+                    <div class="value-large text-green" id="health-text">Good</div>
+                    <div class="progress-bar">
+                        <div class="fill" id="health-bar" style="width: 85%"></div>
+                    </div>
+                </div>
+
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <i class="fa-solid fa-leaf"></i>
+                        <span class="val" id="ndvi-val">--</span>
+                        <span class="lbl">Avg NDVI</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fa-solid fa-droplet"></i>
+                        <span class="val" id="moisture-val">--%</span>
+                        <span class="lbl">Moisture</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fa-solid fa-temperature-half"></i>
+                        <span class="val" id="temp-val">--°C</span>
+                        <span class="lbl">Temp</span>
+                    </div>
+                </div>
+
+                <h3>Recommendations</h3>
+                <ul class="recommendation-list" id="rec-list">
+                    <li><i class="fa-solid fa-check-circle text-green"></i> No irrigation needed today.</li>
+                    <li><i class="fa-solid fa-exclamation-triangle text-yellow"></i> Monitor Sector B for pest risk.
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/spatial.js"></script>
+</body>
+
+</html>
