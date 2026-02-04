@@ -2898,35 +2898,29 @@
         closeMobileMenu();
       });
 
+    if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
+      // OPEN
+      hamburgerBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        openMobileMenu();
+      });
+
+      // CLOSE (button)
+      mobileCloseBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closeMobileMenu();
+      });
+
+      // CLOSE (overlay – mobile + desktop)
+      mobileMenuOverlay.addEventListener("click", closeMobileMenu);
       mobileMenuOverlay.addEventListener("pointerdown", closeMobileMenu);
 
-      mobileMenu.addEventListener("pointerdown", (e) => {
-        e.stopPropagation();
-      });
-    }
+      // Prevent menu click from closing
+      mobileMenu.addEventListener("click", (e) => e.stopPropagation());
+      mobileMenu.addEventListener("pointerdown", (e) => e.stopPropagation());
+    } 
 
-    // Mobile Services Toggle
-    const mobileServicesToggle = document.getElementById(
-      "mobileServicesToggle",
-    );
-    const mobileServicesList = document.getElementById("mobileServicesList");
-    const mobileServicesArrow = document.getElementById(
-      "mobileServicesArrow",
-    );
-
-    if (mobileServicesToggle && mobileServicesList && mobileServicesArrow) {
-      mobileServicesToggle.addEventListener("click", (e) => {
-        e.preventDefault();
-        mobileServicesList.classList.toggle("active");
-        mobileServicesArrow.classList.toggle("rotated");
-      });
-    }
-
-    // Mobile Theme Toggle
-    const mobileThemeToggle = document.getElementById("mobileThemeToggle");
-    const mobileThemeText = document.querySelector(".mobile-theme-text");
-    const mobileSunIcon = document.querySelector(".mobile-sun-icon");
-    const mobileMoonIcon = document.querySelector(".mobile-moon-icon");
 
     if (mobileThemeToggle) {
       mobileThemeToggle.addEventListener("click", () => {
@@ -3265,4 +3259,36 @@
 
 </body>
 
+<script>
+  window.addEventListener("mouseup", () => {
+    circles.forEach((c) => c.classList.remove("cursor-clicking"));
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
+    const mobileCloseBtn = document.querySelector(".mobile-close-btn");
+
+    if (!hamburgerBtn || !mobileMenu || !mobileMenuOverlay) return;
+
+    function openMobileMenu() {
+      mobileMenu.classList.add("active");
+      mobileMenuOverlay.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeMobileMenu() {
+      mobileMenu.classList.remove("active");
+      mobileMenuOverlay.classList.remove("active");
+      document.body.style.overflow = "";
+    }
+
+    hamburgerBtn.addEventListener("click", openMobileMenu);
+    mobileCloseBtn?.addEventListener("click", closeMobileMenu);
+    mobileMenuOverlay.addEventListener("click", closeMobileMenu);
+  });
+</script>
+</body>
 </html>
+
