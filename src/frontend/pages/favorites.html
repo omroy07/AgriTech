@@ -114,9 +114,14 @@
     <script>
         class FavoritesPage {
             constructor() {
+                if (!window.favoritesManager) {
+                    console.error('FavoritesManager not initialized');
+                    return;
+                }
                 this.favoritesManager = window.favoritesManager;
                 this.init();
             }
+
 
             init() {
                 this.renderFavorites();
@@ -230,15 +235,16 @@
 
         // Initialize favorites page
         let favoritesPage;
-        document.addEventListener('DOMContentLoaded', function() {
+
+        document.addEventListener('favoritesLoaded', () => {
             favoritesPage = new FavoritesPage();
-            
-            // Listen for favorite changes
-            document.addEventListener('favoriteToggle', function() {
+
+            document.addEventListener('favoriteToggle', () => {
                 favoritesPage.renderFavorites();
                 favoritesPage.updateStats();
             });
         });
+
     </script>
 </body>
 </html>

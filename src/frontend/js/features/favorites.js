@@ -133,6 +133,19 @@ class FavoritesManager {
             }
         }, 3000);
     }
+    clearFavorites() {
+    this.favorites = [];
+    this.saveFavorites();
+
+    document.dispatchEvent(
+        new CustomEvent('favoritesLoaded', {
+            detail: { favorites: [] }
+        })
+    );
+
+    this.showNotification('All favorites cleared');
+}
+
 }
 
 // Initialize when DOM is loaded
