@@ -77,7 +77,7 @@ if (!window.favoritesManager) {
             this.storageKey = 'agritech_favorite_blogs';
             this.favorites = JSON.parse(localStorage.getItem(this.storageKey)) || [];
             window.favoritesManager = this;
-            console.log('✅ FavoritesManager initialized');
+            // console.log('✅ FavoritesManager initialized');
         }
 
         isFavorite(blogId) {
@@ -495,7 +495,7 @@ function displayPosts() {
 
 // Toggle favorite
 function toggleFavorite(blogId) {
-    console.log('🔄 Toggling favorite for:', blogId);
+    // console.log('🔄 Toggling favorite for:', blogId);
 
     if (!window.favoritesManager) {
         alert('❌ Favorites feature not loaded');
@@ -626,7 +626,7 @@ document.getElementById('themeToggle').addEventListener('click', function () {
 
 // Listen for favorite changes
 document.addEventListener('favoriteToggle', function (event) {
-    console.log('📢 Favorite event:', event.detail);
+    // console.log('📢 Favorite event:', event.detail);
     updateFavoriteButtons(event.detail.blogId);
     updateFavoriteCounter();
 });

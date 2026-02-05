@@ -703,35 +703,74 @@ body {
 }
 
 .feature-card {
+  position: relative;
   background: var(--surface-color);
-  padding: 2rem;
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
+  padding: 2.2rem;
+  border-radius: 14px;
+  border: 2px solid var(--border-color);
   text-align: center;
+  overflow: hidden;
+
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s ease,
+    border-color 0.45s ease;
+}
+
+/* STRONG animated glow */
+.feature-card::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(
+    circle,
+    rgba(34, 197, 94, 0.45) 0%,
+    rgba(34, 197, 94, 0.25) 30%,
+    transparent 60%
+  );
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+  pointer-events: none;
 }
 
 .feature-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-16px) scale(1.06);
   border-color: var(--accent-color);
-  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.2);
+  box-shadow:
+    0 40px 80px rgba(0, 0, 0, 0.35),
+    0 20px 40px rgba(34, 197, 94, 0.45);
 }
 
+.feature-card:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ICON — BIG reaction */
 .feature-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+  font-size: 3.2rem;
+  margin-bottom: 1.2rem;
   color: var(--text-color);
+  transition: transform 0.45s ease, color 0.45s ease;
 }
 
+.feature-card:hover .feature-icon {
+  transform: scale(1.35) rotate(-6deg);
+  color: var(--accent-color);
+}
+
+/* Title */
 .feature-title {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   margin-bottom: 1rem;
   color: var(--accent-color);
 }
 
+/* Description */
 .feature-description {
   color: var(--text-muted);
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 /* 6. FOOTER */
