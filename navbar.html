@@ -3,7 +3,6 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Navbar Component</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
@@ -568,6 +567,34 @@
         font-size: 1.1rem;
       }
     }
+    /* ===== Lighthouse A11Y FIXES ===== */
+
+    /* Mobile Register button – fix contrast */
+    a.mobile-link.mobile-register {
+      background-color: #166534; /* dark green */
+      color: #ffffff !important;
+      font-weight: 600;
+    }
+
+    /* Ensure hover is also readable */
+    a.mobile-link.mobile-register:hover {
+      background-color: #14532d;
+      color: #ffffff;
+    }
+
+    /* Fix active secondary buttons */
+    button.btn.btn-secondary.active {
+      background-color: #0f172a !important;
+      color: #ffffff !important;
+      border-color: #0f172a !important;
+    }
+
+    /* Fix primary buttons */
+    button.btn.btn-primary {
+      background-color: #166534 !important;
+      color: #ffffff !important;
+    }
+
   </style>
 </head>
 
