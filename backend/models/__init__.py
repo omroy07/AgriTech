@@ -8,6 +8,7 @@ from .misc import Notification, File, YieldPool, PoolContribution, ResourceShare
 from .gews import DiseaseIncident, OutbreakZone, OutbreakAlert
 from .traceability import SupplyBatch, CustodyLog, QualityGrade, BatchStatus
 from .insurance import InsurancePolicy, ClaimRequest, RiskScoreHistory
+from .equipment import Equipment, RentalBooking, AvailabilityCalendar, PaymentEscrow
 
 __all__ = [
     'User', 'UserRole', 'LoanRequest', 'PredictionHistory', 
