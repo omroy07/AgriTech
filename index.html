@@ -16,31 +16,6 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
     rel="stylesheet" />
-  <script>
-    // services dropdown
-    document.addEventListener("DOMContentLoaded", () => {
-      const container = document.querySelector(".services-toggle-container");
-      const toggle = container.querySelector(".services-toggle");
-      const dropdown = container.querySelector(".services-dropdown");
-      const arrow = container.querySelector(".services-arrow");
-
-      toggle.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        dropdown.classList.toggle("active");
-        arrow.classList.toggle("rotated");
-      });
-
-      // Close dropdown if clicking outside
-      document.addEventListener("click", (e) => {
-        if (!container.contains(e.target)) {
-          dropdown.classList.remove("active");
-          arrow.classList.remove("rotated");
-        }
-      });
-    });
-  </script>
-
   <style>
     /* 1. DEFINE VARIABLES FOR THEMES */
     :root {
@@ -326,7 +301,41 @@
     /* Language Selector */
     .lang-container {
       position: relative;
-      flex-shrink: 0;
+      display: inline-block;
+    }
+
+    .lang-trigger {
+      background: var(--brand-green-gradient);
+      /* Consistent Green Palette */
+      color: #ffffff !important;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 25px;
+      /* Pill-shaped */
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      /* Bouncy Interaction Logic */
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        box-shadow 0.3s ease;
+    }
+
+    .lang-trigger:hover {
+      transform: scale(1.08) translateY(-2px);
+      /* Pop-out effect */
+      box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+    }
+
+    .lang-chevron {
+      font-size: 0.7rem;
+      transition: transform 0.3s ease;
+    }
+
+    .lang-container.active .lang-chevron {
+      transform: rotate(180deg);
     }
 
     .lang-btn {
@@ -354,88 +363,49 @@
 
     .lang-dropdown {
       position: absolute;
-      top: calc(100% + 0.5rem);
+      top: calc(100% + 10px);
       right: 0;
       background: var(--surface-color);
+      backdrop-filter: blur(15px);
+      /* Modern blur effect */
       border: 1px solid var(--border-color);
-      border-radius: 0.5rem;
-      min-width: 120px;
-      padding: 0.5rem;
+      border-radius: 15px;
+      min-width: 160px;
+      padding: 8px;
       opacity: 0;
       visibility: hidden;
       transform: translateY(-10px);
       transition: all 0.3s ease;
-      z-index: 1000;
-      box-shadow: 0 4px 12px var(--shadow-color);
+      z-index: 1100;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
     }
-      .theme-text {
-        font-size: 0.85rem;
-      }
-      /* ====================================
-        Language Select (Top Bar)
-        ==================================== */
 
-      .language-select {
-        padding: 8px 14px;
-        border-radius: 999px;
-        border: 1px solid var(--border-color);
-        background: var(--surface-color);
-        color: var(--text-color);
-        font-size: 0.85rem;
-        font-weight: 500;
-        cursor: pointer;
-        box-shadow: 0 2px 8px var(--shadow-color);
-        transition: all 0.25s ease;
-        outline: none;
-      }
-      .language-label {
-        font-size: 0.85rem;
-        color: var(--text-muted);
-        margin-right: 6px;
-      }
-
-      /* Hover */
-      .language-select:hover {
-        border-color: var(--accent-color);
-        background: rgba(34, 197, 94, 0.1);
-        transform: translateY(-1px);
-      }
-
-      /* Focus */
-      .language-select:focus {
-        border-color: var(--accent-color);
-        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
-      }
-
-     
-      /* Mobile */
-      @media (max-width: 600px) {
-        .language-select {
-          width: 100%;
-          margin-top: 6px;
-        }
-      }
     .lang-dropdown.active {
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
     }
 
-
     .lang-option {
-      display: block;
-      color: var(--text-muted);
-      text-decoration: none;
-      padding: 0.5rem;
-      border-radius: 4px;
-      transition: all 0.2s;
+      padding: 10px 15px;
+      border-radius: 10px;
       cursor: pointer;
-      font-size: 0.85rem;
+      color: var(--text-color);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s ease;
     }
 
     .lang-option:hover {
-      background: var(--btn-bg);
-      color: var(--text-color);
+      background: rgba(34, 197, 94, 0.15);
+      /* Soft green highlight */
+      color: var(--accent-color);
+    }
+
+    .lang-flag {
+      font-size: 1.1rem;
     }
 
     /* Theme Toggle */
@@ -719,7 +689,6 @@
 
     /* FLOATING BUTTONS */
     #chatbotBtn,
-    #spatialBtn,
     .scroll-btn {
       position: fixed;
       right: 20px;
@@ -738,18 +707,8 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
-    #spatialBtn {
-      bottom: 140px;
-      background: #6366f1;
-    }
-
     #chatbotBtn {
       bottom: 80px;
-    }
-
-    #spatialBtn:hover {
-      transform: scale(1.1);
-      background: #4f46e5;
     }
 
     #chatbotBtn:hover,
@@ -990,6 +949,7 @@
           top: 1rem;
           right: 1rem;
         }
+      }
 
         .mobile-close-btn i {
           font-size: 1.1rem;
@@ -1283,15 +1243,10 @@
       }
 
       #chatbotBtn,
-      #spatialBtn,
       .scroll-btn {
         width: 45px;
         height: 45px;
         right: 15px;
-      }
-
-      #spatialBtn {
-        bottom: 125px;
       }
 
       #chatbotBtn {
@@ -1974,15 +1929,15 @@
 
       <!-- Left Nav Links -->
       <div class="left-nav">
-        <a href="index.html" class="nav-link" data-i18n="home">Home</a>
-        <a href="about.html" class="nav-link" data-i18n="about">About</a>
-        <a href="blog.html" class="nav-link" data-i18n="blog">Blog</a>
-        <a href="news.html" class="nav-link" data-i18n="ag_news">Ag News</a>
-        <a href="scheme.html" class="nav-link" data-i18n="schemes">Schemes</a>
-        <a href="community_forum.html" class="nav-link" data-i18n="community_forum">Community Forum</a>
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="news.html" class="nav-link">Ag News</a>
+        <a href="scheme.html" class="nav-link">Schemes</a>
+        <a href="community_forum.html" class="nav-link">Community Forum</a>
         <!-- Services Dropdown -->
         <div class="services-toggle-container">
-          <a href="#" class="nav-link services-toggle" data-i18n="services">
+          <a href="#" class="nav-link services-toggle">
             Services <i class="fas fa-chevron-down services-arrow"></i>
           </a>
           <div class="services-dropdown">
@@ -2018,40 +1973,23 @@
 
         <!-- Language Selector -->
         <div class="lang-container">
-          <button class="lang-btn">
+          <button class="btn-nav-action lang-trigger" id="langTrigger">
             <i class="fas fa-globe"></i>
-            <span class="selected-lang" id="current-lang-text">English</span>
+            <span id="current-lang-text">English</span>
+            <i class="fas fa-chevron-down lang-chevron"></i>
           </button>
-          <div class="lang-dropdown">
+          <div class="lang-dropdown" id="langDropdown">
             <div class="lang-option" onclick="setLanguage('en', 'English')">
-              English
+              <span class="lang-flag">🇺🇸</span> English
             </div>
             <div class="lang-option" onclick="setLanguage('hi', 'हिन्दी')">
-              हिन्दी
-            </div>
-            <div class="lang-option" onclick="setLanguage('bn', 'বাংলা')">
-              বাংলা
+              <span class="lang-flag">🇮🇳</span> हिन्दी
             </div>
             <div class="lang-option" onclick="setLanguage('te', 'తెలుగు')">
-              తెలుగు
-            </div>
-            <div class="lang-option" onclick="setLanguage('mr', 'मराठी')">
-              मराठी
+              <span class="lang-flag">🇮🇳</span> తెలుగు
             </div>
             <div class="lang-option" onclick="setLanguage('ta', 'தமிழ்')">
-              தமிழ்
-            </div>
-            <div class="lang-option" onclick="setLanguage('gu', 'ગુજરાતી')">
-              ગુજરાતી
-            </div>
-            <div class="lang-option" onclick="setLanguage('kn', 'ಕನ್ನಡ')">
-              ಕನ್ನಡ
-            </div>
-            <div class="lang-option" onclick="setLanguage('ml', 'മലയാളം')">
-              മലയാളം
-            </div>
-            <div class="lang-option" onclick="setLanguage('pa', 'ਪੰਜਾਬੀ')">
-              ਪੰਜਾਬੀ
+              <span class="lang-flag">🇮🇳</span> தமிழ்
             </div>
           </div>
         </div>
@@ -2334,7 +2272,7 @@
             List equipment, offer rentals, and connect with nearby farmers who
             need modern machinery.
           </p>
-          <a class="btn btn-secondary" href="equipments.html" data-i18n="marketplace"
+          <a class="btn btn-secondary" href="marketplace.html" data-i18n="marketplace"
             aria-label="List equipment on the marketplace">List equipment</a>
         </article>
 
@@ -2693,10 +2631,6 @@
     <div class="footer-wave-overlay"></div>
   </footer>
 
-  <a href="spatial.html" id="spatialBtn" title="Field Analysis" aria-label="Spatial Analytics">
-    <i class="fas fa-map-marked-alt"></i>
-  </a>
-
   <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
     <i class="fas fa-robot"></i>
   </a>
@@ -2824,6 +2758,35 @@
       const next = current === "light" ? "dark" : "light";
       applyTheme(next);
     });
+
+    // Services Dropdown
+    const servicesToggle = document.querySelector(".services-toggle");
+    const servicesDropdown = document.querySelector(".services-dropdown");
+    const servicesArrow = document.querySelector(".services-arrow");
+
+    if (servicesToggle && servicesDropdown && servicesArrow) {
+      servicesToggle.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        servicesDropdown.classList.toggle("active");
+        servicesArrow.classList.toggle("rotated");
+      });
+
+      document.addEventListener("click", (e) => {
+        const container = document.querySelector(
+          ".services-toggle-container",
+        );
+        if (
+          container &&
+          !container.contains(e.target) &&
+          servicesDropdown.classList.contains("active")
+        ) {
+          servicesDropdown.classList.remove("active");
+          servicesArrow.classList.remove("rotated");
+        }
+      });
+    }
+
     // Language Selector
     const langBtn = document.querySelector(".lang-btn");
     const langDropdown = document.querySelector(".lang-dropdown");
@@ -2890,6 +2853,7 @@
         e.preventDefault();
         openMobileMenu();
       });
+    }
 
       // CLOSE
       mobileCloseBtn.addEventListener("pointerdown", (e) => {
@@ -2898,29 +2862,35 @@
         closeMobileMenu();
       });
 
-    if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
-      // OPEN
-      hamburgerBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        openMobileMenu();
-      });
-
-      // CLOSE (button)
-      mobileCloseBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        closeMobileMenu();
-      });
-
-      // CLOSE (overlay – mobile + desktop)
-      mobileMenuOverlay.addEventListener("click", closeMobileMenu);
       mobileMenuOverlay.addEventListener("pointerdown", closeMobileMenu);
 
-      // Prevent menu click from closing
-      mobileMenu.addEventListener("click", (e) => e.stopPropagation());
-      mobileMenu.addEventListener("pointerdown", (e) => e.stopPropagation());
-    } 
+      mobileMenu.addEventListener("pointerdown", (e) => {
+        e.stopPropagation();
+      });
+    }
 
+    // Mobile Services Toggle
+    const mobileServicesToggle = document.getElementById(
+      "mobileServicesToggle",
+    );
+    const mobileServicesList = document.getElementById("mobileServicesList");
+    const mobileServicesArrow = document.getElementById(
+      "mobileServicesArrow",
+    );
+
+    if (mobileServicesToggle && mobileServicesList && mobileServicesArrow) {
+      mobileServicesToggle.addEventListener("click", (e) => {
+        e.preventDefault();
+        mobileServicesList.classList.toggle("active");
+        mobileServicesArrow.classList.toggle("rotated");
+      });
+    }
+
+    // Mobile Theme Toggle
+    const mobileThemeToggle = document.getElementById("mobileThemeToggle");
+    const mobileThemeText = document.querySelector(".mobile-theme-text");
+    const mobileSunIcon = document.querySelector(".mobile-sun-icon");
+    const mobileMoonIcon = document.querySelector(".mobile-moon-icon");
 
     if (mobileThemeToggle) {
       mobileThemeToggle.addEventListener("click", () => {
@@ -2941,7 +2911,6 @@
     }
   </script>
   <script>
-
     if (
       window.location.pathname.endsWith("index.html") ||
       window.location.pathname === "/"
@@ -3024,6 +2993,42 @@
           `No results found for "${query}". Try different keywords.`;
         document.getElementById("searchPopup").style.display = "flex";
       }
+
+      function highlightAll(query) {
+        clearHighlights();
+        let found = false;
+        let firstMatch = null;
+
+        const walker = document.createTreeWalker(
+          document.body,
+          NodeFilter.SHOW_TEXT,
+        );
+        const nodes = [];
+
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+
+        nodes.forEach((node) => {
+          const text = node.nodeValue;
+          const lower = text.toLowerCase();
+
+          if (!lower.includes(query)) return;
+
+          const parent = node.parentNode;
+          const fragment = document.createDocumentFragment();
+          let lastIndex = 0;
+
+          lower.replace(new RegExp(query, "gi"), (match, index) => {
+            found = true;
+
+            fragment.append(
+              document.createTextNode(text.slice(lastIndex, index)),
+            );
+
+            const span = document.createElement("span");
+            span.className = "search-highlight";
+            span.textContent = text.slice(index, index + match.length);
+
+            if (!firstMatch) firstMatch = span;
 
       window.closeSearchPopup = () => {
         document.getElementById("searchPopup").style.display = "none";
@@ -3165,6 +3170,7 @@
   <script src="translations.js"></script>
   <script src="scripts/i18n.js"></script>
 
+  
   <script>
     const languages = {
       en: {
@@ -3198,6 +3204,7 @@
       }
     });
   </script>
+
 
   <script>
     const langSelect = document.getElementById("languageSelect");
@@ -3253,30 +3260,8 @@
     window.addEventListener("mouseup", () => {
       circles.forEach((c) => c.classList.remove("cursor-clicking"));
     });
-
   </script>
-  <script src="javascript/i18n.js"></script>
-
 </body>
-
-<script>
-  window.addEventListener("mouseup", () => {
-    circles.forEach((c) => c.classList.remove("cursor-clicking"));
-  });
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const hamburgerBtn = document.getElementById("hamburgerBtn");
-    const mobileMenu = document.getElementById("mobileMenu");
-    const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
-    const mobileCloseBtn = document.querySelector(".mobile-close-btn");
-
-    if (!hamburgerBtn || !mobileMenu || !mobileMenuOverlay) return;
-
-    function openMobileMenu() {
-      mobileMenu.classList.add("active");
-      mobileMenuOverlay.classList.add("active");
-      document.body.style.overflow = "hidden";
-    }
 
     function closeMobileMenu() {
       mobileMenu.classList.remove("active");
