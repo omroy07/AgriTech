@@ -25,6 +25,8 @@ from backend.tasks import predict_crop_task, process_loan_task
 import backend.sockets.task_events  # Register socket event handlers
 import backend.sockets.supply_events # Register supply chain events
 from auth_utils import token_required, roles_required
+import backend.sockets.forum_events # Register forum socket events
+from backend.utils.i18n import t
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
