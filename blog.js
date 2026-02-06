@@ -297,7 +297,31 @@ const defaultBlogPosts = [
         date: "March 20, 2025",
         image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?auto=format&fit=crop&w=800&q=80",
         content: "Turning farm waste into gold! Vermicomposting is one of the most profitable low-investment agri-businesses today. Here is a step-by-step guide to setting up your own unit..."
-    }
+    },
+    {
+    id: "7",
+    title: "Smart Sensors and IoT in Precision Agriculture",
+    category: "technology",
+    description: "How IoT-enabled smart sensors help farmers monitor soil, crops, and weather conditions in real time for data-driven farming decisions.",
+    author: "AgriTech Research Team",
+    date: "March 25, 2025",
+    image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&fit=crop",
+    content: `
+        <p>Precision agriculture is transforming modern farming by integrating smart sensors and Internet of Things (IoT) technologies into everyday agricultural practices.</p>
+
+        <h4>Real-Time Soil Monitoring</h4>
+        <p>IoT-enabled soil sensors continuously track moisture levels, nutrient content, and temperature. This helps farmers optimize irrigation and fertilizer usage, reducing waste and improving crop health.</p>
+
+        <h4>Crop Health & Weather Insights</h4>
+        <p>Advanced sensors and weather stations provide real-time data on humidity, rainfall, and disease risk. Farmers can take timely action to prevent crop loss and increase productivity.</p>
+
+        <h4>Data-Driven Decision Making</h4>
+        <p>By combining sensor data with analytics dashboards, farmers can make informed decisions, improve yield quality, and adopt sustainable farming practices.</p>
+
+        <p>Smart sensors and IoT are key pillars of the future of precision agriculture.</p>
+    `
+},
+
 ];
 
 // Initialize blogPosts with defaults + user posts
