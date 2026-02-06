@@ -395,6 +395,10 @@ input:focus {
  <!-- Cursor Trail -->
 <div class="circle-container" id="cursorTrail"></div>
 <script>
+
+  const today = new Date();
+today.setHours(0, 0, 0, 0);
+
 const schemes=[
 {
 name:"PM-KISAN",
@@ -480,26 +484,40 @@ function checkEligibility(){
   const list=document.getElementById("schemeList");
   list.innerHTML="";
 
-  schemes.forEach(s=>{
-    const eligible=land<=s.max&&(s.states.includes(state)||s.states.includes("India"));
-    list.innerHTML+=`
+schemes.forEach(s => {
+  const deadlineDate = new Date(s.deadline);
+  deadlineDate.setHours(0, 0, 0, 0);
+
+  const isExpired = today > deadlineDate;
+  const eligible =
+    !isExpired &&
+    land <= s.max &&
+    (s.states.includes(state) || s.states.includes("India"));
+
+  list.innerHTML += `
     <div class="scheme">
-      <h3>${s.name}</h3>
+      <h3>${s.name} ${isExpired ? '<span style="color:#d32f2f;font-size:14px;">(Expired)</span>' : ''}</h3>
       <p>${s.desc}</p>
-      <p class="${eligible?'eligible':'not-eligible'}">
-        ${eligible?'✔ Eligible':'✖ Not Eligible'}
+
+      <p class="${eligible ? 'eligible' : 'not-eligible'}">
+        ${isExpired ? '⛔ Expired' : eligible ? '✔ Eligible' : '✖ Not Eligible'}
       </p>
+
       <p class="deadline">Deadline: ${s.deadline}</p>
 
       <div class="actions">
-        <a href="${eligible?s.link:'#'}" target="_blank"
-           class="apply ${eligible?'':'disabled'}">📝 Apply Now</a>
+        <a href="${eligible ? s.link : '#'}"
+           target="_blank"
+           class="apply ${eligible ? '' : 'disabled'}">
+           📝 Apply Now
+        </a>
 
         <button class="docs" onclick="showDocs('${s.name}')">📄 Documents</button>
         <button class="reminder" onclick="showMsg('Reminder set for ${s.name}')">⏰ Reminder</button>
       </div>
-    </div>`;
-  });
+    </div>
+  `;
+});
 }
 
 function showDocs(name){
