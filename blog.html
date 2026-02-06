@@ -70,25 +70,50 @@
                 <button class="close" id="closeCreateModal">&times;</button>
             </div>
             <div class="modal-body">
-                <form id="createPostForm" class="create-post-form">
-                    <div class="form-group">
-                        <label for="postTitle">Title</label>
-                        <input type="text" id="postTitle" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="postCategory">Category</label>
-                        <select id="postCategory" required>
-                            <option value="farming-tips">Farming Tips</option>
-                            <option value="technology">Technology</option>
-                            <option value="sustainability">Sustainability</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="postContent">Content</label>
-                        <textarea id="postContent" required rows="6"></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Publish Post</button>
-                </form>
+               <form id="createPostForm" class="create-post-form">
+
+    <div class="form-group">
+        <label for="postTitle">Title</label>
+        <input type="text" id="postTitle" required>
+    </div>
+
+    <div class="form-group">
+        <label for="postCategory">Category</label>
+        <select id="postCategory" required>
+            <option value="farming-tips">Farming Tips</option>
+            <option value="technology">Technology</option>
+            <option value="sustainability">Sustainability</option>
+            <option value="market-trends">Market Trends</option>
+            <option value="business">Business</option>
+        </select>
+    </div>
+
+    <!-- ✅ NEW: Featured Image -->
+    <div class="form-group">
+        <label for="postImage">Featured Image URL</label>
+        <input type="url" id="postImage" placeholder="https://example.com/image.jpg" required>
+    </div>
+
+    <!-- ✅ NEW: Tags -->
+    <div class="form-group">
+        <label for="postTags">Tags / Keywords</label>
+        <input type="text" id="postTags" placeholder="AI, IoT, Smart Farming">
+    </div>
+
+    <!-- ✅ NEW: Author -->
+    <div class="form-group">
+        <label for="postAuthor">Author Name (optional)</label>
+        <input type="text" id="postAuthor" placeholder="Author name">
+    </div>
+
+    <div class="form-group">
+        <label for="postContent">Content</label>
+        <textarea id="postContent" required rows="6"></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn">Publish Post</button>
+</form>
+
             </div>
         </div>
     </div>

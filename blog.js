@@ -641,39 +641,42 @@ function handleCreatePost(e) {
 
     const title = document.getElementById('postTitle').value;
     const category = document.getElementById('postCategory').value;
-    const description = document.getElementById('postDescription').value;
+    const description = document.getElementById('postContent').value.slice(0, 120) + '...';
     const image = document.getElementById('postImage').value;
+    const tags = document.getElementById('postTags').value
+        .split(',')
+        .map(tag => tag.trim())
+        .filter(Boolean);
+    const author = document.getElementById('postAuthor').value || 'AgriTech Contributor';
     const content = document.getElementById('postContent').value;
-    const author = document.getElementById('postAuthor').value;
 
     const newPost = {
         id: 'user-post-' + Date.now(),
-        title: title,
-        category: category,
-        description: description,
-        image: image,
-        content: content, // Simplified content for now
-        author: author,
-        date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        title,
+        category,
+        description,
+        image,
+        tags,
+        author,
+        date: new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        }),
+        content,
         isUserPost: true
     };
 
-    // Save to localStorage
-    let userPosts = JSON.parse(localStorage.getItem('agritech_user_posts')) || [];
-    userPosts.unshift(newPost); // Add to beginning
+    const userPosts = JSON.parse(localStorage.getItem('agritech_user_posts')) || [];
+    userPosts.unshift(newPost);
     localStorage.setItem('agritech_user_posts', JSON.stringify(userPosts));
 
-    // Update in-memory posts
     blogPosts.unshift(newPost);
-
-    // Re-render
     filterPosts();
 
-    // Close modal and reset form
     document.getElementById('createPostModal').style.display = 'none';
     document.body.style.overflow = 'auto';
     document.getElementById('createPostForm').reset();
 
-    // Show success message
     alert('✅ Blog post published successfully!');
 }
