@@ -424,8 +424,10 @@ function updateFavoriteCounter() {
 // Filter posts
 function filterPosts() {
     filteredPosts = blogPosts.filter(post => {
-        const matchesSearch = post.title.toLowerCase().includes(searchQuery) ||
-            post.description.toLowerCase().includes(searchQuery);
+        const matchesSearch =
+    post.title.toLowerCase().includes(searchQuery) ||
+    (post.description && post.description.toLowerCase().includes(searchQuery)) ||
+    (post.category && post.category.toLowerCase().includes(searchQuery));
         const matchesCategory = currentCategory === 'all' || post.category === currentCategory;
         return matchesSearch && matchesCategory;
     });
