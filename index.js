@@ -1,143 +1,301 @@
-// DOM Elements
+import * as THREE from "three";
+import cropRoadmaps from "./roadmap.js";
+
+/* =========================================
+   1. GLOBAL VARIABLES & DOM ELEMENTS
+   ========================================= */
 const hamburgerBtn = document.getElementById('hamburgerBtn');
-const mobileMenu = document.querySelector('.mobile-menu');
+const mobileMenu = document.getElementById('mobileMenu');
 const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
 const mobileThemeToggle = document.getElementById('mobileThemeToggle');
 const mobileServicesToggle = document.getElementById('mobileServicesToggle');
 const mobileServicesList = document.getElementById('mobileServicesList');
-const themeText = document.getElementById('themeText');
-const moonIcon = document.getElementById('moonIcon');
-const sunIcon = document.getElementById('sunIcon');
-
+const mobileServicesArrow = document.getElementById('mobileServicesArrow');
+const themeToggle = document.querySelector('.theme-toggle');
+const themeText = document.querySelector('.theme-text');
+const moonIcon = document.querySelector('.moon-icon');
+const sunIcon = document.querySelector('.sun-icon');
 const scrollBtn = document.getElementById('scrollBtn');
 const scrollIcon = document.getElementById('scrollIcon');
 
-
-
-
-
-function showCachedNotice() {
-  const notice = document.getElementById('cached-notice');
-  notice.classList.remove('hidden');
-
-  // Automatically hide after a while if you want:
-  setTimeout(() => {
-    notice.classList.add('hidden');
-  }, 5000); // hides after 5 seconds (optional)
-}
-
-
-// Theme Management
-// Theme Management
+/* =========================================
+   2. THEME MANAGEMENT
+   ========================================= */
 const applyTheme = (theme) => {
-document.documentElement.setAttribute('data-theme', theme);
-localStorage.setItem('theme', theme);
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
 
-if (theme === 'dark') {
-    if (themeText) themeText.textContent = 'Light Mode';
-    if (moonIcon) moonIcon.style.display = 'none';
-    if (sunIcon) sunIcon.style.display = 'inline-block';
-} else {
-    if (themeText) themeText.textContent = 'Dark Mode';
-    if (moonIcon) moonIcon.style.display = 'inline-block';
-    if (sunIcon) sunIcon.style.display = 'none';
-}
+  if (themeText) themeText.textContent = theme === 'dark' ? 'Dark' : 'Light';
+  
+  const mobileThemeText = document.querySelector('.mobile-theme-text');
+  const mobileSunIcon = document.querySelector('.mobile-sun-icon');
+  const mobileMoonIcon = document.querySelector('.mobile-moon-icon');
 
+  if (mobileThemeText) {
+      mobileThemeText.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+  }
+  
+  if (theme === 'dark') {
+      if (moonIcon) moonIcon.style.display = 'none';
+      if (sunIcon) sunIcon.style.display = 'inline-block';
+      if (mobileMoonIcon) mobileMoonIcon.style.display = 'none';
+      if (mobileSunIcon) mobileSunIcon.style.display = 'inline-block';
+  } else {
+      if (moonIcon) moonIcon.style.display = 'inline-block';
+      if (sunIcon) sunIcon.style.display = 'none';
+      if (mobileMoonIcon) mobileMoonIcon.style.display = 'inline-block';
+      if (mobileSunIcon) mobileSunIcon.style.display = 'none';
+  }
 };
 
+function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'light' ? 'dark' : 'light';
+    applyTheme(next);
+}
 
 const savedTheme = localStorage.getItem('theme') || 'dark';
 applyTheme(savedTheme);
 
-// Desktop Theme Toggle
-if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme');
-        const next = current === 'light' ? 'dark' : 'light';
-        applyTheme(next);
+if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+if (mobileThemeToggle) mobileThemeToggle.addEventListener('click', toggleTheme);
+
+
+/* =========================================
+   3. LANGUAGE SELECTOR
+   ========================================= */
+window.setLanguage = function(code, label) {
+    const currentLangText = document.getElementById("current-lang-text");
+    if (currentLangText) currentLangText.innerText = label;
+
+    localStorage.setItem("lang", code);
+    
+    if (window.platformLanguageChange) {
+        window.platformLanguageChange(code);
+    } else if (window.languagePlatformChange) {
+        window.languagePlatformChange(code);
+    } else {
+        console.log("Language changed to:", code);
+    }
+};
+
+const langBtn = document.querySelector(".lang-btn");
+const langDropdown = document.querySelector(".lang-dropdown");
+const langTrigger = document.querySelector(".lang-trigger");
+
+if (langTrigger && langDropdown) {
+    langTrigger.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        langDropdown.classList.toggle("active");
+        const chevron = langTrigger.querySelector('.lang-chevron');
+        if (chevron) chevron.classList.toggle('rotated');
+    });
+} else if (langBtn && langDropdown) {
+     langBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        langDropdown.classList.toggle("active");
+      });
+}
+
+document.addEventListener("click", (e) => {
+    if (langDropdown && langDropdown.classList.contains("active")) {
+        if (langTrigger && !langTrigger.contains(e.target) && !langDropdown.contains(e.target)) {
+             langDropdown.classList.remove("active");
+        }
+    }
+});
+
+/* =========================================
+   4. THREE.JS BACKGROUND ANIMATION
+   ========================================= */
+function initThreeJS() {
+    const canvas = document.querySelector("#bg-canvas");
+    if (!canvas) return;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000,
+    );
+    camera.position.set(0, 3, 10);
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      alpha: true,
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    const geometry = new THREE.PlaneGeometry(20, 20, 40, 40);
+    const material = new THREE.MeshBasicMaterial({
+      color: 0x22c55e,
+      wireframe: true,
+    });
+    const plane = new THREE.Mesh(geometry, material);
+    plane.rotation.x = -Math.PI / 2;
+    scene.add(plane);
+
+    const originalPositions = plane.geometry.attributes.position.array.slice();
+    const clock = new THREE.Clock();
+
+    const mouse = new THREE.Vector2(0, 0);
+    const targetMouse = new THREE.Vector2(0, 0);
+
+    window.addEventListener("mousemove", (event) => {
+      targetMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      targetMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    });
+
+    function animate() {
+      const t = clock.getElapsedTime();
+      mouse.x += (targetMouse.x - mouse.x) * 0.05;
+      mouse.y += (targetMouse.y - mouse.y) * 0.05;
+
+      const positions = plane.geometry.attributes.position.array;
+      const mouseWorld = new THREE.Vector2(mouse.x * 10, mouse.y * 10);
+
+      for (let i = 0; i < positions.length; i += 3) {
+        const x = originalPositions[i];
+        const y = originalPositions[i + 1];
+        const baseWave =
+          Math.sin(x * 0.5 + t * 0.5) * 0.1 +
+          Math.sin(y * 0.5 + t * 0.5) * 0.1;
+        const dist = new THREE.Vector2(x, y).distanceTo(mouseWorld);
+        const influence = Math.max(0, 1 - dist / 5);
+        const ripple = Math.sin(dist * 2 - t * 2) * influence * 0.3;
+        positions[i + 2] = baseWave + ripple;
+      }
+
+      plane.geometry.attributes.position.needsUpdate = true;
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    });
+
+    animate();
+}
+
+/* =========================================
+   5. CURSOR TRAIL
+   ========================================= */
+function initCursorTrail() {
+    const circles = document.querySelectorAll(".cursor-circle");
+    if (circles.length === 0) return;
+    
+    let mouseX = 0, mouseY = 0;
+    let positions = Array.from(circles).map(() => ({ x: 0, y: 0 }));
+
+    window.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animateCursor() {
+      let x = mouseX;
+      let y = mouseY;
+
+      circles.forEach((circle, index) => {
+        const pos = positions[index];
+
+        pos.x += (x - pos.x) * 0.3;
+        pos.y += (y - pos.y) * 0.3;
+
+        circle.style.left = pos.x + "px";
+        circle.style.top = pos.y + "px";
+
+        x = pos.x;
+        y = pos.y;
+      });
+
+      requestAnimationFrame(animateCursor);
+    }
+
+    animateCursor();
+
+    window.addEventListener("mousedown", () => {
+      circles.forEach((c) => c.classList.add("cursor-clicking"));
+    });
+
+    window.addEventListener("mouseup", () => {
+      circles.forEach((c) => c.classList.remove("cursor-clicking"));
     });
 }
 
-// Mobile Theme Toggle
-if (mobileThemeToggle) {
-    mobileThemeToggle.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme');
-        const next = current === 'light' ? 'dark' : 'light';
-        applyTheme(next);
-    });
-}
 
-// Mobile Menu Functions
+/* =========================================
+   6. MOBILE MENU & NAVIGATION
+   ========================================= */
 function openMobileMenu() {
-    if (hamburgerBtn) hamburgerBtn.classList.add('active');
     if (mobileMenu) mobileMenu.classList.add('active');
     if (mobileMenuOverlay) mobileMenuOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
 
 function closeMobileMenu() {
-    if (hamburgerBtn) hamburgerBtn.classList.remove('active');
     if (mobileMenu) mobileMenu.classList.remove('active');
     if (mobileMenuOverlay) mobileMenuOverlay.classList.remove('active');
     document.body.style.overflow = '';
     
-    // Close services dropdown if open
     if (mobileServicesList && mobileServicesList.classList.contains('active')) {
         mobileServicesList.classList.remove('active');
-        const mobileServicesArrow = document.querySelector('.mobile-services-toggle .services-arrow');
-        if (mobileServicesArrow) {
-            mobileServicesArrow.classList.remove('rotated');
-        }
+        if (mobileServicesArrow) mobileServicesArrow.classList.remove('rotated');
     }
 }
 
-// Hamburger Menu Toggle
 if (hamburgerBtn) {
     hamburgerBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (hamburgerBtn.classList.contains('active')) {
-            closeMobileMenu();
-        } else {
-            openMobileMenu();
-        }
+        openMobileMenu();
     });
 }
 
-// Close menu when clicking overlay
+const mobileCloseBtn = document.querySelector(".mobile-close-btn");
+if (mobileCloseBtn) {
+    mobileCloseBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeMobileMenu();
+    });
+}
+
 if (mobileMenuOverlay) {
     mobileMenuOverlay.addEventListener('click', closeMobileMenu);
 }
 
-// Close menu when clicking links
 const mobileLinks = document.querySelectorAll('.mobile-menu a:not(.mobile-services-toggle)');
 mobileLinks.forEach(link => {
     link.addEventListener('click', closeMobileMenu);
 });
 
-// Mobile Services Toggle
 if (mobileServicesToggle && mobileServicesList) {
     mobileServicesToggle.addEventListener('click', (e) => {
         e.preventDefault();
         mobileServicesList.classList.toggle('active');
-        const arrow = mobileServicesToggle.querySelector('.services-arrow');
-        if (arrow) {
-            arrow.classList.toggle('rotated');
+        if (mobileServicesArrow) {
+            mobileServicesArrow.classList.toggle('rotated');
         }
     });
 }
 
-// Desktop Services Toggle
 const servicesToggle = document.querySelector('.services-toggle');
 const servicesDropdown = document.querySelector('.services-dropdown');
 const servicesArrow = document.querySelector('.services-arrow');
 
 if (servicesToggle && servicesDropdown && servicesArrow) {
     servicesToggle.addEventListener('click', (event) => {
+        event.preventDefault();
         event.stopPropagation();
         servicesDropdown.classList.toggle('active');
         servicesArrow.classList.toggle('rotated');
-        servicesDropdown.style.left = 'auto';
-        servicesDropdown.style.right = '0';
     });
 
     document.addEventListener('click', (e) => {
@@ -149,7 +307,146 @@ if (servicesToggle && servicesDropdown && servicesArrow) {
     });
 }
 
-// Scroll Button
+/* =========================================
+   7. SEARCH LOGIC
+   ========================================= */
+const pageMap = {
+    home: "index.html",
+    about: "about.html",
+    blog: "blog.html",
+    crop: "crop.html",
+    marketplace: "marketplace.html",
+    supply: "supply-chain.html",
+    sustainable: "sustainable-farming.html",
+    finance: "financial-support.html",
+    login: "login.html",
+    register: "register.html",
+    faq: "faq.html",
+    feedback: "feed-back.html",
+    chat: "chat.html",
+};
+
+function clearHighlights() {
+    document.querySelectorAll(".search-highlight").forEach((span) => {
+      span.replaceWith(span.textContent);
+    });
+}
+
+function highlightAll(query) {
+    clearHighlights();
+    let found = false;
+    let firstMatch = null;
+
+    const walker = document.createTreeWalker(
+      document.body,
+      NodeFilter.SHOW_TEXT,
+    );
+    const nodes = [];
+
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+
+    nodes.forEach((node) => {
+      if (node.parentNode.tagName === 'SCRIPT' || node.parentNode.tagName === 'STYLE') return;
+      
+      const text = node.nodeValue;
+      const lower = text.toLowerCase();
+
+      if (!lower.includes(query)) return;
+
+      const parent = node.parentNode;
+      const fragment = document.createDocumentFragment();
+      let lastIndex = 0;
+
+      lower.replace(new RegExp(query, "gi"), (match, index) => {
+        found = true;
+
+        fragment.append(
+          document.createTextNode(text.slice(lastIndex, index)),
+        );
+
+        const span = document.createElement("span");
+        span.className = "search-highlight";
+        span.textContent = text.slice(index, index + match.length);
+
+        if (!firstMatch) firstMatch = span;
+
+        fragment.append(span);
+        lastIndex = index + match.length;
+      });
+
+      fragment.append(document.createTextNode(text.slice(lastIndex)));
+      parent.replaceChild(fragment, node);
+    });
+
+    if (firstMatch) {
+      firstMatch.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    return found;
+}
+
+function showSearchPopup(query) {
+    const popupText = document.getElementById("searchPopupText");
+    const popup = document.getElementById("searchPopup");
+    if (popupText && popup) {
+        popupText.textContent = `No results found for "${query}". Try different keywords.`;
+        popup.style.display = "flex";
+    }
+}
+
+window.closeSearchPopup = function() {
+    const popup = document.getElementById("searchPopup");
+    if (popup) popup.style.display = "none";
+};
+
+function handleSearch(value) {
+    if (!value) return;
+    const query = value.trim().toLowerCase();
+
+    for (const key in pageMap) {
+      if (query.includes(key)) {
+        window.location.href = pageMap[key];
+        return;
+      }
+    }
+
+    if (highlightAll(query)) return;
+    showSearchPopup(value);
+}
+
+function initSearch() {
+    const searchButton = document.querySelector(".search-button");
+    const searchInput = document.querySelector(".search-input");
+
+    if (searchButton && searchInput) {
+        searchButton.addEventListener("click", () => handleSearch(searchInput.value));
+        searchInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") handleSearch(e.target.value);
+        });
+        
+        searchButton.addEventListener("focus", () => searchInput.focus());
+    }
+
+    const mobileSearchBtn = document.querySelector(".mobile-search-btn");
+    const mobileSearchInput = document.querySelector(".mobile-search-input");
+    
+    if (mobileSearchBtn && mobileSearchInput) {
+        mobileSearchBtn.addEventListener("click", () => {
+             handleSearch(mobileSearchInput.value);
+             closeMobileMenu();
+        });
+        mobileSearchInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                handleSearch(e.target.value);
+                closeMobileMenu();
+            }
+        });
+    }
+}
+
+/* =========================================
+   8. SCROLL BUTTON
+   ========================================= */
 if (scrollBtn && scrollIcon) {
     window.addEventListener("scroll", () => {
         if (window.scrollY > 300) {
@@ -166,227 +463,106 @@ if (scrollBtn && scrollIcon) {
     scrollBtn.addEventListener("click", () => {
         if (scrollIcon.classList.contains("fa-arrow-up")) {
             window.scrollTo({top: 0, behavior: "smooth"});
-        } else {
-            window.scrollTo({top: document.body.scrollHeight, behavior: "smooth"});
         }
     });
 }
 
-// Mobile Search
-const mobileSearchInput = document.querySelector('.mobile-search-input');
-if (mobileSearchInput) {
-    mobileSearchInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            // console.log('Searching for:', mobileSearchInput.value);
-            closeMobileMenu();
 
-            closeMobileMenu();
-        }
-    });
-}
+/* =========================================
+   9. ROADMAP FEATURE
+   ========================================= */
+function initRoadmap() {
+    if (!document.getElementById("roadmap")) return;
+    
+    function getTodayDay() {
+      const start = localStorage.getItem("roadmapStartDate");
 
-// Close menu on escape key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) {
-        closeMobileMenu();
-    }
-});
-
-// Close menu on window resize (if resized to desktop size)
-window.addEventListener('resize', () => {
-    if (window.innerWidth > 1024 && mobileMenu && mobileMenu.classList.contains('active')) {
-        closeMobileMenu();
-    }
-});
-
-// Initialize Three.js animation
-function initThreeJS() {
-    // Your Three.js code here
-}
-
-// ================================
-// 🌱 Farming Roadmap Feature (FINAL)
-// ================================
-
-import cropRoadmaps from "./roadmap.js";
-
-// --------------------
-// 1️⃣ Today calculation
-// --------------------
-function getTodayDay() {
-  const start = localStorage.getItem("roadmapStartDate");
-
-  if (!start) {
-    localStorage.setItem("roadmapStartDate", new Date().toISOString());
-    return 1;
-  }
-
-  const diff =
-    new Date() - new Date(start);
-
-  return Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
-}
-
-// --------------------
-// 2️⃣ Task generation
-// --------------------
-function generateDailyTasks(roadmap) {
-  let day = 1;
-  const tasks = [];
-
-  Object.values(roadmap).forEach(month => {
-    Object.values(month.weeks).forEach(week => {
-      week.forEach(task => {
-        tasks.push({
-          task,
-          baseDay: day,
-          day: day,
-          completed: false
-        });
-        day++;
-      });
-    });
-  });
-
-  return tasks;
-}
-
-// --------------------
-// 3️⃣ ✅ REAL rescheduling
-// --------------------
-function rescheduleTasks(tasks) {
-  const today = getTodayDay();
-
-  // ❗ MISSED = unchecked + scheduled before today
-  const missedCount = tasks.filter(
-    t => !t.completed && t.day < today
-  ).length;
-   
-  return tasks.map(t => ({
-    ...t,
-    day: t.baseDay + missedCount
-  }));
-}
-
-// --------------------
-// 4️⃣ Render UI
-// --------------------
-function renderRoadmap(tasks) {
-  const container = document.getElementById("roadmap");
-  if (!container) return;
-
-  container.innerHTML = "";
-
-  tasks
-    .sort((a, b) => a.day - b.day)
-    .forEach(task => {
-      const row = document.createElement("div");
-      row.style.display = "flex";
-      row.style.gap = "10px";
-      row.style.marginBottom = "10px";
-
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.checked = task.completed;
-
-      checkbox.onchange = () => {
-        task.completed = checkbox.checked;
-
-        // 🔁 Recalculate immediately
-        const updatedTasks = rescheduleTasks(tasks);
-        localStorage.setItem(
-          "roadmapProgress",
-          JSON.stringify(updatedTasks)
-        );
-        renderRoadmap(updatedTasks);
-      };
-
-      const overdue =
-        !task.completed && task.day < getTodayDay()
-          ? " 🔴 Overdue"
-          : "";
-
-      const label = document.createElement("span");
-      label.innerHTML = `
-        <strong>Day ${task.baseDay}</strong>
-        (Scheduled: Day ${task.day})
-        ${overdue}
-        : ${task.task}
-      `;
-
-      row.appendChild(checkbox);
-      row.appendChild(label);
-      container.appendChild(row);
-    });
-}
-
-// --------------------
-// 🚀 Init (ONCE)
-// --------------------
-const selectedCrop = "tomato";
-
-let tasks =
-  JSON.parse(localStorage.getItem("roadmapProgress")) ||
-  generateDailyTasks(
-    cropRoadmaps[selectedCrop].roadmap
-  );
-
-tasks = rescheduleTasks(tasks);
-localStorage.setItem(
-  "roadmapProgress",
-  JSON.stringify(tasks)
-);
-
-renderRoadmap(tasks);
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  const statusDiv = document.getElementById('network-status');
-  const cachedDiv = document.getElementById('cached-notice');
-
-  function updateNetworkStatus() {
-    if (!navigator.onLine) {
-      statusDiv.textContent = '⚠️ Offline or poor connection';
-      statusDiv.classList.remove('hidden');
-    } else {
-      // Check if slow/limited connection
-      if (navigator.connection && (navigator.connection.effectiveType === '2g' || navigator.connection.effectiveType === '3g')) {
-        statusDiv.textContent = '📶 Poor/slow connection';
-        statusDiv.classList.remove('hidden');
-      } else {
-        statusDiv.classList.add('hidden');
-        cachedDiv.classList.add('hidden'); // clear cached notice too
+      if (!start) {
+        localStorage.setItem("roadmapStartDate", new Date().toISOString());
+        return 1;
       }
+
+      const diff = new Date() - new Date(start);
+      return Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
     }
-  }
 
-  window.addEventListener('online', updateNetworkStatus);
-  window.addEventListener('offline', updateNetworkStatus);
+    function generateDailyTasks(roadmap) {
+      let day = 1;
+      const tasks = [];
 
-  updateNetworkStatus();
+      Object.values(roadmap).forEach(month => {
+        Object.values(month.weeks).forEach(week => {
+          week.forEach(task => {
+            tasks.push({
+              task,
+              baseDay: day,
+              day: day,
+              completed: false
+            });
+            day++;
+          });
+        });
+      });
 
-  function showCachedNotice() {
-    cachedDiv.classList.remove('hidden');
-  }
+      return tasks;
+    }
 
-  window.addEventListener('online', () => {
-    cachedDiv.classList.add('hidden');
-  });
+    function rescheduleTasks(tasks) {
+      const today = getTodayDay();
+      const missedCount = tasks.filter(t => !t.completed && t.day < today).length;
+       
+      return tasks.map(t => ({
+        ...t,
+        day: t.baseDay + missedCount
+      }));
+    }
 
-  // Example fetch wrapper
-  fetch('/some-api')
-    .then(resp => resp.json())
-    .then(data => {
-      // render data
-    })
-    .catch(err => {
-      showCachedNotice();
-    });
-});
+    function renderRoadmap(tasks) {
+      const container = document.getElementById("roadmap");
+      if (!container) return;
 
-// --------------------
-// My Activity: Single User Profile with Service Usage Chart
-// --------------------
+      container.innerHTML = "";
+
+      tasks.sort((a, b) => a.day - b.day).forEach(task => {
+          const row = document.createElement("div");
+          row.style.display = "flex";
+          row.style.gap = "10px";
+          row.style.marginBottom = "10px";
+
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.checked = task.completed;
+
+          checkbox.onchange = () => {
+            task.completed = checkbox.checked;
+            const updatedTasks = rescheduleTasks(tasks);
+            localStorage.setItem("roadmapProgress", JSON.stringify(updatedTasks));
+            renderRoadmap(updatedTasks);
+          };
+
+          const overdue = !task.completed && task.day < getTodayDay() ? " 🔴 Overdue" : "";
+
+          const label = document.createElement("span");
+          label.innerHTML = `<strong>Day ${task.baseDay}</strong> (Scheduled: Day ${task.day}) ${overdue}: ${task.task}`;
+
+          row.appendChild(checkbox);
+          row.appendChild(label);
+          container.appendChild(row);
+        });
+    }
+
+    const selectedCrop = "tomato";
+    let tasks = JSON.parse(localStorage.getItem("roadmapProgress")) || generateDailyTasks(cropRoadmaps[selectedCrop].roadmap);
+
+    tasks = rescheduleTasks(tasks);
+    localStorage.setItem("roadmapProgress", JSON.stringify(tasks));
+    renderRoadmap(tasks);
+}
+
+
+/* =========================================
+   10. USER DATA & CHARTS
+   ========================================= */
 const USER_DATA_KEY = 'agritech_user_data';
 
 const sampleUsers = [
@@ -481,6 +657,9 @@ function renderServiceChart(user) {
 
   if (currentChart) currentChart.destroy();
 
+  // Check if Chart is available
+  if (typeof Chart === 'undefined') return;
+
   currentChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
@@ -511,7 +690,7 @@ function renderServiceChart(user) {
         legend: {
           position: 'bottom',
           labels: {
-            color: 'var(--text-color)',
+            color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim(),
             font: { size: 12 }
           }
         },
@@ -526,7 +705,10 @@ function renderServiceChart(user) {
 }
 
 function renderUserProfile(user) {
-  document.getElementById('profileSection').style.display = 'block';
+  const profileSection = document.getElementById('profileSection');
+  if (!profileSection) return;
+
+  profileSection.style.display = 'block';
   document.getElementById('profileName').textContent = user.name;
   document.getElementById('profileSold').textContent = user.sold;
   document.getElementById('profilePurchased').textContent = user.purchased;
@@ -534,26 +716,30 @@ function renderUserProfile(user) {
 
   // Render transactions
   const list = document.getElementById('transactionList');
-  list.innerHTML = '';
-  user.transactions.forEach(tx => {
-    const li = document.createElement('li');
-    li.style.padding = '0.5rem';
-    li.style.borderBottom = '1px solid var(--border-color)';
-    const sign = tx.type === 'sold' ? '+' : '';
-    const color = tx.type === 'sold' ? 'var(--accent-color)' : 'var(--text-muted)';
-    li.innerHTML = `<div style="font-size:0.85rem;color:var(--text-muted)">${tx.date}</div>
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.25rem;">
-                      <span style="color:var(--text-color);font-size:0.95rem">${tx.item}</span>
-                      <span style="color:${color};font-weight:600;">${sign}₹${Math.abs(tx.amount).toLocaleString()}</span>
-                    </div>`;
-    list.appendChild(li);
-  });
+  if (list) {
+      list.innerHTML = '';
+      user.transactions.forEach(tx => {
+        const li = document.createElement('li');
+        li.style.padding = '0.5rem';
+        li.style.borderBottom = '1px solid var(--border-color)';
+        const sign = tx.type === 'sold' ? '+' : '';
+        const color = tx.type === 'sold' ? 'var(--accent-color)' : 'var(--text-muted)';
+        li.innerHTML = `<div style="font-size:0.85rem;color:var(--text-muted)">${tx.date}</div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.25rem;">
+                          <span style="color:var(--text-color);font-size:0.95rem">${tx.item}</span>
+                          <span style="color:${color};font-weight:600;">${sign}₹${Math.abs(tx.amount).toLocaleString()}</span>
+                        </div>`;
+        list.appendChild(li);
+      });
+  }
 
   renderServiceChart(user);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function initUserActivity() {
   const selector = document.getElementById('userSelector');
+  if (!selector) return;
+
   const users = getUserData();
 
   // Populate dropdown
@@ -607,12 +793,11 @@ document.addEventListener('DOMContentLoaded', () => {
       URL.revokeObjectURL(url);
     });
   }
-  // ============================================
-// PROFIT & LOSS ANALYTICS - ADDON SCRIPT
-// Add this to your existing main.js file
-// ============================================
+}
 
-// P&L Sample Data
+/* =========================================
+   11. PROFIT & LOSS ANALYTICS
+   ========================================= */
 const plSampleData = [
   {
     id: 'U003',
@@ -706,14 +891,12 @@ const plSampleData = [
   }
 ];
 
-// Chart instances
 let plTrendChart = null;
 let plCategoryChart = null;
 
-// Initialize P&L Trend Chart
 function renderPLTrendChart(userData, timeRange) {
   const ctx = document.getElementById('plTrendChart');
-  if (!ctx) return;
+  if (!ctx || typeof Chart === 'undefined') return;
 
   const periods = userData[timeRange];
   const labels = periods.map(p => p.period);
@@ -827,10 +1010,9 @@ function renderPLTrendChart(userData, timeRange) {
   });
 }
 
-// Initialize P&L Category Chart
 function renderPLCategoryChart(categories) {
   const ctx = document.getElementById('plCategoryChart');
-  if (!ctx) return;
+  if (!ctx || typeof Chart === 'undefined') return;
 
   const labels = Object.keys(categories);
   const data = Object.values(categories);
@@ -904,7 +1086,6 @@ function renderPLCategoryChart(categories) {
   });
 }
 
-// Update P&L Summary Cards
 function updatePLSummary(userData, timeRange) {
   const periods = userData[timeRange];
   const latest = periods[periods.length - 1];
@@ -918,7 +1099,6 @@ function updatePLSummary(userData, timeRange) {
   profitEl.className = 'pl-card-value ' + (latest.profit >= 0 ? 'positive' : 'negative');
 }
 
-// Generate CSV Export
 function generatePLCSV(user, timeRange) {
   const periods = user[timeRange];
   let csv = 'Period,Revenue,Expenses,Profit,Transactions\n';
@@ -928,12 +1108,10 @@ function generatePLCSV(user, timeRange) {
   return csv;
 }
 
-// Initialize P&L Section
-document.addEventListener('DOMContentLoaded', () => {
+function initProfitLoss() {
   const plSelector = document.getElementById('plUserSelector');
   if (!plSelector) return;
 
-  // Populate dropdown with buyers and retailers only
   plSampleData.forEach(u => {
     const opt = document.createElement('option');
     opt.value = u.id;
@@ -944,7 +1122,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentTimeRange = 'monthly';
   let currentUser = null;
 
-  // Load first user by default
   if (plSampleData.length > 0) {
     currentUser = plSampleData[0];
     plSelector.value = currentUser.id;
@@ -953,7 +1130,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderPLCategoryChart(currentUser.categories);
   }
 
-  // User selection change handler
   plSelector.addEventListener('change', (e) => {
     const user = plSampleData.find(u => u.id === e.target.value);
     if (user) {
@@ -964,10 +1140,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Time range toggle handlers
   document.querySelectorAll('.pl-time-toggle .btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      // Update active state
       document.querySelectorAll('.pl-time-toggle .btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       
@@ -980,7 +1154,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Export functionality
   const exportBtn = document.getElementById('exportPLBtn');
   if (exportBtn) {
     exportBtn.addEventListener('click', () => {
@@ -1002,7 +1175,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Update chart colors on theme change
   const observer = new MutationObserver(() => {
     if (currentUser) {
       renderPLTrendChart(currentUser, currentTimeRange);
@@ -1014,6 +1186,49 @@ document.addEventListener('DOMContentLoaded', () => {
     attributes: true,
     attributeFilter: ['data-theme']
   });
+}
+
+/* =========================================
+   12. NETWORK & SERVICE WORKER
+   ========================================= */
+function initNetworkStatus() {
+  const statusDiv = document.getElementById('network-status');
+  const cachedDiv = document.getElementById('cached-notice');
+  if (!statusDiv || !cachedDiv) return;
+
+  function updateNetworkStatus() {
+    if (!navigator.onLine) {
+      statusDiv.textContent = '⚠️ Offline or poor connection';
+      statusDiv.classList.remove('hidden');
+    } else {
+      statusDiv.classList.add('hidden');
+      cachedDiv.classList.add('hidden');
+    }
+  }
+
+  window.addEventListener('online', updateNetworkStatus);
+  window.addEventListener('offline', updateNetworkStatus);
+  updateNetworkStatus();
+}
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/service-worker.js")
+      .catch((err) => console.log("Service Worker failed", err));
+  });
+}
+
+
+/* =========================================
+   INITIALIZATION
+   ========================================= */
+document.addEventListener('DOMContentLoaded', () => {
+    initThreeJS();
+    initCursorTrail();
+    initSearch();
+    initRoadmap();
+    initUserActivity();
+    initProfitLoss();
+    initNetworkStatus();
 });
-});
- main
