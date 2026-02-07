@@ -349,3 +349,64 @@ window.removePrediction = function (index) {
 renderProducts();
 renderRequests();
 renderPredictions();
+            // --- Cursor Trailing Effect ---
+const container = document.getElementById('cursorTrail');
+const circleCount = 12;
+const circles = [];
+
+let mouseX = 0;
+let mouseY = 0;
+
+// Create circles
+for (let i = 0; i < circleCount; i++) {
+    const circle = document.createElement('div');
+    circle.classList.add('cursor-circle');
+    container.appendChild(circle);
+    circles.push({ el: circle, x: 0, y: 0 });
+}
+
+// Mouse move
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
+
+// Click effects
+document.addEventListener('mousedown', () => {
+    circles.forEach(c => c.el.classList.add('cursor-clicking'));
+});
+document.addEventListener('mouseup', () => {
+    circles.forEach(c => c.el.classList.remove('cursor-clicking'));
+});
+
+// Hover effects on interactive elements
+document.addEventListener('mouseover', (e) => {
+    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+        circles.forEach(c => c.el.classList.add('cursor-hovering'));
+    }
+});
+document.addEventListener('mouseout', (e) => {
+    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+        circles.forEach(c => c.el.classList.remove('cursor-hovering'));
+    }
+});
+
+// Animate trailing effect
+function animateCursor() {
+    let x = mouseX;
+    let y = mouseY;
+
+    circles.forEach((circle) => {
+        circle.x += (x - circle.x) * 0.25;
+        circle.y += (y - circle.y) * 0.25;
+
+        circle.el.style.left = circle.x + 'px';
+        circle.el.style.top = circle.y + 'px';
+
+        x = circle.x;
+        y = circle.y;
+    });
+
+    requestAnimationFrame(animateCursor);
+}
+animateCursor();
