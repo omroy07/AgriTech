@@ -1,706 +1,745 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>Govt Schemes & Subsidy Tracker</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <meta charset="UTF-8">
+  <title>Govt Schemes & Subsidy Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-<style>
-:root{
-  --primary:#2e7d32;
-  --secondary:#1b5e20;
-  --bg:#f1f5f3;
-  --card: rgba(255, 255, 255, 0.9);
-  --text:#333333;
-  --label:#1b5e20;
-  --input-bg:#ffffff;
-  --input-border:#cccccc;
-  --danger:#d32f2f;
-  --success:#2e7d32;
-  --shadow:0 18px 45px rgba(0,0,0,0.12);
-}
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --bg: #f1f5f3;
+      --card: rgba(255, 255, 255, 0.9);
+      --text: #333333;
+      --label: #1b5e20;
+      --input-bg: #ffffff;
+      --input-border: #cccccc;
+      --danger: #d32f2f;
+      --success: #2e7d32;
+      --shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+    }
 
-/* DARK THEME VARIABLES */
-[data-theme="dark"] {
-  --bg:#0f172a;
-  --card:#1e293b;
-  --text:#f1f5f3;
-  --label:#4caf50;
-  --input-bg:#0f172a;
-  --input-border:#334155;
-  --shadow:0 18px 45px rgba(0,0,0,0.4);
-}
+    /* DARK THEME VARIABLES */
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f1f5f3;
+      --label: #4caf50;
+      --input-bg: #0f172a;
+      --input-border: #334155;
+      --shadow: 0 18px 45px rgba(0, 0, 0, 0.4);
+    }
 
-*{box-sizing:border-box;margin:0;padding:0}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-body{
-  font-family:"Segoe UI",sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  transition: background 0.3s ease, color 0.3s ease;
-}
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
 
-.serif { font-family: 'Libertinus Serif', serif; }
+    .serif {
+      font-family: 'Libertinus Serif', serif;
+    }
 
-/* HEADER */
-header{
-  background:linear-gradient(135deg,var(--primary),var(--secondary));
-  color:#fff;
-  padding:24px 30px;
-  display:flex;
-  align-items:center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-header h1{font-size:26px;font-weight:800}
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      padding: 24px 30px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
 
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
+    header h1 {
+      font-size: 26px;
+      font-weight: 800
+    }
 
-/* THEME TOGGLE STYLE */
-.theme-toggle {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 40px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 800;
-  transition: all 0.3s ease;
-}
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
 
-.theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
-}
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-header h1{
-  font-size:26px;
-  font-weight:800;
-  flex:1; /* pushes right items safely */
-}
-header a{
-  background:#fff;
-  color:var(--primary);
-  padding:10px 22px;
-  border-radius:40px;
-  text-decoration:none;
-  font-weight:800;
-  transition: all 0.3s ease;
-}
+    /* THEME TOGGLE STYLE */
+    .theme-toggle {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      transition: all 0.3s ease;
+    }
 
-header a:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      flex: 1;
+      /* pushes right items safely */
+    }
+
+    header a {
+      background: #fff;
+      color: var(--primary);
+      padding: 10px 22px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: all 0.3s ease;
+    }
+
+    header a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
 
 
-/* FORM */
-.hero{display:flex;justify-content:center;padding:40px 20px}
-.form-card{
-  background:var(--card);
-  max-width:900px;
-  width:100%;
-  padding:55px 65px;
-  border-radius:28px;
-  box-shadow:var(--shadow);
-  transition: background 0.3s ease;
-}
-.form-card h2{
-  text-align:center;
-  font-size:34px;
-  margin-bottom:40px;
-  color:var(--primary);
-}
+    /* FORM */
+    .hero {
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px
+    }
 
-[data-theme="dark"] .form-card h2 {
-    color: var(--label);
-}
+    .form-card {
+      background: var(--card);
+      max-width: 900px;
+      width: 100%;
+      padding: 55px 65px;
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      transition: background 0.3s ease;
+    }
 
-label {
-  display: block;
-  margin-top: 1.6rem;
-  font-weight: 700;
-  font-size: 1.05rem;
-  color: var(--primary);
-}
+    .form-card h2 {
+      text-align: center;
+      font-size: 34px;
+      margin-bottom: 40px;
+      color: var(--primary);
+    }
 
-select,
-input {
-  width: 100%;
-  margin-top: 0.6rem;
-  padding: 1rem 1.2rem;
-  font-size: 1rem;
-  border-radius: 16px;
-  border: 1px solid var(--input-border);
-  background: var(--input-bg);
-  color: var(--text);
-  outline: none;
-  transition: border 0.25s ease, box-shadow 0.25s ease;
-}
+    [data-theme="dark"] .form-card h2 {
+      color: var(--label);
+    }
 
-select:focus,
-input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
-}
+    label {
+      display: block;
+      margin-top: 1.6rem;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--primary);
+    }
 
-/* ===============================
+    select,
+    input {
+      width: 100%;
+      margin-top: 0.6rem;
+      padding: 1rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 16px;
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text);
+      outline: none;
+      transition: border 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+    }
+
+    /* ===============================
    SUBMIT BUTTON
 ================================ */
-.form-card button {
-  width: 100%;
-  margin-top: 2.5rem;
-  padding: 1.2rem;
-  font-size: 1.15rem;
-  font-weight: 900;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  color: #fff;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
+    .form-card button {
+      width: 100%;
+      margin-top: 2.5rem;
+      padding: 1.2rem;
+      font-size: 1.15rem;
+      font-weight: 900;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
 
-.form-card button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
-}
+    .form-card button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+    }
 
-/* ===============================
+    /* ===============================
    SCHEME LIST
 ================================ */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 3rem 1.5rem;
-}
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+    }
 
-.scheme {
-  background: var(--card);
-  border-left: 8px solid var(--primary);
-  padding: 2rem;
-  border-radius: 22px;
-  box-shadow: var(--shadow);
-  margin-bottom: 2rem;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
+    .scheme {
+      background: var(--card);
+      border-left: 8px solid var(--primary);
+      padding: 2rem;
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
 
-.scheme:hover {
-  transform: translateY(-4px);
-}
+    .scheme:hover {
+      transform: translateY(-4px);
+    }
 
-.scheme h3 {
-  font-size: 1.6rem;
-  margin-bottom: 0.4rem;
-  color: var(--primary);
-}
+    .scheme h3 {
+      font-size: 1.6rem;
+      margin-bottom: 0.4rem;
+      color: var(--primary);
+    }
 
-.scheme p {
-  font-size: 1rem;
-  color: var(--muted);
-}
+    .scheme p {
+      font-size: 1rem;
+      color: var(--muted);
+    }
 
-/* ===============================
+    /* ===============================
    RESPONSIVE
 ================================ */
-@media (max-width: 768px) {
-  .form-card {
-    padding: 2.2rem;
-  }
+    @media (max-width: 768px) {
+      .form-card {
+        padding: 2.2rem;
+      }
 
-  .form-card h2 {
-    font-size: 1.7rem;
-  }
-}
+      .form-card h2 {
+        font-size: 1.7rem;
+      }
+    }
 
-.eligible{color:var(--success);font-weight:900;font-size:20px}
-.not-eligible{color:var(--danger);font-weight:900;font-size:20px}
-.deadline{color:#b71c1c;font-weight:800}
-[data-theme="dark"] .deadline { color: #ff5252; }
+    .eligible {
+      color: var(--success);
+      font-weight: 900;
+      font-size: 20px
+    }
+
+    .not-eligible {
+      color: var(--danger);
+      font-weight: 900;
+      font-size: 20px
+    }
+
+    .deadline {
+      color: #b71c1c;
+      font-weight: 800
+    }
+
+    [data-theme="dark"] .deadline {
+      color: #ff5252;
+    }
 
 
-.actions{
-  display:flex;
-  gap:14px;
-  margin-top:18px;
-  flex-wrap:wrap;
-}
+    .actions {
+      display: flex;
+      gap: 14px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
 
-/* BUTTONS */
-.apply{
-  padding:12px 26px;
-  font-size:17px;
-  border-radius:30px;
-  font-weight:800;
-  text-decoration:none;
-  background:#1976d2;
-  color:#fff;
-}
-.apply.disabled{
-  background:#bdbdbd;
-  pointer-events:none;
-  cursor:not-allowed;
-}
+    /* BUTTONS */
+    .apply {
+      padding: 12px 26px;
+      font-size: 17px;
+      border-radius: 30px;
+      font-weight: 800;
+      text-decoration: none;
+      background: #1976d2;
+      color: #fff;
+    }
 
-.docs,.reminder{
-  padding:12px 26px;
-  border-radius:30px;
-  font-size:16px;
-  font-weight:800;
-  border:none;
-  cursor:pointer;
-}
-.docs{background:#6a1b9a;color:#fff}
-.reminder{background:var(--primary);color:#fff}
+    .apply.disabled {
+      background: #bdbdbd;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
 
-/* MODAL */
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.8);
-  justify-content:center;
-  align-items:center;
-  z-index:1000;
-}
-.modal-content{
-  background:var(--card);
-  color: var(--text);
-  padding:40px;
-  border-radius:26px;
-  max-width:520px;
-  width:90%;
-}
-.modal-content h3{color:var(--primary);margin-bottom:20px}
-[data-theme="dark"] .modal-content h3 { color: var(--label); }
-.modal-content ul{padding-left:20px}
-.modal-content li{font-size:17px;margin-bottom:8px}
-.close{
-  margin-top:25px;
-  background:var(--primary);
-  color:#fff;
-  padding:14px;
-  border-radius:30px;
-  text-align:center;
-  cursor:pointer;
-}
+    .docs,
+    .reminder {
+      padding: 12px 26px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+    }
 
-@media(max-width:768px){
-  header{ flex-direction: column; gap: 15px; text-align: center;}
-  .form-card{padding:30px}
-  .form-card h2{font-size:26px}
-}
-    
-        /* --- Cursor Trail Container --- */
-.circle-container {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 999999;
-}
+    .docs {
+      background: #6a1b9a;
+      color: #fff
+    }
 
-/* --- Individual Trail Circles --- */
-.cursor-circle {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #ff8c00;
-  box-shadow: 0 0 15px rgba(255, 140, 0, 0.7);
-  transform: translate(-50%, -50%);
-  will-change: transform;
-  mix-blend-mode: screen;
-  transition: transform 0.1s ease-out;
-}
+    .reminder {
+      background: var(--primary);
+      color: #fff
+    }
 
-/* --- The Leading "Head" Circle --- */
-.cursor-circle:first-child {
-  width: 14px;
-  height: 14px;
-  background-color: #ffcc00;
-  box-shadow:
-    0 0 20px #ff8c00,
-    0 0 40px rgba(255, 140, 0, 0.5);
-}
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .8);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
 
-/* --- Interaction States --- */
-.cursor-clicking {
-  transform: translate(-50%, -50%) scale(2.5) !important;
-  background-color: #ffffff !important;
-  box-shadow: 0 0 30px #ffffff !important;
-}
+    .modal-content {
+      background: var(--card);
+      color: var(--text);
+      padding: 40px;
+      border-radius: 26px;
+      max-width: 520px;
+      width: 90%;
+    }
 
-.cursor-hovering {
-  transform: translate(-50%, -50%) scale(1.8);
-  background-color: #22c55e; /* AgriTech green */
-  box-shadow: 0 0 20px #22c55e;
-}
-</style>
+    .modal-content h3 {
+      color: var(--primary);
+      margin-bottom: 20px
+    }
+
+    [data-theme="dark"] .modal-content h3 {
+      color: var(--label);
+    }
+
+    .modal-content ul {
+      padding-left: 20px
+    }
+
+    .modal-content li {
+      font-size: 17px;
+      margin-bottom: 8px
+    }
+
+    .close {
+      margin-top: 25px;
+      background: var(--primary);
+      color: #fff;
+      padding: 14px;
+      border-radius: 30px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    @media(max-width:768px) {
+      header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+
+      .form-card {
+        padding: 30px
+      }
+
+      .form-card h2 {
+        font-size: 26px
+      }
+    }
+
+    /* --- Cursor Trail Container --- */
+    .circle-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999999;
+    }
+
+    /* --- Individual Trail Circles --- */
+    .cursor-circle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #ff8c00;
+      box-shadow: 0 0 15px rgba(255, 140, 0, 0.7);
+      transform: translate(-50%, -50%);
+      will-change: transform;
+      mix-blend-mode: screen;
+      transition: transform 0.1s ease-out;
+    }
+
+    /* --- The Leading "Head" Circle --- */
+    .cursor-circle:first-child {
+      width: 14px;
+      height: 14px;
+      background-color: #ffcc00;
+      box-shadow:
+        0 0 20px #ff8c00,
+        0 0 40px rgba(255, 140, 0, 0.5);
+    }
+
+    /* --- Interaction States --- */
+    .cursor-clicking {
+      transform: translate(-50%, -50%) scale(2.5) !important;
+      background-color: #ffffff !important;
+      box-shadow: 0 0 30px #ffffff !important;
+    }
+
+    .cursor-hovering {
+      transform: translate(-50%, -50%) scale(1.8);
+      background-color: #22c55e;
+      /* AgriTech green */
+      box-shadow: 0 0 20px #22c55e;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- Include Navbar -->
-<div w3-include-html="navbar.html"></div>
+  <!-- Include Navbar -->
+  <div w3-include-html="navbar.html"></div>
 
-<section class="hero">
-<div class="form-card">
-<h2>Check Your Scheme Eligibility</h2>
 
-<label>State</label>
-<select id="state">
-<option>India</option>
-<option>Karnataka</option>
-<option>Maharashtra</option>
-<option>Tamil Nadu</option>
-<option>Uttar Pradesh</option>
-<option>Bihar</option>
-<option>Punjab</option>
-<option>Haryana</option>
-<option>Rajasthan</option>
-<option>Madhya Pradesh</option>
-<option>Telangana</option>
-<option>Andhra Pradesh</option>
-</select>
+  <section class="hero">
+    <div class="form-card">
+      <h2>Check Your Scheme Eligibility</h2>
 
-<label>Land Holding (acres)</label>
-<input type="number" id="land" placeholder="Example: 2.5">
+      <label>State</label>
+      <select id="state">
+        <option>India</option>
+        <option>Karnataka</option>
+        <option>Maharashtra</option>
+        <option>Tamil Nadu</option>
+        <option>Uttar Pradesh</option>
+        <option>Bihar</option>
+        <option>Punjab</option>
+        <option>Haryana</option>
+        <option>Rajasthan</option>
+        <option>Madhya Pradesh</option>
+        <option>Telangana</option>
+        <option>Andhra Pradesh</option>
+      </select>
 
-<button onclick="checkEligibility()">Find Eligible Schemes</button>
-</div>
-</section>
+      <label>Land Holding (acres)</label>
+      <input type="number" id="land" placeholder="Example: 2.5">
 
-<div class="container" id="schemeList"></div>
+      <button onclick="checkEligibility()">Find Eligible Schemes</button>
+    </div>
+  </section>
 
-<!-- MODAL -->
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <h3 id="modalTitle"></h3>
-    <div id="modalBody"></div>
-    <div class="close" onclick="closeModal()">Close</div>
+  <div class="container" id="schemeList"></div>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h3 id="modalTitle"></h3>
+      <div id="modalBody"></div>
+      <div class="close" onclick="closeModal()">Close</div>
+    </div>
   </div>
-</div>
- <!-- Cursor Trail -->
-<div class="circle-container" id="cursorTrail"></div>
-<script>
+  <!-- Cursor Trail -->
+  <div class="circle-container" id="cursorTrail"></div>
+  <script>
 
-  const today = new Date();
-today.setHours(0, 0, 0, 0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-const schemes=[
-{
-name:"PM-KISAN",
-max:5, states:["India"], deadline:"2026-03-31",
-desc:"₹6000 annual income support to farmers.",
-link:"https://pmkisan.gov.in",
-docs:["Aadhaar Card","Land Ownership Proof","Bank Passbook"]
-},
-{
-name:"PMFBY Crop Insurance",
-max:999, states:["India"], deadline:"2026-01-31",
-desc:"Crop insurance at low premium rates.",
-link:"https://pmfby.gov.in",
-docs:["Aadhaar Card","Land Records","Crop Sowing Proof"]
-},
-{
-name:"Kisan Credit Card",
-max:999, states:["India"], deadline:"2026-06-30",
-desc:"Short-term credit for agriculture needs.",
-link:"https://www.nabard.org",
-docs:["Aadhaar Card","Bank Account","Land Documents"]
-},
-{
-name:"Soil Health Card",
-max:999, states:["India"], deadline:"2026-12-31",
-desc:"Free soil testing & recommendations.",
-link:"https://soilhealth.dac.gov.in",
-docs:["Aadhaar Card","Land Details"]
-},
-{
-name:"PM Kusum – Solar Pump",
-max:8, states:["Rajasthan","MP","Maharashtra"],
-deadline:"2026-05-31",
-desc:"Subsidy for solar irrigation pumps.",
-link:"https://pmkusum.mnre.gov.in",
-docs:["Aadhaar Card","Electricity Bill","Land Proof"]
-},
-{
-name:"Drip Irrigation Subsidy",
-max:10, states:["Karnataka","TN","Maharashtra"],
-deadline:"2026-02-28",
-desc:"Water-efficient irrigation systems.",
-link:"https://pmksy.gov.in",
-docs:["Aadhaar Card","Land Records","Quotation"]
-},
-{
-name:"Organic Farming Scheme",
-max:7, states:["MP","Bihar","Rajasthan"],
-deadline:"2026-04-30",
-desc:"Support for organic inputs & certification.",
-link:"https://pgsindia-ncof.gov.in",
-docs:["Aadhaar Card","Land Proof","Farmer Photo"]
-},
-{
-name:"Farm Mechanization",
-max:10, states:["Punjab","Haryana","UP"],
-deadline:"2026-02-15",
-desc:"Subsidy on farm machinery.",
-link:"https://agrimachinery.nic.in",
-docs:["Aadhaar Card","Land Records","Equipment Quotation"]
-},
-{
-name:"Seed Subsidy Scheme",
-max:6, states:["Telangana","TN","AP"],
-deadline:"2026-01-20",
-desc:"Certified seed subsidy for farmers.",
-link:"https://seednet.gov.in",
-docs:["Aadhaar Card","Farmer ID","Land Proof"]
-},
-{
-name:"Matsya Sampada Yojana",
-max:999, states:["India"],
-deadline:"2026-08-31",
-desc:"Financial assistance for fisheries.",
-link:"https://pmmsy.dof.gov.in",
-docs:["Aadhaar Card","Bank Passbook","Fisheries Registration"]
-}
-];
+    const schemes = [
+      {
+        name: "PM-KISAN",
+        max: 5, states: ["India"], deadline: "2026-03-31",
+        desc: "₹6000 annual income support to farmers.",
+        link: "https://pmkisan.gov.in",
+        docs: ["Aadhaar Card", "Land Ownership Proof", "Bank Passbook"]
+      },
+      {
+        name: "PMFBY Crop Insurance",
+        max: 999, states: ["India"], deadline: "2026-01-31",
+        desc: "Crop insurance at low premium rates.",
+        link: "https://pmfby.gov.in",
+        docs: ["Aadhaar Card", "Land Records", "Crop Sowing Proof"]
+      },
+      {
+        name: "Kisan Credit Card",
+        max: 999, states: ["India"], deadline: "2026-06-30",
+        desc: "Short-term credit for agriculture needs.",
+        link: "https://www.nabard.org",
+        docs: ["Aadhaar Card", "Bank Account", "Land Documents"]
+      },
+      {
+        name: "Soil Health Card",
+        max: 999, states: ["India"], deadline: "2026-12-31",
+        desc: "Free soil testing & recommendations.",
+        link: "https://soilhealth.dac.gov.in",
+        docs: ["Aadhaar Card", "Land Details"]
+      },
+      {
+        name: "PM Kusum – Solar Pump",
+        max: 8, states: ["Rajasthan", "MP", "Maharashtra"],
+        deadline: "2026-05-31",
+        desc: "Subsidy for solar irrigation pumps.",
+        link: "https://pmkusum.mnre.gov.in",
+        docs: ["Aadhaar Card", "Electricity Bill", "Land Proof"]
+      },
+      {
+        name: "Drip Irrigation Subsidy",
+        max: 10, states: ["Karnataka", "TN", "Maharashtra"],
+        deadline: "2026-02-28",
+        desc: "Water-efficient irrigation systems.",
+        link: "https://pmksy.gov.in",
+        docs: ["Aadhaar Card", "Land Records", "Quotation"]
+      },
+      {
+        name: "Organic Farming Scheme",
+        max: 7, states: ["MP", "Bihar", "Rajasthan"],
+        deadline: "2026-04-30",
+        desc: "Support for organic inputs & certification.",
+        link: "https://pgsindia-ncof.gov.in",
+        docs: ["Aadhaar Card", "Land Proof", "Farmer Photo"]
+      },
+      {
+        name: "Farm Mechanization",
+        max: 10, states: ["Punjab", "Haryana", "UP"],
+        deadline: "2026-02-15",
+        desc: "Subsidy on farm machinery.",
+        link: "https://agrimachinery.nic.in",
+        docs: ["Aadhaar Card", "Land Records", "Equipment Quotation"]
+      },
+      {
+        name: "Seed Subsidy Scheme",
+        max: 6, states: ["Telangana", "TN", "AP"],
+        deadline: "2026-01-20",
+        desc: "Certified seed subsidy for farmers.",
+        link: "https://seednet.gov.in",
+        docs: ["Aadhaar Card", "Farmer ID", "Land Proof"]
+      },
+      {
+        name: "Matsya Sampada Yojana",
+        max: 999, states: ["India"],
+        deadline: "2026-08-31",
+        desc: "Financial assistance for fisheries.",
+        link: "https://pmmsy.dof.gov.in",
+        docs: ["Aadhaar Card", "Bank Passbook", "Fisheries Registration"]
+      }
+    ];
 
-function checkEligibility(){
-  const state=document.getElementById("state").value;
-  const land=parseFloat(document.getElementById("land").value||0);
-  const list=document.getElementById("schemeList");
-  list.innerHTML="";
+    function checkEligibility() {
+      const state = document.getElementById("state").value;
+      const land = parseFloat(document.getElementById("land").value || 0);
+      const list = document.getElementById("schemeList");
+      if (!document.getElementById("land").value) {
+        alert("Please enter land holding in acres");
+        return;
+      }
 
-schemes.forEach(s => {
-  const deadlineDate = new Date(s.deadline);
-  deadlineDate.setHours(0, 0, 0, 0);
+      list.innerHTML = "";
 
-  const isExpired = today > deadlineDate;
-  const eligible =
-    !isExpired &&
-    land <= s.max &&
-    (s.states.includes(state) || s.states.includes("India"));
+      const eligibleSchemes = schemes.filter(s => {
+        const deadlineDate = new Date(s.deadline);
+        deadlineDate.setHours(0, 0, 0, 0);
 
-  list.innerHTML += `
-  // Filter to show only eligible schemes
-  const eligibleSchemes = schemes.filter(s => {
-    return land <= s.max && (s.states.includes(state) || s.states.includes("India"));
-  });
+        const notExpired = today <= deadlineDate;
+        const landOk = land <= s.max;
+        const stateOk = s.states.includes(state) || s.states.includes("India");
 
-  // Check if no eligible schemes found
-  if (eligibleSchemes.length === 0) {
-    list.innerHTML = `
-      <div class="scheme" style="text-align: center; border-left: 8px solid var(--danger);">
-        <h3 style="color: var(--danger);">No Eligible Schemes Found</h3>
-        <p>Based on your land holding of ${land} acres in ${state}, there are currently no schemes available. Please check back later or try different criteria.</p>
+        return notExpired && landOk && stateOk;
+      });
+
+      if (eligibleSchemes.length === 0) {
+        list.innerHTML = `
+      <div class="scheme" style="text-align:center;border-left:8px solid var(--danger)">
+        <h3 style="color:var(--danger)">No Eligible Schemes Found</h3>
+        <p>
+          Based on your land holding of <b>${land}</b> acres in <b>${state}</b>,
+          there are currently no schemes available.
+        </p>
       </div>
     `;
-    return;
-  }
+        return;
+      }
 
-  // Display only eligible schemes
-  eligibleSchemes.forEach(s=>{
-    list.innerHTML+=`
-    <div class="scheme">
-      <h3>${s.name} ${isExpired ? '<span style="color:#d32f2f;font-size:14px;">(Expired)</span>' : ''}</h3>
-      <p>${s.desc}</p>
+      eligibleSchemes.forEach(s => {
+        list.innerHTML += `
+      <div class="scheme">
+        <h3>${s.name}</h3>
+        <p>${s.desc}</p>
 
-      <p class="${eligible ? 'eligible' : 'not-eligible'}">
-        ${isExpired ? '⛔ Expired' : eligible ? '✔ Eligible' : '✖ Not Eligible'}
-      </p>
+        <p class="eligible">✔ Eligible</p>
+        <p class="deadline">Deadline: ${s.deadline}</p>
 
-      <p class="deadline">Deadline: ${s.deadline}</p>
-
-      <div class="actions">
-        <a href="${eligible ? s.link : '#'}"
-           target="_blank"
-           class="apply ${eligible ? '' : 'disabled'}">
-           📝 Apply Now
-        </a>
-
-      <p class="eligible">✔ Eligible</p>
-      <p class="deadline">Deadline: ${s.deadline}</p>
-
-      <div class="actions">
-        <a href="${s.link}" target="_blank" class="apply">📝 Apply Now</a>
-        <button class="docs" onclick="showDocs('${s.name}')">📄 Documents</button>
-        <button class="reminder" onclick="showMsg('Reminder set for ${s.name}')">⏰ Reminder</button>
+        <div class="actions">
+          <a href="${s.link}" target="_blank" class="apply">📝 Apply Now</a>
+          <button class="docs" onclick="showDocs('${s.name}')">📄 Documents</button>
+          <button class="reminder" onclick="showMsg('Reminder set for ${s.name}')">
+            ⏰ Reminder
+          </button>
+        </div>
       </div>
-    </div>
-  `;
-});
-}
-
-
-function showDocs(name){
-  const scheme=schemes.find(s=>s.name===name);
-  document.getElementById("modalTitle").innerText=name+" – Required Documents";
-  document.getElementById("modalBody").innerHTML=
-    "<ul>"+scheme.docs.map(d=>`<li>${d}</li>`).join("")+"</ul>";
-  document.getElementById("modal").style.display="flex";
-}
-function showMsg(msg){
-  document.getElementById("modalTitle").innerText="Success";
-  document.getElementById("modalBody").innerHTML="<p>"+msg+"</p>";
-  document.getElementById("modal").style.display="flex";
-}
-function closeModal(){
-  document.getElementById("modal").style.display="none";
-}
-</script>
-
-
-<!-- Include Navbar Script -->
-<script>
-    function includeHTML() {
-        var z, i, elmnt, file, xhttp;
-        z = document.getElementsByTagName("*");
-        for (i = 0; i < z.length; i++) {
-            elmnt = z[i];
-            file = elmnt.getAttribute("w3-include-html");
-            if (file) {
-                xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4) {
-                        if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-                        if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-                        elmnt.removeAttribute("w3-include-html");
-                        includeHTML();
-                    }
-                }
-                xhttp.open("GET", file, true);
-                xhttp.send();
-                return;
-            }
-        }
+    `;
+      });
     }
-    includeHTML();
-</script>
-<script>
-// Include navbar
-function includeHTML(callback) {
-    var z, i, elmnt, file, xhttp;
-    z = document.getElementsByTagName("*");
-    for (i = 0; i < z.length; i++) {
+
+
+    function showDocs(name) {
+      const scheme = schemes.find(s => s.name === name);
+      document.getElementById("modalTitle").innerText = name + " – Required Documents";
+      document.getElementById("modalBody").innerHTML =
+        "<ul>" + scheme.docs.map(d => `< li > ${d}</li >`).join("") + "</ul>";
+      document.getElementById("modal").style.display = "flex";
+    }
+    function showMsg(msg) {
+      document.getElementById("modalTitle").innerText = "Success";
+      document.getElementById("modalBody").innerHTML = "<p>" + msg + "</p>";
+      document.getElementById("modal").style.display = "flex";
+    }
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+  </script>
+
+
+  <script>
+    // Include navbar
+    function includeHTML(callback) {
+      var z, i, elmnt, file, xhttp;
+      z = document.getElementsByTagName("*");
+      for (i = 0; i < z.length; i++) {
         elmnt = z[i];
         file = elmnt.getAttribute("w3-include-html");
         if (file) {
-            xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4) {
-                    if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-                    if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-                    elmnt.removeAttribute("w3-include-html");
+          xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4) {
+              if (this.status == 200) { elmnt.innerHTML = this.responseText; }
+              if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
+              elmnt.removeAttribute("w3-include-html");
 
-                    // Call again recursively
-                    includeHTML(callback);
+              // Call again recursively
+              includeHTML(callback);
 
-                    // After loading navbar, run callback
-                    if (callback) callback();
-                }
+              // After loading navbar, run callback
+              if (callback) callback();
             }
-            xhttp.open("GET", file, true);
-            xhttp.send();
-            return;
+          }
+          xhttp.open("GET", file, true);
+          xhttp.send();
+          return;
         }
+      }
     }
-}
 
 
-// Initialize mobile hamburger
-function initHamburgerMenu() {
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const overlay = document.getElementById('mobileMenuOverlay');
+    // Initialize mobile hamburger
+    function initHamburgerMenu() {
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const overlay = document.getElementById('mobileMenuOverlay');
 
-    if (!hamburgerBtn || !mobileMenu || !overlay) return;
+      if (!hamburgerBtn || !mobileMenu || !overlay) return;
 
-    hamburgerBtn.addEventListener('click', () => {
+      hamburgerBtn.addEventListener('click', () => {
         mobileMenu.classList.add('active');
         overlay.classList.add('active');
         document.body.style.overflow = 'hidden';
-    });
+      });
 
-    overlay.addEventListener('click', () => {
+      overlay.addEventListener('click', () => {
         mobileMenu.classList.remove('active');
         overlay.classList.remove('active');
         document.body.style.overflow = '';
-    });
-}
+      });
+    }
 
-// Run after DOM loads
-document.addEventListener('DOMContentLoaded', () => {
-    // Apply saved theme
-    const savedTheme = localStorage.getItem('agritech-theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
 
-    // Include navbar and initialize functions
-    includeHTML(() => {
-      
+    // Run after DOM loads
+    document.addEventListener('DOMContentLoaded', () => {
+
+
+      // Include navbar and initialize functions
+      includeHTML(() => {
         initHamburgerMenu();
+        initThemeToggle(); // 🔥 THIS WAS MISSING
+      });
+
     });
-});
- // --- Cursor Trailing Effect ---
-const container = document.getElementById('cursorTrail');
-const circleCount = 12;
-const circles = [];
+    // --- Cursor Trailing Effect ---
+    const container = document.getElementById('cursorTrail');
+    const circleCount = 12;
+    const circles = [];
 
-let mouseX = 0;
-let mouseY = 0;
+    let mouseX = 0;
+    let mouseY = 0;
 
-// Create circles
-for (let i = 0; i < circleCount; i++) {
-    const circle = document.createElement('div');
-    circle.classList.add('cursor-circle');
-    container.appendChild(circle);
-    circles.push({ el: circle, x: 0, y: 0 });
-}
+    // Create circles
+    for (let i = 0; i < circleCount; i++) {
+      const circle = document.createElement('div');
+      circle.classList.add('cursor-circle');
+      container.appendChild(circle);
+      circles.push({ el: circle, x: 0, y: 0 });
+    }
 
-// Mouse move
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
+    // Mouse move
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
 
-// Click effects
-document.addEventListener('mousedown', () => {
-    circles.forEach(c => c.el.classList.add('cursor-clicking'));
-});
-document.addEventListener('mouseup', () => {
-    circles.forEach(c => c.el.classList.remove('cursor-clicking'));
-});
+    // Click effects
+    document.addEventListener('mousedown', () => {
+      circles.forEach(c => c.el.classList.add('cursor-clicking'));
+    });
+    document.addEventListener('mouseup', () => {
+      circles.forEach(c => c.el.classList.remove('cursor-clicking'));
+    });
 
-// Hover effects on interactive elements
-document.addEventListener('mouseover', (e) => {
-    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+    // Hover effects on interactive elements
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
         circles.forEach(c => c.el.classList.add('cursor-hovering'));
-    }
-});
-document.addEventListener('mouseout', (e) => {
-    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+      }
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
         circles.forEach(c => c.el.classList.remove('cursor-hovering'));
-    }
-});
+      }
+    });
 
-// Animate trailing effect
-function animateCursor() {
-    let x = mouseX;
-    let y = mouseY;
+    // Animate trailing effect
+    function animateCursor() {
+      let x = mouseX;
+      let y = mouseY;
 
-    circles.forEach((circle) => {
+      circles.forEach((circle) => {
         circle.x += (x - circle.x) * 0.25;
         circle.y += (y - circle.y) * 0.25;
 
@@ -709,12 +748,49 @@ function animateCursor() {
 
         x = circle.x;
         y = circle.y;
-    });
+      });
 
-    requestAnimationFrame(animateCursor);
-}
-animateCursor();
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
 
-</script>
+    function initThemeToggle() {
+      const toggleBtn = document.getElementById('themeToggle');
+      const label = toggleBtn?.querySelector('.theme-label');
+      const icon = toggleBtn?.querySelector('i');
+
+      if (!toggleBtn) return;
+
+      // Sync UI with current theme
+      function updateUI(theme) {
+        if (theme === 'dark') {
+          label.textContent = 'Dark';
+          icon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+          label.textContent = 'Light';
+          icon.classList.replace('fa-sun', 'fa-moon');
+        }
+      }
+
+      // Initial state
+      const savedTheme = localStorage.getItem('agritech-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      updateUI(savedTheme);
+
+      // Toggle on click
+      toggleBtn.addEventListener('click', () => {
+        const html = document.documentElement;
+        const current = html.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('agritech-theme', next);
+        updateUI(next);
+      });
+    }
+
+
+  </script>
 </body>
+
 </html>
