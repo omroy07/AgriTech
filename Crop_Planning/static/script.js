@@ -258,7 +258,21 @@ function createParticles() {
   });
 
   particles = new THREE.Points(geometry, material);
-  scene.add(particles);
+  miniScene.add(particles);
+}
+function centerAndScale(object, targetSize = 3) {
+  const box = new THREE.Box3().setFromObject(object);
+  const size = new THREE.Vector3();
+  box.getSize(size);
+
+  const maxDim = Math.max(size.x, size.y, size.z);
+  const scale = targetSize / maxDim;
+
+  object.scale.setScalar(scale);
+
+  const center = new THREE.Vector3();
+  box.getCenter(center);
+  object.position.sub(center.multiplyScalar(scale));
 }
 
 function animate() {
@@ -268,8 +282,9 @@ function animate() {
     particles.rotation.x += 0.001;
     particles.rotation.y += 0.002;
   }
+  miniRenderer.render(miniScene, miniCamera);
 
-  renderer.render(scene, camera);
+
 }
 
 function onWindowResize() {

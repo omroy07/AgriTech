@@ -211,14 +211,17 @@ function initThemeToggle() {
     if (!themeToggle) return;
 
     themeToggle.addEventListener('click', () => {
-        const navbar = document.querySelector('.navbar');
-        if (!navbar) return;
-        const current = navbar.getAttribute('data-theme');
+        const root = document.documentElement;
+        const current = root.getAttribute('data-theme') || 'dark';
         const next = current === 'light' ? 'dark' : 'light';
-        navbar.setAttribute('data-theme', next);
-        const themeLabel = document.querySelector('.theme-label');
-        if (themeLabel) themeLabel.textContent = next === 'light' ? 'Light' : 'Dark';
+
+        root.setAttribute('data-theme', next);
         localStorage.setItem('agritech-theme', next);
+
+        const themeLabel = document.querySelector('.theme-label');
+        if (themeLabel) {
+            themeLabel.textContent = next === 'light' ? 'Light' : 'Dark';
+        }
     });
 }
 
