@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Management | AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #10b981;
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            margin: 0;
+        }
+
+        .app-shell {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Sidebar */
+        .sidebar {
+            background: var(--primary);
+            color: white;
+            padding: 2rem;
+        }
+
+        .farm-switcher {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .farm-switcher:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-link {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+
+        .nav-link.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Main Dashboard */
+        .main-content {
+            padding: 3rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card h3 {
+            color: #64748b;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .asset-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .asset-item {
+            padding: 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .member-avatar {
+            width: 40px;
+            height: 40px;
+            background: #e2e8f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .modal-body {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            padding: 2.5rem;
+            border-radius: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-shell">
+        <aside class="sidebar">
+            <h2 style="margin-bottom: 2rem;">AgriTech Farms</h2>
+
+            <div class="farm-switcher" id="current-farm-name">
+                <i class="fas fa-tractor"></i> <span>Select Farm</span>
+                <i class="fas fa-chevron-down" style="float: right;"></i>
+            </div>
+
+            <nav>
+                <div class="nav-link active"><i class="fas fa-chart-line"></i> Dashboard</div>
+                <div class="nav-link"><i class="fas fa-users"></i> Team Members</div>
+                <div class="nav-link"><i class="fas fa-box-open"></i> Inventory</div>
+                <div class="nav-link"><i class="fas fa-file-invoice-dollar"></i> Financials</div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <h1 id="dashboard-title">Farm Overview</h1>
+                <button class="btn btn-primary" onclick="openNewFarmModal()">+ New Farm</button>
+            </div>
+
+            <div id="no-farm-message" style="display: none; text-align: center; padding: 5rem;">
+                <i class="fas fa-tractor fa-4x" style="color: #cbd5e1; margin-bottom: 1.5rem;"></i>
+                <h2>No farm selected</h2>
+                <p>Register your first farm to start tracking assets and team members.</p>
+            </div>
+
+            <div id="farm-data-view">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Asset Value</h3>
+                        <div class="value" id="stat-asset-value">₹0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Active Production</h3>
+                        <div class="value" id="stat-production">0 kg</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Team Size</h3>
+                        <div class="value" id="stat-team">0</div>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Recent Assets</h2>
+                            <button class="btn" style="background: #f1f5f9;" onclick="openAssetModal()">+ Add
+                                Asset</button>
+                        </div>
+                        <div class="asset-list" id="asset-list">
+                            <!-- Assets injected here -->
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Team</h2>
+                            <button class="btn" style="border: 1px solid #e2e8f0; background: none;"
+                                onclick="openInviteModal()">Invite</button>
+                        </div>
+                        <div class="member-list" id="team-list">
+                            <!-- Members injected here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="new-farm-modal" class="modal">
+        <div class="modal-body">
+            <h2>Add New Farm</h2>
+            <div class="form-group">
+                <label>Farm Name</label>
+                <input type="text" class="form-input" id="farm-name" placeholder="Green Valley Estate">
+            </div>
+            <div class="form-group">
+                <label>Location</label>
+                <input type="text" class="form-input" id="farm-loc" placeholder="District, State">
+            </div>
+            <div class="btn-group" style="display: flex; gap: 1rem;">
+                <button class="btn btn-primary" style="flex: 1;" onclick="createFarm()">Save Farm</button>
+                <button class="btn" style="background: #e5e7eb;" onclick="closeModals()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="farm_dashboard.js"></script>
+</body>
+
+</html>
