@@ -710,11 +710,10 @@ body {
   border: 2px solid var(--border-color);
   text-align: center;
   overflow: hidden;
-
   transition:
-    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.45s ease,
-    border-color 0.45s ease;
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
 }
 
 /* STRONG animated glow */
@@ -722,12 +721,12 @@ body {
   content: "";
   position: absolute;
   inset: -40%;
-  background: radial-gradient(
-    circle,
-    rgba(34, 197, 94, 0.45) 0%,
-    rgba(34, 197, 94, 0.25) 30%,
-    transparent 60%
-  );
+background: radial-gradient(
+  circle,
+  rgba(34, 197, 94, 0.20) 0%,
+  rgba(34, 197, 94, 0.12) 30%,
+  transparent 60%
+);
   opacity: 0;
   transform: scale(0.6);
   transition: opacity 0.45s ease, transform 0.45s ease;
@@ -735,17 +734,28 @@ body {
 }
 
 .feature-card:hover {
-  transform: translateY(-16px) scale(1.06);
-  border-color: var(--accent-color);
-  box-shadow:
-    0 40px 80px rgba(0, 0, 0, 0.35),
-    0 20px 40px rgba(34, 197, 94, 0.45);
+  border-color: var(--accent-color); /* green border */
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(34, 197, 94, 0.25);
 }
 
-.feature-card:hover::before {
-  opacity: 1;
-  transform: scale(1);
+
+.feature-card::before {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  background: radial-gradient(
+    circle,
+    rgba(34, 197, 94, 0.18) 0%,
+    rgba(34, 197, 94, 0.08) 40%,
+    transparent 65%
+  );
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
 }
+
 
 /* ICON — BIG reaction */
 .feature-icon {

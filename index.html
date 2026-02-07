@@ -538,21 +538,6 @@
       gap: 2rem;
     }
 
-    .feature-card {
-      background: var(--surface-color);
-      padding: 2rem;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      transition: all 0.3s ease;
-      text-align: center;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--accent-color);
-      box-shadow: 0 8px 24px rgba(34, 197, 94, 0.2);
-    }
-
     .feature-icon {
       font-size: 3rem;
       margin-bottom: 1rem;
@@ -1238,9 +1223,6 @@
         font-size: 1.75rem;
       }
 
-      .feature-card {
-        padding: 1.5rem;
-      }
 
       #chatbotBtn,
       .scroll-btn {
@@ -1363,22 +1345,25 @@
     }
 
     .feature-card {
-      background: linear-gradient(180deg,
-          rgba(255, 255, 255, 0.02),
-          rgba(255, 255, 255, 0));
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      border-radius: 16px;
-      padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      transition:
-        transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1),
-        box-shadow 0.28s ease,
-        border-color 0.28s ease;
-      min-height: 220px;
-      backdrop-filter: blur(6px) saturate(110%);
-    }
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0)
+  );
+  border: 2px solid rgba(34, 197, 94, 0.45); /* ✅ GREEN BORDER */
+  border-radius: 16px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 220px;
+  backdrop-filter: blur(6px) saturate(110%);
+  transition:
+    transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1),
+    box-shadow 0.28s ease,
+    border-color 0.28s ease;
+}
+
 
     .feature-card:focus-visible {
       outline: none;
@@ -1387,11 +1372,14 @@
       border-color: rgba(34, 197, 94, 0.12);
     }
 
-    .feature-card:hover {
-      transform: translateY(-8px) scale(1.01);
-      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.12);
-      border-color: rgba(34, 197, 94, 0.12);
-    }
+.feature-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  border-color: #22c55e; /* ✅ SOLID GREEN */
+  box-shadow:
+    0 0 0 2px rgba(34, 197, 94, 0.35),
+    0 18px 40px rgba(34, 197, 94, 0.25);
+}
+
 
     .feature-icon {
       font-size: 1.6rem;
@@ -3058,6 +3046,7 @@ if (mobileMenuOverlay) mobileMenuOverlay.addEventListener("click", closeMobileMe
         mobileSearchInput.classList.remove("input-focused");
       });
     }
+
   </script>
 
   <div class="search-popup-overlay" id="searchPopup">
@@ -3065,7 +3054,8 @@ if (mobileMenuOverlay) mobileMenuOverlay.addEventListener("click", closeMobileMe
       <i class="fas fa-search"></i>
       <h3>No Results Found</h3>
       <p id="searchPopupText"></p>
-      <button onclick="closeSearchPopup()">Got it</button>
+<button id="closeSearchPopupBtn">Got it</button>
+
     </div>
   </div>
   <script>

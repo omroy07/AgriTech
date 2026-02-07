@@ -297,7 +297,31 @@ const defaultBlogPosts = [
         date: "March 20, 2025",
         image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?auto=format&fit=crop&w=800&q=80",
         content: "Turning farm waste into gold! Vermicomposting is one of the most profitable low-investment agri-businesses today. Here is a step-by-step guide to setting up your own unit..."
-    }
+    },
+    {
+    id: "7",
+    title: "Smart Sensors and IoT in Precision Agriculture",
+    category: "technology",
+    description: "How IoT-enabled smart sensors help farmers monitor soil, crops, and weather conditions in real time for data-driven farming decisions.",
+    author: "AgriTech Research Team",
+    date: "March 25, 2025",
+    image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&fit=crop",
+    content: `
+        <p>Precision agriculture is transforming modern farming by integrating smart sensors and Internet of Things (IoT) technologies into everyday agricultural practices.</p>
+
+        <h4>Real-Time Soil Monitoring</h4>
+        <p>IoT-enabled soil sensors continuously track moisture levels, nutrient content, and temperature. This helps farmers optimize irrigation and fertilizer usage, reducing waste and improving crop health.</p>
+
+        <h4>Crop Health & Weather Insights</h4>
+        <p>Advanced sensors and weather stations provide real-time data on humidity, rainfall, and disease risk. Farmers can take timely action to prevent crop loss and increase productivity.</p>
+
+        <h4>Data-Driven Decision Making</h4>
+        <p>By combining sensor data with analytics dashboards, farmers can make informed decisions, improve yield quality, and adopt sustainable farming practices.</p>
+
+        <p>Smart sensors and IoT are key pillars of the future of precision agriculture.</p>
+    `
+},
+
 ];
 
 // Initialize blogPosts with defaults + user posts
@@ -424,8 +448,10 @@ function updateFavoriteCounter() {
 // Filter posts
 function filterPosts() {
     filteredPosts = blogPosts.filter(post => {
-        const matchesSearch = post.title.toLowerCase().includes(searchQuery) ||
-            post.description.toLowerCase().includes(searchQuery);
+        const matchesSearch =
+    post.title.toLowerCase().includes(searchQuery) ||
+    (post.description && post.description.toLowerCase().includes(searchQuery)) ||
+    (post.category && post.category.toLowerCase().includes(searchQuery));
         const matchesCategory = currentCategory === 'all' || post.category === currentCategory;
         return matchesSearch && matchesCategory;
     });
@@ -637,39 +663,42 @@ function handleCreatePost(e) {
 
     const title = document.getElementById('postTitle').value;
     const category = document.getElementById('postCategory').value;
-    const description = document.getElementById('postDescription').value;
+    const description = document.getElementById('postContent').value.slice(0, 120) + '...';
     const image = document.getElementById('postImage').value;
+    const tags = document.getElementById('postTags').value
+        .split(',')
+        .map(tag => tag.trim())
+        .filter(Boolean);
+    const author = document.getElementById('postAuthor').value || 'AgriTech Contributor';
     const content = document.getElementById('postContent').value;
-    const author = document.getElementById('postAuthor').value;
 
     const newPost = {
         id: 'user-post-' + Date.now(),
-        title: title,
-        category: category,
-        description: description,
-        image: image,
-        content: content, // Simplified content for now
-        author: author,
-        date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        title,
+        category,
+        description,
+        image,
+        tags,
+        author,
+        date: new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        }),
+        content,
         isUserPost: true
     };
 
-    // Save to localStorage
-    let userPosts = JSON.parse(localStorage.getItem('agritech_user_posts')) || [];
-    userPosts.unshift(newPost); // Add to beginning
+    const userPosts = JSON.parse(localStorage.getItem('agritech_user_posts')) || [];
+    userPosts.unshift(newPost);
     localStorage.setItem('agritech_user_posts', JSON.stringify(userPosts));
 
-    // Update in-memory posts
     blogPosts.unshift(newPost);
-
-    // Re-render
     filterPosts();
 
-    // Close modal and reset form
     document.getElementById('createPostModal').style.display = 'none';
     document.body.style.overflow = 'auto';
     document.getElementById('createPostForm').reset();
 
-    // Show success message
     alert('✅ Blog post published successfully!');
 }

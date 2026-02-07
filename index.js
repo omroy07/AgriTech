@@ -26,24 +26,33 @@ function showCachedNotice() {
   }, 5000); // hides after 5 seconds (optional)
 }
 
+const refreshThemeStyles = () => {
+  // Force reflow so pages like About re-read CSS variables
+  document.body.style.display = 'none';
+  document.body.offsetHeight; // trigger reflow
+  document.body.style.display = '';
+};
+
 
 // Theme Management
 // Theme Management
 const applyTheme = (theme) => {
-document.documentElement.setAttribute('data-theme', theme);
-localStorage.setItem('theme', theme);
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
 
-if (theme === 'dark') {
+  if (theme === 'dark') {
     if (themeText) themeText.textContent = 'Light Mode';
     if (moonIcon) moonIcon.style.display = 'none';
     if (sunIcon) sunIcon.style.display = 'inline-block';
-} else {
+  } else {
     if (themeText) themeText.textContent = 'Dark Mode';
     if (moonIcon) moonIcon.style.display = 'inline-block';
     if (sunIcon) sunIcon.style.display = 'none';
-}
+  }
 
+  refreshThemeStyles(); // ✅ ADD THIS LINE
 };
+
 
 
 const savedTheme = localStorage.getItem('theme') || 'dark';

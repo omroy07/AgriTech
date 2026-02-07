@@ -395,6 +395,10 @@ input:focus {
  <!-- Cursor Trail -->
 <div class="circle-container" id="cursorTrail"></div>
 <script>
+
+  const today = new Date();
+today.setHours(0, 0, 0, 0);
+
 const schemes=[
 {
 name:"PM-KISAN",
@@ -480,27 +484,66 @@ function checkEligibility(){
   const list=document.getElementById("schemeList");
   list.innerHTML="";
 
-  schemes.forEach(s=>{
-    const eligible=land<=s.max&&(s.states.includes(state)||s.states.includes("India"));
+schemes.forEach(s => {
+  const deadlineDate = new Date(s.deadline);
+  deadlineDate.setHours(0, 0, 0, 0);
+
+  const isExpired = today > deadlineDate;
+  const eligible =
+    !isExpired &&
+    land <= s.max &&
+    (s.states.includes(state) || s.states.includes("India"));
+
+  list.innerHTML += `
+  // Filter to show only eligible schemes
+  const eligibleSchemes = schemes.filter(s => {
+    return land <= s.max && (s.states.includes(state) || s.states.includes("India"));
+  });
+
+  // Check if no eligible schemes found
+  if (eligibleSchemes.length === 0) {
+    list.innerHTML = `
+      <div class="scheme" style="text-align: center; border-left: 8px solid var(--danger);">
+        <h3 style="color: var(--danger);">No Eligible Schemes Found</h3>
+        <p>Based on your land holding of ${land} acres in ${state}, there are currently no schemes available. Please check back later or try different criteria.</p>
+      </div>
+    `;
+    return;
+  }
+
+  // Display only eligible schemes
+  eligibleSchemes.forEach(s=>{
     list.innerHTML+=`
     <div class="scheme">
-      <h3>${s.name}</h3>
+      <h3>${s.name} ${isExpired ? '<span style="color:#d32f2f;font-size:14px;">(Expired)</span>' : ''}</h3>
       <p>${s.desc}</p>
-      <p class="${eligible?'eligible':'not-eligible'}">
-        ${eligible?'✔ Eligible':'✖ Not Eligible'}
+
+      <p class="${eligible ? 'eligible' : 'not-eligible'}">
+        ${isExpired ? '⛔ Expired' : eligible ? '✔ Eligible' : '✖ Not Eligible'}
       </p>
+
       <p class="deadline">Deadline: ${s.deadline}</p>
 
       <div class="actions">
-        <a href="${eligible?s.link:'#'}" target="_blank"
-           class="apply ${eligible?'':'disabled'}">📝 Apply Now</a>
+        <a href="${eligible ? s.link : '#'}"
+           target="_blank"
+           class="apply ${eligible ? '' : 'disabled'}">
+           📝 Apply Now
+        </a>
 
+      <p class="eligible">✔ Eligible</p>
+      <p class="deadline">Deadline: ${s.deadline}</p>
+
+      <div class="actions">
+        <a href="${s.link}" target="_blank" class="apply">📝 Apply Now</a>
         <button class="docs" onclick="showDocs('${s.name}')">📄 Documents</button>
         <button class="reminder" onclick="showMsg('Reminder set for ${s.name}')">⏰ Reminder</button>
       </div>
-    </div>`;
-  });
+    </div>
+  `;
+});
 }
+
 
 function showDocs(name){
   const scheme=schemes.find(s=>s.name===name);
@@ -521,7 +564,31 @@ function closeModal(){
 
 
 <!-- Include Navbar Script -->
-
+<script>
+    function includeHTML() {
+        var z, i, elmnt, file, xhttp;
+        z = document.getElementsByTagName("*");
+        for (i = 0; i < z.length; i++) {
+            elmnt = z[i];
+            file = elmnt.getAttribute("w3-include-html");
+            if (file) {
+                xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4) {
+                        if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+                        if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                        elmnt.removeAttribute("w3-include-html");
+                        includeHTML();
+                    }
+                }
+                xhttp.open("GET", file, true);
+                xhttp.send();
+                return;
+            }
+        }
+    }
+    includeHTML();
+</script>
 <script>
 // Include navbar
 function includeHTML(callback) {
@@ -555,34 +622,24 @@ function includeHTML(callback) {
 
 // Initialize mobile hamburger
 function initHamburgerMenu() {
-    const hamburgerBtn = document.getElementById("hamburgerBtn");
-    const mobileMenu = document.getElementById("mobileMenu");
-    const overlay = document.getElementById("mobileMenuOverlay");
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const overlay = document.getElementById('mobileMenuOverlay');
 
     if (!hamburgerBtn || !mobileMenu || !overlay) return;
 
-    hamburgerBtn.addEventListener("click", () => {
-        mobileMenu.classList.add("active");
-        overlay.classList.add("active");
-        document.body.style.overflow = "hidden";
+    hamburgerBtn.addEventListener('click', () => {
+        mobileMenu.classList.add('active');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
     });
 
-    overlay.addEventListener("click", () => {
-        mobileMenu.classList.remove("active");
-        overlay.classList.remove("active");
-        document.body.style.overflow = "";
+    overlay.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
     });
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    const savedTheme = localStorage.getItem("agritech-theme") || "light";
-    document.documentElement.setAttribute("data-theme", savedTheme);
-
-    includeHTML(() => {
-        initHamburgerMenu(); // ✅ runs AFTER navbar.html is injected
-    });
-});
-
 
 // Run after DOM loads
 document.addEventListener('DOMContentLoaded', () => {
