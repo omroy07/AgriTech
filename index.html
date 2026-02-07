@@ -307,7 +307,7 @@
     }
 
     .lang-trigger {
-      background: var(--brand-green-gradient);
+      background: linear-gradient(135deg, var(--accent-color) 0%, #16a34a 100%);
       /* Consistent Green Palette */
       color: #ffffff !important;
       border: none;
@@ -319,10 +319,15 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
       /* Bouncy Interaction Logic */
       transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
         box-shadow 0.3s ease;
+    }
+
+    [data-theme="light"] .lang-trigger {
+      background: linear-gradient(135deg, var(--accent-color) 0%, #15803d 100%);
+      box-shadow: 0 4px 15px rgba(22, 163, 74, 0.4);
     }
 
     .lang-trigger:hover {
@@ -418,6 +423,10 @@
       padding: 0.5rem;
       border-radius: 8px;
       transition: all 0.2s;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .theme-toggle:hover {
@@ -427,6 +436,16 @@
 
     .theme-toggle i {
       font-size: 0.9rem;
+      pointer-events: none;
+    }
+
+    .theme-toggle .theme-text {
+      pointer-events: none;
+    }
+
+    .theme-icon-moon,
+    .theme-icon-sun {
+      display: inline-block;
     }
 
     .theme-text {
@@ -1906,16 +1925,6 @@
       <option value="ta">தமிழ்</option>
     </select>
   </div> -->
-  <div style="padding: 10px; text-align: right">
-    <label for="languageSelect" class="language-label">Language:</label>
-    <select id="languageSelect" class="language-select"
-      onchange="setLanguage(this.value, this.options[this.selectedIndex].text)">
-      <option value="en">English</option>
-      <option value="te">తెలుగు</option>
-      <option value="hi">हिन्दी</option>
-      <option value="ta">தமிழ்</option>
-    </select>
-  </div>
 
 
   <!-- Offline & Cached Notices -->
@@ -2014,8 +2023,9 @@
         </div>
 
         <!-- Theme Toggle -->
-        <button class="theme-toggle btn" onclick="toggleTheme()">
-          <i class="fas fa-moon"></i>
+        <button class="theme-toggle btn" id="themeToggleBtn" type="button">
+          <i class="fas fa-sun theme-icon-sun"></i>
+          <i class="fas fa-moon theme-icon-moon" style="display: none;"></i>
           <span class="theme-text">Light</span>
         </button>
 
@@ -2100,16 +2110,32 @@
       }
     }
 
-    // Theme Toggle Function
+    // Theme Toggle Function - Fixed to change entire page
     function toggleTheme() {
-      const navbar = document.querySelector(".navbar");
+      const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+      const nextTheme = currentTheme === "light" ? "dark" : "light";
+      
+      // Change entire page theme
+      document.documentElement.setAttribute("data-theme", nextTheme);
+      localStorage.setItem("agritech-theme", nextTheme);
+      
+      // Update theme text and icons
       const themeText = document.querySelector(".theme-text");
-      if (navbar.getAttribute("data-theme") === "light") {
-        navbar.setAttribute("data-theme", "dark");
-        themeText.innerText = "Dark";
-      } else {
-        navbar.setAttribute("data-theme", "light");
-        themeText.innerText = "Light";
+      const moonIcon = document.querySelector(".theme-icon-moon");
+      const sunIcon = document.querySelector(".theme-icon-sun");
+      
+      if (themeText) {
+        themeText.innerText = nextTheme === "dark" ? "Light" : "Dark";
+      }
+      
+      if (moonIcon && sunIcon) {
+        if (nextTheme === "dark") {
+          moonIcon.style.display = "inline-block";
+          sunIcon.style.display = "none";
+        } else {
+          moonIcon.style.display = "none";
+          sunIcon.style.display = "inline-block";
+        }
       }
     }
   </script>
@@ -2749,34 +2775,95 @@
   <script type="module" src="index.js"></script>
 
   <script>
-    // Theme Toggle
-    const themeToggle = document.querySelector(".theme-toggle");
-    const themeText = document.querySelector(".theme-text");
-    const sunIcon = document.querySelector(".sun-icon");
-    const moonIcon = document.querySelector(".moon-icon");
+    // Theme Toggle - Unified function (runs after DOM and other scripts)
+    (function() {
+      function initThemeToggle() {
+        const themeToggle = document.querySelector(".theme-toggle");
+        if (!themeToggle) {
+          console.warn("Theme toggle button not found");
+          return;
+        }
 
-    const applyTheme = (theme) => {
-      document.documentElement.setAttribute("data-theme", theme);
-      localStorage.setItem("agritech-theme", theme);
-      if (theme === "dark") {
-        themeText.textContent = "Light";
-        moonIcon.style.display = "none";
-        sunIcon.style.display = "inline-block";
-      } else {
-        themeText.textContent = "Dark";
-        moonIcon.style.display = "inline-block";
-        sunIcon.style.display = "none";
+        const themeText = themeToggle.querySelector(".theme-text");
+        const moonIcon = themeToggle.querySelector(".theme-icon-moon");
+        const sunIcon = themeToggle.querySelector(".theme-icon-sun");
+
+        function applyTheme(theme) {
+          // Change entire page theme
+          document.documentElement.setAttribute("data-theme", theme);
+          localStorage.setItem("agritech-theme", theme);
+          
+          // Update theme text and icons
+          // Icon shows what you'll switch TO (sun in dark mode, moon in light mode)
+          if (themeText) {
+            themeText.textContent = theme === "dark" ? "Light" : "Dark";
+          }
+          
+          if (moonIcon && sunIcon) {
+            if (theme === "dark") {
+              // In dark mode, show sun icon (clicking will switch to light)
+              sunIcon.style.display = "inline-block";
+              moonIcon.style.display = "none";
+            } else {
+              // In light mode, show moon icon (clicking will switch to dark)
+              sunIcon.style.display = "none";
+              moonIcon.style.display = "inline-block";
+            }
+          }
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem("agritech-theme") || "dark";
+        applyTheme(savedTheme);
+
+        // Remove any existing listeners by replacing the button
+        const newButton = themeToggle.cloneNode(true);
+        themeToggle.parentNode.replaceChild(newButton, themeToggle);
+        const freshButton = document.querySelector(".theme-toggle");
+        const freshThemeText = freshButton.querySelector(".theme-text");
+        const freshMoonIcon = freshButton.querySelector(".theme-icon-moon");
+        const freshSunIcon = freshButton.querySelector(".theme-icon-sun");
+
+        // Add click handler to theme toggle button
+        freshButton.addEventListener("click", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const current = document.documentElement.getAttribute("data-theme") || "dark";
+          const next = current === "light" ? "dark" : "light";
+          
+          // Change entire page theme
+          document.documentElement.setAttribute("data-theme", next);
+          localStorage.setItem("agritech-theme", next);
+          
+          // Update theme text and icons
+          // Icon shows what you'll switch TO (sun in dark mode, moon in light mode)
+          if (freshThemeText) {
+            freshThemeText.textContent = next === "dark" ? "Light" : "Dark";
+          }
+          
+          if (freshMoonIcon && freshSunIcon) {
+            if (next === "dark") {
+              // In dark mode, show sun icon (clicking will switch to light)
+              freshSunIcon.style.display = "inline-block";
+              freshMoonIcon.style.display = "none";
+            } else {
+              // In light mode, show moon icon (clicking will switch to dark)
+              freshSunIcon.style.display = "none";
+              freshMoonIcon.style.display = "inline-block";
+            }
+          }
+        });
       }
-    };
 
-    const savedTheme = localStorage.getItem("agritech-theme") || "dark";
-    applyTheme(savedTheme);
-
-    themeToggle.addEventListener("click", () => {
-      const current = document.documentElement.getAttribute("data-theme");
-      const next = current === "light" ? "dark" : "light";
-      applyTheme(next);
-    });
+      // Initialize after DOM and other scripts load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          setTimeout(initThemeToggle, 300);
+        });
+      } else {
+        setTimeout(initThemeToggle, 300);
+      }
+    })();
 
     // Services Dropdown
     const servicesToggle = document.querySelector(".services-toggle");
@@ -2806,22 +2893,70 @@
       });
     }
 
-    // Language Selector
-    const langBtn = document.querySelector(".lang-btn");
-    const langDropdown = document.querySelector(".lang-dropdown");
-
-    if (langBtn && langDropdown) {
-      langBtn.addEventListener("click", (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        langDropdown.classList.toggle("active");
-      });
-
-      document.addEventListener("click", (e) => {
-        if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
-          langDropdown.classList.remove("active");
+    // Language Selector - Handle both .lang-btn and #langTrigger
+    function setupLanguageDropdown() {
+      const langBtn = document.querySelector(".lang-btn");
+      const langTrigger = document.getElementById("langTrigger");
+      // Find dropdown - prefer the one in the same container as trigger
+      let langDropdown = null;
+      if (langTrigger) {
+        const langContainer = langTrigger.closest(".lang-container");
+        if (langContainer) {
+          langDropdown = langContainer.querySelector(".lang-dropdown");
         }
-      });
+      }
+      if (!langDropdown) {
+        langDropdown = document.getElementById("langDropdown") || document.querySelector(".lang-dropdown");
+      }
+
+      // Handle .lang-btn (if exists)
+      if (langBtn && langDropdown) {
+        langBtn.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          langDropdown.classList.toggle("active");
+        });
+
+        document.addEventListener("click", (e) => {
+          if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
+            langDropdown.classList.remove("active");
+          }
+        });
+      }
+
+      // Handle #langTrigger (navbar language button)
+      if (langTrigger && langDropdown) {
+        langTrigger.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          langDropdown.classList.toggle("active");
+        });
+
+        document.addEventListener("click", (e) => {
+          if (!langTrigger.contains(e.target) && !langDropdown.contains(e.target)) {
+            langDropdown.classList.remove("active");
+          }
+        });
+
+        // Close dropdown when a language option is clicked
+        const langOptions = langDropdown.querySelectorAll(".lang-option");
+        langOptions.forEach(option => {
+          option.addEventListener("click", (e) => {
+            // Don't prevent default - let onclick handler run
+            setTimeout(() => {
+              langDropdown.classList.remove("active");
+            }, 100);
+          });
+        });
+      }
+    }
+
+    // Run setup when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupLanguageDropdown);
+    } else {
+      // If DOM is already loaded, wait a bit for other scripts to initialize
+      setTimeout(setupLanguageDropdown, 200);
     }
 
     // Scroll Button
@@ -3150,6 +3285,53 @@
   </script>
   <script src="translations.js"></script>
   <script src="scripts/i18n.js"></script>
+  <script>
+    // Ensure language dropdown works after i18n.js loads
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        const langTrigger = document.getElementById("langTrigger");
+        const langDropdown = document.getElementById("langDropdown");
+        
+        if (langTrigger && langDropdown) {
+          // Remove any existing listeners by cloning
+          const newTrigger = langTrigger.cloneNode(true);
+          langTrigger.parentNode.replaceChild(newTrigger, langTrigger);
+          const freshTrigger = document.getElementById("langTrigger");
+          
+          freshTrigger.addEventListener("click", function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const dropdown = document.getElementById("langDropdown");
+            if (dropdown) {
+              dropdown.classList.toggle("active");
+            }
+          });
+
+          // Close on outside click
+          document.addEventListener("click", function(e) {
+            const trigger = document.getElementById("langTrigger");
+            const dropdown = document.getElementById("langDropdown");
+            if (trigger && dropdown && 
+                !trigger.contains(e.target) && 
+                !dropdown.contains(e.target)) {
+              dropdown.classList.remove("active");
+            }
+          });
+
+          // Close when option is clicked
+          const options = langDropdown.querySelectorAll(".lang-option");
+          options.forEach(function(option) {
+            option.addEventListener("click", function() {
+              setTimeout(function() {
+                const dd = document.getElementById("langDropdown");
+                if (dd) dd.classList.remove("active");
+              }, 50);
+            });
+          });
+        }
+      }, 300);
+    });
+  </script>
 
 
   <script>
@@ -3187,16 +3369,6 @@
   </script>
 
 
-  <script>
-    const langSelect = document.getElementById("languageSelect");
-    const savedLang = localStorage.getItem("lang") || "en";
-    langSelect.value = savedLang;
-
-    langSelect.addEventListener("change", () => {
-      localStorage.setItem("lang", langSelect.value);
-      location.reload();
-    });
-  </script>
 
   <!-- Notification System -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
