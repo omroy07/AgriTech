@@ -246,26 +246,27 @@
     }
 
     .services-dropdown {
+      display: none;
       position: absolute;
-      top: calc(100% + 0.5rem);
+      top: calc(100% + 10px);
       left: 0;
-      background: var(--surface-color);
-      border: 1px solid var(--border-color);
-      border-radius: 0.5rem;
-      min-width: 250px;
-      padding: 0.5rem;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-10px);
-      transition: all 0.3s ease;
-      z-index: 1000;
-      box-shadow: 0 4px 12px var(--shadow-color);
+      background: rgba(15, 23, 42, 0.95);
+      /* Dark Surface Token */
+      backdrop-filter: blur(15px) saturate(180%);
+      /* Premium Glassmorphism */
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      /* Subtle Visual Boundary */
+      border-radius: 12px;
+      min-width: 280px;
+      padding: 8px;
+      z-index: 1100;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      /* Pop-Out Transition Timing */
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .services-dropdown.active {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
+      display: block;
     }
 
     .services-list {
@@ -279,19 +280,20 @@
     }
 
     .services-list a {
-      color: var(--text-muted);
+      color: #cbd5e1 !important;
       text-decoration: none;
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.5rem;
+      padding: 12px 15px;
       border-radius: 4px;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
     }
 
     .services-list a:hover {
-      background: var(--btn-bg);
-      color: var(--text-color);
+      background: rgba(34, 197, 94, 0.15);
+      /* Green Glow */
+      transform: scale(1.02) translateX(5px);
     }
 
     .services-list i {
@@ -936,218 +938,218 @@
         }
       }
 
-        .mobile-close-btn i {
-          font-size: 1.1rem;
-        }
-
-        .mobile-close-btn:active {
-          background: linear-gradient(135deg,
-              var(--accent-color),
-              rgba(34, 197, 94, 0.4));
-          transform: scale(0.9);
-        }
-
-        /* Remove tooltip on mobile */
-        .mobile-close-btn::before,
-        .mobile-close-btn::after {
-          display: none;
-        }
-
-        /* Better touch feedback */
-        .mobile-close-btn {
-          -webkit-tap-highlight-color: transparent;
-        }
+      .mobile-close-btn i {
+        font-size: 1.1rem;
       }
 
-      /* Dark mode adjustments */
-      [data-theme="dark"] .mobile-close-btn {
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-      }
-
-      [data-theme="dark"] .mobile-close-btn:hover {
+      .mobile-close-btn:active {
         background: linear-gradient(135deg,
             var(--accent-color),
             rgba(34, 197, 94, 0.4));
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        transform: scale(0.9);
       }
 
-      /* Light mode adjustments */
-      [data-theme="light"] .mobile-close-btn {
-        background: rgba(0, 0, 0, 0.08);
-        border: 1px solid rgba(0, 0, 0, 0.15);
-      }
-
-      [data-theme="light"] .mobile-close-btn:hover {
-        background: linear-gradient(135deg,
-            var(--accent-color),
-            rgba(34, 197, 94, 0.2));
-        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
-      }
-
-      /* Accessibility focus styles */
-      .mobile-close-btn:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.5);
-      }
-
-      .mobile-close-btn:focus-visible {
-        outline: 2px solid var(--accent-color);
-        outline-offset: 2px;
-      }
-
-      /* मोबाइल मेनू हेडर को adjust करें */
-      .mobile-menu-header {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        padding: 1rem;
-        /* थोड़ा कम padding */
-        border-bottom: 1px solid var(--border-color);
-        position: relative;
-        background: var(--surface-color);
-        z-index: 1002;
-        min-height: 56px;
-        /* और छोटी height */
-      }
-
-      /* मोबाइल मेनू content को थोड़ा adjust करें */
-      .mobile-menu-content {
-        padding-top: 0.5rem;
-        /* header के नीचे थोड़ी space */
-      }
-
-      .mobile-search {
-        position: relative;
-        display: flex;
-        margin-bottom: 1.5rem;
-      }
-
-      .mobile-search-input {
-        flex: 1;
-        padding: 0.5rem;
-        padding-right: 40px;
-        border-radius: 8px;
-        border: 1px solid var(--input-border);
-        background: transparent;
-        color: var(--text-color);
-        outline: none;
-      }
-
-      .mobile-search-btn {
-        position: absolute;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        padding: 0.5rem 0.6rem;
-        background: var(--accent-color);
-        border: none;
-        border-radius: 0 8px 8px 0;
-        color: white;
-        cursor: pointer;
-      }
-
-      .mobile-search-input:focus,
-      .mobile-search-input.input-focused {
-        outline: none;
-        border-color: var(--accent-color);
-      }
-
-      .mobile-buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-      }
-
-      .mobile-theme-toggle {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .mobile-links {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-
-      .mobile-link {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.75rem;
-        color: var(--text-color);
-        text-decoration: none;
-        border-radius: 8px;
-        transition: all 0.2s;
-      }
-
-      .mobile-link:hover {
-        background: var(--btn-bg);
-      }
-
-      .link-arrow {
-        margin-left: auto;
-        font-size: 0.8rem;
-      }
-
-      .mobile-services-section {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .mobile-services-list {
+      /* Remove tooltip on mobile */
+      .mobile-close-btn::before,
+      .mobile-close-btn::after {
         display: none;
-        flex-direction: column;
-        gap: 0.25rem;
-        padding-left: 1rem;
-        margin-top: 0.5rem;
       }
 
-      .mobile-services-list.active {
-        display: flex;
+      /* Better touch feedback */
+      .mobile-close-btn {
+        -webkit-tap-highlight-color: transparent;
       }
+    }
 
-      .mobile-sublink {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.5rem;
-        color: var(--text-muted);
-        text-decoration: none;
-        border-radius: 4px;
-        font-size: 0.9rem;
-        transition: all 0.2s;
-      }
+    /* Dark mode adjustments */
+    [data-theme="dark"] .mobile-close-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
 
-      .mobile-sublink:hover {
-        background: var(--btn-bg);
-        color: var(--text-color);
-      }
+    [data-theme="dark"] .mobile-close-btn:hover {
+      background: linear-gradient(135deg,
+          var(--accent-color),
+          rgba(34, 197, 94, 0.4));
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
 
-      .mobile-register {
-        background: var(--accent-color);
-        color: white !important;
-      }
+    /* Light mode adjustments */
+    [data-theme="light"] .mobile-close-btn {
+      background: rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(0, 0, 0, 0.15);
+    }
 
-      .mobile-footer-links {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        margin-top: 2rem;
-        padding-top: 1rem;
-        border-top: 1px solid var(--border-color);
-      }
+    [data-theme="light"] .mobile-close-btn:hover {
+      background: linear-gradient(135deg,
+          var(--accent-color),
+          rgba(34, 197, 94, 0.2));
+      box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+    }
 
-      .mobile-footer-link {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem;
-        color: var(--text-muted);
-        text-decoration: none;
-        font-size: 0.9rem;
-      }
-    
+    /* Accessibility focus styles */
+    .mobile-close-btn:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.5);
+    }
+
+    .mobile-close-btn:focus-visible {
+      outline: 2px solid var(--accent-color);
+      outline-offset: 2px;
+    }
+
+    /* मोबाइल मेनू हेडर को adjust करें */
+    .mobile-menu-header {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 1rem;
+      /* थोड़ा कम padding */
+      border-bottom: 1px solid var(--border-color);
+      position: relative;
+      background: var(--surface-color);
+      z-index: 1002;
+      min-height: 56px;
+      /* और छोटी height */
+    }
+
+    /* मोबाइल मेनू content को थोड़ा adjust करें */
+    .mobile-menu-content {
+      padding-top: 0.5rem;
+      /* header के नीचे थोड़ी space */
+    }
+
+    .mobile-search {
+      position: relative;
+      display: flex;
+      margin-bottom: 1.5rem;
+    }
+
+    .mobile-search-input {
+      flex: 1;
+      padding: 0.5rem;
+      padding-right: 40px;
+      border-radius: 8px;
+      border: 1px solid var(--input-border);
+      background: transparent;
+      color: var(--text-color);
+      outline: none;
+    }
+
+    .mobile-search-btn {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      padding: 0.5rem 0.6rem;
+      background: var(--accent-color);
+      border: none;
+      border-radius: 0 8px 8px 0;
+      color: white;
+      cursor: pointer;
+    }
+
+    .mobile-search-input:focus,
+    .mobile-search-input.input-focused {
+      outline: none;
+      border-color: var(--accent-color);
+    }
+
+    .mobile-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .mobile-theme-toggle {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .mobile-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .mobile-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      color: var(--text-color);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .mobile-link:hover {
+      background: var(--btn-bg);
+    }
+
+    .link-arrow {
+      margin-left: auto;
+      font-size: 0.8rem;
+    }
+
+    .mobile-services-section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mobile-services-list {
+      display: none;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding-left: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .mobile-services-list.active {
+      display: flex;
+    }
+
+    .mobile-sublink {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .mobile-sublink:hover {
+      background: var(--btn-bg);
+      color: var(--text-color);
+    }
+
+    .mobile-register {
+      background: var(--accent-color);
+      color: white !important;
+    }
+
+    .mobile-footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .mobile-footer-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
 
     @media (max-width: 768px) {
       .navbar {
@@ -1761,13 +1763,15 @@
     .services-dropdown {
       display: none;
       position: absolute;
-      background: #fff;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      margin-top: 5px;
-      border-radius: 5px;
-      z-index: 1000;
-      transition: all 0.3s ease;
-      /* for smooth effect */
+      top: calc(100% + 12px);
+      background: rgba(15, 23, 42, 0.95);
+      /* Dark Surface */
+      backdrop-filter: blur(15px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      min-width: 280px;
+      padding: 10px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     }
 
     /* Show dropdown when active */
@@ -1792,15 +1796,26 @@
     }
 
     .services-list li a {
-      display: block;
-      padding: 10px 20px;
-      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 15px;
+      color: #cbd5e1 !important;
+      /* High-Contrast Vibrant Text */
       text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      font-weight: 500;
     }
 
     .services-list li a:hover {
-      background-color: #f0f0f0;
-      color: #000;
+      background: rgba(16, 173, 74, 0.15);
+      /* Brand Green Glow */
+      color: #225504 !important;
+      /* Pure White on Hover */
+      transform: scale(1.02) translateX(5px);
+      /* Interactive Pop-Out */
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.1);
     }
 
     /* Make sure the container is relative */
@@ -1838,9 +1853,37 @@
       color: #333;
     }
 
+    .services-list li a i {
+      color: var(--accent-color);
+      /* Themed Icons */
+      width: 20px;
+      text-align: center;
+    }
+
     .services-list li a:hover {
       background: #f0f0f0;
       color: #000;
+    }
+
+    /* Unified Green Action Hub Buttons */
+    .btn-hub {
+      background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+      color: #ffffff !important;
+      border: none;
+      padding: 0.65rem 1.3rem;
+      border-radius: 25px;
+      /* Pill Shape */
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        box-shadow 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-hub:hover {
+      transform: scale(1.08) translateY(-2px);
+      /* Pop-Out Effect */
+      box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
     }
   </style>
 </head>
@@ -1864,18 +1907,15 @@
     </select>
   </div> -->
   <div style="padding: 10px; text-align: right">
-  <label for="languageSelect" class="language-label">Language:</label>
-  <select
-    id="languageSelect"
-    class="language-select"
-    onchange="setLanguage(this.value, this.options[this.selectedIndex].text)"
-  >
-    <option value="en">English</option>
-    <option value="te">తెలుగు</option>
-    <option value="hi">हिन्दी</option>
-    <option value="ta">தமிழ்</option>
-  </select>
-</div>
+    <label for="languageSelect" class="language-label">Language:</label>
+    <select id="languageSelect" class="language-select"
+      onchange="setLanguage(this.value, this.options[this.selectedIndex].text)">
+      <option value="en">English</option>
+      <option value="te">తెలుగు</option>
+      <option value="hi">हिन्दी</option>
+      <option value="ta">தமிழ்</option>
+    </select>
+  </div>
 
 
   <!-- Offline & Cached Notices -->
@@ -2808,41 +2848,41 @@
       });
     }
 
-// ===== MOBILE MENU CLEAN FIX =====
-const hamburgerBtn = document.getElementById("hamburgerBtn");
-const mobileMenu = document.getElementById("mobileMenu");
-const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
-const mobileCloseBtn = document.querySelector(".mobile-close-btn");
+    // ===== MOBILE MENU CLEAN FIX =====
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
+    const mobileCloseBtn = document.querySelector(".mobile-close-btn");
 
-function openMobileMenu() {
-  mobileMenu.classList.add("active");
-  mobileMenuOverlay.classList.add("active");
-  document.body.style.overflow = "hidden";
-}
+    function openMobileMenu() {
+      mobileMenu.classList.add("active");
+      mobileMenuOverlay.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
 
-function closeMobileMenu() {
-  mobileMenu.classList.remove("active");
-  mobileMenuOverlay.classList.remove("active");
-  document.body.style.overflow = "";
-}
+    function closeMobileMenu() {
+      mobileMenu.classList.remove("active");
+      mobileMenuOverlay.classList.remove("active");
+      document.body.style.overflow = "";
+    }
 
-if (hamburgerBtn) hamburgerBtn.addEventListener("click", openMobileMenu);
-if (mobileCloseBtn) mobileCloseBtn.addEventListener("click", closeMobileMenu);
-if (mobileMenuOverlay) mobileMenuOverlay.addEventListener("click", closeMobileMenu);
+    if (hamburgerBtn) hamburgerBtn.addEventListener("click", openMobileMenu);
+    if (mobileCloseBtn) mobileCloseBtn.addEventListener("click", closeMobileMenu);
+    if (mobileMenuOverlay) mobileMenuOverlay.addEventListener("click", closeMobileMenu);
 
 
-      // CLOSE
-      mobileCloseBtn.addEventListener("pointerdown", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        closeMobileMenu();
-      });
+    // CLOSE
+    mobileCloseBtn.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeMobileMenu();
+    });
 
-      mobileMenuOverlay.addEventListener("pointerdown", closeMobileMenu);
+    mobileMenuOverlay.addEventListener("pointerdown", closeMobileMenu);
 
-      mobileMenu.addEventListener("pointerdown", (e) => {
-        e.stopPropagation();
-      });
+    mobileMenu.addEventListener("pointerdown", (e) => {
+      e.stopPropagation();
+    });
 
     // Mobile Services Toggle
     const mobileServicesToggle = document.getElementById(
@@ -3111,7 +3151,7 @@ if (mobileMenuOverlay) mobileMenuOverlay.addEventListener("click", closeMobileMe
   <script src="translations.js"></script>
   <script src="scripts/i18n.js"></script>
 
-  
+
   <script>
     const languages = {
       en: {
@@ -3202,6 +3242,6 @@ if (mobileMenuOverlay) mobileMenuOverlay.addEventListener("click", closeMobileMe
       circles.forEach((c) => c.classList.remove("cursor-clicking"));
     });
   </script>
-  </body>
-</html>
+</body>
 
+</html>
