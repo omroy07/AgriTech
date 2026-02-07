@@ -1162,7 +1162,7 @@
         text-decoration: none;
         font-size: 0.9rem;
       }
-    }
+    
 
     @media (max-width: 768px) {
       .navbar {
@@ -1821,15 +1821,6 @@
     }
 
 
-    <div style="padding: 10px; text-align: right">
-      <label for="languageSelect" class="language-label">Language:</label>
-      <select id="languageSelect" class="language-select">
-        <option value="en">English</option>
-        <option value="te">తెలుగు</option>
-        <option value="hi">हिन्दी</option>
-        <option value="ta">தமிழ்</option>
-      </select>
-    </div>
 
     /* Show dropdown when active */
     .services-dropdown.active {
@@ -2829,31 +2820,28 @@
       });
     }
 
-    // ===== MOBILE MENU (FINAL FIX) =====
-    const hamburgerBtn = document.getElementById("hamburgerBtn");
-    const mobileMenu = document.getElementById("mobileMenu");
-    const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
+// ===== MOBILE MENU CLEAN FIX =====
+const hamburgerBtn = document.getElementById("hamburgerBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
+const mobileCloseBtn = document.querySelector(".mobile-close-btn");
 
-    function closeMobileMenu() {
-      mobileMenu.classList.remove("active");
-      mobileMenuOverlay.classList.remove("active");
-      document.body.style.overflow = "";
-    }
+function openMobileMenu() {
+  mobileMenu.classList.add("active");
+  mobileMenuOverlay.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
 
-    function openMobileMenu() {
-      mobileMenu.classList.add("active");
-      mobileMenuOverlay.classList.add("active");
-      document.body.style.overflow = "hidden";
-    }
-    const mobileCloseBtn = document.querySelector(".mobile-close-btn");
+function closeMobileMenu() {
+  mobileMenu.classList.remove("active");
+  mobileMenuOverlay.classList.remove("active");
+  document.body.style.overflow = "";
+}
 
-    if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
-      // OPEN
-      hamburgerBtn.addEventListener("pointerdown", (e) => {
-        e.preventDefault();
-        openMobileMenu();
-      });
-    }
+if (hamburgerBtn) hamburgerBtn.addEventListener("click", openMobileMenu);
+if (mobileCloseBtn) mobileCloseBtn.addEventListener("click", closeMobileMenu);
+if (mobileMenuOverlay) mobileMenuOverlay.addEventListener("click", closeMobileMenu);
+
 
       // CLOSE
       mobileCloseBtn.addEventListener("pointerdown", (e) => {
@@ -2867,7 +2855,6 @@
       mobileMenu.addEventListener("pointerdown", (e) => {
         e.stopPropagation();
       });
-    }
 
     // Mobile Services Toggle
     const mobileServicesToggle = document.getElementById(
@@ -2993,42 +2980,6 @@
           `No results found for "${query}". Try different keywords.`;
         document.getElementById("searchPopup").style.display = "flex";
       }
-
-      function highlightAll(query) {
-        clearHighlights();
-        let found = false;
-        let firstMatch = null;
-
-        const walker = document.createTreeWalker(
-          document.body,
-          NodeFilter.SHOW_TEXT,
-        );
-        const nodes = [];
-
-        while (walker.nextNode()) nodes.push(walker.currentNode);
-
-        nodes.forEach((node) => {
-          const text = node.nodeValue;
-          const lower = text.toLowerCase();
-
-          if (!lower.includes(query)) return;
-
-          const parent = node.parentNode;
-          const fragment = document.createDocumentFragment();
-          let lastIndex = 0;
-
-          lower.replace(new RegExp(query, "gi"), (match, index) => {
-            found = true;
-
-            fragment.append(
-              document.createTextNode(text.slice(lastIndex, index)),
-            );
-
-            const span = document.createElement("span");
-            span.className = "search-highlight";
-            span.textContent = text.slice(index, index + match.length);
-
-            if (!firstMatch) firstMatch = span;
 
       window.closeSearchPopup = () => {
         document.getElementById("searchPopup").style.display = "none";
@@ -3261,19 +3212,6 @@
       circles.forEach((c) => c.classList.remove("cursor-clicking"));
     });
   </script>
-</body>
-
-    function closeMobileMenu() {
-      mobileMenu.classList.remove("active");
-      mobileMenuOverlay.classList.remove("active");
-      document.body.style.overflow = "";
-    }
-
-    hamburgerBtn.addEventListener("click", openMobileMenu);
-    mobileCloseBtn?.addEventListener("click", closeMobileMenu);
-    mobileMenuOverlay.addEventListener("click", closeMobileMenu);
-  });
-</script>
-</body>
+  </body>
 </html>
 
