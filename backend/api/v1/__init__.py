@@ -34,7 +34,7 @@ api_v1.register_blueprint(contributions_bp)
 api_v1.register_blueprint(market_bp)
 api_v1.register_blueprint(risk_bp)
 api_v1.register_blueprint(schemes_bp)
-api_v1.register_blueprint(weather_bp)
+api_v1.register_blueprint(weather_bp) # Weather endpoints relocated/updated
 api_v1.register_blueprint(traceability_bp)
 api_v1.register_blueprint(disease_bp)
 api_v1.register_blueprint(insurance_bp)
