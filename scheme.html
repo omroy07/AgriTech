@@ -429,6 +429,7 @@
   <!-- Include Navbar -->
   <div w3-include-html="navbar.html"></div>
 
+
   <section class="hero">
     <div class="form-card">
       <h2>Check Your Scheme Eligibility</h2>
@@ -679,17 +680,17 @@
       });
     }
 
+
     // Run after DOM loads
     document.addEventListener('DOMContentLoaded', () => {
-      // Apply saved theme
-      const savedTheme = localStorage.getItem('agritech-theme') || 'light';
-      document.documentElement.setAttribute('data-theme', savedTheme);
+
 
       // Include navbar and initialize functions
       includeHTML(() => {
-
         initHamburgerMenu();
+        initThemeToggle(); // 🔥 THIS WAS MISSING
       });
+
     });
     // --- Cursor Trailing Effect ---
     const container = document.getElementById('cursorTrail');
@@ -752,6 +753,42 @@
       requestAnimationFrame(animateCursor);
     }
     animateCursor();
+
+    function initThemeToggle() {
+      const toggleBtn = document.getElementById('themeToggle');
+      const label = toggleBtn?.querySelector('.theme-label');
+      const icon = toggleBtn?.querySelector('i');
+
+      if (!toggleBtn) return;
+
+      // Sync UI with current theme
+      function updateUI(theme) {
+        if (theme === 'dark') {
+          label.textContent = 'Dark';
+          icon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+          label.textContent = 'Light';
+          icon.classList.replace('fa-sun', 'fa-moon');
+        }
+      }
+
+      // Initial state
+      const savedTheme = localStorage.getItem('agritech-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      updateUI(savedTheme);
+
+      // Toggle on click
+      toggleBtn.addEventListener('click', () => {
+        const html = document.documentElement;
+        const current = html.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('agritech-theme', next);
+        updateUI(next);
+      });
+    }
+
 
   </script>
 </body>
