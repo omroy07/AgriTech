@@ -10,7 +10,6 @@ from .traceability import SupplyBatch, CustodyLog, QualityGrade, BatchStatus
 from .insurance import InsurancePolicy, ClaimRequest, RiskScoreHistory
 from .forum import ForumCategory, ForumThread, PostComment, Upvote, UserReputation
 from .knowledge import Question, Answer, KnowledgeVote, Badge, UserBadge, UserExpertise
-from .weather import WeatherData, CropAdvisory, AdvisorySubscription
 
 __all__ = [
     'User', 'UserRole', 'LoanRequest', 'PredictionHistory', 
@@ -19,6 +18,5 @@ __all__ = [
     'SupplyBatch', 'CustodyLog', 'QualityGrade', 'BatchStatus',
     'InsurancePolicy', 'ClaimRequest', 'RiskScoreHistory',
     'ForumCategory', 'ForumThread', 'PostComment', 'Upvote', 'UserReputation',
-    'Question', 'Answer', 'KnowledgeVote', 'Badge', 'UserBadge', 'UserExpertise',
-    'WeatherData', 'CropAdvisory', 'AdvisorySubscription'
+    'Question', 'Answer', 'KnowledgeVote', 'Badge', 'UserBadge', 'UserExpertise'
 ]
