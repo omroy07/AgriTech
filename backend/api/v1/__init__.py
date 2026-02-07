@@ -20,8 +20,6 @@ from .bookings import bookings_bp
 from .questions import questions_bp
 from .answers import answers_bp
 from .advisories import advisories_bp
-from .farms import farms_bp
-from .farm_members import farm_members_bp
 
 # Create v1 API blueprint
 api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1')
@@ -39,7 +37,7 @@ api_v1.register_blueprint(contributions_bp)
 api_v1.register_blueprint(market_bp)
 api_v1.register_blueprint(risk_bp)
 api_v1.register_blueprint(schemes_bp)
-api_v1.register_blueprint(weather_bp)
+api_v1.register_blueprint(weather_bp) # Weather endpoints relocated/updated
 api_v1.register_blueprint(traceability_bp)
 api_v1.register_blueprint(disease_bp)
 api_v1.register_blueprint(insurance_bp)
@@ -48,5 +46,3 @@ api_v1.register_blueprint(bookings_bp, url_prefix='/bookings')
 api_v1.register_blueprint(questions_bp, url_prefix='/questions')
 api_v1.register_blueprint(answers_bp, url_prefix='/answers')
 api_v1.register_blueprint(advisories_bp, url_prefix='/advisories')
-api_v1.register_blueprint(farms_bp, url_prefix='/farms')
-api_v1.register_blueprint(farm_members_bp, url_prefix='/farm_teams')

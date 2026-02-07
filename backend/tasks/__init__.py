@@ -5,4 +5,3 @@ from .traceability_tasks import generate_batch_certificate_task
 from .knowledge_tasks import calculate_trending_questions_task, expert_verification_audit_task
 from .weather_tasks import fetch_weather_updates_task, generate_bulk_advisories_task
 from .rental_tasks import check_overdue_rentals_task, cleanup_expired_pending_bookings_task
-from .farm_tasks import monthly_farm_valuation_task, generate_farm_report_task
