@@ -4,7 +4,7 @@ Handles async PDF generation and email sending
 """
 
 from backend.config.celery_config import celery_app
-from backend.services.pdf_service import generate_loan_report
+from backend.services.pdf_service import PDFService
 from backend.services.email_service import send_loan_report_email
 import os
 import traceback
@@ -30,7 +30,7 @@ def generate_and_send_report(self, farmer_data, assessment_result, farmer_email,
         
         # Step 1: Generate PDF
         print("📄 Generating PDF report...")
-        pdf_path = generate_loan_report(farmer_data, assessment_result, farmer_email)
+        pdf_path = PDFService.generate_loan_report(farmer_data, assessment_result, farmer_email)
         
         if not os.path.exists(pdf_path):
             raise Exception("PDF generation failed - file not found")
@@ -97,7 +97,7 @@ def generate_pdf_report(farmer_data, assessment_result, farmer_email):
     try:
         print(f"📄 Generating PDF report for {farmer_email}")
         
-        pdf_path = generate_loan_report(farmer_data, assessment_result, farmer_email)
+        pdf_path = PDFService.generate_loan_report(farmer_data, assessment_result, farmer_email)
         
         if not os.path.exists(pdf_path):
             raise Exception("PDF generation failed - file not found")

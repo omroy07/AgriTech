@@ -42,9 +42,14 @@
                 <h2 class="modal-title" id="modalTitle"></h2>
                 <div class="icons">
                     <button class="close" id="closeBlogModal" aria-label="Close modal">&times;</button>
-                    <button class="modal-favorite-btn" id="modalFavoriteBtn" title="Toggle favorite">
-                        <i class="far fa-heart"></i>
+                    <button
+                      class="modal-favorite-btn"
+                      id="modalFavoriteBtn"
+                      aria-label="Add blog to favorites"
+                    >
+                        <i class="far fa-heart" aria-hidden="true"></i>
                     </button>
+
                 </div>
                 <div class="modal-meta">
                     <span id="modal-Author"><i class="fas fa-user"></i> </span>
@@ -59,7 +64,14 @@
         </div>
     </div>
 
-    <button class="fab-btn" id="createPostBtn" title="Create New Post">
+    <button
+      class="fab-btn"
+      id="createPostBtn"
+      aria-label="Create new blog post"
+    >
+        <i class="fas fa-plus" aria-hidden="true"></i>
+    </button>
+
         <i class="fas fa-plus"></i>
     </button>
 
@@ -70,28 +82,139 @@
                 <button class="close" id="closeCreateModal">&times;</button>
             </div>
             <div class="modal-body">
-                <form id="createPostForm" class="create-post-form">
-                    <div class="form-group">
-                        <label for="postTitle">Title</label>
-                        <input type="text" id="postTitle" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="postCategory">Category</label>
-                        <select id="postCategory" required>
-                            <option value="farming-tips">Farming Tips</option>
-                            <option value="technology">Technology</option>
-                            <option value="sustainability">Sustainability</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="postContent">Content</label>
-                        <textarea id="postContent" required rows="6"></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Publish Post</button>
-                </form>
+               <form id="createPostForm" class="create-post-form">
+
+    <div class="form-group">
+        <label for="postTitle">Title</label>
+        <input type="text" id="postTitle" required>
+    </div>
+
+    <div class="form-group">
+        <label for="postCategory">Category</label>
+        <select id="postCategory" required>
+            <option value="farming-tips">Farming Tips</option>
+            <option value="technology">Technology</option>
+            <option value="sustainability">Sustainability</option>
+            <option value="market-trends">Market Trends</option>
+            <option value="business">Business</option>
+        </select>
+    </div>
+
+    <!-- ✅ NEW: Featured Image -->
+    <div class="form-group">
+        <label for="postImage">Featured Image URL</label>
+        <input type="url" id="postImage" placeholder="https://example.com/image.jpg" required>
+    </div>
+
+    <!-- ✅ NEW: Tags -->
+    <div class="form-group">
+        <label for="postTags">Tags / Keywords</label>
+        <input type="text" id="postTags" placeholder="AI, IoT, Smart Farming">
+    </div>
+
+    <!-- ✅ NEW: Author -->
+    <div class="form-group">
+        <label for="postAuthor">Author Name (optional)</label>
+        <input type="text" id="postAuthor" placeholder="Author name">
+    </div>
+
+    <div class="form-group">
+        <label for="postContent">Content</label>
+        <textarea id="postContent" required rows="6"></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn">Publish Post</button>
+</form>
+
             </div>
         </div>
     </div>
+
+    <footer class="site-footer tech-dark-theme final-match">
+      <div class="footer-top-accent"></div>
+
+      <div class="footer-inner-content">
+        <div class="footer-section footer-brand">
+          <div class="brand-header">
+            <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
+            <h3>AgriTech</h3>
+          </div>
+
+          <p class="tagline">
+            Empowering India's Farming Future with innovative technology
+            connecting every stakeholder.
+          </p>
+
+          <div class="social-icons">
+            <a href="#" aria-label="Facebook"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" aria-label="Twitter"
+              ><i class="fab fa-x-twitter"></i
+            ></a>
+            <a href="#" aria-label="LinkedIn"
+              ><i class="fab fa-linkedin-in"></i
+            ></a>
+            <a href="#" aria-label="Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="footer-group-links">
+          <div class="footer-section footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li>
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+              </li>
+              <li>
+                <a href="login.html"
+                  ><i class="fas fa-tachometer-alt"></i> Dashboard</a
+                >
+              </li>
+              <li>
+                <a href="feed-back.html"
+                  ><i class="fas fa-comment-dots"></i> Feedback</a
+                >
+              </li>
+              <li>
+                <a href="chat.html"
+                  ><i class="fas fa-robot"></i> AI Assistant</a
+                >
+              </li>
+              <li>
+                <a href="terms-and-service.html"
+                  ><i class="fas fa-file-contract"></i> Terms & Service</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-section footer-contact">
+            <h4>Contact</h4>
+            <ul>
+              <li>
+                <a href="mailto:contact@agritech.com">
+                  <i class="fas fa-envelope"></i> contact@agritech.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:+910000000000">
+                  <i class="fas fa-phone"></i> +91 00000 00000
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
+      </div>
+
+      <div class="footer-wave-overlay"></div>
+    </footer>
 
     <script src="js/features/favorites.js"></script>
     <script src="blog.js"></script>
@@ -162,6 +285,41 @@ function initHamburgerMenu() {
         document.body.style.overflow = '';
     });
 }
+function initNavbarInteractions() {
+  // Desktop Services Dropdown
+  const servicesToggle = document.querySelector('.services-toggle');
+  const servicesDropdown = document.querySelector('.services-dropdown');
+  const servicesArrow = document.querySelector('.services-arrow');
+
+  if (servicesToggle && servicesDropdown) {
+    servicesToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      servicesDropdown.classList.toggle('active');
+      servicesArrow?.classList.toggle('rotated');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!servicesToggle.contains(e.target) && !servicesDropdown.contains(e.target)) {
+        servicesDropdown.classList.remove('active');
+        servicesArrow?.classList.remove('rotated');
+      }
+    });
+  }
+
+  // Mobile Services Dropdown
+  const mobServToggle = document.getElementById('mobileServicesToggle');
+  const mobServList = document.getElementById('mobileServicesList');
+
+  if (mobServToggle && mobServList) {
+    mobServToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      mobServList.classList.toggle('active');
+    });
+  }
+}
+
+
 
 // Run after DOM loads
 document.addEventListener('DOMContentLoaded', () => {
@@ -173,7 +331,9 @@ document.addEventListener('DOMContentLoaded', () => {
     includeHTML(() => {
         initThemeToggle();
         initHamburgerMenu();
+        initServicesDropdown(); // ✅ ADD THIS
     });
+
 });
 </script>
 <!-- Cursor Trail -->

@@ -1,96 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agriculture News - AgriTech</title>
-    <link rel="icon" type="image/png" href="images/logo.png">
-    <link rel="stylesheet" href="news.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agriculture News - AgriTech</title>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="stylesheet" href="news.css">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
 </head>
 <body>
-    <section class="agritech-news">
-        <div class="news-container">
-            <!-- Header with Navigation -->
-            <div class="news-header">
-                <div class="header-actions">
-                    <a href="index.html" class="home-btn">
-                        <i class="fas fa-arrow-left"></i> Back to Home
-                    </a>
-                    <button class="theme-toggle" id="themeToggle">
-                        <span id="themeIcon">🌙</span>
-                        <span id="themeText">Dark Mode</span>
-                    </button>
-                </div>
-                <h1 class="news-title">📰 Agriculture News & Updates</h1>
-                <p class="news-subtitle">Stay informed with the latest agricultural news, market trends, and farming innovations worldwide.</p>
-            </div>
-
-            <!-- Search and Filter Section -->
-            <div class="search-filter-section">
-                <div class="search-wrapper">
-                    <input type="text" class="search-bar" placeholder="Search news articles..." id="searchInput">
-                    <i class="fas fa-search"></i>
-                </div>
-                <div class="category-filters">
-                    <button class="filter-btn active" data-category="all">All News</button>
-                    <button class="filter-btn" data-category="market-trends">Market Trends</button>
-                    <button class="filter-btn" data-category="technology">Technology</button>
-                    <button class="filter-btn" data-category="weather">Weather & Climate</button>
-                    <button class="filter-btn" data-category="policy">Policy & Government</button>
-                    <button class="filter-btn" data-category="innovation">Innovation</button>
-                    <button class="filter-btn" data-category="sustainability">Sustainability</button>
-                </div>
-            </div>
-
-            <!-- Empty State -->
-            <div id="empty-news-state" class="empty-state" style="display: none;">
-                <div>
-                    <h3 class="news-title">📭 No News Found</h3>
-                    <p class="news-subtitle">Check back soon for latest agricultural news and updates.</p>
-                </div>
-            </div>
-
-            <!-- News Grid -->
-            <div class="news-grid" id="newsGrid"></div>
-
-            <!-- Load More Button -->
-            <div class="load-more-container">
-                <button class="load-more-btn" id="loadMoreBtn">Load More News</button>
-            </div>
+  <section class="agritech-news">
+    <div class="news-container">
+      <!-- Header with Navigation -->
+      <div class="news-header">
+        <div class="header-actions">
+          <a href="index.html" class="home-btn">
+            <i class="fas fa-arrow-left"></i> Back to Home
+          </a>
+          <button class="theme-toggle" id="themeToggle">
+            <span id="themeIcon">🌙</span>
+            <span id="themeText">Dark Mode</span>
+          </button>
         </div>
-    </section>
+        <h1 class="news-title">📰 Agriculture News &amp; Updates</h1>
+        <p class="news-subtitle">
+          Stay informed with the latest agricultural news, market trends, and farming innovations worldwide.
+        </p>
+      </div>
 
-    <!-- News Detail Modal -->
-    <div id="newsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="modalTitle"></h2>
-                <button class="close" id="closeNewsModal" aria-label="Close modal">&times;</button>
-            </div>
-            <div class="modal-meta">
-                <span id="modal-source"><i class="fas fa-globe"></i> Source: </span>
-                <span id="modal-date"><i class="far fa-calendar-alt"></i> </span>
-            </div>
-            <span class="modal-category" id="modalCategory"></span>
-            <div class="modal-body">
-                <img class="modal-image" id="modalImage" alt="News image">
-                <div class="modal-text" id="modalContent"></div>
-                <a id="modalLink" href="#" class="read-more-link" target="_blank">Read Full Article <i class="fas fa-external-link-alt"></i></a>
-            </div>
+      <!-- Search and Filter Section -->
+      <div class="search-filter-section">
+        <div class="search-wrapper">
+          <input
+            type="text"
+            class="search-bar"
+            placeholder="Search news articles..."
+            id="searchInput"
+          >
+          <i class="fas fa-search"></i>
         </div>
+        <div class="category-filters">
+          <button class="filter-btn active" data-category="all">All News</button>
+          <button class="filter-btn" data-category="market-trends">Market Trends</button>
+          <button class="filter-btn" data-category="technology">Technology</button>
+          <button class="filter-btn" data-category="weather">Weather &amp; Climate</button>
+          <button class="filter-btn" data-category="policy">Policy &amp; Government</button>
+          <button class="filter-btn" data-category="innovation">Innovation</button>
+          <button class="filter-btn" data-category="sustainability">Sustainability</button>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-news-state" class="empty-state" style="display: none;">
+        <div>
+          <h3 class="news-title">📭 No News Found</h3>
+          <p class="news-subtitle">
+            Check back soon for latest agricultural news and updates.
+          </p>
+        </div>
+      </div>
+
+      <!-- News Grid -->
+      <div class="news-grid" id="newsGrid"></div>
+
+      <!-- Load More Button -->
+      <div class="load-more-container">
+        <button class="load-more-btn" id="loadMoreBtn">Load More News</button>
+      </div>
     </div>
+  </section>
 
-    <!-- Floating Action Button -->
-    <button class="fab-btn" id="refreshBtn" title="Refresh News">
-        <i class="fas fa-redo"></i>
-    </button>
- <!-- Cursor Trail -->
-<div class="circle-container" id="cursorTrail"></div>
+  <!-- News Detail Modal -->
+  <div id="newsModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle"></h2>
+        <button class="close" id="closeNewsModal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-meta">
+        <span id="modal-source">
+          <i class="fas fa-globe"></i> Source:
+        </span>
+        <span id="modal-date">
+          <i class="far fa-calendar-alt"></i>
+        </span>
+      </div>
+      <span class="modal-category" id="modalCategory"></span>
+      <div class="modal-body">
+        <img class="modal-image" id="modalImage" alt="News image">
+        <div class="modal-text" id="modalContent"></div>
+        <a
+          id="modalLink"
+          href="#"
+          class="read-more-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Read Full Article <i class="fas fa-external-link-alt"></i>
+        </a>
+      </div>
+    </div>
+  </div>
 
-    <script src="news.js"></script>
+  <!-- Floating Action Button (Refresh) -->
+  <button class="fab-btn" id="refreshBtn" title="Refresh News" type="button">
+    <i class="fas fa-redo"></i>
+  </button>
+
+  <!-- Back to Top Button -->
+  <button
+    id="backToTopBtn"
+    class="back-to-top-btn"
+    aria-label="Back to top"
+    type="button"
+  >
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Cursor Trail -->
+  <div class="circle-container" id="cursorTrail"></div>
+
+  <script src="news.js"></script>
 </body>
 </html>
