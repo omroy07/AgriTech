@@ -100,10 +100,11 @@ const loadMoreBtn = document.getElementById('loadMoreBtn');
 const refreshBtn = document.getElementById('refreshBtn');
 const emptyState = document.getElementById('empty-news-state');
 const themeToggle = document.getElementById('themeToggle');
-const backToTopBtn = document.getElementById('backToTopBtn'); // NEW
+const backToTopBtn = document.getElementById('backToTopBtn');
+const clearFiltersBtn = document.getElementById('clearFiltersBtn');
 
 // State
-let currentCategory = 'all';
+let currentCategories = ['all']; // supports up to 2 real categories
 let currentSearchTerm = '';
 let displayedArticles = 6;
 
@@ -139,12 +140,48 @@ function updateThemeIcon(theme) {
 
 // Setup Event Listeners
 function setupEventListeners() {
-  // Category filter
+  // Category filter (multi-select up to 2)
   categoryButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
-      categoryButtons.forEach((b) => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentCategory = btn.getAttribute('data-category');
+      const category = btn.getAttribute('data-category');
+
+      // If "All News" clicked → reset everything
+      if (category === 'all') {
+        currentCategories = ['all'];
+        categoryButtons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+      } else {
+        // Remove "all" if any specific category is chosen
+        currentCategories = currentCategories.filter((c) => c !== 'all');
+
+        if (btn.classList.contains('active')) {
+          // Deselect this category
+          btn.classList.remove('active');
+          currentCategories = currentCategories.filter((c) => c !== category);
+
+          // If none left, fallback to "all"
+          if (currentCategories.length === 0) {
+            currentCategories = ['all'];
+            const allBtn = document.querySelector('.filter-btn[data-category="all"]');
+            if (allBtn) allBtn.classList.add('active');
+          }
+        } else {
+          // Select category if we have a slot
+          if (currentCategories.length < 2) {
+            btn.classList.add('active');
+            currentCategories.push(category);
+          } else {
+            // Replace the oldest selected category
+            const oldest = currentCategories.shift();
+            const oldestBtn = document.querySelector(`.filter-btn[data-category="${oldest}"]`);
+            if (oldestBtn) oldestBtn.classList.remove('active');
+
+            btn.classList.add('active');
+            currentCategories.push(category);
+          }
+        }
+      }
+
       displayedArticles = 6;
       renderNews();
     });
@@ -163,14 +200,15 @@ function setupEventListeners() {
     renderNews();
   });
 
-  // Refresh
+  // Refresh (acts as "clear all" including search)
   refreshBtn.addEventListener('click', () => {
-    displayedArticles = 6;
-    currentCategory = 'all';
-    currentSearchTerm = '';
-    searchInput.value = '';
-    categoryButtons.forEach((b) => b.classList.remove('active'));
-    categoryButtons[0].classList.add('active');
+    resetFiltersAndSearch();
+    renderNews();
+  });
+
+  // Clear Filters button (only filters + search, keep pagination reset)
+  clearFiltersBtn.addEventListener('click', () => {
+    resetFiltersAndSearch();
     renderNews();
   });
 
@@ -195,22 +233,50 @@ function setupEventListeners() {
   });
 }
 
+// Reset filters + search to defaults
+function resetFiltersAndSearch() {
+  displayedArticles = 6;
+  currentCategories = ['all'];
+  currentSearchTerm = '';
+  searchInput.value = '';
+
+  categoryButtons.forEach((b) => b.classList.remove('active'));
+  const allBtn = document.querySelector('.filter-btn[data-category="all"]');
+  if (allBtn) allBtn.classList.add('active');
+}
+
+// Decide when to show/hide Clear Filters button
+function updateClearFiltersVisibility() {
+  const hasNonAllCategory =
+    !currentCategories.includes('all') && currentCategories.length > 0;
+  const hasSearch = currentSearchTerm.trim().length > 0;
+
+  if (hasNonAllCategory || hasSearch) {
+    clearFiltersBtn.classList.remove('hidden');
+  } else {
+    clearFiltersBtn.classList.add('hidden');
+  }
+}
+
 // Filter News
 function getFilteredNews() {
   let filtered = newsArticles;
 
-  // Category filter
-  if (currentCategory !== 'all') {
-    filtered = filtered.filter((article) => article.category === currentCategory);
+  // Category filter (allow "all" or up to two categories)
+  if (!currentCategories.includes('all')) {
+    filtered = filtered.filter((article) =>
+      currentCategories.includes(article.category)
+    );
   }
 
   // Search filter
   if (currentSearchTerm) {
+    const term = currentSearchTerm;
     filtered = filtered.filter(
       (article) =>
-        article.title.toLowerCase().includes(currentSearchTerm) ||
-        article.description.toLowerCase().includes(currentSearchTerm) ||
-        article.content.toLowerCase().includes(currentSearchTerm)
+        article.title.toLowerCase().includes(term) ||
+        article.description.toLowerCase().includes(term) ||
+        article.content.toLowerCase().includes(term)
     );
   }
 
@@ -227,6 +293,7 @@ function renderNews() {
     emptyState.style.display = 'block';
     newsGrid.innerHTML = '';
     loadMoreBtn.style.display = 'none';
+    updateClearFiltersVisibility();
     return;
   }
 
@@ -258,6 +325,9 @@ function renderNews() {
 
   // Show/hide load more button
   loadMoreBtn.style.display = displayedArticles < filtered.length ? 'block' : 'none';
+
+  // Update clear filters visibility
+  updateClearFiltersVisibility();
 }
 
 // Open News Modal

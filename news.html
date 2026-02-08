@@ -26,7 +26,7 @@
           <a href="index.html" class="home-btn">
             <i class="fas fa-arrow-left"></i> Back to Home
           </a>
-          <button class="theme-toggle" id="themeToggle">
+          <button class="theme-toggle" id="themeToggle" type="button">
             <span id="themeIcon">🌙</span>
             <span id="themeText">Dark Mode</span>
           </button>
@@ -48,15 +48,21 @@
           >
           <i class="fas fa-search"></i>
         </div>
+
         <div class="category-filters">
-          <button class="filter-btn active" data-category="all">All News</button>
-          <button class="filter-btn" data-category="market-trends">Market Trends</button>
-          <button class="filter-btn" data-category="technology">Technology</button>
-          <button class="filter-btn" data-category="weather">Weather &amp; Climate</button>
-          <button class="filter-btn" data-category="policy">Policy &amp; Government</button>
-          <button class="filter-btn" data-category="innovation">Innovation</button>
-          <button class="filter-btn" data-category="sustainability">Sustainability</button>
+          <button class="filter-btn active" data-category="all" type="button">All News</button>
+          <button class="filter-btn" data-category="market-trends" type="button">Market Trends</button>
+          <button class="filter-btn" data-category="technology" type="button">Technology</button>
+          <button class="filter-btn" data-category="weather" type="button">Weather &amp; Climate</button>
+          <button class="filter-btn" data-category="policy" type="button">Policy &amp; Government</button>
+          <button class="filter-btn" data-category="innovation" type="button">Innovation</button>
+          <button class="filter-btn" data-category="sustainability" type="button">Sustainability</button>
         </div>
+
+        <!-- Clear Filters Button -->
+        <button id="clearFiltersBtn" class="clear-filters-btn hidden" type="button">
+          Clear Filters
+        </button>
       </div>
 
       <!-- Empty State -->
@@ -74,7 +80,7 @@
 
       <!-- Load More Button -->
       <div class="load-more-container">
-        <button class="load-more-btn" id="loadMoreBtn">Load More News</button>
+        <button class="load-more-btn" id="loadMoreBtn" type="button">Load More News</button>
       </div>
     </div>
   </section>
@@ -84,7 +90,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="modal-title" id="modalTitle"></h2>
-        <button class="close" id="closeNewsModal" aria-label="Close modal">&times;</button>
+        <button class="close" id="closeNewsModal" aria-label="Close modal" type="button">&times;</button>
       </div>
       <div class="modal-meta">
         <span id="modal-source">
