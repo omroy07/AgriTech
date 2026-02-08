@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="./about.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/footer.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
 </head>
 <body>
     <div w3-include-html="navbar.html"></div>
@@ -88,9 +91,184 @@
         </section>
     </main>
 
-    <footer class="footer">
-        <p>&copy; 2026 AgriTech. All rights reserved. | Built with 💚 for farmers</p>
-    </footer>
+    <footer class="site-footer tech-dark-theme final-match">
+  <div class="footer-top-accent"></div>
+
+  <div class="footer-inner-content">
+    <div class="footer-section footer-brand">
+      <div class="brand-header">
+        <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
+        <h3>AgriTech</h3>
+      </div>
+
+      <p class="tagline">
+        Empowering India's Farming Future with innovative technology
+        connecting every stakeholder.
+      </p>
+
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <div class="footer-group-links">
+      <div class="footer-section footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+          <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+          <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
+          <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section footer-contact">
+        <h4>Contact</h4>
+        <ul>
+          <li>
+            <a href="mailto:contact@agritech.com">
+              <i class="fas fa-envelope"></i> contact@agritech.com
+            </a>
+          </li>
+          <li>
+            <a href="tel:+910000000000">
+              <i class="fas fa-phone"></i> +91 00000 00000
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
+  </div>
+
+  <div class="footer-wave-overlay"></div>
+</footer>
+
+<style>
+        /* FOOTER */
+    .site-footer {
+      background: var(--surface-color);
+      color: var(--text-color);
+      position: relative;
+      font-size: 0.95rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .footer-top-accent {
+      height: 4px;
+      background: linear-gradient(90deg, #16a34a, #22c55e);
+    }
+
+    .footer-inner-content {
+      max-width: 1200px;
+      margin: auto;
+      padding: 3rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      flex: 1 1 280px;
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .brand-logo {
+      width: 42px;
+    }
+
+    .footer-brand h3 {
+      color: var(--accent-color);
+      font-size: 1.3rem;
+    }
+
+    .tagline {
+      margin: 0.8rem 0 1.2rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 0.7rem;
+    }
+
+    .social-icons a {
+      width: 36px;
+      height: 36px;
+      background: #e6f4ea;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #15803d;
+      transition: all 0.25s ease;
+    }
+
+    .social-icons a:hover {
+      background: #22c55e;
+      color: #fff;
+    }
+
+    .footer-group-links {
+      display: flex;
+      gap: 3rem;
+      flex: 1 1 320px;
+    }
+
+    .footer-section h4 {
+      color: var(--accent-color);
+      margin-bottom: 0.9rem;
+      font-size: 1rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-section ul a {
+      color: var(--text-muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.25s ease;
+    }
+
+    .footer-section ul a:hover {
+      color: var(--accent-color);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding: 1rem;
+      background: var(--section-bg);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .footer-wave-overlay {
+      display: none;
+    }
+</style>
 <!-- Cursor Trail -->
 <div class="circle-container" id="cursorTrail"></div>
 
@@ -211,14 +389,17 @@ function initThemeToggle() {
     if (!themeToggle) return;
 
     themeToggle.addEventListener('click', () => {
-        const navbar = document.querySelector('.navbar');
-        if (!navbar) return;
-        const current = navbar.getAttribute('data-theme');
+        const root = document.documentElement;
+        const current = root.getAttribute('data-theme') || 'dark';
         const next = current === 'light' ? 'dark' : 'light';
-        navbar.setAttribute('data-theme', next);
-        const themeLabel = document.querySelector('.theme-label');
-        if (themeLabel) themeLabel.textContent = next === 'light' ? 'Light' : 'Dark';
+
+        root.setAttribute('data-theme', next);
         localStorage.setItem('agritech-theme', next);
+
+        const themeLabel = document.querySelector('.theme-label');
+        if (themeLabel) {
+            themeLabel.textContent = next === 'light' ? 'Light' : 'Dark';
+        }
     });
 }
 
@@ -256,6 +437,11 @@ document.addEventListener('DOMContentLoaded', () => {
         initServicesDropdown(); // This starts the dropdown code
     });
 });
+</script>
+
+<script>
+  document.getElementById("current-year").textContent =
+    new Date().getFullYear();
 </script>
 
 </body>

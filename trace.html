@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Traceability | AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #16a34a;
+            --primary-dark: #15803d;
+            --secondary: #f8fafc;
+            --accent: #f59e0b;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.8);
+            --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        .trace-container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--white);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .batch-id-hero {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            display: inline-block;
+            font-family: monospace;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .status-tracker {
+            display: flex;
+            justify-content: space-between;
+            padding: 2.5rem 2rem;
+            background: #fdfdfd;
+            border-bottom: 1px solid #e2e8f0;
+            overflow-x: auto;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+            min-width: 100px;
+        }
+
+        .step::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: #e2e8f0;
+            z-index: 1;
+        }
+
+        .step:last-child::after {
+            display: none;
+        }
+
+        .icon-box {
+            width: 44px;
+            height: 44px;
+            background: var(--white);
+            border: 2px solid #e2e8f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            margin-bottom: 0.75rem;
+            transition: 0.3s;
+            color: var(--text-muted);
+        }
+
+        .step.active .icon-box {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: var(--white);
+            box-shadow: 0 0 0 5px rgba(22, 163, 74, 0.2);
+        }
+
+        .step.completed .icon-box {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: var(--white);
+        }
+
+        .step.completed::after {
+            background: var(--primary);
+        }
+
+        .step-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .step.active .step-label {
+            color: var(--primary);
+        }
+
+        .content-panel {
+            padding: 2rem;
+        }
+
+        .card {
+            background: var(--secondary);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .info-item label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-item span {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            bottom: 5px;
+            width: 2px;
+            background: #e2e8f0;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 4px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 2px solid var(--primary);
+        }
+
+        .tl-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .tl-content {
+            background: #fff;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            font-size: 0.95rem;
+        }
+
+        .tl-action {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .grade-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            background: var(--primary);
+            color: white;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .integrity-footer {
+            margin-top: 2rem;
+            padding: 1.5rem 2rem;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+
+        .search-area {
+            margin-bottom: 2rem;
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        input {
+            flex: 1;
+            padding: 0.75rem 1.25rem;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="search-area">
+        <input type="text" id="batchIdInput" placeholder="Enter Batch ID (e.g. AGRI-XXXX-YYYY)">
+        <button class="btn" onclick="traceBatch()"><i class="fas fa-search"></i> Trace</button>
+    </div>
+
+    <div class="trace-container" id="results" style="display: none;">
+        <header>
+            <h1>Produce Journey</h1>
+            <p>End-to-end traceability verified by AgriTech Ledger</p>
+            <div class="batch-id-hero" id="hero-batch-id">--</div>
+        </header>
+
+        <div class="status-tracker" id="status-tracker">
+            <div class="step" id="step-HARVESTED">
+                <div class="icon-box"><i class="fas fa-seedling"></i></div>
+                <div class="step-label">Harvested</div>
+            </div>
+            <div class="step" id="step-QUALITY_CHECK">
+                <div class="icon-box"><i class="fas fa-vial"></i></div>
+                <div class="step-label">Quality</div>
+            </div>
+            <div class="step" id="step-LOGISTICS">
+                <div class="icon-box"><i class="fas fa-truck"></i></div>
+                <div class="step-label">Transport</div>
+            </div>
+            <div class="step" id="step-IN_SHOP">
+                <div class="icon-box"><i class="fas fa-store"></i></div>
+                <div class="step-label">Retail</div>
+            </div>
+        </div>
+
+        <div class="content-panel">
+            <div class="card">
+                <h3><i class="fas fa-leaf"></i> Batch Details</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Produce</label>
+                        <span id="p-name">--</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Variety</label>
+                        <span id="p-variety">--</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Quantity</label>
+                        <span id="p-quantity">--</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Farm Location</label>
+                        <span id="p-location">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="quality-card" style="display: none;">
+                <h3><i class="fas fa-check-circle"></i> Quality Standards</h3>
+                <div id="quality-content"></div>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-history"></i> Custody Audit Trail</h3>
+                <div class="timeline" id="audit-trail">
+                    <!-- Timeline items injected here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="integrity-footer">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fas fa-shield-halved" style="color: var(--primary);"></i>
+                <span>Verified Integrity Hash: <code id="integrity-hash"
+                        style="color: var(--text-muted);">--</code></span>
+            </div>
+            <div>
+                <button class="btn" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="downloadCert()">
+                    <i class="fas fa-file-pdf"></i> Certificate
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="trace_batch.js"></script>
+</body>
+
+</html>
