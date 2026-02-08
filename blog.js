@@ -491,8 +491,6 @@ function displayPosts() {
                 >
                     <i class="${favoriteIcon}" aria-hidden="true"></i>
                 </button>
-
-                <i class="${favoriteIcon}"></i>
             </button>
             <div class="card-content">
                 <span class="card-category">${post.category.replace('-', ' ')}</span>
