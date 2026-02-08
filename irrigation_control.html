@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irrigation Control | AgriTech IoT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+        }
+
+        .dashboard {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2rem;
+            background: linear-gradient(90deg, #60a5fa, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .zones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .zone-card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .zone-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .valve-anim {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .valve-anim.active i {
+            color: var(--success);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.4;
+            }
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.25rem;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .metric-val {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            opacity: 0.6;
+            margin-top: 0.25rem;
+            text-transform: uppercase;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.75rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .btn-open {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-close {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-auto {
+            background: var(--primary);
+            color: white;
+        }
+
+        .moisture-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-top: 2rem;
+            position: relative;
+        }
+
+        .moisture-fill {
+            height: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--primary);
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .threshold-marker {
+            position: absolute;
+            top: -12px;
+            height: 32px;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .log-section {
+            margin-top: 3rem;
+            background: var(--card);
+            border-radius: 24px;
+            padding: 2rem;
+        }
+
+        .log-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard">
+        <header class="header">
+            <div>
+                <h1>Precision Irrigation Hub</h1>
+                <p style="opacity: 0.6; margin-top: 0.5rem;">Real-time moisture monitoring & automated water delivery
+                </p>
+            </div>
+            <div id="connection-status">
+                <span style="color: var(--success);"><i class="fas fa-circle"></i> System Online</span>
+            </div>
+        </header>
+
+        <div class="zones-grid" id="zones-container">
+            <!-- Zone Cards will be injected here -->
+        </div>
+
+        <section class="log-section">
+            <h2 style="margin-top:0;">Global Event Logs</h2>
+            <div id="global-logs">
+                <div class="log-item"><span>No events recorded yet.</span></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Templates -->
+    <template id="zone-template">
+        <div class="zone-card">
+            <div class="valve-anim" id="valve-status-icon">
+                <i class="fas fa-faucet-drip fa-lg"></i>
+            </div>
+            <h2 class="zone-name">North Orchard</h2>
+            <p class="zone-desc" style="opacity:0.6; font-size: 0.9rem; margin-top:-0.5rem;">Soil Sensor #402</p>
+
+            <div class="metric-grid">
+                <div class="metric-item">
+                    <div class="metric-val" id="val-temp">28.4°C</div>
+                    <div class="metric-label">Temperature</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-val" id="val-ph">6.8</div>
+                    <div class="metric-label">Soil pH</div>
+                </div>
+            </div>
+
+            <div class="moisture-bar">
+                <div class="moisture-fill" id="moist-bar-fill" style="width: 45%;"></div>
+                <div class="threshold-marker" style="left: 30%;" title="Auto-ON Threshold"></div>
+                <div class="threshold-marker" style="left: 70%;" title="Auto-OFF Threshold"></div>
+                <div style="font-size: 0.75rem; position: absolute; top: 15px; left: 0;" id="val-moist-text">Moisture:
+                    45%</div>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-open" onclick="toggleValve(this, 'open')">Open</button>
+                <button class="btn btn-close" onclick="toggleValve(this, 'closed')">Close</button>
+                <button class="btn btn-auto" onclick="toggleAuto(this)">Auto</button>
+            </div>
+        </div>
+    </template>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="irrigation_control.js"></script>
+</body>
+
+</html>
