@@ -3,3 +3,8 @@ from .core import predict_crop_task, process_loan_task, synthesize_loan_pdf_task
 from .report_tasks import generate_and_send_report, generate_pdf_report, send_email_report, batch_generate_reports
 from .traceability_tasks import generate_batch_certificate_task
 from .knowledge_tasks import calculate_trending_questions_task, expert_verification_audit_task
+from .weather_tasks import fetch_weather_updates_task, generate_bulk_advisories_task
+from .rental_tasks import check_overdue_rentals_task, cleanup_expired_pending_bookings_task
+from .farm_tasks import monthly_farm_valuation_task, generate_farm_report_task
+from .sustainability_tasks import recalculate_all_offsets_task, stale_audit_check_task, annual_credit_revaluation_task
+from .procurement_tasks import procurement_payment_reminders_task, vendor_payout_settlement_task
