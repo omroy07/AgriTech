@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procurement Hub | AgriTech B2B</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f1f5f9;
+            --card: #ffffff;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+        }
+
+        .hub-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Catalog Section */
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .item-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .item-card {
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+
+        .item-card:hover {
+            border-color: var(--primary);
+        }
+
+        .price-badge {
+            background: #dcfce7;
+            color: #166534;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* Order Section */
+        .order-item {
+            border-bottom: 1px solid #f1f5f9;
+            padding: 1rem 0;
+        }
+
+        .status-pill {
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-proposed {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .status-vetted {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-shipment {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 400px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="hub-container">
+        <header class="header">
+            <h1>Bulk Procurement Hub</h1>
+            <div>
+                <button class="btn"
+                    style="background: white; color: var(--primary); border: 1px solid var(--primary);">My
+                    Orders</button>
+            </div>
+        </header>
+
+        <div class="grid">
+            <section>
+                <div class="card">
+                    <h2 style="margin-top:0;">Supply Catalog</h2>
+                    <div class="item-list" id="catalog-list">
+                        <!-- catalog items -->
+                    </div>
+                </div>
+            </section>
+
+            <aside>
+                <div class="card">
+                    <h2 style="margin-top:0;">Open Requests</h2>
+                    <div id="active-orders">
+                        <p style="color: #64748b;">No active procurement sessions.</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div id="order-modal" class="modal">
+        <div class="modal-body">
+            <h3>Place Bulk Order</h3>
+            <p id="modal-item-name">Item Name</p>
+            <div style="margin-bottom: 1rem;">
+                <label>Quantity (Units)</label><br>
+                <input type="number" id="order-qty" value="100"
+                    style="width: 100%; padding: 0.5rem; margin-top: 0.5rem;">
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn" style="flex: 1;" onclick="submitOrder()">Confirm Request</button>
+                <button class="btn" style="background: #e2e8f0; color: #475569;" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="procurement_hub.js"></script>
+</body>
+
+</html>
