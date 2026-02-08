@@ -483,7 +483,15 @@ function displayPosts() {
         postElement.className = 'blog-card';
         postElement.innerHTML = `
             <img src="${post.image}" alt="${post.title}">
-            <button class="${favoriteClass}" data-blog-id="${post.id}">
+            <button
+                class="${favoriteClass}"
+                data-blog-id="${post.id}"
+                aria-label="${isFavorite ? 'Remove blog from favorites' : 'Add blog to favorites'}"
+                aria-pressed="${isFavorite}"
+                >
+                    <i class="${favoriteIcon}" aria-hidden="true"></i>
+                </button>
+
                 <i class="${favoriteIcon}"></i>
             </button>
             <div class="card-content">
@@ -556,6 +564,13 @@ function updateFavoriteButtons(blogId) {
         const icon = button.querySelector('i');
         button.classList.toggle('active', isFavorite);
         icon.className = isFavorite ? 'fas fa-heart' : 'far fa-heart';
+
+        button.setAttribute(
+        'aria-label',
+        isFavorite ? 'Remove blog from favorites' : 'Add blog to favorites'
+        );
+        button.setAttribute('aria-pressed', isFavorite);
+
     });
 
     if (currentModalPostId === blogId) {
@@ -602,6 +617,13 @@ function updateModalFavoriteButton() {
 
     button.classList.toggle('active', isFavorite);
     icon.className = isFavorite ? 'fas fa-heart' : 'far fa-heart';
+
+    button.setAttribute(
+    'aria-label',
+    isFavorite ? 'Remove blog from favorites' : 'Add blog to favorites'
+    );
+    button.setAttribute('aria-pressed', isFavorite);
+
 }
 
 // Toggle favorite from modal
