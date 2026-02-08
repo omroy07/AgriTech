@@ -24,6 +24,8 @@ from .farm_members import farm_members_bp
 from .advisories import advisories_bp
 from .sustainability import sustainability_bp
 from .credits import credits_bp
+from .procurement import procurement_bp
+from .vendors import vendors_bp
 
 # Create v1 API blueprint
 api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1')
@@ -54,3 +56,5 @@ api_v1.register_blueprint(farm_members_bp, url_prefix='/farm_teams')
 api_v1.register_blueprint(advisories_bp, url_prefix='/advisories')
 api_v1.register_blueprint(sustainability_bp, url_prefix='/sustainability')
 api_v1.register_blueprint(credits_bp, url_prefix='/credits')
+api_v1.register_blueprint(procurement_bp, url_prefix='/procurement')
+api_v1.register_blueprint(vendors_bp, url_prefix='/vendors')

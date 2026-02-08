@@ -14,6 +14,7 @@ from .equipment import Equipment, RentalBooking, AvailabilityCalendar, PaymentEs
 from .farm import Farm, FarmMember, FarmAsset, FarmRole
 from .weather import WeatherData, CropAdvisory, AdvisorySubscription
 from .sustainability import CarbonPractice, CreditLedger, AuditRequest
+from .procurement import VendorProfile, ProcurementItem, BulkOrder, OrderEvent
 
 __all__ = [
     'User', 'UserRole', 'LoanRequest', 'PredictionHistory', 
@@ -26,5 +27,6 @@ __all__ = [
     'Equipment', 'RentalBooking', 'AvailabilityCalendar', 'PaymentEscrow',
     'Farm', 'FarmMember', 'FarmAsset', 'FarmRole',
     'WeatherData', 'CropAdvisory', 'AdvisorySubscription',
-    'CarbonPractice', 'CreditLedger', 'AuditRequest'
+    'CarbonPractice', 'CreditLedger', 'AuditRequest',
+    'VendorProfile', 'ProcurementItem', 'BulkOrder', 'OrderEvent'
 ]
