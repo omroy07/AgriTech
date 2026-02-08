@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fleet Manager | Industrial Analytics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #fbbf24;
+            --secondary: #1e293b;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .sidebar {
+            background: #020617;
+            padding: 2rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item {
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: 0.2s;
+        }
+
+        .nav-item:hover {
+            background: rgba(251, 191, 36, 0.1);
+            color: var(--primary);
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: #000;
+            font-weight: 700;
+        }
+
+        /* Main Content */
+        .main {
+            padding: 3rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .fleet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .asset-card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 2rem;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .health-indicator {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .meter-dial {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .hours-val {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+
+        .hours-label {
+            font-size: 0.8rem;
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .maintenance-list {
+            margin-top: 1.5rem;
+        }
+
+        .m-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.85rem;
+        }
+
+        .warning-text {
+            color: var(--danger);
+            font-weight: 700;
+        }
+
+        .btn {
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #000;
+        }
+
+        /* Modal Overlay */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .modal-content {
+            background: var(--card);
+            padding: 3rem;
+            border-radius: 32px;
+            width: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard">
+        <aside class="sidebar">
+            <h2 style="color: var(--primary);">AGRI-FLEET</h2>
+            <div class="nav-item active"><i class="fas fa-th-large"></i> Overview</div>
+            <div class="nav-item"><i class="fas fa-tools"></i> Maintenance</div>
+            <div class="nav-item"><i class="fas fa-exclamation-triangle"></i> Damage Logs</div>
+            <div class="nav-item"><i class="fas fa-chart-line"></i> Efficiency</div>
+        </aside>
+
+        <main class="main">
+            <header class="header">
+                <div>
+                    <h1>Machinery Lifecycle Hub</h1>
+                    <p style="opacity: 0.6; margin-top: 0.5rem;">Global fleet health & engine-hour monitoring</p>
+                </div>
+                <button class="btn btn-primary" onclick="openLogModal()">+ Log Engine Hours</button>
+            </header>
+
+            <div class="fleet-grid" id="fleet-container">
+                <!-- Fleet Assets Injected Here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Log Modal -->
+    <div class="modal" id="log-modal">
+        <div class="modal-content">
+            <h2 style="margin-top:0;">Update Hour Meter</h2>
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display:block; margin-bottom: 0.5rem; font-size: 0.9rem;">Select Machine</label>
+                <select id="swal-eq"
+                    style="width:100%; padding: 1rem; border-radius: 10px; background: #334155; color: white; border: none;"></select>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                <div>
+                    <label style="font-size:0.8rem; opacity:0.6;">Start Hours</label>
+                    <input type="number" id="swal-start"
+                        style="width:100%; padding:1rem; border-radius:10px; background:#334155; border:none; color:white;">
+                </div>
+                <div>
+                    <label style="font-size:0.8rem; opacity:0.6;">End Hours</label>
+                    <input type="number" id="swal-end"
+                        style="width:100%; padding:1rem; border-radius:10px; background:#334155; border:none; color:white;">
+                </div>
+            </div>
+            <div style="display:flex; gap: 1rem;">
+                <button class="btn btn-primary" style="flex:1;" onclick="submitHours()">Confirm Sync</button>
+                <button class="btn" style="flex:1; background: #334155; color:white;"
+                    onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="fleet_manager.js"></script>
+</body>
+
+</html>
