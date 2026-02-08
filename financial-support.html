@@ -771,161 +771,122 @@
       transform: translateX(0);
     }
 /* ================= FOOTER ================= */
-.site-footer {
-  background: var(--surface-color, var(--bg-secondary));
-  color: var(--text-color, var(--text-primary));
-  position: relative;
-  font-size: 0.95rem;
-  border-top: 1px solid var(--border-color);
-  padding-top: 1rem;
-}
+    .site-footer {
+      background: var(--surface-color);
+      color: var(--text-color);
+      position: relative;
+      font-size: 0.95rem;
+      border-top: 1px solid var(--border-color);
+    }
 
-/* Top accent line */
-.footer-top-accent {
-  height: 4px;
-  width: 100%;
-  background: linear-gradient(90deg, #16a34a, #22c55e);
-  margin-bottom: 1rem;
-}
+    .footer-top-accent {
+      height: 4px;
+      background: linear-gradient(90deg, #16a34a, #22c55e);
+    }
 
-/* Inner content wrapper - center everything */
-.footer-inner-content {
-  max-width: 1200px;
-  margin: auto;
-  padding: 2rem 1.5rem;
-  display: flex;
-  flex-direction: column; /* stack brand + links */
-  align-items: center;    /* center horizontally */
-  gap: 2rem;
-}
+    .footer-inner-content {
+      max-width: 1200px;
+      margin: auto;
+      padding: 3rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
 
-/* Brand Section */
-.footer-brand {
-  text-align: center;
-}
+    .footer-brand {
+      flex: 1 1 280px;
+    }
 
-.brand-header {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* center logo + text */
-  gap: 0.6rem;
-}
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
 
-.brand-logo {
-  width: 42px;
-}
+    .brand-logo {
+      width: 42px;
+    }
 
-.footer-brand h3 {
-  color: var(--accent-color, var(--accent-primary));
-  font-size: 1.3rem;
-  margin: 0;
-}
+    .footer-brand h3 {
+      color: var(--accent-color);
+      font-size: 1.3rem;
+    }
 
-.tagline {
-  margin: 0.8rem 0 1.2rem;
-  line-height: 1.6;
-  color: var(--text-muted);
-}
+    .tagline {
+      margin: 0.8rem 0 1.2rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
 
-/* Social Icons */
-.social-icons {
-  display: flex;
-  justify-content: center;
-  gap: 0.7rem;
-  margin-top: 1rem;
-}
+    .social-icons {
+      display: flex;
+      gap: 0.7rem;
+    }
 
-.social-icons a {
-  width: 36px;
-  height: 36px;
-  background: #e6f4ea;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  color: #15803d;
-  transition: all 0.25s ease;
-}
+    .social-icons a {
+      width: 36px;
+      height: 36px;
+      background: #e6f4ea;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #15803d;
+      transition: all 0.25s ease;
+    }
 
-.social-icons a:hover {
-  background: #22c55e;
-  color: #fff;
-}
+    .social-icons a:hover {
+      background: #22c55e;
+      color: #fff;
+    }
 
-/* Links Section - center all links */
-.footer-group-links {
-  display: flex;
-  gap: 3rem;
-  flex-wrap: wrap;
-  justify-content: center; /* center links horizontally */
-}
+    .footer-group-links {
+      display: flex;
+      gap: 3rem;
+      flex: 1 1 320px;
+    }
 
-.footer-section {
-  min-width: 140px;
-  flex: 1;
-  text-align: center; /* center links inside each section */
-}
+    .footer-section h4 {
+      color: var(--accent-color);
+      margin-bottom: 0.9rem;
+      font-size: 1rem;
+    }
 
-.footer-section h4 {
-  color: var(--accent-color, var(--accent-primary));
-  margin-bottom: 0.9rem;
-  font-size: 1rem;
-}
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
 
-.footer-section ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
+    .footer-section ul li {
+      margin-bottom: 0.6rem;
+    }
 
-.footer-section ul li {
-  margin-bottom: 0.6rem;
-}
+    .footer-section ul a {
+      color: var(--text-muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.25s ease;
+    }
 
-.footer-section ul a {
-  color: var(--text-muted);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center; /* center text inside link */
-  gap: 0.5rem;
-  transition: color 0.25s ease, transform 0.25s ease;
-}
+    .footer-section ul a:hover {
+      color: var(--accent-color);
+    }
 
-.footer-section ul a:hover {
-  color: var(--accent-color, var(--accent-primary));
-  transform: translateY(-2px);
-}
+    .footer-bottom {
+      text-align: center;
+      padding: 1rem;
+      background: var(--section-bg);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
 
-/* Footer Bottom */
-.footer-bottom {
-  text-align: center;
-  padding: 1rem 0;
-  background: var(--section-bg, var(--bg-secondary));
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  margin-top: 2rem;
-  border-top: 1px solid var(--border-color);
-}
+    .footer-wave-overlay {
+      display: none;
+    }
 
-/* Responsive Footer */
-@media (max-width: 768px) {
-  .footer-inner-content {
-    gap: 1.5rem;
-  }
-  .footer-group-links {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .footer-inner-content {
-    padding: 2rem 1rem;
-  }
-  .footer-bottom {
-    font-size: 0.8rem;
-  }
-}
 
   </style>
 </head>
@@ -1204,19 +1165,22 @@
     <div class="footer-top-accent"></div>
 
     <div class="footer-inner-content">
-        <div class="footer-section footer-brand">
-            <div class="brand-header">
-                <img src="images/logo.png" alt="AgriTech logo" class="brand-logo">
-                <h3>AgriTech</h3>
-            </div>
-            <p class="tagline">Empowering India's Farming Future with innovative technology connecting every stakeholder.</p>
-            
-            <div class="social-icons">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
-                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            </div>
+      <div class="footer-section footer-brand">
+        <div class="brand-header">
+          <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
+          <h3>AgriTech</h3>
+        </div>
+
+        <p class="tagline">
+          Empowering India's Farming Future with innovative technology
+          connecting every stakeholder.
+        </p>
+
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
 
@@ -1224,11 +1188,21 @@
         <div class="footer-section footer-links">
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-            <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
-            <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
-            <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
+            <li>
+              <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li>
+              <a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+            </li>
+            <li>
+              <a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a>
+            </li>
+            <li>
+              <a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a>
+            </li>
           </ul>
         </div>
 
@@ -1237,12 +1211,12 @@
           <ul>
             <li>
               <a href="mailto:contact@agritech.com">
-                <i class="fas fa-envelope"></i> Email Us
+                <i class="fas fa-envelope"></i> contact@agritech.com
               </a>
             </li>
             <li>
               <a href="tel:+910000000000">
-                <i class="fas fa-phone"></i> Call Us
+                <i class="fas fa-phone"></i> +91 00000 00000
               </a>
             </li>
           </ul>
