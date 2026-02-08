@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriRent | Equipment Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #16a34a;
+            --primary-dark: #15803d;
+            --secondary: #f8fafc;
+            --accent: #3b82f6;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --white: #ffffff;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+        }
+
+        .navbar {
+            background: var(--white);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar Filters */
+        .sidebar {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+
+        .filter-group {
+            margin-bottom: 2rem;
+        }
+
+        .filter-group h4 {
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .filter-option:hover {
+            color: var(--primary);
+        }
+
+        /* Equipment Grid */
+        .marketplace {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .equipment-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .equipment-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .image-container {
+            height: 180px;
+            background: #e2e8f0;
+            position: relative;
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .card-content {
+            padding: 1.25rem;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-location {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .price-tag {
+            display: flex;
+            align-items: baseline;
+            gap: 0.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .price-val {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .price-unit {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .btn-rent {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-rent:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--white);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 24px;
+            padding: 2.5rem;
+            position: relative;
+            animation: zoomIn 0.3s ease-out;
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+        }
+
+        .summary-box {
+            background: var(--secondary);
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo"><i class="fas fa-tractor"></i> AgriRent</div>
+        <div style="display: flex; gap: 1.5rem; align-items: center;">
+            <a href="#" style="text-decoration: none; color: var(--text-main); font-weight: 600;">My Listings</a>
+            <button class="btn-rent" style="width: auto; padding: 0.6rem 1.2rem;">Post Equipment</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="filter-group">
+                <h4>Categories</h4>
+                <div class="filter-option"><input type="checkbox"> Tractors</div>
+                <div class="filter-option"><input type="checkbox"> Harvesters</div>
+                <div class="filter-option"><input type="checkbox"> Spraying Drones</div>
+                <div class="filter-option"><input type="checkbox"> Soil Tillers</div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Price Range (Daily)</h4>
+                <input type="range" style="width: 100%; accent-color: var(--primary);" min="500" max="10000">
+                <div
+                    style="display:flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
+                    <span>₹500</span> <span>₹10,000</span>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Location</h4>
+                <input type="text" class="form-input" placeholder="Enter city or district">
+            </div>
+        </aside>
+
+        <main>
+            <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+                <h2 style="font-size: 1.5rem;">Available Equipment</h2>
+                <div style="font-size: 0.9rem; color: var(--text-muted);">Showing <span id="count">0</span> items</div>
+            </div>
+
+            <div class="marketplace" id="marketplace-grid">
+                <!-- Cards will be injected here -->
+                <div class="loader">Scanning marketplace...</div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="modal" id="booking-modal">
+        <div class="modal-content">
+            <h2 id="modal-title" style="margin-bottom: 1.5rem; font-size: 1.5rem;">Book Equipment</h2>
+            <div class="form-group">
+                <label>Rental Start Date</label>
+                <input type="date" class="form-input" id="start-date">
+            </div>
+            <div class="form-group">
+                <label>Rental End Date</label>
+                <input type="date" class="form-input" id="end-date">
+            </div>
+
+            <div class="summary-box">
+                <div>
+                    <strong>Estimated Total</strong><br>
+                    <small style="color: var(--text-muted);">Includes 20% security deposit</small>
+                </div>
+                <div class="price-val" id="estimate">₹0</div>
+            </div>
+
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn-rent" style="background: var(--secondary); color: var(--text-main);"
+                    onclick="closeModal()">Cancel</button>
+                <button class="btn-rent" id="confirm-booking-btn">Confirm & Hold Funds</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="equipment.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
+</html>

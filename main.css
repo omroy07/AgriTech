@@ -665,6 +665,16 @@ main {
 /*-----------------------------
   Buttons
 -----------------------------*/
+button,
+.nav-btn,
+.btn-green,
+.services-menu-btn {
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.2s ease;
+}
 .btn-green {
   display: inline-block;
   background: linear-gradient(135deg, #2e7d32, #4caf50);
@@ -673,10 +683,16 @@ main {
   border-radius: 25px;
   text-decoration: none;
   font-weight: 600;
-  transition: all 0.3s ease;
   border: none;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
+}
+button:focus-visible,
+.nav-btn:focus-visible,
+.btn-green:focus-visible,
+.services-menu-btn:focus-visible {
+  outline: 3px solid rgba(76, 175, 80, 0.45);
+  outline-offset: 3px;
 }
 
 .btn-green:hover {
@@ -1052,6 +1068,34 @@ select.language-select:focus {
 }
 
 /* Floating Chatbot Button */
+#spatialBtn {
+  position: fixed;
+  bottom: 170px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: #6366f1;
+  color: #fff;
+  font-size: 28px;
+  text-align: center;
+  line-height: 60px;
+  border-radius: 50%;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+#spatialBtn:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+  background-color: #4f46e5;
+}
+
 #chatbotBtn {
   position: fixed;
   bottom: 100px;
@@ -1137,7 +1181,8 @@ select.language-select:focus {
     margin-bottom: 15px;
   }
 
-  #chatbotBtn {
+  #chatbotBtn,
+  #spatialBtn {
     display: none;
   }
 }

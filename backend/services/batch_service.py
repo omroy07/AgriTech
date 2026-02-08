@@ -418,7 +418,7 @@ class BatchService:
             ip_address=ip_address,
             location=location,
             notes=notes,
-            metadata=metadata
+            event_metadata=metadata
         )
         
         # Generate signature for tamper detection

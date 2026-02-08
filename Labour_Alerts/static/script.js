@@ -120,7 +120,7 @@ function fetchNewsUpdates() {
         .then(response => response.json())
         .then(data => {
             if (data && Array.isArray(data.results)) {
-                console.log(data);
+                // console.log(data);
                 displayNews(data.results);
             } else {
                 console.error("Invalid data format received:", data);
