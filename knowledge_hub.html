@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Hub | AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="knowledge_hub.css">
+</head>
+
+<body>
+    <div class="hub-container">
+        <!-- Sidebar -->
+        <aside class="kb-sidebar">
+            <div class="user-stats-card">
+                <div class="avatar-placeholder">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h3 id="user-display-name">Farmer Expert</h3>
+                <div class="rep-badge">
+                    <i class="fas fa-star"></i> <span id="user-total-rep">--</span> Rep
+                </div>
+                <div class="badges-row" id="user-badges-hub">
+                    <!-- Badges injected here -->
+                </div>
+            </div>
+
+            <nav class="kb-nav">
+                <h4>Categories</h4>
+                <ul id="kb-categories">
+                    <li class="active" data-cat="General">General</li>
+                    <li data-cat="Soil">Soil Health</li>
+                    <li data-cat="Pests">Pest Control</li>
+                    <li data-cat="Irrigation">Irrigation</li>
+                    <li data-cat="Livestock">Livestock</li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Feed -->
+        <main class="kb-main">
+            <header class="kb-header">
+                <div class="search-wrap">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="kb-search-input" placeholder="Search questions, solutions, experts...">
+                </div>
+                <button class="btn-primary" id="btn-ask-question">
+                    <i class="fas fa-plus"></i> Ask Question
+                </button>
+            </header>
+
+            <div class="feed-tabs">
+                <button class="active" data-sort="newest">Newest</button>
+                <button data-sort="popular">Popular</button>
+                <button data-sort="trending">Trending</button>
+            </div>
+
+            <div id="questions-feed" class="questions-list">
+                <!-- Questions injected here -->
+                <div class="kb-loader">Loading intelligence...</div>
+            </div>
+        </main>
+
+        <!-- Right Panels -->
+        <aside class="kb-widgets">
+            <div class="widget-card">
+                <h3>Top Experts</h3>
+                <div class="expert-list" id="top-experts-list">
+                    <!-- Experts injected here -->
+                </div>
+            </div>
+
+            <div class="widget-card">
+                <h3>Trending Tags</h3>
+                <div class="tags-cloud">
+                    <span>#organic</span>
+                    <span>#wheat</span>
+                    <span>#drip_irrigation</span>
+                    <span>#pesticide_free</span>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Modals -->
+    <div id="ask-modal" class="kb-modal">
+        <div class="kb-modal-content">
+            <h2>Post Question</h2>
+            <div class="kb-form-group">
+                <label>Title</label>
+                <input type="text" id="q-title" placeholder="e.g., Best way to handle whitefly in cotton?">
+            </div>
+            <div class="kb-form-group">
+                <label>Category</label>
+                <select id="q-category">
+                    <option value="General">General</option>
+                    <option value="Soil">Soil Health</option>
+                    <option value="Pests">Pest Control</option>
+                    <option value="Irrigation">Irrigation</option>
+                </select>
+            </div>
+            <div class="kb-form-group">
+                <label>Details</label>
+                <textarea id="q-content" placeholder="Describe your problem in detail..."></textarea>
+            </div>
+            <div class="kb-modal-actions">
+                <button class="btn-outline" onclick="closeModal()">Cancel</button>
+                <button class="btn-primary" onclick="submitQuestion()">Post</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="knowledge_hub.js"></script>
+</body>
+
+</html>
