@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Micro-Insurance Portal | AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text-main: #1e293b;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .portal-wrapper {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Policy List */
+        .policy-item {
+            border-left: 4px solid var(--primary);
+            padding: 1.25rem;
+            background: #f1f5f9;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .status-pill {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        /* Claim Form */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            font-family: inherit;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* Stats Card */
+        .stat-box {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 16px;
+            background: #eff6ff;
+        }
+
+        .stat-val {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="portal-wrapper">
+        <header class="header">
+            <div class="brand">
+                <h1>CropInsurance Portal</h1>
+                <p style="opacity:0.6; margin:0;">Secure your harvest against climate uncertainty</p>
+            </div>
+            <button class="btn btn-primary" onclick="openPolicyModal()">New Policy</button>
+        </header>
+
+        <div class="dashboard-grid">
+            <section>
+                <div class="card">
+                    <div class="section-title"><i class="fas fa-shield-alt"></i> Active Overlays</div>
+                    <div id="policy-container">
+                        <p style="text-align:center; padding: 2rem; opacity: 0.5;">No active policies found.</p>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top:2rem;">
+                    <div class="section-title"><i class="fas fa-file-invoice-dollar"></i> File a Loss Claim</div>
+                    <div class="form-group">
+                        <label>Select Policy</label>
+                        <select id="claim-policy-id" class="form-input"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Reported Loss (Est. Weight in kg)</label>
+                        <input type="number" id="claim-loss" class="form-input" placeholder="e.g. 500">
+                    </div>
+                    <div class="form-group">
+                        <label>Reason for Loss</label>
+                        <textarea id="claim-reason" class="form-input" rows="3"
+                            placeholder="Describe weather event..."></textarea>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="submitClaim()">Initiate Claim
+                        Assessment</button>
+                </div>
+            </section>
+
+            <aside>
+                <div class="card">
+                    <div class="section-title"><i class="fas fa-chart-pie"></i> Coverage Summary</div>
+                    <div class="stat-box">
+                        <div class="stat-val" id="total-coverage">₹0</div>
+                        <div style="font-size:0.8rem; opacity:0.6;">Total Insured Value</div>
+                    </div>
+                    <div class="stat-box" style="margin-top:1rem; background: #fef3c7;">
+                        <div class="stat-val" style="color: #92400e;" id="pending-claims">0</div>
+                        <div style="font-size:0.8rem; opacity:0.6; color: #92400e;">Active Claims</div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top:2rem;">
+                    <div class="section-title"><i class="fas fa-info-circle"></i> Underwriting Info</div>
+                    <p style="font-size:0.85rem; line-height:1.6;">Your risk score is calculated based on regional
+                        historical hazards and selected crop resilience.</p>
+                    <ul style="font-size:0.8rem; padding-left:1.2rem; opacity:0.8;">
+                        <li>Rice/Wheat: Moderate Risk</li>
+                        <li>High-value Cash Crops: High Risk</li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Modals skipped for brevity, using SweetAlert for inputs -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="insurance_portal.js"></script>
+</body>
+
+</html>
