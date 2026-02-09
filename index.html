@@ -1366,24 +1366,23 @@
     }
 
     .feature-card {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.02),
-    rgba(255, 255, 255, 0)
-  );
-  border: 2px solid rgba(34, 197, 94, 0.45); /* ✅ GREEN BORDER */
-  border-radius: 16px;
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  min-height: 220px;
-  backdrop-filter: blur(6px) saturate(110%);
-  transition:
-    transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1),
-    box-shadow 0.28s ease,
-    border-color 0.28s ease;
-}
+      background: linear-gradient(180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0));
+      border: 2px solid rgba(34, 197, 94, 0.45);
+      /* ✅ GREEN BORDER */
+      border-radius: 16px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      min-height: 220px;
+      backdrop-filter: blur(6px) saturate(110%);
+      transition:
+        transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1),
+        box-shadow 0.28s ease,
+        border-color 0.28s ease;
+    }
 
 
     .feature-card:focus-visible {
@@ -1393,13 +1392,14 @@
       border-color: rgba(34, 197, 94, 0.12);
     }
 
-.feature-card:hover {
-  transform: translateY(-8px) scale(1.01);
-  border-color: #22c55e; /* ✅ SOLID GREEN */
-  box-shadow:
-    0 0 0 2px rgba(34, 197, 94, 0.35),
-    0 18px 40px rgba(34, 197, 94, 0.25);
-}
+    .feature-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      border-color: #22c55e;
+      /* ✅ SOLID GREEN */
+      box-shadow:
+        0 0 0 2px rgba(34, 197, 94, 0.35),
+        0 18px 40px rgba(34, 197, 94, 0.25);
+    }
 
 
     .feature-icon {
@@ -1533,7 +1533,7 @@
         box-shadow: 0 0 14px rgba(34, 197, 94, 0.9);
       }
     }
-  
+
 
     /* ============================================
        NEW: PROFIT & LOSS SECTION STYLES
@@ -2115,20 +2115,20 @@
     function toggleTheme() {
       const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
       const nextTheme = currentTheme === "light" ? "dark" : "light";
-      
+
       // Change entire page theme
       document.documentElement.setAttribute("data-theme", nextTheme);
       localStorage.setItem("agritech-theme", nextTheme);
-      
+
       // Update theme text and icons
       const themeText = document.querySelector(".theme-text");
       const moonIcon = document.querySelector(".theme-icon-moon");
       const sunIcon = document.querySelector(".theme-icon-sun");
-      
+
       if (themeText) {
         themeText.innerText = nextTheme === "dark" ? "Light" : "Dark";
       }
-      
+
       if (moonIcon && sunIcon) {
         if (nextTheme === "dark") {
           moonIcon.style.display = "inline-block";
@@ -2524,8 +2524,8 @@
   <!-- ============================================
      MARKET PRICE TRENDS SECTION
      ============================================ -->
-<section class="activity" id="market-price-trends">
-  <div class="activity-container" style="
+  <section class="activity" id="market-price-trends">
+    <div class="activity-container" style="
         max-width: 1400px;
         margin: 2rem auto;
         padding: 1.5rem;
@@ -2533,65 +2533,65 @@
         border: 1px solid var(--border-color);
         border-radius: 12px;
       ">
-    <h2 class="features-title serif">Market Price Trends</h2>
-    <p class="feature-intro">
-      View real-time crop prices and understand market movements.
-    </p>
+      <h2 class="features-title serif">Market Price Trends</h2>
+      <p class="feature-intro">
+        View real-time crop prices and understand market movements.
+      </p>
 
-    <!-- Controls -->
-    <div style="display:flex; gap:1rem; margin-bottom:1.5rem; flex-wrap:wrap;">
-      <select id="cropSelector" class="btn">
-        <option value="wheat">Wheat</option>
-        <option value="rice">Rice</option>
-        <option value="maize">Maize</option>
-        <option value="cotton">Cotton</option>
-      </select>
+      <!-- Controls -->
+      <div style="display:flex; gap:1rem; margin-bottom:1.5rem; flex-wrap:wrap;">
+        <select id="cropSelector" class="btn">
+          <option value="wheat">Wheat</option>
+          <option value="rice">Rice</option>
+          <option value="maize">Maize</option>
+          <option value="cotton">Cotton</option>
+        </select>
 
-      <select id="trendRange" class="btn">
-        <option value="daily">Daily</option>
-        <option value="weekly">Weekly</option>
-      </select>
-    </div>
+        <select id="trendRange" class="btn">
+          <option value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+        </select>
+      </div>
 
-    <!-- Summary Cards -->
-    <div class="pl-summary-cards">
-      <div class="pl-card">
-        <div class="pl-card-icon">🌾</div>
-        <div class="pl-card-content">
-          <div class="pl-card-label">Current Price</div>
-          <div class="pl-card-value" id="currentPrice">₹0 / quintal</div>
+      <!-- Summary Cards -->
+      <div class="pl-summary-cards">
+        <div class="pl-card">
+          <div class="pl-card-icon">🌾</div>
+          <div class="pl-card-content">
+            <div class="pl-card-label">Current Price</div>
+            <div class="pl-card-value" id="currentPrice">₹0 / quintal</div>
+          </div>
+        </div>
+
+        <div class="pl-card">
+          <div class="pl-card-icon">📊</div>
+          <div class="pl-card-content">
+            <div class="pl-card-label">Change</div>
+            <div class="pl-card-value" id="priceChange">0%</div>
+          </div>
+        </div>
+
+        <div class="pl-card">
+          <div class="pl-card-icon">📈</div>
+          <div class="pl-card-content">
+            <div class="pl-card-label">Trend</div>
+            <div class="pl-card-value" id="priceTrend">Stable</div>
+          </div>
         </div>
       </div>
 
-      <div class="pl-card">
-        <div class="pl-card-icon">📊</div>
-        <div class="pl-card-content">
-          <div class="pl-card-label">Change</div>
-          <div class="pl-card-value" id="priceChange">0%</div>
-        </div>
-      </div>
-
-      <div class="pl-card">
-        <div class="pl-card-icon">📈</div>
-        <div class="pl-card-content">
-          <div class="pl-card-label">Trend</div>
-          <div class="pl-card-value" id="priceTrend">Stable</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Chart -->
-    <div style="
+      <!-- Chart -->
+      <div style="
           margin-top:1.5rem;
           background: var(--section-bg);
           padding:1rem;
           border-radius:8px;
           border:1px solid var(--border-color);
         ">
-      <canvas id="marketPriceChart" height="120"></canvas>
+        <canvas id="marketPriceChart" height="120"></canvas>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <!-- ============================================
        NEW: PROFIT & LOSS ANALYTICS SECTION
@@ -2701,6 +2701,7 @@
           <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
+      
 
       <div class="footer-group-links">
         <div class="footer-section footer-links">
@@ -2849,7 +2850,7 @@
 
   <script>
     // Theme Toggle - Unified function (runs after DOM and other scripts)
-    (function() {
+    (function () {
       function initThemeToggle() {
         const themeToggle = document.querySelector(".theme-toggle");
         if (!themeToggle) {
@@ -2865,13 +2866,13 @@
           // Change entire page theme
           document.documentElement.setAttribute("data-theme", theme);
           localStorage.setItem("agritech-theme", theme);
-          
+
           // Update theme text and icons
           // Icon shows what you'll switch TO (sun in dark mode, moon in light mode)
           if (themeText) {
             themeText.textContent = theme === "dark" ? "Light" : "Dark";
           }
-          
+
           if (moonIcon && sunIcon) {
             if (theme === "dark") {
               // In dark mode, show sun icon (clicking will switch to light)
@@ -2898,22 +2899,22 @@
         const freshSunIcon = freshButton.querySelector(".theme-icon-sun");
 
         // Add click handler to theme toggle button
-        freshButton.addEventListener("click", function(e) {
+        freshButton.addEventListener("click", function (e) {
           e.preventDefault();
           e.stopPropagation();
           const current = document.documentElement.getAttribute("data-theme") || "dark";
           const next = current === "light" ? "dark" : "light";
-          
+
           // Change entire page theme
           document.documentElement.setAttribute("data-theme", next);
           localStorage.setItem("agritech-theme", next);
-          
+
           // Update theme text and icons
           // Icon shows what you'll switch TO (sun in dark mode, moon in light mode)
           if (freshThemeText) {
             freshThemeText.textContent = next === "dark" ? "Light" : "Dark";
           }
-          
+
           if (freshMoonIcon && freshSunIcon) {
             if (next === "dark") {
               // In dark mode, show sun icon (clicking will switch to light)
@@ -2930,7 +2931,7 @@
 
       // Initialize after DOM and other scripts load
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
           setTimeout(initThemeToggle, 300);
         });
       } else {
@@ -3302,7 +3303,7 @@
       <i class="fas fa-search"></i>
       <h3>No Results Found</h3>
       <p id="searchPopupText"></p>
-<button id="closeSearchPopupBtn">Got it</button>
+      <button id="closeSearchPopupBtn">Got it</button>
 
     </div>
   </div>
@@ -3360,18 +3361,18 @@
   <script src="scripts/i18n.js"></script>
   <script>
     // Ensure language dropdown works after i18n.js loads
-    window.addEventListener('load', function() {
-      setTimeout(function() {
+    window.addEventListener('load', function () {
+      setTimeout(function () {
         const langTrigger = document.getElementById("langTrigger");
         const langDropdown = document.getElementById("langDropdown");
-        
+
         if (langTrigger && langDropdown) {
           // Remove any existing listeners by cloning
           const newTrigger = langTrigger.cloneNode(true);
           langTrigger.parentNode.replaceChild(newTrigger, langTrigger);
           const freshTrigger = document.getElementById("langTrigger");
-          
-          freshTrigger.addEventListener("click", function(event) {
+
+          freshTrigger.addEventListener("click", function (event) {
             event.preventDefault();
             event.stopPropagation();
             const dropdown = document.getElementById("langDropdown");
@@ -3381,21 +3382,21 @@
           });
 
           // Close on outside click
-          document.addEventListener("click", function(e) {
+          document.addEventListener("click", function (e) {
             const trigger = document.getElementById("langTrigger");
             const dropdown = document.getElementById("langDropdown");
-            if (trigger && dropdown && 
-                !trigger.contains(e.target) && 
-                !dropdown.contains(e.target)) {
+            if (trigger && dropdown &&
+              !trigger.contains(e.target) &&
+              !dropdown.contains(e.target)) {
               dropdown.classList.remove("active");
             }
           });
 
           // Close when option is clicked
           const options = langDropdown.querySelectorAll(".lang-option");
-          options.forEach(function(option) {
-            option.addEventListener("click", function() {
-              setTimeout(function() {
+          options.forEach(function (option) {
+            option.addEventListener("click", function () {
+              setTimeout(function () {
                 const dd = document.getElementById("langDropdown");
                 if (dd) dd.classList.remove("active");
               }, 50);
@@ -3495,96 +3496,95 @@
     hamburgerBtn.addEventListener("click", openMobileMenu);
     mobileCloseBtn?.addEventListener("click", closeMobileMenu);
     mobileMenuOverlay.addEventListener("click", closeMobileMenu);
-  });
+
+
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // ---------- SAFETY CHECK ----------
+      const canvas = document.getElementById("marketPriceChart");
+      if (!canvas) {
+        console.warn("Market Price Chart canvas not found");
+        return;
       }
-}
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  // ---------- SAFETY CHECK ----------
-  const canvas = document.getElementById("marketPriceChart");
-  if (!canvas) {
-    console.warn("Market Price Chart canvas not found");
-    return;
-  }
 
-  // ---------- DATA ----------
-  const marketData = {
-    wheat: [2100, 2150, 2200, 2250, 2300],
-    rice: [3200, 3180, 3220, 3250, 3300],
-    maize: [1800, 1820, 1850, 1870, 1900],
-    cotton: [6200, 6300, 6400, 6350, 6500]
-  };
+      // ---------- DATA ----------
+      const marketData = {
+        wheat: [2100, 2150, 2200, 2250, 2300],
+        rice: [3200, 3180, 3220, 3250, 3300],
+        maize: [1800, 1820, 1850, 1870, 1900],
+        cotton: [6200, 6300, 6400, 6350, 6500]
+      };
 
-  const labels = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"];
+      const labels = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"];
 
-  // ---------- CHART ----------
-  const ctx = canvas.getContext("2d");
+      // ---------- CHART ----------
+      const ctx = canvas.getContext("2d");
 
-  const marketChart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: labels,
-      datasets: [{
-        label: "Price (₹ / quintal)",
-        data: marketData.wheat,
-        borderColor: "#22c55e",
-        backgroundColor: "rgba(34, 197, 94, 0.15)",
-        tension: 0.4,
-        fill: true,
-        pointRadius: 4
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false }
-      },
-      scales: {
-        y: {
-          ticks: {
-            callback: value => "₹" + value
+      const marketChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [{
+            label: "Price (₹ / quintal)",
+            data: marketData.wheat,
+            borderColor: "#22c55e",
+            backgroundColor: "rgba(34, 197, 94, 0.15)",
+            tension: 0.4,
+            fill: true,
+            pointRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              ticks: {
+                callback: value => "₹" + value
+              }
+            }
           }
         }
+      });
+
+      // ---------- UPDATE FUNCTION ----------
+      function updateMarketData(crop) {
+        const prices = marketData[crop];
+        if (!prices) return;
+
+        const first = prices[0];
+        const last = prices[prices.length - 1];
+        const change = (((last - first) / first) * 100).toFixed(1);
+
+        document.getElementById("currentPrice").innerText =
+          `₹${last} / quintal`;
+
+        document.getElementById("priceChange").innerText =
+          `${change}%`;
+
+        document.getElementById("priceTrend").innerText =
+          change > 0 ? "Increasing" : change < 0 ? "Decreasing" : "Stable";
+
+        marketChart.data.datasets[0].data = prices;
+        marketChart.update();
       }
-    }
-  });
 
-  // ---------- UPDATE FUNCTION ----------
-  function updateMarketData(crop) {
-    const prices = marketData[crop];
-    if (!prices) return;
+      // ---------- DROPDOWN LISTENER ----------
+      const cropSelector = document.getElementById("cropSelector");
+      if (cropSelector) {
+        cropSelector.addEventListener("change", function (e) {
+          updateMarketData(e.target.value);
+        });
+      }
 
-    const first = prices[0];
-    const last = prices[prices.length - 1];
-    const change = (((last - first) / first) * 100).toFixed(1);
-
-    document.getElementById("currentPrice").innerText =
-      `₹${last} / quintal`;
-
-    document.getElementById("priceChange").innerText =
-      `${change}%`;
-
-    document.getElementById("priceTrend").innerText =
-      change > 0 ? "Increasing" : change < 0 ? "Decreasing" : "Stable";
-
-    marketChart.data.datasets[0].data = prices;
-    marketChart.update();
-  }
-
-  // ---------- DROPDOWN LISTENER ----------
-  const cropSelector = document.getElementById("cropSelector");
-  if (cropSelector) {
-    cropSelector.addEventListener("change", function (e) {
-      updateMarketData(e.target.value);
+      // ---------- INITIAL LOAD ----------
+      updateMarketData("wheat");
     });
-  }
-
-  // ---------- INITIAL LOAD ----------
-  updateMarketData("wheat");
-});
-</script>
+  </script>
 
   </script>
 </body>

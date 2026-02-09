@@ -1468,6 +1468,69 @@
         padding: 12px 12px 14px;
       }
     }
+
+    /* ============================================================
+   FIX: Light Mode Contrast & Visibility Overrides
+   ============================================================ */
+    [data-theme="light"] {
+
+      /* 1. Fix Marketplace Commodity Cards */
+      .product-card,
+      .trend-item {
+        background: #ffffff !important;
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05) !important;
+      }
+
+      .product-title,
+      .trend-info h4 {
+        color: #1e293b !important;
+        /* High-Contrast Deep Charcoal */
+      }
+
+      .product-description,
+      .product-seller {
+        color: #475569 !important;
+        /* Readable Slate Grey */
+      }
+
+      /* 2. Fix Price Trend Visualization */
+      .price-chart {
+        background: #f8fafc !important;
+        border-color: rgba(0, 0, 0, 0.1) !important;
+      }
+
+      .price-chart p {
+        color: #334155 !important;
+      }
+
+      /* 3. Fix Services Navigation Dropdown */
+      .services-dropdown {
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      .services-list li a {
+        color: #1e293b !important;
+        /* Accessible text for navigation */
+      }
+
+      .services-list li a:hover {
+        background: rgba(34, 197, 94, 0.1) !important;
+        color: #16a34a !important;
+        /* Brand Green Accent */
+      }
+
+      /* 4. Fix System Alerts & Notifications */
+      .notification {
+        background: #ffffff !important;
+        color: #1e293b !important;
+        border: 1px solid rgba(0, 0, 0, 0.05) !important;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
+      }
+    }
   </style>
 </head>
 
