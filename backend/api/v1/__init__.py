@@ -28,7 +28,6 @@ from .procurement import procurement_bp
 from .vendors import vendors_bp
 from .irrigation import irrigation_bp
 from .processing import processing_bp
-from .insurance_portal import insurance_v2_bp
 
 # Create v1 API blueprint
 api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1')
@@ -63,4 +62,3 @@ api_v1.register_blueprint(procurement_bp, url_prefix='/procurement')
 api_v1.register_blueprint(vendors_bp, url_prefix='/vendors')
 api_v1.register_blueprint(irrigation_bp, url_prefix='/irrigation')
 api_v1.register_blueprint(processing_bp, url_prefix='/processing')
-api_v1.register_blueprint(insurance_v2_bp, url_prefix='/insurance-v2')
