@@ -11,4 +11,3 @@ from .procurement_tasks import procurement_payment_reminders_task, vendor_payout
 from .irrigation_tasks import poll_sensor_telemetry_task, irrigation_health_audit_task
 from .processing_tasks import monitor_stale_batches_task, daily_production_report_task
 from .insurance_tasks import insurance_policy_expiry_check_task, weather_risk_monitor_task
-from .machinery_tasks import check_maintenance_intervals_task, machinery_valuation_update_task
