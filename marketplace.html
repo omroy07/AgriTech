@@ -415,10 +415,16 @@
     .stat-value {
       font-size: 2.2rem;
       font-weight: 800;
-      background: linear-gradient(135deg, #38bdf8, #a855f7);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--accent-success);
+      text-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
       margin-bottom: 4px;
+      display: inline-block;
+    }
+
+    .stat-value.counting {
+      opacity: 0.9;
+      transform: scale(1.05);
+      transition: transform 0.1s ease;
     }
 
     .stat-label {
@@ -1552,19 +1558,19 @@
 
     <div class="marketplace-stats">
       <div class="stat-card">
-        <div class="stat-value" id="totalProducts">2,847</div>
+        <div class="stat-value" data-target="2847">0</div>
         <div class="stat-label">Active Products</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" id="totalSellers">456</div>
+        <div class="stat-value" data-target="456">0</div>
         <div class="stat-label">Verified Sellers</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" id="todayDeals">89</div>
+        <div class="stat-value" data-target="89">0</div>
         <div class="stat-label">Deals Today</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" id="avgRating">4.6</div>
+        <div class="stat-value" data-target="4.6" data-decimals="1">0</div>
         <div class="stat-label">Avg Rating</div>
       </div>
     </div>
@@ -2622,6 +2628,58 @@
           lastMarketplaceScroll = currentMarketplaceScroll;
         }, { passive: true }); // Optimized for scrolling performance
       }
+    })();
+    /* ============================================================
+   FEATURE: High-Energy Counter Animation (Viewport Trigger)
+   ============================================================ */
+    (function () {
+      const runCounterAnimation = (element, targetValue, duration, decimalPlaces = 0) => {
+        let startTime = null;
+
+        const animate = (currentTime) => {
+          if (!startTime) startTime = currentTime;
+          const progress = Math.min((currentTime - startTime) / duration, 1);
+
+          // Requirement: "Deceleration" easing curve
+          const easeOutProgress = 1 - Math.pow(1 - progress, 4);
+          const currentCount = easeOutProgress * targetValue;
+
+          // Formatting: Preserve commas and decimal points
+          element.innerText = currentCount.toLocaleString(undefined, {
+            minimumFractionDigits: decimalPlaces,
+            maximumFractionDigits: decimalPlaces
+          });
+
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          } else {
+            element.classList.remove('counting');
+          }
+        };
+
+        element.classList.add('counting');
+        requestAnimationFrame(animate);
+      };
+
+      // Requirement: Intersection Observer for scroll trigger
+      const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const target = entry.target;
+            const finalVal = parseFloat(target.getAttribute('data-target'));
+            const decimals = parseInt(target.getAttribute('data-decimals')) || 0;
+
+            // Requirement: 2.0s Duration
+            runCounterAnimation(target, finalVal, 2000, decimals);
+
+            statsObserver.unobserve(target); // Only animate once
+          }
+        });
+      }, { threshold: 0.6 }); // Triggers when 60% of card is visible
+
+      document.querySelectorAll('.stat-value').forEach(stat => {
+        statsObserver.observe(stat);
+      });
     })();
   </script>
 
