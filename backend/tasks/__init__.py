@@ -10,3 +10,6 @@ from .sustainability_tasks import recalculate_all_offsets_task, stale_audit_chec
 from .procurement_tasks import procurement_payment_reminders_task, vendor_payout_settlement_task
 from .irrigation_tasks import poll_sensor_telemetry_task, irrigation_health_audit_task
 from .processing_tasks import monitor_stale_batches_task, daily_production_report_task
+from .insurance_tasks import insurance_policy_expiry_check_task, weather_risk_monitor_task
+from .machinery_tasks import check_maintenance_intervals_task, machinery_valuation_update_task
+from .soil_tasks import generate_seasonal_soil_reports_task, fertilizer_application_reminder_task
