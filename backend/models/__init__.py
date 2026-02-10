@@ -20,6 +20,7 @@ from .processing import ProcessingBatch, StageLog, QualityCheck, ProcessingStage
 from .insurance_v2 import CropPolicy, ClaimRequest, PayoutLedger, AdjusterNote
 from .machinery import EngineHourLog, MaintenanceCycle, DamageReport, RepairOrder
 from .soil_health import SoilTest, FertilizerRecommendation, ApplicationLog
+from .loan_v2 import RepaymentSchedule, PaymentHistory, DefaultRiskScore, CollectionNote
 
 __all__ = [
     'User', 'UserRole', 'LoanRequest', 'PredictionHistory', 
@@ -38,5 +39,6 @@ __all__ = [
     'ProcessingBatch', 'StageLog', 'QualityCheck', 'ProcessingStage',
     'CropPolicy', 'ClaimRequest', 'PayoutLedger', 'AdjusterNote',
     'EngineHourLog', 'MaintenanceCycle', 'DamageReport', 'RepairOrder',
-    'SoilTest', 'FertilizerRecommendation', 'ApplicationLog'
+    'SoilTest', 'FertilizerRecommendation', 'ApplicationLog',
+    'RepaymentSchedule', 'PaymentHistory', 'DefaultRiskScore', 'CollectionNote'
 ]
