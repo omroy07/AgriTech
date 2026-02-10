@@ -171,12 +171,14 @@
 
 <body>
 
-    <div class="dashboard-container">
-        <div class="weather-hero" id="weather-banner">
+    <div class="dashboard-container" role="main">
+
+        <div class="weather-hero" id="weather-banner" role="region" aria-labelledby="current-temp">
             <div class="weather-info">
                 <p id="current-loc">Synchronizing...</p>
                 <h1 id="current-temp">--°C</h1>
                 <p id="current-cond">Connecting to satellite...</p>
+
                 <div class="weather-stats">
                     <div class="stat-box">
                         <label>Humidity</label>
@@ -188,17 +190,30 @@
                     </div>
                 </div>
             </div>
-            <div style="display: flex; align-items: center; justify-content: center; font-size: 5rem;">
+
+            <div style="display: flex; align-items: center; justify-content: center; font-size: 5rem;"
+                 aria-hidden="true">
                 <i class="fas fa-cloud-sun-rain"></i>
             </div>
         </div>
 
-        <h2 class="section-title"><i class="fas fa-robot"></i> AI Crop Advisories</h2>
-        <div class="advisories-grid" id="advisory-list">
-            <div class="loading-state">
-                <i class="fas fa-spinner fa-spin fa-2x"></i>
+        <h2 class="section-title" id="advisories-heading">
+            <i class="fas fa-robot" aria-hidden="true"></i>
+            AI Crop Advisories
+        </h2>
+
+        <div class="advisories-grid"
+             id="advisory-list"
+             aria-labelledby="advisories-heading">
+
+            <div class="loading-state"
+                 role="status"
+                 aria-live="polite"
+                 aria-label="Loading crop advisories">
+                <i class="fas fa-spinner fa-spin fa-2x" aria-hidden="true"></i>
                 <p>Consulting Intelligence Engine...</p>
             </div>
+
         </div>
     </div>
 
