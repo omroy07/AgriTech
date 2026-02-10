@@ -21,6 +21,8 @@ from .insurance_v2 import CropPolicy, ClaimRequest, PayoutLedger, AdjusterNote
 from .machinery import EngineHourLog, MaintenanceCycle, DamageReport, RepairOrder
 from .soil_health import SoilTest, FertilizerRecommendation, ApplicationLog
 from .loan_v2 import RepaymentSchedule, PaymentHistory, DefaultRiskScore, CollectionNote
+from .warehouse import WarehouseLocation, StockItem, StockMovement, ReconciliationLog
+from .climate import ClimateZone, SensorNode, TelemetryLog, AutomationTrigger
 
 __all__ = [
     'User', 'UserRole', 'LoanRequest', 'PredictionHistory', 
@@ -40,5 +42,7 @@ __all__ = [
     'CropPolicy', 'ClaimRequest', 'PayoutLedger', 'AdjusterNote',
     'EngineHourLog', 'MaintenanceCycle', 'DamageReport', 'RepairOrder',
     'SoilTest', 'FertilizerRecommendation', 'ApplicationLog',
-    'RepaymentSchedule', 'PaymentHistory', 'DefaultRiskScore', 'CollectionNote'
+    'RepaymentSchedule', 'PaymentHistory', 'DefaultRiskScore', 'CollectionNote',
+    'WarehouseLocation', 'StockItem', 'StockMovement', 'ReconciliationLog',
+    'ClimateZone', 'SensorNode', 'TelemetryLog', 'AutomationTrigger'
 ]
