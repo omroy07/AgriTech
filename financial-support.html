@@ -887,7 +887,205 @@
       display: none;
     }
 
+.site-footer {
+  background: var(--surface-color, var(--bg-secondary));
+  color: var(--text-color, var(--text-primary));
+  position: relative;
+  font-size: 0.95rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1rem;
+}
 
+/* Top accent line */
+.footer-top-accent {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, #16a34a, #22c55e);
+  margin-bottom: 1rem;
+}
+
+/* Inner content wrapper - center everything */
+.footer-inner-content {
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column; /* stack brand + links */
+  align-items: center;    /* center horizontally */
+  gap: 2rem;
+}
+
+/* Brand Section */
+.footer-brand {
+  text-align: center;
+}
+
+.brand-header {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center logo + text */
+  gap: 0.6rem;
+}
+
+.brand-logo {
+  width: 42px;
+}
+
+.footer-brand h3 {
+  color: var(--accent-color, var(--accent-primary));
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.tagline {
+  margin: 0.8rem 0 1.2rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* Social Icons */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.social-icons a {
+  width: 36px;
+  height: 36px;
+  background: #e6f4ea;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #15803d;
+  transition: all 0.25s ease;
+}
+
+.social-icons a:hover {
+  background: #22c55e;
+  color: #fff;
+}
+
+/* Links Section - center all links */
+.footer-group-links {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  justify-content: center; /* center links horizontally */
+}
+
+.footer-section {
+  min-width: 140px;
+  flex: 1;
+  text-align: center; /* center links inside each section */
+}
+
+.footer-section h4 {
+  color: var(--accent-color, var(--accent-primary));
+  margin-bottom: 0.9rem;
+  font-size: 1rem;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.6rem;
+}
+
+.footer-section ul a {
+  color: var(--text-muted);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center text inside link */
+  gap: 0.5rem;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.footer-section ul a:hover {
+  color: var(--accent-color, var(--accent-primary));
+  transform: translateY(-2px);
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  text-align: center;
+  padding: 1rem 0;
+  background: var(--section-bg, var(--bg-secondary));
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 2rem;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Responsive Footer */
+@media (max-width: 768px) {
+  .footer-inner-content {
+    gap: 1.5rem;
+  }
+  .footer-group-links {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-inner-content {
+    padding: 2rem 1rem;
+  }
+  .footer-bottom {
+    font-size: 0.8rem;
+  }
+}
+/* --- Cursor Trail Container --- */
+.circle-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999999;
+}
+
+/* --- Individual Trail Circles --- */
+.cursor-circle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ff8c00;
+  box-shadow: 0 0 15px rgba(255, 140, 0, 0.7);
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  mix-blend-mode: screen;
+  transition: transform 0.1s ease-out;
+}
+
+/* --- The Leading "Head" Circle --- */
+.cursor-circle:first-child {
+  width: 14px;
+  height: 14px;
+  background-color: #ffcc00;
+  box-shadow:
+    0 0 20px #ff8c00,
+    0 0 40px rgba(255, 140, 0, 0.5);
+}
+
+/* --- Interaction States --- */
+.cursor-clicking {
+  transform: translate(-50%, -50%) scale(2.5) !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 0 30px #ffffff !important;
+}
+
+.cursor-hovering {
+  transform: translate(-50%, -50%) scale(1.8);
+  background-color: #22c55e; /* AgriTech green */
+  box-shadow: 0 0 20px #22c55e;
+}
   </style>
 </head>
 
@@ -1230,7 +1428,8 @@
 
     <div class="footer-wave-overlay"></div>
   </footer>
-
+ <!-- Cursor Trail -->
+<div class="circle-container" id="cursorTrail"></div>
 
   <script>
     // Theme Toggle
@@ -1484,6 +1683,67 @@
       calculateLoan();
       showNotification('Welcome to AgriTech Financial Services!');
     });
+     // --- Cursor Trailing Effect ---
+const container = document.getElementById('cursorTrail');
+const circleCount = 12;
+const circles = [];
+
+let mouseX = 0;
+let mouseY = 0;
+
+// Create circles
+for (let i = 0; i < circleCount; i++) {
+    const circle = document.createElement('div');
+    circle.classList.add('cursor-circle');
+    container.appendChild(circle);
+    circles.push({ el: circle, x: 0, y: 0 });
+}
+
+// Mouse move
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
+
+// Click effects
+document.addEventListener('mousedown', () => {
+    circles.forEach(c => c.el.classList.add('cursor-clicking'));
+});
+document.addEventListener('mouseup', () => {
+    circles.forEach(c => c.el.classList.remove('cursor-clicking'));
+});
+
+// Hover effects on interactive elements
+document.addEventListener('mouseover', (e) => {
+    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+        circles.forEach(c => c.el.classList.add('cursor-hovering'));
+    }
+});
+document.addEventListener('mouseout', (e) => {
+    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+        circles.forEach(c => c.el.classList.remove('cursor-hovering'));
+    }
+});
+
+// Animate trailing effect
+function animateCursor() {
+    let x = mouseX;
+    let y = mouseY;
+
+    circles.forEach((circle) => {
+        circle.x += (x - circle.x) * 0.25;
+        circle.y += (y - circle.y) * 0.25;
+
+        circle.el.style.left = circle.x + 'px';
+        circle.el.style.top = circle.y + 'px';
+
+        x = circle.x;
+        y = circle.y;
+    });
+
+    requestAnimationFrame(animateCursor);
+}
+animateCursor();
   </script>
   <script src="theme.js"></script>
 

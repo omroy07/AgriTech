@@ -35,3 +35,15 @@ class CropPredictionSchema(BaseSchema):
     humidity = fields.Float(required=True)
     ph = fields.Float(required=True)
     rainfall = fields.Float(required=True)
+
+class ScheduleGenerationSchema(BaseSchema):
+    loan_id = fields.Int(required=True)
+    principal = fields.Float(required=True, validate=validate.Range(min=1000))
+    rate = fields.Float(required=True, validate=validate.Range(min=0.1, max=50))
+    tenure = fields.Int(required=True, validate=validate.Range(min=1, max=360))
+
+class PaymentSchema(BaseSchema):
+    loan_id = fields.Int(required=True)
+    schedule_id = fields.Int(required=True)
+    amount = fields.Float(required=True, validate=validate.Range(min=1))
+    method = fields.Str(validate=validate.OneOf(['UPI', 'Bank Transfer', 'Cash', 'Cheque']))

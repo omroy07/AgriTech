@@ -1,24 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Premium Marketplace - AgriTech</title>
 
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
-    rel="stylesheet"
-  />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
 
   <link rel="icon" type="image/png" href="images/logo.png" />
 
@@ -99,11 +94,21 @@
       backdrop-filter: blur(14px);
       border: 1px solid var(--border-color);
       border-radius: 20px;
-      margin-bottom: 2rem;
-      position: sticky;
+      position: fixed;
       top: 20px;
+      left: 20px;
+      right: 20px;
+      width: calc(100% - 40px);
+      /* Adjusts for left/right margin */
       z-index: 1000;
       box-shadow: var(--shadow-premium);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    .top-nav--hidden {
+      transform: translateY(-150%);
+      /* Slides completely off-screen */
     }
 
     .nav-back {
@@ -410,10 +415,16 @@
     .stat-value {
       font-size: 2.2rem;
       font-weight: 800;
-      background: linear-gradient(135deg, #38bdf8, #a855f7);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--accent-success);
+      text-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
       margin-bottom: 4px;
+      display: inline-block;
+    }
+
+    .stat-value.counting {
+      opacity: 0.9;
+      transform: scale(1.05);
+      transition: transform 0.1s ease;
     }
 
     .stat-label {
@@ -739,7 +750,7 @@
       color: var(--text-secondary);
     }
 
-    .empty-state > div {
+    .empty-state>div {
       font-size: 2rem;
       margin-bottom: 6px;
     }
@@ -1376,12 +1387,15 @@
       .search-popup-products .product-card {
         width: 100%;
       }
+
       .cart-panel {
         width: 100%;
       }
+
       .cart-widget {
         right: 18px;
       }
+
       .scroll-top-btn {
         right: 22px;
       }
@@ -1454,8 +1468,72 @@
         padding: 12px 12px 14px;
       }
     }
+
+    /* ============================================================
+   FIX: Light Mode Contrast & Visibility Overrides
+   ============================================================ */
+    [data-theme="light"] {
+
+      /* 1. Fix Marketplace Commodity Cards */
+      .product-card,
+      .trend-item {
+        background: #ffffff !important;
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05) !important;
+      }
+
+      .product-title,
+      .trend-info h4 {
+        color: #1e293b !important;
+        /* High-Contrast Deep Charcoal */
+      }
+
+      .product-description,
+      .product-seller {
+        color: #475569 !important;
+        /* Readable Slate Grey */
+      }
+
+      /* 2. Fix Price Trend Visualization */
+      .price-chart {
+        background: #f8fafc !important;
+        border-color: rgba(0, 0, 0, 0.1) !important;
+      }
+
+      .price-chart p {
+        color: #334155 !important;
+      }
+
+      /* 3. Fix Services Navigation Dropdown */
+      .services-dropdown {
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      .services-list li a {
+        color: #1e293b !important;
+        /* Accessible text for navigation */
+      }
+
+      .services-list li a:hover {
+        background: rgba(34, 197, 94, 0.1) !important;
+        color: #16a34a !important;
+        /* Brand Green Accent */
+      }
+
+      /* 4. Fix System Alerts & Notifications */
+      .notification {
+        background: #ffffff !important;
+        color: #1e293b !important;
+        border: 1px solid rgba(0, 0, 0, 0.05) !important;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
+      }
+    }
   </style>
 </head>
+
 <body data-theme="dark">
   <div class="loading-overlay" id="loadingOverlay">
     <div class="loading-spinner"></div>
@@ -1492,23 +1570,14 @@
     <div class="marketplace-controls">
       <div class="controls-row">
         <div class="search-box">
-          <input
-            type="text"
-            placeholder="Search for products, sellers, or locations..."
-            id="searchInput"
-          />
+          <input type="text" placeholder="Search for products, sellers, or locations..." id="searchInput" />
           <button class="search-btn" onclick="searchProducts()" aria-label="Search products">
             <i class="fas fa-search"></i>
             <span>Search</span>
           </button>
         </div>
 
-        <select
-          class="filter-select"
-          id="categoryFilter"
-          onchange="filterProducts()"
-          aria-label="Filter by category"
-        >
+        <select class="filter-select" id="categoryFilter" onchange="filterProducts()" aria-label="Filter by category">
           <option value="">All Categories</option>
           <option value="vegetables">Vegetables</option>
           <option value="fruits">Fruits</option>
@@ -1518,12 +1587,7 @@
           <option value="pulses">Pulses</option>
         </select>
 
-        <select
-          class="filter-select"
-          id="locationFilter"
-          onchange="filterProducts()"
-          aria-label="Filter by location"
-        >
+        <select class="filter-select" id="locationFilter" onchange="filterProducts()" aria-label="Filter by location">
           <option value="">All Locations</option>
           <option value="punjab">Punjab</option>
           <option value="maharashtra">Maharashtra</option>
@@ -1533,13 +1597,8 @@
           <option value="kashmir">Kashmir</option>
         </select>
 
-        <button
-          class="sort-btn"
-          id="cartFilterToggle"
-          type="button"
-          onclick="toggleCartFilter(this)"
-          title="Show only products already added to your cart"
-        >
+        <button class="sort-btn" id="cartFilterToggle" type="button" onclick="toggleCartFilter(this)"
+          title="Show only products already added to your cart">
           <i class="fas fa-filter"></i> In Cart Only
         </button>
 
@@ -1562,19 +1621,19 @@
 
     <div class="marketplace-stats">
       <div class="stat-card">
-        <div class="stat-value" id="totalProducts">2,847</div>
+        <div class="stat-value" data-target="2847">0</div>
         <div class="stat-label">Active Products</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" id="totalSellers">456</div>
+        <div class="stat-value" data-target="456">0</div>
         <div class="stat-label">Verified Sellers</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" id="todayDeals">89</div>
+        <div class="stat-value" data-target="89">0</div>
         <div class="stat-label">Deals Today</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" id="avgRating">4.6</div>
+        <div class="stat-value" data-target="4.6" data-decimals="1">0</div>
         <div class="stat-label">Avg Rating</div>
       </div>
     </div>
@@ -1647,16 +1706,8 @@
 
       <div class="products-grid" id="productsGrid">
         <!-- Product 1 -->
-        <div
-          class="product-card"
-          data-category="vegetables"
-          data-location="punjab"
-          data-price="45"
-          data-rating="4.8"
-          data-distance="50"
-          data-newest="2"
-          data-product-id="fresh-organic-carrots"
-        >
+        <div class="product-card" data-category="vegetables" data-location="punjab" data-price="45" data-rating="4.8"
+          data-distance="50" data-newest="2" data-product-id="fresh-organic-carrots">
           <div class="product-image">
             🥕
             <div class="product-badge">Organic</div>
@@ -1675,10 +1726,8 @@
               <div class="product-quantity">Min 10kg</div>
             </div>
             <div class="product-actions">
-              <button
-                class="btn-primary"
-                onclick="addToCart('fresh-organic-carrots', 'Fresh Organic Carrots', 'Kumar Farms, Punjab')"
-              >
+              <button class="btn-primary"
+                onclick="addToCart('fresh-organic-carrots', 'Fresh Organic Carrots', 'Kumar Farms, Punjab')">
                 <i class="fas fa-cart-plus"></i>
                 <span class="btn-label">Add to Cart</span>
               </button>
@@ -1686,11 +1735,7 @@
                 <i class="fas fa-phone"></i>
                 Contact
               </button>
-              <button
-                class="btn-secondary"
-                onclick="toggleLike(this)"
-                aria-label="Add to favorites"
-              >
+              <button class="btn-secondary" onclick="toggleLike(this)" aria-label="Add to favorites">
                 <i class="far fa-heart"></i>
               </button>
             </div>
@@ -1698,16 +1743,8 @@
         </div>
 
         <!-- Product 2 -->
-        <div
-          class="product-card"
-          data-category="fruits"
-          data-location="kashmir"
-          data-price="180"
-          data-rating="4.9"
-          data-distance="200"
-          data-newest="1"
-          data-product-id="kashmiri-red-apples"
-        >
+        <div class="product-card" data-category="fruits" data-location="kashmir" data-price="180" data-rating="4.9"
+          data-distance="200" data-newest="1" data-product-id="kashmiri-red-apples">
           <div class="product-image">
             🍎
             <div class="product-badge premium">Premium</div>
@@ -1726,10 +1763,8 @@
               <div class="product-quantity">Min 5kg</div>
             </div>
             <div class="product-actions">
-              <button
-                class="btn-primary"
-                onclick="addToCart('kashmiri-red-apples', 'Kashmiri Red Apples', 'Mountain Fresh, Kashmir')"
-              >
+              <button class="btn-primary"
+                onclick="addToCart('kashmiri-red-apples', 'Kashmiri Red Apples', 'Mountain Fresh, Kashmir')">
                 <i class="fas fa-cart-plus"></i>
                 <span class="btn-label">Add to Cart</span>
               </button>
@@ -1737,11 +1772,7 @@
                 <i class="fas fa-phone"></i>
                 Contact
               </button>
-              <button
-                class="btn-secondary"
-                onclick="toggleLike(this)"
-                aria-label="Add to favorites"
-              >
+              <button class="btn-secondary" onclick="toggleLike(this)" aria-label="Add to favorites">
                 <i class="far fa-heart"></i>
               </button>
             </div>
@@ -1749,16 +1780,8 @@
         </div>
 
         <!-- Product 3 -->
-        <div
-          class="product-card"
-          data-category="grains"
-          data-location="haryana"
-          data-price="2500"
-          data-rating="4.5"
-          data-distance="100"
-          data-newest="3"
-          data-product-id="premium-milling-wheat"
-        >
+        <div class="product-card" data-category="grains" data-location="haryana" data-price="2500" data-rating="4.5"
+          data-distance="100" data-newest="3" data-product-id="premium-milling-wheat">
           <div class="product-image">
             🌾
             <div class="product-badge bulk-deal">Bulk Deal</div>
@@ -1777,10 +1800,8 @@
               <div class="product-quantity">Min 50qt</div>
             </div>
             <div class="product-actions">
-              <button
-                class="btn-primary"
-                onclick="addToCart('premium-milling-wheat', 'Premium Milling Wheat (Bulk)', 'Green Fields Co., Haryana')"
-              >
+              <button class="btn-primary"
+                onclick="addToCart('premium-milling-wheat', 'Premium Milling Wheat (Bulk)', 'Green Fields Co., Haryana')">
                 <i class="fas fa-cart-plus"></i>
                 <span class="btn-label">Add to Cart</span>
               </button>
@@ -1788,11 +1809,7 @@
                 <i class="fas fa-phone"></i>
                 Contact
               </button>
-              <button
-                class="btn-secondary"
-                onclick="toggleLike(this)"
-                aria-label="Add to favorites"
-              >
+              <button class="btn-secondary" onclick="toggleLike(this)" aria-label="Add to favorites">
                 <i class="far fa-heart"></i>
               </button>
             </div>
@@ -1800,16 +1817,8 @@
         </div>
 
         <!-- Product 4 -->
-        <div
-          class="product-card"
-          data-category="spices"
-          data-location="maharashtra"
-          data-price="120"
-          data-rating="4.7"
-          data-distance="150"
-          data-newest="4"
-          data-product-id="organic-turmeric-powder"
-        >
+        <div class="product-card" data-category="spices" data-location="maharashtra" data-price="120" data-rating="4.7"
+          data-distance="150" data-newest="4" data-product-id="organic-turmeric-powder">
           <div class="product-image">
             🌶️
             <div class="product-badge hot-stock">Hot Stock</div>
@@ -1828,10 +1837,8 @@
               <div class="product-quantity">Min 1kg</div>
             </div>
             <div class="product-actions">
-              <button
-                class="btn-primary"
-                onclick="addToCart('organic-turmeric-powder', 'Organic Turmeric Powder', 'Spice Hub, Maharashtra')"
-              >
+              <button class="btn-primary"
+                onclick="addToCart('organic-turmeric-powder', 'Organic Turmeric Powder', 'Spice Hub, Maharashtra')">
                 <i class="fas fa-cart-plus"></i>
                 <span class="btn-label">Add to Cart</span>
               </button>
@@ -1839,11 +1846,7 @@
                 <i class="fas fa-phone"></i>
                 Contact
               </button>
-              <button
-                class="btn-secondary"
-                onclick="toggleLike(this)"
-                aria-label="Add to favorites"
-              >
+              <button class="btn-secondary" onclick="toggleLike(this)" aria-label="Add to favorites">
                 <i class="far fa-heart"></i>
               </button>
             </div>
@@ -1851,16 +1854,8 @@
         </div>
 
         <!-- Product 5 -->
-        <div
-          class="product-card"
-          data-category="fruits"
-          data-location="maharashtra"
-          data-price="120"
-          data-rating="4.9"
-          data-distance="90"
-          data-newest="5"
-          data-product-id="nashik-green-grapes"
-        >
+        <div class="product-card" data-category="fruits" data-location="maharashtra" data-price="120" data-rating="4.9"
+          data-distance="90" data-newest="5" data-product-id="nashik-green-grapes">
           <div class="product-image">
             🍇
             <div class="product-badge sweet-stock">Sweet Stock</div>
@@ -1879,10 +1874,8 @@
               <div class="product-quantity">Min 20kg</div>
             </div>
             <div class="product-actions">
-              <button
-                class="btn-primary"
-                onclick="addToCart('nashik-green-grapes', 'Nashik Green Grapes', 'Vitis Growers, Maharashtra')"
-              >
+              <button class="btn-primary"
+                onclick="addToCart('nashik-green-grapes', 'Nashik Green Grapes', 'Vitis Growers, Maharashtra')">
                 <i class="fas fa-cart-plus"></i>
                 <span class="btn-label">Add to Cart</span>
               </button>
@@ -1890,11 +1883,7 @@
                 <i class="fas fa-phone"></i>
                 Contact
               </button>
-              <button
-                class="btn-secondary"
-                onclick="toggleLike(this)"
-                aria-label="Add to favorites"
-              >
+              <button class="btn-secondary" onclick="toggleLike(this)" aria-label="Add to favorites">
                 <i class="far fa-heart"></i>
               </button>
             </div>
@@ -1902,16 +1891,8 @@
         </div>
 
         <!-- Product 6 -->
-        <div
-          class="product-card"
-          data-category="dairy"
-          data-location="gujarat"
-          data-price="60"
-          data-rating="4.7"
-          data-distance="65"
-          data-newest="6"
-          data-product-id="pure-farm-cow-milk"
-        >
+        <div class="product-card" data-category="dairy" data-location="gujarat" data-price="60" data-rating="4.7"
+          data-distance="65" data-newest="6" data-product-id="pure-farm-cow-milk">
           <div class="product-image">
             🥛
             <div class="product-badge">Fresh Daily</div>
@@ -1930,10 +1911,8 @@
               <div class="product-quantity">Min 50L</div>
             </div>
             <div class="product-actions">
-              <button
-                class="btn-primary"
-                onclick="addToCart('pure-farm-cow-milk', 'Pure Farm Cow Milk', 'Amulya Dairy, Gujarat')"
-              >
+              <button class="btn-primary"
+                onclick="addToCart('pure-farm-cow-milk', 'Pure Farm Cow Milk', 'Amulya Dairy, Gujarat')">
                 <i class="fas fa-cart-plus"></i>
                 <span class="btn-label">Add to Cart</span>
               </button>
@@ -1941,11 +1920,7 @@
                 <i class="fas fa-phone"></i>
                 Contact
               </button>
-              <button
-                class="btn-secondary"
-                onclick="toggleLike(this)"
-                aria-label="Add to favorites"
-              >
+              <button class="btn-secondary" onclick="toggleLike(this)" aria-label="Add to favorites">
                 <i class="far fa-heart"></i>
               </button>
             </div>
@@ -2006,16 +1981,10 @@
       <h2>Start Trading Today</h2>
       <p>Join thousands of farmers and buyers in our marketplace</p>
       <div>
-        <button
-          class="cta-button"
-          onclick="showNotification('Product listing started!', 'success')"
-        >
+        <button class="cta-button" onclick="showNotification('Product listing started!', 'success')">
           <i class="fas fa-plus"></i> List Your Products
         </button>
-        <button
-          class="cta-button"
-          onclick="showNotification('Supplier search initiated!', 'info')"
-        >
+        <button class="cta-button" onclick="showNotification('Supplier search initiated!', 'info')">
           <i class="fas fa-user-friends"></i> Find Suppliers
         </button>
       </div>
@@ -2698,8 +2667,86 @@
       }
       animateCursor();
     }
+    /* ============================================================
+   FEATURE: Smart Navbar (Hide on Scroll Down / Show on Up)
+   ============================================================ */
+    (function () {
+      // Unique naming to prevent "Cannot redeclare" errors
+      const marketplaceSmartNav = document.querySelector(".top-nav");
+      let lastMarketplaceScroll = window.pageYOffset;
+
+      if (marketplaceSmartNav) {
+        window.addEventListener("scroll", () => {
+          const currentMarketplaceScroll = window.pageYOffset;
+
+          // Logic: Hide if scrolling down and past a 100px threshold
+          if (currentMarketplaceScroll > lastMarketplaceScroll && currentMarketplaceScroll > 100) {
+            marketplaceSmartNav.classList.add("top-nav--hidden");
+          }
+          // Logic: Show instantly when user scrolls upward
+          else {
+            marketplaceSmartNav.classList.remove("top-nav--hidden");
+          }
+
+          lastMarketplaceScroll = currentMarketplaceScroll;
+        }, { passive: true }); // Optimized for scrolling performance
+      }
+    })();
+    /* ============================================================
+   FEATURE: High-Energy Counter Animation (Viewport Trigger)
+   ============================================================ */
+    (function () {
+      const runCounterAnimation = (element, targetValue, duration, decimalPlaces = 0) => {
+        let startTime = null;
+
+        const animate = (currentTime) => {
+          if (!startTime) startTime = currentTime;
+          const progress = Math.min((currentTime - startTime) / duration, 1);
+
+          // Requirement: "Deceleration" easing curve
+          const easeOutProgress = 1 - Math.pow(1 - progress, 4);
+          const currentCount = easeOutProgress * targetValue;
+
+          // Formatting: Preserve commas and decimal points
+          element.innerText = currentCount.toLocaleString(undefined, {
+            minimumFractionDigits: decimalPlaces,
+            maximumFractionDigits: decimalPlaces
+          });
+
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          } else {
+            element.classList.remove('counting');
+          }
+        };
+
+        element.classList.add('counting');
+        requestAnimationFrame(animate);
+      };
+
+      // Requirement: Intersection Observer for scroll trigger
+      const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const target = entry.target;
+            const finalVal = parseFloat(target.getAttribute('data-target'));
+            const decimals = parseInt(target.getAttribute('data-decimals')) || 0;
+
+            // Requirement: 2.0s Duration
+            runCounterAnimation(target, finalVal, 2000, decimals);
+
+            statsObserver.unobserve(target); // Only animate once
+          }
+        });
+      }, { threshold: 0.6 }); // Triggers when 60% of card is visible
+
+      document.querySelectorAll('.stat-value').forEach(stat => {
+        statsObserver.observe(stat);
+      });
+    })();
   </script>
 
   <script src="auth.js"></script>
 </body>
+
 </html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial Processing Hub | AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --industry-bg: #f3f4f6;
+            --steel: #475569;
+            --primary: #2563eb;
+            --success: #10b981;
+            --danger: #ef4444;
+            --card: #ffffff;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--industry-bg);
+            margin: 0;
+            color: #1e293b;
+        }
+
+        .app-container {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--steel);
+            color: white;
+            padding: 2rem;
+        }
+
+        .batch-selector {
+            margin-top: 2rem;
+        }
+
+        .batch-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+
+        .batch-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .batch-card.active {
+            border-color: var(--success);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Main Hub */
+        .main-content {
+            padding: 3rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        /* Process Line Visualization */
+        .process-line {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 4rem;
+            padding: 0 2rem;
+        }
+
+        .process-line::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 10%;
+            right: 10%;
+            height: 4px;
+            background: #e2e8f0;
+            z-index: 1;
+        }
+
+        .stage-node {
+            z-index: 2;
+            text-align: center;
+            width: 60px;
+        }
+
+        .node-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border: 4px solid #e2e8f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            transition: 0.3s;
+        }
+
+        .stage-node.completed .node-icon {
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .stage-node.active .node-icon {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: #eff6ff;
+        }
+
+        .stage-node.active .node-icon i {
+            animation: gear-spin 2s linear infinite;
+        }
+
+        @keyframes gear-spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Audit Panel */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .audit-form {
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .audit-history {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .audit-item {
+            padding: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .pass-badge {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .fail-badge {
+            color: var(--danger);
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <h2>Industrial Batches</h2>
+            <button class="btn btn-primary" style="width: 100%; margin: 1rem 0;" onclick="createNewBatch()">+ New
+                Batch</button>
+            <div class="batch-selector" id="batch-list">
+                <!-- Batches injected here -->
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <div>
+                    <h1 id="active-batch-num" style="margin: 0;">Select a Batch</h1>
+                    <p id="active-batch-prod" style="color: #64748b;">Processing Lifecycle Management</p>
+                </div>
+                <button class="btn btn-success" id="advance-btn" onclick="advanceStage()" disabled>Advance Stage
+                    →</button>
+            </div>
+
+            <div class="process-line" id="process-visualization">
+                <div class="stage-node" data-stage="collection">
+                    <div class="node-icon"><i class="fas fa-truck-loading"></i></div>
+                    <small>Collection</small>
+                </div>
+                <div class="stage-node" data-stage="cleaning">
+                    <div class="node-icon"><i class="fas fa-soap"></i></div>
+                    <small>Cleaning</small>
+                </div>
+                <div class="stage-node" data-stage="processing">
+                    <div class="node-icon"><i class="fas fa-cog"></i></div>
+                    <small>Processing</small>
+                </div>
+                <div class="stage-node" data-stage="grading">
+                    <div class="node-icon"><i class="fas fa-medal"></i></div>
+                    <small>Grading</small>
+                </div>
+                <div class="stage-node" data-stage="packaging">
+                    <div class="node-icon"><i class="fas fa-box"></i></div>
+                    <small>Packaging</small>
+                </div>
+            </div>
+
+            <div class="grid-layout">
+                <div class="card">
+                    <h3>Mandatory Quality Audit</h3>
+                    <div class="audit-form">
+                        <div class="form-group">
+                            <label>Moisture Content (%)</label>
+                            <input type="number" step="0.1" class="form-input" id="qa-moisture" placeholder="12.5">
+                        </div>
+                        <div class="form-group">
+                            <label>Purity Level (%)</label>
+                            <input type="number" step="0.1" class="form-input" id="qa-purity" placeholder="98.5">
+                        </div>
+                        <div class="form-group">
+                            <label>Recorded Weight (kg)</label>
+                            <input type="number" step="0.1" class="form-input" id="qa-weight" placeholder="950.0">
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%;" onclick="submitAudit()">Certify Stage
+                            Readiness</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Audit History</h3>
+                    <div class="audit-history" id="audit-log">
+                        <p style="color: #94a3b8; text-align: center; margin-top: 2rem;">No audits for this stage yet.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals (Simplified SweetAlert style) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="processing_hub.js"></script>
+</body>
+
+</html>
