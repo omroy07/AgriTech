@@ -74,3 +74,4 @@ api_v1.register_blueprint(soil_bp, url_prefix='/soil')
 api_v1.register_blueprint(loan_repayment_bp, url_prefix='/loans')
 api_v1.register_blueprint(warehouse_bp, url_prefix='/warehouse')
 api_v1.register_blueprint(climate_bp, url_prefix='/climate')
+ 

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainable Eco-Toolbox | AgriTech</title>
+    <link rel="stylesheet" href="css/eco_style.css">
+</head>
+<body>
+    <div class="eco-wrapper">
+        <header>
+            <h1>🌱 Sustainable Farming Toolbox</h1>
+            <p>Practical tools for eco-friendly agriculture and organic resource management.</p>
+        </header>
+
+        <div class="tool-grid">
+            <div class="tool-card">
+                <h3>Compost Maturity Tracker</h3>
+                <div class="progress-container">
+                    <div id="compost-bar" class="progress-bar">0%</div>
+                </div>
+                <p id="compost-status">Status: Idle</p>
+                <button onclick="startCompost()" class="eco-btn">Simulate 90-Day Cycle</button>
+            </div>
+
+            <div class="tool-card">
+                <h3>Organic Pesticide Finder</h3>
+                <input type="text" id="pestInput" onkeyup="findRecipe()" placeholder="Search pest (e.g. Aphids, Slugs)">
+                <div id="recipe-display" class="recipe-box">Start typing a pest name to see organic recipes...</div>
+            </div>
+
+            <div class="tool-card">
+                <h3>Water Conservation Calculator</h3>
+                <label>Current daily water usage (Liters):</label>
+                <input type="number" id="liters" placeholder="e.g. 500">
+                <button onclick="calcSavings()" class="eco-btn">Calculate Savings</button>
+                <p id="save-result" class="result-text"></p>
+            </div>
+        </div>
+    </div>
+    <script src="js/eco_logic.js"></script>
+</body>
+</html>
