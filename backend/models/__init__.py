@@ -24,7 +24,6 @@ from .soil_health import SoilTest, FertilizerRecommendation, ApplicationLog
 from .loan_v2 import RepaymentSchedule, PaymentHistory, DefaultRiskScore, CollectionNote
 from .warehouse import WarehouseLocation, StockItem, StockMovement, ReconciliationLog
 from .climate import ClimateZone, SensorNode, TelemetryLog, AutomationTrigger
-from .labor import WorkerProfile, WorkShift, HarvestLog, PayrollEntry
 
 __all__ = [
     'User', 'UserRole', 'LoanRequest', 'PredictionHistory', 
@@ -46,6 +45,5 @@ __all__ = [
     'SoilTest', 'FertilizerRecommendation', 'ApplicationLog',
     'RepaymentSchedule', 'PaymentHistory', 'DefaultRiskScore', 'CollectionNote',
     'WarehouseLocation', 'StockItem', 'StockMovement', 'ReconciliationLog',
-    'ClimateZone', 'SensorNode', 'TelemetryLog', 'AutomationTrigger',
-    'WorkerProfile', 'WorkShift', 'HarvestLog', 'PayrollEntry'
+    'ClimateZone', 'SensorNode', 'TelemetryLog', 'AutomationTrigger'
 ]
