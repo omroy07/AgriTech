@@ -14,7 +14,7 @@ from .equipment import Equipment, RentalBooking, AvailabilityCalendar, PaymentEs
 from .farm import Farm, FarmMember, FarmAsset, FarmRole
 from .weather import WeatherData, CropAdvisory, AdvisorySubscription
 from .sustainability import CarbonPractice, CreditLedger, AuditRequest
-from .vendor_profile import VendorProfile
+from .vendor_profile import VendorProfile # Updated from procurement to vendor_profile
 from .procurement import ProcurementItem, BulkOrder, OrderEvent
 from .irrigation import IrrigationZone, SensorLog, ValveStatus, IrrigationSchedule
 from .processing import ProcessingBatch, StageLog, QualityCheck, ProcessingStage
