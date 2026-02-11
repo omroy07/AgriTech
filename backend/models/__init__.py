@@ -14,6 +14,7 @@ from .equipment import Equipment, RentalBooking, AvailabilityCalendar, PaymentEs
 from .farm import Farm, FarmMember, FarmAsset, FarmRole
 from .alert import Alert, AlertPreference
 from .audit_log import AuditLog, UserSession
+from .media_payload import MediaPayload
 from .weather import WeatherData, CropAdvisory, AdvisorySubscription
 from .sustainability import CarbonPractice, CreditLedger, AuditRequest
 from .vendor_profile import VendorProfile
@@ -53,5 +54,6 @@ __all__ = [
     'WorkerProfile', 'WorkShift', 'HarvestLog', 'PayrollEntry',
     'DriverProfile', 'DeliveryVehicle', 'TransportRoute', 'FuelLog',
     'Alert', 'AlertPreference',
-    'AuditLog', 'UserSession'
+    'AuditLog', 'UserSession',
+    'MediaPayload'
 ]
