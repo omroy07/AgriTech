@@ -28,6 +28,8 @@ from auth_utils import token_required, roles_required
 import backend.sockets.forum_events # Register forum socket events
 import backend.sockets.knowledge_events # Register knowledge exchange events
 from backend.utils.i18n import t
+from routes.irrigation_routes import irrigation_bp
+app.register_blueprint(irrigation_bp)
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
