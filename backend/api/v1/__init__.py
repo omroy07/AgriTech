@@ -32,6 +32,8 @@ from .insurance_portal import insurance_v2_bp
 from .machinery import machinery_bp
 from .soil_analysis import soil_bp
 from .loan_repayment import loan_repayment_bp
+from .warehouse import warehouse_bp
+from .climate_control import climate_bp
 
 # Create v1 API blueprint
 api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1')
@@ -70,3 +72,6 @@ api_v1.register_blueprint(insurance_v2_bp, url_prefix='/insurance-v2')
 api_v1.register_blueprint(machinery_bp, url_prefix='/machinery')
 api_v1.register_blueprint(soil_bp, url_prefix='/soil')
 api_v1.register_blueprint(loan_repayment_bp, url_prefix='/loans')
+api_v1.register_blueprint(warehouse_bp, url_prefix='/warehouse')
+api_v1.register_blueprint(climate_bp, url_prefix='/climate')
+ 
