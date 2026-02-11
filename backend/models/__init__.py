@@ -27,6 +27,8 @@ from .soil_health import SoilTest, FertilizerRecommendation, ApplicationLog
 from .loan_v2 import RepaymentSchedule, PaymentHistory, DefaultRiskScore, CollectionNote
 from .warehouse import WarehouseLocation, StockItem, StockMovement, ReconciliationLog
 from .climate import ClimateZone, SensorNode, TelemetryLog, AutomationTrigger
+from .labor import WorkerProfile, WorkShift, HarvestLog, PayrollEntry
+from .logistics_v2 import DriverProfile, DeliveryVehicle, TransportRoute, FuelLog
 
 __all__ = [
     'User', 'UserRole', 'LoanRequest', 'PredictionHistory', 
