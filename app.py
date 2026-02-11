@@ -27,6 +27,7 @@ import backend.sockets.supply_events # Register supply chain events
 from auth_utils import token_required, roles_required
 import backend.sockets.forum_events # Register forum socket events
 import backend.sockets.knowledge_events # Register knowledge exchange events
+import backend.sockets.alert_socket # Register centralized alert socket events
 from backend.utils.i18n import t
 
 # Set up logging

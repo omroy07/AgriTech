@@ -12,6 +12,7 @@ from .forum import ForumCategory, ForumThread, PostComment, Upvote, UserReputati
 from .knowledge import Question, Answer, KnowledgeVote, Badge, UserBadge, UserExpertise
 from .equipment import Equipment, RentalBooking, AvailabilityCalendar, PaymentEscrow
 from .farm import Farm, FarmMember, FarmAsset, FarmRole
+from .alert import Alert, AlertPreference
 from .weather import WeatherData, CropAdvisory, AdvisorySubscription
 from .sustainability import CarbonPractice, CreditLedger, AuditRequest
 from .vendor_profile import VendorProfile
@@ -49,5 +50,6 @@ __all__ = [
     'WarehouseLocation', 'StockItem', 'StockMovement', 'ReconciliationLog',
     'ClimateZone', 'SensorNode', 'TelemetryLog', 'AutomationTrigger',
     'WorkerProfile', 'WorkShift', 'HarvestLog', 'PayrollEntry',
-    'DriverProfile', 'DeliveryVehicle', 'TransportRoute', 'FuelLog'
+    'DriverProfile', 'DeliveryVehicle', 'TransportRoute', 'FuelLog',
+    'Alert', 'AlertPreference'
 ]
