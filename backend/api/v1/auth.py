@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from backend.services.auth_service import AuthService
+from backend.services.audit_service import AuditService
 from backend.models import User
 from backend.extensions import db, limiter
 
@@ -28,6 +29,12 @@ def register():
     
     AuthService.send_verification_email(user)
     
+    AuditService.log_action(
+        action="USER_REGISTERED",
+        user_id=user.id,
+        meta_data={"username": username, "email": email}
+    )
+    
     return jsonify({
         'status': 'success',
         'message': 'User registered. Please check your email to verify your account.'
@@ -38,7 +45,9 @@ def verify_email(token):
     """Verify email endpoint."""
     success, message = AuthService.verify_email(token)
     if success:
+        AuditService.log_action(action="EMAIL_VERIFIED", meta_data={"token": token})
         return jsonify({'status': 'success', 'message': message}), 200
+    AuditService.log_action(action="EMAIL_VERIFICATION_FAILED", risk_level='MEDIUM', meta_data={"error": message})
     return jsonify({'status': 'error', 'message': message}), 400
 
 @auth_bp.route('/forgot-password', methods=['POST'])
@@ -54,6 +63,9 @@ def forgot_password():
     user = User.query.filter_by(email=email).first()
     if user:
         AuthService.send_password_reset_email(user)
+        AuditService.log_action(action="PASSWORD_RESET_REQUESTED", user_id=user.id)
+    else:
+        AuditService.log_action(action="UNKNOWN_PASSWORD_RESET_ATTEMPT", risk_level='MEDIUM', meta_data={"email": email})
     
     # Always return same message to prevent email enumeration
     return jsonify({
@@ -73,5 +85,7 @@ def reset_password(token):
         
     success, message = AuthService.reset_password(token, new_password)
     if success:
+        AuditService.log_action(action="PASSWORD_RESET_SUCCESSFUL")
         return jsonify({'status': 'success', 'message': message}), 200
+    AuditService.log_action(action="PASSWORD_RESET_FAILED", risk_level='MEDIUM', meta_data={"error": message})
     return jsonify({'status': 'error', 'message': message}), 400

@@ -12,6 +12,7 @@ from marshmallow import ValidationError
 from backend.utils.validation import validate_input, sanitize_input
 from backend.extensions import socketio, db, migrate, mail, limiter, babel, get_locale
 from backend.api.v1.files import files_bp
+from backend.middleware.audit import AuditMiddleware
 from crop_recommendation.routes import crop_bp
 # from disease_prediction.routes import disease_bp
 from spatial_analytics.routes import spatial_bp
@@ -58,6 +59,9 @@ limiter.init_app(app)
 
 # Initialize Celery with app context
 celery = make_celery(app)
+
+# Initialize Audit Middleware
+audit_mw = AuditMiddleware(app)
 
 # Import models after db initialization
 from backend.models import User

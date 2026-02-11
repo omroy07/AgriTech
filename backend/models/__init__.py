@@ -13,6 +13,7 @@ from .knowledge import Question, Answer, KnowledgeVote, Badge, UserBadge, UserEx
 from .equipment import Equipment, RentalBooking, AvailabilityCalendar, PaymentEscrow
 from .farm import Farm, FarmMember, FarmAsset, FarmRole
 from .alert import Alert, AlertPreference
+from .audit_log import AuditLog, UserSession
 from .weather import WeatherData, CropAdvisory, AdvisorySubscription
 from .sustainability import CarbonPractice, CreditLedger, AuditRequest
 from .vendor_profile import VendorProfile
@@ -51,5 +52,6 @@ __all__ = [
     'ClimateZone', 'SensorNode', 'TelemetryLog', 'AutomationTrigger',
     'WorkerProfile', 'WorkShift', 'HarvestLog', 'PayrollEntry',
     'DriverProfile', 'DeliveryVehicle', 'TransportRoute', 'FuelLog',
-    'Alert', 'AlertPreference'
+    'Alert', 'AlertPreference',
+    'AuditLog', 'UserSession'
 ]
