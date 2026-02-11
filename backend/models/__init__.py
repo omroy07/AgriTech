@@ -17,7 +17,7 @@ from .audit_log import AuditLog, UserSession
 from .media_payload import MediaPayload
 from .weather import WeatherData, CropAdvisory, AdvisorySubscription
 from .sustainability import CarbonPractice, CreditLedger, AuditRequest
-from .vendor_profile import VendorProfile
+from .vendor_profile import VendorProfile # Updated from procurement to vendor_profile
 from .procurement import ProcurementItem, BulkOrder, OrderEvent
 from .irrigation import IrrigationZone, SensorLog, ValveStatus, IrrigationSchedule
 from .processing import ProcessingBatch, StageLog, QualityCheck, ProcessingStage
@@ -27,8 +27,6 @@ from .soil_health import SoilTest, FertilizerRecommendation, ApplicationLog
 from .loan_v2 import RepaymentSchedule, PaymentHistory, DefaultRiskScore, CollectionNote
 from .warehouse import WarehouseLocation, StockItem, StockMovement, ReconciliationLog
 from .climate import ClimateZone, SensorNode, TelemetryLog, AutomationTrigger
-from .labor import WorkerProfile, WorkShift, HarvestLog, PayrollEntry
-from .logistics_v2 import DriverProfile, DeliveryVehicle, TransportRoute, FuelLog
 
 __all__ = [
     'User', 'UserRole', 'LoanRequest', 'PredictionHistory', 

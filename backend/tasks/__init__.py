@@ -16,5 +16,3 @@ from .soil_tasks import generate_seasonal_soil_reports_task, fertilizer_applicat
 from .loan_tasks import daily_payment_reminders_task, overdue_escalation_task, monthly_risk_recalculation_task
 from .warehouse_tasks import daily_expiry_alerts_task, automated_reorder_notifications_task, monthly_reconciliation_reminder_task
 from .climate_tasks import check_sensor_health_task, generate_env_report_task, purge_old_telemetry_task
-from .labor_tasks import generate_weekly_payroll_batch_task, shift_reminder_alerts_task
-from .logistics_tasks import check_fleet_maintenance_task, optimize_daily_routes_task, generate_fuel_efficiency_report_task
