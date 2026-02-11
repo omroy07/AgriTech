@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labor Management Portal | AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #f59e0b;
+            --success: #10b981;
+            --info: #3b82f6;
+            --danger: #ef4444;
+            --bg: #fffcf5;
+            --card: #ffffff;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+        }
+
+        .portal {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            color: #92400e;
+        }
+
+        .actions-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .action-card {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 28px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .labor-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        .labor-table th {
+            text-align: left;
+            padding: 1.25rem;
+            border-bottom: 2px solid #fef3c7;
+            font-size: 0.85rem;
+            color: #92400e;
+            text-transform: uppercase;
+        }
+
+        .labor-table td {
+            padding: 1.25rem;
+            border-bottom: 1px solid #fffbeb;
+        }
+
+        .status-pill {
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-inactive {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .payslip-preview {
+            border: 2px dashed #e2e8f0;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            background: #fafafa;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="portal">
+        <header class="header">
+            <div>
+                <h1>Labor & Payroll Dashboard</h1>
+                <p style="opacity: 0.7; margin-top: 0.5rem;">Workforce management and dynamic wage distribution</p>
+            </div>
+            <button class="btn btn-primary" onclick="registerWorker()">+ Bulk Enroll Workers</button>
+        </header>
+
+        <div class="actions-row">
+            <div class="action-card" onclick="openClockModal()">
+                <div class="action-icon"><i class="fas fa-user-clock"></i></div>
+                <h3>Shift Control</h3>
+                <p style="font-size: 0.85rem; opacity: 0.6;">Clock-in/out attendance tracking</p>
+            </div>
+            <div class="action-card" onclick="openLogHarvestModal()">
+                <div class="action-icon" style="color: var(--success);"><i class="fas fa-seedling"></i></div>
+                <h3>Piece Log</h3>
+                <p style="font-size: 0.85rem; opacity: 0.6;">Log kilograms harvested per worker</p>
+            </div>
+            <div class="action-card" onclick="openPayrollModal()">
+                <div class="action-icon" style="color: var(--info);"><i class="fas fa-file-invoice-dollar"></i></div>
+                <h3>Run Payroll</h3>
+                <p style="font-size: 0.85rem; opacity: 0.6;">Generate weekly batch or single slip</p>
+            </div>
+            <div class="action-card" onclick="downloadReports()">
+                <div class="action-icon" style="color: #6366f1;"><i class="fas fa-chart-line"></i></div>
+                <h3>Labor Analytics</h3>
+                <p style="font-size: 0.85rem; opacity: 0.6;">Yield-to-wage efficiency reports</p>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div class="card">
+                <h3>Active Workforce</h3>
+                <table class="labor-table">
+                    <thead>
+                        <tr>
+                            <th>Worker Name</th>
+                            <th>Type</th>
+                            <th>Rates</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="worker-body">
+                        <tr>
+                            <td colspan="4" style="text-align:center; padding: 4rem; opacity: 0.5;">Loading worker
+                                registry...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>Payroll Ledger</h3>
+                <div id="payroll-ledger">
+                    <p style="text-align: center; padding: 4rem; opacity: 0.5;">Select a worker to view history</p>
+                </div>
+                <div id="payslip-placeholder" style="display: none;">
+                    <div class="payslip-preview" id="payslip-content">
+                        <!-- Generated Payslip Here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="labor_portal.js"></script>
+</body>
+
+</html>

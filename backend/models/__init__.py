@@ -14,7 +14,7 @@ from .equipment import Equipment, RentalBooking, AvailabilityCalendar, PaymentEs
 from .farm import Farm, FarmMember, FarmAsset, FarmRole
 from .weather import WeatherData, CropAdvisory, AdvisorySubscription
 from .sustainability import CarbonPractice, CreditLedger, AuditRequest
-from .vendor_profile import VendorProfile
+from .vendor_profile import VendorProfile # Updated from procurement to vendor_profile
 from .procurement import ProcurementItem, BulkOrder, OrderEvent
 from .irrigation import IrrigationZone, SensorLog, ValveStatus, IrrigationSchedule
 from .processing import ProcessingBatch, StageLog, QualityCheck, ProcessingStage
@@ -25,7 +25,6 @@ from .loan_v2 import RepaymentSchedule, PaymentHistory, DefaultRiskScore, Collec
 from .warehouse import WarehouseLocation, StockItem, StockMovement, ReconciliationLog
 from .climate import ClimateZone, SensorNode, TelemetryLog, AutomationTrigger
 from .labor import WorkerProfile, WorkShift, HarvestLog, PayrollEntry
-from .logistics_v2 import DriverProfile, DeliveryVehicle, TransportRoute, FuelLog
 
 __all__ = [
     'User', 'UserRole', 'LoanRequest', 'PredictionHistory', 
@@ -48,6 +47,5 @@ __all__ = [
     'RepaymentSchedule', 'PaymentHistory', 'DefaultRiskScore', 'CollectionNote',
     'WarehouseLocation', 'StockItem', 'StockMovement', 'ReconciliationLog',
     'ClimateZone', 'SensorNode', 'TelemetryLog', 'AutomationTrigger',
-    'WorkerProfile', 'WorkShift', 'HarvestLog', 'PayrollEntry',
-    'DriverProfile', 'DeliveryVehicle', 'TransportRoute', 'FuelLog'
+    'WorkerProfile', 'WorkShift', 'HarvestLog', 'PayrollEntry'
 ]
