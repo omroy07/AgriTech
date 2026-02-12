@@ -27,6 +27,29 @@ class WeatherService:
         
         db.session.add(weather)
         db.session.commit()
+        
+        # Trigger Alerts for Extreme Conditions
+        # Note: In a real app we'd query users in this location
+        from backend.services.alert_registry import AlertRegistry
+        
+        if weather.temperature > 40:
+            AlertRegistry.register_alert(
+                title="Extreme Heat Alert",
+                message=f"Location {location} is experiencing extreme heat ({weather.temperature}°C). Please protect your crops.",
+                category="WEATHER",
+                priority="HIGH",
+                group_key=f"heat_{location}"
+            )
+            
+        if weather.rainfall > 50:
+             AlertRegistry.register_alert(
+                title="Heavy Rainfall Warning",
+                message=f"Intense rainfall detected in {location}. Check drainage systems.",
+                category="WEATHER",
+                priority="CRITICAL",
+                group_key=f"rain_{location}"
+            )
+            
         return weather
 
     @staticmethod

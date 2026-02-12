@@ -12,6 +12,8 @@ from marshmallow import ValidationError
 from backend.utils.validation import validate_input, sanitize_input
 from backend.extensions import socketio, db, migrate, mail, limiter, babel, get_locale
 from backend.api.v1.files import files_bp
+from backend.api.ingestion import ingestion_bp
+from backend.middleware.audit import AuditMiddleware
 from crop_recommendation.routes import crop_bp
 # from disease_prediction.routes import disease_bp
 from spatial_analytics.routes import spatial_bp
@@ -27,6 +29,7 @@ import backend.sockets.supply_events # Register supply chain events
 from auth_utils import token_required, roles_required
 import backend.sockets.forum_events # Register forum socket events
 import backend.sockets.knowledge_events # Register knowledge exchange events
+import backend.sockets.alert_socket # Register centralized alert socket events
 from backend.utils.i18n import t
 
 from routes.irrigation_routes import irrigation_bp
@@ -65,6 +68,9 @@ limiter.init_app(app)
 # Initialize Celery with app context
 celery = make_celery(app)
 
+# Initialize Audit Middleware
+audit_mw = AuditMiddleware(app)
+
 # Import models after db initialization
 from backend.models import User
 
@@ -75,6 +81,7 @@ app.register_blueprint(crop_bp, url_prefix='/crop')
 app.register_blueprint(health_bp)
 app.register_blueprint(files_bp)
 app.register_blueprint(spatial_bp)
+app.register_blueprint(ingestion_bp, url_prefix='/api/v1')
 
 # Register API v1 (including loan, weather, schemes, etc.)
 register_api(app)

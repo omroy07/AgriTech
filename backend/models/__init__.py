@@ -12,6 +12,9 @@ from .forum import ForumCategory, ForumThread, PostComment, Upvote, UserReputati
 from .knowledge import Question, Answer, KnowledgeVote, Badge, UserBadge, UserExpertise
 from .equipment import Equipment, RentalBooking, AvailabilityCalendar, PaymentEscrow
 from .farm import Farm, FarmMember, FarmAsset, FarmRole
+from .alert import Alert, AlertPreference
+from .audit_log import AuditLog, UserSession
+from .media_payload import MediaPayload
 from .weather import WeatherData, CropAdvisory, AdvisorySubscription
 from .sustainability import CarbonPractice, CreditLedger, AuditRequest
 from .vendor_profile import VendorProfile # Updated from procurement to vendor_profile
@@ -45,5 +48,10 @@ __all__ = [
     'SoilTest', 'FertilizerRecommendation', 'ApplicationLog',
     'RepaymentSchedule', 'PaymentHistory', 'DefaultRiskScore', 'CollectionNote',
     'WarehouseLocation', 'StockItem', 'StockMovement', 'ReconciliationLog',
-    'ClimateZone', 'SensorNode', 'TelemetryLog', 'AutomationTrigger'
+    'ClimateZone', 'SensorNode', 'TelemetryLog', 'AutomationTrigger',
+    'WorkerProfile', 'WorkShift', 'HarvestLog', 'PayrollEntry',
+    'DriverProfile', 'DeliveryVehicle', 'TransportRoute', 'FuelLog',
+    'Alert', 'AlertPreference',
+    'AuditLog', 'UserSession',
+    'MediaPayload'
 ]
