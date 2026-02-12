@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from backend.services.farm_service import FarmService
 from backend.services.farm_analytics import FarmAnalytics
+from backend.services.audit_service import AuditService
 from auth_utils import token_required
 import logging
 
@@ -36,6 +37,14 @@ def create_farm(current_user):
     if error:
         return jsonify({'status': 'error', 'message': error}), 500
         
+    AuditService.log_action(
+        action="CREATE_FARM",
+        user_id=current_user.id,
+        resource_type="FARM",
+        resource_id=str(farm.id),
+        meta_data={"name": data['name'], "location": data['location']}
+    )
+    
     return jsonify({
         'status': 'success',
         'data': farm.to_dict()
@@ -72,6 +81,14 @@ def add_asset(current_user, farm_id):
     if error:
         return jsonify({'status': 'error', 'message': error}), 500
         
+    AuditService.log_action(
+        action="ADD_FARM_ASSET",
+        user_id=current_user.id,
+        resource_type="FARM_ASSET",
+        resource_id=str(asset.id),
+        meta_data={"name": data['name'], "category": data['category'], "farm_id": farm_id}
+    )
+    
     return jsonify({
         'status': 'success',
         'data': asset.to_dict()

@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from backend.services.procurement_service import ProcurementService
+from backend.services.audit_service import AuditService
 from backend.models.procurement import ProcurementItem, BulkOrder
 from auth_utils import token_required
 
@@ -43,6 +44,14 @@ def place_order(current_user):
     if error:
         return jsonify({'status': 'error', 'message': error}), 500
         
+    AuditService.log_action(
+        action="PLACE_PROCUREMENT_ORDER",
+        user_id=current_user.id,
+        resource_type="BULK_ORDER",
+        resource_id=str(order.id),
+        meta_data={"item_id": data['item_id'], "quantity": data['quantity'], "total": float(order.total_amount)}
+    )
+    
     return jsonify({
         'status': 'success',
         'data': {'order_id': order.id, 'total_amount': order.total_amount}

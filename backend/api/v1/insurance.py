@@ -7,6 +7,7 @@ from datetime import datetime
 from marshmallow import Schema, fields, validate, ValidationError
 
 from backend.services.insurance_service import InsuranceService
+from backend.services.audit_service import AuditService
 from backend.auth_utils import token_required
 
 
@@ -74,6 +75,14 @@ def create_policy(current_user):
             farm_location=data['farm_location'],
             farm_size=data['farm_size'],
             coverage_months=data['coverage_months']
+        )
+        
+        AuditService.log_action(
+            action="CREATE_INSURANCE_POLICY",
+            user_id=current_user.id,
+            resource_type="INSURANCE_POLICY",
+            resource_id=str(policy['id']),
+            meta_data=data
         )
         
         return jsonify({
@@ -197,6 +206,14 @@ def renew_policy(current_user, policy_id):
             adjust_coverage=data.get('adjust_coverage')
         )
         
+        AuditService.log_action(
+            action="RENEW_INSURANCE_POLICY",
+            user_id=current_user.id,
+            resource_type="INSURANCE_POLICY",
+            resource_id=str(policy_id),
+            meta_data=data
+        )
+        
         return jsonify({
             'success': True,
             'data': renewed_policy
@@ -246,6 +263,15 @@ def cancel_policy(current_user, policy_id):
             }), 404
         
         result = InsuranceService.cancel_policy(policy_id, reason)
+        
+        AuditService.log_action(
+            action="CANCEL_INSURANCE_POLICY",
+            user_id=current_user.id,
+            resource_type="INSURANCE_POLICY",
+            resource_id=str(policy_id),
+            risk_level='MEDIUM',
+            meta_data={"reason": reason}
+        )
         
         return jsonify({
             'success': True,
@@ -301,6 +327,15 @@ def submit_claim(current_user):
             incident_date=data['incident_date'],
             incident_description=data['incident_description'],
             evidence_photos=data['evidence_photos']
+        )
+        
+        AuditService.log_action(
+            action="SUBMIT_INSURANCE_CLAIM",
+            user_id=current_user.id,
+            resource_type="INSURANCE_CLAIM",
+            resource_id=str(claim['id']),
+            risk_level='MEDIUM',
+            meta_data=data
         )
         
         return jsonify({
@@ -411,6 +446,15 @@ def process_claim(current_user, claim_id):
             processed_by=current_user.id
         )
         
+        AuditService.log_action(
+            action="PROCESS_INSURANCE_CLAIM",
+            user_id=current_user.id,
+            resource_type="INSURANCE_CLAIM",
+            resource_id=str(claim_id),
+            risk_level='HIGH' if data['decision'] == 'APPROVED' else 'MEDIUM',
+            meta_data=data
+        )
+        
         return jsonify({
             'success': True,
             'data': result
@@ -453,6 +497,15 @@ def mark_as_paid(current_user, claim_id):
         payment_ref = data.get('payment_reference', f'PAY-{datetime.utcnow().strftime("%Y%m%d%H%M%S")}')
         
         result = InsuranceService.mark_claim_paid(claim_id, payment_ref)
+        
+        AuditService.log_action(
+            action="PAY_INSURANCE_CLAIM",
+            user_id=current_user.id,
+            resource_type="INSURANCE_CLAIM",
+            resource_id=str(claim_id),
+            risk_level='HIGH',
+            meta_data={"payment_reference": payment_ref}
+        )
         
         return jsonify({
             'success': True,
