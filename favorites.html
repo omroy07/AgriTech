@@ -388,12 +388,11 @@ p, span, li {
         title="Back to top">
     <i class="fas fa-arrow-up" aria-hidden="true"></i>
 </button>
-
+<script src="favorite.js"></script>
 <script>
 class FavoritesPage {
-    constructor() {
-        this.favorites =
-            JSON.parse(localStorage.getItem('agritech_favorite_blogs')) || [];
+    constructor(favorites = []) {
+        this.favorites = favorites;
         this.renderFavorites();
         this.updateStats();
     }
@@ -470,19 +469,22 @@ class FavoritesPage {
 }
 
 function removeFavorite(id) {
-    let favorites =
-        JSON.parse(localStorage.getItem('agritech_favorite_blogs')) || [];
-    favorites = favorites.filter(b => b.id !== id);
-    localStorage.setItem('agritech_favorite_blogs', JSON.stringify(favorites));
-    new FavoritesPage();
+    window.favoritesManager.removeFromFavorites(id);
 }
+
 
 function clearAllFavorites() {
     if (confirm('Are you sure you want to clear all favorites?')) {
-        localStorage.removeItem('agritech_favorite_blogs');
-        new FavoritesPage();
+        window.favoritesManager.favorites = [];
+        window.favoritesManager.saveFavorites();
+        document.dispatchEvent(
+            new CustomEvent('favoritesLoaded', {
+                detail: { favorites: [] }
+            })
+        );
     }
 }
+
 
 function exportFavorites() {
     const favorites =
@@ -513,9 +515,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('dark-theme');
         updateThemeIcon(true);
     }
-
-    new FavoritesPage();
 });
+
 
 
 function toggleTheme() {

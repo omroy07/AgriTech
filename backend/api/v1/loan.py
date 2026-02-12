@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify, current_app
 import google.generativeai as genai
 from backend.utils.validation import sanitize_input, validate_input
+from backend.services.audit_service import AuditService
 
 from auth_utils import token_required, roles_required
 
@@ -53,6 +54,12 @@ Respond in a structured format with labeled sections: Loan Type, Eligibility Sta
             }), 500
 
         reply = response.candidates[0].content.parts[0].text
+        
+        AuditService.log_action(
+            action="LOAN_ELIGIBILITY_CHECK",
+            meta_data={"loan_type": json_data.get('loan_type')}
+        )
+        
         return jsonify({
             "status": "success",
             "message": "Loan processed successfully",

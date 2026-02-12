@@ -1,11 +1,83 @@
-// Simple Favorites Manager - Include it directly to ensure it loads
+/* =========================================
+   FAVORITES MANAGER
+   (Restored logic to make the Heart buttons work)
+   ========================================= */
+class FavoritesManager {
+    constructor() {
+        this.storageKey = 'agritech_favorite_blogs';
+        this.favorites = JSON.parse(localStorage.getItem(this.storageKey)) || [];
+        window.favoritesManager = this;
+    }
+
+    isFavorite(blogId) {
+        return this.favorites.some(blog => blog.id === blogId);
+    }
+
+    addToFavorites(blogData) {
+        if (this.isFavorite(blogData.id)) return false;
+
+        blogData.addedAt = new Date().toISOString();
+        this.favorites.push(blogData);
+        this.save();
+
+        this.showNotification(`Added to favorites: ${blogData.title}`, 'success');
+        this.dispatchEvent(blogData.id, true);
+        return true;
+    }
+
+    removeFromFavorites(blogId) {
+        this.favorites = this.favorites.filter(blog => blog.id !== blogId);
+        this.save();
+
+        this.showNotification('Removed from favorites', 'error');
+        this.dispatchEvent(blogId, false);
+        return true;
+    }
+
+    getFavorites() {
+        return this.favorites;
+    }
+
+    save() {
+        localStorage.setItem(this.storageKey, JSON.stringify(this.favorites));
+    }
+
+    dispatchEvent(blogId, isFavorite) {
+        const event = new CustomEvent('favoriteToggle', {
+            detail: { blogId, isFavorite }
+        });
+        document.dispatchEvent(event);
+    }
+
+    showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.textContent = message;
+
+        Object.assign(notification.style, {
+            position: 'fixed',
+            top: '20px',
+            right: '20px',
+            padding: '12px 20px',
+            borderRadius: '8px',
+            color: 'white',
+            fontWeight: '500',
+            zIndex: '10000',
+            background: type === 'success' ? '#2c5f2d' : '#e74c3c',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
+        });
+
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 3000);
+    }
+}
+
 if (!window.favoritesManager) {
     class FavoritesManager {
         constructor() {
             this.storageKey = 'agritech_favorite_blogs';
             this.favorites = JSON.parse(localStorage.getItem(this.storageKey)) || [];
             window.favoritesManager = this;
-            console.log('✅ FavoritesManager initialized');
+            // console.log('✅ FavoritesManager initialized');
         }
 
         isFavorite(blogId) {
@@ -209,7 +281,7 @@ const defaultBlogPosts = [
     },
 
     {
-        id: 5,
+        id: "5",
         title: "Agri-Market Trends: Wheat Prices Soar",
         category: "market-trends", // Matches the button data-category="market-trends"
         author: "Market Watch Team",
@@ -218,14 +290,38 @@ const defaultBlogPosts = [
         content: "The global wheat market is experiencing a significant upturn this quarter due to changing climate patterns in major export zones. Farmers in India are seeing a 15% increase in MSP..."
     },
     {
-        id: 6,
+        id: "6",
         title: "Starting an Organic Fertilizer Business",
         category: "business", // Matches the button data-category="business"
         author: "Amit Patel",
         date: "March 20, 2025",
         image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?auto=format&fit=crop&w=800&q=80",
         content: "Turning farm waste into gold! Vermicomposting is one of the most profitable low-investment agri-businesses today. Here is a step-by-step guide to setting up your own unit..."
-    }
+    },
+    {
+    id: "7",
+    title: "Smart Sensors and IoT in Precision Agriculture",
+    category: "technology",
+    description: "How IoT-enabled smart sensors help farmers monitor soil, crops, and weather conditions in real time for data-driven farming decisions.",
+    author: "AgriTech Research Team",
+    date: "March 25, 2025",
+    image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&fit=crop",
+    content: `
+        <p>Precision agriculture is transforming modern farming by integrating smart sensors and Internet of Things (IoT) technologies into everyday agricultural practices.</p>
+
+        <h4>Real-Time Soil Monitoring</h4>
+        <p>IoT-enabled soil sensors continuously track moisture levels, nutrient content, and temperature. This helps farmers optimize irrigation and fertilizer usage, reducing waste and improving crop health.</p>
+
+        <h4>Crop Health & Weather Insights</h4>
+        <p>Advanced sensors and weather stations provide real-time data on humidity, rainfall, and disease risk. Farmers can take timely action to prevent crop loss and increase productivity.</p>
+
+        <h4>Data-Driven Decision Making</h4>
+        <p>By combining sensor data with analytics dashboards, farmers can make informed decisions, improve yield quality, and adopt sustainable farming practices.</p>
+
+        <p>Smart sensors and IoT are key pillars of the future of precision agriculture.</p>
+    `
+},
+
 ];
 
 // Initialize blogPosts with defaults + user posts
@@ -240,13 +336,21 @@ let currentCategory = 'all';
 let searchQuery = '';
 let currentModalPostId = null;
 
-// Initialize the blog
+// Wait for DOM and FavoritesManager to be ready
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('📄 Blog initialized');
-    displayPosts();
-    setupEventListeners();
-    updateFavoriteCounter();
+    // Slight delay to ensure FavoritesManager is attached
+    setTimeout(() => {
+        if (!window.favoritesManager) {
+            window.favoritesManager = new FavoritesManager();
+        }
+
+        displayPosts();
+        setupEventListeners();
+        updateFavoriteCounter();
+    }, 50);
 });
+
+
 
 // Setup event listeners
 function setupEventListeners() {
@@ -293,7 +397,8 @@ function setupEventListeners() {
             e.stopPropagation();
             const button = e.target.closest('.favorite-btn');
             const blogId = button.getAttribute('data-blog-id');
-            console.log('❤️ Favorite button clicked:', blogId);
+
+            // console.log('🎯 Favorite button clicked:', blogId);
             toggleFavorite(blogId);
         }
     });
@@ -343,8 +448,10 @@ function updateFavoriteCounter() {
 // Filter posts
 function filterPosts() {
     filteredPosts = blogPosts.filter(post => {
-        const matchesSearch = post.title.toLowerCase().includes(searchQuery) ||
-            post.description.toLowerCase().includes(searchQuery);
+        const matchesSearch =
+    post.title.toLowerCase().includes(searchQuery) ||
+    (post.description && post.description.toLowerCase().includes(searchQuery)) ||
+    (post.category && post.category.toLowerCase().includes(searchQuery));
         const matchesCategory = currentCategory === 'all' || post.category === currentCategory;
         return matchesSearch && matchesCategory;
     });
@@ -376,13 +483,22 @@ function displayPosts() {
         postElement.className = 'blog-card';
         postElement.innerHTML = `
             <img src="${post.image}" alt="${post.title}">
-            <button class="${favoriteClass}" data-blog-id="${post.id}">
-                <i class="${favoriteIcon}"></i>
+            <button
+                class="${favoriteClass}"
+                data-blog-id="${post.id}"
+                aria-label="${isFavorite ? 'Remove blog from favorites' : 'Add blog to favorites'}"
+                aria-pressed="${isFavorite}"
+                >
+                    <i class="${favoriteIcon}" aria-hidden="true"></i>
+                </button>
             </button>
             <div class="card-content">
                 <span class="card-category">${post.category.replace('-', ' ')}</span>
                 <h3 class="card-title">${post.title}</h3>
-                <p class="card-description">${post.description}</p>
+
+                <p class="card-description">${post.description || ''}</p>
+    
+                <div class="card-footer">
                 <div class="card-meta">
                     <span class="card-author">By ${post.author}</span>
                     <span class="card-date">${post.date}</span>
@@ -393,13 +509,17 @@ function displayPosts() {
         blogGrid.appendChild(postElement);
     });
 
-    document.getElementById('loadMoreBtn').style.display =
-        endIndex >= filteredPosts.length ? 'none' : 'inline-block';
+    
+
+    if (loadMoreBtn) {
+        loadMoreBtn.style.display = 
+            (currentPage + 1) * postsPerPage >= filteredPosts.length ? 'none' : 'inline-block';
+    }
 }
 
 // Toggle favorite
 function toggleFavorite(blogId) {
-    console.log('🔄 Toggling favorite for:', blogId);
+    // console.log('🔄 Toggling favorite for:', blogId);
 
     if (!window.favoritesManager) {
         alert('❌ Favorites feature not loaded');
@@ -408,7 +528,7 @@ function toggleFavorite(blogId) {
 
     const post = blogPosts.find(p => p.id === blogId);
     if (!post) {
-        console.error('❌ Post not found:', blogId);
+        // console.error('❌ Post not found:', blogId);
         return;
     }
 
@@ -442,6 +562,13 @@ function updateFavoriteButtons(blogId) {
         const icon = button.querySelector('i');
         button.classList.toggle('active', isFavorite);
         icon.className = isFavorite ? 'fas fa-heart' : 'far fa-heart';
+
+        button.setAttribute(
+        'aria-label',
+        isFavorite ? 'Remove blog from favorites' : 'Add blog to favorites'
+        );
+        button.setAttribute('aria-pressed', isFavorite);
+
     });
 
     if (currentModalPostId === blogId) {
@@ -488,6 +615,13 @@ function updateModalFavoriteButton() {
 
     button.classList.toggle('active', isFavorite);
     icon.className = isFavorite ? 'fas fa-heart' : 'far fa-heart';
+
+    button.setAttribute(
+    'aria-label',
+    isFavorite ? 'Remove blog from favorites' : 'Add blog to favorites'
+    );
+    button.setAttribute('aria-pressed', isFavorite);
+
 }
 
 // Toggle favorite from modal
@@ -516,7 +650,7 @@ document.getElementById('themeToggle').addEventListener('click', function () {
 
 // Listen for favorite changes
 document.addEventListener('favoriteToggle', function (event) {
-    console.log('📢 Favorite event:', event.detail);
+    // console.log('📢 Favorite event:', event.detail);
     updateFavoriteButtons(event.detail.blogId);
     updateFavoriteCounter();
 });
@@ -527,39 +661,42 @@ function handleCreatePost(e) {
 
     const title = document.getElementById('postTitle').value;
     const category = document.getElementById('postCategory').value;
-    const description = document.getElementById('postDescription').value;
+    const description = document.getElementById('postContent').value.slice(0, 120) + '...';
     const image = document.getElementById('postImage').value;
+    const tags = document.getElementById('postTags').value
+        .split(',')
+        .map(tag => tag.trim())
+        .filter(Boolean);
+    const author = document.getElementById('postAuthor').value || 'AgriTech Contributor';
     const content = document.getElementById('postContent').value;
-    const author = document.getElementById('postAuthor').value;
 
     const newPost = {
         id: 'user-post-' + Date.now(),
-        title: title,
-        category: category,
-        description: description,
-        image: image,
-        content: content, // Simplified content for now
-        author: author,
-        date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        title,
+        category,
+        description,
+        image,
+        tags,
+        author,
+        date: new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        }),
+        content,
         isUserPost: true
     };
 
-    // Save to localStorage
-    let userPosts = JSON.parse(localStorage.getItem('agritech_user_posts')) || [];
-    userPosts.unshift(newPost); // Add to beginning
+    const userPosts = JSON.parse(localStorage.getItem('agritech_user_posts')) || [];
+    userPosts.unshift(newPost);
     localStorage.setItem('agritech_user_posts', JSON.stringify(userPosts));
 
-    // Update in-memory posts
     blogPosts.unshift(newPost);
-
-    // Re-render
     filterPosts();
 
-    // Close modal and reset form
     document.getElementById('createPostModal').style.display = 'none';
     document.body.style.overflow = 'auto';
     document.getElementById('createPostForm').reset();
 
-    // Show success message
     alert('✅ Blog post published successfully!');
 }

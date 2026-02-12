@@ -1,155 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>Govt Schemes & Subsidy Tracker</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <meta charset="UTF-8">
+  <title>Govt Schemes & Subsidy Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-<style>
-:root{
-  --primary:#2e7d32;
-  --secondary:#1b5e20;
-  --bg:#f1f5f3;
-  --card:#ffffff;
-  --card: rgba(255, 255, 255, 0.9);
-  --text:#333333;
-  --label:#1b5e20;
-  --input-bg:#ffffff;
-  --input-border:#cccccc;
-  --danger:#d32f2f;
-  --success:#2e7d32;
-  --shadow:0 18px 45px rgba(0,0,0,0.12);
-}
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --bg: #f1f5f3;
+      --card: rgba(255, 255, 255, 0.9);
+      --text: #333333;
+      --label: #1b5e20;
+      --input-bg: #ffffff;
+      --input-border: #cccccc;
+      --danger: #d32f2f;
+      --success: #2e7d32;
+      --shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+    }
 
-/* DARK THEME VARIABLES */
-[data-theme="dark"] {
-  --bg:#0f172a;
-  --card:#1e293b;
-  --text:#f1f5f3;
-  --label:#4caf50;
-  --input-bg:#0f172a;
-  --input-border:#334155;
-  --shadow:0 18px 45px rgba(0,0,0,0.4);
-}
+    /* DARK THEME VARIABLES */
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f1f5f3;
+      --label: #4caf50;
+      --input-bg: #0f172a;
+      --input-border: #334155;
+      --shadow: 0 18px 45px rgba(0, 0, 0, 0.4);
+    }
 
-*{box-sizing:border-box;margin:0;padding:0}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-body{
-  font-family:"Segoe UI",sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  transition: background 0.3s ease, color 0.3s ease;
-}
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .serif {
+      font-family: 'Libertinus Serif', serif;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      padding: 24px 30px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    header h1 {
+      font-size: 26px;
+      font-weight: 800
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    /* THEME TOGGLE STYLE */
+    .theme-toggle {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      flex: 1;
+      /* pushes right items safely */
+    }
+
+    header a {
+      background: #fff;
+      color: var(--primary);
+      padding: 10px 22px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: all 0.3s ease;
+    }
+
+    header a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
 
 
-/* FORM */
-.hero{display:flex;justify-content:center;padding:40px 20px}
-.form-card{
-  background:var(--card);
-  max-width:900px;
-  width:100%;
-  padding:55px 65px;
-  border-radius:28px;
-  box-shadow:var(--shadow);
-  transition: background 0.3s ease;
-}
-.form-card h2{
-  text-align:center;
-  font-size:34px;
-  margin-bottom:40px;
-  color:var(--primary);
-}
+    /* FORM */
+    .hero {
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px
+    }
 
-[data-theme="dark"] .form-card h2 {
-    color: var(--label);
-}
+    .form-card {
+      background: var(--card);
+      max-width: 900px;
+      width: 100%;
+      padding: 55px 65px;
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      transition: background 0.3s ease;
+    }
 
-label {
-  display: block;
-  margin-top: 1.6rem;
-  font-weight: 700;
-  font-size: 1.05rem;
-  color: var(--primary);
-}
+    .form-card h2 {
+      text-align: center;
+      font-size: 34px;
+      margin-bottom: 40px;
+      color: var(--primary);
+    }
 
-select,
-input {
-  width: 100%;
-  margin-top: 0.6rem;
-  padding: 1rem 1.2rem;
-  font-size: 1rem;
-  border-radius: 16px;
-  border: 1px solid var(--input-border);
-  background: var(--input-bg);
-  color: var(--text);
-  outline: none;
-  transition: border 0.25s ease, box-shadow 0.25s ease;
-}
+    [data-theme="dark"] .form-card h2 {
+      color: var(--label);
+    }
 
-select:focus,
-input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
-}
+    label {
+      display: block;
+      margin-top: 1.6rem;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--primary);
+    }
 
-/* ===============================
+    select,
+    input {
+      width: 100%;
+      margin-top: 0.6rem;
+      padding: 1rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 16px;
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text);
+      outline: none;
+      transition: border 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+    }
+
+    /* ===============================
    SUBMIT BUTTON
 ================================ */
-.form-card button {
-  width: 100%;
-  margin-top: 2.5rem;
-  padding: 1.2rem;
-  font-size: 1.15rem;
-  font-weight: 900;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  color: #fff;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
+    .form-card button {
+      width: 100%;
+      margin-top: 2.5rem;
+      padding: 1.2rem;
+      font-size: 1.15rem;
+      font-weight: 900;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
 
-.form-card button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
-}
+    .form-card button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+    }
 
-/* ===============================
+    /* ===============================
    SCHEME LIST
 ================================ */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 3rem 1.5rem;
-}
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+    }
 
-.scheme {
-  background: var(--card);
-  border-left: 8px solid var(--primary);
-  padding: 2rem;
-  border-radius: 22px;
-  box-shadow: var(--shadow);
-  margin-bottom: 2rem;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
+    .scheme {
+      background: var(--card);
+      border-left: 8px solid var(--primary);
+      padding: 2rem;
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
 
-.scheme:hover {
-  transform: translateY(-4px);
-}
+    .scheme:hover {
+      transform: translateY(-4px);
+    }
 
-.scheme h3 {
-  font-size: 1.6rem;
-  margin-bottom: 0.4rem;
-  color: var(--primary);
-}
+    .scheme h3 {
+      font-size: 1.6rem;
+      margin-bottom: 0.4rem;
+      color: var(--primary);
+    }
 
-.scheme p {
-  font-size: 1rem;
-  color: var(--muted);
-}
+    .scheme p {
+      font-size: 1rem;
+      color: var(--muted);
+    }
 
-/* ===============================
+    /* ===============================
    RESPONSIVE
 ================================ */
 @media (max-width: 768px) {
@@ -688,120 +772,124 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     }
-    includeHTML();
-</script>
-<script>
-// Include navbar
-function includeHTML(callback) {
-    var z, i, elmnt, file, xhttp;
-    z = document.getElementsByTagName("*");
-    for (i = 0; i < z.length; i++) {
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+  </script>
+
+
+  <script>
+    // Include navbar
+    function includeHTML(callback) {
+      var z, i, elmnt, file, xhttp;
+      z = document.getElementsByTagName("*");
+      for (i = 0; i < z.length; i++) {
         elmnt = z[i];
         file = elmnt.getAttribute("w3-include-html");
         if (file) {
-            xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4) {
-                    if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-                    if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-                    elmnt.removeAttribute("w3-include-html");
+          xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4) {
+              if (this.status == 200) { elmnt.innerHTML = this.responseText; }
+              if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
+              elmnt.removeAttribute("w3-include-html");
 
-                    // Call again recursively
-                    includeHTML(callback);
+              // Call again recursively
+              includeHTML(callback);
 
-                    // After loading navbar, run callback
-                    if (callback) callback();
-                }
+              // After loading navbar, run callback
+              if (callback) callback();
             }
-            xhttp.open("GET", file, true);
-            xhttp.send();
-            return;
+          }
+          xhttp.open("GET", file, true);
+          xhttp.send();
+          return;
         }
+      }
     }
-}
 
 
-// Initialize mobile hamburger
-function initHamburgerMenu() {
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const overlay = document.getElementById('mobileMenuOverlay');
+    // Initialize mobile hamburger
+    function initHamburgerMenu() {
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const overlay = document.getElementById('mobileMenuOverlay');
 
-    if (!hamburgerBtn || !mobileMenu || !overlay) return;
+      if (!hamburgerBtn || !mobileMenu || !overlay) return;
 
-    hamburgerBtn.addEventListener('click', () => {
+      hamburgerBtn.addEventListener('click', () => {
         mobileMenu.classList.add('active');
         overlay.classList.add('active');
         document.body.style.overflow = 'hidden';
-    });
+      });
 
-    overlay.addEventListener('click', () => {
+      overlay.addEventListener('click', () => {
         mobileMenu.classList.remove('active');
         overlay.classList.remove('active');
         document.body.style.overflow = '';
-    });
-}
+      });
+    }
 
-// Run after DOM loads
-document.addEventListener('DOMContentLoaded', () => {
-    // Apply saved theme
-    const savedTheme = localStorage.getItem('agritech-theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
 
-    // Include navbar and initialize functions
-    includeHTML(() => {
-      
+    // Run after DOM loads
+    document.addEventListener('DOMContentLoaded', () => {
+
+
+      // Include navbar and initialize functions
+      includeHTML(() => {
         initHamburgerMenu();
+        initThemeToggle(); // 🔥 THIS WAS MISSING
+      });
+
     });
-});
- // --- Cursor Trailing Effect ---
-const container = document.getElementById('cursorTrail');
-const circleCount = 12;
-const circles = [];
+    // --- Cursor Trailing Effect ---
+    const container = document.getElementById('cursorTrail');
+    const circleCount = 12;
+    const circles = [];
 
-let mouseX = 0;
-let mouseY = 0;
+    let mouseX = 0;
+    let mouseY = 0;
 
-// Create circles
-for (let i = 0; i < circleCount; i++) {
-    const circle = document.createElement('div');
-    circle.classList.add('cursor-circle');
-    container.appendChild(circle);
-    circles.push({ el: circle, x: 0, y: 0 });
-}
+    // Create circles
+    for (let i = 0; i < circleCount; i++) {
+      const circle = document.createElement('div');
+      circle.classList.add('cursor-circle');
+      container.appendChild(circle);
+      circles.push({ el: circle, x: 0, y: 0 });
+    }
 
-// Mouse move
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
+    // Mouse move
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
 
-// Click effects
-document.addEventListener('mousedown', () => {
-    circles.forEach(c => c.el.classList.add('cursor-clicking'));
-});
-document.addEventListener('mouseup', () => {
-    circles.forEach(c => c.el.classList.remove('cursor-clicking'));
-});
+    // Click effects
+    document.addEventListener('mousedown', () => {
+      circles.forEach(c => c.el.classList.add('cursor-clicking'));
+    });
+    document.addEventListener('mouseup', () => {
+      circles.forEach(c => c.el.classList.remove('cursor-clicking'));
+    });
 
-// Hover effects on interactive elements
-document.addEventListener('mouseover', (e) => {
-    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+    // Hover effects on interactive elements
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
         circles.forEach(c => c.el.classList.add('cursor-hovering'));
-    }
-});
-document.addEventListener('mouseout', (e) => {
-    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+      }
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
         circles.forEach(c => c.el.classList.remove('cursor-hovering'));
-    }
-});
+      }
+    });
 
-// Animate trailing effect
-function animateCursor() {
-    let x = mouseX;
-    let y = mouseY;
+    // Animate trailing effect
+    function animateCursor() {
+      let x = mouseX;
+      let y = mouseY;
 
-    circles.forEach((circle) => {
+      circles.forEach((circle) => {
         circle.x += (x - circle.x) * 0.25;
         circle.y += (y - circle.y) * 0.25;
 
@@ -810,11 +898,47 @@ function animateCursor() {
 
         x = circle.x;
         y = circle.y;
-    });
+      });
 
-    requestAnimationFrame(animateCursor);
-}
-animateCursor();
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    function initThemeToggle() {
+      const toggleBtn = document.getElementById('themeToggle');
+      const label = toggleBtn?.querySelector('.theme-label');
+      const icon = toggleBtn?.querySelector('i');
+
+      if (!toggleBtn) return;
+
+      // Sync UI with current theme
+      function updateUI(theme) {
+        if (theme === 'dark') {
+          label.textContent = 'Dark';
+          icon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+          label.textContent = 'Light';
+          icon.classList.replace('fa-sun', 'fa-moon');
+        }
+      }
+
+      // Initial state
+      const savedTheme = localStorage.getItem('agritech-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      updateUI(savedTheme);
+
+      // Toggle on click
+      toggleBtn.addEventListener('click', () => {
+        const html = document.documentElement;
+        const current = html.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('agritech-theme', next);
+        updateUI(next);
+      });
+    }
+
 
 </script>
 <script>
@@ -874,4 +998,5 @@ window.addEventListener("load", () => {
 
 
 </body>
+
 </html>
