@@ -3,6 +3,7 @@
 
 <head>
   <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="stylesheet" href="index.css">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="description"
@@ -1374,6 +1375,21 @@
 
 <body>
 
+  <!-- Offline & Cached Notices -->
+  <div id="network-status" class="hidden">
+    ⚠️ Offline or poor connection
+  </div>
+
+  <div id="cached-notice" class="hidden">
+    ⚠️ Showing cached data — may be outdated
+  </div>
+
+  <!-- rest of your page starts here -->
+
+
+
+
+
   <canvas id="bg-canvas"></canvas>
 
  <nav class="navbar" data-theme="light">
@@ -1452,6 +1468,7 @@
 
   </div>
 </nav>
+
 
 <script>
   // Language Selector Function
@@ -1666,6 +1683,28 @@
       </div>
     </div>
   </section>
+   </div>
+      <!-- Farmer Success Stories Section -->
+<section id="success-stories" class="success-stories-container">
+  <h2 class="section-title">Farmer Success Stories</h2>
+  <div class="story-cards">
+
+    <!-- EXAMPLE CARD -->
+<div class="story-card">
+  <div class="fake-img">Farmer Photo</div>
+  <h3>Farmer Name</h3>
+  <p>Crop: Wheat</p>
+  <p>Yield Increased: 25%+</p>
+  <blockquote>"Using AgriTech insights improved my crop and income!"</blockquote>
+</div>
+
+
+
+
+    <!-- You can duplicate this card for more stories -->
+
+  </div>
+</section>
 
   <footer class="site-footer tech-dark-theme final-match">
   <div class="footer-top-accent"></div>
@@ -1699,7 +1738,8 @@
           <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
           <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
         </ul>
-      </div>
+
+
 
       <div class="footer-section footer-contact">
         <h4>Contact</h4>
@@ -1814,6 +1854,8 @@
 
     animate();
   </script>
+ 
+
 
 
 
@@ -1894,6 +1936,8 @@
         }
       });
     }
+
+
 
     // ===== MOBILE MENU (FINAL FIX) =====
 const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -2136,10 +2180,26 @@ if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
   <script>
   document.addEventListener("DOMContentLoaded", () => {
     // Restore theme
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      document.documentElement.setAttribute("data-theme", savedTheme);
-    }
+   const applyTheme = (theme) => {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+
+  if (themeText) themeText.textContent = theme === 'dark' ? 'Dark' : 'Light';
+  if (moonIcon) moonIcon.style.display = theme === 'dark' ? 'none' : 'inline-block';
+  if (sunIcon) sunIcon.style.display = theme === 'dark' ? 'inline-block' : 'none';
+};
+
+// Initialize
+const savedTheme = localStorage.getItem('theme') || 'dark';
+applyTheme(savedTheme);
+
+// Toggle on Click
+if (themeText) {
+  themeText.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+    applyTheme(nextTheme);
+  });}
 
     // Restore scroll position
     const scrollY = localStorage.getItem("homeScrollY");

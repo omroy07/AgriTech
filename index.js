@@ -318,3 +318,42 @@ localStorage.setItem(
 );
 
 renderRoadmap(tasks);
+// ===== Farmer Visual Dashboard =====
+
+// Yield Prediction Graph
+const yieldCanvas = document.getElementById("yieldChart");
+
+if (yieldCanvas) {
+  new Chart(yieldCanvas, {
+    type: "line",
+    data: {
+      labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+      datasets: [{
+        label: "Expected Yield",
+        data: [1.8, 2.4, 3.0, 3.6],
+        borderColor: "green",
+        borderWidth: 2,
+        fill: false
+      }]
+    },
+    options: {
+      responsive: true
+    }
+  });
+}
+
+// Crop Health Status
+const healthDiv = document.getElementById("healthStatus");
+const healthStatus = "good"; // good | warning | bad
+
+if (healthDiv) {
+  healthDiv.className = `health ${healthStatus}`;
+
+  if (healthStatus === "good") {
+    healthDiv.innerText = "Crop Health: Good";
+  } else if (healthStatus === "warning") {
+    healthDiv.innerText = "Crop Health: Attention Needed";
+  } else {
+    healthDiv.innerText = "Crop Health: Disease Risk";
+  }
+}
