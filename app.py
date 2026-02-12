@@ -33,7 +33,6 @@ import backend.sockets.alert_socket # Register centralized alert socket events
 from backend.utils.i18n import t
 
 from routes.irrigation_routes import irrigation_bp
-app.register_blueprint(irrigation_bp)
 
 from server.Routes.rotation_routes import rotation_bp
 
@@ -49,7 +48,6 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 app = Flask(__name__, static_folder='.', static_url_path='')
-app.register_blueprint(rotation_bp) 
 
 # Load Configuration
 env_name = os.getenv('FLASK_ENV', 'default')
@@ -82,6 +80,8 @@ app.register_blueprint(health_bp)
 app.register_blueprint(files_bp)
 app.register_blueprint(spatial_bp)
 app.register_blueprint(ingestion_bp, url_prefix='/api/v1')
+app.register_blueprint(irrigation_bp)
+app.register_blueprint(rotation_bp)
 
 # Register API v1 (including loan, weather, schemes, etc.)
 register_api(app)
@@ -508,7 +508,6 @@ def contact():
     return send_from_directory('.', 'contact.html')
 
 @app.route('/chat')
-@limiter.limit("10 per minute")
 def chat():
     return send_from_directory('.', 'chat.html')
 

@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from backend.services.inventory_service import InventoryService
+from backend.services.audit_service import AuditService
 from backend.models.warehouse import StockItem, StockMovement, WarehouseLocation
 from auth_utils import token_required
 
@@ -19,7 +20,7 @@ def list_stock(current_user):
         'data': [i.to_dict() for i in items]
     }), 200
 
-@warehouse_bp.route('/stock/in', methods='POST'])
+@warehouse_bp.route('/stock/in', methods=['POST'])
 @token_required
 def stock_in(current_user):
     """Records incoming stock."""
@@ -33,6 +34,14 @@ def stock_in(current_user):
     
     if error:
         return jsonify({'status': 'error', 'message': error}), 500
+    
+    AuditService.log_action(
+        action="STOCK_IN",
+        user_id=current_user.id,
+        resource_type="STOCK_ITEM",
+        resource_id=str(data['stock_item_id']),
+        meta_data={"quantity": data['quantity'], "reference": data.get('reference')}
+    )
     
     return jsonify({'status': 'success', 'message': 'Stock received'}), 201
 
@@ -51,6 +60,14 @@ def stock_out(current_user):
     if error:
         return jsonify({'status': 'error', 'message': error}), 400
     
+    AuditService.log_action(
+        action="STOCK_OUT",
+        user_id=current_user.id,
+        resource_type="STOCK_ITEM",
+        resource_id=str(data['stock_item_id']),
+        meta_data={"quantity": data['quantity'], "reference": data.get('reference')}
+    )
+    
     return jsonify({'status': 'success', 'message': 'Stock issued'}), 201
 
 @warehouse_bp.route('/reconcile', methods=['POST'])
@@ -66,6 +83,15 @@ def reconcile(current_user):
     
     if error:
         return jsonify({'status': 'error', 'message': error}), 500
+    
+    AuditService.log_action(
+        action="STOCK_RECONCILIATION",
+        user_id=current_user.id,
+        resource_type="WAREHOUSE",
+        resource_id=str(data['warehouse_id']),
+        risk_level='MEDIUM',
+        meta_data={"discrepancies": log.discrepancies_found, "shrinkage": float(log.shrinkage_value)}
+    )
     
     return jsonify({
         'status': 'success',
