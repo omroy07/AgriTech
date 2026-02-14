@@ -490,3 +490,15 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("touchstart", function () {}, {
   passive: true,
 });
+  document.getElementById("backToHomeBtn").addEventListener("click", () => {
+    // Preserve theme
+    const currentTheme =
+      document.documentElement.getAttribute("data-theme") || "light";
+    localStorage.setItem("theme", currentTheme);
+
+    // Preserve scroll position of home page
+    localStorage.setItem("homeScrollY", window.scrollY);
+
+    // Navigate back
+    window.location.href = "index.html";
+  });

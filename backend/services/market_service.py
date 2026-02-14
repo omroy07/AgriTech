@@ -113,13 +113,17 @@ class MarketIntelligenceService:
             for watcher in watchers:
                 # Trigger alert if current price is higher than target (Profit opportunity)
                 if price_data['modal_price'] >= watcher.target_price:
-                    msg = f"Alert! {watcher.crop_name} price in {price_data['district']} reached ₹{price_data['modal_price']}, crossing your target of ₹{watcher.target_price}."
+                    msg = f"Profit Opportunity! {watcher.crop_name} price in {price_data['district']} reached ₹{price_data['modal_price']}, crossing your target of ₹{watcher.target_price}."
                     
-                    NotificationService.create_notification(
+                    from backend.services.alert_registry import AlertRegistry
+                    AlertRegistry.register_alert(
                         user_id=watcher.user_id,
                         title="Market Price Alert",
                         message=msg,
-                        notification_type="price_alert"
+                        category="MARKET",
+                        priority="HIGH",
+                        action_url=f"/market?crop={watcher.crop_name}",
+                        group_key=f"price_{watcher.crop_name}_{price_data['district']}"
                     )
                     alerts_triggered.append({
                         "user_id": watcher.user_id,

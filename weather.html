@@ -4,110 +4,151 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="weather.css" />
-    
+
     <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/logo.png" />
     <title>Weather Check System</title>
     <script src="voice-input.js" defer></script>
+
+    <!-- Visually hidden utility class (accessibility only) -->
+    <style>
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
   </head>
+
   <body>
     <!-- Header from main branch -->
-    <header>
+    <header role="banner">
       <div class="header-content">
         <div class="logo">
-          <i class="fas fa-seedling"></i>
+          <i class="fas fa-seedling" aria-hidden="true"></i>
           <h1>AgriTech</h1>
         </div>
         <div style="display: flex; gap: 1rem; align-items: center;">
           <a href="index.html" class="nav-back">
-            <i class="fas fa-arrow-left"></i> Back to Home
+            <i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Home
           </a>
         </div>
       </div>
     </header>
-    
+
     <!-- Weather box with autocomplete -->
-    <div class="box weather-box">
-      <div class="left general-data">
-        <div class="main">
-          <!-- Your autocomplete feature -->
-          <div class="search-container">
-            <input
-              type="text"
-              id="cityInput"
-              placeholder="Enter a city (by default, New Delhi)"
-              autocomplete="off"
-            />
-            <div id="suggestions" class="suggestions-dropdown"></div>
+    <main role="main">
+      <div class="box weather-box">
+        <div class="left general-data">
+          <div class="main">
+            <!-- Your autocomplete feature -->
+            <div class="search-container">
+              <label for="cityInput" class="sr-only">City search</label>
+              <input
+                type="text"
+                id="cityInput"
+                placeholder="Enter a city (by default, New Delhi)"
+                autocomplete="off"
+              />
+              <div
+                id="suggestions"
+                class="suggestions-dropdown"
+                role="listbox"
+                aria-live="polite"
+              ></div>
+            </div>
+            <br />
+            <button id="search">Search</button>
           </div>
-          <br />
-          <button id="search">Search</button>
+
+          <div
+            class="general"
+            role="region"
+            aria-labelledby="city"
+            aria-live="polite"
+          >
+            <h3 id="city">City</h3>
+            <h4 id="region">Region</h4>
+            <h5 id="country">Country</h5>
+            <br /><br />
+            <h6 id="description">mostly ---</h6>
+            <p id="temperature">40</p>
+          </div>
         </div>
-        
-        <div class="general">
-          <h3 id="city">City</h3>
-          <h4 id="region">Region</h4>
-          <h5 id="country">Country</h5>
-          <br><br>
-          <h6 id="description">mostly ---</h6>
-          <p id="temperature">40</p>
+
+        <div class="right predictions-data">
+          <div class="hourly" role="region" aria-label="Hourly weather forecast">
+            <div>
+              <p>Hourly forecast</p>
+            </div>
+            <div class="hour" id="hour" aria-live="polite">
+              <!-- cards are entered dynamically -->
+            </div>
+          </div>
+
+          <div class="daywise" role="region" aria-label="10 day weather forecast">
+            <div>
+              <p>10 days forecast</p>
+            </div>
+            <div class="day" id="day" aria-live="polite">
+              <!-- cards are entered dynamically -->
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="right predictions-data">
-        <div class="hourly">
-          <div>
-            <p>Hourly forecast</p>
-          </div>
-          <div class="hour" id="hour">
-            <!-- cards are entered dynamically -->
-          </div>
-        </div>
-
-        <div class="daywise">
-          <div>
-            <p>10 days forecast</p>
-          </div>
-          <div class="day" id="day">
-            <!-- cards are entered dynamically -->
-          </div>
-        </div>
-      </div>
-    </div>
+    </main>
 
     <!-- Footer -->
-    <footer class="site-footer">
+    <footer class="site-footer" role="contentinfo">
       <div class="footer-inner">
         <div class="footer-brand">
           <img src="images/logo.png" alt="AgriTech logo" class="footer-logo" />
           <h3>AgriTech</h3>
           <p>Empowering India's Farming Future</p>
           <div class="social-media">
-            <a href="https://instagram.com" target="_blank" aria-label="Follow us on Instagram">
-              <i class="fab fa-instagram"></i>
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              aria-label="Follow us on Instagram"
+            >
+              <i class="fab fa-instagram" aria-hidden="true"></i>
             </a>
-            <a href="https://github.com/omroy07" target="_blank" aria-label="View our GitHub repositories">
-              <i class="fab fa-github"></i>
+            <a
+              href="https://github.com/omroy07"
+              target="_blank"
+              aria-label="View our GitHub repositories"
+            >
+              <i class="fab fa-github" aria-hidden="true"></i>
             </a>
-            <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank" aria-label="Connect with us on LinkedIn">
-              <i class="fab fa-linkedin"></i>
+            <a
+              href="https://www.linkedin.com/in/om-roy-3b809628a/"
+              target="_blank"
+              aria-label="Connect with us on LinkedIn"
+            >
+              <i class="fab fa-linkedin" aria-hidden="true"></i>
             </a>
           </div>
         </div>
-        
+
         <div class="footer-links">
           <h4>Quick Links</h4>
           <ul>
@@ -117,36 +158,59 @@
             <li><a href="chat.html">AI Assistant</a></li>
           </ul>
         </div>
-        
+
         <div class="footer-links">
           <h4>Tools</h4>
           <ul>
             <li><a href="/crop">Crop Recommendation</a></li>
-            <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
-            <li><a href="Disease prediction/template/index.html">Disease Detector</a></li>
-            <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
+            <li>
+              <a href="Crop Yield Prediction/crop_yield_app/templates/index.html"
+                >Yield Prediction</a
+              >
+            </li>
+            <li>
+              <a href="Disease prediction/template/index.html"
+                >Disease Detector</a
+              >
+            </li>
+            <li>
+              <a href="Crop_Planning/templates/cropplan.html">Crop Planner</a>
+            </li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div>
     </footer>
-    
+
     <!-- Floating Chatbot Button -->
-    <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
-      <i class="fas fa-robot"></i>
+    <a
+      href="chat.html"
+      id="chatbotBtn"
+      title="Chat with us"
+      aria-label="AI Assistant"
+    >
+      <i class="fas fa-robot" aria-hidden="true"></i>
     </a>
-    
+
+    <!-- Cursor Trail -->
+    <div
+      class="circle-container"
+      id="cursorTrail"
+      aria-hidden="true"
+    ></div>
+
     <script src="weather.js"></script>
-    
+
     <!-- Voice Button Fix Script -->
     <script>
       // Fix voice button positioning after page loads
-      window.addEventListener('load', function() {
-        setTimeout(function() {
+      window.addEventListener('load', function () {
+        setTimeout(function () {
           const voiceBtn = document.querySelector('.voice-btn');
           const cityInput = document.getElementById('cityInput');
-          const searchContainer = document.querySelector('.search-container');
-          
+          const searchContainer =
+            document.querySelector('.search-container');
+
           if (voiceBtn && cityInput) {
             // Force button inside the search container
             voiceBtn.style.cssText = `
@@ -170,14 +234,77 @@
               color: white !important;
               font-size: 13px !important;
             `;
-            
+
             // Force input padding
             cityInput.style.paddingRight = '45px';
-            
+
             console.log('✓ Voice button positioned correctly');
           }
         }, 300);
       });
+
+    
+      // --- Cursor Trailing Effect ---
+      const container = document.getElementById('cursorTrail');
+      const circleCount = 12;
+      const circles = [];
+
+      let mouseX = 0;
+      let mouseY = 0;
+
+      // Create circles
+      for (let i = 0; i < circleCount; i++) {
+        const circle = document.createElement('div');
+        circle.classList.add('cursor-circle');
+        container.appendChild(circle);
+        circles.push({ el: circle, x: 0, y: 0 });
+      }
+
+      // Mouse move
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      // Click effects
+      document.addEventListener('mousedown', () => {
+        circles.forEach((c) => c.el.classList.add('cursor-clicking'));
+      });
+      document.addEventListener('mouseup', () => {
+        circles.forEach((c) => c.el.classList.remove('cursor-clicking'));
+      });
+
+      // Hover effects on interactive elements
+      document.addEventListener('mouseover', (e) => {
+        if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card )) {
+          circles.forEach((c) => c.el.classList.add('cursor-hovering'));
+        }
+      });
+      document.addEventListener('mouseout', (e) => {
+        if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+          circles.forEach((c) => c.el.classList.remove('cursor-hovering'));
+        }
+      });
+
+      // Animate trailing effect
+      function animateCursor() {
+        let x = mouseX;
+        let y = mouseY;
+
+        circles.forEach((circle) => {
+          circle.x += (x - circle.x) * 0.25;
+          circle.y += (y - circle.y) * 0.25;
+
+          circle.el.style.left = circle.x + 'px';
+          circle.el.style.top = circle.y + 'px';
+
+          x = circle.x;
+          y = circle.y;
+        });
+
+        requestAnimationFrame(animateCursor);
+      }
+      animateCursor();
     </script>
   </body>
 </html>

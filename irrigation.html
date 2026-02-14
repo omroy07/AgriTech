@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irrigation Dashboard | AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="css/irrigation.css">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <aside class="main-sidebar">
+            <div class="logo-area">
+                <img src="assets/logo.png" alt="Logo" class="mini-logo"> <h2>Agri<span>Tech</span></h2>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="#" class="nav-link active"><i class="fas fa-droplet"></i> Irrigation</a>
+                <a href="disease.html" class="nav-link"><i class="fas fa-microscope"></i> Diseases</a>
+            </nav>
+        </aside>
+
+        <main class="content-body">
+            <header class="status-header">
+                <div class="weather-widget-pro" id="weather-banner">
+                    <div class="weather-main-info">
+                        <i id="weather-icon" class="fas fa-cloud-sun"></i>
+                        <div class="temp-box">
+                            <h1 id="current-temp">22°C</h1>
+                            <p id="weather-status">Partly Cloudy</p>
+                        </div>
+                    </div>
+                    <div class="weather-metrics">
+                        <div class="metric"><span>Rain Chance</span><strong id="rain-chance">30%</strong></div>
+                        <div class="metric"><span>Forecast</span><strong id="next-rain">In 2 days</strong></div>
+                    </div>
+                </div>
+            </header>
+
+            <section class="action-grid">
+                <div class="card form-card">
+                    <h3><i class="fas fa-sliders"></i> Field Configuration</h3>
+                    <form id="irrigation-form">
+                        <div class="input-field">
+                            <label>Crop Selection</label>
+                            <select id="crop-type">
+                                <option value="Rice">Rice (Sali)</option>
+                                <option value="Wheat">Wheat (Rabi)</option>
+                                <option value="Maize">Maize (Kharif)</option>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                            <label>Soil Moisture Index (<span id="moisture-val">24%</span>)</label>
+                            <input type="range" id="moisture" min="0" max="100" value="24" class="styled-slider">
+                        </div>
+                        <button type="submit" class="btn-submit-pro">Generate Analysis</button>
+                    </form>
+                </div>
+
+                <div id="result-section" class="card result-card hidden">
+                    <div class="card-header">
+                        <h3>Weekly Watering Strategy</h3>
+                        <button id="download-pdf" class="btn-outline">
+                            <i class="fas fa-file-pdf"></i> Download
+                        </button>
+                    </div>
+                    <div id="schedule-grid" class="schedule-flex"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="js/irrigation.js"></script>
+</body>
+</html>

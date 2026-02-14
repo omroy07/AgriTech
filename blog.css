@@ -507,13 +507,14 @@ body {
 }
 
 .modal-header {
-    padding: 2rem;
+    padding: 1.2rem 1.5rem; /* reduced height */
     border-bottom: 1px solid var(--border-color);
     background: white;
-    z-index: 10;
     border-radius: 15px 15px 0 0;
-    flex-shrink: 0;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .icons {
@@ -857,6 +858,10 @@ body {
 /* ====================================
    FOOTER STYLES
    ==================================== */
+.site-footer {
+  padding: 32px 0 16px;
+}
+
 .site-footer.final-match {
     background-color: var(--dark-bg);
     color: var(--link-color);
@@ -909,22 +914,52 @@ body {
 }
 
 .footer-inner-content {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1.8fr;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 50px 30px;
+    gap: 40px;
+    padding: 28px 30px 24px;
     border-bottom: 1px solid var(--footer-border-color);
 }
 
 .footer-section {
     padding: 0 15px;
-    margin-bottom: 30px;
+    margin-bottom: 16px;
+}
+
+.footer-section h4 {
+  margin-bottom: 8px;
+}
+
+.footer-section ul {
+  margin: 0;
+  padding: 0;
+}
+
+.footer-section li {
+  margin-bottom: 6px;
+}
+
+/* 2-column links */
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 32px;
+  row-gap: 10px;
+  justify-items: start;
+}
+
+.footer-links h4 {
+  grid-column: 1 / -1;
+  margin: 0 auto 16px auto;
+  text-align: center;
 }
 
 .footer-brand {
     flex: 0 0 40%;
-    min-width: 300px;
+    min-width: 200px;
+    max-width: 350px;
 }
 
 .brand-header {
@@ -951,6 +986,11 @@ body {
     margin-bottom: 20px;
 }
 
+.footer-brand .tagline {
+  margin: 8px 0 12px;
+  line-height: 1.4;
+}
+
 .footer-group-links {
     flex: 0 0 50%;
     display: flex;
@@ -959,7 +999,7 @@ body {
 
 .footer-links {
     flex: 1;
-    margin-right: 40px;
+    margin-right: 0;
 }
 
 .footer-contact {
@@ -970,9 +1010,9 @@ body {
     color: var(--link-hover-color);
     font-size: 16px;
     font-weight: 600;
-    margin-bottom: 25px;
+    margin-bottom: 12px;
     border-bottom: 2px solid var(--primary-green);
-    padding-bottom: 5px;
+    padding-bottom: 4px;
     width: fit-content;
 }
 
@@ -1042,7 +1082,8 @@ body {
     font-size: 13px;
     opacity: 0.8;
     max-width: 1200px;
-    margin: 0 auto;
+    margin-top: 16px;
+    padding-top: 12px;
 }
 
 /* ====================================
@@ -1434,10 +1475,24 @@ body {
     }
 
     .footer-group-links {
-        flex: 0 0 100%;
-        padding-left: 0;
-        justify-content: space-around;
-        margin-top: 20px;
+    flex: 0 0 100%;
+    padding: 0;
+    margin-top: 20px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+
+    justify-content: start;
+    align-items: start;
+    }
+
+    /* Mobile: Quick Links should be single column */
+    @media (max-width: 768px) {
+    .links-grid {
+        grid-template-columns: 1fr;
+        row-gap: 5px;
+    }
     }
 
     .brand-header {
@@ -1514,7 +1569,7 @@ body {
 
     .footer-links,
     .footer-contact {
-        min-width: 100%;
+        min-width: 100px;
         flex: 0 0 100%;
     }
 }
@@ -1601,6 +1656,32 @@ a:focus-visible {
     opacity: 0.9;
 }
 
+.cursor-hovering {
+  transform: translate(-50%, -50%) scale(1.8);
+  background-color: #22c55e; /* Changes to AgriTech green on hover */
+  box-shadow: 0 0 20px #22c55e;
+}
+
+
+button.btn.btn-secondary.active {
+    background-color: #1f2937; /* slate-800 */
+    color: #ffffff;
+    border-color: #1f2937;
+}
+button.btn.btn-primary {
+    background-color: #166534; /* darker green */
+    color: #ffffff;
+}
+button.btn.btn-primary:hover {
+    background-color: #14532d;
+}
+a.mobile-link.mobile-register {
+    color: #ffffff;
+    font-weight: 600;
+}
+[data-theme="light"] a.mobile-link.mobile-register {
+    color: #0f172a;
+}
 /* Fix author names if you have them separately */
 [data-theme="dark"] .card-author,
 [data-theme="dark"] .card-meta {

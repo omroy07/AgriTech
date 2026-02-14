@@ -1,218 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>Govt Schemes & Subsidy Tracker</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <meta charset="UTF-8">
+  <title>Govt Schemes & Subsidy Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-<style>
-:root{
-  --primary:#2e7d32;
-  --secondary:#1b5e20;
-  --bg:#f1f5f3;
-  --card: rgba(255, 255, 255, 0.9);
-  --text:#333333;
-  --label:#1b5e20;
-  --input-bg:#ffffff;
-  --input-border:#cccccc;
-  --danger:#d32f2f;
-  --success:#2e7d32;
-  --shadow:0 18px 45px rgba(0,0,0,0.12);
-}
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --bg: #f1f5f3;
+      --card: rgba(255, 255, 255, 0.9);
+      --text: #333333;
+      --label: #1b5e20;
+      --input-bg: #ffffff;
+      --input-border: #cccccc;
+      --danger: #d32f2f;
+      --success: #2e7d32;
+      --shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+    }
 
-/* DARK THEME VARIABLES */
-[data-theme="dark"] {
-  --bg:#0f172a;
-  --card:#1e293b;
-  --text:#f1f5f3;
-  --label:#4caf50;
-  --input-bg:#0f172a;
-  --input-border:#334155;
-  --shadow:0 18px 45px rgba(0,0,0,0.4);
-}
+    /* DARK THEME VARIABLES */
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f1f5f3;
+      --label: #4caf50;
+      --input-bg: #0f172a;
+      --input-border: #334155;
+      --shadow: 0 18px 45px rgba(0, 0, 0, 0.4);
+    }
 
-*{box-sizing:border-box;margin:0;padding:0}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-body{
-  font-family:"Segoe UI",sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  transition: background 0.3s ease, color 0.3s ease;
-}
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
 
-.serif { font-family: 'Libertinus Serif', serif; }
+    .serif {
+      font-family: 'Libertinus Serif', serif;
+    }
 
-/* HEADER */
-header{
-  background:linear-gradient(135deg,var(--primary),var(--secondary));
-  color:#fff;
-  padding:24px 30px;
-  display:flex;
-  align-items:center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-header h1{font-size:26px;font-weight:800}
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      padding: 24px 30px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
 
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
+    header h1 {
+      font-size: 26px;
+      font-weight: 800
+    }
 
-/* THEME TOGGLE STYLE */
-.theme-toggle {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 40px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 800;
-  transition: all 0.3s ease;
-}
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
 
-.theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
-}
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-header h1{
-  font-size:26px;
-  font-weight:800;
-  flex:1; /* pushes right items safely */
-}
-header a{
-  background:#fff;
-  color:var(--primary);
-  padding:10px 22px;
-  border-radius:40px;
-  text-decoration:none;
-  font-weight:800;
-  transition: all 0.3s ease;
-}
+    /* THEME TOGGLE STYLE */
+    .theme-toggle {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      transition: all 0.3s ease;
+    }
 
-header a:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      flex: 1;
+      /* pushes right items safely */
+    }
+
+    header a {
+      background: #fff;
+      color: var(--primary);
+      padding: 10px 22px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: all 0.3s ease;
+    }
+
+    header a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
 
 
-/* FORM */
-.hero{display:flex;justify-content:center;padding:40px 20px}
-.form-card{
-  background:var(--card);
-  max-width:900px;
-  width:100%;
-  padding:55px 65px;
-  border-radius:28px;
-  box-shadow:var(--shadow);
-  transition: background 0.3s ease;
-}
-.form-card h2{
-  text-align:center;
-  font-size:34px;
-  margin-bottom:40px;
-  color:var(--primary);
-}
+    /* FORM */
+    .hero {
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px
+    }
 
-[data-theme="dark"] .form-card h2 {
-    color: var(--label);
-}
+    .form-card {
+      background: var(--card);
+      max-width: 900px;
+      width: 100%;
+      padding: 55px 65px;
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      transition: background 0.3s ease;
+    }
 
-label {
-  display: block;
-  margin-top: 1.6rem;
-  font-weight: 700;
-  font-size: 1.05rem;
-  color: var(--primary);
-}
+    .form-card h2 {
+      text-align: center;
+      font-size: 34px;
+      margin-bottom: 40px;
+      color: var(--primary);
+    }
 
-select,
-input {
-  width: 100%;
-  margin-top: 0.6rem;
-  padding: 1rem 1.2rem;
-  font-size: 1rem;
-  border-radius: 16px;
-  border: 1px solid var(--input-border);
-  background: var(--input-bg);
-  color: var(--text);
-  outline: none;
-  transition: border 0.25s ease, box-shadow 0.25s ease;
-}
+    [data-theme="dark"] .form-card h2 {
+      color: var(--label);
+    }
 
-select:focus,
-input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
-}
+    label {
+      display: block;
+      margin-top: 1.6rem;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--primary);
+    }
 
-/* ===============================
+    select,
+    input {
+      width: 100%;
+      margin-top: 0.6rem;
+      padding: 1rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 16px;
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text);
+      outline: none;
+      transition: border 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+    }
+
+    /* ===============================
    SUBMIT BUTTON
 ================================ */
-.form-card button {
-  width: 100%;
-  margin-top: 2.5rem;
-  padding: 1.2rem;
-  font-size: 1.15rem;
-  font-weight: 900;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  color: #fff;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
+    .form-card button {
+      width: 100%;
+      margin-top: 2.5rem;
+      padding: 1.2rem;
+      font-size: 1.15rem;
+      font-weight: 900;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
 
-.form-card button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
-}
+    .form-card button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+    }
 
-/* ===============================
+    /* ===============================
    SCHEME LIST
 ================================ */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 3rem 1.5rem;
-}
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+    }
 
-.scheme {
-  background: var(--card);
-  border-left: 8px solid var(--primary);
-  padding: 2rem;
-  border-radius: 22px;
-  box-shadow: var(--shadow);
-  margin-bottom: 2rem;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
+    .scheme {
+      background: var(--card);
+      border-left: 8px solid var(--primary);
+      padding: 2rem;
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
 
-.scheme:hover {
-  transform: translateY(-4px);
-}
+    .scheme:hover {
+      transform: translateY(-4px);
+    }
 
-.scheme h3 {
-  font-size: 1.6rem;
-  margin-bottom: 0.4rem;
-  color: var(--primary);
-}
+    .scheme h3 {
+      font-size: 1.6rem;
+      margin-bottom: 0.4rem;
+      color: var(--primary);
+    }
 
-.scheme p {
-  font-size: 1rem;
-  color: var(--muted);
-}
+    .scheme p {
+      font-size: 1rem;
+      color: var(--muted);
+    }
 
-/* ===============================
+    /* ===============================
    RESPONSIVE
 ================================ */
 @media (max-width: 768px) {
@@ -225,11 +246,34 @@ input:focus {
   }
 }
 
+/* SCHEMES */
+.container{max-width:1200px;margin:auto;padding:50px 20px}
+.scheme{
+  background:var(--card);
+  border-left:10px solid var(--primary);
+  padding:32px;
+  border-radius:22px;
+  box-shadow:var(--shadow);
+  margin-bottom:30px;
+  transition: background 0.3s ease;
+}
+.scheme h3{font-size:26px;color:var(--label)}
+.scheme p{font-size:19px;margin:6px 0}
+
 .eligible{color:var(--success);font-weight:900;font-size:20px}
 .not-eligible{color:var(--danger);font-weight:900;font-size:20px}
 .deadline{color:#b71c1c;font-weight:800}
 [data-theme="dark"] .deadline { color: #ff5252; }
 
+.hero::before {
+  pointer-events: none;
+}
+.scheme h3{font-size:26px;color:#1b5e20}
+.scheme p{font-size:19px;margin:6px 0}
+
+.eligible{color:var(--success);font-weight:900;font-size:20px}
+.not-eligible{color:var(--danger);font-weight:900;font-size:20px}
+.deadline{color:#b71c1c;font-weight:800}
 
 .actions{
   display:flex;
@@ -346,40 +390,125 @@ input:focus {
   transform: translate(-50%, -50%) scale(1.8);
   background-color: #22c55e; /* AgriTech green */
   box-shadow: 0 0 20px #22c55e;
+}/* ===== Floating Language Button ===== */
+#langFloatBtn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2e7d32, #1b5e20);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  z-index: 9999;
+}
+
+#langPanel {
+  position: fixed;
+  bottom: 95px;
+  right: 25px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+  border-radius: 18px;
+  padding: 16px;
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+  min-width: 160px;
+}
+
+#langPanel h4 {
+  margin-bottom: 8px;
+  font-size: 15px;
+  text-align: center;
+  color: var(--primary);
+}
+
+#langPanel button {
+  border: none;
+  border-radius: 20px;
+  padding: 8px 12px;
+  font-weight: 700;
+  cursor: pointer;
+  background: #e8f5e9;
+  color: #1b5e20;
+}
+
+[data-theme="dark"] #langPanel button {
+  background: #1e293b;
+  color: #4caf50;
 }
 </style>
 </head>
 
 <body>
-
 <!-- Include Navbar -->
 <div w3-include-html="navbar.html"></div>
 
 <section class="hero">
-<div class="form-card">
-<h2>Check Your Scheme Eligibility</h2>
+  <div class="form-card">
 
-<label>State</label>
-<select id="state">
-<option>India</option>
-<option>Karnataka</option>
-<option>Maharashtra</option>
-<option>Tamil Nadu</option>
-<option>Uttar Pradesh</option>
-<option>Bihar</option>
-<option>Punjab</option>
-<option>Haryana</option>
-<option>Rajasthan</option>
-<option>Madhya Pradesh</option>
-<option>Telangana</option>
-<option>Andhra Pradesh</option>
-</select>
+    <h2 
+      data-i18n 
+      data-i18n-en="Check Your Scheme Eligibility"
+      data-i18n-hi="अपनी योजना पात्रता जांचें">
+      Check Your Scheme Eligibility
+    </h2>
 
-<label>Land Holding (acres)</label>
-<input type="number" id="land" placeholder="Example: 2.5">
+    <label 
+      data-i18n 
+      data-i18n-en="State"
+      data-i18n-hi="राज्य">
+      State
+    </label>
 
-<button onclick="checkEligibility()">Find Eligible Schemes</button>
-</div>
+    <select id="state">
+      <option data-i18n data-i18n-en="India" data-i18n-hi="भारत">India</option>
+      <option>Karnataka</option>
+      <option>Maharashtra</option>
+      <option>Tamil Nadu</option>
+      <option>Uttar Pradesh</option>
+      <option>Bihar</option>
+      <option>Punjab</option>
+      <option>Haryana</option>
+      <option>Rajasthan</option>
+      <option>Madhya Pradesh</option>
+      <option>Telangana</option>
+      <option>Andhra Pradesh</option>
+    </select>
+
+    <label 
+      data-i18n 
+      data-i18n-en="Land Holding (acres)"
+      data-i18n-hi="भूमि धारणा (एकड़)">
+      Land Holding (acres)
+    </label>
+
+    <input 
+      type="number" 
+      id="land" 
+      placeholder="Example: 2.5"
+      data-i18n-placeholder
+      data-i18n-placeholder-en="Example: 2.5"
+      data-i18n-placeholder-hi="उदाहरण: 2.5">
+
+    <button 
+      onclick="checkEligibility()"
+      data-i18n
+      data-i18n-en="Find Eligible Schemes"
+      data-i18n-hi="पात्र योजनाएं खोजें">
+      Find Eligible Schemes
+    </button>
+
+  </div>
 </section>
 
 <div class="container" id="schemeList"></div>
@@ -392,276 +521,338 @@ input:focus {
     <div class="close" onclick="closeModal()">Close</div>
   </div>
 </div>
+<!-- Floating Language Button -->
+<div id="langFloatBtn">🌐</div>
+
+<!-- Floating Language Panel -->
+<div id="langPanel">
+  <h4>Select Language</h4>
+  <button onclick="setLanguage('en')">English</button>
+  <button onclick="setLanguage('hi')">हिंदी</button>
+</div>
+
  <!-- Cursor Trail -->
 <div class="circle-container" id="cursorTrail"></div>
 <script>
-
-  const today = new Date();
-today.setHours(0, 0, 0, 0);
-
-const schemes=[
+const schemes = [
 {
-name:"PM-KISAN",
-max:5, states:["India"], deadline:"2026-03-31",
-desc:"₹6000 annual income support to farmers.",
-link:"https://pmkisan.gov.in",
-docs:["Aadhaar Card","Land Ownership Proof","Bank Passbook"]
+  key:"pmkisan",
+  name:{ en:"PM-KISAN", hi:"पीएम-किसान" },
+  max:5, states:["India"], deadline:"2026-03-31",
+  desc:{ en:"₹6000 annual income support to farmers.", hi:"किसानों को ₹6000 वार्षिक आय सहायता।" },
+  link:"https://pmkisan.gov.in",
+  docs:{
+    en:["Aadhaar Card","Land Ownership Proof","Bank Passbook"],
+    hi:["आधार कार्ड","भूमि स्वामित्व प्रमाण","बैंक पासबुक"]
+  }
 },
 {
-name:"PMFBY Crop Insurance",
-max:999, states:["India"], deadline:"2026-01-31",
-desc:"Crop insurance at low premium rates.",
-link:"https://pmfby.gov.in",
-docs:["Aadhaar Card","Land Records","Crop Sowing Proof"]
+  key:"pmfby",
+  name:{ en:"PMFBY Crop Insurance", hi:"प्रधानमंत्री फसल बीमा योजना" },
+  max:999, states:["India"], deadline:"2026-01-31",
+  desc:{ en:"Crop insurance at low premium rates.", hi:"कम प्रीमियम पर फसल बीमा।" },
+  link:"https://pmfby.gov.in",
+  docs:{
+    en:["Aadhaar Card","Land Records","Crop Sowing Proof"],
+    hi:["आधार कार्ड","भूमि रिकॉर्ड","फसल बुवाई प्रमाण"]
+  }
 },
 {
-name:"Kisan Credit Card",
-max:999, states:["India"], deadline:"2026-06-30",
-desc:"Short-term credit for agriculture needs.",
-link:"https://www.nabard.org",
-docs:["Aadhaar Card","Bank Account","Land Documents"]
+  key:"kcc",
+  name:{ en:"Kisan Credit Card", hi:"किसान क्रेडिट कार्ड" },
+  max:999, states:["India"], deadline:"2026-06-30",
+  desc:{ en:"Short-term credit for agriculture needs.", hi:"कृषि जरूरतों के लिए अल्पकालिक ऋण।" },
+  link:"https://www.nabard.org",
+  docs:{
+    en:["Aadhaar Card","Bank Account","Land Documents"],
+    hi:["आधार कार्ड","बैंक खाता","भूमि दस्तावेज"]
+  }
 },
 {
-name:"Soil Health Card",
-max:999, states:["India"], deadline:"2026-12-31",
-desc:"Free soil testing & recommendations.",
-link:"https://soilhealth.dac.gov.in",
-docs:["Aadhaar Card","Land Details"]
+  key:"soil",
+  name:{ en:"Soil Health Card", hi:"मृदा स्वास्थ्य कार्ड" },
+  max:999, states:["India"], deadline:"2026-12-31",
+  desc:{ en:"Free soil testing & recommendations.", hi:"मुफ्त मिट्टी परीक्षण और सिफारिशें।" },
+  link:"https://soilhealth.dac.gov.in",
+  docs:{
+    en:["Aadhaar Card","Land Details"],
+    hi:["आधार कार्ड","भूमि विवरण"]
+  }
 },
 {
-name:"PM Kusum – Solar Pump",
-max:8, states:["Rajasthan","MP","Maharashtra"],
-deadline:"2026-05-31",
-desc:"Subsidy for solar irrigation pumps.",
-link:"https://pmkusum.mnre.gov.in",
-docs:["Aadhaar Card","Electricity Bill","Land Proof"]
+  key:"kusum",
+  name:{ en:"PM Kusum – Solar Pump", hi:"पीएम कुसुम – सोलर पंप" },
+  max:8, states:["Rajasthan","MP","Maharashtra"],
+  deadline:"2026-05-31",
+  desc:{ en:"Subsidy for solar irrigation pumps.", hi:"सोलर सिंचाई पंप पर सब्सिडी।" },
+  link:"https://pmkusum.mnre.gov.in",
+  docs:{
+    en:["Aadhaar Card","Electricity Bill","Land Proof"],
+    hi:["आधार कार्ड","बिजली बिल","भूमि प्रमाण"]
+  }
 },
 {
-name:"Drip Irrigation Subsidy",
-max:10, states:["Karnataka","TN","Maharashtra"],
-deadline:"2026-02-28",
-desc:"Water-efficient irrigation systems.",
-link:"https://pmksy.gov.in",
-docs:["Aadhaar Card","Land Records","Quotation"]
+  key:"drip",
+  name:{ en:"Drip Irrigation Subsidy", hi:"ड्रिप सिंचाई सब्सिडी" },
+  max:10, states:["Karnataka","TN","Maharashtra"],
+  deadline:"2026-02-28",
+  desc:{ en:"Water-efficient irrigation systems.", hi:"जल-कुशल सिंचाई प्रणाली।" },
+  link:"https://pmksy.gov.in",
+  docs:{
+    en:["Aadhaar Card","Land Records","Quotation"],
+    hi:["आधार कार्ड","भूमि रिकॉर्ड","कोटेशन"]
+  }
 },
 {
-name:"Organic Farming Scheme",
-max:7, states:["MP","Bihar","Rajasthan"],
-deadline:"2026-04-30",
-desc:"Support for organic inputs & certification.",
-link:"https://pgsindia-ncof.gov.in",
-docs:["Aadhaar Card","Land Proof","Farmer Photo"]
+  key:"organic",
+  name:{ en:"Organic Farming Scheme", hi:"जैविक खेती योजना" },
+  max:7, states:["MP","Bihar","Rajasthan"],
+  deadline:"2026-04-30",
+  desc:{ en:"Support for organic inputs & certification.", hi:"जैविक इनपुट और प्रमाणन के लिए सहायता।" },
+  link:"https://pgsindia-ncof.gov.in",
+  docs:{
+    en:["Aadhaar Card","Land Proof","Farmer Photo"],
+    hi:["आधार कार्ड","भूमि प्रमाण","किसान फोटो"]
+  }
 },
 {
-name:"Farm Mechanization",
-max:10, states:["Punjab","Haryana","UP"],
-deadline:"2026-02-15",
-desc:"Subsidy on farm machinery.",
-link:"https://agrimachinery.nic.in",
-docs:["Aadhaar Card","Land Records","Equipment Quotation"]
+  key:"mechanization",
+  name:{ en:"Farm Mechanization", hi:"कृषि यंत्रीकरण" },
+  max:10, states:["Punjab","Haryana","UP"],
+  deadline:"2026-02-15",
+  desc:{ en:"Subsidy on farm machinery.", hi:"कृषि मशीनरी पर सब्सिडी।" },
+  link:"https://agrimachinery.nic.in",
+  docs:{
+    en:["Aadhaar Card","Land Records","Equipment Quotation"],
+    hi:["आधार कार्ड","भूमि रिकॉर्ड","उपकरण कोटेशन"]
+  }
 },
 {
-name:"Seed Subsidy Scheme",
-max:6, states:["Telangana","TN","AP"],
-deadline:"2026-01-20",
-desc:"Certified seed subsidy for farmers.",
-link:"https://seednet.gov.in",
-docs:["Aadhaar Card","Farmer ID","Land Proof"]
+  key:"seed",
+  name:{ en:"Seed Subsidy Scheme", hi:"बीज सब्सिडी योजना" },
+  max:6, states:["Telangana","TN","AP"],
+  deadline:"2026-01-20",
+  desc:{ en:"Certified seed subsidy for farmers.", hi:"प्रमाणित बीज पर सब्सिडी।" },
+  link:"https://seednet.gov.in",
+  docs:{
+    en:["Aadhaar Card","Farmer ID","Land Proof"],
+    hi:["आधार कार्ड","किसान आईडी","भूमि प्रमाण"]
+  }
 },
 {
-name:"Matsya Sampada Yojana",
-max:999, states:["India"],
-deadline:"2026-08-31",
-desc:"Financial assistance for fisheries.",
-link:"https://pmmsy.dof.gov.in",
-docs:["Aadhaar Card","Bank Passbook","Fisheries Registration"]
+  key:"matsya",
+  name:{ en:"Matsya Sampada Yojana", hi:"मत्स्य संपदा योजना" },
+  max:999, states:["India"],
+  deadline:"2026-08-31",
+  desc:{ en:"Financial assistance for fisheries.", hi:"मत्स्य पालन के लिए वित्तीय सहायता।" },
+  link:"https://pmmsy.dof.gov.in",
+  docs:{
+    en:["Aadhaar Card","Bank Passbook","Fisheries Registration"],
+    hi:["आधार कार्ड","बैंक पासबुक","मत्स्य पंजीकरण"]
+  }
 }
 ];
 
 function checkEligibility(){
-  const state=document.getElementById("state").value;
-  const land=parseFloat(document.getElementById("land").value||0);
-  const list=document.getElementById("schemeList");
-  list.innerHTML="";
+  const state = document.getElementById("state").value;
+  const land = parseFloat(document.getElementById("land").value || 0);
+  const list = document.getElementById("schemeList");
+  list.innerHTML = "";
 
-schemes.forEach(s => {
-  const deadlineDate = new Date(s.deadline);
-  deadlineDate.setHours(0, 0, 0, 0);
+  schemes.forEach(s => {
+    const eligible = land <= s.max && (s.states.includes(state) || s.states.includes("India"));
 
-  const isExpired = today > deadlineDate;
-  const eligible =
-    !isExpired &&
-    land <= s.max &&
-    (s.states.includes(state) || s.states.includes("India"));
+    const name = s.name[currentLang] || s.name.en;
+    const desc = s.desc[currentLang] || s.desc.en;
 
-  list.innerHTML += `
-    <div class="scheme">
-      <h3>${s.name} ${isExpired ? '<span style="color:#d32f2f;font-size:14px;">(Expired)</span>' : ''}</h3>
-      <p>${s.desc}</p>
+    const eligibleText = currentLang === "hi" ? "✔ पात्र" : "✔ Eligible";
+    const notEligibleText = currentLang === "hi" ? "✖ अपात्र" : "✖ Not Eligible";
+    const deadlineText = currentLang === "hi" ? "अंतिम तिथि" : "Deadline";
 
-      <p class="${eligible ? 'eligible' : 'not-eligible'}">
-        ${isExpired ? '⛔ Expired' : eligible ? '✔ Eligible' : '✖ Not Eligible'}
-      </p>
+    const applyText = currentLang === "hi" ? "📝 आवेदन करें" : "📝 Apply Now";
+    const docsText = currentLang === "hi" ? "📄 दस्तावेज़" : "📄 Documents";
+    const reminderText = currentLang === "hi" ? "⏰ रिमाइंडर" : "⏰ Reminder";
 
-      <p class="deadline">Deadline: ${s.deadline}</p>
+    list.innerHTML += `
+      <div class="scheme">
+        <h3>${name}</h3>
+        <p>${desc}</p>
 
-      <div class="actions">
-        <a href="${eligible ? s.link : '#'}"
-           target="_blank"
-           class="apply ${eligible ? '' : 'disabled'}">
-           📝 Apply Now
-        </a>
+        <p class="${eligible ? 'eligible' : 'not-eligible'}">
+          ${eligible ? eligibleText : notEligibleText}
+        </p>
 
-        <button class="docs" onclick="showDocs('${s.name}')">📄 Documents</button>
-        <button class="reminder" onclick="showMsg('Reminder set for ${s.name}')">⏰ Reminder</button>
+        <p class="deadline">${deadlineText}: ${s.deadline}</p>
+
+        <div class="actions">
+          <a href="${eligible ? s.link : '#'}" target="_blank"
+             class="apply ${eligible ? '' : 'disabled'}">${applyText}</a>
+
+          <button class="docs" onclick="showDocs('${s.key}')">${docsText}</button>
+          <button class="reminder" onclick="showMsg('${name}')">${reminderText}</button>
+        </div>
       </div>
-    </div>
-  `;
-});
+    `;
+  });
 }
 
-function showDocs(name){
-  const scheme=schemes.find(s=>s.name===name);
-  document.getElementById("modalTitle").innerText=name+" – Required Documents";
-  document.getElementById("modalBody").innerHTML=
-    "<ul>"+scheme.docs.map(d=>`<li>${d}</li>`).join("")+"</ul>";
-  document.getElementById("modal").style.display="flex";
-}
-function showMsg(msg){
-  document.getElementById("modalTitle").innerText="Success";
-  document.getElementById("modalBody").innerHTML="<p>"+msg+"</p>";
-  document.getElementById("modal").style.display="flex";
-}
-function closeModal(){
-  document.getElementById("modal").style.display="none";
+
+function showDocs(key){
+  const scheme = schemes.find(s => s.key === key);
+  const docs = scheme.docs[currentLang] || scheme.docs.en;
+
+  document.getElementById("modalTitle").innerText =
+    (scheme.name[currentLang] || scheme.name.en) +
+    (currentLang === "hi" ? " – आवश्यक दस्तावेज़" : " – Required Documents");
+
+  document.getElementById("modalBody").innerHTML =
+    "<ul>" + docs.map(d => `<li>${d}</li>`).join("") + "</ul>";
+
+  document.getElementById("modal").style.display = "flex";
 }
 </script>
-
-
 <!-- Include Navbar Script -->
-
 <script>
-// Include navbar
-function includeHTML(callback) {
-    var z, i, elmnt, file, xhttp;
-    z = document.getElementsByTagName("*");
-    for (i = 0; i < z.length; i++) {
+    function includeHTML() {
+        var z, i, elmnt, file, xhttp;
+        z = document.getElementsByTagName("*");
+        for (i = 0; i < z.length; i++) {
+            elmnt = z[i];
+            file = elmnt.getAttribute("w3-include-html");
+            if (file) {
+                xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4) {
+                        if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+                        if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                        elmnt.removeAttribute("w3-include-html");
+                        includeHTML();
+                    }
+                }
+                xhttp.open("GET", file, true);
+                xhttp.send();
+                return;
+            }
+        }
+    }
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+  </script>
+
+
+  <script>
+    // Include navbar
+    function includeHTML(callback) {
+      var z, i, elmnt, file, xhttp;
+      z = document.getElementsByTagName("*");
+      for (i = 0; i < z.length; i++) {
         elmnt = z[i];
         file = elmnt.getAttribute("w3-include-html");
         if (file) {
-            xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4) {
-                    if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-                    if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-                    elmnt.removeAttribute("w3-include-html");
+          xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4) {
+              if (this.status == 200) { elmnt.innerHTML = this.responseText; }
+              if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
+              elmnt.removeAttribute("w3-include-html");
 
-                    // Call again recursively
-                    includeHTML(callback);
+              // Call again recursively
+              includeHTML(callback);
 
-                    // After loading navbar, run callback
-                    if (callback) callback();
-                }
+              // After loading navbar, run callback
+              if (callback) callback();
             }
-            xhttp.open("GET", file, true);
-            xhttp.send();
-            return;
+          }
+          xhttp.open("GET", file, true);
+          xhttp.send();
+          return;
         }
+      }
     }
-}
 
 
-// Initialize mobile hamburger
-function initHamburgerMenu() {
-    const hamburgerBtn = document.getElementById("hamburgerBtn");
-    const mobileMenu = document.getElementById("mobileMenu");
-    const overlay = document.getElementById("mobileMenuOverlay");
+    // Initialize mobile hamburger
+    function initHamburgerMenu() {
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const overlay = document.getElementById('mobileMenuOverlay');
 
-    if (!hamburgerBtn || !mobileMenu || !overlay) return;
+      if (!hamburgerBtn || !mobileMenu || !overlay) return;
 
-    hamburgerBtn.addEventListener("click", () => {
-        mobileMenu.classList.add("active");
-        overlay.classList.add("active");
-        document.body.style.overflow = "hidden";
-    });
+      hamburgerBtn.addEventListener('click', () => {
+        mobileMenu.classList.add('active');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
 
-    overlay.addEventListener("click", () => {
-        mobileMenu.classList.remove("active");
-        overlay.classList.remove("active");
-        document.body.style.overflow = "";
-    });
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    const savedTheme = localStorage.getItem("agritech-theme") || "light";
-    document.documentElement.setAttribute("data-theme", savedTheme);
-
-    includeHTML(() => {
-        initHamburgerMenu(); // ✅ runs AFTER navbar.html is injected
-    });
-});
+      overlay.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    }
 
 
-// Run after DOM loads
-document.addEventListener('DOMContentLoaded', () => {
-    // Apply saved theme
-    const savedTheme = localStorage.getItem('agritech-theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
+    // Run after DOM loads
+    document.addEventListener('DOMContentLoaded', () => {
 
-    // Include navbar and initialize functions
-    includeHTML(() => {
-      
+
+      // Include navbar and initialize functions
+      includeHTML(() => {
         initHamburgerMenu();
+        initThemeToggle(); // 🔥 THIS WAS MISSING
+      });
+
     });
-});
- // --- Cursor Trailing Effect ---
-const container = document.getElementById('cursorTrail');
-const circleCount = 12;
-const circles = [];
+    // --- Cursor Trailing Effect ---
+    const container = document.getElementById('cursorTrail');
+    const circleCount = 12;
+    const circles = [];
 
-let mouseX = 0;
-let mouseY = 0;
+    let mouseX = 0;
+    let mouseY = 0;
 
-// Create circles
-for (let i = 0; i < circleCount; i++) {
-    const circle = document.createElement('div');
-    circle.classList.add('cursor-circle');
-    container.appendChild(circle);
-    circles.push({ el: circle, x: 0, y: 0 });
-}
+    // Create circles
+    for (let i = 0; i < circleCount; i++) {
+      const circle = document.createElement('div');
+      circle.classList.add('cursor-circle');
+      container.appendChild(circle);
+      circles.push({ el: circle, x: 0, y: 0 });
+    }
 
-// Mouse move
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
+    // Mouse move
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
 
-// Click effects
-document.addEventListener('mousedown', () => {
-    circles.forEach(c => c.el.classList.add('cursor-clicking'));
-});
-document.addEventListener('mouseup', () => {
-    circles.forEach(c => c.el.classList.remove('cursor-clicking'));
-});
+    // Click effects
+    document.addEventListener('mousedown', () => {
+      circles.forEach(c => c.el.classList.add('cursor-clicking'));
+    });
+    document.addEventListener('mouseup', () => {
+      circles.forEach(c => c.el.classList.remove('cursor-clicking'));
+    });
 
-// Hover effects on interactive elements
-document.addEventListener('mouseover', (e) => {
-    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+    // Hover effects on interactive elements
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
         circles.forEach(c => c.el.classList.add('cursor-hovering'));
-    }
-});
-document.addEventListener('mouseout', (e) => {
-    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+      }
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
         circles.forEach(c => c.el.classList.remove('cursor-hovering'));
-    }
-});
+      }
+    });
 
-// Animate trailing effect
-function animateCursor() {
-    let x = mouseX;
-    let y = mouseY;
+    // Animate trailing effect
+    function animateCursor() {
+      let x = mouseX;
+      let y = mouseY;
 
-    circles.forEach((circle) => {
+      circles.forEach((circle) => {
         circle.x += (x - circle.x) * 0.25;
         circle.y += (y - circle.y) * 0.25;
 
@@ -670,12 +861,105 @@ function animateCursor() {
 
         x = circle.x;
         y = circle.y;
-    });
+      });
 
-    requestAnimationFrame(animateCursor);
-}
-animateCursor();
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    function initThemeToggle() {
+      const toggleBtn = document.getElementById('themeToggle');
+      const label = toggleBtn?.querySelector('.theme-label');
+      const icon = toggleBtn?.querySelector('i');
+
+      if (!toggleBtn) return;
+
+      // Sync UI with current theme
+      function updateUI(theme) {
+        if (theme === 'dark') {
+          label.textContent = 'Dark';
+          icon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+          label.textContent = 'Light';
+          icon.classList.replace('fa-sun', 'fa-moon');
+        }
+      }
+
+      // Initial state
+      const savedTheme = localStorage.getItem('agritech-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      updateUI(savedTheme);
+
+      // Toggle on click
+      toggleBtn.addEventListener('click', () => {
+        const html = document.documentElement;
+        const current = html.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('agritech-theme', next);
+        updateUI(next);
+      });
+    }
+
 
 </script>
+<script>
+function initLanguageSystem() {
+  const langBtn = document.getElementById("langFloatBtn");
+  const langPanel = document.getElementById("langPanel");
+
+  if (!langBtn || !langPanel) {
+    console.warn("Language UI not ready yet");
+    return;
+  }
+
+  langBtn.onclick = () => {
+    langPanel.style.display =
+      langPanel.style.display === "flex" ? "none" : "flex";
+  };
+
+  function applyLanguage(lang) {
+    console.log("Applying language FINAL:", lang);
+
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      if (lang === "hi" && el.dataset.i18nHi) el.textContent = el.dataset.i18nHi;
+      else if (lang === "mr" && el.dataset.i18nMr) el.textContent = el.dataset.i18nMr;
+      else if (lang === "ta" && el.dataset.i18nTa) el.textContent = el.dataset.i18nTa;
+      else if (el.dataset.i18nEn) el.textContent = el.dataset.i18nEn;
+    });
+
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+      if (lang === "hi" && el.dataset.i18nPlaceholderHi) el.placeholder = el.dataset.i18nPlaceholderHi;
+      else if (el.dataset.i18nPlaceholderEn) el.placeholder = el.dataset.i18nPlaceholderEn;
+    });
+  }
+
+  window.setLanguage = function(lang) {
+  localStorage.setItem("site-lang", lang);
+  currentLang = lang;
+  applyLanguage(lang);
+  checkEligibility(); // 🔥 re-render cards
+  langPanel.style.display = "none";
+};
+
+
+  const saved = localStorage.getItem("site-lang") || "en";
+  applyLanguage(saved);
+
+  // Re-apply again after navbar loads (CRITICAL FIX)
+  setTimeout(() => {
+    applyLanguage(saved);
+  }, 800);
+}
+
+/* WAIT until EVERYTHING (including navbar) is loaded */
+window.addEventListener("load", () => {
+  initLanguageSystem();
+});
+</script>
+
+
 </body>
+
 </html>

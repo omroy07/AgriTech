@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Repayment Dashboard | AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --bg: #f8fafc;
+            --card: #ffffff;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .metric-card {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .metric-val {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        .schedule-table th {
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .schedule-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .badge-paid {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-overdue {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .risk-meter {
+            margin-top: 2rem;
+        }
+
+        .risk-bar {
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .risk-fill {
+            height: 100%;
+            transition: 1s ease-out;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard">
+        <header class="header">
+            <div>
+                <h1>Loan Repayment Tracker</h1>
+                <p style="opacity: 0.6; margin-top: 0.5rem;">Automated EMI scheduling & default risk analytics</p>
+            </div>
+            <button class="btn btn-primary" onclick="makePayment()">Make Payment</button>
+        </header>
+
+        <div class="metrics-row">
+            <div class="metric-card">
+                <div class="metric-val" style="color: var(--primary);" id="total-emi">₹0</div>
+                <div class="metric-label">Monthly EMI</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-val" style="color: var(--success);" id="paid-count">0</div>
+                <div class="metric-label">Paid Installments</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-val" style="color: var(--warning);" id="pending-count">0</div>
+                <div class="metric-label">Pending</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-val" style="color: var(--danger);" id="overdue-count">0</div>
+                <div class="metric-label">Overdue</div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div class="card">
+                <h3>Amortization Schedule</h3>
+                <table class="schedule-table" id="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Due Date</th>
+                            <th>Principal</th>
+                            <th>Interest</th>
+                            <th>EMI</th>
+                            <th>Balance</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="schedule-body">
+                        <tr>
+                            <td colspan="7" style="text-align:center; padding: 3rem; opacity: 0.5;">No schedule loaded
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>Default Risk Assessment</h3>
+                <div id="risk-display" style="text-align: center; padding: 2rem;">
+                    <div style="font-size: 3rem; font-weight: 700; color: var(--success);" id="risk-score">-</div>
+                    <div style="font-size: 0.9rem; opacity: 0.6;">Risk Score (0-100)</div>
+                </div>
+                <div class="risk-meter">
+                    <div class="risk-bar">
+                        <div class="risk-fill" id="risk-fill"
+                            style="background: linear-gradient(90deg, #10b981, #f59e0b, #ef4444);"></div>
+                    </div>
+                </div>
+                <div style="margin-top: 2rem; font-size: 0.85rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Days Overdue:</span>
+                        <strong id="days-overdue">0</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Payment Consistency:</span>
+                        <strong id="consistency">100%</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="loan_dashboard.js"></script>
+</body>
+
+</html>
