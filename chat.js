@@ -183,3 +183,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
   chatInput.focus();
 });
+
+// 🌙 GLOBAL DARK/LIGHT MODE FIX (Mobile + Desktop Toggle)
+document.addEventListener("DOMContentLoaded", function () {
+  const toggleButtons = document.querySelectorAll(".theme-toggle, .nav-btn");
+
+  toggleButtons.forEach((btn) => {
+    // Only attach to buttons that contain Dark or Light text
+    if (
+      btn.textContent.toLowerCase().includes("dark") ||
+      btn.textContent.toLowerCase().includes("light")
+    ) {
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation(); // critical for mobile sidebar overlay
+
+        document.body.classList.toggle("dark-mode");
+
+        // Save theme preference
+        if (document.body.classList.contains("dark-mode")) {
+          localStorage.setItem("theme", "dark");
+          btn.innerHTML = "☀️ Light Mode";
+        } else {
+          localStorage.setItem("theme", "light");
+          btn.innerHTML = "🌙 Dark Mode";
+        }
+      });
+    }
+  });
+
+  // Apply saved theme on page load
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
+  }
+});
