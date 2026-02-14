@@ -446,7 +446,6 @@
   background: #1e293b;
   color: #4caf50;
 }
-
 </style>
 </head>
 
@@ -711,43 +710,7 @@ function showDocs(key){
 
   document.getElementById("modal").style.display = "flex";
 }
-
 </script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  const applyTheme = (theme) => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("agritech-theme", theme);
-
-    const icon = document.getElementById("themeIcon");
-    const text = document.getElementById("themeText");
-
-    if (!icon || !text) return;
-
-    if (theme === "dark") {
-      icon.className = "fas fa-sun";
-      text.innerText = "Light";
-    } else {
-      icon.className = "fas fa-moon";
-      text.innerText = "Dark";
-    }
-  };
-
-  const savedTheme = localStorage.getItem("agritech-theme") || "light";
-  applyTheme(savedTheme);
-
-  document.addEventListener("click", (e) => {
-    if (e.target.closest("#themeToggle")) {
-      const current = document.documentElement.getAttribute("data-theme");
-      applyTheme(current === "dark" ? "light" : "dark");
-    }
-  });
-
-});
-</script>
-
-
 <!-- Include Navbar Script -->
 <script>
     function includeHTML() {

@@ -42,7 +42,8 @@
         </div>
 
         <button class="nav-btn">English</button>
-        <button class="nav-btn">Light</button>
+        <button class="nav-btn theme-toggle">🌙 Dark Mode</button>
+        <button class="nav-btn" id="themeToggle">Light</button>
         <a href="login.html" class="nav-btn">Login</a>
         <a href="register.html" class="nav-btn primary">Register</a>
       </div>
@@ -155,6 +156,29 @@
       </div>
     </div>
   </div>
+<script>
+  const themeBtn = document.getElementById("themeToggle");
+
+  // Load saved theme on page load
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+    themeBtn.textContent = "Light";
+  } else {
+    themeBtn.textContent = "Dark";
+  }
+
+  themeBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+
+    if (document.body.classList.contains("dark-mode")) {
+      localStorage.setItem("theme", "dark");
+      themeBtn.textContent = "Light";
+    } else {
+      localStorage.setItem("theme", "light");
+      themeBtn.textContent = "Dark";
+    }
+  });
+</script>
 
   <!-- Scripts -->
   <script src="forum.js"></script>
