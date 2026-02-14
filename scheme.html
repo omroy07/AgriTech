@@ -533,7 +533,11 @@
 
  <!-- Cursor Trail -->
 <div class="circle-container" id="cursorTrail"></div>
+
 <script>
+let currentLang = localStorage.getItem("site-lang") || "en";
+
+// --- SCHEMES DATA ---
 const schemes = [
 {
   key:"pmkisan",
@@ -653,41 +657,136 @@ const schemes = [
 }
 ];
 
-function checkEligibility(){
-  const state = document.getElementById("state").value;
-  const land = parseFloat(document.getElementById("land").value || 0);
+// --- INCLUDE HTML (NAVBAR/FOOTER) ---
+function includeHTML(callback) {
+  var z, i, elmnt, file, xhttp;
+  z = document.getElementsByTagName("*");
+  for (i = 0; i < z.length; i++) {
+    elmnt = z[i];
+    file = elmnt.getAttribute("w3-include-html");
+    if (file) {
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4) {
+          if (this.status == 200) { elmnt.innerHTML = this.responseText; }
+          if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
+          elmnt.removeAttribute("w3-include-html");
+          includeHTML(callback);
+          if (callback) callback();
+        }
+      }
+      xhttp.open("GET", file, true);
+      xhttp.send();
+      return;
+    }
+  }
+  if (callback) callback(); // no includes left
+}
+
+// --- INIT FUNCTIONS ---
+function initHamburgerMenu() {
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const overlay = document.getElementById('mobileMenuOverlay');
+
+  if (!hamburgerBtn || !mobileMenu || !overlay) return;
+
+  hamburgerBtn.addEventListener('click', () => {
+    mobileMenu.classList.add('active');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+
+  overlay.addEventListener('click', () => {
+    mobileMenu.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+}
+
+function initThemeToggle() {
+  const toggleBtn = document.getElementById('themeToggle');
+  const label = toggleBtn?.querySelector('.theme-label');
+  const icon = toggleBtn?.querySelector('i');
+  if (!toggleBtn) return;
+
+  function updateUI(theme) {
+    if (theme === 'dark') { label.textContent='Dark'; icon.classList.replace('fa-moon','fa-sun'); }
+    else { label.textContent='Light'; icon.classList.replace('fa-sun','fa-moon'); }
+  }
+
+  const savedTheme = localStorage.getItem('agritech-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateUI(savedTheme);
+
+  toggleBtn.addEventListener('click', () => {
+    const html = document.documentElement;
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('agritech-theme', next);
+    updateUI(next);
+  });
+}
+
+function initLanguageSystem() {
+  const langBtn = document.getElementById("langFloatBtn");
+  const langPanel = document.getElementById("langPanel");
+  if (!langBtn || !langPanel) return;
+
+  langBtn.onclick = () => {
+    langPanel.style.display = langPanel.style.display === "flex" ? "none" : "flex";
+  };
+
+  function applyLanguage(lang) {
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      if (lang==="hi" && el.dataset.i18nHi) el.textContent=el.dataset.i18nHi;
+      else if (el.dataset.i18nEn) el.textContent=el.dataset.i18nEn;
+    });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+      if (lang==="hi" && el.dataset.i18nPlaceholderHi) el.placeholder=el.dataset.i18nPlaceholderHi;
+      else if (el.dataset.i18nPlaceholderEn) el.placeholder=el.dataset.i18nPlaceholderEn;
+    });
+  }
+
+  window.setLanguage = function(lang){
+    localStorage.setItem("site-lang", lang);
+    currentLang = lang;
+    applyLanguage(lang);
+    checkEligibility(); // re-render schemes
+    langPanel.style.display = "none";
+  };
+
+  const saved = localStorage.getItem("site-lang") || "en";
+  applyLanguage(saved);
+}
+
+// --- SCHEME RENDER & ELIGIBILITY ---
+function checkEligibility() {
+  const state = document.getElementById("state")?.value || "";
+  const land = parseFloat(document.getElementById("land")?.value || 0);
   const list = document.getElementById("schemeList");
+  if (!list) return;
   list.innerHTML = "";
 
   schemes.forEach(s => {
     const eligible = land <= s.max && (s.states.includes(state) || s.states.includes("India"));
-
     const name = s.name[currentLang] || s.name.en;
     const desc = s.desc[currentLang] || s.desc.en;
-
-    const eligibleText = currentLang === "hi" ? "✔ पात्र" : "✔ Eligible";
-    const notEligibleText = currentLang === "hi" ? "✖ अपात्र" : "✖ Not Eligible";
-    const deadlineText = currentLang === "hi" ? "अंतिम तिथि" : "Deadline";
-
-    const applyText = currentLang === "hi" ? "📝 आवेदन करें" : "📝 Apply Now";
-    const docsText = currentLang === "hi" ? "📄 दस्तावेज़" : "📄 Documents";
-    const reminderText = currentLang === "hi" ? "⏰ रिमाइंडर" : "⏰ Reminder";
+    const eligibleText = currentLang==="hi"?"✔ पात्र":"✔ Eligible";
+    const notEligibleText = currentLang==="hi"?"✖ अपात्र":"✖ Not Eligible";
+    const deadlineText = currentLang==="hi"?"अंतिम तिथि":"Deadline";
+    const applyText = currentLang==="hi"?"📝 आवेदन करें":"📝 Apply Now";
+    const docsText = currentLang==="hi"?"📄 दस्तावेज़":"📄 Documents";
+    const reminderText = currentLang==="hi"?"⏰ रिमाइंडर":"⏰ Reminder";
 
     list.innerHTML += `
       <div class="scheme">
         <h3>${name}</h3>
         <p>${desc}</p>
-
-        <p class="${eligible ? 'eligible' : 'not-eligible'}">
-          ${eligible ? eligibleText : notEligibleText}
-        </p>
-
+        <p class="${eligible?'eligible':'not-eligible'}">${eligible?eligibleText:notEligibleText}</p>
         <p class="deadline">${deadlineText}: ${s.deadline}</p>
-
         <div class="actions">
-          <a href="${eligible ? s.link : '#'}" target="_blank"
-             class="apply ${eligible ? '' : 'disabled'}">${applyText}</a>
-
+          <a href="${eligible?s.link:'#'}" target="_blank" class="apply ${eligible?'':'disabled'}">${applyText}</a>
           <button class="docs" onclick="showDocs('${s.key}')">${docsText}</button>
           <button class="reminder" onclick="showMsg('${name}')">${reminderText}</button>
         </div>
@@ -696,265 +795,39 @@ function checkEligibility(){
   });
 }
 
-
 function showDocs(key){
-  const scheme = schemes.find(s => s.key === key);
+  const scheme = schemes.find(s=>s.key===key);
+  if (!scheme) return;
   const docs = scheme.docs[currentLang] || scheme.docs.en;
 
-  document.getElementById("modalTitle").innerText =
-    (scheme.name[currentLang] || scheme.name.en) +
-    (currentLang === "hi" ? " – आवश्यक दस्तावेज़" : " – Required Documents");
-
-  document.getElementById("modalBody").innerHTML =
-    "<ul>" + docs.map(d => `<li>${d}</li>`).join("") + "</ul>";
-
+  document.getElementById("modalTitle").innerText = (scheme.name[currentLang] || scheme.name.en) + (currentLang==="hi"?" – आवश्यक दस्तावेज़":" – Required Documents");
+  document.getElementById("modalBody").innerHTML = "<ul>"+docs.map(d=>`<li>${d}</li>`).join("")+"</ul>";
   document.getElementById("modal").style.display = "flex";
 }
-</script>
-<!-- Include Navbar Script -->
-<script>
-    function includeHTML() {
-        var z, i, elmnt, file, xhttp;
-        z = document.getElementsByTagName("*");
-        for (i = 0; i < z.length; i++) {
-            elmnt = z[i];
-            file = elmnt.getAttribute("w3-include-html");
-            if (file) {
-                xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4) {
-                        if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-                        if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-                        elmnt.removeAttribute("w3-include-html");
-                        includeHTML();
-                    }
-                }
-                xhttp.open("GET", file, true);
-                xhttp.send();
-                return;
-            }
-        }
-    }
-    function closeModal() {
-      document.getElementById("modal").style.display = "none";
-    }
-  </script>
+function closeModal(){ document.getElementById("modal").style.display="none"; }
 
-
-  <script>
-    // Include navbar
-    function includeHTML(callback) {
-      var z, i, elmnt, file, xhttp;
-      z = document.getElementsByTagName("*");
-      for (i = 0; i < z.length; i++) {
-        elmnt = z[i];
-        file = elmnt.getAttribute("w3-include-html");
-        if (file) {
-          xhttp = new XMLHttpRequest();
-          xhttp.onreadystatechange = function () {
-            if (this.readyState == 4) {
-              if (this.status == 200) { elmnt.innerHTML = this.responseText; }
-              if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
-              elmnt.removeAttribute("w3-include-html");
-
-              // Call again recursively
-              includeHTML(callback);
-
-              // After loading navbar, run callback
-              if (callback) callback();
-            }
-          }
-          xhttp.open("GET", file, true);
-          xhttp.send();
-          return;
-        }
-      }
-    }
-
-
-    // Initialize mobile hamburger
-    function initHamburgerMenu() {
-      const hamburgerBtn = document.getElementById('hamburgerBtn');
-      const mobileMenu = document.getElementById('mobileMenu');
-      const overlay = document.getElementById('mobileMenuOverlay');
-
-      if (!hamburgerBtn || !mobileMenu || !overlay) return;
-
-      hamburgerBtn.addEventListener('click', () => {
-        mobileMenu.classList.add('active');
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      });
-
-      overlay.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-        overlay.classList.remove('active');
-        document.body.style.overflow = '';
-      });
-    }
-
-
-    // Run after DOM loads
-    document.addEventListener('DOMContentLoaded', () => {
-
-
-      // Include navbar and initialize functions
-      includeHTML(() => {
-        initHamburgerMenu();
-        initThemeToggle(); // 🔥 THIS WAS MISSING
-      });
-
+// --- SEARCH FUNCTION ---
+function initSearch() {
+  const searchInput = document.getElementById('navbarSearch');
+  if (!searchInput) return;
+  searchInput.addEventListener('input', function () {
+    const query = this.value.toLowerCase();
+    const schemeCards = document.querySelectorAll('#schemeList .scheme');
+    schemeCards.forEach(card => {
+      const name = card.querySelector('h3')?.innerText.toLowerCase() || "";
+      const desc = card.querySelector('p')?.innerText.toLowerCase() || "";
+      card.style.display = (name.includes(query) || desc.includes(query)) ? 'block':'none';
     });
-    // --- Cursor Trailing Effect ---
-    const container = document.getElementById('cursorTrail');
-    const circleCount = 12;
-    const circles = [];
-
-    let mouseX = 0;
-    let mouseY = 0;
-
-    // Create circles
-    for (let i = 0; i < circleCount; i++) {
-      const circle = document.createElement('div');
-      circle.classList.add('cursor-circle');
-      container.appendChild(circle);
-      circles.push({ el: circle, x: 0, y: 0 });
-    }
-
-    // Mouse move
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
-
-    // Click effects
-    document.addEventListener('mousedown', () => {
-      circles.forEach(c => c.el.classList.add('cursor-clicking'));
-    });
-    document.addEventListener('mouseup', () => {
-      circles.forEach(c => c.el.classList.remove('cursor-clicking'));
-    });
-
-    // Hover effects on interactive elements
-    document.addEventListener('mouseover', (e) => {
-      if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
-        circles.forEach(c => c.el.classList.add('cursor-hovering'));
-      }
-    });
-    document.addEventListener('mouseout', (e) => {
-      if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
-        circles.forEach(c => c.el.classList.remove('cursor-hovering'));
-      }
-    });
-
-    // Animate trailing effect
-    function animateCursor() {
-      let x = mouseX;
-      let y = mouseY;
-
-      circles.forEach((circle) => {
-        circle.x += (x - circle.x) * 0.25;
-        circle.y += (y - circle.y) * 0.25;
-
-        circle.el.style.left = circle.x + 'px';
-        circle.el.style.top = circle.y + 'px';
-
-        x = circle.x;
-        y = circle.y;
-      });
-
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    function initThemeToggle() {
-      const toggleBtn = document.getElementById('themeToggle');
-      const label = toggleBtn?.querySelector('.theme-label');
-      const icon = toggleBtn?.querySelector('i');
-
-      if (!toggleBtn) return;
-
-      // Sync UI with current theme
-      function updateUI(theme) {
-        if (theme === 'dark') {
-          label.textContent = 'Dark';
-          icon.classList.replace('fa-moon', 'fa-sun');
-        } else {
-          label.textContent = 'Light';
-          icon.classList.replace('fa-sun', 'fa-moon');
-        }
-      }
-
-      // Initial state
-      const savedTheme = localStorage.getItem('agritech-theme') || 'light';
-      document.documentElement.setAttribute('data-theme', savedTheme);
-      updateUI(savedTheme);
-
-      // Toggle on click
-      toggleBtn.addEventListener('click', () => {
-        const html = document.documentElement;
-        const current = html.getAttribute('data-theme');
-        const next = current === 'dark' ? 'light' : 'dark';
-
-        html.setAttribute('data-theme', next);
-        localStorage.setItem('agritech-theme', next);
-        updateUI(next);
-      });
-    }
-
-
-</script>
-<script>
-function initLanguageSystem() {
-  const langBtn = document.getElementById("langFloatBtn");
-  const langPanel = document.getElementById("langPanel");
-
-  if (!langBtn || !langPanel) {
-    console.warn("Language UI not ready yet");
-    return;
-  }
-
-  langBtn.onclick = () => {
-    langPanel.style.display =
-      langPanel.style.display === "flex" ? "none" : "flex";
-  };
-
-  function applyLanguage(lang) {
-    console.log("Applying language FINAL:", lang);
-
-    document.querySelectorAll("[data-i18n]").forEach(el => {
-      if (lang === "hi" && el.dataset.i18nHi) el.textContent = el.dataset.i18nHi;
-      else if (lang === "mr" && el.dataset.i18nMr) el.textContent = el.dataset.i18nMr;
-      else if (lang === "ta" && el.dataset.i18nTa) el.textContent = el.dataset.i18nTa;
-      else if (el.dataset.i18nEn) el.textContent = el.dataset.i18nEn;
-    });
-
-    document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
-      if (lang === "hi" && el.dataset.i18nPlaceholderHi) el.placeholder = el.dataset.i18nPlaceholderHi;
-      else if (el.dataset.i18nPlaceholderEn) el.placeholder = el.dataset.i18nPlaceholderEn;
-    });
-  }
-
-  window.setLanguage = function(lang) {
-  localStorage.setItem("site-lang", lang);
-  currentLang = lang;
-  applyLanguage(lang);
-  checkEligibility(); // 🔥 re-render cards
-  langPanel.style.display = "none";
-};
-
-
-  const saved = localStorage.getItem("site-lang") || "en";
-  applyLanguage(saved);
-
-  // Re-apply again after navbar loads (CRITICAL FIX)
-  setTimeout(() => {
-    applyLanguage(saved);
-  }, 800);
+  });
 }
 
-/* WAIT until EVERYTHING (including navbar) is loaded */
-window.addEventListener("load", () => {
+// --- RUN AFTER DOM LOAD ---
+document.addEventListener("DOMContentLoaded",()=>{
+  includeHTML(()=>{
+    initHamburgerMenu();
+    initThemeToggle();
+    initSearch(); // 🔥 SEARCH ATTACHED AFTER NAVBAR LOAD
+  });
   initLanguageSystem();
 });
 </script>
