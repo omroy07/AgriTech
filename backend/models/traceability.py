@@ -46,6 +46,7 @@ class SupplyBatch(db.Model):
     current_handler_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     distributor_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     retailer_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    soil_test_id = db.Column(db.Integer, db.ForeignKey('soil_tests.id'))
     
     # Quality & Legal
     is_certified = db.Column(db.Boolean, default=False)

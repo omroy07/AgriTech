@@ -31,6 +31,13 @@ class StockItem(db.Model):
     reorder_quantity = db.Column(db.Float) # Economic Order Quantity
     
     batch_number = db.Column(db.String(50))
+    processing_batch_id = db.Column(db.Integer, db.ForeignKey('processing_batches.id'))
+    supply_batch_id = db.Column(db.Integer, db.ForeignKey('supply_batches.id'))
+    
+    base_price = db.Column(db.Float, default=0.0)
+    current_market_price = db.Column(db.Float, default=0.0) # Adjusted by freshness
+    freshness_score = db.Column(db.Float, default=100.0) # 0-100
+    
     expiry_date = db.Column(db.Date)
     
     created_at = db.Column(db.DateTime, default=datetime.utcnow)

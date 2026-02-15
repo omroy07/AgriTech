@@ -17,3 +17,4 @@ from .loan_tasks import daily_payment_reminders_task, overdue_escalation_task, m
 from .warehouse_tasks import daily_expiry_alerts_task, automated_reorder_notifications_task, monthly_reconciliation_reminder_task
 from .climate_tasks import check_sensor_health_task, generate_env_report_task, purge_old_telemetry_task
 from .pathogen_tasks import pathogen_propagation_run, analyze_new_incident
+from .transparency_tasks import hourly_freshness_pricing_update, sync_reputation_feedback
