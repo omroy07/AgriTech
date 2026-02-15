@@ -16,7 +16,7 @@ class JSONChatbot {
    */
   async loadResponses() {
     try {
-      const response = await fetch('./chatbot-responses.json');
+      const response = await fetch(`${APP_CONFIG.API_BASE_URL}/api/chatbot-responses.json`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

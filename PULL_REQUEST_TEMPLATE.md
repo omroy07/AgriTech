@@ -58,7 +58,7 @@ const firebaseConfig = {
 ```javascript
 // firebase.js - NO CREDENTIALS
 async function initializeFirebase() {
-  const response = await fetch('/api/firebase-config');
+  const response = await fetch(`{APP_CONFIG.API_BASE_URL}/api/firebase-config`);
   firebaseConfig = await response.json();
   // Credentials loaded securely from server
 }

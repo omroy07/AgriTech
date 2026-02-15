@@ -93,7 +93,7 @@
         stateSelect.disabled = true;
         stateSelect.classList.add("loading");
 
-        fetch("/get_states?crop=" + this.value)
+        fetch(`${APP_CONFIG.API_BASE_URL}/get_states?crop=${this.value}`)
           .then((res) => res.json())
           .then((states) => {
             stateSelect.innerHTML =
@@ -128,7 +128,7 @@
           marketSelect.disabled = true;
           marketSelect.classList.add("loading");
 
-          fetch(`/get_markets?crop=${crop}&state=${state}`)
+          fetch(`${APP_CONFIG.API_BASE_URL}/get_markets?crop=${crop}&state=${state}`)
             .then((res) => res.json())
             .then((markets) => {
               marketSelect.innerHTML =

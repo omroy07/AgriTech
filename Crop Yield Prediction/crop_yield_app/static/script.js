@@ -124,7 +124,7 @@ document
       }
 
       // Make API request
-      const response = await fetch("/predict", {
+      const response = await fetch(`${APP_CONFIG.API_BASE_URL}/predict`, {
         method: "POST",
         body: formData,
         headers: headers,

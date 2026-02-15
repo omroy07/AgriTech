@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, send_from_directory
-from google import genai
+from config.config import Config
+import google.generativeai as genai
 import traceback
 import os
 import re
@@ -10,6 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__, static_folder='.', static_url_path='')
+app.config["SECRET_KEY"] = Config.SECRET_KEY
 CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
 
 # Input validation and sanitization functions
@@ -45,35 +47,33 @@ def validate_input(data):
     return True, "Valid input"
 
 # Initialize Gemini API
-API_KEY = os.environ.get('GEMINI_API_KEY')
-MODEL_ID = 'gemini-2.5-flash'
+API_KEY = os.environ.get("GEMINI_API_KEY")
+MODEL_ID = "gemini-2.5-flash"
 
-if not API_KEY:
-    raise RuntimeError("GEMINI_API_KEY is not set in environment variables")
+client = None
 
-# Configure Gemini Client
-client = genai.Client(api_key=API_KEY)
+if API_KEY:
+    try:
+        client = genai.Client(api_key=API_KEY)
+        print("Gemini client initialized successfully.")
+    except Exception as e:
+        print("Failed to initialize Gemini client:", e)
+else:
+    print("Warning: GEMINI_API_KEY not set. AI features are disabled.")
 
 
 """Secure endpoint to provide Firebase configuration to client"""
 @app.route('/api/firebase-config')
 def get_firebase_config():
-    try:
-        return jsonify({
-            'apikey': os.environ['FIREBASE_API_KEY'],
-            'authDomain': os.environ['FIREBASE_AUTH_DOMAIN'],
-            'projectId': os.environ['FIREBASE_PROJECT_ID'],
-            'storageBucket': os.environ['FIREBASE_STORAGE_BUCKET'],
-            'messagingSenderId': os.environ['FIREBASE_MESSAGING_SENDER_ID'],
-            'appId': os.environ['FIREBASE_APP_ID'],
-            'measurementId': os.environ['FIREBASE_MEASUREMENT_ID']
-
-        })
-    except KeyError as e:
-        return jsonify({
-            "status": "error",
-            "message":f"Missing environment variable: {str(e)}"
-        }),500
+    return jsonify({
+        "apiKey": os.getenv("FIREBASE_API_KEY"),
+        "authDomain": os.getenv("FIREBASE_AUTH_DOMAIN"),
+        "projectId": os.getenv("FIREBASE_PROJECT_ID"),
+        "storageBucket": os.getenv("FIREBASE_STORAGE_BUCKET"),
+        "messagingSenderId": os.getenv("FIREBASE_MESSAGING_SENDER_ID"),
+        "appId": os.getenv("FIREBASE_APP_ID"),
+        "measurementId": os.getenv("FIREBASE_MEASUREMENT_ID")
+    })
 
 
 @app.route('/process-loan', methods=['POST'])

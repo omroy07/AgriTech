@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Call backend /api/chat
-        const res = await fetch("/api/chat", {
+        const res = await fetch(`${APP_CONFIG.API_BASE_URL}/api/chat`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"

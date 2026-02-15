@@ -4,7 +4,7 @@ let username = "";
 let currentCommunity = "";
 
 function fetchCommunities() {
-  fetch("/communities")
+  fetch(`${APP_CONFIG.API_BASE_URL}/api/communities`)
     .then(res => res.json())
     .then(communities => {
       const list = document.getElementById('communitiesList');
@@ -21,7 +21,7 @@ function fetchCommunities() {
 function addCommunity() {
   const room = document.getElementById('newCommunityName').value.trim();
   if (!room) return;
-  fetch("/add_community", {
+  fetch(`${APP_CONFIG.API_BASE_URL}/add_community`, {
     method: "POST",
     headers: { 'Content-Type': "application/json" },
     body: JSON.stringify({ room })
@@ -35,7 +35,7 @@ function addCommunity() {
 
 function deleteCommunity() {
   if (!currentCommunity) return;
-  fetch("/delete_community", {
+  fetch(`${APP_CONFIG.API_BASE_URL}/delete_community`, {
     method: "POST",
     headers: { 'Content-Type': "application/json" },
     body: JSON.stringify({ room: currentCommunity })

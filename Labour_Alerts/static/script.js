@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function fetchNewsUpdates() {
-    fetch('http://127.0.0.1:5000/news')
+    fetch(`${APP_CONFIG.API_BASE_URL}/news`)
         .then(response => response.json())
         .then(data => {
             if (data && Array.isArray(data.results)) {

@@ -8,7 +8,7 @@ document.getElementById('forumForm').addEventListener('submit', function (e) {
   };
 
 
-  fetch('http://localhost:5000/forum', {
+  fetch(`${APP_CONFIG.API_BASE_URL}/forum`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -24,7 +24,7 @@ document.getElementById('forumForm').addEventListener('submit', function (e) {
 
 
 function loadPosts() {
-  fetch('http://localhost:5000/forum')
+  fetch(`${APP_CONFIG.API_BASE_URL}/api/forum_posts`)
     .then(res => res.json())
     .then(posts => {
       const container = document.getElementById('forumPosts');

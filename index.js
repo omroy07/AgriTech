@@ -316,3 +316,26 @@ localStorage.setItem(
 );
 
 renderRoadmap(tasks);
+
+async function initializeFirebase() {
+    try {
+        const response = await fetch('/api/firebase-config');
+        const config = await response.json();
+
+        if (!config.apiKey) {
+            console.warn("Firebase not configured on server.");
+            return;
+        }
+
+        console.log("Firebase config loaded:", config);
+
+        // If you later add Firebase SDK, initialize here
+        // initializeApp(config);
+
+    } catch (error) {
+        console.error("Failed to load Firebase config:", error);
+    }
+}
+
+// Call it
+initializeFirebase();

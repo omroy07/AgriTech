@@ -1615,7 +1615,6 @@
 
   <script type="module" src="index.js"></script>
   
-  <script src="index.js"></script>
 
   <script>
     // Theme Toggle
@@ -1697,6 +1696,7 @@
 const hamburgerBtn = document.getElementById('hamburgerBtn');
 const mobileMenu = document.getElementById('mobileMenu');
 const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+const mobileCloseBtn = document.querySelector('.mobile-close-btn');
 
 function closeMobileMenu() {
   mobileMenu.classList.remove('active');
@@ -1719,11 +1719,17 @@ if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
   });
 
   // ❌ CLOSE — TOUCH SAFE
+
+
+
+if(mobileCloseBtn){
+
   mobileCloseBtn.addEventListener('pointerdown', (e) => {
     e.preventDefault();
     e.stopPropagation();
     closeMobileMenu();
   });
+  }
 
   // BACKUP FOR OLD MOBILE BROWSERS
   mobileCloseBtn.addEventListener('touchstart', (e) => {

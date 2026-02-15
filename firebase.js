@@ -9,7 +9,7 @@ let auth = null;
 // Initialize Firebase securely
 async function initializeFirebase() {
   try {
-    const response = await fetch('/api/firebase-config');
+    const response = await fetch(`${APP_CONFIG.API_BASE_URL}/api/firebase-config`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
