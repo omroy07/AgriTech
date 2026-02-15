@@ -30,6 +30,7 @@ from .climate import ClimateZone, SensorNode, TelemetryLog, AutomationTrigger
 from .labor import WorkerProfile, WorkShift, HarvestLog, PayrollEntry
 from .logistics_v2 import DriverProfile, DeliveryVehicle, TransportRoute, FuelLog
 from .transparency import ProduceReview, PriceAdjustmentLog
+from .barter import BarterTransaction, BarterResource, ResourceValueIndex
 
 __all__ = [
     'User', 'UserRole', 'LoanRequest', 'PredictionHistory', 
@@ -57,5 +58,6 @@ __all__ = [
     'Alert', 'AlertPreference',
     'AuditLog', 'UserSession',
     'MediaPayload',
-    'ProduceReview', 'PriceAdjustmentLog'
+    'ProduceReview', 'PriceAdjustmentLog',
+    'BarterTransaction', 'BarterResource', 'ResourceValueIndex'
 ]
