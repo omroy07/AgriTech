@@ -30,6 +30,7 @@ from auth_utils import token_required, roles_required
 import backend.sockets.forum_events # Register forum socket events
 import backend.sockets.knowledge_events # Register knowledge exchange events
 import backend.sockets.alert_socket # Register centralized alert socket events
+import backend.sockets.crisis_events # Register crisis monitoring events
 from backend.utils.i18n import t
 
 from routes.irrigation_routes import irrigation_bp
