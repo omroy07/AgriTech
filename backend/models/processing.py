@@ -10,6 +10,11 @@ class ProcessingStage(Enum):
     PACKAGING = "packaging"
     COMPLETED = "completed"
 
+batch_supply_map = db.Table('batch_supply_map',
+    db.Column('processing_batch_id', db.Integer, db.ForeignKey('processing_batches.id'), primary_key=True),
+    db.Column('supply_batch_id', db.Integer, db.ForeignKey('supply_batches.id'), primary_key=True)
+)
+
 class ProcessingBatch(db.Model):
     __tablename__ = 'processing_batches'
     
@@ -29,6 +34,7 @@ class ProcessingBatch(db.Model):
 
     stages = db.relationship('StageLog', backref='batch', lazy='dynamic', cascade='all, delete-orphan')
     quality_checks = db.relationship('QualityCheck', backref='batch', lazy='dynamic', cascade='all, delete-orphan')
+    supply_batches = db.relationship('SupplyBatch', secondary=batch_supply_map, backref='processing_batches')
 
     def to_dict(self):
         return {

@@ -44,11 +44,12 @@
       <div class="navbar-right">
         <!-- Search -->
         <div class="search-container">
-          <input type="text" placeholder="Search..." class="search-input" />
-          <button class="search-button">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
+  <input type="text" placeholder="Search..." class="search-input" id="dashboardSearch" />
+  <button class="search-button" id="searchBtn">
+    <i class="fas fa-search"></i>
+  </button>
+</div>
+
 
         <!-- Action Buttons -->
         <div class="navbar-actions">
@@ -452,6 +453,79 @@
   <script src="theme.js"></script>
   <script src="auth.js"></script>
   <script>
+
+    // ================= DASHBOARD SEARCH FUNCTIONALITY =================
+function performDashboardSearch(query) {
+  if (!query) return;
+
+  const q = query.toLowerCase();
+
+  // Map keywords to pages/modules
+  const routes = {
+    "crop": "/crop",
+    "yield": "Crop Yield Prediction/crop_yield_app/templates/index.html",
+    "disease": "disease.html",
+    "organic": "organic.html",
+    "weather": "weather.html",
+    "farmer": "farmer.html",
+    "shop": "shopkeeper.html",
+    "chat": "chat.html",
+    "forum": "Forum/forum.html",
+    "scheme": "Gov_schemes/index_scheme.html",
+    "loan": "smart_loan.html",
+    "calendar": "cropCalendar.html",
+    "labour": "Labour_Alerts/templates/labour.html"
+  };
+
+  // Find matching route
+  for (const key in routes) {
+    if (q.includes(key)) {
+      window.location.href = routes[key];
+      return;
+    }
+  }
+
+  // If no match found
+  Swal.fire({
+    icon: 'info',
+    title: 'No Results Found',
+    text: 'Try searching for: crop, weather, chat, disease, loan, etc.',
+    confirmButtonColor: '#4CAF50'
+  });
+}
+
+// Desktop Search Events
+const searchInput = document.getElementById('dashboardSearch');
+const searchBtn = document.getElementById('searchBtn');
+
+if (searchBtn && searchInput) {
+  searchBtn.addEventListener('click', () => {
+    performDashboardSearch(searchInput.value.trim());
+  });
+
+  searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      performDashboardSearch(searchInput.value.trim());
+    }
+  });
+}
+
+// Mobile Search Events
+const mobileSearchInput = document.getElementById('mobileDashboardSearch');
+const mobileSearchBtn = document.getElementById('mobileSearchBtn');
+
+if (mobileSearchBtn && mobileSearchInput) {
+  mobileSearchBtn.addEventListener('click', () => {
+    performDashboardSearch(mobileSearchInput.value.trim());
+  });
+
+  mobileSearchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      performDashboardSearch(mobileSearchInput.value.trim());
+    }
+  });
+}
+
     // Mobile menu toggle
     function toggleMobileMenu() {
       const mobileMenu = document.getElementById('mobileMenu');

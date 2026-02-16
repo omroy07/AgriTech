@@ -43,11 +43,14 @@ class WeatherAPIClient:
         import random
         return {
             'main': {
-                'temp': random.uniform(15, 35),
-                'humidity': random.uniform(40, 80)
+                'temp': random.uniform(15, 45),
+                'humidity': random.uniform(20, 95)
             },
-            'weather': [{'main': 'Cloudy', 'description': 'broken clouds'}],
-            'wind': {'speed': random.uniform(2, 10)},
+            'weather': [{'main': random.choice(['Clear', 'Cloudy', 'Rain', 'Storm']), 'description': 'weather status'}],
+            'wind': {
+                'speed': random.uniform(1, 15),
+                'deg': random.uniform(0, 360)
+            },
             'name': location,
             'dt': int(time.time())
         }

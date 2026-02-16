@@ -13,6 +13,8 @@
     --glass: rgba(255, 255, 255, 0.4);
     --glass-border: rgba(255, 255, 255, 0.2);
     --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    --brand-green-gradient: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+    --brand-green-hover: linear-gradient(135deg, #388e3c 0%, #66bb6a 100%);
 }
 
 /* =========================
@@ -102,18 +104,31 @@
 }
 
 .nav-btn {
-  padding: 0.4rem 0.8rem;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-  background: #f9fafb;
-  cursor: pointer;
-  font-weight: 500;
+ background: var(--brand-green-gradient) !important; /* Unified Green Palette */
+    color: #ffffff !important;
+    border: none !important;
+    padding: 0.6rem 1.25rem;
+    border-radius: 25px; /* Pill-shaped aesthetic */
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    /* Bouncy Interaction Logic */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.nav-btn:hover {
+    transform: scale(1.08) translateY(-2px);
+    background: var(--brand-green-hover) !important;
+    box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
 }
 
 .nav-btn.primary {
-  background: #16a34a;
-  color: white;
-  border-color: #16a34a;
+    background: #16a34a !important; /* Standout register button */
 }
 
 .forum-layout {
@@ -186,7 +201,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.75rem 1rem;
+    padding: 0.85rem 1rem;
     border-radius: 12px;
     cursor: pointer;
     transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -195,9 +210,9 @@ body {
 
 .category-item:hover,
 .category-item.active {
-    background: var(--primary);
-    color: white;
-    transform: translateX(5px);
+    background: rgba(34, 197, 94, 0.15); /* Green Glow highlight */
+    color: var(--primary-light);
+    transform: scale(1.02) translateX(8px);
 }
 
 .category-item .count {
