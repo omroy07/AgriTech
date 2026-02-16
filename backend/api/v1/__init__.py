@@ -37,6 +37,9 @@ from .climate_control import climate_bp
 from .labor_management import labor_bp
 from .logistics_portal import logistics_portal_bp
 from .audit import audit_bp
+from .gews import gews_bp
+from .transparency import transparency_bp
+from .barter import barter_bp
 
 # Create v1 API blueprint
 api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1')
@@ -80,3 +83,6 @@ api_v1.register_blueprint(climate_bp, url_prefix='/climate')
 api_v1.register_blueprint(labor_bp, url_prefix='/labor')
 api_v1.register_blueprint(logistics_portal_bp, url_prefix='/logistics-v2')
 api_v1.register_blueprint(audit_bp)
+api_v1.register_blueprint(gews_bp, url_prefix='/gews')
+api_v1.register_blueprint(transparency_bp, url_prefix='/transparency')
+api_v1.register_blueprint(barter_bp, url_prefix='/barter')

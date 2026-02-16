@@ -13,6 +13,7 @@ class WeatherData(db.Model):
     humidity = db.Column(db.Float)
     rainfall = db.Column(db.Float) # precipitation
     wind_speed = db.Column(db.Float)
+    wind_direction = db.Column(db.Float) # degree, 0-360
     weather_condition = db.Column(db.String(50)) # e.g., 'Cloudy', 'Rainy'
     
     is_forecast = db.Column(db.Boolean, default=False)

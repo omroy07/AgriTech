@@ -42,5 +42,13 @@ celery_app.conf.update(
             'task': 'tasks.update_market_prices',
             'schedule': 3600.0,  # 1 hour
         },
+        'hourly-freshness-pricing': {
+            'task': 'tasks.hourly_freshness_pricing_update',
+            'schedule': 3600.0,
+        },
+        'pathogen-propagation-simulation': {
+            'task': 'tasks.pathogen_propagation_run',
+            'schedule': 1800.0, # Every 30 mins
+        }
     }
 )
