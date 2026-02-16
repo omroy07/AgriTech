@@ -40,9 +40,10 @@
           <input type="text" placeholder="Search...">
           <button><i class="fas fa-search"></i></button>
         </div>
+        <button class="nav-btn" id="themeToggle">
+  <i class="fas fa-moon"></i>
+</button>
 
-        <button class="nav-btn">English</button>
-        <button class="nav-btn" id="themeToggle">Light</button>
         <a href="login.html" class="nav-btn">Login</a>
         <a href="register.html" class="nav-btn primary">Register</a>
       </div>
@@ -157,13 +158,16 @@
   </div>
 <script>
   const themeBtn = document.getElementById("themeToggle");
+  const themeIcon = themeBtn.querySelector("i");
 
-  // Load saved theme on page load
+  // Load saved theme
   if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("dark-mode");
-    themeBtn.textContent = "Light";
+    themeIcon.classList.remove("fa-moon");
+    themeIcon.classList.add("fa-sun");
   } else {
-    themeBtn.textContent = "Dark";
+    themeIcon.classList.remove("fa-sun");
+    themeIcon.classList.add("fa-moon");
   }
 
   themeBtn.addEventListener("click", () => {
@@ -171,13 +175,16 @@
 
     if (document.body.classList.contains("dark-mode")) {
       localStorage.setItem("theme", "dark");
-      themeBtn.textContent = "Light";
+      themeIcon.classList.remove("fa-moon");
+      themeIcon.classList.add("fa-sun");
     } else {
       localStorage.setItem("theme", "light");
-      themeBtn.textContent = "Dark";
+      themeIcon.classList.remove("fa-sun");
+      themeIcon.classList.add("fa-moon");
     }
   });
 </script>
+
 
   <!-- Scripts -->
   <script src="forum.js"></script>
