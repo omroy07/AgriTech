@@ -658,9 +658,9 @@
 
         <div class="action-buttons-group">
           <form method="post" action="/download_report">
-            {% for key, value in params.items() %}
+            
             <input type="hidden" name="{{ key }}" value="{{ value }}" />
-            {% endfor %}
+            
             <input type="hidden" name="crop" value="{{ crop }}" />
             
             <button
