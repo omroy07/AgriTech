@@ -73,18 +73,30 @@
           </div>
         </div>
         <div class="hero-image">
-  <div class="floating-icons">
-    <span class="float-icon">🍅</span>
-    <span class="float-icon">🥔</span>
-    <span class="float-icon">🌽</span>
-    <span class="float-icon">🍎</span>
-    <span class="float-icon">🍇</span>
-    <span class="float-icon">🌿</span>
-  </div>
+  <div class="floating-icons" aria-hidden="true">
+  <span class="float-icon" role="presentation">
+    <span aria-hidden="true">🍅</span>
+  </span>
+  <span class="float-icon" role="presentation">
+    <span aria-hidden="true">🥔</span>
+  </span>
+  <span class="float-icon" role="presentation">
+    <span aria-hidden="true">🌽</span>
+  </span>
+  <span class="float-icon" role="presentation">
+    <span aria-hidden="true">🍎</span>
+  </span>
+  <span class="float-icon" role="presentation">
+    <span aria-hidden="true">🍇</span>
+  </span>
+  <span class="float-icon" role="presentation">
+    <span aria-hidden="true">🌿</span>
+  </span>
 </div>
-
+</div>
+        
       </div>
-      
+  
     </section>
 
 
@@ -93,15 +105,15 @@
     <main class="main-wrapper" id="analysis">
       <div class="main-content">
         <div class="analysis-section">
-          <h2>🔬 AI Disease Analysis</h2>
+          <h2><span aria-hidden="true">🔬</span> AI Disease Analysis</h2>
           <div id="modelStatus" class="status-indicator status-success">
-            ✅ AI Model Ready - Upload an image to begin analysis
+            <span aria-hidden="true">✅</span> AI Model Ready - Upload an image to begin analysis
           </div>
 
           <div class="upload-container">
             <div class="upload-zone">
               <div class="upload-area" id="uploadArea">
-                <div class="upload-icon">📸</div>
+                <div class="upload-icon"><span aria-hidden="true">📸</span></div>
                 <div class="upload-text">
                   <strong>Drop your plant image here</strong><br />
                   or click to browse files<br />
@@ -111,55 +123,55 @@
               <input type="file" id="fileInput" class="file-input" accept="image/*" />
               <center>
                 <button class="btn" id="analyzeBtn" disabled>
-                  🔍 Analyze Plant Health
+                  <span aria-hidden="true">🔍</span> Analyze Plant Health
                 </button>
               </center>
             </div>
 
             <div class="results-zone">
               <div class="preview-container" id="previewContainer">
-                <div class="no-results">📷 Upload an image to get started</div>
+                <div class="no-results"><span aria-hidden="true">📷</span> Upload an image to get started</div>
               </div>
 
               <div class="loading" id="loading">
                 <div class="spinner"></div>
-                <p>🧠 AI is analyzing your plant...</p>
+                <p><span aria-hidden="true">🧠</span> AI is analyzing your plant...</p>
               </div>
 
               <div id="results"></div>
               <center style="margin-top: 15px;">
                 <button id="downloadPdfBtn" class="btn" style="display:none;">
-                    📄 Download Result as PDF
+                    <span aria-hidden="true">📄</span> Download Result as PDF
                 </button>
               </center>
             </div>
           </div>
         </div>
       </div>
+      
 
       <!-- Features Section -->
       <div class="features-section" id="features">
         <h2 style="text-align: center; color: var(--color-brand); font-size: 2rem; margin-bottom: 20px;">
-          ✨ Key Features
-        </h2>
+        <span aria-hidden="true">✨</span> Key Features</h2>
         <div class="features-grid">
           <div class="feature-card" onclick="openModal('accuracyModal')">
-            <div class="feature-icon">🎯</div>
+            <div class="feature-icon" aria-hidden="true">🎯</div>
             <h3>High Accuracy</h3>
             <p>Advanced machine learning algorithms for precise disease identification</p>
           </div>
           <div class="feature-card" onclick="openModal('speedModal')">
-            <div class="feature-icon">⚡</div>
+            <div class="feature-icon" aria-hidden="true">⚡</div>
             <h3>Instant Results</h3>
             <p>Get comprehensive analysis within seconds of uploading</p>
           </div>
           <div class="feature-card" onclick="openModal('treatmentModal')">
-            <div class="feature-icon">💊</div>
+            <div class="feature-icon" aria-hidden="true">💊</div>
             <h3>Treatment Recommendations</h3>
             <p>Detailed treatment suggestions and prevention tips</p>
           </div>
           <div class="feature-card" onclick="openModal('plantsModal')">
-            <div class="feature-icon">🌿</div>
+            <div class="feature-icon" aria-hidden="true">🌿</div>
             <h3>Multiple Plant Types</h3>
             <p>Support for various crops and plant species</p>
           </div>
@@ -171,7 +183,7 @@
     <div id="accuracyModal" class="modal">
       <div class="modal-content">
         <span class="close" onclick="closeModal('accuracyModal')">&times;</span>
-        <h2>🎯 High Accuracy Detection</h2>
+        <h2><span aria-hidden="true">🎯</span> High Accuracy Detection</h2>
         <div class="modal-section">
           <h3>Advanced AI Technology</h3>
           <p>Our system uses state-of-the-art deep learning models trained on extensive datasets containing thousands of plant images.</p>
@@ -182,7 +194,7 @@
     <div id="speedModal" class="modal">
       <div class="modal-content">
         <span class="close" onclick="closeModal('speedModal')">&times;</span>
-        <h2>⚡ Instant Results</h2>
+        <h2><span aria-hidden="true">⚡</span> Instant Results</h2>
         <div class="modal-section">
           <h3>Lightning-Fast Analysis</h3>
           <p>Our optimized AI model processes your plant images in real-time.</p>
@@ -193,7 +205,7 @@
     <div id="treatmentModal" class="modal">
       <div class="modal-content">
         <span class="close" onclick="closeModal('treatmentModal')">&times;</span>
-        <h2>💊 Treatment Recommendations</h2>
+        <h2><span aria-hidden="true">💊</span> Treatment Recommendations</h2>
         <div class="modal-section">
           <h3>Comprehensive Treatment Plans</h3>
           <p>Each diagnosis comes with detailed, actionable treatment recommendations.</p>
@@ -204,7 +216,7 @@
     <div id="plantsModal" class="modal">
       <div class="modal-content">
         <span class="close" onclick="closeModal('plantsModal')">&times;</span>
-        <h2>🌿 Supported Plant Types</h2>
+        <h2><span aria-hidden="true">🌿</span> Supported Plant Types</h2>
         <div class="modal-section">
           <h3>Comprehensive Plant Database</h3>
           <p>Our AI system has been trained to identify diseases across a wide variety of plant species.</p>

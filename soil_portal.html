@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil Health Insights | AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --earth: #78350f;
+            --leaf: #15803d;
+            --clay: #fde68a;
+            --bg: #fafaf9;
+            --card: #ffffff;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: #1c1917;
+            margin: 0;
+        }
+
+        .app-shell {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--earth);
+            color: white;
+            padding: 2rem;
+        }
+
+        .farm-selector {
+            margin-top: 2rem;
+        }
+
+        .farm-card {
+            padding: 1rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 1rem;
+        }
+
+        .farm-card:hover,
+        .farm-card.active {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Main Content */
+        .main {
+            padding: 3rem;
+            max-width: 1200px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .stat-val {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--leaf);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #78716c;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .recommendation-list {
+            margin-top: 2rem;
+        }
+
+        .rec-item {
+            padding: 1.25rem;
+            border-left: 4px solid var(--leaf);
+            background: #f0fdf4;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 1rem;
+        }
+
+        .rec-item h4 {
+            margin: 0 0 0.5rem 0;
+            color: var(--earth);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-earth {
+            background: var(--earth);
+            color: white;
+        }
+
+        .btn-leaf {
+            background: var(--leaf);
+            color: white;
+        }
+
+        .nutrient-bar {
+            height: 8px;
+            background: #e7e5e4;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .nutrient-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: 1s ease-out;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-shell">
+        <aside class="sidebar">
+            <h2 style="color: var(--clay);"><i class="fas fa-seedling"></i> TerraProbe</h2>
+            <p style="opacity: 0.7; font-size: 0.9rem;">Advanced Soil Health Intelligence</p>
+            <div class="farm-selector" id="farm-list">
+                <!-- Farm Cards Injected Here -->
+            </div>
+            <button class="btn btn-leaf" style="width: 100%; margin-top: 2rem;" onclick="openTestModal()">+ Log Soil
+                Test</button>
+        </aside>
+
+        <main class="main">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h1 id="active-farm-name">Select a Farm</h1>
+                <div id="last-test-date" style="font-size: 0.9rem; color: #78716c;"></div>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="stat-card">
+                    <div class="stat-val" id="val-ph">-</div>
+                    <div class="stat-label">Soil pH</div>
+                    <div class="nutrient-bar">
+                        <div class="nutrient-fill" id="fill-ph" style="background: #f59e0b;"></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-val" id="val-oc">-</div>
+                    <div class="stat-label">Organic Matter (%)</div>
+                    <div class="nutrient-bar">
+                        <div class="nutrient-fill" id="fill-oc" style="background: #10b981;"></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-val" id="val-ec">-</div>
+                    <div class="stat-label">Conductivity (dS/m)</div>
+                    <div class="nutrient-bar">
+                        <div class="nutrient-fill" id="fill-ec" style="background: #3b82f6;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-layout">
+                <div class="card">
+                    <h3>Nutrient Trend Analysis (ppm)</h3>
+                    <canvas id="nutrientChart"></canvas>
+                </div>
+
+                <div class="card">
+                    <h3>Personalized Recommendations</h3>
+                    <div id="rec-container" class="recommendation-list">
+                        <p style="text-align: center; opacity: 0.5;">Load a farm to see recommendations.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="soil_portal.js"></script>
+</body>
+
+</html>

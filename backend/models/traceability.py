@@ -1,4 +1,6 @@
 from datetime import datetime
+import json
+import hashlib
 from backend.extensions import db
 
 
@@ -16,79 +18,135 @@ class BatchStatus:
         return status in [cls.HARVESTED, cls.QUALITY_CHECK, cls.PACKAGED, cls.LOGISTICS, cls.IN_SHOP, cls.SOLD, cls.REJECTED]
 
 
-class ProduceBatch(db.Model):
-    __tablename__ = 'produce_batches'
+class SupplyBatch(db.Model):
+    __tablename__ = 'supply_batches'
     
     id = db.Column(db.Integer, primary_key=True)
-    batch_id = db.Column(db.String(50), unique=True, nullable=False)
-    qr_code = db.Column(db.Text)
-    produce_name = db.Column(db.String(100), nullable=False)
-    produce_type = db.Column(db.String(50), nullable=False)
-    quantity_kg = db.Column(db.Float, nullable=False)
-    origin_location = db.Column(db.String(200), nullable=False)
+    batch_internal_id = db.Column(db.String(50), unique=True, nullable=False, index=True)
+    qr_code_data = db.Column(db.Text)
+    
+    # Crop Details
+    crop_name = db.Column(db.String(100), nullable=False)
+    crop_variety = db.Column(db.String(100))
+    quantity = db.Column(db.Float, nullable=False)
+    unit = db.Column(db.String(20), default='KG')
+    
+    # State & Timeline
     status = db.Column(db.String(20), default=BatchStatus.HARVESTED)
+    harvest_date = db.Column(db.DateTime, default=datetime.utcnow)
+    expiry_date = db.Column(db.DateTime)
+    
+    # Locations
+    farm_location = db.Column(db.String(255), nullable=False)
+    current_gps_lat = db.Column(db.Float)
+    current_gps_lng = db.Column(db.Float)
+    
+    # Participants
     farmer_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     current_handler_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    shopkeeper_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
-    harvest_date = db.Column(db.DateTime, default=datetime.utcnow)
-    quality_check_date = db.Column(db.DateTime, nullable=True)
-    logistics_date = db.Column(db.DateTime, nullable=True)
-    received_date = db.Column(db.DateTime, nullable=True)
-    certification = db.Column(db.String(100))
-    quality_grade = db.Column(db.String(20))
-    quality_notes = db.Column(db.Text)
+    distributor_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    retailer_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    soil_test_id = db.Column(db.Integer, db.ForeignKey('soil_tests.id'))
+    
+    # Quality & Legal
+    is_certified = db.Column(db.Boolean, default=False)
+    certificate_url = db.Column(db.String(255))
+    integrity_hash = db.Column(db.String(64))  # SHA256 of the batch history
+    
+    # Timestamps
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-
+    
     # Relationships
-    audit_logs = db.relationship('AuditTrail', backref='batch', lazy='dynamic', cascade='all, delete-orphan')
+    custody_logs = db.relationship('CustodyLog', backref='batch', lazy='dynamic', cascade='all, delete-orphan')
+    quality_grades = db.relationship('QualityGrade', backref='batch', lazy='dynamic', cascade='all, delete-orphan')
 
-    def can_transition_to(self, new_status, user_role):
-        # Simplified transition logic
-        return True
+    def generate_integrity_hash(self):
+        """Generate a SHA256 hash representing the current state and audit trail of the batch"""
+        logs = [log.to_dict() for log in self.custody_logs.all()]
+        data = {
+            'id': self.batch_internal_id,
+            'crop': self.crop_name,
+            'quantity': self.quantity,
+            'logs': logs
+        }
+        data_string = json.dumps(data, sort_keys=True, default=str)
+        return hashlib.sha256(data_string.encode()).hexdigest()
 
+    def to_dict(self, include_logs=False):
+        data = {
+            'id': self.id,
+            'batch_id': self.batch_internal_id,
+            'crop_name': self.crop_name,
+            'crop_variety': self.crop_variety,
+            'quantity': self.quantity,
+            'unit': self.unit,
+            'status': self.status,
+            'farm_location': self.farm_location,
+            'farmer_id': self.farmer_id,
+            'current_handler_id': self.current_handler_id,
+            'harvest_date': self.harvest_date.isoformat(),
+            'is_certified': self.is_certified,
+            'certificate_url': self.certificate_url,
+            'integrity_hash': self.integrity_hash,
+            'updated_at': self.updated_at.isoformat()
+        }
+        if include_logs:
+            data['logs'] = [log.to_dict() for log in self.custody_logs.order_by(CustodyLog.timestamp.desc()).all()]
+            data['quality_history'] = [q.to_dict() for q in self.quality_grades.all()]
+        return data
+
+
+class QualityGrade(db.Model):
+    __tablename__ = 'quality_grades'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    batch_id = db.Column(db.Integer, db.ForeignKey('supply_batches.id'), nullable=False)
+    inspector_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    
+    grade = db.Column(db.String(10), nullable=False)  # A, B, C, Premium, etc.
+    parameters = db.Column(db.Text)  # JSON string of moisture, size, etc.
+    notes = db.Column(db.Text)
+    
+    inspection_date = db.Column(db.DateTime, default=datetime.utcnow)
+    
     def to_dict(self):
         return {
             'id': self.id,
-            'batch_id': self.batch_id,
-            'produce_name': self.produce_name,
-            'produce_type': self.produce_type,
-            'quantity_kg': self.quantity_kg,
-            'origin_location': self.origin_location,
-            'status': self.status,
-            'farmer_id': self.farmer_id,
-            'current_handler_id': self.current_handler_id,
-            'harvest_date': self.harvest_date.isoformat() if self.harvest_date else None,
-            'created_at': self.created_at.isoformat() if self.created_at else None
+            'grade': self.grade,
+            'parameters': json.loads(self.parameters) if self.parameters else {},
+            'notes': self.notes,
+            'inspection_date': self.inspection_date.isoformat()
         }
 
 
-class AuditTrail(db.Model):
-    __tablename__ = 'audit_trails'
+class CustodyLog(db.Model):
+    __tablename__ = 'custody_logs'
     
     id = db.Column(db.Integer, primary_key=True)
-    batch_id = db.Column(db.Integer, db.ForeignKey('produce_batches.id'), nullable=False)
-    event_type = db.Column(db.String(50), nullable=False)
+    batch_id = db.Column(db.Integer, db.ForeignKey('supply_batches.id'), nullable=False)
+    handler_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    
+    action = db.Column(db.String(100), nullable=False)  # HARVESTED, TRANSFERRED, RECEIVED, etc.
     from_status = db.Column(db.String(20))
     to_status = db.Column(db.String(20))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    user_role = db.Column(db.String(20))
-    user_email = db.Column(db.String(120))
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    ip_address = db.Column(db.String(45))
-    location = db.Column(db.String(200))
+    
+    location = db.Column(db.String(255))
+    gps_lat = db.Column(db.Float)
+    gps_lng = db.Column(db.Float)
+    
     notes = db.Column(db.Text)
-    event_metadata = db.Column(db.Text)
-    signature = db.Column(db.String(255))
+    digital_signature = db.Column(db.String(255))
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
     def to_dict(self):
         return {
             'id': self.id,
-            'event_type': self.event_type,
+            'handler_id': self.handler_id,
+            'action': self.action,
             'from_status': self.from_status,
             'to_status': self.to_status,
-            'user_id': self.user_id,
-            'user_email': self.user_email,
-            'timestamp': self.timestamp.isoformat() if self.timestamp else None,
+            'location': self.location,
+            'timestamp': self.timestamp.isoformat(),
             'notes': self.notes
         }

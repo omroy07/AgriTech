@@ -771,6 +771,122 @@
       transform: translateX(0);
     }
 /* ================= FOOTER ================= */
+    .site-footer {
+      background: var(--surface-color);
+      color: var(--text-color);
+      position: relative;
+      font-size: 0.95rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .footer-top-accent {
+      height: 4px;
+      background: linear-gradient(90deg, #16a34a, #22c55e);
+    }
+
+    .footer-inner-content {
+      max-width: 1200px;
+      margin: auto;
+      padding: 3rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      flex: 1 1 280px;
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .brand-logo {
+      width: 42px;
+    }
+
+    .footer-brand h3 {
+      color: var(--accent-color);
+      font-size: 1.3rem;
+    }
+
+    .tagline {
+      margin: 0.8rem 0 1.2rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 0.7rem;
+    }
+
+    .social-icons a {
+      width: 36px;
+      height: 36px;
+      background: #e6f4ea;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #15803d;
+      transition: all 0.25s ease;
+    }
+
+    .social-icons a:hover {
+      background: #22c55e;
+      color: #fff;
+    }
+
+    .footer-group-links {
+      display: flex;
+      gap: 3rem;
+      flex: 1 1 320px;
+    }
+
+    .footer-section h4 {
+      color: var(--accent-color);
+      margin-bottom: 0.9rem;
+      font-size: 1rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-section ul a {
+      color: var(--text-muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.25s ease;
+    }
+
+    .footer-section ul a:hover {
+      color: var(--accent-color);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding: 1rem;
+      background: var(--section-bg);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .footer-wave-overlay {
+      display: none;
+    }
+
 .site-footer {
   background: var(--surface-color, var(--bg-secondary));
   color: var(--text-color, var(--text-primary));
@@ -926,7 +1042,50 @@
     font-size: 0.8rem;
   }
 }
+/* --- Cursor Trail Container --- */
+.circle-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999999;
+}
 
+/* --- Individual Trail Circles --- */
+.cursor-circle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ff8c00;
+  box-shadow: 0 0 15px rgba(255, 140, 0, 0.7);
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  mix-blend-mode: screen;
+  transition: transform 0.1s ease-out;
+}
+
+/* --- The Leading "Head" Circle --- */
+.cursor-circle:first-child {
+  width: 14px;
+  height: 14px;
+  background-color: #ffcc00;
+  box-shadow:
+    0 0 20px #ff8c00,
+    0 0 40px rgba(255, 140, 0, 0.5);
+}
+
+/* --- Interaction States --- */
+.cursor-clicking {
+  transform: translate(-50%, -50%) scale(2.5) !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 0 30px #ffffff !important;
+}
+
+.cursor-hovering {
+  transform: translate(-50%, -50%) scale(1.8);
+  background-color: #22c55e; /* AgriTech green */
+  box-shadow: 0 0 20px #22c55e;
+}
   </style>
 </head>
 
@@ -1204,19 +1363,22 @@
     <div class="footer-top-accent"></div>
 
     <div class="footer-inner-content">
-        <div class="footer-section footer-brand">
-            <div class="brand-header">
-                <img src="images/logo.png" alt="AgriTech logo" class="brand-logo">
-                <h3>AgriTech</h3>
-            </div>
-            <p class="tagline">Empowering India's Farming Future with innovative technology connecting every stakeholder.</p>
-            
-            <div class="social-icons">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
-                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            </div>
+      <div class="footer-section footer-brand">
+        <div class="brand-header">
+          <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
+          <h3>AgriTech</h3>
+        </div>
+
+        <p class="tagline">
+          Empowering India's Farming Future with innovative technology
+          connecting every stakeholder.
+        </p>
+
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
 
@@ -1224,11 +1386,21 @@
         <div class="footer-section footer-links">
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-            <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
-            <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
-            <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a></li>
+            <li>
+              <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li>
+              <a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+            </li>
+            <li>
+              <a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a>
+            </li>
+            <li>
+              <a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a>
+            </li>
           </ul>
         </div>
 
@@ -1237,12 +1409,12 @@
           <ul>
             <li>
               <a href="mailto:contact@agritech.com">
-                <i class="fas fa-envelope"></i> Email Us
+                <i class="fas fa-envelope"></i> contact@agritech.com
               </a>
             </li>
             <li>
               <a href="tel:+910000000000">
-                <i class="fas fa-phone"></i> Call Us
+                <i class="fas fa-phone"></i> +91 00000 00000
               </a>
             </li>
           </ul>
@@ -1256,7 +1428,8 @@
 
     <div class="footer-wave-overlay"></div>
   </footer>
-
+ <!-- Cursor Trail -->
+<div class="circle-container" id="cursorTrail"></div>
 
   <script>
     // Theme Toggle
@@ -1510,6 +1683,67 @@
       calculateLoan();
       showNotification('Welcome to AgriTech Financial Services!');
     });
+     // --- Cursor Trailing Effect ---
+const container = document.getElementById('cursorTrail');
+const circleCount = 12;
+const circles = [];
+
+let mouseX = 0;
+let mouseY = 0;
+
+// Create circles
+for (let i = 0; i < circleCount; i++) {
+    const circle = document.createElement('div');
+    circle.classList.add('cursor-circle');
+    container.appendChild(circle);
+    circles.push({ el: circle, x: 0, y: 0 });
+}
+
+// Mouse move
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
+
+// Click effects
+document.addEventListener('mousedown', () => {
+    circles.forEach(c => c.el.classList.add('cursor-clicking'));
+});
+document.addEventListener('mouseup', () => {
+    circles.forEach(c => c.el.classList.remove('cursor-clicking'));
+});
+
+// Hover effects on interactive elements
+document.addEventListener('mouseover', (e) => {
+    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+        circles.forEach(c => c.el.classList.add('cursor-hovering'));
+    }
+});
+document.addEventListener('mouseout', (e) => {
+    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+        circles.forEach(c => c.el.classList.remove('cursor-hovering'));
+    }
+});
+
+// Animate trailing effect
+function animateCursor() {
+    let x = mouseX;
+    let y = mouseY;
+
+    circles.forEach((circle) => {
+        circle.x += (x - circle.x) * 0.25;
+        circle.y += (y - circle.y) * 0.25;
+
+        circle.el.style.left = circle.x + 'px';
+        circle.el.style.top = circle.y + 'px';
+
+        x = circle.x;
+        y = circle.y;
+    });
+
+    requestAnimationFrame(animateCursor);
+}
+animateCursor();
   </script>
   <script src="theme.js"></script>
 

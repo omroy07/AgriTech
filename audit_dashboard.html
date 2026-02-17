@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security & Audit Dashboard | AgriTech Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-deep: #020617;
+            --surface-panel: #0f172a;
+            --danger-red: #ef4444;
+            --warning-amber: #f59e0b;
+            --success-cyan: #06b6d4;
+            --border-muted: #1e293b;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .admin-sidebar {
+            width: 260px;
+            height: 100vh;
+            background: var(--surface-panel);
+            position: fixed;
+            border-right: 1px solid var(--border-muted);
+            padding: 20px;
+        }
+
+        .main-content {
+            margin-left: 300px;
+            padding: 40px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--surface-panel);
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid var(--border-muted);
+        }
+
+        .stat-card h3 {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 10px 0;
+        }
+
+        .stat-card.threat {
+            border-left: 4px solid var(--danger-red);
+        }
+
+        .stat-card.active {
+            border-left: 4px solid var(--success-cyan);
+        }
+
+        .dashboard-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .table-container {
+            background: var(--surface-panel);
+            border-radius: 16px;
+            border: 1px solid var(--border-muted);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.02);
+            text-align: left;
+            padding: 16px;
+            font-size: 0.85rem;
+            border-bottom: 1px solid var(--border-muted);
+        }
+
+        td {
+            padding: 16px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border-muted);
+        }
+
+        .risk-badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .risk-CRITICAL {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .risk-HIGH {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+        }
+
+        .risk-MEDIUM {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+
+        .threat-warning {
+            animation: pulse 2s infinite;
+            color: var(--danger-red);
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .chart-container {
+            background: var(--surface-panel);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-muted);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-sidebar">
+        <h2 style="color: var(--success-cyan);"><i class="fas fa-shield-virus"></i> AgriAudit</h2>
+        <nav style="margin-top: 40px;">
+            <div style="padding: 10px 0; color: #64748b; font-size: 0.8rem;">OPERATIONS</div>
+            <a href="#" style="display: block; color: white; padding: 12px 0; text-decoration: none;"><i
+                    class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="#" style="display: block; color: #94a3b8; padding: 12px 0; text-decoration: none;"><i
+                    class="fas fa-list"></i> Full Logs</a>
+            <a href="#" style="display: block; color: #94a3b8; padding: 12px 0; text-decoration: none;"><i
+                    class="fas fa-user-lock"></i> Active Sessions</a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <h1>Security Monitoring</h1>
+            <button class="btn" style="background: var(--success-cyan); color: black;" onclick="refreshDashboard()">
+                <i class="fas fa-sync"></i> Refresh Data
+            </button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Interactions (24h)</h3>
+                <div class="value" id="stat-total">--</div>
+            </div>
+            <div class="stat-card threat">
+                <h3>Threats Blocked</h3>
+                <div class="value" id="stat-threats" style="color: var(--danger-red);">--</div>
+            </div>
+            <div class="stat-card active">
+                <h3>Active Sessions</h3>
+                <div class="value" id="stat-sessions" style="color: var(--success-cyan);">--</div>
+            </div>
+            <div class="stat-card">
+                <h3>System Gravity</h3>
+                <div class="value" id="stat-gravity">ALIGNED</div>
+            </div>
+        </div>
+
+        <div class="dashboard-row">
+            <div class="table-container">
+                <div
+                    style="padding: 20px; border-bottom: 1px solid var(--border-muted); display: flex; justify-content: space-between;">
+                    <h2 style="margin:0; font-size: 1.2rem;">Recent Audit Stream</h2>
+                    <span style="color: #64748b; font-size: 0.8rem;">LIVE AUTO-REFRESH</span>
+                </div>
+                <table id="logs-table">
+                    <thead>
+                        <tr>
+                            <th>TIMESTAMP</th>
+                            <th>USER</th>
+                            <th>ACTION</th>
+                            <th>RISK</th>
+                            <th>IP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dynamic Rows -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="chart-container">
+                <h3>Risk Distribution</h3>
+                <canvas id="riskChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchStats() {
+            try {
+                const res = await fetch('/api/v1/audit/stats', {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    document.getElementById('stat-total').innerText = data.stats.total_actions_24h;
+                    document.getElementById('stat-threats').innerText = data.stats.threats_detected_24h;
+                    document.getElementById('stat-sessions').innerText = data.stats.active_users;
+                    updateChart(data.stats.risk_distribution);
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        async function fetchLogs() {
+            try {
+                const res = await fetch('/api/v1/audit/logs?limit=15', {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                const data = await res.json();
+                const tbody = document.querySelector('#logs-table tbody');
+                tbody.innerHTML = data.logs.map(log => `
+                    <tr>
+                        <td style="color: #64748b;">${new Date(log.timestamp).toLocaleTimeString()}</td>
+                        <td>${log.user_id ? `User #${log.user_id}` : 'ANONYMOUS'}</td>
+                        <td style="font-weight: 500;">
+                            ${log.threat_flag ? `<i class="fas fa-exclamation-triangle threat-warning"></i> ` : ''}
+                            ${log.action}
+                        </td>
+                        <td><span class="risk-badge risk-${log.risk_level}">${log.risk_level}</span></td>
+                        <td style="font-family: monospace; font-size: 0.8rem;">${log.ip_address}</td>
+                    </tr>
+                `).join('');
+            } catch (e) { console.error(e); }
+        }
+
+        let chart;
+        function updateChart(data) {
+            const ctx = document.getElementById('riskChart').getContext('2d');
+            if (chart) chart.destroy();
+            chart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(data),
+                    datasets: [{
+                        data: Object.values(data),
+                        backgroundColor: ['#3b82f6', '#f59e0b', '#ef4444', '#06b6d4'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { plugins: { legend: { position: 'bottom', labels: { color: 'white' } } } }
+            });
+        }
+
+        function refreshDashboard() {
+            fetchStats();
+            fetchLogs();
+        }
+
+        // Initial Load
+        refreshDashboard();
+        setInterval(refreshDashboard, 30000);
+    </script>
+</body>
+
+</html>

@@ -6,7 +6,52 @@
     <title>AgriTech Blog</title>
     <link rel="stylesheet" href="blog.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
+<style>
+/* Fail-proof Scroll Top Button */
+#scrollTopBtn {
+    position: fixed !important;
+    bottom: 30px !important;
+    right: 30px !important;
+    width: 55px !important;
+    height: 55px !important;
+    border-radius: 50% !important;
+    border: none !important;
+    background: #2e7d32 !important; /* AgriTech Green */
+    color: #ffffff !important;
+    font-size: 20px !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4) !important;
+    z-index: 999999 !important; /* Above everything else */
+    
+    /* Animation logic */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out !important;
+    transform: translateY(10px);
+}
+
+/* This class must be applied by JS */
+#scrollTopBtn.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+}
+
+#scrollTopBtn:hover {
+    background: #1b5e20 !important;
+    transform: scale(1.1) !important;
+}
+
+@media (max-width: 768px) {
+    #scrollTopBtn {
+        bottom: 100px !important; /* Avoid overlap with FAB */
+    }
+}
+</style>
+  </head>
 <body>
     <!-- Include Navbar -->
     <div w3-include-html="navbar.html"></div>
@@ -42,9 +87,14 @@
                 <h2 class="modal-title" id="modalTitle"></h2>
                 <div class="icons">
                     <button class="close" id="closeBlogModal" aria-label="Close modal">&times;</button>
-                    <button class="modal-favorite-btn" id="modalFavoriteBtn" title="Toggle favorite">
-                        <i class="far fa-heart"></i>
+                    <button
+                      class="modal-favorite-btn"
+                      id="modalFavoriteBtn"
+                      aria-label="Add blog to favorites"
+                    >
+                        <i class="far fa-heart" aria-hidden="true"></i>
                     </button>
+
                 </div>
                 <div class="modal-meta">
                     <span id="modal-Author"><i class="fas fa-user"></i> </span>
@@ -59,10 +109,13 @@
         </div>
     </div>
 
-    <button class="fab-btn" id="createPostBtn" title="Create New Post">
-        <i class="fas fa-plus"></i>
+    <button
+      class="fab-btn"
+      id="createPostBtn"
+      aria-label="Create new blog post"
+    >
+        <i class="fas fa-plus" aria-hidden="true"></i>
     </button>
-
     <div id="createPostModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -203,12 +256,41 @@
 
       <div class="footer-wave-overlay"></div>
     </footer>
+<button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <i class="fas fa-arrow-up"></i>
+</button>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+    if (!scrollTopBtn) return;
+
+    // Monitor Scroll Position
+    window.addEventListener("scroll", function () {
+        // Show button after scrolling down 300px
+        if (window.pageYOffset > 300) {
+            scrollTopBtn.classList.add("show");
+        } else {
+            scrollTopBtn.classList.remove("show");
+        }
+    });
+
+    // Scroll to top on click
+    scrollTopBtn.addEventListener("click", function () {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+});
+</script>
 
     <script src="js/features/favorites.js"></script>
     <script src="blog.js"></script>
     <script src="auth.js"></script>
    <script>
 // Include navbar
+
 function includeHTML(callback) {
     var z, i, elmnt, file, xhttp;
     z = document.getElementsByTagName("*");
@@ -317,10 +399,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Include navbar and initialize functions
     includeHTML(() => {
-        initThemeToggle();
-        initHamburgerMenu();
-        initServicesDropdown(); // ✅ ADD THIS
-    });
+    initThemeToggle();
+    initHamburgerMenu();
+    initNavbarInteractions(); // ✅ CORRECT
+});
+
 
 });
 </script>
@@ -388,7 +471,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     requestAnimationFrame(animate);
   }
-
   animate();
 </script>
 

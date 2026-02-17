@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Center | AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --surface-dark: #1e293b;
+            --accent-green: #22c55e;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 80px auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .filter-btn {
+            background: var(--surface-dark);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            border-color: var(--accent-green);
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .alert-card {
+            background: var(--surface-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: grid;
+            grid-template-columns: 60px 1fr auto;
+            gap: 20px;
+            align-items: start;
+            transition: transform 0.2s;
+        }
+
+        .alert-card:hover {
+            transform: translateY(-2px);
+            border-color: #475569;
+        }
+
+        .alert-card.unread {
+            border-left: 4px solid var(--accent-green);
+            background: rgba(34, 197, 94, 0.02);
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .category-WEATHER {
+            color: #3b82f6;
+        }
+
+        .category-MARKET {
+            color: #f59e0b;
+        }
+
+        .category-SYSTEM {
+            color: #64748b;
+        }
+
+        .category-FORUM {
+            color: #8b5cf6;
+        }
+
+        .alert-content h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.1rem;
+        }
+
+        .alert-content p {
+            margin: 0;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .alert-meta {
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .priority-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .priority-CRITICAL {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .priority-HIGH {
+            background: #ffedd5;
+            color: #9a3412;
+        }
+
+        .priority-MEDIUM {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .priority-LOW {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 100px;
+            opacity: 0.5;
+        }
+
+        .settings-panel {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .preference-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .preference-card {
+            background: var(--surface-dark);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        /* Switch UI */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #475569;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: var(--accent-green);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar placeholder - In real app, include navbar.html -->
+    <div id="navbar-container"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Notification Center</h1>
+            <div class="controls">
+                <button class="filter-btn active">All</button>
+                <button class="filter-btn">Unread</button>
+                <button class="filter-btn">Extreme Weather</button>
+                <button class="filter-btn">Market Updates</button>
+            </div>
+        </div>
+
+        <div id="full-alert-list">
+            <!-- Dynamic Content -->
+            <div class="empty-state">
+                <i class="fas fa-bell-slash fa-3x"></i>
+                <p>You're all caught up!</p>
+            </div>
+        </div>
+
+        <div class="settings-panel">
+            <h2>Alert Preferences</h2>
+            <p>Choose how and when you want to be notified for different categories.</p>
+
+            <div class="preference-grid">
+                <!-- Weather -->
+                <div class="preference-card">
+                    <h3><i class="fas fa-cloud-sun"></i> Weather Alerts</h3>
+                    <div class="toggle-row">
+                        <span>Push Notifications</span>
+                        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                    </div>
+                    <div class="toggle-row">
+                        <span>Email Digest</span>
+                        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                    </div>
+                    <div class="toggle-row">
+                        <span>SMS Alerts (Critical Only)</span>
+                        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                    </div>
+                </div>
+
+                <!-- Market -->
+                <div class="preference-card">
+                    <h3><i class="fas fa-chart-line"></i> Market Intelligence</h3>
+                    <div class="toggle-row">
+                        <span>Real-time Price Alerts</span>
+                        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                    </div>
+                    <div class="toggle-row">
+                        <span>Weekly Market Report</span>
+                        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                    </div>
+                </div>
+
+                <!-- Security -->
+                <div class="preference-card">
+                    <h3><i class="fas fa-shield-alt"></i> Security & Account</h3>
+                    <div class="toggle-row">
+                        <span>Login Attempts</span>
+                        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                    </div>
+                    <div class="toggle-row">
+                        <span>Resource Access</span>
+                        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/alert_manager.js"></script>
+    <script>
+        // Load navbar
+        fetch('navbar.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('navbar-container').innerHTML = html;
+                // Re-init scripts if needed
+            });
+
+        // Simplified rendering for this page
+        function renderFullList(alerts) {
+            const list = document.getElementById('full-alert-list');
+            if (alerts.length === 0) return;
+
+            list.innerHTML = alerts.map(alert => `
+                <div class="alert-card ${alert.read_at ? '' : 'unread'}">
+                    <div class="category-icon category-${alert.category}">
+                        <i class="fas ${getIcon(alert.category)}"></i>
+                    </div>
+                    <div class="alert-content">
+                        <span class="priority-badge priority-${alert.priority}">${alert.priority}</span>
+                        <h3>${alert.title}</h3>
+                        <p>${alert.message}</p>
+                    </div>
+                    <div class="alert-meta">
+                        <div>${formatDate(alert.created_at)}</div>
+                        <div style="margin-top: 10px">
+                            ${alert.read_at ? '' : `<button onclick="markRead(${alert.id})" class="filter-btn">Mark Read</button>`}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getIcon(cat) {
+            const icons = { 'WEATHER': 'fa-cloud-meatball', 'MARKET': 'fa-store', 'FORUM': 'fa-comments' };
+            return icons[cat] || 'fa-info-circle';
+        }
+
+        function formatDate(iso) {
+            return new Date(iso).toLocaleDateString('en-IN', {
+                day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
+            });
+        }
+
+        // Hook into alertManager
+        window.alertManager.onUpdate = (alerts) => renderFullList(alerts);
+    </script>
+</body>
+
+</html>
