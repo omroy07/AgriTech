@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="icon" type="image/png" href="../../images/logo.png" />
+
    <link rel="icon" type="image/png" href="/images/logo.png">
     <meta charset="UTF-8" />
     <title>Crop Recommendation Result</title>
@@ -14,7 +16,8 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
-    <script src="{{ url_for('static', filename='theme.js') }}"></script>
+    <script src="../../static/script.js"></script>
+
 
     <style>
       /* === THEME VARIABLES AND TOGGLE LOGIC === */
@@ -634,7 +637,8 @@
           <div class="success-icon">✓</div>
           <div class="result-value">
             <i class="fas fa-seedling"></i>
-            <span class="recommended-crop">{{ crop | capitalize }}</span>
+            <span class="recommended-crop"><h1 id="predictedCrop">Crop Result</h1>
+</span>
           </div>
           <p class="insight-note">
             This is the most suitable crop for your current soil nutrient profile.
@@ -643,15 +647,15 @@
           <div class="result-stats">
             <div class="stat">
                 <i class="fas fa-vial stat-icon"></i> 
-                <span class="stat-label">Nitrogen (N): {{ params.N }}</span>
+                <span class="stat-label">Nitrogen (N): <span id="nValue">--</span></span>
             </div>
             <div class="stat">
                 <i class="fas fa-flask stat-icon"></i> 
-                <span class="stat-label">Phosphorus (P): {{ params.P }}</span>
+                <span class="stat-label">Phosphorus (P): <span id="pValue">--</span></span>
             </div>
             <div class="stat">
                 <i class="fas fa-microscope stat-icon"></i> 
-                <span class="stat-label">Potassium (K): {{ params.K }}</span>
+                <span class="stat-label">Potassium (K): <span id="kValue">--</span></span>
             </div>
           </div>
         </div>
@@ -686,21 +690,25 @@
               <i class="fas fa-thermometer-half"></i>
               <div>
                 <strong>Temperature</strong>
-                <p class="insight-note">{{ params.temperature }}°C</p>
+                <p class="insight-note"><span id="temperatureValue">--</span>°C
+</p>
               </div>
             </li>
             <li>
               <i class="fas fa-cloud-showers-heavy"></i>
               <div>
                 <strong>Climate Data</strong>
-                <p class="insight-note">Rainfall: {{ params.rainfall }} mm | Humidity: {{ params.humidity }}%</p>
+                <p class="insight-note">Rainfall: <span id="rainfallValue">--</span> mm
+ | Humidity: <span id="humidityValue">--</span>%
+</p>
               </div>
             </li>
             <li>
               <i class="fas fa-tint"></i>
               <div>
                 <strong>Soil pH Level</strong>
-                <p class="insight-note">pH: {{ params.ph }}</p>
+                <p class="insight-note">pH: <span id="phValue">--</span>
+</p>
               </div>
             </li>
             <li>
@@ -813,5 +821,44 @@ function animateCursor() {
 }
 animateCursor();
     </script>
+    <script>
+/*
+Frontend-only replacement for Jinja placeholders
+Reads values from URL query params
+Example URL:
+result.html?crop=Wheat&temperature=25&humidity=60&rainfall=120&ph=6.5&N=90&P=40&K=50
+*/
+
+function getParam(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
+// Set dynamic values
+document.getElementById("predictedCrop").textContent =
+    (getParam("crop") || "Recommended Crop").toUpperCase();
+
+document.getElementById("temperatureValue").textContent =
+    getParam("temperature") || "--";
+
+document.getElementById("humidityValue").textContent =
+    getParam("humidity") || "--";
+
+document.getElementById("rainfallValue").textContent =
+    getParam("rainfall") || "--";
+
+document.getElementById("phValue").textContent =
+    getParam("ph") || "--";
+
+document.getElementById("nValue").textContent =
+    getParam("N") || "--";
+
+document.getElementById("pValue").textContent =
+    getParam("P") || "--";
+
+document.getElementById("kValue").textContent =
+    getParam("K") || "--";
+</script>
+
   </body>
 </html>
