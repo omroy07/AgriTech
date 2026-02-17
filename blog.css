@@ -1701,4 +1701,40 @@ a.mobile-link.mobile-register {
 /* Ensure icons are visible with green tint */
 [data-theme="dark"] .card-date i {
     color: #68d391 !important;
+}/* Scroll To Top Button */
+.scroll-top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: var(--primary-color, #2e7d32);
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    transition: all 0.3s ease;
+}
+
+.scroll-top-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Dark Mode Support */
+[data-theme="dark"] .scroll-top-btn {
+    background: #4caf50;
+}
+.scroll-top-btn {
+  display: flex !important;
+  position: fixed !important;
+  bottom: 30px !important;
+  right: 30px !important;
+  z-index: 9999 !important;
 }
