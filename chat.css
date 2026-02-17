@@ -827,3 +827,127 @@ main {
     scroll-behavior: auto !important;
   }
 }
+
+.site-footer {
+  background: linear-gradient(135deg, #2e7d32, #4caf50);
+  color: #ffffff;
+  padding: 2rem 1.2rem 1.2rem;
+  margin-top: 2rem;
+}
+
+.site-footer .footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.footer-logo {
+  width: 120px;   
+  height: 120px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+/* Footer Brand */
+.footer-brand h3 {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer-brand p {
+  opacity: 0.9;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+/* Headings */
+.site-footer h4 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.site-footer h4::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: #ffffff;
+  margin-top: 6px;
+  border-radius: 3px;
+  opacity: 0.7;
+}
+
+/* Links */
+.site-footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.site-footer ul li {
+  margin-bottom: 0.6rem;
+}
+
+.site-footer ul li a {
+  display: block;
+  padding: 6px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #ffffff;
+  transition: all 0.25s ease;
+}
+
+.site-footer ul li a:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateX(4px);
+}
+
+/* ===== Social Media Icons ===== */
+.social-media {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+.social-media a {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  color: white;
+}
+
+.social-media a:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Bottom */
+.footer-bottom {
+  text-align: center;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .site-footer .footer-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .social-media {
+    justify-content: center;
+  }
+}
