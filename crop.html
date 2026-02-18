@@ -505,6 +505,13 @@
             max-height: 300px;
             overflow-y: auto;
         }
+        /* Light Mode Styling for Alerts Panel (Issue #1530 Fix) */
+[data-theme="light"] .alerts-panel {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
 
         .alert-item {
             display: flex;
@@ -531,28 +538,60 @@
             border-left: 4px solid var(--accent-success);
         }
 
+        /* Light mode alert card refinement */
+[data-theme="light"] .alert-item {
+    background: #f8fafc;
+    border-radius: 12px;
+    border-left-width: 5px;
+    transition: all 0.25s ease;
+}
+
+[data-theme="light"] .alert-item.warning {
+    background: #fffbeb; /* warm soft amber */
+    border-left-color: var(--accent-warning);
+}
+
+[data-theme="light"] .alert-item.danger {
+    background: #fef2f2; /* soft red tint */
+    border-left-color: var(--accent-danger);
+}
+
+[data-theme="light"] .alert-item.success {
+    background: #f0fdf4; /* soft green tint */
+    border-left-color: var(--accent-success);
+}
+
+/* Subtle hover polish for alerts (both themes) */
+.alert-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px var(--shadow-light);
+}
+
+
         .alert-icon {
             font-size: 1.5rem;
         }
 
         /* --- FIXED: CONTRAST AND VISIBILITY FOR ALERTS --- */
-        .alert-content h4 {
-            color: #ffffff; /* Improved Contrast: Explicitly white */
-            margin-bottom: 5px;
-            font-weight: 700;
-        }
+        /* --- THEME-AWARE ALERT TEXT (Fix for Issue #1530) --- */
+.alert-content h4 {
+    color: var(--text-primary);
+    margin-bottom: 5px;
+    font-weight: 700;
+}
 
-        .alert-content p {
-            color: #ffffff !important; /* Maps to WCAG Requirement: Pure White */
-            font-size: 0.9rem;
-            opacity: 1; /* Maximum visibility */
-        }
+.alert-content p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    opacity: 1;
+}
 
-        .alert-time {
-            font-size: 0.8rem;
-            color: #f8fafc !important; /* High Contrast off-white */
-            margin-left: auto;
-        }
+.alert-time {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-left: auto;
+}
+
 
         .sensor-status {
             display: grid;
@@ -561,16 +600,28 @@
             margin: 30px 0;
         }
 
-        .sensor-item {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 20px;
-            border-left: 4px solid var(--accent-success);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
+        /* Enhanced Sensor Card Animation (Subtle & Lightweight) */
+.sensor-item {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+    border-left: 4px solid var(--accent-success);
+    position: relative;
+    overflow: hidden;
+
+    /* NEW: smooth entrance + hover feel */
+    opacity: 0;
+    transform: translateY(15px) scale(0.98);
+    animation: sensorFadeIn 0.6s ease forwards;
+
+    transition: transform 0.32s cubic-bezier(0.2, 1.6, 0.3, 1),
+            box-shadow 0.3s ease,
+            border-color 0.3s ease;
+
+
+}
+
 
         .sensor-item::before {
             content: '';
@@ -598,6 +649,32 @@
             }
         }
 
+        /* Subtle fade-in animation for sensor cards */
+@keyframes sensorFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Spring jump effect for hover (visible but still professional) */
+@keyframes sensorJump {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    40% {
+        transform: translateY(-14px) scale(1.04);
+    }
+    70% {
+        transform: translateY(-8px) scale(1.02);
+    }
+    100% {
+        transform: translateY(-10px) scale(1.03);
+    }
+}
+
+
+
         .sensor-item.warning {
             border-left-color: var(--accent-warning);
         }
@@ -614,10 +691,31 @@
             background: radial-gradient(circle, var(--accent-danger) 0%, transparent 70%);
         }
 
-        .sensor-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px var(--shadow-light);
-        }
+        /* Subtle hover lift (as requested in issue #1529) */
+/* Enhanced soft bounce hover (more noticeable) */
+.sensor-item:hover {
+    transform: translateY(-12px) scale(1.025);
+    box-shadow: 0 18px 35px var(--shadow-medium);
+
+    transition: transform 0.25s cubic-bezier(0.34, 1.4, 0.64, 1),
+                box-shadow 0.25s ease;
+}
+
+
+/* Status-colored border on hover (matches left accent color) */
+.sensor-item:hover {
+    border-color: var(--accent-success);
+}
+
+/* Warning card → orange border on hover */
+.sensor-item.warning:hover {
+    border-color: var(--accent-warning);
+}
+
+/* Critical card → red border on hover */
+.sensor-item.critical:hover {
+    border-color: var(--accent-danger);
+}
 
         .sensor-header {
             display: flex;
@@ -662,6 +760,24 @@
         .status-indicator.critical {
             background: var(--accent-danger);
         }
+
+        /* Gentle status glow based on sensor state */
+.sensor-item:not(.warning):not(.critical) {
+    box-shadow: 0 0 0 rgba(34, 197, 94, 0);
+}
+
+.sensor-item:not(.warning):not(.critical):hover {
+    box-shadow: 0 10px 25px rgba(34, 197, 94, 0.15);
+}
+
+.sensor-item.warning:hover {
+    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.2);
+}
+
+.sensor-item.critical:hover {
+    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.2);
+}
+
 
         .settings-panel {
             position: fixed;
@@ -1028,6 +1144,33 @@
             transition: transform 0.3s ease;
             max-width: 300px;
         }
+
+        .notification-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.notification-text {
+    flex: 1;
+}
+
+.notification-close {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 10px;
+    line-height: 1;
+    opacity: 0.9;
+}
+
+.notification-close:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
 
         .notification.show {
             transform: translateX(0);
@@ -1937,33 +2080,50 @@
         }
 
         // Notification System
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
+        // Notification System (UPDATED with Close Button + Better Dismiss)
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
 
-            const icons = {
-                success: 'fa-check-circle',
-                warning: 'fa-exclamation-triangle',
-                danger: 'fa-exclamation-circle',
-                info: 'fa-info-circle'
-            };
+    const icons = {
+        success: 'fa-check-circle',
+        warning: 'fa-exclamation-triangle',
+        danger: 'fa-exclamation-circle',
+        info: 'fa-info-circle'
+    };
 
-            notification.innerHTML = `
-                <i class="fas ${icons[type]}"></i>
-                <span style="margin-left: 10px;">${message}</span>
-            `;
+    // Create content wrapper
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas ${icons[type]}"></i>
+            <span class="notification-text">${message}</span>
+            <button class="notification-close" aria-label="Close">&times;</button>
+        </div>
+    `;
 
-            document.body.appendChild(notification);
+    document.body.appendChild(notification);
 
-            setTimeout(() => {
-                notification.classList.add('show');
-            }, 100);
+    // Show animation
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
 
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => notification.remove(), 300);
-            }, 4000);
+    // Close button logic (NEW)
+    const closeBtn = notification.querySelector('.notification-close');
+    closeBtn.addEventListener('click', () => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    });
+
+    // Auto dismiss (still keeps UX smooth)
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
         }
+    }, 4000);
+}
+
 
         // Sensor Time Updates
         function updateSensorTimes() {
@@ -2027,12 +2187,14 @@
             }, { threshold: 0.1 });
 
             // Observe all cards for animation
-            document.querySelectorAll('.feature-card, .metric-card, .sensor-item').forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'all 0.6s ease';
-                observer.observe(card);
-            });
+            // Observe cards for animation (EXCLUDE sensor-item to preserve CSS animation)
+document.querySelectorAll('.feature-card, .metric-card').forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px)';
+    card.style.transition = 'all 0.6s ease';
+    observer.observe(card);
+});
+
 
             // Simulate some initial alerts
             setTimeout(() => {
