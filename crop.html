@@ -561,16 +561,28 @@
             margin: 30px 0;
         }
 
-        .sensor-item {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 20px;
-            border-left: 4px solid var(--accent-success);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
+        /* Enhanced Sensor Card Animation (Subtle & Lightweight) */
+.sensor-item {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+    border-left: 4px solid var(--accent-success);
+    position: relative;
+    overflow: hidden;
+
+    /* NEW: smooth entrance + hover feel */
+    opacity: 0;
+    transform: translateY(15px) scale(0.98);
+    animation: sensorFadeIn 0.6s ease forwards;
+
+    transition: transform 0.32s cubic-bezier(0.2, 1.6, 0.3, 1),
+            box-shadow 0.3s ease,
+            border-color 0.3s ease;
+
+
+}
+
 
         .sensor-item::before {
             content: '';
@@ -598,6 +610,32 @@
             }
         }
 
+        /* Subtle fade-in animation for sensor cards */
+@keyframes sensorFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Spring jump effect for hover (visible but still professional) */
+@keyframes sensorJump {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    40% {
+        transform: translateY(-14px) scale(1.04);
+    }
+    70% {
+        transform: translateY(-8px) scale(1.02);
+    }
+    100% {
+        transform: translateY(-10px) scale(1.03);
+    }
+}
+
+
+
         .sensor-item.warning {
             border-left-color: var(--accent-warning);
         }
@@ -614,10 +652,31 @@
             background: radial-gradient(circle, var(--accent-danger) 0%, transparent 70%);
         }
 
-        .sensor-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px var(--shadow-light);
-        }
+        /* Subtle hover lift (as requested in issue #1529) */
+/* Enhanced soft bounce hover (more noticeable) */
+.sensor-item:hover {
+    transform: translateY(-12px) scale(1.025);
+    box-shadow: 0 18px 35px var(--shadow-medium);
+
+    transition: transform 0.25s cubic-bezier(0.34, 1.4, 0.64, 1),
+                box-shadow 0.25s ease;
+}
+
+
+/* Status-colored border on hover (matches left accent color) */
+.sensor-item:hover {
+    border-color: var(--accent-success);
+}
+
+/* Warning card → orange border on hover */
+.sensor-item.warning:hover {
+    border-color: var(--accent-warning);
+}
+
+/* Critical card → red border on hover */
+.sensor-item.critical:hover {
+    border-color: var(--accent-danger);
+}
 
         .sensor-header {
             display: flex;
@@ -662,6 +721,24 @@
         .status-indicator.critical {
             background: var(--accent-danger);
         }
+
+        /* Gentle status glow based on sensor state */
+.sensor-item:not(.warning):not(.critical) {
+    box-shadow: 0 0 0 rgba(34, 197, 94, 0);
+}
+
+.sensor-item:not(.warning):not(.critical):hover {
+    box-shadow: 0 10px 25px rgba(34, 197, 94, 0.15);
+}
+
+.sensor-item.warning:hover {
+    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.2);
+}
+
+.sensor-item.critical:hover {
+    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.2);
+}
+
 
         .settings-panel {
             position: fixed;
@@ -2025,12 +2102,14 @@ function showNotification(message, type = 'success') {
             }, { threshold: 0.1 });
 
             // Observe all cards for animation
-            document.querySelectorAll('.feature-card, .metric-card, .sensor-item').forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'all 0.6s ease';
-                observer.observe(card);
-            });
+            // Observe cards for animation (EXCLUDE sensor-item to preserve CSS animation)
+document.querySelectorAll('.feature-card, .metric-card').forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px)';
+    card.style.transition = 'all 0.6s ease';
+    observer.observe(card);
+});
+
 
             // Simulate some initial alerts
             setTimeout(() => {
