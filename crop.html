@@ -1029,6 +1029,33 @@
             max-width: 300px;
         }
 
+        .notification-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.notification-text {
+    flex: 1;
+}
+
+.notification-close {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 10px;
+    line-height: 1;
+    opacity: 0.9;
+}
+
+.notification-close:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+
         .notification.show {
             transform: translateX(0);
         }
@@ -1891,33 +1918,50 @@
         }
 
         // Notification System
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
+        // Notification System (UPDATED with Close Button + Better Dismiss)
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
 
-            const icons = {
-                success: 'fa-check-circle',
-                warning: 'fa-exclamation-triangle',
-                danger: 'fa-exclamation-circle',
-                info: 'fa-info-circle'
-            };
+    const icons = {
+        success: 'fa-check-circle',
+        warning: 'fa-exclamation-triangle',
+        danger: 'fa-exclamation-circle',
+        info: 'fa-info-circle'
+    };
 
-            notification.innerHTML = `
-                <i class="fas ${icons[type]}"></i>
-                <span style="margin-left: 10px;">${message}</span>
-            `;
+    // Create content wrapper
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas ${icons[type]}"></i>
+            <span class="notification-text">${message}</span>
+            <button class="notification-close" aria-label="Close">&times;</button>
+        </div>
+    `;
 
-            document.body.appendChild(notification);
+    document.body.appendChild(notification);
 
-            setTimeout(() => {
-                notification.classList.add('show');
-            }, 100);
+    // Show animation
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
 
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => notification.remove(), 300);
-            }, 4000);
+    // Close button logic (NEW)
+    const closeBtn = notification.querySelector('.notification-close');
+    closeBtn.addEventListener('click', () => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    });
+
+    // Auto dismiss (still keeps UX smooth)
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
         }
+    }, 4000);
+}
+
 
         // Sensor Time Updates
         function updateSensorTimes() {
