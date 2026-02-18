@@ -505,6 +505,13 @@
             max-height: 300px;
             overflow-y: auto;
         }
+        /* Light Mode Styling for Alerts Panel (Issue #1530 Fix) */
+[data-theme="light"] .alerts-panel {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
 
         .alert-item {
             display: flex;
@@ -531,28 +538,60 @@
             border-left: 4px solid var(--accent-success);
         }
 
+        /* Light mode alert card refinement */
+[data-theme="light"] .alert-item {
+    background: #f8fafc;
+    border-radius: 12px;
+    border-left-width: 5px;
+    transition: all 0.25s ease;
+}
+
+[data-theme="light"] .alert-item.warning {
+    background: #fffbeb; /* warm soft amber */
+    border-left-color: var(--accent-warning);
+}
+
+[data-theme="light"] .alert-item.danger {
+    background: #fef2f2; /* soft red tint */
+    border-left-color: var(--accent-danger);
+}
+
+[data-theme="light"] .alert-item.success {
+    background: #f0fdf4; /* soft green tint */
+    border-left-color: var(--accent-success);
+}
+
+/* Subtle hover polish for alerts (both themes) */
+.alert-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px var(--shadow-light);
+}
+
+
         .alert-icon {
             font-size: 1.5rem;
         }
 
         /* --- FIXED: CONTRAST AND VISIBILITY FOR ALERTS --- */
-        .alert-content h4 {
-            color: #ffffff; /* Improved Contrast: Explicitly white */
-            margin-bottom: 5px;
-            font-weight: 700;
-        }
+        /* --- THEME-AWARE ALERT TEXT (Fix for Issue #1530) --- */
+.alert-content h4 {
+    color: var(--text-primary);
+    margin-bottom: 5px;
+    font-weight: 700;
+}
 
-        .alert-content p {
-            color: #ffffff !important; /* Maps to WCAG Requirement: Pure White */
-            font-size: 0.9rem;
-            opacity: 1; /* Maximum visibility */
-        }
+.alert-content p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    opacity: 1;
+}
 
-        .alert-time {
-            font-size: 0.8rem;
-            color: #f8fafc !important; /* High Contrast off-white */
-            margin-left: auto;
-        }
+.alert-time {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-left: auto;
+}
+
 
         .sensor-status {
             display: grid;
