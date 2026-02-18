@@ -18,3 +18,4 @@ from .warehouse_tasks import daily_expiry_alerts_task, automated_reorder_notific
 from .climate_tasks import check_sensor_health_task, generate_env_report_task, purge_old_telemetry_task
 from .pathogen_tasks import pathogen_propagation_run, analyze_new_incident
 from .transparency_tasks import hourly_freshness_pricing_update, sync_reputation_feedback
+from .soil_sync import precision_fertigation_sync, update_nutrient_maps

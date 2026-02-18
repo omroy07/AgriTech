@@ -29,9 +29,17 @@ class IrrigationZone(db.Model):
     
     # Change logs and sensor data
     sensor_logs = db.relationship('SensorLog', backref='zone', lazy='dynamic', cascade='all, delete-orphan')
+    
+    # Fertigation (L3-1547)
+    fertigation_enabled = db.Column(db.Boolean, default=False)
+    fertigation_valve_status = db.Column(db.String(20), default=ValveStatus.CLOSED.value)
+    chemical_concentration = db.Column(db.Float, default=0.0) # ppm
+    washout_risk_threshold = db.Column(db.Float, default=0.7)
+    
+    fertigation_logs = db.relationship('FertigationLog', backref='zone', lazy='dynamic', cascade='all, delete-orphan')
 
     def to_dict(self):
-        return {
+        data = {
             'id': self.id,
             'farm_id': self.farm_id,
             'name': self.name,
@@ -40,7 +48,39 @@ class IrrigationZone(db.Model):
             'moisture_threshold_max': self.moisture_threshold_max,
             'status': self.current_valve_status,
             'auto_mode': self.auto_mode,
-            'last_activation': self.last_activation.isoformat() if self.last_activation else None
+            'last_activation': self.last_activation.isoformat() if self.last_activation else None,
+            'fertigation': {
+                'enabled': self.fertigation_enabled,
+                'status': self.fertigation_valve_status,
+                'concentration': self.chemical_concentration
+            }
+        }
+        return data
+
+class FertigationLog(db.Model):
+    __tablename__ = 'fertigation_logs'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    zone_id = db.Column(db.Integer, db.ForeignKey('irrigation_zones.id'), nullable=False)
+    
+    injectant_type = db.Column(db.String(50)) # Nitrogen, Phosphorus, Mix
+    concentration_ppm = db.Column(db.Float)
+    volume_liters = db.Column(db.Float)
+    
+    # Runoff Metrics
+    washout_risk_score = db.Column(db.Float) # Calculated at injection time
+    weather_impact_factor = db.Column(db.Float) # From rain forecasts
+    
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'injectant': self.injectant_type,
+            'ppm': self.concentration_ppm,
+            'volume': self.volume_liters,
+            'risk': self.washout_risk_score,
+            'timestamp': self.timestamp.isoformat()
         }
 
 class SensorLog(db.Model):

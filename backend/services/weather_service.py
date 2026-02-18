@@ -43,9 +43,21 @@ class WeatherService:
             )
             
         if weather.rainfall > 50:
+             # Critical: Auto-Stop Fertigation
+             from backend.services.fertigation_service import FertigationService
+             from backend.models.irrigation import IrrigationZone
+             
+             # Find all active zones in this location (simplified lookup)
+             zones = IrrigationZone.query.filter(IrrigationZone.name.contains(location)).all()
+             for z in zones:
+                 z.fertigation_enabled = False
+                 z.status = "closed"
+                 db.session.add(z)
+             db.session.commit()
+
              AlertRegistry.register_alert(
-                title="Heavy Rainfall Warning",
-                message=f"Intense rainfall detected in {location}. Check drainage systems.",
+                title="Heavy Rainfall Warning - FERTIGATION PAUSED",
+                message=f"Intense rainfall ({weather.rainfall}mm) in {location}. Chemical injection halted to prevent leaching.",
                 category="WEATHER",
                 priority="CRITICAL",
                 group_key=f"rain_{location}"
