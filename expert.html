@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expert Panel - AgriTech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="farmer.css">
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    /* Reuse farmer.css base, override accent colour to blue for expert */
+    .header-hero {
+      background: linear-gradient(135deg, #1565c0, #42a5f5);
+    }
+
+    .submit-button,
+    .tab-button.active {
+      background: linear-gradient(135deg, #1565c0, #42a5f5);
+    }
+
+    .tab-button.active {
+      box-shadow: 0 4px 12px rgba(21, 101, 192, .3);
+    }
+
+    /* Community post cards */
+    .post-card {
+      background: #fff;
+      border: 1.5px solid #e3f2fd;
+      border-left: 4px solid #1565c0;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+      transition: box-shadow .15s;
+    }
+
+    .post-card:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, .08);
+    }
+
+    .post-card h4 {
+      margin: 0 0 .4rem;
+      color: #1565c0;
+      font-size: 1rem;
+    }
+
+    .post-card p {
+      margin: 0 0 .75rem;
+      color: #555;
+      font-size: .9rem;
+      line-height: 1.5;
+    }
+
+    .post-meta {
+      font-size: .8rem;
+      color: #999;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .post-meta span {
+      display: flex;
+      align-items: center;
+      gap: .3rem;
+    }
+
+    .answer-form {
+      margin-top: .75rem;
+      display: none;
+    }
+
+    .answer-form textarea {
+      width: 100%;
+      min-height: 90px;
+      padding: .6rem .85rem;
+      border: 1.5px solid #bbdefb;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: .9rem;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+
+    .answer-form textarea:focus {
+      outline: none;
+      border-color: #1565c0;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: .5rem;
+      margin-top: .5rem;
+    }
+
+    .btn-answer {
+      padding: .4rem 1rem;
+      background: #1565c0;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: .85rem;
+      font-weight: 600;
+    }
+
+    .btn-answer:hover {
+      background: #0d47a1;
+    }
+
+    .btn-toggle {
+      padding: .4rem 1rem;
+      background: #e3f2fd;
+      color: #1565c0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: .85rem;
+      font-weight: 600;
+    }
+
+    .btn-best {
+      padding: .3rem .8rem;
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: 1.5px solid #a5d6a7;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: .8rem;
+      font-weight: 700;
+    }
+
+    .best-badge {
+      background: #e8f5e9;
+      color: #2e7d32;
+      padding: .15rem .55rem;
+      border-radius: 12px;
+      font-size: .75rem;
+      font-weight: 700;
+    }
+
+    .answers-list {
+      margin-top: .75rem;
+      padding-left: 1rem;
+      border-left: 3px solid #e3f2fd;
+    }
+
+    .answer-item {
+      margin-bottom: .6rem;
+      font-size: .88rem;
+      color: #444;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #999;
+    }
+
+    .empty-state i {
+      font-size: 2.5rem;
+      margin-bottom: .75rem;
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <img src="images/logo.png" alt="AgriTech Logo" class="nav-logo">
+        <span class="brand-name">AgriTech</span>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="main.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="blog.html" class="nav-link">Blog</a></li>
+      </ul>
+      <div class="nav-actions">
+        <span id="nav-user-name"
+          style="font-size:.9rem;color:#1565c0;font-weight:600;display:none;margin-right:.5rem;"></span>
+        <button id="nav-logout-btn" style="display:none;background:none;border:1.5px solid #ef5350;color:#ef5350;
+                   padding:.3rem .85rem;border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:600;">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+        <button class="theme-toggle" aria-label="Toggle dark/light mode">
+          <i class="fas fa-sun sun-icon"></i>
+          <i class="fas fa-moon moon-icon"></i>
+          <span class="theme-text">Light Mode</span>
+        </button>
+      </div>
+    </nav>
+    <div class="header-hero">
+      <h1 class="hero-title">Expert Panel 🎓</h1>
+      <p class="hero-subtitle">Help farmers by answering questions and sharing your expertise</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <nav class="nav-tabs">
+      <button class="tab-button active" data-section="unanswered">
+        <i class="fas fa-question-circle"></i> Unanswered
+      </button>
+      <button class="tab-button" data-section="my-answers">
+        <i class="fas fa-check-circle"></i> My Answers
+      </button>
+    </nav>
+
+    <main>
+      <!-- Unanswered Questions -->
+      <section id="unanswered-section" class="section active">
+        <div id="unanswered-list">
+          <div class="empty-state">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading questions...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- My Answers -->
+      <section id="my-answers-section" class="section">
+        <div id="my-answers-list">
+          <div class="empty-state">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading your answers...</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <style>
+    .site-footer {
+      background: linear-gradient(135deg, #2e7d32, #66bb6a);
+      color: #fff;
+      margin-top: auto;
+      padding: 2rem 1.25rem;
+    }
+
+    .site-footer .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem
+    }
+
+    .footer-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #fff;
+      padding: 4px
+    }
+
+    .site-footer h3,
+    .site-footer h4 {
+      margin: 0 0 .5rem 0
+    }
+
+    .site-footer p {
+      margin: 0;
+      opacity: .9
+    }
+
+    .site-footer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem
+    }
+
+    .site-footer a {
+      color: #fff;
+      text-decoration: none;
+      opacity: .9;
+      transition: opacity .2s
+    }
+
+    .site-footer a:hover {
+      opacity: 1;
+      text-decoration: underline
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 1rem auto 0;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, .25);
+      text-align: center;
+      font-size: .9rem;
+      opacity: .9
+    }
+
+    .social-media {
+      display: flex;
+      gap: 1rem;
+      margin-top: .5rem
+    }
+
+    .social-media a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, .1);
+      border-radius: 50%;
+      transition: all .3s ease;
+      font-size: 1.2rem
+    }
+
+    .social-media a:hover {
+      background: rgba(255, 255, 255, .2);
+      transform: translateY(-2px)
+    }
+  </style>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
+        <h3>AgriTech</h3>
+        <p>Empowering India's Farming Future</p>
+        <div class="social-media">
+          <a href="https://instagram.com" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+          <a href="https://github.com/omroy07" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank" rel="noopener"><i
+              class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="main.html">Dashboard</a></li>
+          <li><a href="feed-back.html">Feedback</a></li>
+          <li><a href="chat.html">AI Assistant</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="Crop Recommendation/templates/index.html">Crop Recommendation</a></li>
+          <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
+          <li><a href="Disease prediction/template/index.html">Disease Detector</a></li>
+          <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div>
+  </footer>
+
+  <div class="circle-container" id="cursorTrail"></div>
+  <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
+    <i class="fas fa-robot"></i>
+  </a>
+
+  <script src="firebase-config.js"></script>
+  <script src="theme.js"></script>
+  <script type="module" src="auth.js"></script>
+  <script type="module">
+    import {
+      getFirestore, collection, query, where,
+      getDocs, addDoc, updateDoc, doc, serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Only experts (and admins) can access this page
+      if (!requireAuth(['expert', 'admin'])) return;
+
+      const user = window.authManager.getCurrentUser();
+
+      // Show user in navbar
+      document.getElementById('nav-user-name').textContent = '👤 ' + (user.fullname || user.email);
+      document.getElementById('nav-user-name').style.display = 'inline';
+      const logoutEl = document.getElementById('nav-logout-btn');
+      logoutEl.style.display = 'inline-flex';
+      logoutEl.addEventListener('click', () => window.authManager.logout());
+
+      // Tab switching (reuse farmer.css tab logic)
+      document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById(btn.dataset.section + '-section').classList.add('active');
+        });
+      });
+
+      // Get Firestore instance from the already-initialised Firebase in auth.js
+      // auth.js exposes window._agriDb after init (see note below)
+      await loadPosts(user);
+    });
+
+    async function loadPosts(user) {
+      // Wait for auth.js to expose the db instance
+      let attempts = 0;
+      while (!window._agriDb && attempts < 20) {
+        await new Promise(r => setTimeout(r, 150));
+        attempts++;
+      }
+      const db = window._agriDb;
+      if (!db) {
+        document.getElementById('unanswered-list').innerHTML =
+          '<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Could not connect to database.</p></div>';
+        return;
+      }
+
+      try {
+        const postsSnap = await getDocs(collection(db, 'posts'));
+        const allPosts = postsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+        const unanswered = allPosts.filter(p => !p.bestAnswerId);
+        renderUnanswered(unanswered, db, user);
+
+        const myAnswerPosts = allPosts.filter(p =>
+          p.answers && p.answers.some(a => a.expertId === user.id)
+        );
+        renderMyAnswers(myAnswerPosts, db, user);
+      } catch (e) {
+        console.error('Error loading posts:', e);
+      }
+    }
+
+    function renderUnanswered(posts, db, user) {
+      const el = document.getElementById('unanswered-list');
+      if (posts.length === 0) {
+        el.innerHTML = '<div class="empty-state"><i class="fas fa-check-double"></i><p>All questions have been answered!</p></div>';
+        return;
+      }
+      el.innerHTML = posts.map(p => `
+          <div class="post-card" id="post-${p.id}">
+            <h4>${escHtml(p.title || 'Untitled Question')}</h4>
+            <p>${escHtml(p.body || '')}</p>
+            <div class="post-meta">
+              <span><i class="fas fa-user"></i> ${escHtml(p.authorName || 'Farmer')}</span>
+              <span><i class="fas fa-clock"></i> ${formatDate(p.createdAt)}</span>
+            </div>
+            <div class="btn-row" style="margin-top:.75rem;">
+              <button class="btn-toggle" onclick="toggleAnswerForm('${p.id}')">
+                <i class="fas fa-pen"></i> Answer
+              </button>
+            </div>
+            <div class="answer-form" id="form-${p.id}">
+              <textarea placeholder="Write your expert answer here…" id="textarea-${p.id}"></textarea>
+              <div class="btn-row">
+                <button class="btn-answer" onclick="submitAnswer('${p.id}', db, user)">
+                  <i class="fas fa-paper-plane"></i> Submit Answer
+                </button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+      // Expose helpers to onclick
+      window.toggleAnswerForm = (postId) => {
+        const form = document.getElementById('form-' + postId);
+        form.style.display = form.style.display === 'block' ? 'none' : 'block';
+      };
+
+      window.submitAnswer = async (postId, db, user) => {
+        const text = document.getElementById('textarea-' + postId).value.trim();
+        if (!text) return;
+        const postRef = doc(db, 'posts', postId);
+        const postSnap = await getDocs(collection(db, 'posts'));
+        const postData = postSnap.docs.find(d => d.id === postId)?.data() || {};
+        const answers = postData.answers || [];
+        answers.push({ expertId: user.id, expertName: user.fullname, text, createdAt: new Date().toISOString() });
+        await updateDoc(postRef, { answers });
+        showAuthMessage('Answer submitted!', 'success');
+        document.getElementById('form-' + postId).style.display = 'none';
+        document.getElementById('textarea-' + postId).value = '';
+      };
+    }
+
+    function renderMyAnswers(posts, db, user) {
+      const el = document.getElementById('my-answers-list');
+      if (posts.length === 0) {
+        el.innerHTML = '<div class="empty-state"><i class="fas fa-pen"></i><p>You have not answered any questions yet.</p></div>';
+        return;
+      }
+      el.innerHTML = posts.map(p => {
+        const myAnswer = (p.answers || []).find(a => a.expertId === user.id);
+        const isBest = p.bestAnswerId === user.id;
+        return `
+            <div class="post-card">
+              <h4>${escHtml(p.title || 'Untitled Question')}</h4>
+              <div class="answers-list">
+                <div class="answer-item">
+                  <strong>Your answer:</strong> ${escHtml(myAnswer?.text || '')}
+                  ${isBest ? '<span class="best-badge">✅ Best Answer</span>' : ''}
+                </div>
+              </div>
+              ${!isBest ? `<button class="btn-best" onclick="markBest('${p.id}', '${user.id}')">
+                ✅ Mark as Best Answer
+              </button>` : ''}
+            </div>`;
+      }).join('');
+
+      window.markBest = async (postId, expertId) => {
+        await updateDoc(doc(db, 'posts', postId), { bestAnswerId: expertId });
+        showAuthMessage('Marked as best answer!', 'success');
+        setTimeout(() => location.reload(), 1200);
+      };
+    }
+
+    function escHtml(str) {
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+    function formatDate(ts) {
+      if (!ts) return '';
+      const d = ts.toDate ? ts.toDate() : new Date(ts);
+      return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+  </script>
+</body>
+
+</html>
