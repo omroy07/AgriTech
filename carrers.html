@@ -245,6 +245,28 @@
         background: rgba(255, 255, 255, 0.2);
         transform: translateY(-2px);
       }
+        
+      #scrollTopBtn {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        background: #2e7d32;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        display: none;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+        z-index: 999;
+      }
+      #scrollTopBtn:hover {
+        background: #1b5e20;
+        transform: translateY(-3px);
+      }
     </style>
     <footer class="site-footer">
       <div class="footer-inner">
@@ -309,6 +331,11 @@
       <div class="footer-bottom">© <span id="current-year">2026</span> AgriTech • Made for farmers</div>
     </footer>
 
+    <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" aria-label="Scroll to top">
+         <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
     <!-- Optional: Add theme toggle script if needed -->
     <script>
         // Theme toggle functionality
@@ -350,6 +377,7 @@ function initThemeToggle() {
     });
 }
 
+
 // Initialize theme from localStorage
 document.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('agritech-theme') || 'light';
@@ -384,6 +412,27 @@ function includeHTML() {
 }
 includeHTML();
 </script>
+
+<!-- Scroll-to-Top JS -->
+<script>
+const scrollBtn = document.getElementById("scrollTopBtn");
+
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+        scrollBtn.style.display = "block";
+    } else {
+        scrollBtn.style.display = "none";
+    }
+});
+
+scrollBtn.addEventListener("click", () => {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});
+</script>
+
 
 </body>
 </html>
