@@ -21,9 +21,22 @@ class Equipment(db.Model):
     is_available = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
+    # Telemetry & Reliability (L3-1545)
+    reliability_score = db.Column(db.Float, default=100.0) # 0-100
+    vibration_level = db.Column(db.Float, default=0.0) # mm/s
+    heat_index = db.Column(db.Float, default=25.0) # Celsius (Engine temp)
+    duty_cycle_rating = db.Column(db.Float, default=0.8) # Design limit modifier
+    
+    last_health_check = db.Column(db.DateTime)
+    
     # Relationships
     bookings = db.relationship('RentalBooking', backref='equipment', lazy='dynamic')
     availability = db.relationship('AvailabilityCalendar', backref='equipment', lazy='dynamic')
+    reliability_logs = db.relationship('ReliabilityLog', backref='equipment', lazy='dynamic')
+
+    def is_safe_to_operate(self):
+        """Safety Lock: Returns False if reliability < 40%"""
+        return self.reliability_score >= 40.0
 
     def to_dict(self):
         return {
