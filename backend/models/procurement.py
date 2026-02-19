@@ -54,8 +54,19 @@ class BulkOrder(db.Model):
     
     unit_price = db.Column(db.Float)
     total_amount = db.Column(db.Float)
+    
+    # Global Currency & Tax (L3-1546)
+    currency = db.Column(db.String(3), default='USD')
+    forex_rate = db.Column(db.Float, default=1.0)
+    gst_rate = db.Column(db.Float, default=0.0)
+    vat_rate = db.Column(db.Float, default=0.0)
+    
     tax_amount = db.Column(db.Float)
     shipping_cost = db.Column(db.Float, default=0)
+    
+    # Logistics Escrow
+    customs_clearance_status = db.Column(db.String(20), default='PENDING')
+    funds_in_escrow = db.Column(db.Boolean, default=False)
     
     status = db.Column(db.String(20), default=OrderStatus.PROPOSED.value)
     

@@ -13,6 +13,16 @@ class SoilTest(db.Model):
     phosphorus = db.Column(db.Float, nullable=False)
     potassium = db.Column(db.Float, nullable=False)
     
+    # 3D Mapping / Nutrient Flux (L3-1547)
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
+    depth_cm = db.Column(db.Float, default=15.0) # Sampling depth
+    
+    # Depth-based Ratios (Subsoil vs Topsoil)
+    nitrogen_flux_index = db.Column(db.Float) 
+    phosphorus_flux_index = db.Column(db.Float)
+    leaching_susceptibility = db.Column(db.Float) # 0-1 score
+    
     # Soil Chemical Properties
     ph_level = db.Column(db.Float, nullable=False)
     organic_matter = db.Column(db.Float) # Percentage

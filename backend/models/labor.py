@@ -23,6 +23,7 @@ class WorkerProfile(db.Model):
     shifts = db.relationship('WorkShift', backref='worker', lazy='dynamic')
     harvest_logs = db.relationship('HarvestLog', backref='worker', lazy='dynamic')
     payrolls = db.relationship('PayrollEntry', backref='worker', lazy='dynamic')
+    skills = db.relationship('WorkerSkillMap', backref='worker', lazy='dynamic')
 
     def to_dict(self):
         return {
@@ -32,7 +33,25 @@ class WorkerProfile(db.Model):
             'worker_type': self.worker_type,
             'hourly_rate': self.base_hourly_rate,
             'piece_rate': self.piece_rate_kg,
-            'active': self.is_active
+            'active': self.is_active,
+            'skills': [s.to_dict() for s in self.skills.all()]
+        }
+
+class WorkerSkillMap(db.Model):
+    __tablename__ = 'worker_skills'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    worker_id = db.Column(db.Integer, db.ForeignKey('worker_profiles.id'), nullable=False)
+    
+    skill_name = db.Column(db.String(100), nullable=False) # e.g., "Combine_Harvester_Operator"
+    certification_level = db.Column(db.String(20), default='BASIC') # BASIC, ADVANCED, EXPERT
+    
+    expiry_date = db.Column(db.Date)
+    
+    def to_dict(self):
+        return {
+            'skill': self.skill_name,
+            'level': self.certification_level
         }
 
 class WorkShift(db.Model):

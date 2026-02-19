@@ -49,3 +49,26 @@ def log_application(current_user):
         'status': 'success',
         'message': 'Application logged successfully'
     }), 201
+
+@soil_bp.route('/flux-map/<int:farm_id>', methods=['GET'])
+@token_required
+def get_flux_map(current_user, farm_id):
+    """
+    Returns 3D nutrient flux data for visualization.
+    """
+    tests = SoilTest.query.filter_by(farm_id=farm_id).all()
+    flux_data = []
+    for t in tests:
+        if t.latitude and t.longitude:
+            flux_data.append({
+                'loc': [t.latitude, t.longitude],
+                'depth': t.depth_cm,
+                'n_flux': t.nitrogen_flux_index,
+                'p_flux': t.phosphorus_flux_index,
+                'leaching_risk': t.leaching_susceptibility
+            })
+            
+    return jsonify({
+        'status': 'success',
+        'data': flux_data
+    })
