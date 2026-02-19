@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="styles/switcher.css" />
+  <link rel="stylesheet" href="weather-banner.css">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link
@@ -1844,7 +1845,7 @@
     }
 
     .hidden {
-  display: none !important;
+      display: none !important;
     }
 
 
@@ -1912,6 +1913,19 @@
 </head>
 
 <body>
+  <div id="weather-advisory-banner" class="weather-advisory-banner loading">
+    <div class="weather-banner-left">
+      <div class="weather-icon"><i class="fas fa-spinner fa-spin"></i></div>
+      <div class="weather-info">
+        <div class="weather-location">Loading...</div>
+        <div class="weather-temp">--°C</div>
+      </div>
+    </div>
+    <div class="weather-banner-center">
+      <div class="advisory-message"><span>Fetching weather...</span></div>
+    </div>
+  </div>
+
   <div class="circle-container" id="cursorTrail">
     <div class="cursor-circle"></div>
     <div class="cursor-circle"></div>
@@ -2704,7 +2718,7 @@
           <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
-      
+
 
       <div class="footer-group-links">
         <div class="footer-section footer-links">
@@ -3590,6 +3604,7 @@
   </script>
 
   </script>
+  <script src="weather-banner.js"></script>
 </body>
 
 </html>
