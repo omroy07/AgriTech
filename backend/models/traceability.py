@@ -53,6 +53,12 @@ class SupplyBatch(db.Model):
     certificate_url = db.Column(db.String(255))
     integrity_hash = db.Column(db.String(64))  # SHA256 of the batch history
     
+    # Global Trade & ESG (L3-1546)
+    export_compliance_status = db.Column(db.String(20), default='PENDING') # PENDING, CLEARED, REJECTED
+    target_market = db.Column(db.String(50)) # EU, USA, ASIA
+    esg_score = db.Column(db.Float) # Calculated sustainability score
+    phyto_cert_id = db.Column(db.String(100))
+    
     # Timestamps
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

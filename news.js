@@ -8,7 +8,7 @@ const newsArticles = [
     category: "technology",
     source: "AgriTech Daily",
     date: "2024-01-24",
-    image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%2322c55e' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='white' font-weight='bold'%3EAI Crop Prediction%3C/text%3E%3C/svg%3E",
+    image: "https://images.unsplash.com/photo-1586771107445-d3ca888129ff?auto=format&fit=crop&q=80&w=800",
     link: "#"
   },
   {
@@ -19,7 +19,7 @@ const newsArticles = [
     category: "market-trends",
     source: "Farm Economics Weekly",
     date: "2024-01-23",
-    image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%2316a34a' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='white' font-weight='bold'%3EMarket Growth%3C/text%3E%3C/svg%3E",
+    image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?auto=format&fit=crop&q=80&w=800",
     link: "#"
   },
   {
@@ -30,7 +30,7 @@ const newsArticles = [
     category: "sustainability",
     source: "Green Farming Initiative",
     date: "2024-01-22",
-    image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%2310b981' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='white' font-weight='bold'%3ESustainable Farming%3C/text%3E%3C/svg%3E",
+    image: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&q=80&w=800",
     link: "#"
   },
   {
@@ -41,7 +41,7 @@ const newsArticles = [
     category: "weather",
     source: "Weather & Climate Bureau",
     date: "2024-01-21",
-    image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%233b82f6' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='white' font-weight='bold'%3EWeather Forecast%3C/text%3E%3C/svg%3E",
+    image: "https://images.unsplash.com/photo-1561484930-998b6a7b22e8?auto=format&fit=crop&q=80&w=800",
     link: "#"
   },
   {
@@ -52,7 +52,7 @@ const newsArticles = [
     category: "policy",
     source: "Government Agriculture Ministry",
     date: "2024-01-20",
-    image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%238b5cf6' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='white' font-weight='bold'%3EPolicy News%3C/text%3E%3C/svg%3E",
+    image: "https://plus.unsplash.com/premium_photo-1661497281000-b5ecb39a2114?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     link: "#"
   },
   {
@@ -63,7 +63,7 @@ const newsArticles = [
     category: "innovation",
     source: "Precision Agriculture Today",
     date: "2024-01-19",
-    image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%23ec4899' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='white' font-weight='bold'%3EDrone Technology%3C/text%3E%3C/svg%3E",
+    image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     link: "#"
   },
   {
@@ -74,7 +74,7 @@ const newsArticles = [
     category: "innovation",
     source: "Urban Farming News",
     date: "2024-01-18",
-    image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%238b5cf6' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='white' font-weight='bold'%3EVertical Farming%3C/text%3E%3C/svg%3E",
+    image: "https://plus.unsplash.com/premium_photo-1682095147192-4d79c98ec421?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     link: "#"
   },
   {
@@ -85,7 +85,7 @@ const newsArticles = [
     category: "sustainability",
     source: "Water Conservation Alliance",
     date: "2024-01-17",
-    image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%234f46e5' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='white' font-weight='bold'%3EWater Conservation%3C/text%3E%3C/svg%3E",
+    image: "https://images.unsplash.com/photo-1563514227147-6d2ff665a6a0?auto=format&fit=crop&q=80&w=800",
     link: "#"
   }
 ];

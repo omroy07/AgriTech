@@ -132,14 +132,14 @@ connect-src 'self' http://localhost:3000;
               <i class="fas fa-camera"></i>
             </button>
 
-            <input
-              type="text"
+            <textarea
               id="chat-input"
               placeholder="Ask about crops or upload a photo..."
               aria-label="Chat input"
-              autofocus
+              rows="1"
               required
-            />
+            ></textarea>
+            
           </div>
           <button type="submit" id="send-button">
             <i class="fas fa-paper-plane"></i> Send
@@ -177,68 +177,6 @@ connect-src 'self' http://localhost:3000;
     <script src="theme.js"></script>
 
     <style>
-      .site-footer {
-        background: linear-gradient(135deg, #2e7d32, #66bb6a);
-        color: #fff;
-        margin-top: auto;
-        padding: 2rem 1.25rem;
-      }
-      .site-footer .footer-inner {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 1.5rem;
-        align-items: flex-start;
-      }
-      .footer-brand {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-      .footer-logo {
-        width: 48px;
-        height: 48px;
-        border-radius: 8px;
-        object-fit: cover;
-        background: #fff;
-        padding: 4px;
-      }
-      .site-footer h3,
-      .site-footer h4 {
-        margin: 0 0 0.5rem 0;
-      }
-      .site-footer p {
-        margin: 0;
-        opacity: 0.9;
-      }
-      .site-footer ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 0.4rem;
-      }
-      .site-footer a {
-        color: #fff;
-        text-decoration: none;
-        opacity: 0.9;
-        transition: opacity 0.2s;
-      }
-      .site-footer a:hover {
-        opacity: 1;
-        text-decoration: underline;
-      }
-      .footer-bottom {
-        max-width: 1200px;
-        margin: 1rem auto 0;
-        padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.25);
-        text-align: center;
-        font-size: 0.9rem;
-        opacity: 0.9;
-      }
       .social-media {
         display: flex;
         gap: 1rem;
@@ -260,49 +198,49 @@ connect-src 'self' http://localhost:3000;
         transform: translateY(-2px);
       } 
        /* --- Cursor Trail Container --- */
-.circle-container {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 999999;
-}
+      .circle-container {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 999999;
+      }
 
-/* --- Individual Trail Circles --- */
-.cursor-circle {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #ff8c00;
-  box-shadow: 0 0 15px rgba(255, 140, 0, 0.7);
-  transform: translate(-50%, -50%);
-  will-change: transform;
-  mix-blend-mode: screen;
-  transition: transform 0.1s ease-out;
-}
+      /* --- Individual Trail Circles --- */
+      .cursor-circle {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #ff8c00;
+        box-shadow: 0 0 15px rgba(255, 140, 0, 0.7);
+        transform: translate(-50%, -50%);
+        will-change: transform;
+        mix-blend-mode: screen;
+        transition: transform 0.1s ease-out;
+      }
 
-/* --- The Leading "Head" Circle --- */
-.cursor-circle:first-child {
-  width: 14px;
-  height: 14px;
-  background-color: #ffcc00;
-  box-shadow:
-    0 0 20px #ff8c00,
-    0 0 40px rgba(255, 140, 0, 0.5);
-}
+      /* --- The Leading "Head" Circle --- */
+      .cursor-circle:first-child {
+        width: 14px;
+        height: 14px;
+        background-color: #ffcc00;
+        box-shadow:
+          0 0 20px #ff8c00,
+          0 0 40px rgba(255, 140, 0, 0.5);
+      }
 
-/* --- Interaction States --- */
-.cursor-clicking {
-  transform: translate(-50%, -50%) scale(2.5) !important;
-  background-color: #ffffff !important;
-  box-shadow: 0 0 30px #ffffff !important;
-}
+      /* --- Interaction States --- */
+      .cursor-clicking {
+        transform: translate(-50%, -50%) scale(2.5) !important;
+        background-color: #ffffff !important;
+        box-shadow: 0 0 30px #ffffff !important;
+      }
 
-.cursor-hovering {
-  transform: translate(-50%, -50%) scale(1.8);
-  background-color: #22c55e; /* AgriTech green */
-  box-shadow: 0 0 20px #22c55e;
-}
+      .cursor-hovering {
+        transform: translate(-50%, -50%) scale(1.8);
+        background-color: #22c55e; /* AgriTech green */
+        box-shadow: 0 0 20px #22c55e;
+      }
     </style>
     <footer class="site-footer">
       <div class="footer-inner">
@@ -446,5 +384,68 @@ function animateCursor() {
 }
 animateCursor();
 </script>
+<!-- ===== Universal Back To Top Button (All Pages) ===== -->
+<style>
+  #globalBackToTop {
+    position: fixed;
+    bottom: 90px; /* prevents overlap with chatbot/floating icons */
+    right: 25px;
+    z-index: 9999;
+    display: none;
+    background: #2ecc71;
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 52px;
+    height: 52px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    transition: opacity 0.3s ease, transform 0.2s ease;
+  }
+
+  #globalBackToTop:hover {
+    transform: scale(1.12);
+    background: #27ae60;
+  }
+
+  @media (max-width: 768px) {
+    #globalBackToTop {
+      bottom: 100px; /* better spacing on mobile */
+      right: 18px;
+      width: 48px;
+      height: 48px;
+      font-size: 20px;
+    }
+  }
+</style>
+
+<button id="globalBackToTop" title="Back to Top">↑</button>
+
+<script>
+  (function () {
+    const btn = document.getElementById("globalBackToTop");
+
+    // Show button after scrolling down
+    window.addEventListener("scroll", function () {
+      if (window.scrollY > 300) {
+        btn.style.display = "block";
+      } else {
+        btn.style.display = "none";
+      }
+    });
+
+    // Smooth scroll to top on click
+    btn.addEventListener("click", function () {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+  })();
+</script>
+<!-- ===== End Back To Top Button ===== -->
+
   </body>
 </html>

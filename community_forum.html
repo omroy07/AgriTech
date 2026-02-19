@@ -40,9 +40,10 @@
           <input type="text" placeholder="Search...">
           <button><i class="fas fa-search"></i></button>
         </div>
+
         <button class="nav-btn" id="themeToggle">
-  <i class="fas fa-moon"></i>
-</button>
+          <i class="fas fa-moon"></i>
+        </button>
 
         <a href="login.html" class="nav-btn">Login</a>
         <a href="register.html" class="nav-btn primary">Register</a>
@@ -83,14 +84,13 @@
           <input type="text" id="forum-search" class="search-input"
             placeholder="Search for experts, topics, or solutions...">
         </div>
+
         <button class="btn-ask" id="btn-new-thread">
           <i class="fas fa-plus"></i> New Topic
         </button>
       </header>
 
-      <div id="threads-feed">
-        <!-- Threads will be injected here -->
-      </div>
+      <div id="threads-feed"></div>
     </main>
 
     <!-- Right Widgets: Trends & AI -->
@@ -109,26 +109,41 @@
       <div class="card">
         <h3><i class="fas fa-fire"></i> Trending Topics</h3>
         <div id="trending-list">
-          <p style="font-size: 0.85rem; color: var(--text-muted);">Real-time trends appearing soon...</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">
+            Real-time trends appearing soon...
+          </p>
         </div>
       </div>
     </aside>
   </div>
 
-  <!-- Create Thread Modal -->
-  <div class="modal-overlay" id="create-thread-modal">
-    <div class="card modal-content">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-        <h2 style="font-size: 1.5rem;">Start a Conversation</h2>
-        <button onclick="forum.toggleModal('create-thread-modal', false)"
-          style="background: none; border: none; cursor: pointer; font-size: 1.2rem; color: var(--text-muted);">
+  <!-- Accessible Create Thread Modal -->
+  <div class="modal-overlay" id="create-thread-modal"
+       role="dialog"
+       aria-modal="true"
+       aria-labelledby="create-thread-title"
+       aria-hidden="true">
+
+    <div class="card modal-content" tabindex="-1">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <h2 id="create-thread-title" style="font-size:1.5rem;">
+          Start a Conversation
+        </h2>
+
+        <button id="modal-close-btn"
+          style="background:none; border:none; cursor:pointer; font-size:1.2rem; color:var(--text-muted);"
+          aria-label="Close dialog">
           <i class="fas fa-times"></i>
         </button>
       </div>
 
-      <div class="form-group" style="margin-bottom: 1.25rem;">
-        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Discussion Category</label>
-        <select id="thread-category-select" class="search-input" style="padding-left: 1rem; width: 100%;">
+      <div class="form-group" style="margin-bottom:1.25rem;">
+        <label for="thread-category-select"
+          style="display:block; margin-bottom:0.5rem; font-weight:500;">
+          Discussion Category
+        </label>
+        <select id="thread-category-select" class="search-input"
+          style="padding-left:1rem; width:100%;">
           <option value="1">General Farming</option>
           <option value="2">Crop Protection</option>
           <option value="3">Soil Health</option>
@@ -136,58 +151,164 @@
         </select>
       </div>
 
-      <div class="form-group" style="margin-bottom: 1.25rem;">
-        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Topic Title</label>
-        <input type="text" id="thread-title-input" class="search-input" style="padding-left: 1rem;"
+      <div class="form-group" style="margin-bottom:1.25rem;">
+        <label for="thread-title-input"
+          style="display:block; margin-bottom:0.5rem; font-weight:500;">
+          Topic Title
+        </label>
+        <input type="text" id="thread-title-input" class="search-input"
+          style="padding-left:1rem;"
           placeholder="e.g. Best organic fertilizer for Wheat?">
       </div>
 
-      <div class="form-group" style="margin-bottom: 1.5rem;">
-        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Content Details</label>
+      <div class="form-group" style="margin-bottom:1.5rem;">
+        <label for="thread-content-input"
+          style="display:block; margin-bottom:0.5rem; font-weight:500;">
+          Content Details
+        </label>
         <textarea id="thread-content-input" class="search-input"
-          style="padding-left: 1rem; min-height: 150px; resize: vertical;"
+          style="padding-left:1rem; min-height:150px; resize:vertical;"
           placeholder="Describe your question or share your knowledge here..."></textarea>
       </div>
 
-      <div style="display: flex; justify-content: flex-end; gap: 1rem;">
-        <button onclick="forum.toggleModal('create-thread-modal', false)" class="btn-ask"
-          style="background: var(--bg-main); color: var(--text-main);">Cancel</button>
-        <button onclick="forum.createThread()" class="btn-ask">Post Discussion</button>
+      <div style="display:flex; justify-content:flex-end; gap:1rem;">
+        <button id="modal-cancel-btn"
+          class="btn-ask"
+          style="background:var(--bg-main); color:var(--text-main);">
+          Cancel
+        </button>
+
+        <button onclick="forum.createThread()" class="btn-ask">
+          Post Discussion
+        </button>
       </div>
     </div>
   </div>
-<script>
-  const themeBtn = document.getElementById("themeToggle");
-  const themeIcon = themeBtn.querySelector("i");
 
-  // Load saved theme
-  if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark-mode");
-    themeIcon.classList.remove("fa-moon");
-    themeIcon.classList.add("fa-sun");
-  } else {
-    themeIcon.classList.remove("fa-sun");
-    themeIcon.classList.add("fa-moon");
+<script>
+  const modal = document.getElementById("create-thread-modal");
+  const modalContent = modal.querySelector(".modal-content");
+  const openBtn = document.getElementById("btn-new-thread");
+  const closeBtn = document.getElementById("modal-close-btn");
+  const cancelBtn = document.getElementById("modal-cancel-btn");
+
+  let lastFocusedElement = null;
+
+  function openModal() {
+    lastFocusedElement = document.activeElement;
+    modal.setAttribute("aria-hidden", "false");
+    modal.style.display = "flex";
+    document.body.style.overflow = "hidden";
+    trapFocus();
+    setTimeout(() => modalContent.focus(), 0);
   }
 
-  themeBtn.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
+  function closeModal() {
+    modal.setAttribute("aria-hidden", "true");
+    modal.style.display = "none";
+    document.body.style.overflow = "";
+    if (lastFocusedElement) lastFocusedElement.focus();
+  }
 
-    if (document.body.classList.contains("dark-mode")) {
-      localStorage.setItem("theme", "dark");
-      themeIcon.classList.remove("fa-moon");
-      themeIcon.classList.add("fa-sun");
-    } else {
-      localStorage.setItem("theme", "light");
-      themeIcon.classList.remove("fa-sun");
-      themeIcon.classList.add("fa-moon");
-    }
+  function trapFocus() {
+    const focusable = modal.querySelectorAll(
+      'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])'
+    );
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    modal.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeModal();
+
+      if (e.key === "Tab") {
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+  }
+
+  openBtn.addEventListener("click", openModal);
+  closeBtn.addEventListener("click", closeModal);
+  cancelBtn.addEventListener("click", closeModal);
+
+  modal.addEventListener("click", function (e) {
+    if (e.target === modal) closeModal();
   });
 </script>
 
-
   <!-- Scripts -->
   <script src="forum.js"></script>
+
+  <!-- ===== Universal Back To Top Button (All Pages) ===== -->
+<style>
+  #globalBackToTop {
+    position: fixed;
+    bottom: 90px; /* prevents overlap with chatbot/floating icons */
+    right: 25px;
+    z-index: 9999;
+    display: none;
+    background: #2ecc71;
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 52px;
+    height: 52px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    transition: opacity 0.3s ease, transform 0.2s ease;
+  }
+
+  #globalBackToTop:hover {
+    transform: scale(1.12);
+    background: #27ae60;
+  }
+
+  @media (max-width: 768px) {
+    #globalBackToTop {
+      bottom: 100px; /* better spacing on mobile */
+      right: 18px;
+      width: 48px;
+      height: 48px;
+      font-size: 20px;
+    }
+  }
+</style>
+
+<button id="globalBackToTop" title="Back to Top">↑</button>
+
+<script>
+  (function () {
+    const btn = document.getElementById("globalBackToTop");
+
+    // Show button after scrolling down
+    window.addEventListener("scroll", function () {
+      if (window.scrollY > 300) {
+        btn.style.display = "block";
+      } else {
+        btn.style.display = "none";
+      }
+    });
+
+    // Smooth scroll to top on click
+    btn.addEventListener("click", function () {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+  })();
+</script>
+<!-- ===== End Back To Top Button ===== -->
+
 </body>
 
+</body>
 </html>
