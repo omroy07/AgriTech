@@ -90,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     displayMessage(input || "Analyzing uploaded image...", 'user');
     chatInput.value = '';
+    chatInput.style.height = 'auto';
 
     const typing = showTyping();
     toggleInput(true);
@@ -215,5 +216,22 @@ document.addEventListener("DOMContentLoaded", function () {
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
     document.body.classList.add("dark-mode");
+  }
+});
+
+const chatInput = document.getElementById("chat-input");
+const chatForm = document.getElementById("chat-form");
+
+// Auto expand textarea
+chatInput.addEventListener("input", function () {
+  this.style.height = "auto";
+  this.style.height = this.scrollHeight + "px";
+});
+
+// Enter vs Shift+Enter
+chatInput.addEventListener("keydown", function (e) {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    chatForm.dispatchEvent(new Event("submit"));
   }
 });

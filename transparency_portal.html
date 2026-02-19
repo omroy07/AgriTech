@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seed-to-Shelf | AgriTech Transparency Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --agri-green: #2ecc71;
+            --agri-gold: #f1c40f;
+            --agri-blue: #3498db;
+            --bg-glass: rgba(255, 255, 255, 0.05);
+            --border-glass: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f8fafc;
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(to right, var(--agri-green), var(--agri-gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        /* Genealogy Tree UI */
+        .genealogy-wrapper {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .tree-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .node {
+            background: #1e293b;
+            border: 1px solid var(--agri-blue);
+            padding: 20px;
+            border-radius: 16px;
+            width: 300px;
+            margin: 20px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .node::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            width: 2px;
+            height: 40px;
+            background: var(--agri-blue);
+            z-index: 1;
+        }
+
+        .node:last-child::after {
+            display: none;
+        }
+
+        .node-icon {
+            font-size: 1.5rem;
+            color: var(--agri-green);
+            margin-bottom: 10px;
+        }
+
+        /* Pricing Card */
+        .pricing-section {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 30px;
+        }
+
+        .price-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .freshness-meter {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            border: 8px solid var(--agri-green);
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.3);
+        }
+
+        .current-price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 10px 0;
+        }
+
+        .strike-price {
+            text-decoration: line-through;
+            color: #94a3b8;
+            font-size: 1.2rem;
+        }
+
+        .chart-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            padding: 30px;
+        }
+
+        /* Review Section */
+        .review-section {
+            margin-top: 40px;
+            background: var(--bg-glass);
+            padding: 30px;
+            border-radius: 24px;
+        }
+
+        .star-rating {
+            font-size: 2rem;
+            color: var(--agri-gold);
+            cursor: pointer;
+        }
+
+        .btn-submit {
+            background: var(--agri-green);
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Transparency Portal</h1>
+            <p>Scan your QR code to see the journey from seed to your shelf.</p>
+        </div>
+
+        <div class="search-bar" style="max-width: 600px; margin: 0 auto 40px; display: flex; gap: 10px;">
+            <input type="text" id="batch-input" placeholder="Enter Batch ID (e.g., 1)"
+                style="flex: 1; padding: 15px; border-radius: 12px; border: none; background: #1e293b; color: #fff;">
+            <button onclick="fetchTransparency()"
+                style="padding: 0 30px; border-radius: 12px; border: none; background: var(--agri-green); cursor: pointer;">Trace</button>
+        </div>
+
+        <div id="portal-content" style="display: none;">
+            <!-- Genealogy -->
+            <div class="genealogy-wrapper">
+                <div class="panel-header" style="margin-bottom: 30px; font-size: 1.5rem; font-weight: 700;">
+                    <i class="fas fa-route"></i> Product Journey
+                </div>
+                <div class="tree-container" id="genealogy-tree">
+                    <!-- Dynamic Nodes -->
+                </div>
+            </div>
+
+            <!-- Pricing & Freshness -->
+            <div class="pricing-section">
+                <div class="price-card">
+                    <h3>Dynamic Freshness Value</h3>
+                    <div class="freshness-meter" id="freshness-value">--%</div>
+                    <div class="strike-price" id="base-price">$--</div>
+                    <div class="current-price" id="market-price">$--</div>
+                    <p style="color: #94a3b8; font-size: 0.9rem;">Price automatically adjusted based on nutritional
+                        decay algorithm.</p>
+                </div>
+                <div class="chart-card">
+                    <h3>Price Decay Audit Trail</h3>
+                    <canvas id="pricingChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Review Feedback -->
+            <div class="review-section">
+                <h3>Rate this Produce</h3>
+                <p>Your feedback directly impacts the farmer's reputation score.</p>
+                <div class="star-rating" id="stars">
+                    <i class="far fa-star" onclick="setRating(1)"></i>
+                    <i class="far fa-star" onclick="setRating(2)"></i>
+                    <i class="far fa-star" onclick="setRating(3)"></i>
+                    <i class="far fa-star" onclick="setRating(4)"></i>
+                    <i class="far fa-star" onclick="setRating(5)"></i>
+                </div>
+                <textarea id="comment" placeholder="Tell us about the quality..."
+                    style="width: 100%; margin-top: 20px; padding: 15px; border-radius: 12px; background: #1e293b; border: 1px solid #334155; color: #fff;"></textarea>
+                <button class="btn-submit" onclick="submitReview()">Submit to Blockchain Audit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentRating = 0;
+        let activeItemId = null;
+
+        async function fetchTransparency() {
+            const itemId = document.getElementById('batch-input').value;
+            if (!itemId) return;
+            activeItemId = itemId;
+
+            try {
+                const res = await fetch(`/api/v1/transparency/trace/${itemId}`);
+                const data = await res.json();
+
+                if (data.status === 'success') {
+                    renderUI(data.data);
+                    fetchPricingAudit(itemId);
+                    document.getElementById('portal-content').style.display = 'block';
+                }
+            } catch (e) {
+                alert("Traceability records not found for this batch.");
+            }
+        }
+
+        function renderUI(data) {
+            // Render Pricing
+            const item = data.retail_item;
+            document.getElementById('freshness-value').innerText = `${item.freshness || 100}%`;
+            document.getElementById('base-price').innerText = `$${item.base_price || 0}`;
+            document.getElementById('market-price').innerText = `$${(item.market_price || item.base_price).toFixed(2)}`;
+
+            // Render Tree
+            const tree = document.getElementById('genealogy-tree');
+            tree.innerHTML = '';
+
+            // Retail Node
+            addNode(tree, 'fas fa-store', 'Retailer Shelf', 'AgriTech Regional Warehouse');
+
+            // Processing Node
+            if (data.processing) {
+                addNode(tree, 'fas fa-industry', 'Processing & Packaging', data.processing.batch_number);
+            }
+
+            // Origin Nodes
+            if (data.origins) {
+                data.origins.forEach(origin => {
+                    addNode(tree, 'fas fa-seedling', 'Agricultural Origin', `Farmer: ${origin.farmer_name} (Rep: ${origin.farmer_reputation})`);
+                    if (origin.soil_profile) {
+                        addNode(tree, 'fas fa-microscope', 'Soil Health Audit', `pH: ${origin.soil_profile.ph_level}, Nitrogen: ${origin.soil_profile.nitrogen}`);
+                    }
+                });
+            }
+        }
+
+        function addNode(container, icon, title, subtitle) {
+            const node = document.createElement('div');
+            node.className = 'node';
+            node.innerHTML = `
+                <div class="node-icon"><i class="${icon}"></i></div>
+                <div style="font-weight: 700;">${title}</div>
+                <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 5px;">${subtitle}</div>
+            `;
+            container.appendChild(node);
+        }
+
+        async function fetchPricingAudit(id) {
+            const res = await fetch(`/api/v1/transparency/pricing/audit/${id}`, {
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+            });
+            const data = await res.json();
+            if (data.status === 'success') {
+                renderChart(data.data);
+            }
+        }
+
+        function renderChart(logs) {
+            const ctx = document.getElementById('pricingChart').getContext('2d');
+            const labels = logs.slice().reverse().map(l => new Date(l.timestamp).toLocaleTimeString());
+            const values = logs.slice().reverse().map(l => l.new_price);
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Market Price (Freshness Adjusted)',
+                        data: values,
+                        borderColor: '#2ecc71',
+                        backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
+                        x: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } }
+                    }
+                }
+            });
+        }
+
+        function setRating(n) {
+            currentRating = n;
+            const stars = document.querySelectorAll('#stars i');
+            stars.forEach((s, idx) => {
+                s.className = idx < n ? 'fas fa-star' : 'far fa-star';
+            });
+        }
+
+        async function submitReview() {
+            if (!currentRating) return alert("Please select a rating.");
+
+            const res = await fetch('/api/v1/transparency/review', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    stock_item_id: activeItemId,
+                    rating: currentRating,
+                    comment: document.getElementById('comment').value
+                })
+            });
+
+            if (res.ok) {
+                alert("Thank you! Your feedback has updated the farmer's global reputation score.");
+                location.reload();
+            }
+        }
+    </script>
+</body>
+
+</html>

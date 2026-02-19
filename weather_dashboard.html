@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Advisory | AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e293b;
+            --accent: #22c55e;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .weather-hero {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 3rem;
+            border-radius: 32px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .weather-info h1 {
+            font-size: 3rem;
+            margin: 0;
+        }
+
+        .weather-info p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .weather-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-box label {
+            display: block;
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-box span {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .advisories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .advisory-card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid #f1f5f9;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .advisory-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .advisory-card.high-priority {
+            border-left: 6px solid #ef4444;
+        }
+
+        .priority-badge {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .high-priority .priority-badge {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .normal-priority .priority-badge {
+            background: #f0fdf4;
+            color: #15803d;
+        }
+
+        .crop-label {
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .advisory-text {
+            margin-top: 1rem;
+            line-height: 1.6;
+            color: var(--text-main);
+        }
+
+        .footer-info {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 4rem;
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 900px) {
+            .weather-hero {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard-container" role="main">
+
+        <div class="weather-hero" id="weather-banner" role="region" aria-labelledby="current-temp">
+            <div class="weather-info">
+                <p id="current-loc">Synchronizing...</p>
+                <h1 id="current-temp">--°C</h1>
+                <p id="current-cond">Connecting to satellite...</p>
+
+                <div class="weather-stats">
+                    <div class="stat-box">
+                        <label>Humidity</label>
+                        <span id="humidity-val">--%</span>
+                    </div>
+                    <div class="stat-box">
+                        <label>Wind</label>
+                        <span id="wind-val">-- km/h</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: center; font-size: 5rem;"
+                 aria-hidden="true">
+                <i class="fas fa-cloud-sun-rain"></i>
+            </div>
+        </div>
+
+        <h2 class="section-title" id="advisories-heading">
+            <i class="fas fa-robot" aria-hidden="true"></i>
+            AI Crop Advisories
+        </h2>
+
+        <div class="advisories-grid"
+             id="advisory-list"
+             aria-labelledby="advisories-heading">
+
+            <div class="loading-state"
+                 role="status"
+                 aria-live="polite"
+                 aria-label="Loading crop advisories">
+                <i class="fas fa-spinner fa-spin fa-2x" aria-hidden="true"></i>
+                <p>Consulting Intelligence Engine...</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="weather_dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
+</html>

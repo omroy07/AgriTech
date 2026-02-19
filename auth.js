@@ -1,479 +1,405 @@
-// Authentication System for AgriTech
+// auth.js — AgriTech Authentication System
+// Migrated from localStorage to Firebase Auth + Firestore
+// Maintains full backward-compatible API so register.js / login.js need minimal changes
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  collection,
+  getDocs,
+  serverTimestamp,
+} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+// ─────────────────────────────────────────────
+// Role constants — single source of truth
+// ─────────────────────────────────────────────
+export const ROLES = {
+  FARMER: "farmer",
+  BUYER: "buyer",
+  EQUIPMENT: "equipment",
+  GROCERY: "grocery",
+  EXPERT: "expert",
+  ADMIN: "admin",
+};
+
+// Pages each role is allowed to access (filename without path)
+const ROLE_HOME = {
+  farmer: "farmer.html",
+  buyer: "buyer.html",
+  equipment: "equipment.html",
+  grocery: "grocery.html",
+  expert: "expert.html",
+  admin: "admin.html",
+};
+
+// ─────────────────────────────────────────────
+// Firebase initialisation (config fetched from Flask)
+// ─────────────────────────────────────────────
+let _app, _auth, _db;
+
+async function getFirebaseInstances() {
+  if (_auth && _db) return { auth: _auth, db: _db };
+
+  const res = await fetch('http://localhost:5000/api/firebase-config');
+  if (!res.ok) throw new Error('Failed to fetch Firebase config');
+  
+  const config = await res.json();
+
+  _app = initializeApp(config);
+  _auth = getAuth(_app);
+  _db = getFirestore(_app);
+  window._agriDb = _db;
+  return { auth: _auth, db: _db };
+}
+
 class AuthManager {
   constructor() {
-    this.users = this.loadUsers();
-    this.currentUser = this.getCurrentUser();
+    // currentUser is populated after observeAuth resolves
+    this.currentUser = null;
+    this._ready = false;
+
+    getFirebaseInstances().catch(console.error);
   }
 
-  // Load users from localStorage
-  loadUsers() {
+  // ── Register ──────────────────────────────
+  async register({ role, fullname, email, password }) {
+    // Client-side validation (same as before)
+    if (!role || !fullname || !email || !password)
+      return { success: false, message: "All fields are required" };
+
+    if (!this._validateEmail(email))
+      return { success: false, message: "Please enter a valid email address" };
+
+    const pwCheck = this._validatePassword(password);
+    if (!pwCheck.valid) return { success: false, message: pwCheck.message };
+
     try {
-      const users = localStorage.getItem('agritech_users');
-      return users ? JSON.parse(users) : [];
-    } catch (error) {
-      console.error('Error loading users:', error);
-      return [];
-    }
-  }
+      const { auth, db } = await getFirebaseInstances();
 
-  // Save users to localStorage
-  saveUsers() {
-    try {
-      localStorage.setItem('agritech_users', JSON.stringify(this.users));
-    } catch (error) {
-      console.error('Error saving users:', error);
-    }
-  }
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
 
-  // Simple password hashing (in production, use proper bcrypt)
-  hashPassword(password) {
-    // Simple hash function for demo - in production use proper bcrypt
-    let hash = 0;
-    for (let i = 0; i < password.length; i++) {
-      const char = password.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash = hash & hash; // Convert to 32-bit integer
-    }
-    return hash.toString();
-  }
+      // Store profile + role in Firestore
+      await setDoc(doc(db, "users", cred.user.uid), {
+        fullname: fullname.trim(),
+        email: email.toLowerCase().trim(),
+        role,
+        createdAt: serverTimestamp(),
+        isActive: true,
+        isBanned: false,
+      });
 
-  // Validate email format
-  validateEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
+      const userData = { id: cred.user.uid, fullname, email, role };
+      this._setSession(userData);
 
-  // Validate password strength
-  validatePassword(password) {
-    if (password.length < 8) {
-      return { valid: false, message: 'Password must be at least 8 characters long' };
-    }
-    if (!/[a-z]/.test(password)) {
-      return { valid: false, message: 'Password must contain at least one lowercase letter' };
-    }
-    if (!/[A-Z]/.test(password)) {
-      return { valid: false, message: 'Password must contain at least one uppercase letter' };
-    }
-    if (!/\d/.test(password)) {
-      return { valid: false, message: 'Password must contain at least one number' };
-    }
-    return { valid: true, message: 'Password is strong' };
-  }
-
-  // Register new user
-  register(userData) {
-    const { role, fullname, email, password } = userData;
-
-    // Validate input
-    if (!role || !fullname || !email || !password) {
-      return { success: false, message: 'All fields are required' };
-    }
-
-    if (!this.validateEmail(email)) {
-      return { success: false, message: 'Please enter a valid email address' };
-    }
-
-    const passwordValidation = this.validatePassword(password);
-    if (!passwordValidation.valid) {
-      return { success: false, message: passwordValidation.message };
-    }
-
-    // Check if user already exists
-    const existingUser = this.users.find(user => user.email.toLowerCase() === email.toLowerCase());
-    if (existingUser) {
-      return { success: false, message: 'An account with this email already exists' };
-    }
-
-    // Create new user
-    const newUser = {
-      id: Date.now().toString(),
-      role: role,
-      fullname: fullname.trim(),
-      email: email.toLowerCase().trim(),
-      password: this.hashPassword(password),
-      createdAt: new Date().toISOString(),
-      isActive: true
-    };
-
-    this.users.push(newUser);
-    this.saveUsers();
-
-    return { success: true, message: 'Account created successfully!', user: newUser };
-  }
-
-  // Login user
-  login(email, password) {
-    if (!email || !password) {
-      return { success: false, message: 'Email and password are required' };
-    }
-
-    if (!this.validateEmail(email)) {
-      return { success: false, message: 'Please enter a valid email address' };
-    }
-
-    // Find user
-    const user = this.users.find(u => u.email.toLowerCase() === email.toLowerCase());
-    if (!user) {
-      return { success: false, message: 'Invalid email or password' };
-    }
-
-    // Check password
-    const hashedPassword = this.hashPassword(password);
-    if (user.password !== hashedPassword) {
-      return { success: false, message: 'Invalid email or password' };
-    }
-
-    if (!user.isActive) {
-      return { success: false, message: 'Account is deactivated. Please contact support.' };
-    }
-
-    // Update last login
-    user.lastLogin = new Date().toISOString();
-    this.saveUsers();
-
-    // Set current user session
-    this.setCurrentUser(user);
-
-    return { success: true, message: 'Login successful!', user: user };
-  }
-
-  // Set current user session
-  setCurrentUser(user) {
-    try {
-      const userSession = {
-        id: user.id,
-        email: user.email,
-        fullname: user.fullname,
-        role: user.role,
-        loginTime: new Date().toISOString()
+      return {
+        success: true,
+        message: "Account created successfully!",
+        user: userData,
       };
-      localStorage.setItem('agritech_current_user', JSON.stringify(userSession));
-      this.currentUser = userSession;
-    } catch (error) {
-      console.error('Error setting current user:', error);
+    } catch (err) {
+      return { success: false, message: this._friendlyError(err.code) };
     }
   }
 
-  // Get current user session
-  getCurrentUser() {
+  // ── Login ─────────────────────────────────
+  async login(email, password) {
+    if (!email || !password)
+      return { success: false, message: "Email and password are required" };
+
+    if (!this._validateEmail(email))
+      return { success: false, message: "Please enter a valid email address" };
+
     try {
-      const user = localStorage.getItem('agritech_current_user');
-      return user ? JSON.parse(user) : null;
-    } catch (error) {
-      console.error('Error getting current user:', error);
-      return null;
+      const { auth, db } = await getFirebaseInstances();
+
+      const cred = await signInWithEmailAndPassword(auth, email, password);
+
+      // Fetch role and profile from Firestore
+      const snap = await getDoc(doc(db, "users", cred.user.uid));
+      if (!snap.exists())
+        return {
+          success: false,
+          message: "User profile not found. Please re-register.",
+        };
+
+      const data = snap.data();
+
+      if (data.isBanned)
+        return {
+          success: false,
+          message: "Your account has been suspended. Contact support.",
+        };
+
+      if (!data.isActive)
+        return {
+          success: false,
+          message: "Account is deactivated. Contact support.",
+        };
+
+      // Update lastLogin in Firestore
+      await updateDoc(doc(db, "users", cred.user.uid), {
+        lastLogin: serverTimestamp(),
+      });
+
+      const userData = {
+        id: cred.user.uid,
+        fullname: data.fullname,
+        email: data.email,
+        role: data.role,
+      };
+      this._setSession(userData);
+
+      return { success: true, message: "Login successful!", user: userData };
+    } catch (err) {
+      return { success: false, message: this._friendlyError(err.code) };
     }
   }
 
-  // Check if user is logged in
+  // ── Logout ────────────────────────────────
+  async logout() {
+    try {
+      const { auth } = await getFirebaseInstances();
+      await signOut(auth);
+      sessionStorage.removeItem("agritech_session");
+      this.currentUser = null;
+      window.location.href = "login.html";
+      return { success: true };
+    } catch (err) {
+      return { success: false, message: err.message };
+    }
+  }
+
+  // ── Check login state ─────────────────────
   isLoggedIn() {
     return this.currentUser !== null;
   }
 
-  // Logout user
-  logout() {
+  // ── Get current user ──────────────────────
+  getCurrentUser() {
+    if (this.currentUser) return this.currentUser;
     try {
-      localStorage.removeItem('agritech_current_user');
-      this.currentUser = null;
-      return { success: true, message: 'Logged out successfully' };
-    } catch (error) {
-      console.error('Error during logout:', error);
-      return { success: false, message: 'Error during logout' };
-    }
+      const s = sessionStorage.getItem("agritech_session");
+      if (s) {
+        this.currentUser = JSON.parse(s);
+        return this.currentUser;
+      }
+    } catch (_) {}
+    return null;
   }
 
-  // Get user by email
-  getUserByEmail(email) {
-    return this.users.find(user => user.email.toLowerCase() === email.toLowerCase());
+  // ── Role helpers ──────────────────────────
+  getHomePageForRole(role) {
+    return ROLE_HOME[role] || "main.html";
   }
 
-  // Update user profile
-  updateUser(userId, updates) {
-    const userIndex = this.users.findIndex(user => user.id === userId);
-    if (userIndex === -1) {
-      return { success: false, message: 'User not found' };
-    }
-
-    // Update user data
-    this.users[userIndex] = { ...this.users[userIndex], ...updates, updatedAt: new Date().toISOString() };
-    this.saveUsers();
-
-    // Update current session if it's the same user
-    if (this.currentUser && this.currentUser.id === userId) {
-      this.setCurrentUser(this.users[userIndex]);
-    }
-
-    return { success: true, message: 'Profile updated successfully', user: this.users[userIndex] };
+  // ── Admin: get all users ──────────────────
+  async getAllUsers() {
+    const { db } = await getFirebaseInstances();
+    const snap = await getDocs(collection(db, "users"));
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
   }
 
-  // Get all users (admin function)
-  getAllUsers() {
-    return this.users.map(user => ({
-      id: user.id,
-      role: user.role,
-      fullname: user.fullname,
-      email: user.email,
-      createdAt: user.createdAt,
-      lastLogin: user.lastLogin,
-      isActive: user.isActive
-    }));
+  // ── Admin: ban / unban ────────────────────
+  async setBanned(uid, isBanned) {
+    const { db } = await getFirebaseInstances();
+    await updateDoc(doc(db, "users", uid), { isBanned });
+    return { success: true };
   }
 
-  // Delete user account
-  deleteUser(userId) {
-    const userIndex = this.users.findIndex(user => user.id === userId);
-    if (userIndex === -1) {
-      return { success: false, message: 'User not found' };
-    }
-
-    this.users.splice(userIndex, 1);
-    this.saveUsers();
-
-    // Logout if current user is deleted
-    if (this.currentUser && this.currentUser.id === userId) {
-      this.logout();
-    }
-
-    return { success: true, message: 'Account deleted successfully' };
+  // ── Admin: change role ────────────────────
+  async setRole(uid, newRole) {
+    const { db } = await getFirebaseInstances();
+    await updateDoc(doc(db, "users", uid), { role: newRole });
+    return { success: true };
   }
 
-  // Change password
-  changePassword(userId, currentPassword, newPassword) {
-    const user = this.users.find(u => u.id === userId);
-    if (!user) {
-      return { success: false, message: 'User not found' };
-    }
-
-    // Verify current password
-    const hashedCurrentPassword = this.hashPassword(currentPassword);
-    if (user.password !== hashedCurrentPassword) {
-      return { success: false, message: 'Current password is incorrect' };
-    }
-
-    // Validate new password
-    const passwordValidation = this.validatePassword(newPassword);
-    if (!passwordValidation.valid) {
-      return { success: false, message: passwordValidation.message };
-    }
-
-    // Update password
-    user.password = this.hashPassword(newPassword);
-    user.updatedAt = new Date().toISOString();
-    this.saveUsers();
-
-    return { success: true, message: 'Password changed successfully' };
+  // ─────────────────────────────────────────
+  // Private helpers
+  // ─────────────────────────────────────────
+  _setSession(user) {
+    this.currentUser = user;
+    sessionStorage.setItem("agritech_session", JSON.stringify(user));
   }
 
-  // Reset password (simplified - in production, use email verification)
-  resetPassword(email) {
-    const user = this.users.find(u => u.email.toLowerCase() === email.toLowerCase());
-    if (!user) {
-      return { success: false, message: 'No account found with this email address' };
-    }
+  _validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
 
-    // Generate temporary password
-    const tempPassword = Math.random().toString(36).slice(-8);
-    user.password = this.hashPassword(tempPassword);
-    user.updatedAt = new Date().toISOString();
-    this.saveUsers();
+  _validatePassword(password) {
+    if (password.length < 8)
+      return {
+        valid: false,
+        message: "Password must be at least 8 characters long",
+      };
+    if (!/[a-z]/.test(password))
+      return {
+        valid: false,
+        message: "Password must contain at least one lowercase letter",
+      };
+    if (!/[A-Z]/.test(password))
+      return {
+        valid: false,
+        message: "Password must contain at least one uppercase letter",
+      };
+    if (!/\d/.test(password))
+      return {
+        valid: false,
+        message: "Password must contain at least one number",
+      };
+    return { valid: true };
+  }
 
-    // In production, send this via email
-    return {
-      success: true,
-      message: 'Password reset successfully',
-      tempPassword: tempPassword
+  _friendlyError(code) {
+    const map = {
+      "auth/email-already-in-use": "An account with this email already exists.",
+      "auth/invalid-email": "Please enter a valid email address.",
+      "auth/weak-password": "Password must be at least 6 characters.",
+      "auth/user-not-found": "Invalid email or password.",
+      "auth/wrong-password": "Invalid email or password.",
+      "auth/too-many-requests": "Too many attempts. Please try again later.",
+      "auth/network-request-failed": "Network error. Check your connection.",
+      "auth/invalid-credential": "Invalid email or password.",
     };
+    return map[code] || "Something went wrong. Please try again.";
+  }
+
+  // ── UI helper (kept from old auth.js) ─────
+  updateAuthUI() {
+    const user = this.getCurrentUser();
+    const isLoggedIn = !!user;
+
+    const loginBtn = document.querySelector(".login-btn-desktop");
+    const registerBtn = document.querySelector(".register-btn-desktop");
+    const logoutBtn = document.querySelector(".logout-button");
+    const mobileLogin = document.querySelector(
+      'a[href="login.html"].mobile-link',
+    );
+    const mobileReg = document.querySelector(
+      'a[href="register.html"].mobile-link',
+    );
+
+    if (isLoggedIn) {
+      if (loginBtn) loginBtn.style.display = "none";
+      if (registerBtn) registerBtn.style.display = "none";
+      if (logoutBtn) {
+        logoutBtn.style.display = "inline-flex";
+        logoutBtn.onclick = (e) => {
+          e.preventDefault();
+          this.logout();
+        };
+      }
+      if (mobileLogin) mobileLogin.style.display = "none";
+      if (mobileReg) mobileReg.style.display = "none";
+    } else {
+      if (loginBtn) loginBtn.style.display = "inline-flex";
+      if (registerBtn) registerBtn.style.display = "inline-flex";
+      if (logoutBtn) logoutBtn.style.display = "none";
+      if (mobileLogin) mobileLogin.style.display = "flex";
+      if (mobileReg) mobileReg.style.display = "flex";
+    }
   }
 }
 
-// Initialize global auth manager
+// ─────────────────────────────────────────────
+// Singleton
+// ─────────────────────────────────────────────
 window.authManager = new AuthManager();
 
-// Utility functions for UI
-function showAuthMessage(message, type = 'info') {
-  // Remove existing messages
-  const existingMessage = document.querySelector('.auth-message');
-  if (existingMessage) {
-    existingMessage.remove();
-  }
+// ─────────────────────────────────────────────
+// Page guards — same function names as before
+// ─────────────────────────────────────────────
 
-  const messageDiv = document.createElement('div');
-  messageDiv.className = `auth-message auth-message-${type}`;
-  messageDiv.innerHTML = `
-    <div class="auth-message-content">
-      <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-      <span>${message}</span>
-    </div>
-  `;
-
-  // Add styles
-  messageDiv.style.cssText = `
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 10000;
-    padding: 15px 20px;
-    border-radius: 8px;
-    color: white;
-    font-weight: 500;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    animation: slideInRight 0.3s ease-out;
-    max-width: 400px;
-  `;
-
-  if (type === 'success') {
-    messageDiv.style.background = 'linear-gradient(135deg, #4caf50, #45a049)';
-  } else if (type === 'error') {
-    messageDiv.style.background = 'linear-gradient(135deg, #f44336, #e53935)';
-  } else {
-    messageDiv.style.background = 'linear-gradient(135deg, #2196f3, #1976d2)';
-  }
-
-  document.body.appendChild(messageDiv);
-
-  // Auto remove after 5 seconds
-  setTimeout(() => {
-    if (messageDiv.parentNode) {
-      messageDiv.style.animation = 'slideOutRight 0.3s ease-out';
-      setTimeout(() => {
-        if (messageDiv.parentNode) {
-          messageDiv.remove();
-        }
-      }, 300);
-    }
-  }, 5000);
-}
-
-// Add CSS animations
-const authStyles = document.createElement('style');
-authStyles.textContent = `
-  @keyframes slideInRight {
-    from {
-      opacity: 0;
-      transform: translateX(100%);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes slideOutRight {
-    from {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    to {
-      opacity: 0;
-      transform: translateX(100%);
-    }
-  }
-
-  .auth-message-content {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .auth-message-content i {
-    font-size: 1.2rem;
-  }
-`;
-document.head.appendChild(authStyles);
-
-// Check authentication on protected pages
-function requireAuth() {
-  if (!window.authManager.isLoggedIn()) {
-    showAuthMessage('Please log in to access this page', 'error');
+/**
+ * requireAuth([allowedRoles])
+ * Call on any protected page.
+ * Optionally pass roles that are allowed, e.g. requireAuth(["admin"])
+ */
+window.requireAuth = function (allowedRoles = []) {
+  const user = window.authManager.getCurrentUser();
+  if (!user) {
+    showAuthMessage("Please log in to access this page.", "error");
     setTimeout(() => {
-      window.location.href = 'login.html';
-    }, 2000);
+      window.location.href = "login.html";
+    }, 1500);
+    return false;
+  }
+  if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
+    showAuthMessage("You don't have permission to view this page.", "error");
+    setTimeout(() => {
+      window.location.href = "unauthorized.html";
+    }, 1500);
     return false;
   }
   return true;
-}
+};
 
-// Redirect if already logged in
-function redirectIfLoggedIn() {
-  if (window.authManager.isLoggedIn()) {
-    window.location.href = 'main.html';
-  }
-}
-
-// Update UI based on auth state
-AuthManager.prototype.updateAuthUI = function () {
-  const isLoggedIn = this.isLoggedIn();
-  const user = this.currentUser;
-
-  // Desktop Header Elements
-  const loginBtn = document.querySelector('.login-btn-desktop'); // Add this class to HTML
-  const registerBtn = document.querySelector('.register-btn-desktop'); // Add this class to HTML
-  const logoutBtn = document.querySelector('.logout-button');
-  const profileLink = document.querySelector('.profile-link'); // Optional: Add profile link
-
-  // Mobile Menu Elements
-  const mobileLoginLink = document.querySelector('a[href="login.html"].mobile-link');
-  const mobileRegisterLink = document.querySelector('a[href="register.html"].mobile-link');
-  const mobileLogoutLink = document.getElementById('mobile-logout-link'); // Add this to HTML
-
-  if (isLoggedIn) {
-    // Desktop: Hide Login/Register, Show Logout
-    if (loginBtn) loginBtn.style.display = 'none';
-    if (registerBtn) registerBtn.style.display = 'none';
-    if (logoutBtn) {
-      logoutBtn.style.display = 'inline-flex';
-      logoutBtn.onclick = (e) => {
-        e.preventDefault();
-        this.logout();
-        window.location.reload();
-      };
-    }
-
-    // Mobile: Hide Login/Register, Show Logout
-    if (mobileLoginLink) mobileLoginLink.style.display = 'none';
-    if (mobileRegisterLink) mobileRegisterLink.style.display = 'none';
-
-    // Check if mobile logout link exists, if not create it in mobile menu
-    if (!mobileLogoutLink) {
-      const mobileLinksContainer = document.querySelector('.mobile-links');
-      if (mobileLinksContainer) {
-        const logoutLink = document.createElement('a');
-        logoutLink.href = "#";
-        logoutLink.id = "mobile-logout-link";
-        logoutLink.className = "mobile-link";
-        logoutLink.innerHTML = `
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-                <i class="fas fa-chevron-right link-arrow"></i>
-            `;
-        logoutLink.onclick = (e) => {
-          e.preventDefault();
-          this.logout();
-          window.location.reload();
-        };
-        mobileLinksContainer.appendChild(logoutLink);
-      }
-    } else {
-      mobileLogoutLink.style.display = 'flex';
-    }
-
-  } else {
-    // Desktop: Show Login/Register, Hide Logout
-    if (loginBtn) loginBtn.style.display = 'inline-flex';
-    if (registerBtn) registerBtn.style.display = 'inline-flex';
-    if (logoutBtn) logoutBtn.style.display = 'none';
-
-    // Mobile: Show Login/Register, Hide Logout
-    if (mobileLoginLink) mobileLoginLink.style.display = 'flex';
-    if (mobileRegisterLink) mobileRegisterLink.style.display = 'flex';
-    if (mobileLogoutLink) mobileLogoutLink.style.display = 'none';
+/** Redirect already-logged-in users away from login/register pages */
+window.redirectIfLoggedIn = function () {
+  const user = window.authManager.getCurrentUser();
+  if (user) {
+    window.location.href = window.authManager.getHomePageForRole(user.role);
   }
 };
 
-// Initialize global auth manager and UI
-window.authManager = new AuthManager();
+// ─────────────────────────────────────────────
+// showAuthMessage — kept exactly from old auth.js
+// ─────────────────────────────────────────────
+window.showAuthMessage = function (message, type = "info") {
+  const existing = document.querySelector(".auth-message");
+  if (existing) existing.remove();
 
-// Run UI update on load
-document.addEventListener('DOMContentLoaded', () => {
+  const div = document.createElement("div");
+  div.className = `auth-message auth-message-${type}`;
+  div.innerHTML = `
+    <div class="auth-message-content">
+      <i class="fas fa-${type === "success" ? "check-circle" : type === "error" ? "exclamation-circle" : "info-circle"}"></i>
+      <span>${message}</span>
+    </div>`;
+
+  div.style.cssText = `
+    position:fixed; top:20px; right:20px; z-index:10000;
+    padding:15px 20px; border-radius:8px; color:white;
+    font-weight:500; box-shadow:0 4px 12px rgba(0,0,0,.15);
+    animation:slideInRight .3s ease-out; max-width:400px;`;
+
+  const colors = {
+    success: "linear-gradient(135deg,#4caf50,#45a049)",
+    error: "linear-gradient(135deg,#f44336,#e53935)",
+    info: "linear-gradient(135deg,#2196f3,#1976d2)",
+  };
+  div.style.background = colors[type] || colors.info;
+  document.body.appendChild(div);
+
+  setTimeout(() => {
+    if (div.parentNode) {
+      div.style.animation = "slideOutRight .3s ease-out";
+      setTimeout(() => div.remove(), 300);
+    }
+  }, 5000);
+};
+
+// CSS animations (same as before)
+const s = document.createElement("style");
+s.textContent = `
+  @keyframes slideInRight  { from{opacity:0;transform:translateX(100%)} to{opacity:1;transform:translateX(0)} }
+  @keyframes slideOutRight { from{opacity:1;transform:translateX(0)}    to{opacity:0;transform:translateX(100%)} }
+  .auth-message-content { display:flex; align-items:center; gap:10px; }
+  .auth-message-content i { font-size:1.2rem; }
+`;
+document.head.appendChild(s);
+
+// Run UI update on every page load
+document.addEventListener("DOMContentLoaded", () => {
   window.authManager.updateAuthUI();
 });

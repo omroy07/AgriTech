@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circular Hub | Intelligent Barter Exchange</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --barter-gold: #f39c12;
+            --barter-teal: #1abc9c;
+            --barter-blue: #2980b9;
+            --bg-dark: #0f1218;
+            --card-bg: #1a1e26;
+            --border-color: #2c3340;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #ecf0f1;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .hub-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 20px;
+        }
+
+        /* Value Balance Bar */
+        .value-orchestrator {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .balance-meter {
+            height: 12px;
+            background: #2c3e50;
+            border-radius: 6px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .balance-fill {
+            height: 100%;
+            width: 50%;
+            background: linear-gradient(to right, var(--barter-gold), var(--barter-teal));
+            transition: width 0.5s ease;
+        }
+
+        /* Trade Builder */
+        .trade-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .resource-column {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .column-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .provide {
+            color: var(--barter-gold);
+        }
+
+        .receive {
+            color: var(--barter-teal);
+        }
+
+        .resource-item {
+            background: #252b36;
+            margin-bottom: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .value-tag {
+            font-size: 0.8rem;
+            color: #bdc3c7;
+            background: #34495e;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+
+        /* Transaction List */
+        .tx-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--barter-teal);
+        }
+
+        .status-pill {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 800;
+        }
+
+        .status-proposed {
+            background: #34495e;
+        }
+
+        .status-locked {
+            background: var(--barter-blue);
+        }
+
+        .status-completed {
+            background: #27ae60;
+        }
+
+        .btn-action {
+            padding: 8px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--barter-teal);
+            color: #000;
+        }
+
+        .btn-secondary {
+            background: #34495e;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hub-container">
+        <!-- Main Panel: Exchange Management -->
+        <div class="main-panel">
+            <header style="margin-bottom: 30px;">
+                <h1><i class="fas fa-recycle" style="color: var(--barter-teal);"></i> Circular Exchange Hub</h1>
+                <p>Swap farm resources using real-time Value-Index mapping.</p>
+            </header>
+
+            <!-- Value Orchestrator Banner -->
+            <div class="value-orchestrator">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <span id="give-value">$0.00</span> Offered
+                    </div>
+                    <div style="font-size: 1.2rem; font-weight: 800;">VALUE-INDEX QUOTE</div>
+                    <div>
+                        <span id="get-value">$0.00</span> Requested
+                    </div>
+                </div>
+                <div class="balance-meter">
+                    <div class="balance-fill" id="val-meter" style="width: 50%;"></div>
+                </div>
+                <button class="btn-action btn-primary" onclick="proposeTrade()">PROPOSE BARTER</button>
+            </div>
+
+            <div class="trade-builder">
+                <!-- Offered Resources -->
+                <div class="resource-column">
+                    <div class="column-header provide">
+                        <i class="fas fa-arrow-up"></i> YOUR RESOURCES (TO GIVE)
+                    </div>
+                    <div id="give-list">
+                        <!-- Added items -->
+                    </div>
+                    <div style="margin-top: 15px; display: flex; gap: 5px;">
+                        <select id="give-cat" class="btn-secondary" style="padding: 10px;">
+                            <option value="MACHINERY">Machinery</option>
+                            <option value="LABOR">Labor</option>
+                            <option value="COMMODITY">Seeds/Commodity</option>
+                        </select>
+                        <input type="number" id="give-qty" placeholder="Qty"
+                            style="width: 60px; padding: 10px; border-radius: 8px; background: #252b36; border: none; color: #fff;">
+                        <button class="btn-action btn-secondary" onclick="addResource('GIVE')">ADD</button>
+                    </div>
+                </div>
+
+                <!-- Requested Resources -->
+                <div class="resource-column">
+                    <div class="column-header receive">
+                        <i class="fas fa-arrow-down"></i> TARGET RESOURCES (TO GET)
+                    </div>
+                    <div id="get-list">
+                        <!-- Added items -->
+                    </div>
+                    <div style="margin-top: 15px; display: flex; gap: 5px;">
+                        <select id="get-cat" class="btn-secondary" style="padding: 10px;">
+                            <option value="MACHINERY">Machinery</option>
+                            <option value="LABOR">Labor</option>
+                            <option value="COMMODITY">Seeds/Commodity</option>
+                        </select>
+                        <input type="number" id="get-qty" placeholder="Qty"
+                            style="width: 60px; padding: 10px; border-radius: 8px; background: #252b36; border: none; color: #fff;">
+                        <button class="btn-action btn-secondary" onclick="addResource('GET')">ADD</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transaction History -->
+            <h3><i class="fas fa-history"></i> Immutable Barter Trails</h3>
+            <div id="transaction-list">
+                <!-- Tx Cards -->
+            </div>
+        </div>
+
+        <!-- Sidebar: Market & System Health -->
+        <div class="sidebar">
+            <div class="value-orchestrator" style="text-align: left; padding: 15px;">
+                <h4><i class="fas fa-chart-line"></i> Global Multipliers</h4>
+                <div style="font-size: 0.85rem; line-height: 1.8;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Machinery (Tractors)</span>
+                        <span style="color: var(--barter-gold);">0.92x</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Harvest Labor</span>
+                        <span style="color: var(--barter-teal);">1.15x</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Wheat Seed (Cat A)</span>
+                        <span style="color: var(--barter-teal);">1.05x</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let giveResources = [];
+        let getResources = [];
+        let giveVal = 0;
+        let getVal = 0;
+
+        async function addResource(type) {
+            const cat = document.getElementById(type === 'GIVE' ? 'give-cat' : 'get-cat').value;
+            const qty = document.getElementById(type === 'GIVE' ? 'give-qty' : 'get-qty').value;
+
+            // Mocking a quote call for now
+            const val = type === 'GIVE' ? qty * 45 : qty * 50;
+
+            const res = { category: cat, id: 1, qty: parseFloat(qty), value: val };
+
+            if (type === 'GIVE') {
+                giveResources.push(res);
+                giveVal += val;
+            } else {
+                getResources.push(res);
+                getVal += val;
+            }
+
+            renderResources();
+            updateMeter();
+        }
+
+        function renderResources() {
+            const render = (list, containerId) => {
+                const container = document.getElementById(containerId);
+                container.innerHTML = list.map((r, i) => `
+                    <div class="resource-item">
+                        <span>${r.category} x ${r.qty}</span>
+                        <span class="value-tag">$${r.value.toFixed(2)}</span>
+                    </div>
+                `).join('');
+            };
+
+            render(giveResources, 'give-list');
+            render(getResources, 'get-list');
+        }
+
+        function updateMeter() {
+            document.getElementById('give-value').innerText = `$${giveVal.toFixed(2)}`;
+            document.getElementById('get-value').innerText = `$${getVal.toFixed(2)}`;
+
+            const total = giveVal + getVal;
+            const pct = total === 0 ? 50 : (giveVal / total) * 100;
+            document.getElementById('val-meter').style.width = `${pct}%`;
+        }
+
+        async function proposeTrade() {
+            const res = await fetch('/api/v1/barter/propose', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    responder_id: 2, // Hardcoded for demo
+                    offered: giveResources,
+                    requested: getResources
+                })
+            });
+
+            if (res.ok) {
+                alert("Barter Proposal Sent! Dual-lock Escrow initialized.");
+                fetchHistory();
+            }
+        }
+
+        async function fetchHistory() {
+            const res = await fetch('/api/v1/barter/history', {
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+            });
+            const data = await res.json();
+            const list = document.getElementById('transaction-list');
+            list.innerHTML = data.transactions.map(tx => `
+                <div class="tx-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <b>TX#${tx.id} - Resource Swap</b>
+                        <span class="status-pill status-${tx.status.toLowerCase()}">${tx.status}</span>
+                    </div>
+                    <div style="font-size: 0.85rem; color: #bdc3c7;">
+                        Initiator Locked: ${tx.escrow.initiator_locked ? '✅' : '❌'} | 
+                        Responder Locked: ${tx.escrow.responder_locked ? '✅' : '❌'}
+                    </div>
+                    <div style="margin-top: 15px;">
+                        ${tx.status === 'PROPOSED' ? `<button class="btn-action btn-primary" onclick="lockEscrow(${tx.id})">COMMIT RESOURCES</button>` : ''}
+                        ${tx.status === 'ESCROW_LOCKED' ? `<button class="btn-action btn-primary" onclick="confirmFulfillment(${tx.id})">CONFIRM DELIVERY</button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function lockEscrow(id) {
+            await fetch(`/api/v1/barter/${id}/commit`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+            });
+            fetchHistory();
+        }
+
+        async function confirmFulfillment(id) {
+            await fetch(`/api/v1/barter/${id}/confirm-fulfillment`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+            });
+            fetchHistory();
+        }
+
+        window.onload = fetchHistory;
+    </script>
+</body>
+
+</html>

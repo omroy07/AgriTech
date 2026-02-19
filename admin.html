@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel - AgriTech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="farmer.css">
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    /* Override accent to red for admin */
+    .header-hero {
+      background: linear-gradient(135deg, #b71c1c, #ef5350);
+    }
+
+    .submit-button,
+    .tab-button.active {
+      background: linear-gradient(135deg, #b71c1c, #ef5350);
+    }
+
+    .tab-button.active {
+      box-shadow: 0 4px 12px rgba(183, 28, 28, .3);
+    }
+
+    /* Stats bar */
+    .stats-row {
+      display: flex;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      background: #fff;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 1rem 1.5rem;
+      min-width: 130px;
+      text-align: center;
+      flex: 1;
+    }
+
+    .stat-card span {
+      display: block;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #2e7d32;
+    }
+
+    .stat-card p {
+      margin: .25rem 0 0;
+      font-size: .85rem;
+      color: #666;
+    }
+
+    .stat-card.danger {
+      border-color: #ef9a9a;
+    }
+
+    .stat-card.danger span {
+      color: #b71c1c;
+    }
+
+    /* Users table */
+    .search-bar {
+      width: 100%;
+      max-width: 340px;
+      padding: .55rem .85rem;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-size: .9rem;
+      margin-bottom: 1rem;
+      font-family: inherit;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
+    }
+
+    th {
+      background: #fbe9e7;
+      color: #b71c1c;
+      padding: .7rem 1rem;
+      text-align: left;
+      font-size: .85rem;
+    }
+
+    td {
+      padding: .65rem 1rem;
+      border-top: 1px solid #f0f0f0;
+      font-size: .88rem;
+    }
+
+    .banned-row {
+      background: #fff8f8;
+    }
+
+    .badge {
+      padding: .2rem .6rem;
+      border-radius: 12px;
+      font-size: .75rem;
+      font-weight: 700;
+    }
+
+    .badge.active {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .badge.banned {
+      background: #ffebee;
+      color: #b71c1c;
+    }
+
+    .role-select {
+      padding: .25rem .4rem;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      font-size: .83rem;
+      font-family: inherit;
+    }
+
+    .btn-sm {
+      padding: .28rem .65rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    .btn-ban {
+      background: #ffebee;
+      color: #b71c1c;
+    }
+
+    .btn-unban {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #999;
+    }
+
+    .empty-state i {
+      font-size: 2.5rem;
+      margin-bottom: .75rem;
+      display: block;
+    }
+
+    /* Reports tab */
+    .report-card {
+      background: #fff;
+      border: 1.5px solid #fce4ec;
+      border-left: 4px solid #e91e63;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: .85rem;
+    }
+
+    .report-card h4 {
+      margin: 0 0 .3rem;
+      color: #880e4f;
+      font-size: .95rem;
+    }
+
+    .report-card p {
+      margin: 0 0 .5rem;
+      color: #555;
+      font-size: .88rem;
+    }
+
+    .btn-resolve {
+      padding: .3rem .8rem;
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: 1.5px solid #a5d6a7;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: .8rem;
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <img src="images/logo.png" alt="AgriTech Logo" class="nav-logo">
+        <span class="brand-name">AgriTech</span>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="main.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="blog.html" class="nav-link">Blog</a></li>
+      </ul>
+      <div class="nav-actions">
+        <span id="nav-user-name"
+          style="font-size:.9rem;color:#b71c1c;font-weight:600;display:none;margin-right:.5rem;"></span>
+        <button id="nav-logout-btn" style="display:none;background:none;border:1.5px solid #ef5350;color:#ef5350;
+                   padding:.3rem .85rem;border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:600;">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+        <button class="theme-toggle" aria-label="Toggle dark/light mode">
+          <i class="fas fa-sun sun-icon"></i>
+          <i class="fas fa-moon moon-icon"></i>
+          <span class="theme-text">Light Mode</span>
+        </button>
+      </div>
+    </nav>
+    <div class="header-hero">
+      <h1 class="hero-title">Admin Panel ⚙️</h1>
+      <p class="hero-subtitle">Manage users, moderate content, and keep the community safe</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Quick stats -->
+    <div class="stats-row">
+      <div class="stat-card"><span id="stat-total">—</span>
+        <p>Total Users</p>
+      </div>
+      <div class="stat-card danger"><span id="stat-banned">—</span>
+        <p>Banned</p>
+      </div>
+      <div class="stat-card"><span id="stat-experts">—</span>
+        <p>Experts</p>
+      </div>
+      <div class="stat-card danger"><span id="stat-reports">—</span>
+        <p>Open Reports</p>
+      </div>
+    </div>
+
+    <nav class="nav-tabs">
+      <button class="tab-button active" data-section="users">
+        <i class="fas fa-users"></i> Users
+      </button>
+      <button class="tab-button" data-section="reports">
+        <i class="fas fa-flag"></i> Reports
+      </button>
+    </nav>
+
+    <main>
+      <!-- Users tab -->
+      <section id="users-section" class="section active">
+        <input type="text" class="search-bar" id="search-input" placeholder="Search by name or email…" />
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="users-tbody">
+              <tr>
+                <td colspan="5" style="text-align:center;color:#999;padding:2rem;">
+                  <i class="fas fa-spinner fa-spin"></i> Loading users…
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Reports tab -->
+      <section id="reports-section" class="section">
+        <div id="reports-list">
+          <div class="empty-state">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading reports…</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <style>
+    .site-footer {
+      background: linear-gradient(135deg, #2e7d32, #66bb6a);
+      color: #fff;
+      margin-top: auto;
+      padding: 2rem 1.25rem;
+    }
+
+    .site-footer .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem
+    }
+
+    .footer-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #fff;
+      padding: 4px
+    }
+
+    .site-footer h3,
+    .site-footer h4 {
+      margin: 0 0 .5rem 0
+    }
+
+    .site-footer p {
+      margin: 0;
+      opacity: .9
+    }
+
+    .site-footer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem
+    }
+
+    .site-footer a {
+      color: #fff;
+      text-decoration: none;
+      opacity: .9;
+      transition: opacity .2s
+    }
+
+    .site-footer a:hover {
+      opacity: 1;
+      text-decoration: underline
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 1rem auto 0;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, .25);
+      text-align: center;
+      font-size: .9rem;
+      opacity: .9
+    }
+
+    .social-media {
+      display: flex;
+      gap: 1rem;
+      margin-top: .5rem
+    }
+
+    .social-media a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, .1);
+      border-radius: 50%;
+      transition: all .3s ease;
+      font-size: 1.2rem
+    }
+
+    .social-media a:hover {
+      background: rgba(255, 255, 255, .2);
+      transform: translateY(-2px)
+    }
+  </style>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
+        <h3>AgriTech</h3>
+        <p>Empowering India's Farming Future</p>
+        <div class="social-media">
+          <a href="https://instagram.com" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+          <a href="https://github.com/omroy07" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank" rel="noopener"><i
+              class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="main.html">Dashboard</a></li>
+          <li><a href="feed-back.html">Feedback</a></li>
+          <li><a href="chat.html">AI Assistant</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="Crop Recommendation/templates/index.html">Crop Recommendation</a></li>
+          <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
+          <li><a href="Disease prediction/template/index.html">Disease Detector</a></li>
+          <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div>
+  </footer>
+
+  <div class="circle-container" id="cursorTrail"></div>
+  <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
+    <i class="fas fa-robot"></i>
+  </a>
+
+  <script src="theme.js"></script>
+  <script type="module" src="auth.js"></script>
+  <script type="module">
+    import {
+      getFirestore, collection, getDocs, doc,
+      updateDoc, query, where
+    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+    let allUsers = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Admin-only guard
+      if (!requireAuth(['admin'])) return;
+
+      const user = window.authManager.getCurrentUser();
+      document.getElementById('nav-user-name').textContent = '👤 ' + (user.fullname || user.email);
+      document.getElementById('nav-user-name').style.display = 'inline';
+      const logoutEl = document.getElementById('nav-logout-btn');
+      logoutEl.style.display = 'inline-flex';
+      logoutEl.addEventListener('click', () => window.authManager.logout());
+
+      // Tab switching
+      document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById(btn.dataset.section + '-section').classList.add('active');
+        });
+      });
+
+      // Wait for db
+      let attempts = 0;
+      while (!window._agriDb && attempts < 20) {
+        await new Promise(r => setTimeout(r, 150));
+        attempts++;
+      }
+      const db = window._agriDb;
+      if (!db) return;
+
+      await loadUsers(db);
+      await loadReports(db);
+    });
+
+    // ── Users ──────────────────────────────────────────────────────────────
+    async function loadUsers(db) {
+      const snap = await getDocs(collection(db, 'users'));
+      allUsers = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+      const banned = allUsers.filter(u => u.isBanned).length;
+      const experts = allUsers.filter(u => u.role === 'expert').length;
+      document.getElementById('stat-total').textContent = allUsers.length;
+      document.getElementById('stat-banned').textContent = banned;
+      document.getElementById('stat-experts').textContent = experts;
+
+      renderTable(allUsers, db);
+    }
+
+    function renderTable(users, db) {
+      const tbody = document.getElementById('users-tbody');
+      if (users.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#999;">No users found.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = users.map(u => `
+          <tr class="${u.isBanned ? 'banned-row' : ''}">
+            <td>${escHtml(u.fullname || '—')}</td>
+            <td>${escHtml(u.email)}</td>
+            <td>
+              <select class="role-select" onchange="changeRole('${u.id}', this.value)">
+                <option value="farmer"    ${u.role === 'farmer' ? 'selected' : ''}>🌾 Farmer</option>
+                <option value="buyer"     ${u.role === 'buyer' ? 'selected' : ''}>🛒 Buyer</option>
+                <option value="equipment" ${u.role === 'equipment' ? 'selected' : ''}>🔧 Equipment</option>
+                <option value="grocery"   ${u.role === 'grocery' ? 'selected' : ''}>🏪 Grocery</option>
+                <option value="expert"    ${u.role === 'expert' ? 'selected' : ''}>🎓 Expert</option>
+                <option value="admin"     ${u.role === 'admin' ? 'selected' : ''}>⚙️ Admin</option>
+              </select>
+            </td>
+            <td><span class="badge ${u.isBanned ? 'banned' : 'active'}">${u.isBanned ? 'Banned' : 'Active'}</span></td>
+            <td>
+              <button class="btn-sm ${u.isBanned ? 'btn-unban' : 'btn-ban'}"
+                onclick="toggleBan('${u.id}', ${!!u.isBanned})">
+                ${u.isBanned ? 'Unban' : 'Ban'}
+              </button>
+            </td>
+          </tr>
+        `).join('');
+
+      window.changeRole = async (uid, newRole) => {
+        await window.authManager.setRole(uid, newRole);
+        const u = allUsers.find(u => u.id === uid);
+        if (u) u.role = newRole;
+        showAuthMessage('Role updated.', 'success');
+      };
+
+      window.toggleBan = async (uid, current) => {
+        await window.authManager.setBanned(uid, !current);
+        const u = allUsers.find(u => u.id === uid);
+        if (u) u.isBanned = !current;
+        const banned = allUsers.filter(u => u.isBanned).length;
+        document.getElementById('stat-banned').textContent = banned;
+        renderTable(allUsers, db);
+        showAuthMessage(current ? 'User unbanned.' : 'User banned.', 'success');
+      };
+    }
+
+    // Search filter
+    document.getElementById('search-input').addEventListener('input', function () {
+      const q = this.value.toLowerCase();
+      renderTable(allUsers.filter(u =>
+        (u.fullname || '').toLowerCase().includes(q) ||
+        u.email.toLowerCase().includes(q)
+      ), window._agriDb);
+    });
+
+    // ── Reports ────────────────────────────────────────────────────────────
+    async function loadReports(db) {
+      try {
+        const snap = await getDocs(query(collection(db, 'reports'), where('resolved', '==', false)));
+        const reports = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        document.getElementById('stat-reports').textContent = reports.length;
+
+        const el = document.getElementById('reports-list');
+        if (reports.length === 0) {
+          el.innerHTML = '<div class="empty-state"><i class="fas fa-check-double"></i><p>No open reports. Community looks clean!</p></div>';
+          return;
+        }
+        el.innerHTML = reports.map(r => `
+            <div class="report-card" id="report-${r.id}">
+              <h4>🚩 ${escHtml(r.reason || 'Reported content')}</h4>
+              <p>${escHtml(r.description || '')}</p>
+              <button class="btn-resolve" onclick="resolveReport('${r.id}')">
+                ✅ Mark Resolved
+              </button>
+            </div>
+          `).join('');
+
+        window.resolveReport = async (reportId) => {
+          await updateDoc(doc(db, 'reports', reportId), { resolved: true });
+          document.getElementById('report-' + reportId).remove();
+          const curr = parseInt(document.getElementById('stat-reports').textContent) - 1;
+          document.getElementById('stat-reports').textContent = Math.max(0, curr);
+          showAuthMessage('Report resolved.', 'success');
+        };
+      } catch (e) {
+        document.getElementById('reports-list').innerHTML =
+          '<div class="empty-state"><i class="fas fa-lock"></i><p>No reports access.</p></div>';
+      }
+    }
+
+    function escHtml(str) {
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+  </script>
+</body>
+
+</html>

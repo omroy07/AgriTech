@@ -16,6 +16,34 @@
     rel="stylesheet" />
   <link href="style.css" rel="stylesheet" />
   <link href="faq.css" rel="stylesheet" />
+  <style>
+    /* FAQ Search Enhancements */
+.faq-item.hidden {
+  display: none;
+}
+
+.faq-highlight {
+  background: #ffeb3b;
+  color: #000;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+/* FAQ No Results Message */
+.faq-no-results {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted, #aaa);
+  font-size: 1.1rem;
+}
+
+.faq-no-results i {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  display: block;
+  opacity: 0.7;
+}
+
+  </style>
 </head>
 
 <body>
@@ -110,6 +138,10 @@
 
   <!-- FAQ Container -->
   <div class="faq-container">
+<div id="faqNoResults" class="faq-no-results" style="display: none;">
+  <i class="fas fa-search"></i>
+  <p>No matching FAQs found. Try different keywords.</p>
+</div>
 
     <!-- Getting Started Section -->
     <div class="faq-section">
@@ -734,6 +766,89 @@
       }
     });
   </script>
+  <script>
+/* =========================
+   FAQ SEARCH FUNCTIONALITY
+========================= */
+
+function clearHighlights(element) {
+  element.innerHTML = element.innerHTML.replace(
+    /<span class="faq-highlight">(.*?)<\/span>/g,
+    "$1"
+  );
+}
+
+function highlightText(element, query) {
+  const regex = new RegExp(`(${query})`, "gi");
+  element.innerHTML = element.textContent.replace(
+    regex,
+    `<span class="faq-highlight">$1</span>`
+  );
+}
+
+function handleSearch(query) {
+  const searchTerm = query.trim().toLowerCase();
+  const faqItems = document.querySelectorAll(".faq-item");
+  const noResultsEl = document.getElementById("faqNoResults");
+
+  let matches = [];
+
+  faqItems.forEach(item => {
+    const questionEl = item.querySelector(".faq-question h3");
+    const answerEl = item.querySelector(".faq-answer-content");
+
+    // Clear old highlights
+    clearHighlights(questionEl);
+    clearHighlights(answerEl);
+
+    const qText = questionEl.textContent.toLowerCase();
+    const aText = answerEl.textContent.toLowerCase();
+
+    if (searchTerm === "") {
+      item.classList.remove("hidden");
+      item.classList.remove("active");
+      if (noResultsEl) noResultsEl.style.display = "none";
+      return;
+    }
+
+    if (qText.includes(searchTerm) || aText.includes(searchTerm)) {
+      item.classList.remove("hidden");
+      item.classList.add("active");
+
+      highlightText(questionEl, searchTerm);
+      highlightText(answerEl, searchTerm);
+
+      matches.push(item);
+    } else {
+      item.classList.add("hidden");
+      item.classList.remove("active");
+    }
+  });
+
+  // Bring matches to top of their section
+  matches.forEach(item => {
+    const section = item.closest(".faq-section");
+    section.appendChild(item);
+  });
+
+  // Show No Results message
+  if (noResultsEl) {
+    noResultsEl.style.display = matches.length === 0 && searchTerm !== ""
+      ? "block"
+      : "none";
+  }
+
+  // Scroll to first match
+  if (matches.length > 0) {
+    matches[0].scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+  }
+}
+
+</script>
+
   <script src="auth.js"></script>
   <!-- ===== Universal Back To Top Button (All Pages) ===== -->
 <style>

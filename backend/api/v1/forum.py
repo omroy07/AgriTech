@@ -4,6 +4,8 @@ from backend.services.ai_moderator import ai_moderator
 from backend.models import ForumCategory
 from auth_utils import token_required
 from backend.utils.logger import logger
+from backend.middleware.audit import audit_request
+from backend.services.audit_service import AuditService
 
 forum_bp = Blueprint('forum', __name__)
 
@@ -23,6 +25,7 @@ def get_categories():
 
 @forum_bp.route('/forum/categories', methods=['POST'])
 @token_required
+@audit_request("ADMIN_CREATE_FORUM_CATEGORY")
 def create_category():
     """Create a new forum category (Admin only)"""
     try:
@@ -102,6 +105,7 @@ def get_thread(thread_id):
 
 @forum_bp.route('/forum/threads', methods=['POST'])
 @token_required
+@audit_request("CREATE_FORUM_THREAD")
 def create_thread():
     """Create a new thread"""
     try:
@@ -163,6 +167,14 @@ def create_comment(thread_id):
         
         if error:
             return jsonify({'status': 'error', 'message': error}), 500
+        
+        AuditService.log_action(
+            action="POST_FORUM_COMMENT",
+            user_id=user['id'],
+            resource_type="COMMENT",
+            resource_id=str(comment.id),
+            meta_data={"thread_id": thread_id}
+        )
         
         return jsonify({
             'status': 'success',
@@ -276,6 +288,7 @@ def ai_search():
 
 @forum_bp.route('/forum/flag', methods=['POST'])
 @token_required
+@audit_request("FLAG_FORUM_CONTENT")
 def flag_content():
     """Flag inappropriate content"""
     try:

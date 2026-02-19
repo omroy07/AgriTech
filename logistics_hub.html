@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistics Fleet Hub | AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+        }
+
+        .hub-container {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: #0b0f1a;
+            padding: 2rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-card {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-val {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.5;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Main View */
+        .main {
+            padding: 3rem;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .active-routes {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .route-card {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+        }
+
+        .route-card:hover {
+            border-color: var(--primary);
+            background: #242f45;
+        }
+
+        .route-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .route-path {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .status-chip {
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .status-transit {
+            background: rgba(99, 102, 241, 0.2);
+            color: #818cf8;
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+        }
+
+        .progress-container {
+            margin: 1.5rem 0;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #818cf8);
+            width: 45%;
+            transition: 1s ease-in-out;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="hub-container">
+        <aside class="sidebar">
+            <h2 style="margin-bottom: 2rem; color: var(--primary);">Fleet Command</h2>
+
+            <div class="stat-card">
+                <span class="stat-val" id="fleet-util">0%</span>
+                <span class="stat-label">Fleet Utilization</span>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-val" id="active-count">0</span>
+                <span class="stat-label">Vehicles in Field</span>
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="newDispatch()">+ New
+                Dispatch</button>
+
+            <div style="margin-top: 3rem; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 16px;">
+                <h4 style="margin-top: 0;">Efficiency Insights</h4>
+                <p style="font-size: 0.85rem; opacity: 0.5;">Fuel efficiency is up 12% across refrigerator units this
+                    month.</p>
+            </div>
+        </aside>
+
+        <main class="main">
+            <header class="header">
+                <div>
+                    <h1>Live Transport Ledger</h1>
+                    <p style="opacity: 0.6; margin-top: 0.5rem;">Real-time dispatch tracking and geospatial telemetry
+                    </p>
+                </div>
+                <div id="live-indicator"
+                    style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; opacity: 0.7;">
+                    <div
+                        style="width: 8px; height: 8px; background: var(--success); border-radius: 50%; animation: pulse 2s infinite;">
+                    </div>
+                    LIVE SYNC ACTIVE
+                </div>
+            </header>
+
+            <div class="active-routes" id="routes-container">
+                <p style="text-align: center; padding: 5rem; opacity: 0.3;">Scanning for active dispatches...</p>
+            </div>
+        </main>
+    </div>
+
+    <style>
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="logistics_hub.js"></script>
+</body>
+
+</html>
