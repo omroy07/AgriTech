@@ -180,20 +180,20 @@ def roles_required(*allowed_roles):
 
 def log_security_event(event_type, details, user_ip=None):
     """Log security events for audit trail"""
-    if user_ip is None:
-        user_ip = request.remote_addr
+    from backend.services.audit_service import AuditService
     
-    user_email = "anonymous"
+    user_id = None
     if hasattr(request, 'user') and request.user:
-        user_email = request.user.get('email', 'unknown')
+        user_id = request.user.get('id') or request.user.get('user_id')
 
-    log_entry = f"[{datetime.datetime.now()}] TYPE: {event_type} | IP: {user_ip} | USER: {user_email} | DETAILS: {details}"
+    AuditService.log_action(
+        action=event_type,
+        user_id=user_id,
+        risk_level='HIGH',
+        meta_data={"details": details, "remote_addr": user_ip or request.remote_addr}
+    )
     
-    # Log to our security logger
-    security_logger.warning(log_entry)
-    
-    # Fallback to print if no handlers configured
-    print(f"SECURITY AUDIT: {log_entry}")
+    security_logger.warning(f"SECURITY EVENT: {event_type} | DETAILS: {details}")
 
 def sanitize_sql_input(value):
     """Sanitize input for SQL queries (use parameterized queries instead)"""

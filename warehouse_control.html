@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warehouse Control Center | AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #7c3aed;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #fafafa;
+            --card: #ffffff;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .control-panel {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-box {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .content-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .inventory-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        .inventory-table th {
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .inventory-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .stock-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .badge-healthy {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-low {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-critical {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .alert-item {
+            padding: 1rem;
+            border-left: 4px solid var(--warning);
+            background: #fffbeb;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="control-panel">
+        <header class="header">
+            <div>
+                <h1>Warehouse Control Center</h1>
+                <p style="opacity: 0.6; margin-top: 0.5rem;">Real-time inventory tracking & automated reconciliation</p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-success" onclick="openStockInModal()">+ Stock In</button>
+                <button class="btn btn-danger" onclick="openStockOutModal()">- Stock Out</button>
+                <button class="btn btn-primary" onclick="performReconciliation()">Reconcile</button>
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-value" style="color: var(--primary);" id="total-items">0</div>
+                <div class="stat-label">Total SKUs</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" style="color: var(--success);" id="healthy-stock">0</div>
+                <div class="stat-label">Healthy Stock</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" style="color: var(--warning);" id="low-stock">0</div>
+                <div class="stat-label">Low Stock</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" style="color: var(--danger);" id="expiring-soon">0</div>
+                <div class="stat-label">Expiring Soon</div>
+            </div>
+        </div>
+
+        <div class="content-layout">
+            <div class="card">
+                <h3>Inventory Ledger</h3>
+                <table class="inventory-table" id="inventory-table">
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>Item Name</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                            <th>Reorder Point</th>
+                            <th>Status</th>
+                            <th>Expiry</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventory-body">
+                        <tr>
+                            <td colspan="7" style="text-align:center; padding: 3rem; opacity: 0.5;">Loading inventory...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>Expiry Alerts</h3>
+                <div id="alerts-container" style="margin-top: 1.5rem;">
+                    <p style="text-align: center; opacity: 0.5;">No alerts</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="warehouse_control.js"></script>
+</body>
+
+</html>

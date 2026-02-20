@@ -1,329 +1,460 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <link rel="icon" type="image/png" href="images/logo.png">
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Plant Disease Detection - AI Powered Diagnosis</title>
-    <link rel="stylesheet" href="disease.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  </head>
-  <body>
-    <!-- Enhanced Navbar -->
-    <header class="navbar">
-      <div class="nav-container">
-        <a href="main.html" class="logo">
-          <img src="images/logo.png" alt="AgriTech">
-          <span>AgriTech</span>
-        </a>
-        
-        <nav class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="main.html">Dashboard</a>
-          <a href="feed-back.html">Feedback</a>
-        </nav>
-        
-        <button class="theme-toggle" id="themeToggle">
-          <i class="fas fa-moon"></i>
-          <span>Dark Mode</span>
-        </button>
-      </div>
-    </header>
 
-    <!-- Hero Section -->
-<section class="hero-section">
-      <div class="hero-container">
-        <div class="hero-content">
-          <div class="hero-badge">
-            <i class="fas fa-leaf"></i>
-            <span>AI-Powered Plant Health</span>
-          </div>
-          <h1 class="hero-title">
-            Detect Plant Diseases
-            <span class="gradient-text">Instantly</span>
-          </h1>
-          <p class="hero-description">
-            Upload a photo of your plant and let our advanced AI diagnose diseases with 95%+ accuracy. 
-            Get instant treatment recommendations and save your crops.
-          </p>
-          <div class="hero-stats">
-            <div class="stat-item">
-              <div class="stat-number">95%+</div>
-              <div class="stat-label">Accuracy</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-number">2-3s</div>
-              <div class="stat-label">Analysis Time</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-number">50+</div>
-              <div class="stat-label">Plant Species</div>
-            </div>
-          </div>
-          <div class="hero-cta">
-            <a href="#analysis" class="btn-primary">
-              <i class="fas fa-camera"></i>
-              Start Analysis
-            </a>
-            <a href="#features" class="btn-secondary">
-              <i class="fas fa-info-circle"></i>
-              Learn More
-            </a>
-          </div>
-        </div>
-        <div class="hero-image">
-  <div class="floating-icons">
-    <span class="float-icon">🍅</span>
-    <span class="float-icon">🥔</span>
-    <span class="float-icon">🌽</span>
-    <span class="float-icon">🍎</span>
-    <span class="float-icon">🍇</span>
-    <span class="float-icon">🌿</span>
+<head>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plant Disease Detection - AI Powered Diagnosis</title>
+  <link rel="stylesheet" href="disease.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="weather-banner.css">
+  <style>
+    #weather-advisory-banner {
+      position: relative;
+      z-index: 1000;
+      margin: 0;
+      width: 100%;
+    }
+
+    /* Adjust navbar to not overlap */
+    .navbar {
+      position: relative;
+      z-index: 999;
+    }
+
+    /* Ensure body doesn't hide banner */
+    body {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="weather-advisory-banner" class="weather-advisory-banner loading">
+    <div class="weather-banner-left">
+      <div class="weather-icon"><i class="fas fa-spinner fa-spin"></i></div>
+      <div class="weather-info">
+        <div class="weather-location">Loading...</div>
+        <div class="weather-temp">--°C</div>
+      </div>
+    </div>
+    <div class="weather-banner-center">
+      <div class="advisory-message"><span>Fetching weather...</span></div>
+    </div>
   </div>
-</div>
 
+  <!-- Enhanced Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="main.html" class="logo">
+        <img src="images/logo.png" alt="AgriTech">
+        <span>AgriTech</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="main.html">Dashboard</a>
+        <a href="feed-back.html">Feedback</a>
+      </nav>
+
+      <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+        <span>Dark Mode</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="fas fa-leaf"></i>
+          <span>AI-Powered Plant Health</span>
+        </div>
+        <h1 class="hero-title">
+          Detect Plant Diseases
+          <span class="gradient-text">Instantly</span>
+        </h1>
+        <p class="hero-description">
+          Upload a photo of your plant and let our advanced AI diagnose diseases with 95%+ accuracy.
+          Get instant treatment recommendations and save your crops.
+        </p>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">95%+</div>
+            <div class="stat-label">Accuracy</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">2-3s</div>
+            <div class="stat-label">Analysis Time</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Plant Species</div>
+          </div>
+        </div>
+        <div class="hero-cta">
+          <a href="#analysis" class="btn-primary">
+            <i class="fas fa-camera"></i>
+            Start Analysis
+          </a>
+          <a href="#features" class="btn-secondary">
+            <i class="fas fa-info-circle"></i>
+            Learn More
+          </a>
+        </div>
       </div>
-      
-    </section>
+      <div class="hero-image">
+        <div class="floating-icons" aria-hidden="true">
+          <span class="float-icon" role="presentation">
+            <span aria-hidden="true">🍅</span>
+          </span>
+          <span class="float-icon" role="presentation">
+            <span aria-hidden="true">🥔</span>
+          </span>
+          <span class="float-icon" role="presentation">
+            <span aria-hidden="true">🌽</span>
+          </span>
+          <span class="float-icon" role="presentation">
+            <span aria-hidden="true">🍎</span>
+          </span>
+          <span class="float-icon" role="presentation">
+            <span aria-hidden="true">🍇</span>
+          </span>
+          <span class="float-icon" role="presentation">
+            <span aria-hidden="true">🌿</span>
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
 
 
 
-    <!-- Main Content -->
-    <main class="main-wrapper" id="analysis">
-      <div class="main-content">
-        <div class="analysis-section">
-          <h2>🔬 AI Disease Analysis</h2>
-          <div id="modelStatus" class="status-indicator status-success">
-            ✅ AI Model Ready - Upload an image to begin analysis
+  <!-- Main Content -->
+  <main class="main-wrapper" id="analysis">
+    <div class="main-content">
+      <div class="analysis-section">
+        <h2><span aria-hidden="true">🔬</span> AI Disease Analysis</h2>
+        <div id="modelStatus" class="status-indicator status-success">
+          <span aria-hidden="true">✅</span> AI Model Ready - Upload an image to begin analysis
+        </div>
+
+        <div class="upload-container">
+          <div class="upload-zone">
+            <div class="upload-area" id="uploadArea">
+              <div class="upload-icon"><span aria-hidden="true">📸</span></div>
+              <div class="upload-text">
+                <strong>Drop your plant image here</strong><br />
+                or click to browse files<br />
+                <small style="opacity: 0.7">Supports JPG, PNG, WebP formats</small>
+              </div>
+            </div>
+            <input type="file" id="fileInput" class="file-input" accept="image/*" />
+            <center>
+              <button class="btn" id="analyzeBtn" disabled>
+                <span aria-hidden="true">🔍</span> Analyze Plant Health
+              </button>
+            </center>
           </div>
 
-          <div class="upload-container">
-            <div class="upload-zone">
-              <div class="upload-area" id="uploadArea">
-                <div class="upload-icon">📸</div>
-                <div class="upload-text">
-                  <strong>Drop your plant image here</strong><br />
-                  or click to browse files<br />
-                  <small style="opacity: 0.7">Supports JPG, PNG, WebP formats</small>
-                </div>
-              </div>
-              <input type="file" id="fileInput" class="file-input" accept="image/*" />
-              <center>
-                <button class="btn" id="analyzeBtn" disabled>
-                  🔍 Analyze Plant Health
-                </button>
-              </center>
+          <div class="results-zone">
+            <div class="preview-container" id="previewContainer">
+              <div class="no-results"><span aria-hidden="true">📷</span> Upload an image to get started</div>
             </div>
 
-            <div class="results-zone">
-              <div class="preview-container" id="previewContainer">
-                <div class="no-results">📷 Upload an image to get started</div>
-              </div>
-
-              <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p>🧠 AI is analyzing your plant...</p>
-              </div>
-
-              <div id="results"></div>
-              <center style="margin-top: 15px;">
-                <button id="downloadPdfBtn" class="btn" style="display:none;">
-                    📄 Download Result as PDF
-                </button>
-              </center>
+            <div class="loading" id="loading">
+              <div class="spinner"></div>
+              <p><span aria-hidden="true">🧠</span> AI is analyzing your plant...</p>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Features Section -->
-      <div class="features-section" id="features">
-        <h2 style="text-align: center; color: var(--color-brand); font-size: 2rem; margin-bottom: 20px;">
-          ✨ Key Features
-        </h2>
-        <div class="features-grid">
-          <div class="feature-card" onclick="openModal('accuracyModal')">
-            <div class="feature-icon">🎯</div>
-            <h3>High Accuracy</h3>
-            <p>Advanced machine learning algorithms for precise disease identification</p>
+            <div id="results"></div>
+            <center style="margin-top: 15px;">
+              <button id="downloadPdfBtn" class="btn" style="display:none;">
+                <span aria-hidden="true">📄</span> Download Result as PDF
+              </button>
+            </center>
           </div>
-          <div class="feature-card" onclick="openModal('speedModal')">
-            <div class="feature-icon">⚡</div>
-            <h3>Instant Results</h3>
-            <p>Get comprehensive analysis within seconds of uploading</p>
-          </div>
-          <div class="feature-card" onclick="openModal('treatmentModal')">
-            <div class="feature-icon">💊</div>
-            <h3>Treatment Recommendations</h3>
-            <p>Detailed treatment suggestions and prevention tips</p>
-          </div>
-          <div class="feature-card" onclick="openModal('plantsModal')">
-            <div class="feature-icon">🌿</div>
-            <h3>Multiple Plant Types</h3>
-            <p>Support for various crops and plant species</p>
-          </div>
-        </div>
-      </div>
-    </main>
-
-    <!-- Modals (keeping your existing modals) -->
-    <div id="accuracyModal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="closeModal('accuracyModal')">&times;</span>
-        <h2>🎯 High Accuracy Detection</h2>
-        <div class="modal-section">
-          <h3>Advanced AI Technology</h3>
-          <p>Our system uses state-of-the-art deep learning models trained on extensive datasets containing thousands of plant images.</p>
         </div>
       </div>
     </div>
 
-    <div id="speedModal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="closeModal('speedModal')">&times;</span>
-        <h2>⚡ Instant Results</h2>
-        <div class="modal-section">
-          <h3>Lightning-Fast Analysis</h3>
-          <p>Our optimized AI model processes your plant images in real-time.</p>
+
+    <!-- Features Section -->
+    <div class="features-section" id="features">
+      <h2 style="text-align: center; color: var(--color-brand); font-size: 2rem; margin-bottom: 20px;">
+        <span aria-hidden="true">✨</span> Key Features
+      </h2>
+      <div class="features-grid">
+        <div class="feature-card" onclick="openModal('accuracyModal')">
+          <div class="feature-icon" aria-hidden="true">🎯</div>
+          <h3>High Accuracy</h3>
+          <p>Advanced machine learning algorithms for precise disease identification</p>
+        </div>
+        <div class="feature-card" onclick="openModal('speedModal')">
+          <div class="feature-icon" aria-hidden="true">⚡</div>
+          <h3>Instant Results</h3>
+          <p>Get comprehensive analysis within seconds of uploading</p>
+        </div>
+        <div class="feature-card" onclick="openModal('treatmentModal')">
+          <div class="feature-icon" aria-hidden="true">💊</div>
+          <h3>Treatment Recommendations</h3>
+          <p>Detailed treatment suggestions and prevention tips</p>
+        </div>
+        <div class="feature-card" onclick="openModal('plantsModal')">
+          <div class="feature-icon" aria-hidden="true">🌿</div>
+          <h3>Multiple Plant Types</h3>
+          <p>Support for various crops and plant species</p>
         </div>
       </div>
     </div>
+  </main>
 
-    <div id="treatmentModal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="closeModal('treatmentModal')">&times;</span>
-        <h2>💊 Treatment Recommendations</h2>
-        <div class="modal-section">
-          <h3>Comprehensive Treatment Plans</h3>
-          <p>Each diagnosis comes with detailed, actionable treatment recommendations.</p>
-        </div>
+  <!-- Modals (keeping your existing modals) -->
+  <div id="accuracyModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('accuracyModal')">&times;</span>
+      <h2><span aria-hidden="true">🎯</span> High Accuracy Detection</h2>
+      <div class="modal-section">
+        <h3>Advanced AI Technology</h3>
+        <p>Our system uses state-of-the-art deep learning models trained on extensive datasets containing thousands of
+          plant images.</p>
       </div>
     </div>
+  </div>
 
-    <div id="plantsModal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="closeModal('plantsModal')">&times;</span>
-        <h2>🌿 Supported Plant Types</h2>
-        <div class="modal-section">
-          <h3>Comprehensive Plant Database</h3>
-          <p>Our AI system has been trained to identify diseases across a wide variety of plant species.</p>
-        </div>
+  <div id="speedModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('speedModal')">&times;</span>
+      <h2><span aria-hidden="true">⚡</span> Instant Results</h2>
+      <div class="modal-section">
+        <h3>Lightning-Fast Analysis</h3>
+        <p>Our optimized AI model processes your plant images in real-time.</p>
       </div>
     </div>
+  </div>
 
-    <!-- Footer -->
-    <style>
-      .site-footer {background: linear-gradient(135deg,#2e7d32,#66bb6a); color:#fff; margin-top:80px; padding: 2rem 1.25rem;}
-      .site-footer .footer-inner {max-width:1200px;margin:0 auto; display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1.5rem; align-items:flex-start;}
-      .footer-brand {display:flex;flex-direction:column;gap:.5rem}
-      .footer-logo {width:48px;height:48px;border-radius:8px;object-fit:cover;background:#fff;padding:4px}
-      .site-footer h3,.site-footer h4{margin:0 0 .5rem 0}
-      .site-footer p {margin:0;opacity:.9}
-      .site-footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.4rem}
-      .site-footer a{color:#fff;text-decoration:none;opacity:.9;transition:opacity .2s}
-      .site-footer a:hover{opacity:1;text-decoration:underline}
-      .footer-bottom{max-width:1200px;margin:1rem auto 0; padding-top:1rem; border-top:1px solid rgba(255,255,255,.25); text-align:center; font-size:.9rem; opacity:.9}
-      .social-media {display:flex;gap:1rem;margin-top:.5rem}
-      .social-media a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:50%;transition:all .3s ease;font-size:1.2rem}
-      .social-media a:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
-    </style>
+  <div id="treatmentModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('treatmentModal')">&times;</span>
+      <h2><span aria-hidden="true">💊</span> Treatment Recommendations</h2>
+      <div class="modal-section">
+        <h3>Comprehensive Treatment Plans</h3>
+        <p>Each diagnosis comes with detailed, actionable treatment recommendations.</p>
+      </div>
+    </div>
+  </div>
 
-    <footer class="site-footer">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
-          <h3>AgriTech</h3>
-          <p>Empowering India's Farming Future</p>
-          <div class="social-media">
-            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://github.com/omroy07" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank"><i class="fab fa-linkedin"></i></a>
-          </div>
-        </div>
-        <div class="footer-links">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="main.html">Dashboard</a></li>
-            <li><a href="feed-back.html">Feedback</a></li>
-            <li><a href="chat.html">AI Assistant</a></li>
-          </ul>
-        </div>
-        <div class="footer-links">
-          <h4>Tools</h4>
-          <ul>
-            <li><a href="#">Crop Recommendation</a></li>
-            <li><a href="#">Yield Prediction</a></li>
-            <li><a href="disease.html">Disease Detector</a></li>
-          </ul>
+  <div id="plantsModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('plantsModal')">&times;</span>
+      <h2><span aria-hidden="true">🌿</span> Supported Plant Types</h2>
+      <div class="modal-section">
+        <h3>Comprehensive Plant Database</h3>
+        <p>Our AI system has been trained to identify diseases across a wide variety of plant species.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <style>
+    .site-footer {
+      background: linear-gradient(135deg, #2e7d32, #66bb6a);
+      color: #fff;
+      margin-top: 80px;
+      padding: 2rem 1.25rem;
+    }
+
+    .site-footer .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem
+    }
+
+    .footer-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #fff;
+      padding: 4px
+    }
+
+    .site-footer h3,
+    .site-footer h4 {
+      margin: 0 0 .5rem 0
+    }
+
+    .site-footer p {
+      margin: 0;
+      opacity: .9
+    }
+
+    .site-footer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem
+    }
+
+    .site-footer a {
+      color: #fff;
+      text-decoration: none;
+      opacity: .9;
+      transition: opacity .2s
+    }
+
+    .site-footer a:hover {
+      opacity: 1;
+      text-decoration: underline
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 1rem auto 0;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, .25);
+      text-align: center;
+      font-size: .9rem;
+      opacity: .9
+    }
+
+    .social-media {
+      display: flex;
+      gap: 1rem;
+      margin-top: .5rem
+    }
+
+    .social-media a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, .1);
+      border-radius: 50%;
+      transition: all .3s ease;
+      font-size: 1.2rem
+    }
+
+    .social-media a:hover {
+      background: rgba(255, 255, 255, .2);
+      transform: translateY(-2px)
+    }
+  </style>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
+        <h3>AgriTech</h3>
+        <p>Empowering India's Farming Future</p>
+        <div class="social-media">
+          <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://github.com/omroy07" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank"><i class="fab fa-linkedin"></i></a>
         </div>
       </div>
-      <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div>
-    </footer>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="main.html">Dashboard</a></li>
+          <li><a href="feed-back.html">Feedback</a></li>
+          <li><a href="chat.html">AI Assistant</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="#">Crop Recommendation</a></li>
+          <li><a href="#">Yield Prediction</a></li>
+          <li><a href="disease.html">Disease Detector</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div>
+  </footer>
 
-    <!-- Chatbot Button -->
-    <a href="chat.html" id="chatbotBtn" title="Chat with us">
-      <i class="fas fa-robot"></i>
-    </a>
+  <!-- Chatbot Button -->
+  <a href="chat.html" id="chatbotBtn" title="Chat with us">
+    <i class="fas fa-robot"></i>
+  </a>
 
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
-    <script src="disease.js"></script>
-    
-    <script>
-      // Theme Toggle
-      const themeToggle = document.getElementById('themeToggle');
-      const html = document.documentElement;
-      
-      const savedTheme = localStorage.getItem('theme') || 'light';
-      html.setAttribute('data-theme', savedTheme);
-      updateThemeButton(savedTheme);
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
+  <script src="disease.js"></script>
 
-      themeToggle.addEventListener('click', () => {
-        const currentTheme = html.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        html.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateThemeButton(newTheme);
-      });
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
 
-      function updateThemeButton(theme) {
-        const icon = themeToggle.querySelector('i');
-        const text = themeToggle.querySelector('span');
-        if (theme === 'dark') {
-          icon.className = 'fas fa-sun';
-          text.textContent = 'Light Mode';
-        } else {
-          icon.className = 'fas fa-moon';
-          text.textContent = 'Dark Mode';
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    html.setAttribute('data-theme', savedTheme);
+    updateThemeButton(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeButton(newTheme);
+    });
+
+    function updateThemeButton(theme) {
+      const icon = themeToggle.querySelector('i');
+      const text = themeToggle.querySelector('span');
+      if (theme === 'dark') {
+        icon.className = 'fas fa-sun';
+        text.textContent = 'Light Mode';
+      } else {
+        icon.className = 'fas fa-moon';
+        text.textContent = 'Dark Mode';
+      }
+    }
+
+    // Smooth Scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-      }
-
-      // Smooth Scroll
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute('href'));
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        });
       });
+    });
 
-      // Modal Functions
-      function openModal(modalId) {
-        document.getElementById(modalId).style.display = 'block';
-      }
+    // Modal Functions
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = 'block';
+    }
 
-      function closeModal(modalId) {
-        document.getElementById(modalId).style.display = 'none';
-      }
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
 
-      window.onclick = function(event) {
-        if (event.target.classList.contains('modal')) {
-          event.target.style.display = 'none';
-        }
+    window.onclick = function (event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
       }
     </script>
     <!-- ===== Universal Back To Top Button (All Pages) ===== -->

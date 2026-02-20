@@ -58,9 +58,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <span class="close">&times;</span>
-                <button class="modal-favorite-btn" id="modalFavoriteBtn" title="Toggle favorite">
-                    <i class="far fa-heart"></i>
+                <button
+                class="modal-favorite-btn"
+                id="modalFavoriteBtn"
+                aria-label="Add blog to favorites"
+                aria-pressed="false"
+                >
+                    <i class="far fa-heart" aria-hidden="true"></i>
                 </button>
+
                 <h2 class="modal-title" id="modalTitle"></h2>
                 <span class="modal-category" id="modalCategory"></span>
             </div>
@@ -274,9 +280,15 @@
                 postElement.className = 'blog-card';
                 postElement.innerHTML = `
                     <img src="${post.image}" alt="${post.title}">
-                    <button class="${favoriteClass}" data-blog-id="${post.id}">
-                        <i class="${favoriteIcon}"></i>
-                    </button>
+                    <button
+                        class="${favoriteClass}"
+                        data-blog-id="${post.id}"
+                        aria-label="${isFavorite ? 'Remove blog from favorites' : 'Add blog to favorites'}"
+                        aria-pressed="${isFavorite}"
+                        >
+                            <i class="${favoriteIcon}" aria-hidden="true"></i>
+                        </button>
+
                     <div class="card-content">
                         <span class="card-category">${post.category.replace('-', ' ')}</span>
                         <h3 class="card-title">${post.title}</h3>
@@ -340,6 +352,13 @@
                 const icon = button.querySelector('i');
                 button.classList.toggle('active', isFavorite);
                 icon.className = isFavorite ? 'fas fa-heart' : 'far fa-heart';
+
+                button.setAttribute(
+                'aria-label',
+                isFavorite ? 'Remove blog from favorites' : 'Add blog to favorites'
+                );
+                button.setAttribute('aria-pressed', isFavorite);
+
             });
 
             if (currentModalPostId === blogId) {
@@ -386,6 +405,13 @@
             
             button.classList.toggle('active', isFavorite);
             icon.className = isFavorite ? 'fas fa-heart' : 'far fa-heart';
+
+            button.setAttribute(
+            'aria-label',
+            isFavorite ? 'Remove blog from favorites' : 'Add blog to favorites'
+            );
+            button.setAttribute('aria-pressed', isFavorite);
+
         }
 
         // Toggle favorite from modal

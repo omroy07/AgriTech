@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory, g
+from flask import Flask, request, jsonify, send_from_directory, g, render_template
 import google.generativeai as genai
 import traceback
 import os
@@ -12,6 +12,8 @@ from marshmallow import ValidationError
 from backend.utils.validation import validate_input, sanitize_input
 from backend.extensions import socketio, db, migrate, mail, limiter, babel, get_locale
 from backend.api.v1.files import files_bp
+from backend.api.ingestion import ingestion_bp
+from backend.middleware.audit import AuditMiddleware
 from crop_recommendation.routes import crop_bp
 # from disease_prediction.routes import disease_bp
 from spatial_analytics.routes import spatial_bp
@@ -23,10 +25,18 @@ from backend.schemas.loan_schema import LoanRequestSchema
 from backend.celery_app import celery_app, make_celery
 from backend.tasks import predict_crop_task, process_loan_task
 import backend.sockets.task_events  # Register socket event handlers
-import backend.sockets.rental_events # Register rental marketplace events
+import backend.sockets.supply_events # Register supply chain events
 from auth_utils import token_required, roles_required
 import backend.sockets.forum_events # Register forum socket events
+import backend.sockets.knowledge_events # Register knowledge exchange events
+import backend.sockets.alert_socket # Register centralized alert socket events
+import backend.sockets.crisis_events # Register crisis monitoring events
 from backend.utils.i18n import t
+
+from routes.irrigation_routes import irrigation_bp
+
+from server.Routes.rotation_routes import rotation_bp
+
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -57,6 +67,9 @@ limiter.init_app(app)
 # Initialize Celery with app context
 celery = make_celery(app)
 
+# Initialize Audit Middleware
+audit_mw = AuditMiddleware(app)
+
 # Import models after db initialization
 from backend.models import User
 
@@ -67,6 +80,9 @@ app.register_blueprint(crop_bp, url_prefix='/crop')
 app.register_blueprint(health_bp)
 app.register_blueprint(files_bp)
 app.register_blueprint(spatial_bp)
+app.register_blueprint(ingestion_bp, url_prefix='/api/v1')
+app.register_blueprint(irrigation_bp)
+app.register_blueprint(rotation_bp)
 
 # Register API v1 (including loan, weather, schemes, etc.)
 register_api(app)
@@ -493,7 +509,6 @@ def contact():
     return send_from_directory('.', 'contact.html')
 
 @app.route('/chat')
-@limiter.limit("10 per minute")
 def chat():
     return send_from_directory('.', 'chat.html')
 
@@ -528,3 +543,9 @@ def internal_error(error):
     }), 500
 
 
+@app.route('/rotation')
+def rotation_page():
+    return render_template('crop_rotation.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)

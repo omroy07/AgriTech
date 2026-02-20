@@ -14,9 +14,7 @@
 <body>
   <div class="form-container">
 
-    <!-- NEW: back / close button -->
-    <button class="back-button" type="button" aria-label="Go back"
-            onclick="handleBack()">
+    <button class="back-button" type="button" aria-label="Go back" onclick="handleBack()">
       <i class="fas fa-arrow-left"></i>
     </button>
 
@@ -30,7 +28,7 @@
         <span class="theme-text">Light</span>
       </button>
     </div>
-    
+
     <div class="brand-section">
       <a href="./index.html" class="brand-icon">
         <i class="fas fa-seedling"></i>
@@ -38,7 +36,7 @@
       <h2>Join AgriTech</h2>
       <p class="form-subtitle">Create your account to get started</p>
     </div>
-    
+
     <!-- Form progress indicator -->
     <div class="form-progress">
       <div class="progress-step active" id="step-1"></div>
@@ -47,7 +45,7 @@
       <div class="progress-step" id="step-4"></div>
       <div class="progress-step" id="step-5"></div>
     </div>
-    
+
     <form onsubmit="handleRegister(event)">
       <div class="input-group">
         <i class="fas fa-user-tag role-buyer" id="role-icon"></i>
@@ -57,19 +55,22 @@
           <option value="farmer">🚜 Farmer</option>
           <option value="equipment">🔧 Equipment Shopkeeper</option>
           <option value="grocery">🏪 Grocery Shopkeeper</option>
+          <!-- NEW: Expert role added for community answering feature -->
+          <option value="expert">🎓 Agricultural Expert</option>
+          <!-- Admin accounts are created via Firebase Console only — not exposed here -->
         </select>
       </div>
-      
+
       <div class="input-group">
         <i class="fas fa-user"></i>
         <input type="text" id="fullname" placeholder="Enter your full name" required>
       </div>
-      
+
       <div class="input-group">
         <i class="fas fa-envelope"></i>
         <input type="email" id="email" placeholder="Enter your email" required>
       </div>
-      
+
       <div class="input-group">
         <i class="fas fa-lock"></i>
         <input type="password" id="password"
@@ -79,26 +80,30 @@
           <i class="fas fa-eye" id="password-eye"></i>
         </button>
       </div>
-      
+
       <!-- Password strength indicator -->
       <div class="password-strength">
         <div class="strength-bar" id="strength-bar"></div>
       </div>
       <div class="strength-text" id="strength-text"></div>
-      
+
       <button type="submit" id="register-btn">
         <span id="register-text">Create Account</span>
       </button>
-      
+
       <p>Already have an account? <a href="login.html">Sign In</a></p>
     </form>
   </div>
 
+  <!--
+    CHANGED: auth.js uses ES module imports (Firebase SDK via CDN).
+    type="module" is required. register.js and theme.js stay as normal scripts.
+  -->
+  <script src="firebase-config.js"></script>
+  <script type="module" src="auth.js"></script>
   <script src="register.js"></script>
   <script src="theme.js"></script>
-  <script src="auth.js"></script>
   <script>
-    // Redirect if already logged in
     document.addEventListener('DOMContentLoaded', () => {
       redirectIfLoggedIn();
     });

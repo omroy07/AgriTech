@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="styles/switcher.css" />
+  <link rel="stylesheet" href="weather-banner.css">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link
@@ -246,26 +247,27 @@
     }
 
     .services-dropdown {
+      display: none;
       position: absolute;
-      top: calc(100% + 0.5rem);
+      top: calc(100% + 10px);
       left: 0;
-      background: var(--surface-color);
-      border: 1px solid var(--border-color);
-      border-radius: 0.5rem;
-      min-width: 250px;
-      padding: 0.5rem;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-10px);
-      transition: all 0.3s ease;
-      z-index: 1000;
-      box-shadow: 0 4px 12px var(--shadow-color);
+      background: rgba(15, 23, 42, 0.95);
+      /* Dark Surface Token */
+      backdrop-filter: blur(15px) saturate(180%);
+      /* Premium Glassmorphism */
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      /* Subtle Visual Boundary */
+      border-radius: 12px;
+      min-width: 280px;
+      padding: 8px;
+      z-index: 1100;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      /* Pop-Out Transition Timing */
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .services-dropdown.active {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
+      display: block;
     }
 
     .services-list {
@@ -279,19 +281,20 @@
     }
 
     .services-list a {
-      color: var(--text-muted);
+      color: #cbd5e1 !important;
       text-decoration: none;
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.5rem;
+      padding: 12px 15px;
       border-radius: 4px;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
     }
 
     .services-list a:hover {
-      background: var(--btn-bg);
-      color: var(--text-color);
+      background: rgba(34, 197, 94, 0.15);
+      /* Green Glow */
+      transform: scale(1.02) translateX(5px);
     }
 
     .services-list i {
@@ -305,7 +308,7 @@
     }
 
     .lang-trigger {
-      background: var(--brand-green-gradient);
+      background: linear-gradient(135deg, var(--accent-color) 0%, #16a34a 100%);
       /* Consistent Green Palette */
       color: #ffffff !important;
       border: none;
@@ -317,10 +320,15 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
       /* Bouncy Interaction Logic */
       transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
         box-shadow 0.3s ease;
+    }
+
+    [data-theme="light"] .lang-trigger {
+      background: linear-gradient(135deg, var(--accent-color) 0%, #15803d 100%);
+      box-shadow: 0 4px 15px rgba(22, 163, 74, 0.4);
     }
 
     .lang-trigger:hover {
@@ -416,6 +424,10 @@
       padding: 0.5rem;
       border-radius: 8px;
       transition: all 0.2s;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .theme-toggle:hover {
@@ -425,6 +437,16 @@
 
     .theme-toggle i {
       font-size: 0.9rem;
+      pointer-events: none;
+    }
+
+    .theme-toggle .theme-text {
+      pointer-events: none;
+    }
+
+    .theme-icon-moon,
+    .theme-icon-sun {
+      display: inline-block;
     }
 
     .theme-text {
@@ -936,218 +958,219 @@
         }
       }
 
-        .mobile-close-btn i {
-          font-size: 1.1rem;
-        }
-
-        .mobile-close-btn:active {
-          background: linear-gradient(135deg,
-              var(--accent-color),
-              rgba(34, 197, 94, 0.4));
-          transform: scale(0.9);
-        }
-
-        /* Remove tooltip on mobile */
-        .mobile-close-btn::before,
-        .mobile-close-btn::after {
-          display: none;
-        }
-
-        /* Better touch feedback */
-        .mobile-close-btn {
-          -webkit-tap-highlight-color: transparent;
-        }
+      .mobile-close-btn i {
+        font-size: 1.1rem;
       }
 
-      /* Dark mode adjustments */
-      [data-theme="dark"] .mobile-close-btn {
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-      }
-
-      [data-theme="dark"] .mobile-close-btn:hover {
+      .mobile-close-btn:active {
         background: linear-gradient(135deg,
             var(--accent-color),
             rgba(34, 197, 94, 0.4));
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        transform: scale(0.9);
       }
 
-      /* Light mode adjustments */
-      [data-theme="light"] .mobile-close-btn {
-        background: rgba(0, 0, 0, 0.08);
-        border: 1px solid rgba(0, 0, 0, 0.15);
-      }
-
-      [data-theme="light"] .mobile-close-btn:hover {
-        background: linear-gradient(135deg,
-            var(--accent-color),
-            rgba(34, 197, 94, 0.2));
-        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
-      }
-
-      /* Accessibility focus styles */
-      .mobile-close-btn:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.5);
-      }
-
-      .mobile-close-btn:focus-visible {
-        outline: 2px solid var(--accent-color);
-        outline-offset: 2px;
-      }
-
-      /* मोबाइल मेनू हेडर को adjust करें */
-      .mobile-menu-header {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        padding: 1rem;
-        /* थोड़ा कम padding */
-        border-bottom: 1px solid var(--border-color);
-        position: relative;
-        background: var(--surface-color);
-        z-index: 1002;
-        min-height: 56px;
-        /* और छोटी height */
-      }
-
-      /* मोबाइल मेनू content को थोड़ा adjust करें */
-      .mobile-menu-content {
-        padding-top: 0.5rem;
-        /* header के नीचे थोड़ी space */
-      }
-
-      .mobile-search {
-        position: relative;
-        display: flex;
-        margin-bottom: 1.5rem;
-      }
-
-      .mobile-search-input {
-        flex: 1;
-        padding: 0.5rem;
-        padding-right: 40px;
-        border-radius: 8px;
-        border: 1px solid var(--input-border);
-        background: transparent;
-        color: var(--text-color);
-        outline: none;
-      }
-
-      .mobile-search-btn {
-        position: absolute;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        padding: 0.5rem 0.6rem;
-        background: var(--accent-color);
-        border: none;
-        border-radius: 0 8px 8px 0;
-        color: white;
-        cursor: pointer;
-      }
-
-      .mobile-search-input:focus,
-      .mobile-search-input.input-focused {
-        outline: none;
-        border-color: var(--accent-color);
-      }
-
-      .mobile-buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-      }
-
-      .mobile-theme-toggle {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .mobile-links {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-
-      .mobile-link {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.75rem;
-        color: var(--text-color);
-        text-decoration: none;
-        border-radius: 8px;
-        transition: all 0.2s;
-      }
-
-      .mobile-link:hover {
-        background: var(--btn-bg);
-      }
-
-      .link-arrow {
-        margin-left: auto;
-        font-size: 0.8rem;
-      }
-
-      .mobile-services-section {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .mobile-services-list {
+      /* Remove tooltip on mobile */
+      .mobile-close-btn::before,
+      .mobile-close-btn::after {
         display: none;
-        flex-direction: column;
-        gap: 0.25rem;
-        padding-left: 1rem;
-        margin-top: 0.5rem;
       }
 
-      .mobile-services-list.active {
-        display: flex;
+      /* Better touch feedback */
+      .mobile-close-btn {
+        -webkit-tap-highlight-color: transparent;
       }
+    }
 
-      .mobile-sublink {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.5rem;
-        color: var(--text-muted);
-        text-decoration: none;
-        border-radius: 4px;
-        font-size: 0.9rem;
-        transition: all 0.2s;
-      }
+    /* Dark mode adjustments */
+    [data-theme="dark"] .mobile-close-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
 
-      .mobile-sublink:hover {
-        background: var(--btn-bg);
-        color: var(--text-color);
-      }
+    [data-theme="dark"] .mobile-close-btn:hover {
+      background: linear-gradient(135deg,
+          var(--accent-color),
+          rgba(34, 197, 94, 0.4));
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
 
-      .mobile-register {
-        background: var(--accent-color);
-        color: white !important;
-      }
+    /* Light mode adjustments */
+    [data-theme="light"] .mobile-close-btn {
+      background: rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(0, 0, 0, 0.15);
+    }
 
-      .mobile-footer-links {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        margin-top: 2rem;
-        padding-top: 1rem;
-        border-top: 1px solid var(--border-color);
-      }
+    [data-theme="light"] .mobile-close-btn:hover {
+      background: linear-gradient(135deg,
+          var(--accent-color),
+          rgba(34, 197, 94, 0.2));
+      box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+    }
 
-      .mobile-footer-link {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem;
-        color: var(--text-muted);
-        text-decoration: none;
-        font-size: 0.9rem;
-      }
-  
+    /* Accessibility focus styles */
+    .mobile-close-btn:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.5);
+    }
+
+    .mobile-close-btn:focus-visible {
+      outline: 2px solid var(--accent-color);
+      outline-offset: 2px;
+    }
+
+    /* मोबाइल मेनू हेडर को adjust करें */
+    .mobile-menu-header {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 1rem;
+      /* थोड़ा कम padding */
+      border-bottom: 1px solid var(--border-color);
+      position: relative;
+      background: var(--surface-color);
+      z-index: 1002;
+      min-height: 56px;
+      /* और छोटी height */
+    }
+
+    /* मोबाइल मेनू content को थोड़ा adjust करें */
+    .mobile-menu-content {
+      padding-top: 0.5rem;
+      /* header के नीचे थोड़ी space */
+    }
+
+    .mobile-search {
+      position: relative;
+      display: flex;
+      margin-bottom: 1.5rem;
+    }
+
+    .mobile-search-input {
+      flex: 1;
+      padding: 0.5rem;
+      padding-right: 40px;
+      border-radius: 8px;
+      border: 1px solid var(--input-border);
+      background: transparent;
+      color: var(--text-color);
+      outline: none;
+    }
+
+    .mobile-search-btn {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      padding: 0.5rem 0.6rem;
+      background: var(--accent-color);
+      border: none;
+      border-radius: 0 8px 8px 0;
+      color: white;
+      cursor: pointer;
+    }
+
+    .mobile-search-input:focus,
+    .mobile-search-input.input-focused {
+      outline: none;
+      border-color: var(--accent-color);
+    }
+
+    .mobile-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .mobile-theme-toggle {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .mobile-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .mobile-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      color: var(--text-color);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .mobile-link:hover {
+      background: var(--btn-bg);
+    }
+
+    .link-arrow {
+      margin-left: auto;
+      font-size: 0.8rem;
+    }
+
+    .mobile-services-section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mobile-services-list {
+      display: none;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding-left: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .mobile-services-list.active {
+      display: flex;
+    }
+
+    .mobile-sublink {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .mobile-sublink:hover {
+      background: var(--btn-bg);
+      color: var(--text-color);
+    }
+
+    .mobile-register {
+      background: var(--accent-color);
+      color: white !important;
+    }
+
+    .mobile-footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .mobile-footer-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+
     @media (max-width: 768px) {
       .navbar {
         padding: 0.75rem;
@@ -1344,24 +1367,23 @@
     }
 
     .feature-card {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.02),
-    rgba(255, 255, 255, 0)
-  );
-  border: 2px solid rgba(34, 197, 94, 0.45); /* ✅ GREEN BORDER */
-  border-radius: 16px;
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  min-height: 220px;
-  backdrop-filter: blur(6px) saturate(110%);
-  transition:
-    transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1),
-    box-shadow 0.28s ease,
-    border-color 0.28s ease;
-}
+      background: linear-gradient(180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0));
+      border: 2px solid rgba(34, 197, 94, 0.45);
+      /* ✅ GREEN BORDER */
+      border-radius: 16px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      min-height: 220px;
+      backdrop-filter: blur(6px) saturate(110%);
+      transition:
+        transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1),
+        box-shadow 0.28s ease,
+        border-color 0.28s ease;
+    }
 
 
     .feature-card:focus-visible {
@@ -1371,13 +1393,14 @@
       border-color: rgba(34, 197, 94, 0.12);
     }
 
-.feature-card:hover {
-  transform: translateY(-8px) scale(1.01);
-  border-color: #22c55e; /* ✅ SOLID GREEN */
-  box-shadow:
-    0 0 0 2px rgba(34, 197, 94, 0.35),
-    0 18px 40px rgba(34, 197, 94, 0.25);
-}
+    .feature-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      border-color: #22c55e;
+      /* ✅ SOLID GREEN */
+      box-shadow:
+        0 0 0 2px rgba(34, 197, 94, 0.35),
+        0 18px 40px rgba(34, 197, 94, 0.25);
+    }
 
 
     .feature-icon {
@@ -1511,7 +1534,7 @@
         box-shadow: 0 0 14px rgba(34, 197, 94, 0.9);
       }
     }
-  
+
 
     /* ============================================
        NEW: PROFIT & LOSS SECTION STYLES
@@ -1761,13 +1784,15 @@
     .services-dropdown {
       display: none;
       position: absolute;
-      background: #fff;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      margin-top: 5px;
-      border-radius: 5px;
-      z-index: 1000;
-      transition: all 0.3s ease;
-      /* for smooth effect */
+      top: calc(100% + 12px);
+      background: rgba(15, 23, 42, 0.95);
+      /* Dark Surface */
+      backdrop-filter: blur(15px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      min-width: 280px;
+      padding: 10px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     }
 
     /* Show dropdown when active */
@@ -1792,21 +1817,37 @@
     }
 
     .services-list li a {
-      display: block;
-      padding: 10px 20px;
-      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 15px;
+      color: #cbd5e1 !important;
+      /* High-Contrast Vibrant Text */
       text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      font-weight: 500;
     }
 
     .services-list li a:hover {
-      background-color: #f0f0f0;
-      color: #000;
+      background: rgba(16, 173, 74, 0.15);
+      /* Brand Green Glow */
+      color: #225504 !important;
+      /* Pure White on Hover */
+      transform: scale(1.02) translateX(5px);
+      /* Interactive Pop-Out */
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.1);
     }
 
     /* Make sure the container is relative */
     .services-toggle-container {
       position: relative;
     }
+
+    .hidden {
+      display: none !important;
+    }
+
 
     /* Show dropdown when active */
     .services-dropdown.active {
@@ -1836,14 +1877,55 @@
       color: #333;
     }
 
+    .services-list li a i {
+      color: var(--accent-color);
+      /* Themed Icons */
+      width: 20px;
+      text-align: center;
+    }
+
     .services-list li a:hover {
       background: #f0f0f0;
       color: #000;
+    }
+
+    /* Unified Green Action Hub Buttons */
+    .btn-hub {
+      background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+      color: #ffffff !important;
+      border: none;
+      padding: 0.65rem 1.3rem;
+      border-radius: 25px;
+      /* Pill Shape */
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        box-shadow 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-hub:hover {
+      transform: scale(1.08) translateY(-2px);
+      /* Pop-Out Effect */
+      box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
     }
   </style>
 </head>
 
 <body>
+  <div id="weather-advisory-banner" class="weather-advisory-banner loading">
+    <div class="weather-banner-left">
+      <div class="weather-icon"><i class="fas fa-spinner fa-spin"></i></div>
+      <div class="weather-info">
+        <div class="weather-location">Loading...</div>
+        <div class="weather-temp">--°C</div>
+      </div>
+    </div>
+    <div class="weather-banner-center">
+      <div class="advisory-message"><span>Fetching weather...</span></div>
+    </div>
+  </div>
+
   <div class="circle-container" id="cursorTrail">
     <div class="cursor-circle"></div>
     <div class="cursor-circle"></div>
@@ -1861,19 +1943,6 @@
       <option value="ta">தமிழ்</option>
     </select>
   </div> -->
-  <div style="padding: 10px; text-align: right">
-  <label for="languageSelect" class="language-label">Language:</label>
-  <select
-    id="languageSelect"
-    class="language-select"
-    onchange="setLanguage(this.value, this.options[this.selectedIndex].text)"
-  >
-    <option value="en">English</option>
-    <option value="te">తెలుగు</option>
-    <option value="hi">हिन्दी</option>
-    <option value="ta">தமிழ்</option>
-  </select>
-</div>
 
 
   <!-- Offline & Cached Notices -->
@@ -1972,8 +2041,9 @@
         </div>
 
         <!-- Theme Toggle -->
-        <button class="theme-toggle btn" onclick="toggleTheme()">
-          <i class="fas fa-moon"></i>
+        <button class="theme-toggle btn" id="themeToggleBtn" type="button">
+          <i class="fas fa-sun theme-icon-sun"></i>
+          <i class="fas fa-moon theme-icon-moon" style="display: none;"></i>
           <span class="theme-text">Light</span>
         </button>
 
@@ -2058,16 +2128,32 @@
       }
     }
 
-    // Theme Toggle Function
+    // Theme Toggle Function - Fixed to change entire page
     function toggleTheme() {
-      const navbar = document.querySelector(".navbar");
+      const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+      const nextTheme = currentTheme === "light" ? "dark" : "light";
+
+      // Change entire page theme
+      document.documentElement.setAttribute("data-theme", nextTheme);
+      localStorage.setItem("agritech-theme", nextTheme);
+
+      // Update theme text and icons
       const themeText = document.querySelector(".theme-text");
-      if (navbar.getAttribute("data-theme") === "light") {
-        navbar.setAttribute("data-theme", "dark");
-        themeText.innerText = "Dark";
-      } else {
-        navbar.setAttribute("data-theme", "light");
-        themeText.innerText = "Light";
+      const moonIcon = document.querySelector(".theme-icon-moon");
+      const sunIcon = document.querySelector(".theme-icon-sun");
+
+      if (themeText) {
+        themeText.innerText = nextTheme === "dark" ? "Light" : "Dark";
+      }
+
+      if (moonIcon && sunIcon) {
+        if (nextTheme === "dark") {
+          moonIcon.style.display = "inline-block";
+          sunIcon.style.display = "none";
+        } else {
+          moonIcon.style.display = "none";
+          sunIcon.style.display = "inline-block";
+        }
       }
     }
   </script>
@@ -2455,8 +2541,8 @@
   <!-- ============================================
      MARKET PRICE TRENDS SECTION
      ============================================ -->
-<section class="activity" id="market-price-trends">
-  <div class="activity-container" style="
+  <section class="activity" id="market-price-trends">
+    <div class="activity-container" style="
         max-width: 1400px;
         margin: 2rem auto;
         padding: 1.5rem;
@@ -2464,65 +2550,65 @@
         border: 1px solid var(--border-color);
         border-radius: 12px;
       ">
-    <h2 class="features-title serif">Market Price Trends</h2>
-    <p class="feature-intro">
-      View real-time crop prices and understand market movements.
-    </p>
+      <h2 class="features-title serif">Market Price Trends</h2>
+      <p class="feature-intro">
+        View real-time crop prices and understand market movements.
+      </p>
 
-    <!-- Controls -->
-    <div style="display:flex; gap:1rem; margin-bottom:1.5rem; flex-wrap:wrap;">
-      <select id="cropSelector" class="btn">
-        <option value="wheat">Wheat</option>
-        <option value="rice">Rice</option>
-        <option value="maize">Maize</option>
-        <option value="cotton">Cotton</option>
-      </select>
+      <!-- Controls -->
+      <div style="display:flex; gap:1rem; margin-bottom:1.5rem; flex-wrap:wrap;">
+        <select id="cropSelector" class="btn">
+          <option value="wheat">Wheat</option>
+          <option value="rice">Rice</option>
+          <option value="maize">Maize</option>
+          <option value="cotton">Cotton</option>
+        </select>
 
-      <select id="trendRange" class="btn">
-        <option value="daily">Daily</option>
-        <option value="weekly">Weekly</option>
-      </select>
-    </div>
+        <select id="trendRange" class="btn">
+          <option value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+        </select>
+      </div>
 
-    <!-- Summary Cards -->
-    <div class="pl-summary-cards">
-      <div class="pl-card">
-        <div class="pl-card-icon">🌾</div>
-        <div class="pl-card-content">
-          <div class="pl-card-label">Current Price</div>
-          <div class="pl-card-value" id="currentPrice">₹0 / quintal</div>
+      <!-- Summary Cards -->
+      <div class="pl-summary-cards">
+        <div class="pl-card">
+          <div class="pl-card-icon">🌾</div>
+          <div class="pl-card-content">
+            <div class="pl-card-label">Current Price</div>
+            <div class="pl-card-value" id="currentPrice">₹0 / quintal</div>
+          </div>
+        </div>
+
+        <div class="pl-card">
+          <div class="pl-card-icon">📊</div>
+          <div class="pl-card-content">
+            <div class="pl-card-label">Change</div>
+            <div class="pl-card-value" id="priceChange">0%</div>
+          </div>
+        </div>
+
+        <div class="pl-card">
+          <div class="pl-card-icon">📈</div>
+          <div class="pl-card-content">
+            <div class="pl-card-label">Trend</div>
+            <div class="pl-card-value" id="priceTrend">Stable</div>
+          </div>
         </div>
       </div>
 
-      <div class="pl-card">
-        <div class="pl-card-icon">📊</div>
-        <div class="pl-card-content">
-          <div class="pl-card-label">Change</div>
-          <div class="pl-card-value" id="priceChange">0%</div>
-        </div>
-      </div>
-
-      <div class="pl-card">
-        <div class="pl-card-icon">📈</div>
-        <div class="pl-card-content">
-          <div class="pl-card-label">Trend</div>
-          <div class="pl-card-value" id="priceTrend">Stable</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Chart -->
-    <div style="
+      <!-- Chart -->
+      <div style="
           margin-top:1.5rem;
           background: var(--section-bg);
           padding:1rem;
           border-radius:8px;
           border:1px solid var(--border-color);
         ">
-      <canvas id="marketPriceChart" height="120"></canvas>
+        <canvas id="marketPriceChart" height="120"></canvas>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <!-- ============================================
        NEW: PROFIT & LOSS ANALYTICS SECTION
@@ -2632,6 +2718,7 @@
           <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
+
 
       <div class="footer-group-links">
         <div class="footer-section footer-links">
@@ -2779,34 +2866,95 @@
   <script type="module" src="index.js"></script>
 
   <script>
-    // Theme Toggle
-    const themeToggle = document.querySelector(".theme-toggle");
-    const themeText = document.querySelector(".theme-text");
-    const sunIcon = document.querySelector(".sun-icon");
-    const moonIcon = document.querySelector(".moon-icon");
+    // Theme Toggle - Unified function (runs after DOM and other scripts)
+    (function () {
+      function initThemeToggle() {
+        const themeToggle = document.querySelector(".theme-toggle");
+        if (!themeToggle) {
+          console.warn("Theme toggle button not found");
+          return;
+        }
 
-    const applyTheme = (theme) => {
-      document.documentElement.setAttribute("data-theme", theme);
-      localStorage.setItem("agritech-theme", theme);
-      if (theme === "dark") {
-        themeText.textContent = "Light";
-        moonIcon.style.display = "none";
-        sunIcon.style.display = "inline-block";
-      } else {
-        themeText.textContent = "Dark";
-        moonIcon.style.display = "inline-block";
-        sunIcon.style.display = "none";
+        const themeText = themeToggle.querySelector(".theme-text");
+        const moonIcon = themeToggle.querySelector(".theme-icon-moon");
+        const sunIcon = themeToggle.querySelector(".theme-icon-sun");
+
+        function applyTheme(theme) {
+          // Change entire page theme
+          document.documentElement.setAttribute("data-theme", theme);
+          localStorage.setItem("agritech-theme", theme);
+
+          // Update theme text and icons
+          // Icon shows what you'll switch TO (sun in dark mode, moon in light mode)
+          if (themeText) {
+            themeText.textContent = theme === "dark" ? "Light" : "Dark";
+          }
+
+          if (moonIcon && sunIcon) {
+            if (theme === "dark") {
+              // In dark mode, show sun icon (clicking will switch to light)
+              sunIcon.style.display = "inline-block";
+              moonIcon.style.display = "none";
+            } else {
+              // In light mode, show moon icon (clicking will switch to dark)
+              sunIcon.style.display = "none";
+              moonIcon.style.display = "inline-block";
+            }
+          }
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem("agritech-theme") || "dark";
+        applyTheme(savedTheme);
+
+        // Remove any existing listeners by replacing the button
+        const newButton = themeToggle.cloneNode(true);
+        themeToggle.parentNode.replaceChild(newButton, themeToggle);
+        const freshButton = document.querySelector(".theme-toggle");
+        const freshThemeText = freshButton.querySelector(".theme-text");
+        const freshMoonIcon = freshButton.querySelector(".theme-icon-moon");
+        const freshSunIcon = freshButton.querySelector(".theme-icon-sun");
+
+        // Add click handler to theme toggle button
+        freshButton.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const current = document.documentElement.getAttribute("data-theme") || "dark";
+          const next = current === "light" ? "dark" : "light";
+
+          // Change entire page theme
+          document.documentElement.setAttribute("data-theme", next);
+          localStorage.setItem("agritech-theme", next);
+
+          // Update theme text and icons
+          // Icon shows what you'll switch TO (sun in dark mode, moon in light mode)
+          if (freshThemeText) {
+            freshThemeText.textContent = next === "dark" ? "Light" : "Dark";
+          }
+
+          if (freshMoonIcon && freshSunIcon) {
+            if (next === "dark") {
+              // In dark mode, show sun icon (clicking will switch to light)
+              freshSunIcon.style.display = "inline-block";
+              freshMoonIcon.style.display = "none";
+            } else {
+              // In light mode, show moon icon (clicking will switch to dark)
+              freshSunIcon.style.display = "none";
+              freshMoonIcon.style.display = "inline-block";
+            }
+          }
+        });
       }
-    };
 
-    const savedTheme = localStorage.getItem("agritech-theme") || "dark";
-    applyTheme(savedTheme);
-
-    themeToggle.addEventListener("click", () => {
-      const current = document.documentElement.getAttribute("data-theme");
-      const next = current === "light" ? "dark" : "light";
-      applyTheme(next);
-    });
+      // Initialize after DOM and other scripts load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () {
+          setTimeout(initThemeToggle, 300);
+        });
+      } else {
+        setTimeout(initThemeToggle, 300);
+      }
+    })();
 
     // Services Dropdown
     const servicesToggle = document.querySelector(".services-toggle");
@@ -2836,22 +2984,70 @@
       });
     }
 
-    // Language Selector
-    const langBtn = document.querySelector(".lang-btn");
-    const langDropdown = document.querySelector(".lang-dropdown");
-
-    if (langBtn && langDropdown) {
-      langBtn.addEventListener("click", (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        langDropdown.classList.toggle("active");
-      });
-
-      document.addEventListener("click", (e) => {
-        if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
-          langDropdown.classList.remove("active");
+    // Language Selector - Handle both .lang-btn and #langTrigger
+    function setupLanguageDropdown() {
+      const langBtn = document.querySelector(".lang-btn");
+      const langTrigger = document.getElementById("langTrigger");
+      // Find dropdown - prefer the one in the same container as trigger
+      let langDropdown = null;
+      if (langTrigger) {
+        const langContainer = langTrigger.closest(".lang-container");
+        if (langContainer) {
+          langDropdown = langContainer.querySelector(".lang-dropdown");
         }
-      });
+      }
+      if (!langDropdown) {
+        langDropdown = document.getElementById("langDropdown") || document.querySelector(".lang-dropdown");
+      }
+
+      // Handle .lang-btn (if exists)
+      if (langBtn && langDropdown) {
+        langBtn.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          langDropdown.classList.toggle("active");
+        });
+
+        document.addEventListener("click", (e) => {
+          if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
+            langDropdown.classList.remove("active");
+          }
+        });
+      }
+
+      // Handle #langTrigger (navbar language button)
+      if (langTrigger && langDropdown) {
+        langTrigger.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          langDropdown.classList.toggle("active");
+        });
+
+        document.addEventListener("click", (e) => {
+          if (!langTrigger.contains(e.target) && !langDropdown.contains(e.target)) {
+            langDropdown.classList.remove("active");
+          }
+        });
+
+        // Close dropdown when a language option is clicked
+        const langOptions = langDropdown.querySelectorAll(".lang-option");
+        langOptions.forEach(option => {
+          option.addEventListener("click", (e) => {
+            // Don't prevent default - let onclick handler run
+            setTimeout(() => {
+              langDropdown.classList.remove("active");
+            }, 100);
+          });
+        });
+      }
+    }
+
+    // Run setup when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupLanguageDropdown);
+    } else {
+      // If DOM is already loaded, wait a bit for other scripts to initialize
+      setTimeout(setupLanguageDropdown, 200);
     }
 
     // Scroll Button
@@ -2878,10 +3074,17 @@
       });
     }
 
-    // ===== MOBILE MENU (FINAL FIX) =====
+    // ===== MOBILE MENU CLEAN FIX =====
     const hamburgerBtn = document.getElementById("hamburgerBtn");
     const mobileMenu = document.getElementById("mobileMenu");
     const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
+    const mobileCloseBtn = document.querySelector(".mobile-close-btn");
+
+    function openMobileMenu() {
+      mobileMenu.classList.add("active");
+      mobileMenuOverlay.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
 
     function closeMobileMenu() {
       mobileMenu.classList.remove("active");
@@ -2889,34 +3092,23 @@
       document.body.style.overflow = "";
     }
 
-    function openMobileMenu() {
-      mobileMenu.classList.add("active");
-      mobileMenuOverlay.classList.add("active");
-      document.body.style.overflow = "hidden";
-    }
-    const mobileCloseBtn = document.querySelector(".mobile-close-btn");
+    if (hamburgerBtn) hamburgerBtn.addEventListener("click", openMobileMenu);
+    if (mobileCloseBtn) mobileCloseBtn.addEventListener("click", closeMobileMenu);
+    if (mobileMenuOverlay) mobileMenuOverlay.addEventListener("click", closeMobileMenu);
 
-    if (hamburgerBtn && mobileMenu && mobileMenuOverlay && mobileCloseBtn) {
-      // OPEN
-      hamburgerBtn.addEventListener("pointerdown", (e) => {
-        e.preventDefault();
-        openMobileMenu();
-      });
-    }
 
-      // CLOSE
-      mobileCloseBtn.addEventListener("pointerdown", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        closeMobileMenu();
-      });
+    // CLOSE
+    mobileCloseBtn.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeMobileMenu();
+    });
 
-      mobileMenuOverlay.addEventListener("pointerdown", closeMobileMenu);
+    mobileMenuOverlay.addEventListener("pointerdown", closeMobileMenu);
 
-      mobileMenu.addEventListener("pointerdown", (e) => {
-        e.stopPropagation();
-      });
-  
+    mobileMenu.addEventListener("pointerdown", (e) => {
+      e.stopPropagation();
+    });
 
     // Mobile Services Toggle
     const mobileServicesToggle = document.getElementById(
@@ -3043,42 +3235,6 @@
         document.getElementById("searchPopup").style.display = "flex";
       }
 
-      function highlightAll(query) {
-        clearHighlights();
-        let found = false;
-        let firstMatch = null;
-
-        const walker = document.createTreeWalker(
-          document.body,
-          NodeFilter.SHOW_TEXT,
-        );
-        const nodes = [];
-
-        while (walker.nextNode()) nodes.push(walker.currentNode);
-
-        nodes.forEach((node) => {
-          const text = node.nodeValue;
-          const lower = text.toLowerCase();
-
-          if (!lower.includes(query)) return;
-
-          const parent = node.parentNode;
-          const fragment = document.createDocumentFragment();
-          let lastIndex = 0;
-
-          lower.replace(new RegExp(query, "gi")), (match, index) => {
-            found = true;
-
-            fragment.append(
-              document.createTextNode(text.slice(lastIndex, index)),
-            );
-
-            const span = document.createElement("span");
-            span.className = "search-highlight";
-            span.textContent = text.slice(index, index + match.length);
-
-            if (!firstMatch) firstMatch = span;
-
       window.closeSearchPopup = () => {
         document.getElementById("searchPopup").style.display = "none";
       };
@@ -3164,7 +3320,7 @@
       <i class="fas fa-search"></i>
       <h3>No Results Found</h3>
       <p id="searchPopupText"></p>
-<button id="closeSearchPopupBtn">Got it</button>
+      <button id="closeSearchPopupBtn">Got it</button>
 
     </div>
   </div>
@@ -3220,8 +3376,55 @@
   </script>
   <script src="translations.js"></script>
   <script src="scripts/i18n.js"></script>
+  <script>
+    // Ensure language dropdown works after i18n.js loads
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        const langTrigger = document.getElementById("langTrigger");
+        const langDropdown = document.getElementById("langDropdown");
 
-  
+        if (langTrigger && langDropdown) {
+          // Remove any existing listeners by cloning
+          const newTrigger = langTrigger.cloneNode(true);
+          langTrigger.parentNode.replaceChild(newTrigger, langTrigger);
+          const freshTrigger = document.getElementById("langTrigger");
+
+          freshTrigger.addEventListener("click", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const dropdown = document.getElementById("langDropdown");
+            if (dropdown) {
+              dropdown.classList.toggle("active");
+            }
+          });
+
+          // Close on outside click
+          document.addEventListener("click", function (e) {
+            const trigger = document.getElementById("langTrigger");
+            const dropdown = document.getElementById("langDropdown");
+            if (trigger && dropdown &&
+              !trigger.contains(e.target) &&
+              !dropdown.contains(e.target)) {
+              dropdown.classList.remove("active");
+            }
+          });
+
+          // Close when option is clicked
+          const options = langDropdown.querySelectorAll(".lang-option");
+          options.forEach(function (option) {
+            option.addEventListener("click", function () {
+              setTimeout(function () {
+                const dd = document.getElementById("langDropdown");
+                if (dd) dd.classList.remove("active");
+              }, 50);
+            });
+          });
+        }
+      }, 300);
+    });
+  </script>
+
+
   <script>
     const languages = {
       en: {
@@ -3257,16 +3460,6 @@
   </script>
 
 
-  <script>
-    const langSelect = document.getElementById("languageSelect");
-    const savedLang = localStorage.getItem("lang") || "en";
-    langSelect.value = savedLang;
-
-    langSelect.addEventListener("change", () => {
-      localStorage.setItem("lang", langSelect.value);
-      location.reload();
-    });
-  </script>
 
   <!-- Notification System -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
@@ -3320,96 +3513,98 @@
     hamburgerBtn.addEventListener("click", openMobileMenu);
     mobileCloseBtn?.addEventListener("click", closeMobileMenu);
     mobileMenuOverlay.addEventListener("click", closeMobileMenu);
-  });
+
+
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // ---------- SAFETY CHECK ----------
+      const canvas = document.getElementById("marketPriceChart");
+      if (!canvas) {
+        console.warn("Market Price Chart canvas not found");
+        return;
       }
-}
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  // ---------- SAFETY CHECK ----------
-  const canvas = document.getElementById("marketPriceChart");
-  if (!canvas) {
-    console.warn("Market Price Chart canvas not found");
-    return;
-  }
 
-  // ---------- DATA ----------
-  const marketData = {
-    wheat: [2100, 2150, 2200, 2250, 2300],
-    rice: [3200, 3180, 3220, 3250, 3300],
-    maize: [1800, 1820, 1850, 1870, 1900],
-    cotton: [6200, 6300, 6400, 6350, 6500]
-  };
+      // ---------- DATA ----------
+      const marketData = {
+        wheat: [2100, 2150, 2200, 2250, 2300],
+        rice: [3200, 3180, 3220, 3250, 3300],
+        maize: [1800, 1820, 1850, 1870, 1900],
+        cotton: [6200, 6300, 6400, 6350, 6500]
+      };
 
-  const labels = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"];
+      const labels = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"];
 
-  // ---------- CHART ----------
-  const ctx = canvas.getContext("2d");
+      // ---------- CHART ----------
+      const ctx = canvas.getContext("2d");
 
-  const marketChart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: labels,
-      datasets: [{
-        label: "Price (₹ / quintal)",
-        data: marketData.wheat,
-        borderColor: "#22c55e",
-        backgroundColor: "rgba(34, 197, 94, 0.15)",
-        tension: 0.4,
-        fill: true,
-        pointRadius: 4
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false }
-      },
-      scales: {
-        y: {
-          ticks: {
-            callback: value => "₹" + value
+      const marketChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [{
+            label: "Price (₹ / quintal)",
+            data: marketData.wheat,
+            borderColor: "#22c55e",
+            backgroundColor: "rgba(34, 197, 94, 0.15)",
+            tension: 0.4,
+            fill: true,
+            pointRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              ticks: {
+                callback: value => "₹" + value
+              }
+            }
           }
         }
+      });
+
+      // ---------- UPDATE FUNCTION ----------
+      function updateMarketData(crop) {
+        const prices = marketData[crop];
+        if (!prices) return;
+
+        const first = prices[0];
+        const last = prices[prices.length - 1];
+        const change = (((last - first) / first) * 100).toFixed(1);
+
+        document.getElementById("currentPrice").innerText =
+          `₹${last} / quintal`;
+
+        document.getElementById("priceChange").innerText =
+          `${change}%`;
+
+        document.getElementById("priceTrend").innerText =
+          change > 0 ? "Increasing" : change < 0 ? "Decreasing" : "Stable";
+
+        marketChart.data.datasets[0].data = prices;
+        marketChart.update();
       }
-    }
-  });
 
-  // ---------- UPDATE FUNCTION ----------
-  function updateMarketData(crop) {
-    const prices = marketData[crop];
-    if (!prices) return;
+      // ---------- DROPDOWN LISTENER ----------
+      const cropSelector = document.getElementById("cropSelector");
+      if (cropSelector) {
+        cropSelector.addEventListener("change", function (e) {
+          updateMarketData(e.target.value);
+        });
+      }
 
-    const first = prices[0];
-    const last = prices[prices.length - 1];
-    const change = (((last - first) / first) * 100).toFixed(1);
-
-    document.getElementById("currentPrice").innerText =
-      `₹${last} / quintal`;
-
-    document.getElementById("priceChange").innerText =
-      `${change}%`;
-
-    document.getElementById("priceTrend").innerText =
-      change > 0 ? "Increasing" : change < 0 ? "Decreasing" : "Stable";
-
-    marketChart.data.datasets[0].data = prices;
-    marketChart.update();
-  }
-
-  // ---------- DROPDOWN LISTENER ----------
-  const cropSelector = document.getElementById("cropSelector");
-  if (cropSelector) {
-    cropSelector.addEventListener("change", function (e) {
-      updateMarketData(e.target.value);
+      // ---------- INITIAL LOAD ----------
+      updateMarketData("wheat");
     });
-  }
+  </script>
 
-  // ---------- INITIAL LOAD ----------
-  updateMarketData("wheat");
-});
-</script>
-
+  </script>
+  <script src="weather-banner.js"></script>
 </body>
+
 </html>

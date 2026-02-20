@@ -776,4 +776,172 @@ body {
   transform: translate(-50%, -50%) scale(1.8);
   background-color: #22c55e; /* Changes to AgriTech green on hover */
   box-shadow: 0 0 20px #22c55e;
+}/* ================================
+   NAVBAR ALIGNMENT FIX
+   ================================ */
+
+.navbar {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.navbar-content {
+  display: flex;
+  align-items: center;          /* ✅ Vertical alignment */
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 24px;
+}
+
+/* Brand (Logo / Site Name) */
+.navbar .brand {
+  display: flex;
+  align-items: center;
+}
+
+/* Spacer should actually flex */
+.navbar-spacer {
+  flex: 1;
+}
+
+/* Right side buttons */
+.nav-buttons {
+  display: flex;
+  align-items: center;          /* ✅ Align buttons vertically */
+  gap: 10px;                    /* ✅ Consistent spacing */
+}
+
+/* Buttons & links inside navbar */
+.nav-buttons .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+/* Theme toggle alignment */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Prevent wrapping on desktop */
+@media (min-width: 768px) {
+  .navbar-content {
+    flex-wrap: nowrap;
+  }
+}
+/* ============================
+   NAVBAR SPACING & ALIGNMENT
+   ============================ */
+
+.navbar {
+  padding: 12px 0;              /* Vertical breathing space */
+}
+
+.navbar-content {
+  max-width: 1200px;           /* Center + consistent width */
+  margin: 0 auto;
+  padding: 0 24px;             /* Left/right spacing */
+  display: flex;
+  align-items: center;
+  gap: 24px;                   /* Space between brand & buttons */
+}
+
+/* Brand/logo spacing */
+.navbar .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar .logo {
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
+}
+
+/* Spacer should actually push buttons right */
+.navbar-spacer {
+  flex: 1;
+}
+
+/* Buttons container spacing */
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;                   /* Space between buttons */
+}
+
+/* Button consistency */
+.nav-buttons .btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Theme toggle tighter + aligned */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .navbar-content {
+    padding: 0 16px;
+    gap: 12px;
+  }
+
+  .nav-buttons {
+    gap: 8px;
+  }
+
+  .navbar .logo {
+    font-size: 1.2rem;
+  }
+}
+/* =========================================
+   EXTREME LEFT LOGO + EXTREME RIGHT BUTTONS
+   ========================================= */
+
+.navbar-content {
+  max-width: 100% !important;   /* Allow full width */
+  width: 100%;
+  padding: 0 32px;              /* Edge spacing */
+  display: flex;
+  align-items: center;
+}
+
+/* Force brand to extreme left */
+.navbar .brand {
+  margin-right: auto;          /* Push everything else right */
+}
+
+/* Kill spacer impact just in case */
+.navbar-spacer {
+  display: none !important;
+}
+
+/* Force buttons to extreme right */
+.nav-buttons {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Optional polish */
+.navbar {
+  padding: 12px 0;
+}
+
+.navbar .logo {
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
 }

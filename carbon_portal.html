@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Carbon credit management portal for sustainable agricultural practices.">
+    <title>Carbon Portal | AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #059669;
+            --green-light: #ecfdf5;
+            --slate: #0f172a;
+            --white: #ffffff;
+            --bg: #f8fafc;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--slate);
+            margin: 0;
+        }
+
+        .portal-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--slate);
+            color: white;
+            padding: 2rem;
+        }
+
+        .impact-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .impact-val {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #10b981;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 3rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-item {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-item h3 {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-top: 0;
+        }
+
+        .tab-container {
+            margin-bottom: 2rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 1rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .tab.active {
+            background: var(--green);
+            color: white;
+        }
+
+        .practice-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--white);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .practice-table th {
+            background: #f1f5f9;
+            text-align: left;
+            padding: 1.25rem;
+            font-size: 0.9rem;
+            color: #475569;
+        }
+
+        .practice-table td {
+            padding: 1.25rem;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .status-certified {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .btn-green {
+            background: var(--green);
+            color: white;
+        }
+
+        .btn-green:hover {
+            background: #047857;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            padding: 2.5rem;
+            border-radius: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="portal-grid">
+        <aside class="sidebar">
+            <h2>AgriTech Impact</h2>
+            <div class="impact-card">
+                <h3>Total CO2 Offset</h3>
+                <div class="impact-val" id="total-offset">0.00</div>
+                <p>Tonnes sequestered</p>
+            </div>
+
+            <nav style="margin-top: 3rem;">
+                <div style="margin-bottom: 1rem; color: #10b981;"><i class="fas fa-leaf"></i> Practices</div>
+                <div style="opacity: 0.7;"><i class="fas fa-certificate"></i> Certificates</div>
+                <div style="opacity: 0.7;"><i class="fas fa-exchange-alt"></i> Marketplace</div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div>
+                    <h1 style="margin: 0;">Sustainable Ledger</h1>
+                    <p style="color: #64748b;">Issue and trade verified carbon credits</p>
+                </div>
+                <button class="btn btn-green" onclick="openPracticeModal()">+ Log Practice</button>
+            </header>
+
+            <div class="stat-bar">
+                <div class="stat-item">
+                    <h3>Active Practices</h3>
+                    <div style="font-size: 1.5rem; font-weight: 700;" id="active-count">0</div>
+                </div>
+                <div class="stat-item">
+                    <h3>Tradeable Credits</h3>
+                    <div style="font-size: 1.5rem; font-weight: 700;" id="active-credits">0.00</div>
+                </div>
+                <div class="stat-item">
+                    <h3>Verified Status</h3>
+                    <div style="font-size: 1.5rem; font-weight: 700; color: #059669;">Tier 1 Farmer</div>
+                </div>
+            </div>
+
+            <div class="tab-container">
+                <div class="tabs">
+                    <div class="tab active">My Sustainable Activities</div>
+                    <div class="tab">Credit History</div>
+                </div>
+            </div>
+
+            <table class="practice-table">
+                <thead>
+                    <tr>
+                        <th>Practice Type</th>
+                        <th>Area (Acres)</th>
+                        <th>CO2 Offset</th>
+                        <th>Verification</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="practice-list">
+                    <!-- Dynamic Rows -->
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <!-- Log Practice Modal -->
+    <div id="practice-modal" class="modal">
+        <div class="modal-content">
+            <h2>Log Sustainable Practice</h2>
+            <div class="form-group">
+                <label>Practice Type</label>
+                <select class="form-input" id="p-type">
+                    <option value="No-Till">No-Till Farming</option>
+                    <option value="Cover Cropping">Cover Cropping</option>
+                    <option value="Reforestation">Reforestation</option>
+                    <option value="Organic Manure">Organic Manure</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Area Covered (Acres)</label>
+                <input type="number" class="form-input" id="p-area" placeholder="e.g. 50">
+            </div>
+            <div class="form-group">
+                <label>Start Date</label>
+                <input type="date" class="form-input" id="p-start">
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-green" style="flex: 1;" onclick="submitPractice()">Start Logging</button>
+                <button class="btn" style="background: #e2e8f0;" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="carbon_portal.js"></script>
+</body>
+
+</html>

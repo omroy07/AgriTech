@@ -228,6 +228,10 @@
       font-size: 1rem;
     }
 
+    textarea {
+      resize: vertical;
+    }
+
     .submit-btn {
       width: 100%;
       padding: 16px;
@@ -287,6 +291,77 @@
         font-size: 2rem;
       }
     }
+
+    /* --- HALL OF CONTRIBUTORS STYLES --- */
+    .contributors-section {
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px dashed var(--input-border);
+    }
+
+    .contributors-section h2 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      color: var(--accent-green);
+    }
+
+    .contributor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .contributor-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--input-border);
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .contributor-card:hover {
+      background: rgba(34, 197, 94, 0.1);
+      border-color: var(--accent-green);
+      transform: scale(1.05);
+    }
+
+    .contributor-avatar {
+      width: 50px;
+      height: 50px;
+      background: var(--card-bg);
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-green);
+      font-size: 1.2rem;
+      border: 1px solid var(--input-border);
+    }
+
+    .github-cta {
+      margin-top: 40px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 24px;
+      background: #24292e; /* GitHub Dark */
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .github-cta:hover {
+      background: #000;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    
   </style>
 </head>
 
@@ -427,13 +502,12 @@
     </section>
 
     <!-- TEAM MEMBERS -->
-    <section class="team-section">
-      <h2>Meet Our Team</h2>
-      <div class="team-grid">
+    <section class="team-section" style="text-align: center; padding: 80px 20px;">
+      <h2 style="font-size: 2.5rem; margin-bottom: 40px;">Meet Our Team</h2>
+      
+      <div class="team-grid" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-bottom: 60px;">
         <div class="team-member">
-          <div class="member-avatar">
-            <i class="fas fa-user"></i>
-          </div>
+          <div class="member-avatar"><i class="fas fa-user-tie"></i></div>
           <h3>Om Roy</h3>
           <p>Project Lead & ML Engineer</p>
           <div class="social-links">
@@ -442,9 +516,7 @@
         </div>
 
         <div class="team-member">
-          <div class="member-avatar">
-            <i class="fas fa-user"></i>
-          </div>
+          <div class="member-avatar"><i class="fas fa-user-ninja"></i></div>
           <h3>Kanisha Sharma</h3>
           <p>ML Engineer & Backend Developer</p>
           <div class="social-links">
@@ -453,9 +525,7 @@
         </div>
 
         <div class="team-member">
-          <div class="member-avatar">
-            <i class="fas fa-user"></i>
-          </div>
+          <div class="member-avatar"><i class="fas fa-user-astronaut"></i></div>
           <h3>Shubhangi Roy</h3>
           <p>ML Engineer & Backend Developer</p>
           <div class="social-links">
@@ -463,38 +533,110 @@
           </div>
         </div>
       </div>
+
+      <div class="contributors-section">
+    <h2>Hall of Contributions</h2>
+    <p style="margin-bottom: 30px; opacity: 0.8;">Recognizing the heroes of the AgriTech open-source community.</p>
+    
+    <div id="github-contributors" class="contributor-grid">
+        <p>Loading contributors...</p>
+    </div>
+
+    <a href="https://github.com/omroy07/AgriTech" target="_blank" class="github-cta">
+        <i class="fab fa-github"></i>
+        Become a Contributor
+    </a>
+</div>
     </section>
 
     <!-- FAQ -->
-    <section class="faq-section">
-      <h2>Frequently Asked Questions</h2>
-      <div class="faq-grid">
-        <div class="faq-item">
-          <h3>How accurate are the crop recommendations?</h3>
-          <p>Our AI models are trained on extensive agricultural data and provide recommendations with high accuracy
-            based on your soil conditions and local weather patterns.</p>
-        </div>
+  <section class="faq-section">
+    <h2>Frequently Asked Questions</h2>
 
-        <div class="faq-item">
-          <h3>Is AgriTech suitable for small-scale farmers?</h3>
-          <p>Absolutely! AgriTech is designed to be accessible and valuable for farmers of all scales, from small family
-            farms to large agricultural operations.</p>
-        </div>
+    <div class="faq-accordion">
 
-        <div class="faq-item">
-          <h3>How do I join the farmer community?</h3>
-          <p>Simply create an account on our platform and you'll have access to our community chat features where you
-            can connect with fellow farmers and share experiences.</p>
-        </div>
-
-        <div class="faq-item">
-          <h3>Do you offer training on using the platform?</h3>
-          <p>Yes! We provide comprehensive guides, video tutorials, and offer support sessions to help you get the most
-            out of all AgriTech features.</p>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How accurate are the crop recommendations?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Our AI models are trained on extensive agricultural data and provide recommendations with high accuracy
+            based on your soil conditions and local weather patterns.
+          </div>
         </div>
       </div>
-    </section>
-  </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Is AgriTech suitable for small-scale farmers?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Absolutely! AgriTech is designed to be accessible and valuable for farmers of all scales, from small family
+            farms to large agricultural operations.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How do I join the farmer community?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Simply create an account on our platform and you'll have access to our community chat features where you
+            can connect with fellow farmers and share experiences.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Do you offer training on using the platform?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Yes! We provide comprehensive guides, video tutorials, and offer support sessions to help you get the most
+            out of all AgriTech features.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<script>
+document.querySelectorAll(".faq-question").forEach(button => {
+
+  button.addEventListener("click", () => {
+    const item = button.parentElement;
+    const answer = item.querySelector(".faq-answer");
+    const isOpen = item.classList.contains("active");
+
+    // Close all
+    document.querySelectorAll(".faq-item").forEach(faq => {
+      faq.classList.remove("active");
+      faq.querySelector(".faq-answer").style.height = 0;
+      faq.querySelector(".faq-question").setAttribute("aria-expanded", "false");
+    });
+
+    // Open selected
+    if (!isOpen) {
+      item.classList.add("active");
+      button.setAttribute("aria-expanded", "true");
+      answer.style.height = answer.scrollHeight + "px";
+    }
+  });
+
+});
+</script>
+
  <script>
   // --- NAVBAR & SCROLL EFFECTS ---
   const navbar = document.getElementById('navbar');
@@ -579,7 +721,44 @@
     });
   });
 </script>
+<script>
+async function fetchContributors() {
+    const repo = "omroy07/AgriTech";
+    const container = document.getElementById('github-contributors');
 
+    try {
+        const response = await fetch(`https://api.github.com/repos/${repo}/contributors`);
+        if (!response.ok) throw new Error('Failed to fetch');
+        
+        const contributors = await response.json();
+        
+        // Clear the loading message
+        container.innerHTML = '';
+
+        contributors.forEach(user => {
+            // Create the card element
+            const card = document.createElement('div');
+            card.className = 'contributor-card';
+            
+            card.innerHTML = `
+                <a href="${user.html_url}" target="_blank" style="text-decoration: none; color: inherit;">
+                    <img src="${user.avatar_url}" alt="${user.login}" 
+                         style="width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--accent-green); margin-bottom: 10px;">
+                    <h4 style="font-size: 0.9rem;">${user.login}</h4>
+                    <span style="font-size: 0.75rem; color: var(--accent-green);">${user.contributions} Commits</span>
+                </a>
+            `;
+            container.appendChild(card);
+        });
+    } catch (error) {
+        console.error("Error loading contributors:", error);
+        container.innerHTML = '<p>Check out our contributors on GitHub!</p>';
+    }
+}
+
+// Run the function when the page loads
+document.addEventListener('DOMContentLoaded', fetchContributors);
+</script>
 
   <script src="theme.js"></script>
   <script src="auth.js"></script>

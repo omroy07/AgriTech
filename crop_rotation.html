@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/rotation_planner.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>AgriTech | Rotation Planner</title>
+</head>
+<body>
+    <div class="side-nav">
+        <div class="logo">Agri<span>Tech</span></div>
+        <nav>
+            <a href="#" class="active">📊 Dashboard</a>
+            <a href="index.html">🏠 Back to Home</a>
+        </nav>
+    </div>
+
+    <main class="content-area">
+        <header class="top-banner">
+            <div class="header-info">
+                <span class="icon-circle">🌱</span>
+                <div>
+                    <h2>Crop Rotation Analysis</h2>
+                    <p>Intelligent Nutrient Tracking System</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="feature-card">
+            <h3 class="card-title">Analyze Field Health</h3>
+            <div class="input-grid">
+                <div class="input-field">
+                    <span>Nitrogen (N) Level</span>
+                    <input type="number" id="n_level" value="50">
+                </div>
+                <div class="input-field">
+                    <span>Phosphorus (P) Level</span>
+                    <input type="number" id="p_level" value="40">
+                </div>
+                <div class="input-field">
+                    <span>Potassium (K) Level</span>
+                    <input type="number" id="k_level" value="45">
+                </div>
+            </div>
+
+            <div class="selection-row">
+                <div class="dropdown-wrapper">
+                    <span>Target Crop</span>
+                    <select id="crop_select">
+                        <option value="Corn">Corn (High Demand)</option>
+                        <option value="Soybeans">Soybeans (Nitrogen Fixer)</option>
+                        <option value="Wheat">Wheat (Moderate)</option>
+                        <option value="Potatoes">Potatoes (Potassium Heavy)</option>
+                    </select>
+                </div>
+                <button id="analyze_btn" class="main-button">Generate Analysis</button>
+            </div>
+        </div>
+
+        <div id="results-panel" class="results-area">
+            </div>
+    </main>
+    <script src="js/rotation_engine.js"></script>
+</body>
+</html>
