@@ -83,4 +83,7 @@ class FuelLog(db.Model):
     cost = db.Column(db.Float)
     mileage_at_refill = db.Column(db.Float)
     
+    # Sustainability (L3-1558)
+    carbon_footprint_kg = db.Column(db.Float, default=0.0)
+    
     recorded_at = db.Column(db.DateTime, default=datetime.utcnow)

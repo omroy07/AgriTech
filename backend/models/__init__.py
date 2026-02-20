@@ -15,8 +15,8 @@ from .farm import Farm, FarmMember, FarmAsset, FarmRole
 from .alert import Alert, AlertPreference
 from .audit_log import AuditLog, UserSession
 from .media_payload import MediaPayload
-from .weather import WeatherData, CropAdvisory, AdvisorySubscription, RiskTrigger
-from .sustainability import CarbonPractice, CreditLedger, AuditRequest
+from .weather import WeatherData, CropAdvisory, AdvisorySubscription
+from .sustainability import CarbonPractice, CreditLedger, AuditRequest, CarbonLedger, EmissionSource, SustainabilityScore
 from .vendor_profile import VendorProfile # Updated from procurement to vendor_profile
 from .procurement import ProcurementItem, BulkOrder, OrderEvent
 from .irrigation import IrrigationZone, SensorLog, ValveStatus, IrrigationSchedule

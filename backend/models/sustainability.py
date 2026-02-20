@@ -1,78 +1,88 @@
 from datetime import datetime
 from backend.extensions import db
-from enum import Enum
-
-class AuditStatus(Enum):
-    SUBMITTED = "submitted"
-    PENDING_PROOF = "pending_proof"
-    AUDITING = "auditing"
-    CERTIFIED = "certified"
-    REJECTED = "rejected"
 
 class CarbonPractice(db.Model):
     __tablename__ = 'carbon_practices'
-    
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    farm_id = db.Column(db.Integer, db.ForeignKey('farms.id'), nullable=False)
-    
-    practice_type = db.Column(db.String(50), nullable=False) # e.g., 'No-Till', 'Cover Cropping'
-    area_covered = db.Column(db.Float, nullable=False) # in acres
-    start_date = db.Column(db.Date, nullable=False)
-    end_date = db.Column(db.Date)
-    
-    # Evidence for auditing
-    evidence_url = db.Column(db.String(255))
+    name = db.Column(db.String(100))
     description = db.Column(db.Text)
-    
-    is_verified = db.Column(db.Boolean, default=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
-    # Calculated values
-    estimated_offset = db.Column(db.Float, default=0.0) # Tonnes of CO2
-
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'practice_type': self.practice_type,
-            'area_covered': self.area_covered,
-            'is_verified': self.is_verified,
-            'estimated_offset': self.estimated_offset,
-            'created_at': self.created_at.isoformat()
-        }
-
-class AuditRequest(db.Model):
-    __tablename__ = 'audit_requests'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    practice_id = db.Column(db.Integer, db.ForeignKey('carbon_practices.id'), nullable=False)
-    auditor_id = db.Column(db.Integer, db.ForeignKey('users.id')) # Assigned auditor
-    
-    status = db.Column(db.String(20), default=AuditStatus.SUBMITTED.value)
-    auditor_comments = db.Column(db.Text)
-    
-    submitted_at = db.Column(db.DateTime, default=datetime.utcnow)
-    processed_at = db.Column(db.DateTime)
+    carbon_offset_per_unit = db.Column(db.Float)
 
 class CreditLedger(db.Model):
-    __tablename__ = 'carbon_credit_ledger'
+    __tablename__ = 'credit_ledger'
+    id = db.Column(db.Integer, primary_key=True)
+    farm_id = db.Column(db.Integer, db.ForeignKey('farms.id'), nullable=False)
+    credits_earned = db.Column(db.Float, default=0.0)
+    credits_spent = db.Column(db.Float, default=0.0)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+class AuditRequest(db.Model):
+    __tablename__ = 'sustainability_audits'
+    id = db.Column(db.Integer, primary_key=True)
+    farm_id = db.Column(db.Integer, db.ForeignKey('farms.id'), nullable=False)
+    status = db.Column(db.String(20), default='PENDING')
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+# New Models (L3-1558)
+class CarbonLedger(db.Model):
+    __tablename__ = 'carbon_ledger'
     
     id = db.Column(db.Integer, primary_key=True)
-    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    practice_id = db.Column(db.Integer, db.ForeignKey('carbon_practices.id')) # Source of credit
+    farm_id = db.Column(db.Integer, db.ForeignKey('farms.id'), nullable=False)
+    batch_id = db.Column(db.Integer, db.ForeignKey('supply_batches.id')) # Optional, can be farm-level
     
-    amount = db.Column(db.Float, nullable=False) # Number of credits (1 credit = 1 tonne CO2)
-    status = db.Column(db.String(20), default='Active') # 'Active', 'Sold', 'Retired'
-    serial_number = db.Column(db.String(100), unique=True)
+    # Emission Data (kg CO2e)
+    scope_1_direct = db.Column(db.Float, default=0.0) # On-farm fuel, soil N2O
+    scope_2_indirect = db.Column(db.Float, default=0.0) # Purchased electricity (irrigation)
+    scope_3_supply_chain = db.Column(db.Float, default=0.0) # Fertilizer/Seed production
     
-    issued_at = db.Column(db.DateTime, default=datetime.utcnow)
-    transaction_id = db.Column(db.String(100)) # Cross-ref with marketplace transactions
+    total_footprint = db.Column(db.Float, default=0.0)
+    sequestration_offset = db.Column(db.Float, default=0.0) # Tree planting, etc.
+    
+    net_carbon_balance = db.Column(db.Float, default=0.0)
+    certification_status = db.Column(db.String(50), default='PENDING') # PENDING, CARBON_NEUTRAL, NET_ZERO
+    
+    recorded_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def to_dict(self):
         return {
             'id': self.id,
-            'amount': self.amount,
-            'status': self.status,
-            'serial_number': self.serial_number,
-            'issued_at': self.issued_at.isoformat()
+            'farm_id': self.farm_id,
+            'scope_1': self.scope_1_direct,
+            'scope_2': self.scope_2_indirect,
+            'scope_3': self.scope_3_supply_chain,
+            'net_balance': self.net_carbon_balance,
+            'status': self.certification_status,
+            'date': self.recorded_at.isoformat()
         }
+
+class EmissionSource(db.Model):
+    __tablename__ = 'emission_sources'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    ledger_id = db.Column(db.Integer, db.ForeignKey('carbon_ledger.id'), nullable=False)
+    
+    source_type = db.Column(db.String(50)) # FUEL, FERTILIZER, WATER, TRANSPORT
+    ref_id = db.Column(db.Integer) # ID of the source record (e.g. FuelLog.id)
+    
+    emission_value = db.Column(db.Float, nullable=False) # kg CO2e
+    calculation_method = db.Column(db.String(100))
+    
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+class SustainabilityScore(db.Model):
+    __tablename__ = 'sustainability_scores'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    farm_id = db.Column(db.Integer, db.ForeignKey('farms.id'), nullable=False)
+    
+    carbon_efficiency = db.Column(db.Float) # kg CO2e per kg yield
+    water_efficiency = db.Column(db.Float) # Liters per kg yield
+    biodiversity_index = db.Column(db.Float)
+    
+    overall_rating = db.Column(db.Float) # 0-100
+    
+    # Offset points for Barter Arbitrage
+    offset_credits_available = db.Column(db.Float, default=0.0)
+    
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
