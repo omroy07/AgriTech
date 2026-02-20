@@ -64,6 +64,12 @@ class SupplyBatch(db.Model):
     carbon_footprint_hash = db.Column(db.String(64)) # Linked to CarbonLedger
     net_zero_qualified = db.Column(db.Boolean, default=False)
     
+    # Bio-Security (L3-1596)
+    # Status: CLEAN, SUSPECTED, QUARANTINED, REJECTED
+    quarantine_status = db.Column(db.String(20), default='CLEAN')
+    bio_clearance_hash = db.Column(db.String(64)) # Required for logistics manifest
+    contact_tracing_metadata = db.Column(db.Text) # JSON of previous exposures
+    
     # Timestamps
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

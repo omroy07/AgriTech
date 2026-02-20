@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 class LogisticsService:
     @staticmethod
-    def create_dispatch(driver_id, vehicle_id, origin, destination, cargo_weight, coords=None):
+    def create_dispatch(driver_id, vehicle_id, origin, destination, cargo_weight, coords=None, **kwargs):
         """
         Orchestrates the creation of a new transport route.
         """
@@ -23,6 +23,19 @@ class LogisticsService:
             
             if cargo_weight > vehicle.capacity_kg:
                 return None, f"Cargo exceeds vehicle capacity of {vehicle.capacity_kg}kg"
+
+            # Bio-Security Autonomous Shutdown (L3-1596)
+            from backend.models.traceability import SupplyBatch
+            # Assuming dispatch is linked to a batch record
+            batch_id = kwargs.get('batch_id')
+            if batch_id:
+                batch = SupplyBatch.query.get(batch_id)
+                if not batch or not batch.bio_clearance_hash:
+                    return None, "BIO-SECURITY ALERT: Batch lacks Bio-Clearance Hash. Logistics path BLOCKED."
+                
+                # Verify hash (Optional deeper check)
+                if batch.quarantine_status != 'CLEAN':
+                    return None, "BIO-SECURITY ALERT: Batch is under QUARANTINE. Logistics path BLOCKED."
 
             # Calculate distance if coords provided
             est_distance = 0
