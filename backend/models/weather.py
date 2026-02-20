@@ -80,3 +80,20 @@ class AdvisorySubscription(db.Model):
     frequency = db.Column(db.String(20), default='Daily') # 'Daily', 'Weekly'
     
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class RiskTrigger(db.Model):
+    __tablename__ = 'weather_risk_triggers'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    crop_type = db.Column(db.String(100), nullable=False)
+    
+    # Thresholds
+    max_temp_threshold = db.Column(db.Float)
+    min_temp_threshold = db.Column(db.Float)
+    max_rainfall_threshold = db.Column(db.Float) # mm
+    max_wind_speed = db.Column(db.Float)
+    
+    severity_level = db.Column(db.String(20), default='WARNING') # WARNING, CRITICAL, EMERGENCY
+    
+    is_active = db.Column(db.Boolean, default=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)

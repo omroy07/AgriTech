@@ -63,6 +63,28 @@ class WeatherService:
                 group_key=f"rain_{location}"
             )
             
+        # Insurance Risk Trigger (L3-1557)
+        from backend.models.weather import RiskTrigger
+        from backend.models.insurance import InsurancePolicy
+        from backend.services.risk_adjustment_service import RiskAdjustmentService
+        
+        # Check if weather exceeds any active risk triggers
+        triggers = RiskTrigger.query.filter_by(is_active=True).all()
+        for t in triggers:
+            is_triggered = False
+            if t.max_temp_threshold and weather.temperature > t.max_temp_threshold: is_triggered = True
+            if t.max_rainfall_threshold and weather.rainfall > t.max_rainfall_threshold: is_triggered = True
+            
+            if is_triggered:
+                # Recalculate all policies for this specific crop/location
+                affected_policies = InsurancePolicy.query.filter_by(
+                    crop_type=t.crop_type, 
+                    farm_location=location,
+                    status='ACTIVE'
+                ).all()
+                for p in affected_policies:
+                    RiskAdjustmentService.calculate_actuarial_flux(p.id)
+
         return weather
 
     @staticmethod
