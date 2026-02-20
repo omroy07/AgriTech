@@ -35,6 +35,7 @@ from .financials import FarmBalanceSheet, SolvencySnapshot, ProfitabilityIndex
 from .machinery import AssetValueSnapshot
 from .labor import LaborROIHistory
 from .reliability_log import ReliabilityLog
+from .market import ForwardContract, PriceHedgingLog
 
 __all__ = [
     'User', 'UserRole', 'LoanRequest', 'PredictionHistory', 
@@ -65,5 +66,6 @@ __all__ = [
     'ProduceReview', 'PriceAdjustmentLog',
     'BarterTransaction', 'BarterResource', 'ResourceValueIndex',
     'FarmBalanceSheet', 'SolvencySnapshot', 'ProfitabilityIndex',
-    'AssetValueSnapshot', 'LaborROIHistory', 'ReliabilityLog'
+    'AssetValueSnapshot', 'LaborROIHistory', 'ReliabilityLog',
+    'ForwardContract', 'PriceHedgingLog'
 ]

@@ -64,6 +64,9 @@ class SupplyBatch(db.Model):
     carbon_footprint_hash = db.Column(db.String(64)) # Linked to CarbonLedger
     net_zero_qualified = db.Column(db.Boolean, default=False)
     
+    # Predictive Velocity (L3-1560)
+    predicted_quality_grade = db.Column(db.String(10)) # A, B, C based on pre-harvest flux
+    
     # Timestamps
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

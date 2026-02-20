@@ -27,9 +27,10 @@ class AuditLog(db.Model):
     risk_level = db.Column(db.String(20), default='LOW')  # LOW, MEDIUM, HIGH, CRITICAL
     threat_flag = db.Column(db.Boolean, default=False)
     
-    # Financial Integrity (L3-1557)
+    # Financial Integrity (L3-1557 & L3-1560)
     is_financial = db.Column(db.Boolean, default=False)
     financial_impact = db.Column(db.Float, default=0.0)
+    autonomous_decision_flag = db.Column(db.Boolean, default=False) # For AI-driven bidding
     
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     
