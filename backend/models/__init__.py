@@ -7,7 +7,7 @@ from .prediction_history import PredictionHistory
 from .misc import Notification, File, YieldPool, PoolContribution, ResourceShare, PoolVote
 from .gews import DiseaseIncident, OutbreakZone, OutbreakAlert
 from .traceability import SupplyBatch, CustodyLog, QualityGrade, BatchStatus
-from .insurance import InsurancePolicy, ClaimRequest as LegacyClaim, RiskScoreHistory
+from .insurance import InsurancePolicy, ClaimRequest as LegacyClaim, RiskScoreHistory, DynamicPremiumLog, RiskFactorSnapshot
 from .forum import ForumCategory, ForumThread, PostComment, Upvote, UserReputation
 from .knowledge import Question, Answer, KnowledgeVote, Badge, UserBadge, UserExpertise
 from .equipment import Equipment, RentalBooking, AvailabilityCalendar, PaymentEscrow
@@ -31,19 +31,23 @@ from .labor import WorkerProfile, WorkShift, HarvestLog, PayrollEntry
 from .logistics_v2 import DriverProfile, DeliveryVehicle, TransportRoute, FuelLog
 from .transparency import ProduceReview, PriceAdjustmentLog
 from .barter import BarterTransaction, BarterResource, ResourceValueIndex
+from .financials import FarmBalanceSheet, SolvencySnapshot, ProfitabilityIndex
+from .machinery import AssetValueSnapshot
+from .labor import LaborROIHistory
+from .reliability_log import ReliabilityLog
 
 __all__ = [
     'User', 'UserRole', 'LoanRequest', 'PredictionHistory', 
     'Notification', 'File', 'YieldPool', 'PoolContribution', 
     'ResourceShare', 'PoolVote', 'DiseaseIncident', 'OutbreakZone', 'OutbreakAlert',
     'SupplyBatch', 'CustodyLog', 'QualityGrade', 'BatchStatus',
-    'InsurancePolicy', 'LegacyClaim', 'RiskScoreHistory',
+    'InsurancePolicy', 'LegacyClaim', 'RiskScoreHistory', 'DynamicPremiumLog', 'RiskFactorSnapshot',
     'ForumCategory', 'ForumThread', 'PostComment', 'Upvote', 'UserReputation',
     'Question', 'Answer', 'KnowledgeVote', 'Badge', 'UserBadge', 'UserExpertise',
     'Equipment', 'RentalBooking', 'AvailabilityCalendar', 'PaymentEscrow',
     'Farm', 'FarmMember', 'FarmAsset', 'FarmRole',
-    'WeatherData', 'CropAdvisory', 'AdvisorySubscription',
-    'CarbonPractice', 'CreditLedger', 'AuditRequest', 'CarbonLedger', 'EmissionSource', 'SustainabilityScore',
+    'WeatherData', 'CropAdvisory', 'AdvisorySubscription', 'RiskTrigger',
+    'CarbonPractice', 'CreditLedger', 'AuditRequest',
     'VendorProfile', 'ProcurementItem', 'BulkOrder', 'OrderEvent',
     'IrrigationZone', 'SensorLog', 'ValveStatus', 'IrrigationSchedule',
     'ProcessingBatch', 'StageLog', 'QualityCheck', 'ProcessingStage',
@@ -59,5 +63,7 @@ __all__ = [
     'AuditLog', 'UserSession',
     'MediaPayload',
     'ProduceReview', 'PriceAdjustmentLog',
-    'BarterTransaction', 'BarterResource', 'ResourceValueIndex'
+    'BarterTransaction', 'BarterResource', 'ResourceValueIndex',
+    'FarmBalanceSheet', 'SolvencySnapshot', 'ProfitabilityIndex',
+    'AssetValueSnapshot', 'LaborROIHistory', 'ReliabilityLog'
 ]

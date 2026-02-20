@@ -22,6 +22,40 @@ class InsurancePolicy(db.Model):
     notes = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+    # Live Risk Orchestration (L3-1557)
+    current_risk_score = db.Column(db.Float, default=0.0)
+    is_suspended = db.Column(db.Boolean, default=False)
+    suspension_reason = db.Column(db.String(255))
+    recursive_discount_applied = db.Column(db.Boolean, default=False)
+
+    premium_logs = db.relationship('DynamicPremiumLog', backref='policy', lazy='dynamic')
+    risk_snapshots = db.relationship('RiskFactorSnapshot', backref='policy', lazy='dynamic')
+
+class DynamicPremiumLog(db.Model):
+    __tablename__ = 'dynamic_premium_logs'
+
+    id = db.Column(db.Integer, primary_key=True)
+    policy_id = db.Column(db.Integer, db.ForeignKey('insurance_policies.id'), nullable=False)
+
+    old_premium = db.Column(db.Numeric(15, 2))
+    new_premium = db.Column(db.Numeric(15, 2))
+    change_reason = db.Column(db.String(255))
+
+    triggered_by = db.Column(db.String(50)) # WEATHER, TELEMETRY, AUDIT
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+class RiskFactorSnapshot(db.Model):
+    __tablename__ = 'risk_factor_snapshots'
+
+    id = db.Column(db.Integer, primary_key=True)
+    policy_id = db.Column(db.Integer, db.ForeignKey('insurance_policies.id'), nullable=False)
+
+    weather_risk_index = db.Column(db.Float)
+    telemetry_risk_index = db.Column(db.Float)
+    sustainability_discount_factor = db.Column(db.Float)
+
+    recorded_at = db.Column(db.DateTime, default=datetime.utcnow)
+
     def to_dict(self):
         return {
             'id': self.id,

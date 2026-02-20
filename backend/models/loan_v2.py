@@ -14,6 +14,10 @@ class RepaymentSchedule(db.Model):
     interest_amount = db.Column(db.Float, nullable=False)
     total_emi = db.Column(db.Float, nullable=False)
     
+    # Financial Solvency Links (L3-1559)
+    productivity_index_snapshot = db.Column(db.Float) # Linked to ProfitabilityIndex at time of accrual
+    adjusted_interest_rate = db.Column(db.Float) # Variable interest based on solvency
+    
     outstanding_balance = db.Column(db.Float, nullable=False)
     is_paid = db.Column(db.Boolean, default=False)
     
