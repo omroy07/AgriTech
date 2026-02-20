@@ -84,6 +84,7 @@
     <div id="blogModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
+              <div class="modal-header-top">
                 <h2 class="modal-title" id="modalTitle"></h2>
                 <div class="icons">
                     <button class="close" id="closeBlogModal" aria-label="Close modal">&times;</button>
@@ -96,11 +97,13 @@
                     </button>
 
                 </div>
-                <div class="modal-meta">
-                    <span id="modal-Author"><i class="fas fa-user"></i> </span>
-                    <span id="modal-Date"><i class="far fa-calendar-alt"></i> </span>
-                </div>
-                <span class="modal-category" id="modalCategory"></span>
+              </div>
+              
+              <div class="modal-meta">
+                  <span id="modal-Author"><i class="fas fa-user"></i> </span>
+                  <span id="modal-Date"><i class="far fa-calendar-alt"></i> </span>
+              </div>
+              <span class="modal-category" id="modalCategory"></span>
             </div>
             <div class="modal-body">
                 <img class="modal-image" id="modalImage" alt="Blog post image">
@@ -256,34 +259,34 @@
 
       <div class="footer-wave-overlay"></div>
     </footer>
-<button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
-    <i class="fas fa-arrow-up"></i>
-</button>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const scrollTopBtn = document.getElementById("scrollTopBtn");
+    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const scrollTopBtn = document.getElementById("scrollTopBtn");
 
-    if (!scrollTopBtn) return;
+        if (!scrollTopBtn) return;
 
-    // Monitor Scroll Position
-    window.addEventListener("scroll", function () {
-        // Show button after scrolling down 300px
-        if (window.pageYOffset > 300) {
-            scrollTopBtn.classList.add("show");
-        } else {
-            scrollTopBtn.classList.remove("show");
-        }
-    });
+        // Monitor Scroll Position
+        window.addEventListener("scroll", function () {
+            // Show button after scrolling down 300px
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add("show");
+            } else {
+                scrollTopBtn.classList.remove("show");
+            }
+        });
 
-    // Scroll to top on click
-    scrollTopBtn.addEventListener("click", function () {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
+        // Scroll to top on click
+        scrollTopBtn.addEventListener("click", function () {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
         });
     });
-});
-</script>
+    </script>
 
     <script src="js/features/favorites.js"></script>
     <script src="blog.js"></script>
