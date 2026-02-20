@@ -488,13 +488,14 @@
         }
 
         .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #e9ecef;
-            border-radius: 3px;
-            margin: 15px 0;
-            overflow: hidden;
-        }
+    width: 100%;
+    height: 18px; /* increased height for text visibility */
+    background: #e9ecef;
+    border-radius: 8px;
+    margin: 15px 0;
+    overflow: hidden;
+    position: relative; /* IMPORTANT */
+}
 
         .progress-fill {
             height: 100%;
@@ -502,6 +503,20 @@
             border-radius: 3px;
             transition: width 0.3s ease;
         }
+        .progress-fill {
+    position: relative; /* ADD THIS LINE */
+}
+
+.progress-text {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    pointer-events: none;
+}
 
         .metrics-row {
             display: grid;
@@ -755,8 +770,10 @@
                     <p><strong>To:</strong> Delhi Market</p>
                     <p><strong>Product:</strong> Fresh Vegetables</p>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 65%"></div>
-                    </div>
+    <div class="progress-fill" style="width: 65%">
+        <span class="progress-text">65%</span>
+    </div>
+</div>
                     <p><small>ETA: Tomorrow 10:00 AM</small></p>
                 </div>
 
@@ -769,8 +786,10 @@
                     <p><strong>To:</strong> Mumbai Market</p>
                     <p><strong>Product:</strong> Fruits & Grains</p>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 100%"></div>
-                    </div>
+    <div class="progress-fill" style="width: 100%">
+        <span class="progress-text">100%</span>
+    </div>
+</div>
                     <p><small>Delivered: Today 08:30 AM</small></p>
                 </div>
 
@@ -782,9 +801,11 @@
                     <p><strong>From:</strong> Rajasthan Farms</p>
                     <p><strong>To:</strong> Jaipur Market</p>
                     <p><strong>Product:</strong> Pulses & Grains</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 25%"></div>
-                    </div>
+                   <div class="progress-bar">
+    <div class="progress-fill" style="width: 25%">
+        <span class="progress-text">25%</span>
+    </div>
+</div>
                     <p><small>Scheduled: Tomorrow 06:00 AM</small></p>
                 </div>
 
@@ -797,8 +818,10 @@
                     <p><strong>To:</strong> Bangalore Market</p>
                     <p><strong>Product:</strong> Rice & Spices</p>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 80%"></div>
-                    </div>
+    <div class="progress-fill" style="width: 80%">
+        <span class="progress-text">80%</span>
+    </div>
+</div>
                     <p><small>ETA: Tonight 11:00 PM</small></p>
                 </div>
             </div>
@@ -853,13 +876,21 @@
 
             // Progress Bars
             const progressBars = document.querySelectorAll('.progress-fill');
-            progressBars.forEach((bar, index) => {
-                const width = bar.style.width;
-                bar.style.width = '0%';
-                setTimeout(() => {
-                    bar.style.width = width;
-                }, index * 200);
-            });
+progressBars.forEach((bar, index) => {
+    const width = bar.style.width;
+    
+    // Set percentage text dynamically
+    const textEl = bar.querySelector('.progress-text');
+    if (textEl) {
+        textEl.textContent = width;
+    }
+
+    // Animate progress
+    bar.style.width = '0%';
+    setTimeout(() => {
+        bar.style.width = width;
+    }, index * 200);
+});
 
             // Card Entrance
             const cards = document.querySelectorAll('.service-card, .shipment-card');
@@ -884,7 +915,14 @@
                 if (progressBar) {
                     const currentWidth = parseInt(progressBar.style.width) || 0;
                     if (currentWidth < 100) {
-                        progressBar.style.width = Math.min(100, currentWidth + Math.floor(Math.random() * 10 + 5)) + '%';
+                        const newWidth = Math.min(100, currentWidth + Math.floor(Math.random() * 10 + 5)) + '%';
+progressBar.style.width = newWidth;
+
+// Update percentage text dynamically
+const textEl = progressBar.querySelector('.progress-text');
+if (textEl) {
+    textEl.textContent = newWidth;
+}
                     }
                 }
             }

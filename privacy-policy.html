@@ -1,271 +1,252 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AgriTech | Privacy Policy</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AgriTech | Privacy Policy</title>
 
-  <style>
-    :root {
-      --bg-color: #030712;
-      --text-color: #ffffff;
-      --text-muted: #cbd5e1;
-      --surface-color: rgba(15, 23, 42, 0.9);
-      --section-bg: rgba(30, 41, 59, 0.7);
-      --border-color: #334155;
-      --accent-color: #22c55e;
-    }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    [data-theme="light"] {
-      --bg-color: #f8fafc;
-      --text-color: #0f172a;
-      --text-muted: #475569;
-      --surface-color: #ffffff;
-      --section-bg: #f1f5f9;
-      --border-color: #cbd5e1;
-      --accent-color: #16a34a;
-    }
+<style>
+:root {
+  --bg: linear-gradient(135deg, #020617, #022c22);
+  --card: rgba(15, 23, 42, 0.85);
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --accent: #22c55e;
+  --border: #334155;
+}
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: "Segoe UI", sans-serif;
-    }
+[data-theme="light"] {
+  --bg: linear-gradient(135deg, #f8fafc, #e2e8f0);
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --accent: #16a34a;
+  --border: #e2e8f0;
+}
 
-    body {
-      background: var(--bg-color);
-      color: var(--text-color);
-      line-height: 1.7;
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
 
-    header {
-      padding: 1.2rem 2rem;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+body {
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+}
 
-    header h1 {
-      color: var(--accent-color);
-      font-size: 1.6rem;
-    }
+/* HERO HEADER (NEW DESIGN) */
+.hero {
+  text-align: center;
+  padding: 60px 20px 40px;
+}
 
-    button {
-      background: var(--surface-color);
-      color: var(--text-color);
-      border: 1px solid var(--border-color);
-      padding: 0.4rem 0.8rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+.hero h1 {
+  font-size: 2.8rem;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
 
-    main {
-      max-width: 1000px;
-      margin: auto;
-      padding: 2rem;
-    }
+.hero p {
+  color: var(--muted);
+  max-width: 700px;
+  margin: auto;
+  font-size: 1.05rem;
+}
 
-    section {
-      background: var(--section-bg);
-      padding: 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 1.5rem;
-    }
+/* THEME BUTTON */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: 0.3s ease;
+  z-index: 1000;
+}
 
-    h2 {
-      color: var(--accent-color);
-      margin-bottom: 0.6rem;
-    }
+.theme-toggle:hover {
+  transform: scale(1.05);
+  border-color: var(--accent);
+}
 
-    p {
-      color: var(--text-muted);
-      margin-bottom: 0.8rem;
-    }
+/* MAIN CONTAINER */
+.container {
+  max-width: 950px;
+  margin: auto;
+  padding: 20px;
+}
 
-    ul {
-      padding-left: 1.2rem;
-      color: var(--text-muted);
-    }
+/* POLICY CARDS (MAJOR REDESIGN) */
+.policy-card {
+  background: var(--card);
+  border-radius: 18px;
+  padding: 28px;
+  margin-bottom: 24px;
+  border-left: 5px solid var(--accent);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  backdrop-filter: blur(14px);
+  transition: 0.3s ease;
+}
 
-    footer {
-      text-align: center;
-      padding: 1rem;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-  </style>
+.policy-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.35);
+}
+
+/* SECTION HEADINGS WITH ICONS */
+.policy-card h2 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.policy-card p {
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+ul {
+  padding-left: 20px;
+  color: var(--muted);
+}
+
+li {
+  margin-bottom: 6px;
+}
+
+/* CTA BUTTON */
+.back-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 22px;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.back-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 25px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+  font-size: 0.9rem;
+}
+</style>
 </head>
 
 <body>
 
-<header>
-  <h1>Privacy Policy</h1>
-  <button onclick="toggleTheme()">Toggle Theme</button>
-</header>
+<button class="theme-toggle" onclick="toggleTheme()">
+  <i class="fas fa-moon"></i> Toggle Theme
+</button>
 
-<main>
+<!-- HERO SECTION (NEW) -->
+<section class="hero">
+  <h1><i class="fas fa-shield-alt"></i> Privacy Policy</h1>
+  <p>
+    Your privacy is important to us. This policy explains how AgriTech collects,
+    uses, and protects your data across our platform and AI-powered services.
+  </p>
+</section>
 
-  <section>
-    <p>
-      This Privacy Policy describes how <strong>AgriTech</strong> collects, uses,
-      and protects your information when you use our website and services.
-    </p>
-  </section>
+<div class="container">
 
-  <section>
-    <h2>1. Information We Collect</h2>
+  <div class="policy-card">
+    <h2><i class="fas fa-database"></i> 1. Information We Collect</h2>
     <p>We may collect the following types of information:</p>
     <ul>
-      <li>Basic user information (if provided voluntarily)</li>
+      <li>Basic user details (if provided voluntarily)</li>
       <li>Images uploaded for plant disease detection</li>
-      <li>Usage data such as pages visited and interactions</li>
+      <li>Usage analytics and interaction data</li>
     </ul>
-  </section>
+  </div>
 
-  <section>
-    <h2>2. How We Use Your Information</h2>
+  <div class="policy-card">
+    <h2><i class="fas fa-chart-line"></i> 2. How We Use Your Information</h2>
     <ul>
-      <li>To provide and improve AgriTech services</li>
-      <li>To analyze platform usage and enhance user experience</li>
-      <li>To support AI-based features such as crop analysis</li>
+      <li>To improve AgriTech platform services</li>
+      <li>To enhance user experience and performance</li>
+      <li>To support AI-based agricultural insights</li>
     </ul>
-  </section>
+  </div>
 
-  <section>
-    <h2>3. Data Protection</h2>
+  <div class="policy-card">
+    <h2><i class="fas fa-lock"></i> 3. Data Protection</h2>
     <p>
-      We take reasonable security measures to protect user data.
-      Sensitive data such as API keys are never stored on the client side.
+      We implement strong security practices to safeguard your data.
+      Sensitive credentials are never stored on the client side.
     </p>
-  </section>
+  </div>
 
-  <section>
-    <h2>4. Third-Party Services</h2>
+  <div class="policy-card">
+    <h2><i class="fas fa-plug"></i> 4. Third-Party Services</h2>
     <p>
-      AgriTech may use third-party services such as Firebase or AI APIs.
-      These services have their own privacy policies governing data usage.
+      AgriTech may use trusted third-party APIs and analytics tools.
+      These services follow their own privacy and security policies.
     </p>
-  </section>
+  </div>
 
-  <section>
-    <h2>5. Cookies</h2>
+  <div class="policy-card">
+    <h2><i class="fas fa-cookie-bite"></i> 5. Cookies</h2>
     <p>
-      AgriTech may use cookies or local storage to improve functionality
-      and enhance user experience. You can disable cookies in your browser
-      settings if you prefer.
+      Cookies and local storage are used to enhance functionality,
+      remember preferences, and improve overall user experience.
     </p>
-  </section>
+  </div>
 
-  <section>
-    <h2>6. Changes to This Policy</h2>
+  <div class="policy-card">
+    <h2><i class="fas fa-sync-alt"></i> 6. Policy Updates</h2>
     <p>
-      This Privacy Policy may be updated from time to time.
-      Any changes will be reflected on this page.
+      This Privacy Policy may be updated periodically. Changes will
+      always be reflected on this page.
     </p>
-  </section>
+  </div>
 
-  <section>
-    <h2>7. Contact Us</h2>
+  <div class="policy-card">
+    <h2><i class="fas fa-envelope"></i> 7. Contact Us</h2>
     <p>
-      If you have any questions regarding this Privacy Policy, please contact us at:
+      For any privacy-related questions, contact us at:
       <br><strong>agritech.opensource@gmail.com</strong>
     </p>
-  </section>
-  <section style="text-align: center;">
-    <a href="index.html"
-       style="
-         display: inline-block;
-         margin-top: 1rem;
-         padding: 0.6rem 1.2rem;
-         background: var(--accent-color);
-         color: #ffffff;
-         text-decoration: none;
-         border-radius: 8px;
-         font-weight: 500;
-       ">
-      ← Back to Homepage
-    </a>
-  </section>
+    <a href="index.html" class="back-btn">← Back to Homepage</a>
+  </div>
 
-</main>
+</div>
 
 <footer>
-  © 2026 AgriTech · Privacy matters 🌱
+  © 2026 AgriTech · Secure • Transparent • Trusted 🌱
 </footer>
 
 <script>
-  function toggleTheme() {
-    const html = document.documentElement;
-    html.setAttribute(
-      "data-theme",
-      html.getAttribute("data-theme") === "dark" ? "light" : "dark"
-    );
-  }
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute("data-theme");
+  html.setAttribute("data-theme", current === "dark" ? "light" : "dark");
+}
 </script>
-<!-- ===== Universal Back To Top Button (All Pages) ===== -->
-<style>
-  #globalBackToTop {
-    position: fixed;
-    bottom: 90px; /* prevents overlap with chatbot/floating icons */
-    right: 25px;
-    z-index: 9999;
-    display: none;
-    background: #2ecc71;
-    color: #ffffff;
-    border: none;
-    border-radius: 50%;
-    width: 52px;
-    height: 52px;
-    font-size: 22px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-    transition: opacity 0.3s ease, transform 0.2s ease;
-  }
-
-  #globalBackToTop:hover {
-    transform: scale(1.12);
-    background: #27ae60;
-  }
-
-  @media (max-width: 768px) {
-    #globalBackToTop {
-      bottom: 100px; /* better spacing on mobile */
-      right: 18px;
-      width: 48px;
-      height: 48px;
-      font-size: 20px;
-    }
-  }
-</style>
-
-<button id="globalBackToTop" title="Back to Top">↑</button>
-
-<script>
-  (function () {
-    const btn = document.getElementById("globalBackToTop");
-
-    // Show button after scrolling down
-    window.addEventListener("scroll", function () {
-      if (window.scrollY > 300) {
-        btn.style.display = "block";
-      } else {
-        btn.style.display = "none";
-      }
-    });
-
-    // Smooth scroll to top on click
-    btn.addEventListener("click", function () {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    });
-  })();
-</script>
-<!-- ===== End Back To Top Button ===== -->
 
 </body>
 </html>
