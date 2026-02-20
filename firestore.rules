@@ -1,21 +1,30 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Require authentication for all read/write operations
-    match /{document=**} {
-      allow read, write: if request.auth != null;
+    function isLoggedIn() { return request.auth != null; }
+    function role() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
     }
-    
-    // Optional: Add more specific rules for different collections
-    // Example: User profiles - users can only access their own data
-    match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+    function isAdmin() { return role() == 'admin'; }
+    function isExpert() { return role() == 'expert'; }
+
+    match /users/{uid} {
+      allow read: if isLoggedIn();
+      allow create: if request.auth.uid == uid;
+      allow update: if request.auth.uid == uid || isAdmin();
+      allow delete: if isAdmin();
     }
-    
-    // Example: Public data that anyone can read but only authenticated users can write
-    match /public/{document=**} {
-      allow read: if true;
-      allow write: if request.auth != null;
+
+    match /posts/{postId} {
+      allow read: if isLoggedIn();
+      allow create: if isLoggedIn();
+      allow update: if request.auth.uid == resource.data.authorId || isExpert() || isAdmin();
+      allow delete: if request.auth.uid == resource.data.authorId || isAdmin();
+    }
+
+    match /reports/{reportId} {
+      allow read, update, delete: if isAdmin();
+      allow create: if isLoggedIn();
     }
   }
 }

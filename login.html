@@ -15,31 +15,27 @@
   style="background-image: url('images/login.avif'); background-size: cover; background-position: center; background-repeat: no-repeat;">
   <div class="loginContainer">
 
+    <div class="form-container">
+      <!-- Theme toggle -->
+      <div style="position: absolute; top: 20px; right: 20px;">
+        <button class="theme-toggle" aria-label="Toggle dark/light mode"
+          style="background: rgba(46, 125, 50, 0.1); border: 1px solid rgba(46, 125, 50, 0.3); color: #2e7d32;">
+          <i class="fas fa-sun sun-icon"></i>
+          <i class="fas fa-moon moon-icon"></i>
+          <span class="theme-text">Light</span>
+        </button>
+      </div>
 
-  <div class="form-container">
-    <!-- Add the theme toggle button -->
-    <div style="position: absolute; top: 20px; right: 20px;">
-      <button class="theme-toggle" aria-label="Toggle dark/light mode" style="background: rgba(46, 125, 50, 0.1); border: 1px solid rgba(46, 125, 50, 0.3); color: #2e7d32;">
-        <i class="fas fa-sun sun-icon"></i>
-        <i class="fas fa-moon moon-icon"></i>
-        <span class="theme-text">Light</span>
-      </button>
-    </div>
+      <!-- Brand section -->
+      <div class="brand-section">
+        <a href="./index.html" class="brand-icon">
+          <i class="fas fa-seedling"></i>
+        </a>
+        <h2>Login AgriTech</h2>
+        <p class="form-subtitle">Login to get started</p>
+      </div>
 
-    <!-- Brand section -->
-    <div class="brand-section">
-      <a href="./index.html" class="brand-icon">
-        <i class="fas fa-seedling"></i>
-      </a>
-      <h2>Login AgriTech</h2>
-      <p class="form-subtitle">Login to get started</p>
-    </div>
-
-  
-
-     
-
-      <!-- Login form -->
+      <!-- Login form — unchanged -->
       <form onsubmit="handleLogin(event)">
         <div class="input-group">
           <i class="fas fa-envelope"></i>
@@ -47,26 +43,35 @@
         </div>
         <div class="input-group">
           <i class="fas fa-lock"></i>
-          <input type="password" id="password" placeholder="Create a strong password" required
-            oninput="checkPasswordStrength()">
+          <input type="password" id="password" placeholder="Enter your password" required>
           <button type="button" class="password-toggle" onclick="togglePassword()">
             <i class="fas fa-eye" id="password-eye"></i>
           </button>
         </div>
-        
-        <!-- Forgot Password Link -->
+
         <div class="forgot-password">
           <a href="forgot-password.html">Forgot Password?</a>
         </div>
-        
+
         <button type="submit">Login</button>
         <p>Don't have an account? <a href="register.html">Register</a></p>
       </form>
     </div>
+
   </div>
-  <script src="auth.js"></script>
+
+  <!--
+    CHANGED: auth.js is now type="module" (required for Firebase ESM imports).
+    login.js and theme.js remain normal scripts.
+  -->
+  <script type="module" src="auth.js"></script>
   <script src="login.js"></script>
   <script src="theme.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      redirectIfLoggedIn();
+    });
+  </script>
 </body>
 
 </html>

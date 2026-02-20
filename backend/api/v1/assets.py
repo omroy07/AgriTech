@@ -13,6 +13,7 @@ from schemas.asset_schema import (
     AssetCreateSchema, AssetUpdateSchema, TelemetrySchema,
     MaintenanceLogSchema, AssetQuerySchema
 )
+from services.audit_service import AuditService
 
 logger = logging.getLogger(__name__)
 
@@ -50,6 +51,14 @@ def register_asset():
         
         # Create asset
         asset = AssetService.create_asset(current_user_id, validated_data)
+        
+        AuditService.log_action(
+            action="ASSET_REGISTERED",
+            user_id=current_user_id,
+            resource_type="FARM_ASSET",
+            resource_id=asset.asset_id,
+            meta_data={"name": asset.asset_name, "type": asset.asset_type}
+        )
         
         return jsonify({
             'success': True,
@@ -148,6 +157,14 @@ def predict_failure(asset_id):
         
         # Run AI prediction
         prediction = AssetService.predict_failure_ai(asset_id)
+        
+        AuditService.log_action(
+            action="ASSET_FAILURE_PREDICTION",
+            user_id=current_user_id,
+            resource_type="FARM_ASSET",
+            resource_id=asset_id,
+            meta_data={"result": prediction.get('status')}
+        )
         
         return jsonify({
             'success': True,
@@ -449,6 +466,14 @@ def delete_asset(asset_id):
         # Mark as retired instead of deleting
         asset.status = 'RETIRED'
         db.session.commit()
+        
+        AuditService.log_action(
+            action="ASSET_RETIRED",
+            user_id=current_user_id,
+            resource_type="FARM_ASSET",
+            resource_id=asset_id,
+            risk_level="MEDIUM"
+        )
         
         return jsonify({
             'success': True,

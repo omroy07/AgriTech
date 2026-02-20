@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Guardian | IoT Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #0ea5e9;
+            --secondary: #10b981;
+            --accent: #f43f5e;
+            --bg: #020617;
+            --card: #0f172a;
+            --text: #f8fafc;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar UI */
+        .sidebar {
+            background: #010409;
+            padding: 2.5rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .zone-pill {
+            padding: 1.25rem;
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+
+        .zone-pill:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .zone-pill.active {
+            background: rgba(14, 165, 233, 0.15);
+            border-color: var(--primary);
+        }
+
+        /* Main View */
+        .main-content {
+            padding: 3rem;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        .gauges-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .gauge-card {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 24px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .val-display {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+
+        .val-unit {
+            font-size: 0.9rem;
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .viz-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .viz-card {
+            background: var(--card);
+            border-radius: 28px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* VPD Status Labels */
+        .status-chip {
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-propagation {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .status-vegetative {
+            background: rgba(14, 165, 233, 0.2);
+            color: #0ea5e9;
+        }
+
+        .status-stress {
+            background: rgba(244, 63, 94, 0.2);
+            color: #f43f5e;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <h2 style="color: var(--primary); font-size: 1.8rem;"><i class="fas fa-microchip"></i> CLIMATE HUB</h2>
+            <p style="opacity: 0.5; font-size: 0.85rem; margin-bottom: 3rem;">Global IoT Infrastructure</p>
+
+            <div id="zone-list">
+                <!-- Zones Injected Here -->
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%; margin-top: 2rem;" onclick="addNode()">+ Register New
+                Node</button>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div>
+                    <h1 id="active-zone-title">Select a Climate Zone</h1>
+                    <p style="opacity: 0.6; margin-top: 0.6rem;" id="zone-coords">Real-time telemetry stream</p>
+                </div>
+                <div id="connection-status" class="status-chip status-vegetative">STREAMS ACTIVE</div>
+            </header>
+
+            <div class="gauges-grid">
+                <div class="gauge-card">
+                    <span class="val-display" id="stat-temp">--</span>
+                    <span class="val-unit">Temperature °C</span>
+                </div>
+                <div class="gauge-card">
+                    <span class="val-display" id="stat-hum">--</span>
+                    <span class="val-unit">Humidity %</span>
+                </div>
+                <div class="gauge-card">
+                    <span class="val-display" id="stat-vpd">--</span>
+                    <span class="val-unit">VPD kPa</span>
+                </div>
+                <div class="gauge-card">
+                    <span class="val-display" id="stat-co2">--</span>
+                    <span class="val-unit">CO2 ppm</span>
+                </div>
+            </div>
+
+            <div class="viz-row">
+                <div class="viz-card">
+                    <h3>Environmental 24h Trend</h3>
+                    <canvas id="telemetryChart"></canvas>
+                </div>
+                <div class="viz-card">
+                    <h3>Scientific Assessment</h3>
+                    <div id="assessment-block" style="margin-top: 2rem;">
+                        <div
+                            style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 20px; margin-bottom: 1rem;">
+                            <h4 style="margin: 0;">VPD Classification</h4>
+                            <p id="vpd-desc" style="opacity: 0.7; font-size: 0.9rem;">Analytical engine pending data...
+                            </p>
+                            <span id="vpd-tag" class="status-chip">OFFLINE</span>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 20px;">
+                            <h4 style="margin: 0;">Automation State</h4>
+                            <ul id="active-triggers"
+                                style="padding-left: 1.2rem; font-size: 0.85rem; opacity: 0.7; margin-top: 0.8rem;">
+                                <li>Scan active triggers...</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="climate_dashboard.js"></script>
+</body>
+
+</html>

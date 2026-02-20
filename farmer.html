@@ -1,287 +1,318 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <link rel="icon" type="image/png" href="images/logo.png">
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Farmer Connection Platform</title>
-    <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
+
+<head>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmer Connection Platform</title>
+  <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet" />
-    <link rel="stylesheet" href="farmer.css">
-    <link rel="stylesheet" href="theme.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  </head>
-  <body>
-    <header>
-  <nav class="navbar">
-    <div class="nav-brand">
-      <img src="images/logo.png" alt="AgriTech Logo" class="nav-logo">
-      <span class="brand-name">AgriTech</span>
+  <link rel="stylesheet" href="weather-banner.css">
+  <link rel="stylesheet" href="farmer.css">
+  <link rel="stylesheet" href="theme.css">
+</head>
+
+<body>
+  <div id="weather-advisory-banner" class="weather-advisory-banner loading">
+    <div class="weather-banner-left">
+      <div class="weather-icon"><i class="fas fa-spinner fa-spin"></i></div>
+      <div class="weather-info">
+        <div class="weather-location">Loading...</div>
+        <div class="weather-temp">--°C</div>
+      </div>
     </div>
-    
-    <ul class="nav-menu">
-      <li><a href="main.html" class="nav-link">Home</a></li>
-      <li><a href="about.html" class="nav-link">About</a></li>
-      <li><a href="blog.html" class="nav-link">Blog</a></li>
-    </ul>
-    
-    <div class="nav-actions">
-      <button class="theme-toggle" aria-label="Toggle dark/light mode">
-        <i class="fas fa-sun sun-icon"></i>
-        <i class="fas fa-moon moon-icon"></i>
-        <span class="theme-text">Light Mode</span>
-      </button>
+    <div class="weather-banner-center">
+      <div class="advisory-message"><span>Fetching weather...</span></div>
     </div>
-  </nav>
-  
-  <div class="header-hero">
-    <h1 class="hero-title">Optimal Crop yield prediction 🎯</h1>
-    <p class="hero-subtitle">
-      Based on your provided soil and climate data, the following crop is highly recommended
-      for maximum yield and sustainability.
-    </p>
   </div>
-</header>
-
-
-    <div class="container">
-      <nav class="nav-tabs">
-        <button class="tab-button active" data-section="sell">
-          <i class="fas fa-store"></i> Sell Products
+  <header>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <img src="images/logo.png" alt="AgriTech Logo" class="nav-logo">
+        <span class="brand-name">AgriTech</span>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="main.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="blog.html" class="nav-link">Blog</a></li>
+      </ul>
+      <div class="nav-actions">
+        <!-- ADDED: logged-in user name + logout button -->
+        <span id="nav-user-name"
+          style="font-size:.9rem;color:#2e7d32;font-weight:600;display:none;margin-right:.5rem;"></span>
+        <button id="nav-logout-btn" style="display:none;background:none;border:1.5px solid #ef5350;color:#ef5350;
+                   padding:.3rem .85rem;border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:600;">
+          <i class="fas fa-sign-out-alt"></i> Logout
         </button>
-        <button class="tab-button" data-section="buy">
-          <i class="fas fa-shopping-cart"></i> Buy Products
+        <!-- END ADDED -->
+        <button class="theme-toggle" aria-label="Toggle dark/light mode">
+          <i class="fas fa-sun sun-icon"></i>
+          <i class="fas fa-moon moon-icon"></i>
+          <span class="theme-text">Light Mode</span>
         </button>
-        <button class="tab-button" data-section="history">
-          <i class="fas fa-history"></i> Prediction History
-        </button>
-      </nav>
-
-      <main>
-        <!-- Sell Section -->
-        <section id="sell-section" class="section active">
-          <div class="section-grid">
-            <div class="form-card">
-              <h3><i class="fas fa-plus-circle"></i> List Your Product</h3>
-              <form id="product-form">
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="seller-name">Your Name</label>
-                    <input type="text" id="seller-name" required />
-                  </div>
-                  <div class="form-group">
-                    <label for="seller-contact">Contact Number</label>
-                    <input 
-                      type="tel" 
-                      id="seller-contact" 
-                      placeholder="10-digit mobile number"
-                      maxlength="10"
-                      pattern="[0-9]{10}"
-                      required 
-                    />
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="product-name">Product Name</label>
-                  <input
-                    type="text"
-                    id="product-name"
-                    placeholder="e.g., Organic Tomatoes"
-                    required
-                  />
-                </div>
-
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="product-quantity">Quantity Available</label>
-                    <input
-                      type="number"
-                      id="product-quantity"
-                      placeholder="e.g., 500"
-                      step="0.01"
-                      min="0.01"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="product-price">Price per Unit</label>
-                    <input
-                      type="number"
-                      id="product-price"
-                      placeholder="e.g., ₹50/kg"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <button type="submit" class="submit-button">
-                  <i class="fas fa-plus"></i> Add Product
-                </button>
-              </form>
-            </div>
-
-            <div class="listings-container">
-              <div class="listings-header">
-                <h3>Your Products</h3>
-                <span class="listings-count" id="product-count"
-                  >0 Products</span
-                >
-              </div>
-              <div id="product-display">
-                <div class="empty-state">
-                  <i class="fas fa-box-open"></i>
-                  <p>No products listed yet. Add your first product!</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Buy Section -->
-        <section id="buy-section" class="section">
-          <div class="section-grid">
-            <div class="form-card">
-              <h3><i class="fas fa-search"></i> Request to Buy</h3>
-              <form id="buy-form">
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="buyer-name">Your Name</label>
-                    <input type="text" id="buyer-name" required />
-                  </div>
-                  <div class="form-group">
-                    <label for="buyer-contact">Contact Number</label>
-                    <input 
-                      type="tel" 
-                      id="buyer-contact" 
-                      placeholder="10-digit mobile number"
-                      maxlength="10"
-                      pattern="[0-9]{10}"
-                      required 
-                    />
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="buy-product-name">Product Looking For</label>
-                  <input
-                    type="text"
-                    id="buy-product-name"
-                    placeholder="e.g., Fresh Wheat"
-                    required
-                  />
-                </div>
-
-                <div class="form-group">
-                  <label for="buy-product-quantity">Quantity Needed</label>
-                  <input
-                    type="number"
-                    id="buy-product-quantity"
-                    placeholder="e.g., 1000"
-                    step="0.01"
-                    min="0.01"
-                    required
-                  />
-                </div>
-
-                <button type="submit" class="submit-button">
-                  <i class="fas fa-paper-plane"></i> Send Request
-                </button>
-              </form>
-            </div>
-
-            <div class="listings-container">
-              <div class="listings-header">
-                <h3>Buy Requests</h3>
-                <span class="listings-count" id="request-count"
-                  >0 Requests</span
-                >
-              </div>
-              <div id="buy-request-display">
-                <div class="empty-state">
-                  <i class="fas fa-clipboard-list"></i>
-                  <p>No buy requests yet. Submit your first request!</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Prediction History Section -->
-        <section id="history-section" class="section">
-          <div class="section-grid">
-            <div class="listings-container">
-              <div class="listings-header">
-                <h3>Prediction History</h3>
-                <span class="listings-count" id="history-count">0 Predictions</span>
-              </div>
-              <div id="prediction-history-display">
-                <div class="empty-state">
-                  <i class="fas fa-chart-line"></i>
-                  <h3>No prediction history yet 📊</h3>
-                  <p>Use our AI tools to get crop recommendations and yield predictions. Your history will appear here.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
+      </div>
+    </nav>
+    <div class="header-hero">
+      <h1 class="hero-title">Optimal Crop yield prediction 🎯</h1>
+      <p class="hero-subtitle">
+        Based on your provided soil and climate data, the following crop is highly recommended
+        for maximum yield and sustainability.
+      </p>
     </div>
+  </header>
 
-      <style>
-    .site-footer {background: linear-gradient(135deg,#2e7d32,#66bb6a); color:#fff; margin-top:auto; padding: 2rem 1.25rem;}
-    .site-footer .footer-inner {max-width:1200px;margin:0 auto; display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:1.5rem; align-items:flex-start;}
-    .footer-brand {display:flex;flex-direction:column;gap:.5rem}
-    .footer-logo {width:48px;height:48px;border-radius:8px;object-fit:cover;background:#fff;padding:4px}
-    .site-footer h3,.site-footer h4{margin:0 0 .5rem 0}
-    .site-footer p {margin:0;opacity:.9}
-    .site-footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.4rem}
-    .site-footer a{color:#fff;text-decoration:none;opacity:.9;transition:opacity .2s}
-    .site-footer a:hover{opacity:1;text-decoration:underline}
-    .footer-bottom{max-width:1200px;margin:1rem auto 0; padding-top:1rem; border-top:1px solid rgba(255,255,255,.25); text-align:center; font-size:.9rem; opacity:.9}
-    .social-media {display:flex;gap:1rem;margin-top:.5rem}
-    .social-media a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:50%;transition:all .3s ease;font-size:1.2rem}
-    .social-media a:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
-  </style>
-    <footer class="site-footer">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
-          <h3>AgriTech</h3>
-          <p>Empowering India's Farming Future</p>
-          <div class="social-media">
-            <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Follow us on Instagram">
-              <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://github.com/omroy07" target="_blank" rel="noopener" aria-label="View our GitHub repositories">
-              <i class="fab fa-github"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank" rel="noopener" aria-label="Connect with us on LinkedIn">
-              <i class="fab fa-linkedin"></i>
-            </a>
+  <div class="container">
+    <nav class="nav-tabs">
+      <button class="tab-button active" data-section="sell">
+        <i class="fas fa-store"></i> Sell Products
+      </button>
+      <button class="tab-button" data-section="buy">
+        <i class="fas fa-shopping-cart"></i> Buy Products
+      </button>
+      <button class="tab-button" data-section="history">
+        <i class="fas fa-history"></i> Prediction History
+      </button>
+    </nav>
+
+    <main>
+      <!-- Sell Section -->
+      <section id="sell-section" class="section active">
+        <div class="section-grid">
+          <div class="form-card">
+            <h3><i class="fas fa-plus-circle"></i> List Your Product</h3>
+            <form id="product-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="seller-name">Your Name</label>
+                  <input type="text" id="seller-name" required />
+                </div>
+                <div class="form-group">
+                  <label for="seller-contact">Contact Number</label>
+                  <input type="tel" id="seller-contact" placeholder="10-digit mobile number" maxlength="10"
+                    pattern="[0-9]{10}" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="product-name">Product Name</label>
+                <input type="text" id="product-name" placeholder="e.g., Organic Tomatoes" required />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="product-quantity">Quantity Available</label>
+                  <input type="number" id="product-quantity" placeholder="e.g., 500" step="0.01" min="0.01" required />
+                </div>
+                <div class="form-group">
+                  <label for="product-price">Price per Unit</label>
+                  <input type="number" id="product-price" placeholder="e.g., 50/kg" required />
+                </div>
+              </div>
+              <button type="submit" class="submit-button">
+                <i class="fas fa-plus"></i> Add Product
+              </button>
+            </form>
+          </div>
+          <div class="listings-container">
+            <div class="listings-header">
+              <h3>Your Products</h3>
+              <span class="listings-count" id="product-count">0 Products</span>
+            </div>
+            <div id="product-display">
+              <div class="empty-state">
+                <i class="fas fa-box-open"></i>
+                <p>No products listed yet. Add your first product!</p>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="footer-links">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="main.html">Dashboard</a></li>
-            <li><a href="feed-back.html">Feedback</a></li>
-            <li><a href="chat.html">AI Assistant</a></li>
-          </ul>
+      </section>
+
+      <!-- Buy Section -->
+      <section id="buy-section" class="section">
+        <div class="section-grid">
+          <div class="form-card">
+            <h3><i class="fas fa-search"></i> Request to Buy</h3>
+            <form id="buy-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="buyer-name">Your Name</label>
+                  <input type="text" id="buyer-name" required />
+                </div>
+                <div class="form-group">
+                  <label for="buyer-contact">Contact Number</label>
+                  <input type="tel" id="buyer-contact" placeholder="10-digit mobile number" maxlength="10"
+                    pattern="[0-9]{10}" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="buy-product-name">Product Looking For</label>
+                <input type="text" id="buy-product-name" placeholder="e.g., Fresh Wheat" required />
+              </div>
+              <div class="form-group">
+                <label for="buy-product-quantity">Quantity Needed</label>
+                <input type="number" id="buy-product-quantity" placeholder="e.g., 1000" step="0.01" min="0.01"
+                  required />
+              </div>
+              <button type="submit" class="submit-button">
+                <i class="fas fa-paper-plane"></i> Send Request
+              </button>
+            </form>
+          </div>
+          <div class="listings-container">
+            <div class="listings-header">
+              <h3>Buy Requests</h3>
+              <span class="listings-count" id="request-count">0 Requests</span>
+            </div>
+            <div id="buy-request-display">
+              <div class="empty-state">
+                <i class="fas fa-clipboard-list"></i>
+                <p>No buy requests yet. Submit your first request!</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="footer-links">
-          <h4>Tools</h4>
-          <ul>
-            <li><a href="Crop Recommendation/templates/index.html">Crop Recommendation</a></li>
-            <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
-            <li><a href="Disease prediction/template/index.html">Disease Detector</a></li>
-            <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
-          </ul>
+      </section>
+
+      <!-- Prediction History Section -->
+      <section id="history-section" class="section">
+        <div class="section-grid">
+          <div class="listings-container">
+            <div class="listings-header">
+              <h3>Prediction History</h3>
+              <span class="listings-count" id="history-count">0 Predictions</span>
+            </div>
+            <div id="prediction-history-display">
+              <div class="empty-state">
+                <i class="fas fa-chart-line"></i>
+                <h3>No prediction history yet 📊</h3>
+                <p>Use our AI tools to get crop recommendations and yield predictions. Your history will appear here.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <style>
+    .site-footer {
+      background: linear-gradient(135deg, #2e7d32, #66bb6a);
+      color: #fff;
+      margin-top: auto;
+      padding: 2rem 1.25rem;
+    }
+
+    .site-footer .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem
+    }
+
+    .footer-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #fff;
+      padding: 4px
+    }
+
+    .site-footer h3,
+    .site-footer h4 {
+      margin: 0 0 .5rem 0
+    }
+
+    .site-footer p {
+      margin: 0;
+      opacity: .9
+    }
+
+    .site-footer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem
+    }
+
+    .site-footer a {
+      color: #fff;
+      text-decoration: none;
+      opacity: .9;
+      transition: opacity .2s
+    }
+
+    .site-footer a:hover {
+      opacity: 1;
+      text-decoration: underline
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 1rem auto 0;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, .25);
+      text-align: center;
+      font-size: .9rem;
+      opacity: .9
+    }
+
+    .social-media {
+      display: flex;
+      gap: 1rem;
+      margin-top: .5rem
+    }
+
+    .social-media a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, .1);
+      border-radius: 50%;
+      transition: all .3s ease;
+      font-size: 1.2rem
+    }
+
+    .social-media a:hover {
+      background: rgba(255, 255, 255, .2);
+      transform: translateY(-2px)
+    }
+  </style>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
+        <h3>AgriTech</h3>
+        <p>Empowering India's Farming Future</p>
+        <div class="social-media">
+          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Follow us on Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://github.com/omroy07" target="_blank" rel="noopener" aria-label="View our GitHub repositories">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank" rel="noopener"
+            aria-label="Connect with us on LinkedIn">
+            <i class="fab fa-linkedin"></i>
+          </a>
         </div>
       </div>
       <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div>
@@ -357,4 +388,61 @@
 <!-- ===== End Back To Top Button ===== -->
 
   </body>
+</html>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="main.html">Dashboard</a></li>
+          <li><a href="feed-back.html">Feedback</a></li>
+          <li><a href="chat.html">AI Assistant</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="Crop Recommendation/templates/index.html">Crop Recommendation</a></li>
+          <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
+          <li><a href="Disease prediction/template/index.html">Disease Detector</a></li>
+          <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div>
+  </footer>
+
+  <div class="circle-container" id="cursorTrail"></div>
+  <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
+    <i class="fas fa-robot"></i>
+  </a>
+
+  <script src="voice-input.js"></script>
+  <script src="farmer.js"></script>
+  <script src="theme.js"></script>
+
+  <!--
+      ADDED: auth guard.
+      type="module" is required for auth.js (it uses Firebase ESM imports).
+      Only farmers and admins can access this page.
+    -->
+  <script src="firebase-config.js"></script>
+  <script type="module" src="auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!requireAuth(['farmer', 'admin'])) return;
+
+      const user = window.authManager.getCurrentUser();
+      if (user) {
+        const nameEl = document.getElementById('nav-user-name');
+        const logoutEl = document.getElementById('nav-logout-btn');
+        nameEl.textContent = '👤 ' + (user.fullname || user.email);
+        nameEl.style.display = 'inline';
+        logoutEl.style.display = 'inline-flex';
+        logoutEl.addEventListener('click', () => window.authManager.logout());
+      }
+    });
+  </script>
+  <script src="weather-banner.js"></script>
+</body>
+
 </html>

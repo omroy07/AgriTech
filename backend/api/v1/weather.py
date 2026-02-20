@@ -1,63 +1,40 @@
 from flask import Blueprint, request, jsonify
-from backend.services.weather_service import weather_service
-from extensions import limiter
+from backend.services.weather_service import WeatherService
 from auth_utils import token_required
 
 weather_bp = Blueprint('weather', __name__)
 
-@weather_bp.route('/weather/forecast', methods=['GET'])
-@limiter.limit("10 per minute")
-@token_required
+@weather_bp.route('/current', methods=['GET'])
 def get_weather():
-    """Get weather forecast for a location."""
     location = request.args.get('location')
     if not location:
-        return jsonify({"status": "error", "message": "Location is required"}), 400
-    
-    days = request.args.get('days', 3, type=int)
-    data = weather_service.get_weather_forecast(location, days=days)
-    
-    if "error" in data:
-        return jsonify({"status": "error", "message": data["error"]}), 500
+        return jsonify({'status': 'error', 'message': 'Location required'}), 400
         
-    return jsonify({"status": "success", "data": data}), 200
+    weather = WeatherService.get_latest_weather(location)
+    if not weather:
+        return jsonify({'status': 'error', 'message': 'Could not fetch weather'}), 500
+        
+    return jsonify({
+        'status': 'success',
+        'data': weather.to_dict()
+    }), 200
 
-@weather_bp.route('/weather/analysis', methods=['GET'])
-@limiter.limit("5 per minute")
+@weather_bp.route('/subscribe', methods=['POST'])
 @token_required
-def get_weather_analysis():
-    """Get agricultural weather analysis for a location."""
-    location = request.args.get('location')
-    if not location:
-        return jsonify({"status": "error", "message": "Location is required"}), 400
+def subscribe(current_user):
+    data = request.get_json()
+    if not data or 'crop_name' not in data or 'location' not in data:
+        return jsonify({'status': 'error', 'message': 'Missing fields'}), 400
         
-    analysis = weather_service.get_farming_analysis(location)
-    
-    if "error" in analysis:
-        return jsonify({"status": "error", "message": analysis["error"]}), 500
-        
-    return jsonify({"status": "success", "data": analysis}), 200
-
-@weather_bp.route('/weather/crop-advice', methods=['GET'])
-@token_required
-def get_crop_advice():
-    """Get crop-specific weather advice."""
-    location = request.args.get('location')
-    crop = request.args.get('crop')
-    
-    if not location or not crop:
-        return jsonify({"status": "error", "message": "Location and crop are required"}), 400
-        
-    weather_data = weather_service.get_weather_forecast(location, days=1)
-    if "error" in weather_data:
-        return jsonify({"status": "error", "message": weather_data["error"]}), 500
-        
-    current = weather_data.get("current", {})
-    advice = weather_service.get_crop_specific_advice(
-        crop=crop,
-        temperature=current.get("temp_c", 0),
-        humidity=current.get("humidity", 0),
-        rainfall=current.get("precip_mm", 0)
+    sub = WeatherService.subscribe_user(
+        user_id=current_user.id,
+        crop_name=data['crop_name'],
+        location=data['location'],
+        soil_type=data.get('soil_type'),
+        sowing_date=data.get('sowing_date')
     )
     
-    return jsonify({"status": "success", "data": advice}), 200
+    return jsonify({
+        'status': 'success',
+        'message': 'Subscribed to automated advisories'
+    }), 201

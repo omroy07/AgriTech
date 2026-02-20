@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crisis Command Center | Pathogen Propagation Dashboard</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --crisis-red: #ff3e3e;
+            --warning-orange: #ff9f43;
+            --safe-green: #2ecc71;
+            --bg-dark: #0a0e14;
+            --panel-bg: #151d29;
+            --text-grey: #a0a0a0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 350px 1fr 300px;
+            height: 100vh;
+        }
+
+        /* Sidebar Panels */
+        .panel {
+            background: var(--panel-bg);
+            border: 1px solid #232d3d;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .panel-header {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #232d3d;
+            padding-bottom: 10px;
+        }
+
+        /* Map UI */
+        #map {
+            width: 100%;
+            height: 100%;
+            background: #0d1117;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 20px;
+            left: 370px;
+            z-index: 1000;
+            background: rgba(21, 29, 41, 0.9);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid #232d3d;
+        }
+
+        /* Zone Cards */
+        .zone-card {
+            background: #1c2635;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--crisis-red);
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .zone-card:hover {
+            transform: scale(1.02);
+        }
+
+        .zone-meta {
+            font-size: 0.8rem;
+            color: var(--text-grey);
+            margin-top: 5px;
+        }
+
+        .status-badge {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+
+        .badge-lockdown {
+            background: var(--crisis-red);
+            color: #fff;
+        }
+
+        .badge-none {
+            background: var(--safe-green);
+            color: #fff;
+        }
+
+        /* Real-time Ticker */
+        .ticker-item {
+            font-size: 0.85rem;
+            padding: 10px;
+            border-bottom: 1px solid #1c2635;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .ticker-time {
+            color: var(--text-grey);
+            font-size: 0.7rem;
+        }
+
+        /* Heatmap Legend */
+        .legend {
+            background: var(--panel-bg);
+            padding: 15px;
+            line-height: 18px;
+            color: #fff;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Left Panel: Active Outbreaks -->
+        <div class="panel">
+            <div class="panel-header">
+                <i class="fas fa-virus"></i> Active Outbreaks
+            </div>
+            <div id="zone-list">
+                <!-- Zone cards will be injected here -->
+            </div>
+        </div>
+
+        <!-- Center: Heatmap -->
+        <div style="position: relative;">
+            <div class="map-overlay">
+                <i class="fas fa-radar"></i> <span id="sim-status">SYSTEM ALIGNED</span>
+            </div>
+            <div id="map"></div>
+        </div>
+
+        <!-- Right Panel: Containment Log -->
+        <div class="panel">
+            <div class="panel-header">
+                <i class="fas fa-shield-alt"></i> Containment Log
+            </div>
+            <div id="containment-ticker">
+                <!-- Notifications will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+        const map = L.map('map', {
+            center: [20.5937, 78.9629], // Center of India
+            zoom: 5,
+            zoomControl: false
+        });
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; CartoDB'
+        }).addTo(map);
+
+        const socket = io('/crisis');
+        const activeZones = new Map();
+        const projectionLayers = new Map();
+
+        socket.on('heatmap_init', (data) => {
+            console.log("Heatmap Initialized:", data);
+            data.zones.forEach(zone => updateZoneOnMap(zone));
+        });
+
+        socket.on('pathogen_update', (zone) => {
+            console.log("Pathogen Update received:", zone);
+            updateZoneOnMap(zone);
+            logContainment(zone);
+        });
+
+        function updateZoneOnMap(zone) {
+            // Remove old layers
+            if (activeZones.has(zone.id)) {
+                map.removeLayer(activeZones.get(zone.id));
+            }
+            if (projectionLayers.has(zone.id)) {
+                projectionLayers.get(zone.id).forEach(l => map.removeLayer(l));
+            }
+
+            // Create current zone circle
+            const circle = L.circle([zone.center_latitude, zone.center_longitude], {
+                color: zone.severity_level === 'high' ? '#ff3e3e' : '#ff9f43',
+                fillColor: zone.severity_level === 'high' ? '#ff3e3e' : '#ff9f43',
+                fillOpacity: 0.4,
+                radius: zone.radius_km * 1000
+            }).addTo(map);
+
+            circle.bindPopup(`<b>${zone.disease_name}</b><br>Zone: ${zone.zone_id}<br>Status: ${zone.containment_status}`);
+            activeZones.set(zone.id, circle);
+
+            // Create projection circles (faint)
+            const pLayers = [];
+            if (zone.projections) {
+                zone.projections.forEach((p, idx) => {
+                    const pCircle = L.circle([p.latitude, p.longitude], {
+                        color: '#64748b',
+                        weight: 1,
+                        dashArray: '5, 10',
+                        fillOpacity: 0.1,
+                        radius: p.radius * 1000
+                    }).addTo(map);
+                    pLayers.push(pCircle);
+                });
+            }
+            projectionLayers.set(zone.id, pLayers);
+
+            updateSidebarList(zone);
+        }
+
+        function updateSidebarList(zone) {
+            const list = document.getElementById('zone-list');
+            let item = document.getElementById(`side-zone-${zone.id}`);
+
+            const html = `
+                <div class="zone-card" id="side-zone-${zone.id}" onclick="map.setView([${zone.center_latitude}, ${zone.center_longitude}], 10)">
+                    <div style="display: flex; justify-content: space-between;">
+                        <b>${zone.disease_name}</b>
+                        <span class="status-badge badge-${zone.containment_status.toLowerCase().includes('none') ? 'none' : 'lockdown'}">
+                            ${zone.containment_status}
+                        </span>
+                    </div>
+                    <div class="zone-meta">
+                        <i class="fas fa-wind"></i> ${zone.propagation_velocity.toFixed(2)} km/day
+                    </div>
+                    <div class="zone-meta">
+                        <i class="fas fa-arrows-to-circle"></i> Radius: ${zone.radius_km.toFixed(1)} km
+                    </div>
+                </div>
+            `;
+
+            if (item) {
+                item.outerHTML = html;
+            } else {
+                list.insertAdjacentHTML('beforeend', html);
+            }
+        }
+
+        function logContainment(zone) {
+            if (zone.containment_status === 'NONE') return;
+
+            const ticker = document.getElementById('containment-ticker');
+            const html = `
+                <div class="ticker-item">
+                    <span class="ticker-time">${new Date().toLocaleTimeString()}</span>
+                    <b>ZONE ${zone.zone_id} LOCKDOWN</b>
+                    <div class="zone-meta">${zone.containment_status} procedure applied autonomously.</div>
+                </div>
+            `;
+            ticker.insertAdjacentHTML('afterbegin', html);
+        }
+
+    </script>
+</body>
+
+</html>
