@@ -119,3 +119,21 @@ class PayrollEntry(db.Model):
             'net': self.net_payable,
             'status': self.status
         }
+
+class LaborROIHistory(db.Model):
+    __tablename__ = 'labor_roi_history'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    worker_id = db.Column(db.Integer, db.ForeignKey('worker_profiles.id'), nullable=False)
+    
+    period_start = db.Column(db.Date, nullable=False)
+    period_end = db.Column(db.Date, nullable=False)
+    
+    total_hours_worked = db.Column(db.Float)
+    total_yield_kg = db.Column(db.Float)
+    labor_cost = db.Column(db.Float)
+    yield_value_estimate = db.Column(db.Float)
+    
+    roi_percentage = db.Column(db.Float) # (Yield Value - Cost) / Cost
+    
+    calculated_at = db.Column(db.DateTime, default=datetime.utcnow)

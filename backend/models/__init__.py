@@ -31,6 +31,10 @@ from .labor import WorkerProfile, WorkShift, HarvestLog, PayrollEntry
 from .logistics_v2 import DriverProfile, DeliveryVehicle, TransportRoute, FuelLog
 from .transparency import ProduceReview, PriceAdjustmentLog
 from .barter import BarterTransaction, BarterResource, ResourceValueIndex
+from .financials import FarmBalanceSheet, SolvencySnapshot, ProfitabilityIndex
+from .machinery import AssetValueSnapshot
+from .labor import LaborROIHistory
+from .reliability_log import ReliabilityLog
 
 __all__ = [
     'User', 'UserRole', 'LoanRequest', 'PredictionHistory', 
@@ -59,5 +63,7 @@ __all__ = [
     'AuditLog', 'UserSession',
     'MediaPayload',
     'ProduceReview', 'PriceAdjustmentLog',
-    'BarterTransaction', 'BarterResource', 'ResourceValueIndex'
+    'BarterTransaction', 'BarterResource', 'ResourceValueIndex',
+    'FarmBalanceSheet', 'SolvencySnapshot', 'ProfitabilityIndex',
+    'AssetValueSnapshot', 'LaborROIHistory', 'ReliabilityLog'
 ]
