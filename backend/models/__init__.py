@@ -36,6 +36,11 @@ from .machinery import AssetValueSnapshot
 from .labor import LaborROIHistory
 from .reliability_log import ReliabilityLog
 from .disease import MigrationVector, ContainmentZone
+from .ledger import (
+    LedgerAccount, LedgerTransaction, LedgerEntry,
+    FXValuationSnapshot, Vault, VaultCurrencyPosition, FXRate,
+    AccountType, EntryType, TransactionType
+)
 
 __all__ = [
     'User', 'UserRole', 'LoanRequest', 'PredictionHistory', 
@@ -67,5 +72,9 @@ __all__ = [
     'BarterTransaction', 'BarterResource', 'ResourceValueIndex',
     'FarmBalanceSheet', 'SolvencySnapshot', 'ProfitabilityIndex',
     'AssetValueSnapshot', 'LaborROIHistory', 'ReliabilityLog',
-    'MigrationVector', 'ContainmentZone'
+    'MigrationVector', 'ContainmentZone',
+    # Double-Entry Ledger System
+    'LedgerAccount', 'LedgerTransaction', 'LedgerEntry',
+    'FXValuationSnapshot', 'Vault', 'VaultCurrencyPosition', 'FXRate',
+    'AccountType', 'EntryType', 'TransactionType'
 ]

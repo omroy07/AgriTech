@@ -20,4 +20,10 @@ from .pathogen_tasks import pathogen_propagation_run, analyze_new_incident
 from .transparency_tasks import hourly_freshness_pricing_update, sync_reputation_feedback
 from .soil_sync import precision_fertigation_sync, update_nutrient_maps
 from .logistics_tasks import global_tracking_sync, run_compliance_audit
-from .maintenance_tasks import fleet_reliability_audit, check_maintenance_cycles 
+from .maintenance_tasks import fleet_reliability_audit, check_maintenance_cycles
+from .fx_tasks import (
+    sync_fx_rates_task, trigger_ledger_revaluation_task,
+    revalue_vault_task, detect_significant_rate_shifts_task,
+    backfill_historical_rates_task, cleanup_old_rates_task,
+    compute_fx_exposure_alerts_task, daily_fx_rate_sync_task
+) 
