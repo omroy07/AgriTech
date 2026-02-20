@@ -1,58 +1,59 @@
-from flask import Blueprint, request, jsonify
-from backend.services.carbon_service import CarbonService
-from backend.services.audit_workflow import AuditWorkflow
-from backend.models.sustainability import CarbonPractice
-from auth_utils import token_required
-import logging
+from flask import Blueprint, jsonify, request
+from backend.services.carbon_calculator import CarbonCalculator
+from backend.models.sustainability import CarbonLedger, SustainabilityScore
+from backend.auth_utils import token_required
+from backend.extensions import db
 
 sustainability_bp = Blueprint('sustainability', __name__)
 
-@sustainability_bp.route('/practices', methods=['POST'])
+@sustainability_bp.route('/report/farm/<int:farm_id>', methods=['GET'])
 @token_required
-def log_practice(current_user):
-    data = request.get_json()
-    if not data or 'practice_type' not in data or 'area' not in data:
-        return jsonify({'status': 'error', 'message': 'Missing required fields'}), 400
-        
-    practice, error = CarbonService.log_practice(
-        user_id=current_user.id,
-        farm_id=data.get('farm_id'),
-        practice_type=data['practice_type'],
-        area=data['area'],
-        start_date=data.get('start_date'),
-        description=data.get('description')
-    )
+def get_farm_sustainability_report(current_user, farm_id):
+    """
+    Returns detailed carbon breakdown and rating for a farm.
+    """
+    ledger = CarbonLedger.query.filter_by(farm_id=farm_id).order_by(CarbonLedger.recorded_at.desc()).first()
+    score = SustainabilityScore.query.filter_by(farm_id=farm_id).first()
     
-    if error:
-        return jsonify({'status': 'error', 'message': error}), 500
+    if not ledger:
+        return jsonify({'status': 'pending', 'message': 'No audit records found'}), 200
         
     return jsonify({
         'status': 'success',
-        'data': practice.to_dict()
-    }), 201
+        'data': {
+            'carbon_footprint': ledger.to_dict(),
+            'rating': score.overall_rating if score else None,
+            'credits_available': score.offset_credits_available if score else 0.0
+        }
+    })
 
-@sustainability_bp.route('/impact', methods=['GET'])
+@sustainability_bp.route('/report/batch/<int:batch_id>', methods=['GET'])
 @token_required
-def get_impact(current_user):
-    impact = CarbonService.get_user_impact(current_user.id)
+def get_batch_certification(current_user, batch_id):
+    """
+    Returns a 'Net-Zero' certification hash for a specific supply batch.
+    """
+    ledger = CarbonLedger.query.filter_by(batch_id=batch_id).first()
+    if not ledger:
+        return jsonify({'error': 'Certification not yet calculated'}), 404
+        
     return jsonify({
         'status': 'success',
-        'data': impact
-    }), 200
+        'certification_id': f"NZ-{ledger.id:06d}",
+        'net_carbon': ledger.net_carbon_balance,
+        'is_net_zero': ledger.certification_status == 'NET_ZERO'
+    })
 
-@sustainability_bp.route('/audit/<int:practice_id>', methods=['POST'])
+@sustainability_bp.route('/audit', methods=['POST'])
 @token_required
-def request_audit(current_user, practice_id):
-    # Verify ownership
-    practice = CarbonPractice.query.get_or_404(practice_id)
-    if practice.user_id != current_user.id:
-        return jsonify({'status': 'error', 'message': 'Unauthorized'}), 403
-        
-    audit, error = AuditWorkflow.initiate_audit(practice_id)
-    if error:
-        return jsonify({'status': 'error', 'message': error}), 400
-        
+def trigger_manual_audit(current_user):
+    """Manually triggers a fresh carbon audit for the user's farm."""
+    data = request.get_json()
+    farm_id = data.get('farm_id')
+    
+    ledger = CarbonCalculator.run_full_audit(farm_id)
     return jsonify({
         'status': 'success',
-        'message': 'Audit request submitted'
-    }), 200
+        'footprint': ledger.total_footprint,
+        'certification': ledger.certification_status
+    })

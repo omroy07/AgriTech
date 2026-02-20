@@ -23,6 +23,10 @@ class SoilTest(db.Model):
     phosphorus_flux_index = db.Column(db.Float)
     leaching_susceptibility = db.Column(db.Float) # 0-1 score
     
+    # Sustainability & Emissions (L3-1558)
+    estimated_n2o_flux = db.Column(db.Float, default=0.0) # Emission factor based on N levels
+    volatile_organic_compounds = db.Column(db.Float, default=0.0)
+    
     # Soil Chemical Properties
     ph_level = db.Column(db.Float, nullable=False)
     organic_matter = db.Column(db.Float) # Percentage

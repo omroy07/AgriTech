@@ -16,7 +16,7 @@ from .alert import Alert, AlertPreference
 from .audit_log import AuditLog, UserSession
 from .media_payload import MediaPayload
 from .weather import WeatherData, CropAdvisory, AdvisorySubscription
-from .sustainability import CarbonPractice, CreditLedger, AuditRequest
+from .sustainability import CarbonPractice, CreditLedger, AuditRequest, CarbonLedger, EmissionSource, SustainabilityScore
 from .vendor_profile import VendorProfile # Updated from procurement to vendor_profile
 from .procurement import ProcurementItem, BulkOrder, OrderEvent
 from .irrigation import IrrigationZone, SensorLog, ValveStatus, IrrigationSchedule
@@ -43,7 +43,7 @@ __all__ = [
     'Equipment', 'RentalBooking', 'AvailabilityCalendar', 'PaymentEscrow',
     'Farm', 'FarmMember', 'FarmAsset', 'FarmRole',
     'WeatherData', 'CropAdvisory', 'AdvisorySubscription',
-    'CarbonPractice', 'CreditLedger', 'AuditRequest',
+    'CarbonPractice', 'CreditLedger', 'AuditRequest', 'CarbonLedger', 'EmissionSource', 'SustainabilityScore',
     'VendorProfile', 'ProcurementItem', 'BulkOrder', 'OrderEvent',
     'IrrigationZone', 'SensorLog', 'ValveStatus', 'IrrigationSchedule',
     'ProcessingBatch', 'StageLog', 'QualityCheck', 'ProcessingStage',

@@ -37,6 +37,10 @@ class IrrigationZone(db.Model):
     washout_risk_threshold = db.Column(db.Float, default=0.7)
     
     fertigation_logs = db.relationship('FertigationLog', backref='zone', lazy='dynamic', cascade='all, delete-orphan')
+    
+    # Sustainability (L3-1558)
+    total_water_withdrawn = db.Column(db.Float, default=0.0) # Liters
+    electricity_usage_kwh = db.Column(db.Float, default=0.0)
 
     def to_dict(self):
         data = {

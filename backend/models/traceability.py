@@ -59,6 +59,10 @@ class SupplyBatch(db.Model):
     esg_score = db.Column(db.Float) # Calculated sustainability score
     phyto_cert_id = db.Column(db.String(100))
     
+    # Carbon Accounting (L3-1558)
+    carbon_footprint_hash = db.Column(db.String(64)) # Linked to CarbonLedger
+    net_zero_qualified = db.Column(db.Boolean, default=False)
+    
     # Timestamps
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
