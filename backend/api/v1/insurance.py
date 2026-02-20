@@ -545,3 +545,80 @@ def get_admin_statistics(current_user):
             'error': 'Failed to fetch statistics',
             'details': str(e)
         }), 500
+
+
+# ===== Risk & Premium Audit Endpoints (L3-1557) =====
+
+@insurance_bp.route('/policies/<int:policy_id>/risk-visibility', methods=['GET'])
+@token_required
+def get_risk_visibility(current_user, policy_id):
+    """Returns real-time risk factors and suspension status for a policy."""
+    from backend.models.insurance import InsurancePolicy, RiskFactorSnapshot
+
+    policy = InsurancePolicy.query.get(policy_id)
+    if not policy or policy.user_id != current_user.id:
+        return jsonify({'success': False, 'error': 'Policy not found'}), 404
+
+    latest_snapshot = RiskFactorSnapshot.query.filter_by(policy_id=policy_id).order_by(RiskFactorSnapshot.recorded_at.desc()).first()
+
+    return jsonify({
+        'success': True,
+        'data': {
+            'current_risk_score': policy.current_risk_score,
+            'is_suspended': policy.is_suspended,
+            'suspension_reason': policy.suspension_reason,
+            'factors': {
+                'weather_index': latest_snapshot.weather_risk_index if latest_snapshot else 1.0,
+                'telemetry_index': latest_snapshot.telemetry_risk_index if latest_snapshot else 1.0,
+                'sustainability_discount': latest_snapshot.sustainability_discount_factor if latest_snapshot else 0.0
+            }
+        }
+    })
+
+@insurance_bp.route('/policies/<int:policy_id>/premium-audit', methods=['GET'])
+@token_required
+def get_premium_audit(current_user, policy_id):
+    """Returns a history of all automatic premium adjustments."""
+    from backend.models.insurance import InsurancePolicy, DynamicPremiumLog
+
+    policy = InsurancePolicy.query.get(policy_id)
+    if not policy or policy.user_id != current_user.id:
+        return jsonify({'success': False, 'error': 'Policy not found'}), 404
+
+    logs = DynamicPremiumLog.query.filter_by(policy_id=policy_id).order_by(DynamicPremiumLog.timestamp.desc()).all()
+
+    return jsonify({
+        'success': True,
+        'data': [
+            {
+                'old': float(log.old_premium),
+                'new': float(log.new_premium),
+                'reason': log.change_reason,
+                'triggered_by': log.triggered_by,
+                'timestamp': log.timestamp.isoformat()
+            } for log in logs
+        ]
+    })
+
+@insurance_bp.route('/recalculate-risk/<int:policy_id>', methods=['POST'])
+@token_required
+def manual_risk_recalc(current_user, policy_id):
+    """Manual trigger for the risk orchestration engine."""
+    from backend.services.risk_adjustment_service import RiskAdjustmentService
+
+    # Audit trail for manual trigger
+    from backend.services.audit_service import AuditService
+    AuditService.log_event(
+        user_id=current_user.id,
+        action="MANUAL_RISK_RECALC",
+        resource_type="POLICY",
+        resource_id=policy_id,
+        details="User manually triggered risk recalculation",
+        risk_level="LOW"
+    )
+
+    score = RiskAdjustmentService.calculate_actuarial_flux(policy_id)
+    return jsonify({
+        'success': True,
+        'new_risk_score': score
+    })

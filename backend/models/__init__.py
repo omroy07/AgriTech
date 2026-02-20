@@ -7,7 +7,7 @@ from .prediction_history import PredictionHistory
 from .misc import Notification, File, YieldPool, PoolContribution, ResourceShare, PoolVote
 from .gews import DiseaseIncident, OutbreakZone, OutbreakAlert
 from .traceability import SupplyBatch, CustodyLog, QualityGrade, BatchStatus
-from .insurance import InsurancePolicy, ClaimRequest as LegacyClaim, RiskScoreHistory
+from .insurance import InsurancePolicy, ClaimRequest as LegacyClaim, RiskScoreHistory, DynamicPremiumLog, RiskFactorSnapshot
 from .forum import ForumCategory, ForumThread, PostComment, Upvote, UserReputation
 from .knowledge import Question, Answer, KnowledgeVote, Badge, UserBadge, UserExpertise
 from .equipment import Equipment, RentalBooking, AvailabilityCalendar, PaymentEscrow
@@ -15,7 +15,7 @@ from .farm import Farm, FarmMember, FarmAsset, FarmRole
 from .alert import Alert, AlertPreference
 from .audit_log import AuditLog, UserSession
 from .media_payload import MediaPayload
-from .weather import WeatherData, CropAdvisory, AdvisorySubscription
+from .weather import WeatherData, CropAdvisory, AdvisorySubscription, RiskTrigger
 from .sustainability import CarbonPractice, CreditLedger, AuditRequest
 from .vendor_profile import VendorProfile # Updated from procurement to vendor_profile
 from .procurement import ProcurementItem, BulkOrder, OrderEvent
@@ -37,12 +37,12 @@ __all__ = [
     'Notification', 'File', 'YieldPool', 'PoolContribution', 
     'ResourceShare', 'PoolVote', 'DiseaseIncident', 'OutbreakZone', 'OutbreakAlert',
     'SupplyBatch', 'CustodyLog', 'QualityGrade', 'BatchStatus',
-    'InsurancePolicy', 'LegacyClaim', 'RiskScoreHistory',
+    'InsurancePolicy', 'LegacyClaim', 'RiskScoreHistory', 'DynamicPremiumLog', 'RiskFactorSnapshot',
     'ForumCategory', 'ForumThread', 'PostComment', 'Upvote', 'UserReputation',
     'Question', 'Answer', 'KnowledgeVote', 'Badge', 'UserBadge', 'UserExpertise',
     'Equipment', 'RentalBooking', 'AvailabilityCalendar', 'PaymentEscrow',
     'Farm', 'FarmMember', 'FarmAsset', 'FarmRole',
-    'WeatherData', 'CropAdvisory', 'AdvisorySubscription',
+    'WeatherData', 'CropAdvisory', 'AdvisorySubscription', 'RiskTrigger',
     'CarbonPractice', 'CreditLedger', 'AuditRequest',
     'VendorProfile', 'ProcurementItem', 'BulkOrder', 'OrderEvent',
     'IrrigationZone', 'SensorLog', 'ValveStatus', 'IrrigationSchedule',
