@@ -385,11 +385,16 @@
         }
 
         .impact-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--accent-primary);
-            margin-bottom: 10px;
-        }
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+}
+
+.impact-stat:hover .impact-number {
+    transform: scale(1.08);
+}
 
         .impact-description {
             color: var(--text-secondary);
@@ -1026,19 +1031,19 @@
             </div>
             <div class="impact-stats">
                 <div class="impact-stat">
-                    <div class="impact-number" id="waterSavedLiters">2.5M</div>
+                    <div class="impact-number" data-target="2.5" data-suffix="M" id="waterSavedLiters">0</div>
                     <div class="impact-description">Liters of water saved annually</div>
                 </div>
                 <div class="impact-stat">
-                    <div class="impact-number" id="co2Reduced">1,200</div>
+                    <div class="impact-number" data-target="1200" id="co2Reduced">0</div>
                     <div class="impact-description">Tons of CO2 reduced</div>
                 </div>
                 <div class="impact-stat">
-                    <div class="impact-number" id="chemicalReduction">85</div>
+                    <div class="impact-number" data-target="85" id="chemicalReduction">0</div>
                     <div class="impact-description">% Reduction in chemical usage</div>
                 </div>
                 <div class="impact-stat">
-                    <div class="impact-number" id="speciesProtected">150</div>
+                    <div class="impact-number" data-target="150" data-suffix="+" id="speciesProtected">0</div>
                     <div class="impact-description">+ Species protected</div>
                 </div>
             </div>
@@ -1451,7 +1456,7 @@
 
             // Set up auto-updates
             setInterval(updateMetrics, 12000);
-            setInterval(updateImpactStats, 18000);
+            
             setInterval(rotateTips, 15000);
 
             // Add entrance animations
@@ -1589,6 +1594,57 @@ function animateCursor() {
 }
 animateCursor();
     </script>
+
+    <script>
+/* ===== Animated Counter for Sustainability Impact (Issue #1563) ===== */
+const impactNumbers = document.querySelectorAll('.impact-number');
+let counterStarted = false;
+
+function animateCounter(element) {
+    const target = parseFloat(element.getAttribute('data-target'));
+    const suffix = element.getAttribute('data-suffix') || '';
+    const duration = 2000;
+    let start = 0;
+    const increment = target / (duration / 16);
+
+    function updateCounter() {
+        start += increment;
+
+        if (start >= target) {
+            element.textContent = (suffix === 'M' ? target.toFixed(1) : Math.floor(target)) + suffix;
+            return;
+        }
+
+        if (suffix === 'M') {
+            element.textContent = start.toFixed(1) + suffix;
+        } else {
+            element.textContent = Math.floor(start) + suffix;
+        }
+
+        requestAnimationFrame(updateCounter);
+    }
+
+    updateCounter();
+}
+
+/* Trigger animation when Environmental Impact section is visible */
+const impactSection = document.querySelector('.eco-impact');
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && !counterStarted) {
+            impactNumbers.forEach(num => animateCounter(num));
+            counterStarted = true; // run only once (issue requirement)
+        }
+    });
+}, {
+    threshold: 0.4
+});
+
+if (impactSection) {
+    observer.observe(impactSection);
+}
+</script>
     <!-- ===== Universal Back To Top Button (All Pages) ===== -->
 <style>
   #globalBackToTop {
