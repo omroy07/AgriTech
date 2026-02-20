@@ -12,11 +12,24 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet" />
+  <link rel="stylesheet" href="weather-banner.css">
   <link rel="stylesheet" href="farmer.css">
   <link rel="stylesheet" href="theme.css">
 </head>
 
 <body>
+  <div id="weather-advisory-banner" class="weather-advisory-banner loading">
+    <div class="weather-banner-left">
+      <div class="weather-icon"><i class="fas fa-spinner fa-spin"></i></div>
+      <div class="weather-info">
+        <div class="weather-location">Loading...</div>
+        <div class="weather-temp">--°C</div>
+      </div>
+    </div>
+    <div class="weather-banner-center">
+      <div class="advisory-message"><span>Fetching weather...</span></div>
+    </div>
+  </div>
   <header>
     <nav class="navbar">
       <div class="nav-brand">
@@ -429,6 +442,7 @@
       }
     });
   </script>
+  <script src="weather-banner.js"></script>
 </body>
 
 </html>
