@@ -74,3 +74,29 @@ class RepairOrder(db.Model):
     
     started_at = db.Column(db.DateTime)
     completed_at = db.Column(db.DateTime)
+
+class AssetValueSnapshot(db.Model):
+    __tablename__ = 'asset_value_snapshots'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    equipment_id = db.Column(db.Integer, db.ForeignKey('equipment.id'), nullable=False)
+    
+    current_book_value = db.Column(db.Float, nullable=False)
+    depreciation_accumulated = db.Column(db.Float, default=0.0)
+    liquidation_priority = db.Column(db.Integer) # 1 = High priority to sell
+    
+    # Factors
+    hours_impact_factor = db.Column(db.Float)
+    maintenance_health_bonus = db.Column(db.Float)
+    
+    calculated_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'equipment_id': self.equipment_id,
+            'value': self.current_book_value,
+            'depreciation': self.depreciation_accumulated,
+            'priority': self.liquidation_priority,
+            'date': self.calculated_at.isoformat()
+        }
