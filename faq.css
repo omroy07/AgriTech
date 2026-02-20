@@ -170,8 +170,8 @@
 }
 
 /* Contact CTA Section */
+/* Contact CTA Section (Base - now acts as fallback) */
 .contact-cta {
-  background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
   color: white;
   padding: 3rem 2rem;
   text-align: center;
@@ -264,4 +264,140 @@
   .contact-cta p {
     font-size: 1rem;
   }
+}
+
+/* ===== Enhanced Still Have Questions Section ===== */
+.enhanced-cta {
+  background: linear-gradient(135deg, #1fa463, #2ecc71);
+  padding: 60px 20px;
+  text-align: center;
+  border-radius: 16px;
+  margin: 60px auto 40px;
+  max-width: 1100px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.enhanced-cta::before {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50%;
+  top: -80px;
+  right: -80px;
+}
+
+.cta-content {
+  position: relative;
+  z-index: 2;
+}
+
+.cta-icon {
+  font-size: 42px;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.cta-title {
+  font-size: 32px;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.cta-subtitle {
+  color: #eaffea;
+  font-size: 16px;
+  max-width: 600px;
+  margin: 0 auto 25px;
+  line-height: 1.6;
+}
+
+/* CTA Buttons */
+.cta-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.primary-cta {
+  background: #ffffff;
+  color: #1fa463;
+  font-weight: 600;
+  padding: 12px 22px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.primary-cta:hover {
+  background: #f3fff5;
+  transform: translateY(-3px);
+}
+
+.secondary-cta {
+  background: transparent;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 12px 22px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.secondary-cta:hover {
+  background: rgba(255,255,255,0.15);
+  transform: translateY(-3px);
+}
+
+/* ===== Floating Button Distinction Fix (Issue #1562) ===== */
+
+/* Chatbot Button - Blue Circle */
+#chatbotBtn {
+  position: fixed;
+  bottom: 110px; /* creates spacing */
+  right: 25px;
+  background: #1e88e5; /* Blue = support identity */
+  color: #ffffff;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  z-index: 999;
+  transition: all 0.3s ease;
+}
+
+#chatbotBtn:hover {
+  background: #1565c0;
+  transform: translateY(-4px) scale(1.08);
+}
+
+/* Scroll Button - Green Rounded Square (different shape) */
+.scroll-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 25px;
+  background: #2ecc71;
+  color: #ffffff;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px; /* KEY CHANGE: not circle anymore */
+  border: none;
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.scroll-btn:hover {
+  background: #27ae60;
+  transform: scale(1.1);
 }
