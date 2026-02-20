@@ -228,6 +228,10 @@
       font-size: 1rem;
     }
 
+    textarea {
+      resize: vertical;
+    }
+
     .submit-btn {
       width: 100%;
       padding: 16px;
@@ -546,35 +550,93 @@
     </section>
 
     <!-- FAQ -->
-    <section class="faq-section">
-      <h2>Frequently Asked Questions</h2>
-      <div class="faq-grid">
-        <div class="faq-item">
-          <h3>How accurate are the crop recommendations?</h3>
-          <p>Our AI models are trained on extensive agricultural data and provide recommendations with high accuracy
-            based on your soil conditions and local weather patterns.</p>
-        </div>
+  <section class="faq-section">
+    <h2>Frequently Asked Questions</h2>
 
-        <div class="faq-item">
-          <h3>Is AgriTech suitable for small-scale farmers?</h3>
-          <p>Absolutely! AgriTech is designed to be accessible and valuable for farmers of all scales, from small family
-            farms to large agricultural operations.</p>
-        </div>
+    <div class="faq-accordion">
 
-        <div class="faq-item">
-          <h3>How do I join the farmer community?</h3>
-          <p>Simply create an account on our platform and you'll have access to our community chat features where you
-            can connect with fellow farmers and share experiences.</p>
-        </div>
-
-        <div class="faq-item">
-          <h3>Do you offer training on using the platform?</h3>
-          <p>Yes! We provide comprehensive guides, video tutorials, and offer support sessions to help you get the most
-            out of all AgriTech features.</p>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How accurate are the crop recommendations?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Our AI models are trained on extensive agricultural data and provide recommendations with high accuracy
+            based on your soil conditions and local weather patterns.
+          </div>
         </div>
       </div>
-    </section>
-  </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Is AgriTech suitable for small-scale farmers?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Absolutely! AgriTech is designed to be accessible and valuable for farmers of all scales, from small family
+            farms to large agricultural operations.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How do I join the farmer community?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Simply create an account on our platform and you'll have access to our community chat features where you
+            can connect with fellow farmers and share experiences.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Do you offer training on using the platform?</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Yes! We provide comprehensive guides, video tutorials, and offer support sessions to help you get the most
+            out of all AgriTech features.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<script>
+document.querySelectorAll(".faq-question").forEach(button => {
+
+  button.addEventListener("click", () => {
+    const item = button.parentElement;
+    const answer = item.querySelector(".faq-answer");
+    const isOpen = item.classList.contains("active");
+
+    // Close all
+    document.querySelectorAll(".faq-item").forEach(faq => {
+      faq.classList.remove("active");
+      faq.querySelector(".faq-answer").style.height = 0;
+      faq.querySelector(".faq-question").setAttribute("aria-expanded", "false");
+    });
+
+    // Open selected
+    if (!isOpen) {
+      item.classList.add("active");
+      button.setAttribute("aria-expanded", "true");
+      answer.style.height = answer.scrollHeight + "px";
+    }
+  });
+
+});
+</script>
+
  <script>
   // --- NAVBAR & SCROLL EFFECTS ---
   const navbar = document.getElementById('navbar');
