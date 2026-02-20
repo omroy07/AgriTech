@@ -41,8 +41,10 @@
           <button><i class="fas fa-search"></i></button>
         </div>
 
-        <button class="nav-btn">English</button>
-        <button class="nav-btn theme-toggle">🌙 Dark Mode</button>
+        <button class="nav-btn" id="themeToggle">
+          <i class="fas fa-moon"></i>
+        </button>
+
         <a href="login.html" class="nav-btn">Login</a>
         <a href="register.html" class="nav-btn primary">Register</a>
       </div>
@@ -82,14 +84,13 @@
           <input type="text" id="forum-search" class="search-input"
             placeholder="Search for experts, topics, or solutions...">
         </div>
+
         <button class="btn-ask" id="btn-new-thread">
           <i class="fas fa-plus"></i> New Topic
         </button>
       </header>
 
-      <div id="threads-feed">
-        <!-- Threads will be injected here -->
-      </div>
+      <div id="threads-feed"></div>
     </main>
 
     <!-- Right Widgets: Trends & AI -->
@@ -108,26 +109,41 @@
       <div class="card">
         <h3><i class="fas fa-fire"></i> Trending Topics</h3>
         <div id="trending-list">
-          <p style="font-size: 0.85rem; color: var(--text-muted);">Real-time trends appearing soon...</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">
+            Real-time trends appearing soon...
+          </p>
         </div>
       </div>
     </aside>
   </div>
 
-  <!-- Create Thread Modal -->
-  <div class="modal-overlay" id="create-thread-modal">
-    <div class="card modal-content">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-        <h2 style="font-size: 1.5rem;">Start a Conversation</h2>
-        <button onclick="forum.toggleModal('create-thread-modal', false)"
-          style="background: none; border: none; cursor: pointer; font-size: 1.2rem; color: var(--text-muted);">
+  <!-- Accessible Create Thread Modal -->
+  <div class="modal-overlay" id="create-thread-modal"
+       role="dialog"
+       aria-modal="true"
+       aria-labelledby="create-thread-title"
+       aria-hidden="true">
+
+    <div class="card modal-content" tabindex="-1">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <h2 id="create-thread-title" style="font-size:1.5rem;">
+          Start a Conversation
+        </h2>
+
+        <button id="modal-close-btn"
+          style="background:none; border:none; cursor:pointer; font-size:1.2rem; color:var(--text-muted);"
+          aria-label="Close dialog">
           <i class="fas fa-times"></i>
         </button>
       </div>
 
-      <div class="form-group" style="margin-bottom: 1.25rem;">
-        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Discussion Category</label>
-        <select id="thread-category-select" class="search-input" style="padding-left: 1rem; width: 100%;">
+      <div class="form-group" style="margin-bottom:1.25rem;">
+        <label for="thread-category-select"
+          style="display:block; margin-bottom:0.5rem; font-weight:500;">
+          Discussion Category
+        </label>
+        <select id="thread-category-select" class="search-input"
+          style="padding-left:1rem; width:100%;">
           <option value="1">General Farming</option>
           <option value="2">Crop Protection</option>
           <option value="3">Soil Health</option>
@@ -135,26 +151,96 @@
         </select>
       </div>
 
-      <div class="form-group" style="margin-bottom: 1.25rem;">
-        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Topic Title</label>
-        <input type="text" id="thread-title-input" class="search-input" style="padding-left: 1rem;"
+      <div class="form-group" style="margin-bottom:1.25rem;">
+        <label for="thread-title-input"
+          style="display:block; margin-bottom:0.5rem; font-weight:500;">
+          Topic Title
+        </label>
+        <input type="text" id="thread-title-input" class="search-input"
+          style="padding-left:1rem;"
           placeholder="e.g. Best organic fertilizer for Wheat?">
       </div>
 
-      <div class="form-group" style="margin-bottom: 1.5rem;">
-        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Content Details</label>
+      <div class="form-group" style="margin-bottom:1.5rem;">
+        <label for="thread-content-input"
+          style="display:block; margin-bottom:0.5rem; font-weight:500;">
+          Content Details
+        </label>
         <textarea id="thread-content-input" class="search-input"
-          style="padding-left: 1rem; min-height: 150px; resize: vertical;"
+          style="padding-left:1rem; min-height:150px; resize:vertical;"
           placeholder="Describe your question or share your knowledge here..."></textarea>
       </div>
 
-      <div style="display: flex; justify-content: flex-end; gap: 1rem;">
-        <button onclick="forum.toggleModal('create-thread-modal', false)" class="btn-ask"
-          style="background: var(--bg-main); color: var(--text-main);">Cancel</button>
-        <button onclick="forum.createThread()" class="btn-ask">Post Discussion</button>
+      <div style="display:flex; justify-content:flex-end; gap:1rem;">
+        <button id="modal-cancel-btn"
+          class="btn-ask"
+          style="background:var(--bg-main); color:var(--text-main);">
+          Cancel
+        </button>
+
+        <button onclick="forum.createThread()" class="btn-ask">
+          Post Discussion
+        </button>
       </div>
     </div>
   </div>
+
+<script>
+  const modal = document.getElementById("create-thread-modal");
+  const modalContent = modal.querySelector(".modal-content");
+  const openBtn = document.getElementById("btn-new-thread");
+  const closeBtn = document.getElementById("modal-close-btn");
+  const cancelBtn = document.getElementById("modal-cancel-btn");
+
+  let lastFocusedElement = null;
+
+  function openModal() {
+    lastFocusedElement = document.activeElement;
+    modal.setAttribute("aria-hidden", "false");
+    modal.style.display = "flex";
+    document.body.style.overflow = "hidden";
+    trapFocus();
+    setTimeout(() => modalContent.focus(), 0);
+  }
+
+  function closeModal() {
+    modal.setAttribute("aria-hidden", "true");
+    modal.style.display = "none";
+    document.body.style.overflow = "";
+    if (lastFocusedElement) lastFocusedElement.focus();
+  }
+
+  function trapFocus() {
+    const focusable = modal.querySelectorAll(
+      'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])'
+    );
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    modal.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeModal();
+
+      if (e.key === "Tab") {
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+  }
+
+  openBtn.addEventListener("click", openModal);
+  closeBtn.addEventListener("click", closeModal);
+  cancelBtn.addEventListener("click", closeModal);
+
+  modal.addEventListener("click", function (e) {
+    if (e.target === modal) closeModal();
+  });
+</script>
 
   <!-- Scripts -->
   <script src="forum.js"></script>
@@ -224,4 +310,5 @@
 
 </body>
 
+</body>
 </html>

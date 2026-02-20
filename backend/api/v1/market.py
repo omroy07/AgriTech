@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from backend.services.market_service import MarketIntelligenceService
 from backend.models import PriceWatchlist
 from backend.extensions import db
+from backend.services.audit_service import AuditService
 
 market_bp = Blueprint('market', __name__)
 
@@ -47,6 +48,14 @@ def add_to_watchlist():
     db.session.add(watchlist_item)
     db.session.commit()
     
+    AuditService.log_action(
+        action="MARKET_WATCHLIST_ADD",
+        user_id=user_id,
+        resource_type="MARKET_WATCHLIST",
+        resource_id=str(watchlist_item.id),
+        meta_data={"crop": crop, "target": target_price}
+    )
+    
     return jsonify({
         "status": "success",
         "message": f"Added {crop} to your watchlist."
@@ -56,6 +65,13 @@ def add_to_watchlist():
 def force_refresh_prices():
     """Manual trigger for price updates (Admin/Internal use)"""
     updated = MarketIntelligenceService.fetch_live_prices()
+    
+    AuditService.log_action(
+        action="MARKET_PRICE_REFRESH_MANUAL",
+        risk_level="MEDIUM",
+        meta_data={"updated_count": len(updated)}
+    )
+    
     return jsonify({
         "status": "success",
         "updated_count": len(updated)
