@@ -36,6 +36,7 @@ from .machinery import AssetValueSnapshot
 from .labor import LaborROIHistory
 from .reliability_log import ReliabilityLog
 from .market import ForwardContract, PriceHedgingLog
+from .circular import WasteInventory, BioEnergyOutput, CircularCredit
 
 __all__ = [
     'User', 'UserRole', 'LoanRequest', 'PredictionHistory', 
@@ -67,5 +68,6 @@ __all__ = [
     'BarterTransaction', 'BarterResource', 'ResourceValueIndex',
     'FarmBalanceSheet', 'SolvencySnapshot', 'ProfitabilityIndex',
     'AssetValueSnapshot', 'LaborROIHistory', 'ReliabilityLog',
-    'ForwardContract', 'PriceHedgingLog'
+    'ForwardContract', 'PriceHedgingLog',
+    'WasteInventory', 'BioEnergyOutput', 'CircularCredit'
 ]

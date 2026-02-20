@@ -50,6 +50,21 @@ class CarbonCalculator:
         return 0.0
 
     @staticmethod
+    def calculate_circular_offset(farm_id):
+        """
+        L3 Requirement: Calculates offset from reused bio-mass (Circular Economy).
+        Reduces Scope 3 by preventing new fertilizer production.
+        """
+        from backend.models.circular import WasteInventory
+        reused_waste = db.session.query(db.func.sum(WasteInventory.quantity_kg)).filter_by(
+            farm_id=farm_id, 
+            is_reused_on_farm=True
+        ).scalar() or 0.0
+        
+        # 3.0 kg CO2e offset per kg of organic recovery
+        return reused_waste * 3.0
+
+    @staticmethod
     def run_full_audit(farm_id, batch_id=None):
         """Generates a CarbonLedger entry for a farm or specific batch."""
         # This is a simplified aggregation for the audit
@@ -68,14 +83,17 @@ class CarbonCalculator:
         s2 = CarbonCalculator.calculate_scope_2(total_elec)
         s3 = 0.0 # Aggregated from recent BulkOrders
         
+        # Apply Circular Economy Offsets (L3-1594)
+        circular_offset = CarbonCalculator.calculate_circular_offset(farm_id)
+        
         ledger = CarbonLedger(
             farm_id=farm_id,
             batch_id=batch_id,
             scope_1_direct=s1,
             scope_2_indirect=s2,
-            scope_3_supply_chain=s3,
+            scope_3_supply_chain=max(0.0, s3 - circular_offset),
             total_footprint=s1 + s2 + s3,
-            net_carbon_balance=s1 + s2 + s3 # Sequestration not yet subtracted
+            net_carbon_balance=s1 + s2 + s3 - circular_offset
         )
         db.session.add(ledger)
         db.session.commit()
