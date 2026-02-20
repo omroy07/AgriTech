@@ -506,32 +506,60 @@ body {
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
 
+/* ===== FIXED MODAL HEADER LAYOUT ===== */
+
 .modal-header {
-    padding: 1.2rem 1.5rem; /* reduced height */
+    padding: 1.8rem 1.5rem 1.2rem 1.5rem;
     border-bottom: 1px solid var(--border-color);
     background: white;
     border-radius: 15px 15px 0 0;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 }
 
+/* Top row (title + icons) */
+.modal-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+/* Title */
+.modal-title {
+    font-size: 2rem;
+    color: var(--green-dark);
+    margin: 0;
+    line-height: 1.3;
+}
+
+/* Icons container */
 .icons {
-    position: absolute;
-    top: 30px;
-    right: 30px;
     display: flex;
     gap: 10px;
     align-items: center;
 }
 
-.modal-title {
-    font-size: 2rem;
-    color: var(--green-dark);
-    margin-bottom: 1rem;
-    line-height: 1.3;
-    padding-right: 100px;
+/* Meta section */
+.modal-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    font-size: 0.9rem;
+    color: #94a3b8;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Category badge */
+.modal-category {
+    display: inline-block;
+    align-self: flex-start;
+    background: var(--green-primary);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
 }
 
 .modal-meta {
