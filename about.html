@@ -268,6 +268,41 @@
     .footer-wave-overlay {
       display: none;
     }
+
+    /* Scroll To Top Button */
+    .scroll-top-btn {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: none;
+        background: #2ecc71;
+        color: #ffffff;
+        font-size: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+        z-index: 9999;
+    }
+
+    .scroll-top-btn.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .scroll-top-btn:hover {
+        background: #27ae60;
+        transform: scale(1.1);
+    }
 </style>
 <!-- Cursor Trail -->
 <div class="circle-container" id="cursorTrail"></div>
@@ -443,6 +478,33 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById("current-year").textContent =
     new Date().getFullYear();
 </script>
+<button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <i class="fas fa-arrow-up"></i>
+</button>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
 
+    if (!scrollTopBtn) return;
+
+    // Monitor Scroll Position
+    window.addEventListener("scroll", function () {
+        // Show button after scrolling down 300px
+        if (window.pageYOffset > 300) {
+            scrollTopBtn.classList.add("show");
+        } else {
+            scrollTopBtn.classList.remove("show");
+        }
+    });
+
+    // Scroll to top on click
+    scrollTopBtn.addEventListener("click", function () {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+});
+</script>
 </body>
 </html>
