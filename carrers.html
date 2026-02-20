@@ -33,77 +33,123 @@
                 </div>
             </div>
 
-            <!-- Job Openings -->
-            <div class="job-openings">
-                <h2>Current Openings</h2>
-                <div class="job-list">
-                    <!-- Job 1 -->
-                    <div class="job-card">
-                        <h3>Senior Agronomist</h3>
-                        <span class="job-department">Research & Development</span>
-                        <p class="job-description">Lead research initiatives to improve crop yield through data-driven insights and innovative farming techniques.</p>
-                        <div class="job-details">
-                            <div class="job-detail">
-                                <i class="fa-solid fa-location-dot"></i>
-                                <span>Remote</span>
-                            </div>
-                            <div class="job-detail">
-                                <i class="fa-solid fa-clock"></i>
-                                <span>Full-time</span>
-                            </div>
-                            <div class="job-detail">
-                                <i class="fa-solid fa-calendar"></i>
-                                <span>Posted 2 days ago</span>
-                            </div>
-                        </div>
-                        <button class="btn-apply">Apply Now</button>
-                    </div>
-                    
-                    <!-- Job 2 -->
-                    <div class="job-card">
-                        <h3>Full Stack Developer</h3>
-                        <span class="job-department">Engineering</span>
-                        <p class="job-description">Build scalable applications for farm management, data analytics, and IoT integration in agriculture.</p>
-                        <div class="job-details">
-                            <div class="job-detail">
-                                <i class="fa-solid fa-location-dot"></i>
-                                <span>Remote/Hybrid</span>
-                            </div>
-                            <div class="job-detail">
-                                <i class="fa-solid fa-clock"></i>
-                                <span>Full-time</span>
-                            </div>
-                            <div class="job-detail">
-                                <i class="fa-solid fa-calendar"></i>
-                                <span>Posted 1 week ago</span>
-                            </div>
-                        </div>
-                        <button class="btn-apply">Apply Now</button>
-                    </div>
-                    
-                    <!-- Job 3 -->
-                    <div class="job-card">
-                        <h3>Data Scientist</h3>
-                        <span class="job-department">Analytics</span>
-                        <p class="job-description">Develop predictive models for crop disease, weather patterns, and soil health using machine learning.</p>
-                        <div class="job-details">
-                            <div class="job-detail">
-                                <i class="fa-solid fa-location-dot"></i>
-                                <span>Remote</span>
-                            </div>
-                            <div class="job-detail">
-                                <i class="fa-solid fa-clock"></i>
-                                <span>Full-time</span>
-                            </div>
-                            <div class="job-detail">
-                                <i class="fa-solid fa-calendar"></i>
-                                <span>Posted 3 days ago</span>
-                            </div>
-                        </div>
-                        <button class="btn-apply">Apply Now</button>
-                    </div>
-                </div>
+            <!-- 🌿 Modern Job Openings Section (Enhanced UI + Search + Filter + Modal Ready) -->
+<div class="job-openings modern-jobs">
+    <div class="jobs-header">
+        <div class="jobs-title">
+            <h2><i class="fa-solid fa-briefcase"></i> Current Openings</h2>
+            <p class="jobs-subtitle">Discover roles where technology meets agriculture 🚜</p>
+        </div>
+
+        <!-- Search & Filter Controls -->
+        <div class="jobs-controls">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input 
+                    type="text" 
+                    id="jobSearch" 
+                    placeholder="Search by role, keyword..."
+                />
             </div>
+
+            <select id="jobFilter" class="department-filter">
+                <option value="all">All Departments</option>
+                <option value="Research & Development">Research & Development</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Analytics">Analytics</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Job Grid -->
+    <div class="job-grid" id="jobList">
+
+        <!-- Job 1 -->
+        <div class="job-card modern-card"
+             data-title="Senior Agronomist"
+             data-department="Research & Development">
+             
+            <div class="job-top">
+                <div>
+                    <h3>Senior Agronomist</h3>
+                    <span class="job-badge r&d">Research & Development</span>
+                </div>
+                <span class="job-type">Full-time</span>
+            </div>
+
+            <p class="job-description">
+                Lead research initiatives to improve crop yield through data-driven insights and innovative farming techniques.
+            </p>
+
+            <div class="job-meta">
+                <span><i class="fa-solid fa-location-dot"></i> Remote</span>
+                <span><i class="fa-solid fa-calendar"></i> Posted 2 days ago</span>
+            </div>
+
+            <div class="job-footer">
+                <button class="btn-view-details">View Details</button>
+                <button class="btn-apply">Apply Now</button>
+            </div>
+        </div>
+
+        <!-- Job 2 -->
+        <div class="job-card modern-card"
+             data-title="Full Stack Developer"
+             data-department="Engineering">
+
+            <div class="job-top">
+                <div>
+                    <h3>Full Stack Developer</h3>
+                    <span class="job-badge eng">Engineering</span>
+                </div>
+                <span class="job-type">Full-time</span>
+            </div>
+
+            <p class="job-description">
+                Build scalable applications for farm management, data analytics, and IoT integration in agriculture.
+            </p>
+
+            <div class="job-meta">
+                <span><i class="fa-solid fa-location-dot"></i> Remote / Hybrid</span>
+                <span><i class="fa-solid fa-calendar"></i> Posted 1 week ago</span>
+            </div>
+
+            <div class="job-footer">
+                <button class="btn-view-details">View Details</button>
+                <button class="btn-apply">Apply Now</button>
+            </div>
+        </div>
+
+        <!-- Job 3 -->
+        <div class="job-card modern-card"
+             data-title="Data Scientist"
+             data-department="Analytics">
+
+            <div class="job-top">
+                <div>
+                    <h3>Data Scientist</h3>
+                    <span class="job-badge analytics">Analytics</span>
+                </div>
+                <span class="job-type">Full-time</span>
+            </div>
+
+            <p class="job-description">
+                Develop predictive models for crop disease, weather patterns, and soil health using machine learning.
+            </p>
+
+            <div class="job-meta">
+                <span><i class="fa-solid fa-location-dot"></i> Remote</span>
+                <span><i class="fa-solid fa-calendar"></i> Posted 3 days ago</span>
+            </div>
+
+            <div class="job-footer">
+                <button class="btn-view-details">View Details</button>
+                <button class="btn-apply">Apply Now</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
             <!-- Benefits Section -->
             <div class="benefits-section">
@@ -245,6 +291,134 @@
         background: rgba(255, 255, 255, 0.2);
         transform: translateY(-2px);
       }
+
+      /* ===== Modern Jobs Section ===== */
+.modern-jobs {
+    margin-top: 2rem;
+}
+
+.jobs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.jobs-subtitle {
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+/* Search Box */
+.jobs-controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: #f4f6f5;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    background: transparent;
+    margin-left: 8px;
+    font-size: 0.9rem;
+    width: 200px;
+}
+
+.department-filter {
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    cursor: pointer;
+}
+
+/* Grid Layout */
+.job-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Modern Card */
+.modern-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid #e6f4ea;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.modern-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(46,125,50,0.15);
+}
+
+/* Top Section */
+.job-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.job-badge {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #e8f5e9;
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+.job-type {
+    font-size: 0.8rem;
+    background: #f1f5f9;
+    padding: 4px 10px;
+    border-radius: 8px;
+}
+
+/* Meta Info */
+.job-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 10px;
+}
+
+/* Footer Buttons */
+.job-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.btn-view-details {
+    background: transparent;
+    border: 2px solid #2e7d32;
+    color: #2e7d32;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-view-details:hover {
+    background: #2e7d32;
+    color: white;
+}
         
       #scrollTopBtn {
         position: fixed;
