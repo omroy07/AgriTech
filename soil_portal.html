@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soil Health Insights | AgriTech</title>
+    <meta name="description" content="Soil Health Insights dashboard providing farm-wise nutrient trends, soil metrics, and personalized agricultural recommendations.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --earth: #78350f;
@@ -160,7 +161,7 @@
         <aside class="sidebar">
             <h2 style="color: var(--clay);"><i class="fas fa-seedling"></i> TerraProbe</h2>
             <p style="opacity: 0.7; font-size: 0.9rem;">Advanced Soil Health Intelligence</p>
-            <div class="farm-selector" id="farm-list">
+            <div class="farm-selector" id="farm-list" aria-live="polite">
                 <!-- Farm Cards Injected Here -->
             </div>
             <button class="btn btn-leaf" style="width: 100%; margin-top: 2rem;" onclick="openTestModal()">+ Log Soil
@@ -169,27 +170,27 @@
 
         <main class="main">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                <h1 id="active-farm-name">Select a Farm</h1>
-                <div id="last-test-date" style="font-size: 0.9rem; color: #78716c;"></div>
+                <h1 id="active-farm-name" aria-live="polite">Select a Farm</h1>
+                <div id="last-test-date" style="font-size: 0.9rem; color: #78716c;" aria-live="polite"></div>
             </div>
 
             <div class="metrics-grid">
                 <div class="stat-card">
-                    <div class="stat-val" id="val-ph">-</div>
+                    <div class="stat-val" id="val-ph" aria-live="polite">-</div>
                     <div class="stat-label">Soil pH</div>
                     <div class="nutrient-bar">
                         <div class="nutrient-fill" id="fill-ph" style="background: #f59e0b;"></div>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-val" id="val-oc">-</div>
+                    <div class="stat-val" id="val-oc" aria-live="polite">-</div>
                     <div class="stat-label">Organic Matter (%)</div>
                     <div class="nutrient-bar">
                         <div class="nutrient-fill" id="fill-oc" style="background: #10b981;"></div>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-val" id="val-ec">-</div>
+                    <div class="stat-val" id="val-ec" aria-live="polite">-</div>
                     <div class="stat-label">Conductivity (dS/m)</div>
                     <div class="nutrient-bar">
                         <div class="nutrient-fill" id="fill-ec" style="background: #3b82f6;"></div>
@@ -200,12 +201,12 @@
             <div class="dashboard-layout">
                 <div class="card">
                     <h3>Nutrient Trend Analysis (ppm)</h3>
-                    <canvas id="nutrientChart"></canvas>
+                    <canvas id="nutrientChart">Nutrient trend chart visualization</canvas>
                 </div>
 
                 <div class="card">
                     <h3>Personalized Recommendations</h3>
-                    <div id="rec-container" class="recommendation-list">
+                    <div id="rec-container" class="recommendation-list" aria-live="polite">
                         <p style="text-align: center; opacity: 0.5;">Load a farm to see recommendations.</p>
                     </div>
                 </div>
@@ -213,8 +214,8 @@
         </main>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="soil_portal.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script defer src="soil_portal.js"></script>
 </body>
 
 </html>
