@@ -27,6 +27,9 @@ class IrrigationZone(db.Model):
     
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
+    # Bio-Security & Resource Control (L3-1596 & L3-1605)
+    banned_by_system = db.Column(db.Boolean, default=False) # Hydro-Lock trigger
+    
     # Change logs and sensor data
     sensor_logs = db.relationship('SensorLog', backref='zone', lazy='dynamic', cascade='all, delete-orphan')
     
@@ -126,3 +129,27 @@ class IrrigationSchedule(db.Model):
     
     is_active = db.Column(db.Boolean, default=True)
     last_run = db.Column(db.DateTime)
+
+class AquiferLevel(db.Model):
+    __tablename__ = 'aquifer_levels'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    region_name = db.Column(db.String(100), nullable=False)
+    
+    current_depth_meters = db.Column(db.Float)
+    depletion_rate = db.Column(db.Float) # meters per year
+    
+    last_survey_date = db.Column(db.DateTime, default=datetime.utcnow)
+
+class WaterRightsQuota(db.Model):
+    __tablename__ = 'water_rights_quotas'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    farm_id = db.Column(db.Integer, db.ForeignKey('farms.id'), nullable=False)
+    aquifer_id = db.Column(db.Integer, db.ForeignKey('aquifer_levels.id'), nullable=False)
+    
+    total_quota_liters = db.Column(db.Float, nullable=False)
+    used_quota_liters = db.Column(db.Float, default=0.0)
+    
+    renewal_date = db.Column(db.DateTime)
+    status = db.Column(db.String(20), default='ACTIVE') # ACTIVE, SUSPENDED, EXHAUSTED

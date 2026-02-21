@@ -52,6 +52,11 @@ class ValueOrchestrator:
             base_val = item.base_price
             details['base_price'] = item.base_price
 
+        elif category == 'WATER_QUOTA':
+            # Base value for 1 liter of water rights
+            base_val = 0.05 # 1 credit per 20 liters
+            details['base_rate'] = base_val
+
         # Apply Global Demand Multiplier
         final_unit_value = base_val * global_multiplier
         total_value = final_unit_value * quantity
@@ -80,6 +85,22 @@ class BarterService:
         )
         db.session.add(transaction)
         db.session.flush() # Get transaction ID
+
+        # L3-1605: Water Quota Geo-Fencing Check
+        is_water_trade = any(res['category'] == 'WATER_QUOTA' for res in offered_resources + requested_resources)
+        if is_water_trade:
+            from backend.services.hydro_engine import HydroEngine
+            from backend.models.farm import FarmMember
+            
+            init_membership = FarmMember.query.filter_by(user_id=initiator_id).first()
+            resp_membership = FarmMember.query.filter_by(user_id=responder_id).first()
+            
+            if init_membership and resp_membership:
+                valid, msg = HydroEngine.validate_quota_trade(init_membership.farm_id, resp_membership.farm_id)
+                if not valid:
+                    db.session.rollback()
+                    logger.error(f"HYDRO-LOCK VIOLATION: {msg}")
+                    return None # Transaction aborted
 
         # Process Offered Resources (from Initiator)
         for res in offered_resources:

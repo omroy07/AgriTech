@@ -119,3 +119,23 @@ class NotificationService:
         if unread_only:
             query = query.filter(Notification.read_at.is_(None))
         return query.order_by(Notification.sent_at.desc()).all()
+
+    @staticmethod
+    def broadcast_hydro_lock_warning(farm_id, usage_ratio):
+        """
+        Specialized broadcast for water quota warnings (L3-1605).
+        """
+        percent = usage_ratio * 100
+        if percent >= 99:
+            msg = "1% REMAINING. Hydro-Lock will be enforced across all zones in minutes."
+        elif percent >= 95:
+            msg = "5% REMAINING. Please reduce irrigation immediately to avoid regional shutdown."
+        else:
+            msg = "10% REMAINING. Water quota is nearing its subsurface limit."
+
+        return NotificationService.create_notification(
+            title="AQUIFER QUOTA WARNING",
+            message=msg,
+            notification_type="RESOURCE_ADVISORY",
+            user_id=farm_id
+        )

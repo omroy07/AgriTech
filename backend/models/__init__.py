@@ -19,7 +19,7 @@ from .weather import WeatherData, CropAdvisory, AdvisorySubscription, RiskTrigge
 from .sustainability import CarbonPractice, CreditLedger, AuditRequest, CarbonLedger, EmissionSource, SustainabilityScore
 from .vendor_profile import VendorProfile # Updated from procurement to vendor_profile
 from .procurement import ProcurementItem, BulkOrder, OrderEvent
-from .irrigation import IrrigationZone, SensorLog, ValveStatus, IrrigationSchedule
+from .irrigation import IrrigationZone, SensorLog, ValveStatus, IrrigationSchedule, AquiferLevel, WaterRightsQuota
 from .processing import ProcessingBatch, StageLog, QualityCheck, ProcessingStage
 from .insurance_v2 import CropPolicy, ClaimRequest, PayoutLedger, AdjusterNote
 from .machinery import EngineHourLog, MaintenanceCycle, DamageReport, RepairOrder
@@ -75,11 +75,10 @@ __all__ = [
     'FarmBalanceSheet', 'SolvencySnapshot', 'ProfitabilityIndex',
     'AssetValueSnapshot', 'LaborROIHistory', 'ReliabilityLog',
     'MigrationVector', 'ContainmentZone',
-    # Double-Entry Ledger System
+    'ForwardContract', 'PriceHedgingLog',
+    'WasteInventory', 'BioEnergyOutput', 'CircularCredit',
     'LedgerAccount', 'LedgerTransaction', 'LedgerEntry',
     'FXValuationSnapshot', 'Vault', 'VaultCurrencyPosition', 'FXRate',
-    'AccountType', 'EntryType', 'TransactionType'
-    'ForwardContract', 'PriceHedgingLog',
-    'WasteInventory', 'BioEnergyOutput', 'CircularCredit'
-    'MigrationVector', 'ContainmentZone'
+    'AccountType', 'EntryType', 'TransactionType',
+    'AquiferLevel', 'WaterRightsQuota'
 ]
