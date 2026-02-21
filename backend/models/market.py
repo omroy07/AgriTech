@@ -1,6 +1,8 @@
 from datetime import datetime
 from backend.extensions import db
 
+# L3-1560: Predictive Harvest Velocity & Autonomous Futures Hedging
+
 class ForwardContract(db.Model):
     __tablename__ = 'forward_contracts'
     

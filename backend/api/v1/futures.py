@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+# L3-1560: Predictive Harvest Velocity & Autonomous Futures Hedging
 from backend.services.velocity_engine import VelocityEngine
 from backend.models.market import ForwardContract, PriceHedgingLog
 from backend.models.farm import Farm

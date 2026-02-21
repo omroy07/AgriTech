@@ -2,6 +2,8 @@ from datetime import datetime
 from backend.extensions import db
 from enum import Enum
 
+# L3-1560: Predictive Harvest Velocity & Autonomous Futures Hedging
+
 class FarmRole(Enum):
     OWNER = "owner"
     MANAGER = "manager"

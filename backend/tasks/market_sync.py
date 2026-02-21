@@ -1,4 +1,5 @@
 from backend.celery_app import celery_app
+# L3-1560: Predictive Harvest Velocity & Autonomous Futures Hedging
 from backend.services.velocity_engine import VelocityEngine
 from backend.models.farm import Farm
 from backend.models.market import ForwardContract, PriceHedgingLog

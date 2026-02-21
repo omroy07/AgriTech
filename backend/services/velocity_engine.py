@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+# L3-1560: Predictive Harvest Velocity & Autonomous Futures Hedging
 from backend.models.farm import Farm
 from backend.models.weather import WeatherData
 from backend.models.soil_health import SoilTest
