@@ -38,6 +38,11 @@ from .reliability_log import ReliabilityLog
 from .market import ForwardContract, PriceHedgingLog
 from .circular import WasteInventory, BioEnergyOutput, CircularCredit
 from .disease import MigrationVector, ContainmentZone
+from .ledger import (
+    LedgerAccount, LedgerTransaction, LedgerEntry,
+    FXValuationSnapshot, Vault, VaultCurrencyPosition, FXRate,
+    AccountType, EntryType, TransactionType
+)
 
 __all__ = [
     'User', 'UserRole', 'LoanRequest', 'PredictionHistory', 
@@ -69,6 +74,11 @@ __all__ = [
     'BarterTransaction', 'BarterResource', 'ResourceValueIndex',
     'FarmBalanceSheet', 'SolvencySnapshot', 'ProfitabilityIndex',
     'AssetValueSnapshot', 'LaborROIHistory', 'ReliabilityLog',
+    'MigrationVector', 'ContainmentZone',
+    # Double-Entry Ledger System
+    'LedgerAccount', 'LedgerTransaction', 'LedgerEntry',
+    'FXValuationSnapshot', 'Vault', 'VaultCurrencyPosition', 'FXRate',
+    'AccountType', 'EntryType', 'TransactionType'
     'ForwardContract', 'PriceHedgingLog',
     'WasteInventory', 'BioEnergyOutput', 'CircularCredit'
     'MigrationVector', 'ContainmentZone'
