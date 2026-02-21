@@ -70,6 +70,6 @@ __all__ = [
     'FarmBalanceSheet', 'SolvencySnapshot', 'ProfitabilityIndex',
     'AssetValueSnapshot', 'LaborROIHistory', 'ReliabilityLog',
     'ForwardContract', 'PriceHedgingLog',
-    'WasteInventory', 'BioEnergyOutput', 'CircularCredit'
+    'WasteInventory', 'BioEnergyOutput', 'CircularCredit',
     'MigrationVector', 'ContainmentZone'
 ]
