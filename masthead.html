@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AgriTech | Masthead</title>
+<meta name="description" content="AI-powered smart farming platform offering crop recommendations, disease detection, yield prediction, and community collaboration for sustainable agriculture.">
 
 <style>
 :root {
@@ -88,13 +89,13 @@ footer{text-align:center;color:var(--text-muted);padding:1rem}
 
 <header>
   <h1 style="color:var(--accent-color)">AgriTech Masthead</h1>
-  <button onclick="toggleTheme()">Toggle Theme</button>
+  <button onclick="toggleTheme()" aria-label="Toggle theme">Toggle Theme</button>
 </header>
 
 <main>
 
 <section>
-<h2>🌱 Project Overview</h2>
+<h2><span aria-hidden="true">🌱</span> Project Overview</h2>
 <p style="color:var(--text-muted)">
 AI-powered smart farming platform offering crop recommendations, disease detection,
 yield prediction, and community collaboration.
@@ -102,13 +103,13 @@ yield prediction, and community collaboration.
 </section>
 
 <section>
-<h2>🎯 Vision & Mission</h2>
+<h2><span aria-hidden="true">🎯</span> Vision & Mission</h2>
 <p><b>Vision:</b> Empower farmers with AI-driven sustainable agriculture.</p>
 <p><b>Mission:</b> Bridge modern technology with traditional farming.</p>
 </section>
 
 <section>
-<h2>🧑‍💼 Project Admin</h2>
+<h2><span aria-hidden="true">🧑‍💼</span> Project Admin</h2>
 <div class="grid">
   <div class="card"><h3>Om Roy</h3><small>Project Lead · Web · ML</small></div>
   <div class="card"><h3>Shubhangi Roy</h3><small>ML · Backend</small></div>
@@ -116,21 +117,22 @@ yield prediction, and community collaboration.
 </section>
 
 <section>
-<h2>🤝 Contributors</h2>
+<h2><span aria-hidden="true">🤝</span> Contributors</h2>
 <div id="contributors" class="grid"></div>
 
 <div class="toggle">
-  <a href="#" onclick="toggleContributors()" style="color:var(--accent-color)">
+  <button type="button" onclick="toggleContributors()" style="color:var(--accent-color);background:none;border:none;cursor:pointer">
     View all contributors →
-  </a>
+  </button>
 </div>
 </section>
 
 <section>
-<h2>📬 Contact</h2>
+<h2><span aria-hidden="true">📬</span> Contact</h2>
 <p>
 📧 agritech.opensource@gmail.com <br>
 🌐 <a href="https://github.com/omroy07/AgriTech" target="_blank"
+     rel="noopener noreferrer"
      style="color:var(--accent-color)">GitHub Repository</a>
 </p>
 </section>
@@ -165,7 +167,7 @@ function renderContributors() {
         <img src="${c.avatar_url}" alt="${c.login}">
         <h3>${c.login}</h3>
         <small>Commits: ${c.contributions}</small>
-        <a href="${c.html_url}" target="_blank">GitHub Profile →</a>
+        <a href="${c.html_url}" target="_blank" rel="noopener noreferrer">GitHub Profile →</a>
       </div>
     `;
   });
