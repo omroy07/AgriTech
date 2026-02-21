@@ -37,6 +37,7 @@ from .labor import LaborROIHistory
 from .reliability_log import ReliabilityLog
 from .market import ForwardContract, PriceHedgingLog
 from .circular import WasteInventory, BioEnergyOutput, CircularCredit
+from .disease import MigrationVector, ContainmentZone
 
 __all__ = [
     'User', 'UserRole', 'LoanRequest', 'PredictionHistory', 
@@ -70,4 +71,5 @@ __all__ = [
     'AssetValueSnapshot', 'LaborROIHistory', 'ReliabilityLog',
     'ForwardContract', 'PriceHedgingLog',
     'WasteInventory', 'BioEnergyOutput', 'CircularCredit'
+    'MigrationVector', 'ContainmentZone'
 ]

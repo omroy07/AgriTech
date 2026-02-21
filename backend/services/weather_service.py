@@ -63,6 +63,16 @@ class WeatherService:
                 group_key=f"rain_{location}"
             )
             
+        # Pest Breeding Vector Alerts (L3-1596)
+        if weather.humidity > 80.0 and weather.temperature > 25.0:
+            AlertRegistry.register_alert(
+                title="Pest Breeding Vector Detected",
+                message=f"High humidity ({weather.humidity}%) and temperature ({weather.temperature}°C) in {location} are optimal for pest proliferation. Triggering preventive scouting.",
+                category="BIO_SECURITY",
+                priority="HIGH",
+                group_key=f"vector_{location}"
+            )
+            
         # Insurance Risk Trigger (L3-1557)
         from backend.models.weather import RiskTrigger
         from backend.models.insurance import InsurancePolicy

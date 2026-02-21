@@ -41,6 +41,11 @@ class IrrigationZone(db.Model):
     # Sustainability (L3-1558)
     total_water_withdrawn = db.Column(db.Float, default=0.0) # Liters
     electricity_usage_kwh = db.Column(db.Float, default=0.0)
+    
+    # Bio-Security (L3-1596)
+    pest_control_mode = db.Column(db.Boolean, default=False) # Fertigation-based defense
+    pest_neutralization_active = db.Column(db.Boolean, default=False)
+    target_pest_id = db.Column(db.Integer) # Reference to outbreak
 
     def to_dict(self):
         data = {

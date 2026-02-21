@@ -43,6 +43,7 @@ from .barter import barter_bp
 from .financials import financials_bp
 from .futures import futures_bp
 from .circular import circular_bp
+from .biosecurity import biosecurity_bp
 
 # Create v1 API blueprint
 api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1')
@@ -92,3 +93,4 @@ api_v1.register_blueprint(barter_bp, url_prefix='/barter')
 api_v1.register_blueprint(financials_bp, url_prefix='/financials')
 api_v1.register_blueprint(futures_bp, url_prefix='/futures')
 api_v1.register_blueprint(circular_bp, url_prefix='/circular')
+api_v1.register_blueprint(biosecurity_bp, url_prefix='/biosecurity')

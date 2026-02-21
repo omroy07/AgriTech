@@ -66,6 +66,11 @@ class SupplyBatch(db.Model):
     
     # Predictive Velocity (L3-1560)
     predicted_quality_grade = db.Column(db.String(10)) # A, B, C based on pre-harvest flux
+    # Bio-Security (L3-1596)
+    # Status: CLEAN, SUSPECTED, QUARANTINED, REJECTED
+    quarantine_status = db.Column(db.String(20), default='CLEAN')
+    bio_clearance_hash = db.Column(db.String(64)) # Required for logistics manifest
+    contact_tracing_metadata = db.Column(db.Text) # JSON of previous exposures
     
     # Timestamps
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
