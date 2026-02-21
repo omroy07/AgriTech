@@ -68,6 +68,9 @@ class BulkOrder(db.Model):
     tax_amount = db.Column(db.Float)
     shipping_cost = db.Column(db.Float, default=0)
     
+    # Real-time Quality Adjustment (L3-1604)
+    real_time_price_modifier = db.Column(db.Float, default=1.0) # Multiply unit_price by this
+    
     # Logistics Escrow
     customs_clearance_status = db.Column(db.String(20), default='PENDING')
     funds_in_escrow = db.Column(db.Boolean, default=False)
