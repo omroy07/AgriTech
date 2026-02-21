@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Warehouse Control Center | AgriTech</title>
+    <meta name="description" content="Warehouse Control Center dashboard for real-time inventory tracking, stock management, expiry alerts, and automated reconciliation.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -196,20 +197,24 @@
             <div class="card">
                 <h3>Inventory Ledger</h3>
                 <table class="inventory-table" id="inventory-table">
+                    <caption style="text-align:left; font-weight:600; margin-bottom:0.5rem;">
+                        Inventory items with quantity, reorder level, status, and expiry information
+                    </caption>
                     <thead>
                         <tr>
-                            <th>SKU</th>
-                            <th>Item Name</th>
-                            <th>Category</th>
-                            <th>Quantity</th>
-                            <th>Reorder Point</th>
-                            <th>Status</th>
-                            <th>Expiry</th>
+                            <th scope="col">SKU</th>
+                            <th scope="col">Item Name</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Reorder Point</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Expiry</th>
                         </tr>
                     </thead>
-                    <tbody id="inventory-body">
+                    <tbody id="inventory-body" aria-live="polite">
                         <tr>
-                            <td colspan="7" style="text-align:center; padding: 3rem; opacity: 0.5;">Loading inventory...
+                            <td colspan="7" style="text-align:center; padding: 3rem; opacity: 0.5;">
+                                Loading inventory...
                             </td>
                         </tr>
                     </tbody>
@@ -225,8 +230,8 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="warehouse_control.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script defer src="warehouse_control.js"></script>
 </body>
 
 </html>
