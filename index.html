@@ -1975,33 +1975,33 @@
 
       <!-- Left Nav Links -->
       <div class="left-nav">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="about.html" class="nav-link">About</a>
-        <a href="blog.html" class="nav-link">Blog</a>
-        <a href="news.html" class="nav-link">Ag News</a>
-        <a href="scheme.html" class="nav-link">Schemes</a>
-        <a href="community_forum.html" class="nav-link">Community Forum</a>
+       <a href="index.html" class="nav-link" data-i18n="home">Home</a>
+<a href="about.html" class="nav-link" data-i18n="about">About</a>
+<a href="blog.html" class="nav-link" data-i18n="blog">Blog</a>
+<a href="news.html" class="nav-link" data-i18n="ag_News">Ag News</a>
+<a href="scheme.html" class="nav-link" data-i18n="schemes">Schemes</a>
+<a href="community_forum.html"  class="nav-link" data-i18n="community_Forum">Community Forum</a>
         <!-- Services Dropdown -->
         <div class="services-toggle-container">
-          <a href="#" class="nav-link services-toggle">
-            Services <i class="fas fa-chevron-down services-arrow"></i>
-          </a>
+          <a href="#" class="nav-link services-toggle" data-i18n="services">
+  Services
+</a>
           <div class="services-dropdown">
             <ul class="services-list">
               <li>
-                <a href="crop.html"><i class="fas fa-seedling"></i> Smart Crop Monitoring</a>
+                <a href="crop.html" data-i18n="smart_crop">Smart Crop Monitoring</a>
               </li>
               <li>
-                <a href="supply-chain.html"><i class="fas fa-truck"></i> Supply Chain Support</a>
+                <a href="supply-chain.html" data-i18n="Supply Chain Support"><i class="fas fa-truck"></i> Supply Chain Support</a>
               </li>
               <li>
-                <a href="sustainable-farming.html"><i class="fas fa-leaf"></i> Sustainable Farming Guidance</a>
+                <a href="sustainable-farming.html" data-i18n="sustainablefarming">Sustainable Farming Guidance</a>
               </li>
               <li>
-                <a href="marketplace.html"><i class="fas fa-store"></i> Marketplace Services</a>
+                <a href="marketplace.html" data-i18n="marketplace">Marketplace Services</a>
               </li>
               <li>
-                <a href="financial-support.html"><i class="fas fa-dollar-sign"></i> Financial & Insurance
+                <a href="financial-support.html" data-i18n="financial_and_insurance_support"><i class="fas fa-dollar-sign"></i> Financial & Insurance
                   Support</a>
               </li>
             </ul>
@@ -2044,7 +2044,7 @@
         <button class="theme-toggle btn" id="themeToggleBtn" type="button">
           <i class="fas fa-sun theme-icon-sun"></i>
           <i class="fas fa-moon theme-icon-moon" style="display: none;"></i>
-          <span class="theme-text">Light</span>
+          <span class="theme-text" data-i18n="light_theme">Light</span>
         </button>
 
         <a href="login.html" class="btn btn-secondary" data-i18n="login">Login</a>
@@ -3039,6 +3039,14 @@
             }, 100);
           });
         });
+        document.querySelectorAll("[data-i18n]").forEach(el => {
+  const key = el.dataset.i18n.trim();
+  const translation = translations[currentLang]?.[key];
+
+  if (translation) {
+    el.textContent = translation;
+  }
+});
       }
     }
 
