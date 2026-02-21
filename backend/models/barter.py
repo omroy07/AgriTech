@@ -62,8 +62,8 @@ class BarterResource(db.Model):
     provider_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     
     # Resource Metadata
-    resource_category = db.Column(db.String(50), nullable=False) # MACHINERY, LABOR, COMMODITY, SEEDS
-    resource_reference_id = db.Column(db.Integer) # e.g. Equipment ID or ProcurementItem ID
+    resource_category = db.Column(db.String(50), nullable=False) # MACHINERY, LABOR, COMMODITY, SEEDS, CIRCULAR_CREDIT
+    resource_reference_id = db.Column(db.Integer) # e.g. Equipment ID or CircularCredit ID
     resource_name = db.Column(db.String(100))
     
     quantity = db.Column(db.Float, nullable=False)

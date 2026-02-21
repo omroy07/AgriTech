@@ -41,6 +41,8 @@ from .gews import gews_bp
 from .transparency import transparency_bp
 from .barter import barter_bp
 from .financials import financials_bp
+from .futures import futures_bp
+from .circular import circular_bp
 from .biosecurity import biosecurity_bp
 from .vaults import vaults_bp
 
@@ -90,5 +92,7 @@ api_v1.register_blueprint(gews_bp, url_prefix='/gews')
 api_v1.register_blueprint(transparency_bp, url_prefix='/transparency')
 api_v1.register_blueprint(barter_bp, url_prefix='/barter')
 api_v1.register_blueprint(financials_bp, url_prefix='/financials')
+api_v1.register_blueprint(futures_bp, url_prefix='/futures')
+api_v1.register_blueprint(circular_bp, url_prefix='/circular')
 api_v1.register_blueprint(biosecurity_bp, url_prefix='/biosecurity')
 api_v1.register_blueprint(vaults_bp, url_prefix='/vaults')
