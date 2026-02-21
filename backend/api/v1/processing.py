@@ -89,3 +89,49 @@ def get_genealogy(current_user, batch_id):
         'status': 'success',
         'data': history
     }), 200
+
+@processing_bp.route('/batches/<int:batch_id>/spectral-scan', methods=['POST'])
+@token_required
+def submit_spectral_scan(current_user, batch_id):
+    """
+    Ingest raw chemical scan data and trigger autonomous financial updates.
+    """
+    from backend.services.grading_engine import GradingEngine
+    data = request.get_json()
+    if not data:
+        return jsonify({'status': 'error', 'message': 'No scan data provided'}), 400
+        
+    grade, penalty = GradingEngine.process_spectral_scan(batch_id, data)
+    
+    return jsonify({
+        'status': 'success',
+        'data': {
+            'final_grade': grade,
+            'pricing_penalty': penalty,
+            'cascading_status': 'COMPLETED'
+        }
+    }), 201
+
+@processing_bp.route('/batches/<int:batch_id>/valuation', methods=['GET'])
+@token_required
+def get_batch_valuation(current_user, batch_id):
+    """
+    Fetch the current real-time valuation of a batch after quality adjustments.
+    """
+    from backend.models.procurement import BulkOrder
+    # Simplified: Get the latest order for the supply batch linked to this processing batch
+    # In reality, this would involve complex relationship traversals
+    batch = ProcessingBatch.query.get(batch_id)
+    if not batch:
+        return jsonify({'status': 'error', 'message': 'Batch not found'}), 404
+        
+    # Mocking valuation response for demonstration of API structure
+    return jsonify({
+        'status': 'success',
+        'data': {
+            'batch_id': batch_id,
+            'market_valuation': 12500.00, # Simulated
+            'quality_modifier': 0.85, # 15% penalty applied
+            'currency': 'USD'
+        }
+    }), 200

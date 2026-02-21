@@ -90,3 +90,41 @@ class QualityCheck(db.Model):
             'is_passed': self.is_passed,
             'timestamp': self.timestamp.isoformat()
         }
+
+class SpectralScanData(db.Model):
+    """
+    Simulated 'optical/spectral scans' for raw chemical analysis (L3-1604).
+    """
+    __tablename__ = 'spectral_scans'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    batch_id = db.Column(db.Integer, db.ForeignKey('processing_batches.id'), nullable=False)
+    
+    # Nutritional parameters (Simulated)
+    moisture_percentage = db.Column(db.Float)
+    brix_level = db.Column(db.Float) # Sugar content
+    protein_percentage = db.Column(db.Float)
+    fiber_percentage = db.Column(db.Float)
+    
+    # Spectral metadata
+    wavelength_range = db.Column(db.String(50)) # e.g., "700nm-2500nm"
+    scan_integrity_score = db.Column(db.Float) # 0.0 - 1.0
+    
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+class DynamicGradeAdjustment(db.Model):
+    """
+    Tracks cascading financial recalculations after grading (L3-1604).
+    """
+    __tablename__ = 'dynamic_grade_adjustments'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    batch_id = db.Column(db.Integer, db.ForeignKey('processing_batches.id'), nullable=False)
+    
+    old_grade = db.Column(db.String(10))
+    new_grade = db.Column(db.String(10))
+    
+    price_penalty_factor = db.Column(db.Float) # e.g., -0.15 for 15% drop
+    adjustment_reason = db.Column(db.String(255))
+    
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
