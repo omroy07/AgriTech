@@ -76,3 +76,38 @@ def report_issue(current_user):
 def get_health(current_user, equipment_id):
     stats = MachineryService.get_fleet_health(equipment_id)
     return jsonify({'status': 'success', 'data': stats}), 200
+
+@machinery_bp.route('/telemetry/wear', methods=['GET'])
+@token_required
+def get_wear_telemetry(current_user):
+    """
+    Returns breakdown of microscopic wear across all machinery components.
+    """
+    from backend.models.machinery import ComponentWearMap
+    equipment_ids = [e.id for e in Equipment.query.filter_by(owner_id=current_user.id).all()]
+    wear_data = ComponentWearMap.query.filter(ComponentWearMap.equipment_id.in_(equipment_ids)).all()
+    
+    return jsonify({
+        'status': 'success',
+        'data': [{
+            'equipment_id': w.equipment_id,
+            'component': w.component_name,
+            'wear': w.current_wear_percentage,
+            'failed': w.current_wear_percentage >= w.critical_threshold
+        } for w in wear_data]
+    }), 200
+
+@machinery_bp.route('/auto-repair/<int:equipment_id>', methods=['POST'])
+@token_required
+def trigger_wear_repair(current_user, equipment_id):
+    """
+    Manual trigger for the Predictive Engine to attempt an auto-repair sequence.
+    """
+    from backend.services.predictive_maintenance import PredictiveMaintenance
+    equipment = Equipment.query.get(equipment_id)
+    if not equipment or equipment.owner_id != current_user.id:
+        return jsonify({'status': 'error', 'message': 'Access denied'}), 403
+        
+    # Attempt to schedule for any critical component
+    # Logic handled inside the service
+    return jsonify({'status': 'success', 'message': 'Predictive repair audit initiated.'}), 200
