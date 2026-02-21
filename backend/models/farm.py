@@ -20,6 +20,11 @@ class Farm(db.Model):
     # Metadata as JSON
     soil_details = db.Column(db.Text) # e.g., {"type": "Loamy", "pH": 6.5}
     
+    # Predictive Harvest Velocity (L3-1560)
+    harvest_readiness_index = db.Column(db.Float, default=0.0) # 0-100%
+    predicted_yield_volume = db.Column(db.Float, default=0.0) # Estimated kg
+    last_velocity_update = db.Column(db.DateTime)
+    
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Relationships

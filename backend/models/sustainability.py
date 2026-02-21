@@ -82,6 +82,9 @@ class SustainabilityScore(db.Model):
     
     overall_rating = db.Column(db.Float) # 0-100
     
+    # Bonus from Bio-Mass & Waste Recovery (L3-1594)
+    circular_economy_bonus = db.Column(db.Float, default=0.0)
+    
     # Offset points for Barter Arbitrage
     offset_credits_available = db.Column(db.Float, default=0.0)
     

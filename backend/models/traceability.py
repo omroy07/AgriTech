@@ -64,6 +64,8 @@ class SupplyBatch(db.Model):
     carbon_footprint_hash = db.Column(db.String(64)) # Linked to CarbonLedger
     net_zero_qualified = db.Column(db.Boolean, default=False)
     
+    # Predictive Velocity (L3-1560)
+    predicted_quality_grade = db.Column(db.String(10)) # A, B, C based on pre-harvest flux
     # Bio-Security (L3-1596)
     # Status: CLEAN, SUSPECTED, QUARANTINED, REJECTED
     quarantine_status = db.Column(db.String(20), default='CLEAN')

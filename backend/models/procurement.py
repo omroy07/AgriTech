@@ -61,6 +61,10 @@ class BulkOrder(db.Model):
     gst_rate = db.Column(db.Float, default=0.0)
     vat_rate = db.Column(db.Float, default=0.0)
     
+    # Circular Economy Integration (L3-1594)
+    circular_credits_used = db.Column(db.Float, default=0.0)
+    credit_discount_amount = db.Column(db.Float, default=0.0)
+    
     tax_amount = db.Column(db.Float)
     shipping_cost = db.Column(db.Float, default=0)
     
