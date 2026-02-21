@@ -32,6 +32,9 @@ class SoilTest(db.Model):
     organic_matter = db.Column(db.Float) # Percentage
     electrical_conductivity = db.Column(db.Float) # ds/m
     
+    # Machinery Impact (L3-1603)
+    soil_hardness_index = db.Column(db.Float, default=1.0) # Multiplier for component wear
+    
     # Secondary Nutrients (ppm)
     calcium = db.Column(db.Float)
     magnesium = db.Column(db.Float)

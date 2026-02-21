@@ -100,3 +100,35 @@ class AssetValueSnapshot(db.Model):
             'priority': self.liquidation_priority,
             'date': self.calculated_at.isoformat()
         }
+
+class ComponentWearMap(db.Model):
+    """
+    Microscopic wear tracking for individual machinery components (L3-1603).
+    """
+    __tablename__ = 'component_wear_maps'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    equipment_id = db.Column(db.Integer, db.ForeignKey('equipment.id'), nullable=False)
+    
+    component_name = db.Column(db.String(100), nullable=False) # e.g., "Hydraulic Pump", "Transmission"
+    current_wear_percentage = db.Column(db.Float, default=0.0)
+    critical_threshold = db.Column(db.Float, default=85.0)
+    
+    last_inspection_date = db.Column(db.DateTime, default=datetime.utcnow)
+    predicted_failure_date = db.Column(db.DateTime)
+
+class MaintenanceEscrow(db.Model):
+    """
+    Automated financial reserve for predicted equipment repairs (L3-1603).
+    """
+    __tablename__ = 'maintenance_escrows'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    farm_id = db.Column(db.Integer, db.ForeignKey('farms.id'), nullable=False)
+    equipment_id = db.Column(db.Integer, db.ForeignKey('equipment.id'))
+    
+    escrow_balance = db.Column(db.Float, default=0.0)
+    projected_cost = db.Column(db.Float, default=0.0)
+    
+    is_locked = db.Column(db.Boolean, default=True)
+    last_sync = db.Column(db.DateTime, default=datetime.utcnow)

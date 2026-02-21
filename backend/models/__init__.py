@@ -22,7 +22,7 @@ from .procurement import ProcurementItem, BulkOrder, OrderEvent
 from .irrigation import IrrigationZone, SensorLog, ValveStatus, IrrigationSchedule
 from .processing import ProcessingBatch, StageLog, QualityCheck, ProcessingStage
 from .insurance_v2 import CropPolicy, ClaimRequest, PayoutLedger, AdjusterNote
-from .machinery import EngineHourLog, MaintenanceCycle, DamageReport, RepairOrder
+from .machinery import EngineHourLog, MaintenanceCycle, DamageReport, RepairOrder, ComponentWearMap, MaintenanceEscrow
 from .soil_health import SoilTest, FertilizerRecommendation, ApplicationLog
 from .loan_v2 import RepaymentSchedule, PaymentHistory, DefaultRiskScore, CollectionNote
 from .warehouse import WarehouseLocation, StockItem, StockMovement, ReconciliationLog
@@ -75,11 +75,11 @@ __all__ = [
     'FarmBalanceSheet', 'SolvencySnapshot', 'ProfitabilityIndex',
     'AssetValueSnapshot', 'LaborROIHistory', 'ReliabilityLog',
     'MigrationVector', 'ContainmentZone',
-    # Double-Entry Ledger System
+    'ForwardContract', 'PriceHedgingLog',
+    'WasteInventory', 'BioEnergyOutput', 'CircularCredit',
     'LedgerAccount', 'LedgerTransaction', 'LedgerEntry',
     'FXValuationSnapshot', 'Vault', 'VaultCurrencyPosition', 'FXRate',
-    'AccountType', 'EntryType', 'TransactionType'
-    'ForwardContract', 'PriceHedgingLog',
-    'WasteInventory', 'BioEnergyOutput', 'CircularCredit'
-    'MigrationVector', 'ContainmentZone'
+    'AccountType', 'EntryType', 'TransactionType',
+    'SpectralScanData', 'DynamicGradeAdjustment',
+    'ComponentWearMap', 'MaintenanceEscrow'
 ]
