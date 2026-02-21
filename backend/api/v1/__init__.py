@@ -41,6 +41,7 @@ from .gews import gews_bp
 from .transparency import transparency_bp
 from .barter import barter_bp
 from .financials import financials_bp
+from .biosecurity import biosecurity_bp
 
 # Create v1 API blueprint
 api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1')
@@ -88,3 +89,4 @@ api_v1.register_blueprint(gews_bp, url_prefix='/gews')
 api_v1.register_blueprint(transparency_bp, url_prefix='/transparency')
 api_v1.register_blueprint(barter_bp, url_prefix='/barter')
 api_v1.register_blueprint(financials_bp, url_prefix='/financials')
+api_v1.register_blueprint(biosecurity_bp, url_prefix='/biosecurity')

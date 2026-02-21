@@ -27,6 +27,9 @@ class InsurancePolicy(db.Model):
     is_suspended = db.Column(db.Boolean, default=False)
     suspension_reason = db.Column(db.String(255))
     recursive_discount_applied = db.Column(db.Boolean, default=False)
+    
+    # Bio-Security (L3-1596)
+    force_majeure_review = db.Column(db.Boolean, default=False) # Triggered during outbreaks
 
     premium_logs = db.relationship('DynamicPremiumLog', backref='policy', lazy='dynamic')
     risk_snapshots = db.relationship('RiskFactorSnapshot', backref='policy', lazy='dynamic')
