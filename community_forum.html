@@ -4,12 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Join the AgriTech Community Hub to discuss farming, crop protection, soil health, equipment advice, and connect with experts through real-time discussions and AI-powered insights." />
   <title>Community Hub | AgriTech Forum</title>
 
   <!-- Icons & Fonts -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 
   <!-- Custom Theme -->
   <link rel="stylesheet" href="forum.css">
@@ -38,11 +39,11 @@
       <div class="navbar-right">
         <div class="nav-search">
           <input type="text" placeholder="Search...">
-          <button><i class="fas fa-search"></i></button>
+          <button><i class="fas fa-search" aria-hidden="true"></i></button>
         </div>
 
         <button class="nav-btn" id="themeToggle">
-          <i class="fas fa-moon"></i>
+          <i class="fas fa-moon" aria-hidden="true"></i>
         </button>
 
         <a href="login.html" class="nav-btn">Login</a>
@@ -56,14 +57,14 @@
     <!-- Left Sidebar: Navigation & Filters -->
     <aside class="sidebar">
       <div class="card">
-        <h3><i class="fas fa-compass"></i> Discover</h3>
+        <h3><i class="fas fa-compass" aria-hidden="true"></i> Discover</h3>
         <div id="categories-list">
           <div class="loader">Fetching categories...</div>
         </div>
       </div>
 
       <div class="card">
-        <h3><i class="fas fa-trophy"></i> My Reputation</h3>
+        <h3><i class="fas fa-trophy" aria-hidden="true"></i> My Reputation</h3>
         <div class="user-rep-panel">
           <div class="score-display">
             <span id="user-score">--</span>
@@ -80,13 +81,13 @@
     <main class="feed">
       <header class="feed-header">
         <div class="search-container">
-          <i class="fas fa-search"></i>
+          <i class="fas fa-search" aria-hidden="true"></i>
           <input type="text" id="forum-search" class="search-input"
             placeholder="Search for experts, topics, or solutions...">
         </div>
 
         <button class="btn-ask" id="btn-new-thread">
-          <i class="fas fa-plus"></i> New Topic
+          <i class="fas fa-plus" aria-hidden="true"></i> New Topic
         </button>
       </header>
 
@@ -96,7 +97,7 @@
     <!-- Right Widgets: Trends & AI -->
     <aside class="widgets">
       <div class="card">
-        <h3><i class="fas fa-robot"></i> AgriAI Insights</h3>
+        <h3><i class="fas fa-robot" aria-hidden="true"></i> AgriAI Insights</h3>
         <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
           AI is currently monitoring the forum for spam and helpful opportunities.
         </p>
@@ -107,7 +108,7 @@
       </div>
 
       <div class="card">
-        <h3><i class="fas fa-fire"></i> Trending Topics</h3>
+        <h3><i class="fas fa-fire" aria-hidden="true"></i> Trending Topics</h3>
         <div id="trending-list">
           <p style="font-size: 0.85rem; color: var(--text-muted);">
             Real-time trends appearing soon...
@@ -133,7 +134,7 @@
         <button id="modal-close-btn"
           style="background:none; border:none; cursor:pointer; font-size:1.2rem; color:var(--text-muted);"
           aria-label="Close dialog">
-          <i class="fas fa-times"></i>
+          <i class="fas fa-times" aria-hidden="true"></i>
         </button>
       </div>
 
