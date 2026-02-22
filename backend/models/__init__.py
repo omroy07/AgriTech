@@ -19,6 +19,8 @@ from .weather import WeatherData, CropAdvisory, AdvisorySubscription, RiskTrigge
 from .sustainability import CarbonPractice, CreditLedger, AuditRequest, CarbonLedger, EmissionSource, SustainabilityScore
 from .vendor_profile import VendorProfile # Updated from procurement to vendor_profile
 from .procurement import ProcurementItem, BulkOrder, OrderEvent
+from .irrigation import IrrigationZone, SensorLog, ValveStatus, IrrigationSchedule
+from .processing import ProcessingBatch, StageLog, QualityCheck, ProcessingStage, SpectralScanData, DynamicGradeAdjustment
 from .irrigation import IrrigationZone, SensorLog, ValveStatus, IrrigationSchedule, AquiferLevel, WaterRightsQuota
 from .processing import ProcessingBatch, StageLog, QualityCheck, ProcessingStage
 from .insurance_v2 import CropPolicy, ClaimRequest, PayoutLedger, AdjusterNote
@@ -80,6 +82,7 @@ __all__ = [
     'LedgerAccount', 'LedgerTransaction', 'LedgerEntry',
     'FXValuationSnapshot', 'Vault', 'VaultCurrencyPosition', 'FXRate',
     'AccountType', 'EntryType', 'TransactionType',
+    'SpectralScanData', 'DynamicGradeAdjustment'
     'AquiferLevel', 'WaterRightsQuota'
     'SpectralScanData', 'DynamicGradeAdjustment',
     'ComponentWearMap', 'MaintenanceEscrow'

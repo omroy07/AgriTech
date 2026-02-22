@@ -24,6 +24,9 @@ class ForwardContract(db.Model):
     hedge_ratio = db.Column(db.Float) # Percentage of total yield locked in
     market_volatility_at_lock = db.Column(db.Float)
     
+    # Cascading Quality Adjustments (L3-1604)
+    quality_penalty_clause = db.Column(db.Float, default=0.0) # Percentage deduction from final payout
+    
     def to_dict(self):
         return {
             'id': self.id,
