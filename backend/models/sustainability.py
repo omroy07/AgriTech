@@ -88,4 +88,7 @@ class SustainabilityScore(db.Model):
     # Offset points for Barter Arbitrage
     offset_credits_available = db.Column(db.Float, default=0.0)
     
+    # Water Scarcity Tracking (L3-1605)
+    water_quota_utilization_ratio = db.Column(db.Float, default=0.0) # used / total
+    
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

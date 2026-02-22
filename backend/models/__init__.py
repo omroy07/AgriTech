@@ -21,6 +21,8 @@ from .vendor_profile import VendorProfile # Updated from procurement to vendor_p
 from .procurement import ProcurementItem, BulkOrder, OrderEvent
 from .irrigation import IrrigationZone, SensorLog, ValveStatus, IrrigationSchedule
 from .processing import ProcessingBatch, StageLog, QualityCheck, ProcessingStage, SpectralScanData, DynamicGradeAdjustment
+from .irrigation import IrrigationZone, SensorLog, ValveStatus, IrrigationSchedule, AquiferLevel, WaterRightsQuota
+from .processing import ProcessingBatch, StageLog, QualityCheck, ProcessingStage
 from .insurance_v2 import CropPolicy, ClaimRequest, PayoutLedger, AdjusterNote
 from .machinery import EngineHourLog, MaintenanceCycle, DamageReport, RepairOrder, ComponentWearMap, MaintenanceEscrow
 from .soil_health import SoilTest, FertilizerRecommendation, ApplicationLog
@@ -81,6 +83,7 @@ __all__ = [
     'FXValuationSnapshot', 'Vault', 'VaultCurrencyPosition', 'FXRate',
     'AccountType', 'EntryType', 'TransactionType',
     'SpectralScanData', 'DynamicGradeAdjustment'
+    'AquiferLevel', 'WaterRightsQuota'
     'SpectralScanData', 'DynamicGradeAdjustment',
     'ComponentWearMap', 'MaintenanceEscrow'
 ]
