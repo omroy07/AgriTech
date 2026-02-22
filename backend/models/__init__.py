@@ -22,7 +22,7 @@ from .procurement import ProcurementItem, BulkOrder, OrderEvent
 from .irrigation import IrrigationZone, SensorLog, ValveStatus, IrrigationSchedule
 from .processing import ProcessingBatch, StageLog, QualityCheck, ProcessingStage, SpectralScanData, DynamicGradeAdjustment
 from .insurance_v2 import CropPolicy, ClaimRequest, PayoutLedger, AdjusterNote
-from .machinery import EngineHourLog, MaintenanceCycle, DamageReport, RepairOrder
+from .machinery import EngineHourLog, MaintenanceCycle, DamageReport, RepairOrder, ComponentWearMap, MaintenanceEscrow
 from .soil_health import SoilTest, FertilizerRecommendation, ApplicationLog
 from .loan_v2 import RepaymentSchedule, PaymentHistory, DefaultRiskScore, CollectionNote
 from .warehouse import WarehouseLocation, StockItem, StockMovement, ReconciliationLog
@@ -81,4 +81,6 @@ __all__ = [
     'FXValuationSnapshot', 'Vault', 'VaultCurrencyPosition', 'FXRate',
     'AccountType', 'EntryType', 'TransactionType',
     'SpectralScanData', 'DynamicGradeAdjustment'
+    'SpectralScanData', 'DynamicGradeAdjustment',
+    'ComponentWearMap', 'MaintenanceEscrow'
 ]
