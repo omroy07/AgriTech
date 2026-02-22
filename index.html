@@ -17,7 +17,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
     rel="stylesheet" />
-    
+    <link rel="stylesheet" href="ThemeSelector.html">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <style>
     /* 1. DEFINE VARIABLES FOR THEMES */
@@ -54,6 +54,36 @@
       --btn-hover: #cbd5e1;
       --shadow-color: rgba(0, 0, 0, 0.1);
     }
+    [data-theme="ocean"] {
+  --bg-color: #0f172a;
+  --text-color: #e0f2fe;
+  --text-muted: #7dd3fc;
+  --surface-color: rgba(14, 116, 144, 0.15);
+  --section-bg: rgba(2, 132, 199, 0.12);
+  --border-color: #0ea5e9;
+  --accent-color: #06b6d4;
+  --input-bg: #082f49;
+  --input-border: #0284c7;
+  --btn-bg: #0369a1;
+  --btn-text: #ffffff;
+  --btn-hover: #0284c7;
+  --shadow-color: rgba(0, 150, 255, 0.25);
+}
+[data-theme="neon"] {
+  --bg-color: #05010a;
+  --text-color: #f5f3ff;
+  --text-muted: #c084fc;
+  --surface-color: rgba(168, 85, 247, 0.12);
+  --section-bg: rgba(139, 92, 246, 0.15);
+  --border-color: #a855f7;
+  --accent-color: #ec4899;
+  --input-bg: #140a1f;
+  --input-border: #d946ef;
+  --btn-bg: #7c3aed;
+  --btn-text: #ffffff;
+  --btn-hover: #9333ea;
+  --shadow-color: rgba(236, 72, 153, 0.35);
+}
 
     /* 2. RESET & BASE STYLES */
     * {
@@ -2020,12 +2050,17 @@
           </div>
         </div>
 
-        <!-- Theme Toggle -->
-        <button class="theme-toggle btn" id="themeToggleBtn" type="button">
-          <i class="fas fa-sun theme-icon-sun"></i>
-          <i class="fas fa-moon theme-icon-moon" style="display: none;"></i>
-          <span class="theme-text">Light</span>
-        </button>
+      <!-- Theme Toggle -->
+<div class="theme-wrapper">
+  <label for="themeSelect" class="theme-label">Theme</label>
+
+  <select id="themeSelect" class="theme-select">
+    <option value="dark">🌙 Dark</option>
+    <option value="light">🌞 Light</option>
+    <option value="ocean">🌊 Ocean</option>
+    <option value="neon">⚡ Neon</option>
+  </select>
+</div>
 
         <a href="login.html" class="btn btn-secondary" data-i18n="login">Login</a>
         <a href="faq.html" class="btn btn-secondary" data-i18n="faq">FAQ</a>
@@ -2847,95 +2882,39 @@
 
   <script>
     // Theme Toggle - Unified function (runs after DOM and other scripts)
-    (function () {
-      function initThemeToggle() {
-        const themeToggle = document.querySelector(".theme-toggle");
-        if (!themeToggle) {
-          console.warn("Theme toggle button not found");
-          return;
-        }
+   // Theme System
+(function () {
 
-        const themeText = themeToggle.querySelector(".theme-text");
-        const moonIcon = themeToggle.querySelector(".theme-icon-moon");
-        const sunIcon = themeToggle.querySelector(".theme-icon-sun");
+  const THEME_KEY = "agritech-theme";
 
-        function applyTheme(theme) {
-          // Change entire page theme
-          document.documentElement.setAttribute("data-theme", theme);
-          localStorage.setItem("agritech-theme", theme);
+  function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem(THEME_KEY, theme);
 
-          // Update theme text and icons
-          // Icon shows what you'll switch TO (sun in dark mode, moon in light mode)
-          if (themeText) {
-            themeText.textContent = theme === "dark" ? "Light" : "Dark";
-          }
+    const select = document.getElementById("themeSelect");
+    if (select) {
+      select.value = theme;
+    }
+  }
 
-          if (moonIcon && sunIcon) {
-            if (theme === "dark") {
-              // In dark mode, show sun icon (clicking will switch to light)
-              sunIcon.style.display = "inline-block";
-              moonIcon.style.display = "none";
-            } else {
-              // In light mode, show moon icon (clicking will switch to dark)
-              sunIcon.style.display = "none";
-              moonIcon.style.display = "inline-block";
-            }
-          }
-        }
+  function initTheme() {
+    const select = document.getElementById("themeSelect");
+    if (!select) return;
 
-        // Load saved theme
-        const savedTheme = localStorage.getItem("agritech-theme") || "dark";
-        applyTheme(savedTheme);
+    // Load saved theme or default to dark
+    const savedTheme = localStorage.getItem(THEME_KEY) || "dark";
+    applyTheme(savedTheme);
 
-        // Remove any existing listeners by replacing the button
-        const newButton = themeToggle.cloneNode(true);
-        themeToggle.parentNode.replaceChild(newButton, themeToggle);
-        const freshButton = document.querySelector(".theme-toggle");
-        const freshThemeText = freshButton.querySelector(".theme-text");
-        const freshMoonIcon = freshButton.querySelector(".theme-icon-moon");
-        const freshSunIcon = freshButton.querySelector(".theme-icon-sun");
+    // Change theme when dropdown changes
+    select.addEventListener("change", function () {
+      applyTheme(this.value);
+    });
+  }
 
-        // Add click handler to theme toggle button
-        freshButton.addEventListener("click", function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          const current = document.documentElement.getAttribute("data-theme") || "dark";
-          const next = current === "light" ? "dark" : "light";
+  // Initialize after DOM loads
+  document.addEventListener("DOMContentLoaded", initTheme);
 
-          // Change entire page theme
-          document.documentElement.setAttribute("data-theme", next);
-          localStorage.setItem("agritech-theme", next);
-
-          // Update theme text and icons
-          // Icon shows what you'll switch TO (sun in dark mode, moon in light mode)
-          if (freshThemeText) {
-            freshThemeText.textContent = next === "dark" ? "Light" : "Dark";
-          }
-
-          if (freshMoonIcon && freshSunIcon) {
-            if (next === "dark") {
-              // In dark mode, show sun icon (clicking will switch to light)
-              freshSunIcon.style.display = "inline-block";
-              freshMoonIcon.style.display = "none";
-            } else {
-              // In light mode, show moon icon (clicking will switch to dark)
-              freshSunIcon.style.display = "none";
-              freshMoonIcon.style.display = "inline-block";
-            }
-          }
-        });
-      }
-
-      // Initialize after DOM and other scripts load
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function () {
-          setTimeout(initThemeToggle, 300);
-        });
-      } else {
-        setTimeout(initThemeToggle, 300);
-      }
-    })();
-
+})();
     // Services Dropdown
     const servicesToggle = document.querySelector(".services-toggle");
     const servicesDropdown = document.querySelector(".services-dropdown");

@@ -37,6 +37,36 @@
       --btn-hover: #cbd5e1;
       --shadow-color: rgba(0, 0, 0, 0.1);
     }
+       [data-theme="ocean"] {
+  --bg-color: #0f172a;
+  --text-color: #e0f2fe;
+  --text-muted: #7dd3fc;
+  --surface-color: rgba(14, 116, 144, 0.15);
+  --section-bg: rgba(2, 132, 199, 0.12);
+  --border-color: #0ea5e9;
+  --accent-color: #06b6d4;
+  --input-bg: #082f49;
+  --input-border: #0284c7;
+  --btn-bg: #0369a1;
+  --btn-text: #ffffff;
+  --btn-hover: #0284c7;
+  --shadow-color: rgba(0, 150, 255, 0.25);
+}
+[data-theme="neon"] {
+  --bg-color: #05010a;
+  --text-color: #f5f3ff;
+  --text-muted: #c084fc;
+  --surface-color: rgba(168, 85, 247, 0.12);
+  --section-bg: rgba(139, 92, 246, 0.15);
+  --border-color: #a855f7;
+  --accent-color: #ec4899;
+  --input-bg: #140a1f;
+  --input-border: #d946ef;
+  --btn-bg: #7c3aed;
+  --btn-text: #ffffff;
+  --btn-hover: #9333ea;
+  --shadow-color: rgba(236, 72, 153, 0.35);
+}
 
     * {
       box-sizing: border-box;
@@ -1269,10 +1299,16 @@
             <div class="lang-option" onclick="setLanguage('pa','ਪੰਜਾਬੀ')">ਪੰਜਾਬੀ</div>
           </div>
         </div>
-        <button id="themeToggle" class="theme-toggle btn">
-          <i class="fas fa-moon"></i>
-          <span class="theme-label">Light</span>
-        </button>
+       <div class="theme-wrapper">
+  <label for="themeSelect" class="theme-label">Theme</label>
+
+  <select id="themeSelect" class="theme-select">
+    <option value="dark">🌙 Dark</option>
+    <option value="light">🌞 Light</option>
+    <option value="ocean">🌊 Ocean</option>
+    <option value="neon">⚡ Neon</option>
+  </select>
+</div>
 
         <div class="alert-hub-container">
           <button class="alert-bell-btn" id="alertBellBtn" aria-label="Notifications">
@@ -1531,5 +1567,66 @@
   </script>
   <script src="js/alert_manager.js"></script>
 </body>
+<script>
+  (function () {
 
+  const THEME_KEY = "agritech-theme";
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem(THEME_KEY, theme);
+
+    const select = document.getElementById("themeSelect");
+    if (select) {
+      select.value = theme;
+    }
+  }
+
+  function initTheme() {
+    const select = document.getElementById("themeSelect");
+    if (!select) return;
+
+    // Load saved theme or default to dark
+    const savedTheme = localStorage.getItem(THEME_KEY) || "dark";
+    applyTheme(savedTheme);
+
+    // Change theme when dropdown changes
+    select.addEventListener("change", function () {
+      applyTheme(this.value);
+    });
+  }
+
+  // Initialize after DOM loads
+  document.addEventListener("DOMContentLoaded", initTheme);
+
+})();
+    // Services Dropdown
+    const servicesToggle = document.querySelector(".services-toggle");
+    const servicesDropdown = document.querySelector(".services-dropdown");
+    const servicesArrow = document.querySelector(".services-arrow");
+
+    if (servicesToggle && servicesDropdown && servicesArrow) {
+      servicesToggle.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        servicesDropdown.classList.toggle("active");
+        servicesArrow.classList.toggle("rotated");
+      });
+
+      document.addEventListener("click", (e) => {
+        const container = document.querySelector(
+          ".services-toggle-container",
+        );
+        if (
+          container &&
+          !container.contains(e.target) &&
+          servicesDropdown.classList.contains("active")
+        ) {
+          servicesDropdown.classList.remove("active");
+          servicesArrow.classList.remove("rotated");
+        }
+      });
+    }
+
+</script>
 </html>
