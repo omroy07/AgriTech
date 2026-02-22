@@ -40,12 +40,14 @@ const applyTheme = (theme) => {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('theme', theme);
 
-  if (theme === 'dark') {
-    if (themeText) themeText.textContent = 'Light Mode';
-    if (moonIcon) moonIcon.style.display = 'none';
-    if (sunIcon) sunIcon.style.display = 'inline-block';
+  if(theme === 'dark') {
+    if(themeText) themeText.textContent = 'Light Mode';
+    if(moonIcon) moonIcon.style.display = 'none';
+
+    if(sunIcon) sunIcon.style.display = 'inline-block';
   } else {
     if (themeText) themeText.textContent = 'Dark Mode';
+    
     if (moonIcon) moonIcon.style.display = 'inline-block';
     if (sunIcon) sunIcon.style.display = 'none';
   }
