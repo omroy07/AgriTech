@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+  --bg-color: #ffffff;
+  --text-color: #111111;
+  --surface-color: #f5f5f5;
+  --border-color: #e5e5e5;
+  --primary-color: #2563eb;
+}
+[data-theme="dark"] {
+  --bg-color: #111827;
+  --text-color: #f9fafb;
+  --surface-color: #1f2937;
+  --border-color: #374151;
+  --primary-color: #3b82f6;
+}
+[data-theme="ocean"] {
+  --bg-color: #0f172a;
+  --text-color: #e0f2fe;
+  --surface-color: #1e293b;
+  --border-color: #0ea5e9;
+  --primary-color: #06b6d4;
+}
+[data-theme="neon"] {
+  --bg-color: #0a0a0a;
+  --text-color: #39ff14;
+  --surface-color: #111111;
+  --border-color: #39ff14;
+  --primary-color: #ff00ff;
+}
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+nav {
+  background: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+}
+.btn {
+  background: var(--primary-color);
+  color: white;
+}
+    </style>
+   <script>
+window.addEventListener("DOMContentLoaded", function () {
+
+  const themeSelect = document.getElementById("themeSelect");
+
+  if (!themeSelect) return; // safety check
+
+  themeSelect.addEventListener("change", function () {
+    const selectedTheme = this.value;
+    document.documentElement.setAttribute("data-theme", selectedTheme);
+    localStorage.setItem("selectedTheme", selectedTheme);
+  });
+
+  const savedTheme = localStorage.getItem("selectedTheme");
+  if (savedTheme) {
+    document.documentElement.setAttribute("data-theme", savedTheme);
+    themeSelect.value = savedTheme;
+  }
+
+});
+</script>
+</head>
+<body>
+    
+</body>
+</html>
