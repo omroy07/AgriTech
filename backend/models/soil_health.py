@@ -109,3 +109,85 @@ class ApplicationLog(db.Model):
     
     applied_at = db.Column(db.DateTime, default=datetime.utcnow)
     notes = db.Column(db.Text)
+
+class RegenerativeFarmingLog(db.Model):
+    """
+    Records agronomic practices that contribute to carbon sequestration (L3-1632).
+    Each log entry drives the Carbon Minting Engine calculation.
+    """
+    __tablename__ = 'regenerative_farming_logs'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    farm_id = db.Column(db.Integer, db.ForeignKey('farms.id'), nullable=False)
+    soil_test_id = db.Column(db.Integer, db.ForeignKey('soil_tests.id'))
+    
+    # Practice Type: NO_TILL, COVER_CROP, ORGANIC_FERTILIZER, AGROFORESTRY, BIOCHAR
+    practice_type = db.Column(db.String(50), nullable=False)
+    area_hectares = db.Column(db.Float, nullable=False)
+    
+    # Scientific parameters
+    soil_organic_carbon_percent = db.Column(db.Float)   # % SOC at time of logging
+    bulk_density_gcm3 = db.Column(db.Float)             # g/cm³ - needed for tCO2e math
+    sampling_depth_cm = db.Column(db.Float, default=30.0)
+    
+    # Calculated output (filled by engine)
+    estimated_co2e_tonnes = db.Column(db.Float, default=0.0)
+    
+    logged_at = db.Column(db.DateTime, default=datetime.utcnow)
+    verified = db.Column(db.Boolean, default=False)
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'farm_id': self.farm_id,
+            'practice_type': self.practice_type,
+            'area_hectares': self.area_hectares,
+            'soc_percent': self.soil_organic_carbon_percent,
+            'estimated_co2e': self.estimated_co2e_tonnes,
+            'verified': self.verified,
+            'logged_at': self.logged_at.isoformat()
+        }
+
+class CarbonMintEvent(db.Model):
+    """
+    Immutable ledger record for every Carbon Credit minting transaction (L3-1632).
+    Each event is linked to a double-entry LedgerTransaction for financial integrity.
+    """
+    __tablename__ = 'carbon_mint_events'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    farm_id = db.Column(db.Integer, db.ForeignKey('farms.id'), nullable=False)
+    log_id = db.Column(db.Integer, db.ForeignKey('regenerative_farming_logs.id'), nullable=False)
+    
+    # Credits minted (1 credit = 1 tonne CO2e sequestered)
+    credits_minted = db.Column(db.Float, nullable=False)
+    credit_unit_value_usd = db.Column(db.Float, nullable=False, default=15.0) # USD per tonne
+    total_value_usd = db.Column(db.Float, nullable=False)
+    
+    # Cryptographic hash for tamper-proof audit chain
+    mint_hash = db.Column(db.String(64), unique=True, nullable=False)
+    
+    # Double-Entry Ledger reference (L3 Integration)
+    ledger_transaction_id = db.Column(db.Integer, db.ForeignKey('ledger_transactions.id'))
+    
+    # ESG Marketplace status
+    listed_on_market = db.Column(db.Boolean, default=False)
+    buyer_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    sold_at = db.Column(db.DateTime)
+    sale_price_usd = db.Column(db.Float)
+    
+    minted_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'farm_id': self.farm_id,
+            'credits_minted': self.credits_minted,
+            'unit_value_usd': self.credit_unit_value_usd,
+            'total_value_usd': self.total_value_usd,
+            'mint_hash': self.mint_hash,
+            'listed_on_market': self.listed_on_market,
+            'buyer_id': self.buyer_id,
+            'sold_at': self.sold_at.isoformat() if self.sold_at else None,
+            'minted_at': self.minted_at.isoformat()
+        }

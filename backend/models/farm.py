@@ -25,6 +25,13 @@ class Farm(db.Model):
     predicted_yield_volume = db.Column(db.Float, default=0.0) # Estimated kg
     last_velocity_update = db.Column(db.DateTime)
     
+    # Regenerative Carbon Tracking (L3-1632)
+    is_no_till = db.Column(db.Boolean, default=False)            # No-tillage practice
+    cover_crop_active = db.Column(db.Boolean, default=False)      # Cover cropping in rotation
+    organic_certified = db.Column(db.Boolean, default=False)      # Certified organic (no synthetic)
+    sequestration_tier = db.Column(db.String(20), default='TIER_1') # TIER_1 to TIER_4
+    total_carbon_credits_minted = db.Column(db.Float, default=0.0) # Lifetime credits earned
+    
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Relationships
