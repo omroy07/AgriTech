@@ -32,6 +32,9 @@ class AuditLog(db.Model):
     financial_impact = db.Column(db.Float, default=0.0)
     autonomous_decision_flag = db.Column(db.Boolean, default=False) # For AI-driven bidding
     
+    # Smart Freight (L3-1631)
+    ai_logistics_flag = db.Column(db.Boolean, default=False) # For geo-fence & phyto auto-decisions
+    
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Meta data for extra context
