@@ -72,6 +72,11 @@ class SupplyBatch(db.Model):
     bio_clearance_hash = db.Column(db.String(64)) # Required for logistics manifest
     contact_tracing_metadata = db.Column(db.Text) # JSON of previous exposures
     
+    # Digital Corridor (L3-1631)
+    active_route_id = db.Column(db.Integer, db.ForeignKey('transport_routes.id'))
+    phyto_cert_number = db.Column(db.String(64))           # Set once certificate is issued
+    cross_border_cleared = db.Column(db.Boolean, default=False)
+    
     # Timestamps
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

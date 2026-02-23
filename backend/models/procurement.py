@@ -71,6 +71,10 @@ class BulkOrder(db.Model):
     # Real-time Quality Adjustment (L3-1604)
     real_time_price_modifier = db.Column(db.Float, default=1.0) # Multiply unit_price by this
     
+    # Smart Freight Linking (L3-1631)
+    freight_escrow_id = db.Column(db.Integer, db.ForeignKey('freight_escrows.id'))
+    dynamic_freight_surcharge = db.Column(db.Float, default=0.0) # Applied when customs delay > 24h
+    
     # Logistics Escrow
     customs_clearance_status = db.Column(db.String(20), default='PENDING')
     funds_in_escrow = db.Column(db.Boolean, default=False)

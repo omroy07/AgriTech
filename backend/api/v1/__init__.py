@@ -45,6 +45,8 @@ from .futures import futures_bp
 from .circular import circular_bp
 from .biosecurity import biosecurity_bp
 from .vaults import vaults_bp
+from .carbon import carbon_bp
+from .logistics import smart_freight_bp
 
 # Create v1 API blueprint
 api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1')
@@ -86,6 +88,8 @@ api_v1.register_blueprint(loan_repayment_bp, url_prefix='/loans')
 api_v1.register_blueprint(warehouse_bp, url_prefix='/warehouse')
 api_v1.register_blueprint(climate_bp, url_prefix='/climate')
 api_v1.register_blueprint(labor_bp, url_prefix='/labor')
+api_v1.register_blueprint(carbon_bp, url_prefix='/carbon')
+api_v1.register_blueprint(smart_freight_bp, url_prefix='/freight')
 api_v1.register_blueprint(logistics_portal_bp, url_prefix='/logistics-v2')
 api_v1.register_blueprint(audit_bp)
 api_v1.register_blueprint(gews_bp, url_prefix='/gews')

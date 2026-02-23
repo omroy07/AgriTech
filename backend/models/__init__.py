@@ -30,7 +30,10 @@ from .loan_v2 import RepaymentSchedule, PaymentHistory, DefaultRiskScore, Collec
 from .warehouse import WarehouseLocation, StockItem, StockMovement, ReconciliationLog
 from .climate import ClimateZone, SensorNode, TelemetryLog, AutomationTrigger
 from .labor import WorkerProfile, WorkShift, HarvestLog, PayrollEntry
-from .logistics_v2 import DriverProfile, DeliveryVehicle, TransportRoute, FuelLog
+from .logistics_v2 import (
+    DriverProfile, DeliveryVehicle, TransportRoute, FuelLog,
+    PhytoSanitaryCertificate, FreightEscrow, CustomsCheckpoint, GPSTelemetry
+)
 from .transparency import ProduceReview, PriceAdjustmentLog
 from .barter import BarterTransaction, BarterResource, ResourceValueIndex
 from .financials import FarmBalanceSheet, SolvencySnapshot, ProfitabilityIndex
@@ -69,6 +72,7 @@ __all__ = [
     'ClimateZone', 'SensorNode', 'TelemetryLog', 'AutomationTrigger',
     'WorkerProfile', 'WorkShift', 'HarvestLog', 'PayrollEntry',
     'DriverProfile', 'DeliveryVehicle', 'TransportRoute', 'FuelLog',
+    'PhytoSanitaryCertificate', 'FreightEscrow', 'CustomsCheckpoint', 'GPSTelemetry',
     'Alert', 'AlertPreference',
     'AuditLog', 'UserSession',
     'MediaPayload',
