@@ -16,6 +16,127 @@
   <!-- Custom Theme -->
   <link rel="stylesheet" href="forum.css">
 </head>
+<style>
+  /* Improved Dark Mode using Variables */
+body.dark-mode {
+    --bg-main: #0f172a;
+    --card-bg: #1e293b;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border: #334155;
+    --glass: rgba(30, 41, 59, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* Force Navbar and Cards to use the variables */
+body.dark-mode .navbar {
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+}
+
+body.dark-mode .nav-links a {
+    color: var(--text-main);
+}
+
+body.dark-mode .nav-search {
+    border-color: var(--border);
+}
+
+body.dark-mode .nav-search input {
+    background: transparent;
+    color: var(--text-main);
+}
+
+/* Fix for the Modal in Dark Mode */
+body.dark-mode .modal-content {
+    background: var(--card-bg);
+    color: var(--text-main);
+}
+  /* Demo Thread Card Styling */
+.thread-card {
+  margin-bottom: 1.5rem;
+  padding: 1.25rem !important;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+  border-left: 4px solid transparent;
+}
+
+.thread-card:hover {
+  transform: translateY(-3px);
+  border-left-color: #2ecc71;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.thread-main {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.thread-votes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  font-weight: bold;
+}
+
+.thread-votes i {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.thread-votes i:hover {
+  color: #2ecc71;
+}
+
+.thread-info {
+  margin-bottom: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.category-tag {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  margin-right: 10px;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.tag-protection { background: #ffeaa7; color: #d63031; }
+.tag-soil { background: #dff9fb; color: #130f40; }
+.tag-tech { background: #fab1a0; color: #e17055; }
+
+.thread-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-main);
+}
+
+.thread-excerpt {
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.thread-footer {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.share-btn {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.share-btn:hover {
+  color: #2ecc71;
+}
+</style>
 
 <body>
 
@@ -79,20 +200,92 @@
     </aside>
 
     <!-- Main Feed: Discussions -->
-    <main class="feed">
-      <header class="feed-header">
-        <div class="search-container">
-          <i class="fas fa-search" aria-hidden="true"></i>
-          <input type="text" id="forum-search" class="search-input"
-            placeholder="Search for experts, topics, or solutions...">
+      <main class="feed">
+  <header class="feed-header">
+    <div class="search-container">
+      <i class="fas fa-search" aria-hidden="true"></i>
+      <input type="text" id="forum-search" class="search-input"
+        placeholder="Search for experts, topics, or solutions...">
+    </div>
+
+    <button class="btn-ask" id="btn-new-thread">
+      <i class="fas fa-plus" aria-hidden="true"></i> New Topic
+    </button>
+  </header>
+
+  <div id="threads-feed">
+    
+    <div class="thread-card card">
+      <div class="thread-main">
+        <div class="thread-votes">
+          <i class="fas fa-caret-up"></i>
+          <span>42</span>
+          <i class="fas fa-caret-down"></i>
         </div>
+        <div class="thread-content">
+          <div class="thread-info">
+            <span class="category-tag tag-protection">Crop Protection</span>
+            <span class="thread-author">Posted by <b>@EcoFarmer</b> • 2 hours ago</span>
+          </div>
+          <h3 class="thread-title">Identifying early signs of Wheat Rust in 2026?</h3>
+          <p class="thread-excerpt">I've noticed some orange-brown pustules on my lower leaves. Is this the start of a major outbreak or just seasonal stress? Looking for organic treatment options...</p>
+          <div class="thread-footer">
+            <span><i class="far fa-comment"></i> 15 Comments</span>
+            <span><i class="far fa-eye"></i> 1.2k Views</span>
+            <span class="share-btn"><i class="fas fa-share"></i> Share</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <button class="btn-ask" id="btn-new-thread">
-          <i class="fas fa-plus" aria-hidden="true"></i> New Topic
-        </button>
-      </header>
+    <div class="thread-card card">
+      <div class="thread-main">
+        <div class="thread-votes">
+          <i class="fas fa-caret-up"></i>
+          <span>128</span>
+          <i class="fas fa-caret-down"></i>
+        </div>
+        <div class="thread-content">
+          <div class="thread-info">
+            <span class="category-tag tag-soil">Soil Health</span>
+            <span class="thread-author">Posted by <b>@SoilMaster_Guru</b> • 5 hours ago</span>
+          </div>
+          <h3 class="thread-title">Regenerative Farming: 3 Years of No-Till Data</h3>
+          <p class="thread-excerpt">I've been tracking my soil carbon levels since switching to no-till. The results are in, and the microbial activity is off the charts. Full report attached!</p>
+          <div class="thread-footer">
+            <span><i class="far fa-comment"></i> 84 Comments</span>
+            <span><i class="far fa-eye"></i> 3.4k Views</span>
+            <span class="share-btn"><i class="fas fa-share"></i> Share</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <div id="threads-feed"></div>
+    <div class="thread-card card">
+      <div class="thread-main">
+        <div class="thread-votes">
+          <i class="fas fa-caret-up"></i>
+          <span>12</span>
+          <i class="fas fa-caret-down"></i>
+        </div>
+        <div class="thread-content">
+          <div class="thread-info">
+            <span class="category-tag tag-tech">Equipment Advice</span>
+            <span class="thread-author">Posted by <b>@TechTractor</b> • 1 day ago</span>
+          </div>
+          <h3 class="thread-title">Best budget-friendly Drone for multi-spectral imaging?</h3>
+          <p class="thread-excerpt">Are there any reliable options under $1,500 that can accurately map nitrogen deficiency? Or should I just rent a service for the season?</p>
+          <div class="thread-footer">
+            <span><i class="far fa-comment"></i> 22 Comments</span>
+            <span><i class="far fa-eye"></i> 850 Views</span>
+            <span class="share-btn"><i class="fas fa-share"></i> Share</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
     </main>
 
     <!-- Right Widgets: Trends & AI -->
@@ -308,7 +501,32 @@
     });
   })();
 </script>
-<!-- ===== End Back To Top Button ===== -->
+<script>
+  // Theme Toggle Logic
+const themeToggle = document.getElementById("themeToggle");
+const body = document.body;
+const icon = themeToggle.querySelector("i");
+
+// Check for saved theme in localStorage
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme === "dark") {
+  body.classList.add("dark-mode");
+  icon.classList.replace("fa-moon", "fa-sun");
+}
+
+themeToggle.addEventListener("click", () => {
+  body.classList.toggle("dark-mode");
+  
+  // Toggle the icon between Moon and Sun
+  if (body.classList.contains("dark-mode")) {
+    icon.classList.replace("fa-moon", "fa-sun");
+    localStorage.setItem("theme", "dark");
+  } else {
+    icon.classList.replace("fa-sun", "fa-moon");
+    localStorage.setItem("theme", "light");
+  }
+});
+</script>
 
 </body>
 
