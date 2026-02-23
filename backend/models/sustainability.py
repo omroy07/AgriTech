@@ -91,4 +91,52 @@ class SustainabilityScore(db.Model):
     # Water Scarcity Tracking (L3-1605)
     water_quota_utilization_ratio = db.Column(db.Float, default=0.0) # used / total
     
+    # ESG Score (L3-1632)
+    esg_carbon_score = db.Column(db.Float, default=0.0)   # 0-100, based on sequestration
+    total_credits_minted = db.Column(db.Float, default=0.0)
+    
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+class ESGMarketListing(db.Model):
+    """
+    Internal ESG marketplace listing for Corporate buyers to purchase
+    Circular Carbon Credits minted by farms (L3-1632).
+    """
+    __tablename__ = 'esg_market_listings'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    farm_id = db.Column(db.Integer, db.ForeignKey('farms.id'), nullable=False)
+    mint_event_id = db.Column(db.Integer, db.ForeignKey('carbon_mint_events.id'), nullable=False)
+    
+    # Credits being offered
+    credits_offered = db.Column(db.Float, nullable=False)
+    asking_price_usd = db.Column(db.Float, nullable=False)
+    
+    # Listing meta
+    status = db.Column(db.String(20), default='ACTIVE') # ACTIVE, SOLD, EXPIRED, WITHDRAWN
+    description = db.Column(db.Text)
+    
+    # Validity window
+    listed_at = db.Column(db.DateTime, default=datetime.utcnow)
+    expires_at = db.Column(db.DateTime)
+    
+    # Buyer info (filled on purchase)
+    buyer_user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    purchase_price_usd = db.Column(db.Float)
+    purchased_at = db.Column(db.DateTime)
+    
+    # Ledger settlement reference
+    settlement_ledger_txn_id = db.Column(db.Integer, db.ForeignKey('ledger_transactions.id'))
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'farm_id': self.farm_id,
+            'credits_offered': self.credits_offered,
+            'asking_price_usd': self.asking_price_usd,
+            'status': self.status,
+            'listed_at': self.listed_at.isoformat(),
+            'expires_at': self.expires_at.isoformat() if self.expires_at else None,
+            'buyer_user_id': self.buyer_user_id,
+            'purchased_at': self.purchased_at.isoformat() if self.purchased_at else None
+        }
