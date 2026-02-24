@@ -66,7 +66,20 @@
         }
 
         [data-theme="light"] body {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0f9ff 100%);
+            background: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        [data-theme="light"] .top-nav {
+            background: rgba(255, 255, 255, 0.9) !important;
+            /* No longer black! */
+            border-color: rgba(0, 0, 0, 0.1) !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        [data-theme="light"] .nav-back,
+        [data-theme="light"] .nav-left span {
+            color: #1e293b !important;
+            /* High-contrast charcoal text */
         }
 
         .container {
@@ -505,12 +518,13 @@
             max-height: 300px;
             overflow-y: auto;
         }
+
         /* Light Mode Styling for Alerts Panel (Issue #1530 Fix) */
-[data-theme="light"] .alerts-panel {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-}
+        [data-theme="light"] .alerts-panel {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
 
 
         .alert-item {
@@ -539,33 +553,36 @@
         }
 
         /* Light mode alert card refinement */
-[data-theme="light"] .alert-item {
-    background: #f8fafc;
-    border-radius: 12px;
-    border-left-width: 5px;
-    transition: all 0.25s ease;
-}
+        [data-theme="light"] .alert-item {
+            background: #f8fafc;
+            border-radius: 12px;
+            border-left-width: 5px;
+            transition: all 0.25s ease;
+        }
 
-[data-theme="light"] .alert-item.warning {
-    background: #fffbeb; /* warm soft amber */
-    border-left-color: var(--accent-warning);
-}
+        [data-theme="light"] .alert-item.warning {
+            background: #fffbeb;
+            /* warm soft amber */
+            border-left-color: var(--accent-warning);
+        }
 
-[data-theme="light"] .alert-item.danger {
-    background: #fef2f2; /* soft red tint */
-    border-left-color: var(--accent-danger);
-}
+        [data-theme="light"] .alert-item.danger {
+            background: #fef2f2;
+            /* soft red tint */
+            border-left-color: var(--accent-danger);
+        }
 
-[data-theme="light"] .alert-item.success {
-    background: #f0fdf4; /* soft green tint */
-    border-left-color: var(--accent-success);
-}
+        [data-theme="light"] .alert-item.success {
+            background: #f0fdf4;
+            /* soft green tint */
+            border-left-color: var(--accent-success);
+        }
 
-/* Subtle hover polish for alerts (both themes) */
-.alert-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 18px var(--shadow-light);
-}
+        /* Subtle hover polish for alerts (both themes) */
+        .alert-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px var(--shadow-light);
+        }
 
 
         .alert-icon {
@@ -574,23 +591,23 @@
 
         /* --- FIXED: CONTRAST AND VISIBILITY FOR ALERTS --- */
         /* --- THEME-AWARE ALERT TEXT (Fix for Issue #1530) --- */
-.alert-content h4 {
-    color: var(--text-primary);
-    margin-bottom: 5px;
-    font-weight: 700;
-}
+        .alert-content h4 {
+            color: var(--text-primary);
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
 
-.alert-content p {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    opacity: 1;
-}
+        .alert-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            opacity: 1;
+        }
 
-.alert-time {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-left: auto;
-}
+        .alert-time {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
 
 
         .sensor-status {
@@ -601,26 +618,26 @@
         }
 
         /* Enhanced Sensor Card Animation (Subtle & Lightweight) */
-.sensor-item {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 20px;
-    border-left: 4px solid var(--accent-success);
-    position: relative;
-    overflow: hidden;
+        .sensor-item {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid var(--accent-success);
+            position: relative;
+            overflow: hidden;
 
-    /* NEW: smooth entrance + hover feel */
-    opacity: 0;
-    transform: translateY(15px) scale(0.98);
-    animation: sensorFadeIn 0.6s ease forwards;
+            /* NEW: smooth entrance + hover feel */
+            opacity: 0;
+            transform: translateY(15px) scale(0.98);
+            animation: sensorFadeIn 0.6s ease forwards;
 
-    transition: transform 0.32s cubic-bezier(0.2, 1.6, 0.3, 1),
-            box-shadow 0.3s ease,
-            border-color 0.3s ease;
+            transition: transform 0.32s cubic-bezier(0.2, 1.6, 0.3, 1),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
 
 
-}
+        }
 
 
         .sensor-item::before {
@@ -650,28 +667,31 @@
         }
 
         /* Subtle fade-in animation for sensor cards */
-@keyframes sensorFadeIn {
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
+        @keyframes sensorFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
 
-/* Spring jump effect for hover (visible but still professional) */
-@keyframes sensorJump {
-    0% {
-        transform: translateY(0) scale(1);
-    }
-    40% {
-        transform: translateY(-14px) scale(1.04);
-    }
-    70% {
-        transform: translateY(-8px) scale(1.02);
-    }
-    100% {
-        transform: translateY(-10px) scale(1.03);
-    }
-}
+        /* Spring jump effect for hover (visible but still professional) */
+        @keyframes sensorJump {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+
+            40% {
+                transform: translateY(-14px) scale(1.04);
+            }
+
+            70% {
+                transform: translateY(-8px) scale(1.02);
+            }
+
+            100% {
+                transform: translateY(-10px) scale(1.03);
+            }
+        }
 
 
 
@@ -692,30 +712,30 @@
         }
 
         /* Subtle hover lift (as requested in issue #1529) */
-/* Enhanced soft bounce hover (more noticeable) */
-.sensor-item:hover {
-    transform: translateY(-12px) scale(1.025);
-    box-shadow: 0 18px 35px var(--shadow-medium);
+        /* Enhanced soft bounce hover (more noticeable) */
+        .sensor-item:hover {
+            transform: translateY(-12px) scale(1.025);
+            box-shadow: 0 18px 35px var(--shadow-medium);
 
-    transition: transform 0.25s cubic-bezier(0.34, 1.4, 0.64, 1),
+            transition: transform 0.25s cubic-bezier(0.34, 1.4, 0.64, 1),
                 box-shadow 0.25s ease;
-}
+        }
 
 
-/* Status-colored border on hover (matches left accent color) */
-.sensor-item:hover {
-    border-color: var(--accent-success);
-}
+        /* Status-colored border on hover (matches left accent color) */
+        .sensor-item:hover {
+            border-color: var(--accent-success);
+        }
 
-/* Warning card → orange border on hover */
-.sensor-item.warning:hover {
-    border-color: var(--accent-warning);
-}
+        /* Warning card → orange border on hover */
+        .sensor-item.warning:hover {
+            border-color: var(--accent-warning);
+        }
 
-/* Critical card → red border on hover */
-.sensor-item.critical:hover {
-    border-color: var(--accent-danger);
-}
+        /* Critical card → red border on hover */
+        .sensor-item.critical:hover {
+            border-color: var(--accent-danger);
+        }
 
         .sensor-header {
             display: flex;
@@ -762,21 +782,21 @@
         }
 
         /* Gentle status glow based on sensor state */
-.sensor-item:not(.warning):not(.critical) {
-    box-shadow: 0 0 0 rgba(34, 197, 94, 0);
-}
+        .sensor-item:not(.warning):not(.critical) {
+            box-shadow: 0 0 0 rgba(34, 197, 94, 0);
+        }
 
-.sensor-item:not(.warning):not(.critical):hover {
-    box-shadow: 0 10px 25px rgba(34, 197, 94, 0.15);
-}
+        .sensor-item:not(.warning):not(.critical):hover {
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.15);
+        }
 
-.sensor-item.warning:hover {
-    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.2);
-}
+        .sensor-item.warning:hover {
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.2);
+        }
 
-.sensor-item.critical:hover {
-    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.2);
-}
+        .sensor-item.critical:hover {
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.2);
+        }
 
 
         .settings-panel {
@@ -1146,30 +1166,30 @@
         }
 
         .notification-content {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-.notification-text {
-    flex: 1;
-}
+        .notification-text {
+            flex: 1;
+        }
 
-.notification-close {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    margin-left: 10px;
-    line-height: 1;
-    opacity: 0.9;
-}
+        .notification-close {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 10px;
+            line-height: 1;
+            opacity: 0.9;
+        }
 
-.notification-close:hover {
-    opacity: 1;
-    transform: scale(1.1);
-}
+        .notification-close:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
 
 
         .notification.show {
@@ -1368,50 +1388,51 @@
         }
 
         /* --- END OF CTA INTERACTIVE ENHANCEMENTS --- */
-           /* --- Cursor Trail Container --- */
-.circle-container {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 999999;
-}
+        /* --- Cursor Trail Container --- */
+        .circle-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 999999;
+        }
 
-/* --- Individual Trail Circles --- */
-.cursor-circle {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #ff8c00;
-  box-shadow: 0 0 15px rgba(255, 140, 0, 0.7);
-  transform: translate(-50%, -50%);
-  will-change: transform;
-  mix-blend-mode: screen;
-  transition: transform 0.1s ease-out;
-}
+        /* --- Individual Trail Circles --- */
+        .cursor-circle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ff8c00;
+            box-shadow: 0 0 15px rgba(255, 140, 0, 0.7);
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            mix-blend-mode: screen;
+            transition: transform 0.1s ease-out;
+        }
 
-/* --- The Leading "Head" Circle --- */
-.cursor-circle:first-child {
-  width: 14px;
-  height: 14px;
-  background-color: #ffcc00;
-  box-shadow:
-    0 0 20px #ff8c00,
-    0 0 40px rgba(255, 140, 0, 0.5);
-}
+        /* --- The Leading "Head" Circle --- */
+        .cursor-circle:first-child {
+            width: 14px;
+            height: 14px;
+            background-color: #ffcc00;
+            box-shadow:
+                0 0 20px #ff8c00,
+                0 0 40px rgba(255, 140, 0, 0.5);
+        }
 
-/* --- Interaction States --- */
-.cursor-clicking {
-  transform: translate(-50%, -50%) scale(2.5) !important;
-  background-color: #ffffff !important;
-  box-shadow: 0 0 30px #ffffff !important;
-}
+        /* --- Interaction States --- */
+        .cursor-clicking {
+            transform: translate(-50%, -50%) scale(2.5) !important;
+            background-color: #ffffff !important;
+            box-shadow: 0 0 30px #ffffff !important;
+        }
 
-.cursor-hovering {
-  transform: translate(-50%, -50%) scale(1.8);
-  background-color: #22c55e; /* AgriTech green */
-  box-shadow: 0 0 20px #22c55e;
-}
+        .cursor-hovering {
+            transform: translate(-50%, -50%) scale(1.8);
+            background-color: #22c55e;
+            /* AgriTech green */
+            box-shadow: 0 0 20px #22c55e;
+        }
     </style>
 </head>
 
@@ -1861,8 +1882,8 @@
     <button class="scroll-btn" id="scrollBtn" title="Scroll">
         <i class="fas fa-arrow-down" id="scrollIcon"></i>
     </button>
-        <!-- Cursor Trail -->
-<div class="circle-container" id="cursorTrail"></div>
+    <!-- Cursor Trail -->
+    <div class="circle-container" id="cursorTrail"></div>
     <script>
         const scrollBtn = document.getElementById("scrollBtn");
         const scrollIcon = document.getElementById("scrollIcon");
@@ -2081,19 +2102,19 @@
 
         // Notification System
         // Notification System (UPDATED with Close Button + Better Dismiss)
-function showNotification(message, type = 'success') {
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
 
-    const icons = {
-        success: 'fa-check-circle',
-        warning: 'fa-exclamation-triangle',
-        danger: 'fa-exclamation-circle',
-        info: 'fa-info-circle'
-    };
+            const icons = {
+                success: 'fa-check-circle',
+                warning: 'fa-exclamation-triangle',
+                danger: 'fa-exclamation-circle',
+                info: 'fa-info-circle'
+            };
 
-    // Create content wrapper
-    notification.innerHTML = `
+            // Create content wrapper
+            notification.innerHTML = `
         <div class="notification-content">
             <i class="fas ${icons[type]}"></i>
             <span class="notification-text">${message}</span>
@@ -2101,28 +2122,28 @@ function showNotification(message, type = 'success') {
         </div>
     `;
 
-    document.body.appendChild(notification);
+            document.body.appendChild(notification);
 
-    // Show animation
-    setTimeout(() => {
-        notification.classList.add('show');
-    }, 100);
+            // Show animation
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
 
-    // Close button logic (NEW)
-    const closeBtn = notification.querySelector('.notification-close');
-    closeBtn.addEventListener('click', () => {
-        notification.classList.remove('show');
-        setTimeout(() => notification.remove(), 300);
-    });
+            // Close button logic (NEW)
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.addEventListener('click', () => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            });
 
-    // Auto dismiss (still keeps UX smooth)
-    setTimeout(() => {
-        if (notification.parentElement) {
-            notification.classList.remove('show');
-            setTimeout(() => notification.remove(), 300);
+            // Auto dismiss (still keeps UX smooth)
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.classList.remove('show');
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 4000);
         }
-    }, 4000);
-}
 
 
         // Sensor Time Updates
@@ -2188,12 +2209,12 @@ function showNotification(message, type = 'success') {
 
             // Observe all cards for animation
             // Observe cards for animation (EXCLUDE sensor-item to preserve CSS animation)
-document.querySelectorAll('.feature-card, .metric-card').forEach(card => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(20px)';
-    card.style.transition = 'all 0.6s ease';
-    observer.observe(card);
-});
+            document.querySelectorAll('.feature-card, .metric-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
 
 
             // Simulate some initial alerts
@@ -2267,67 +2288,66 @@ document.querySelectorAll('.feature-card, .metric-card').forEach(card => {
         }
 
         window.onload = initTooltips;
-         // --- Cursor Trailing Effect ---
-const container = document.getElementById('cursorTrail');
-const circleCount = 12;
-const circles = [];
+        // --- Cursor Trailing Effect ---
+        const container = document.getElementById('cursorTrail');
+        const circleCount = 12;
+        const circles = [];
+        let mouseX = 0;
+        let mouseY = 0;
 
-let mouseX = 0;
-let mouseY = 0;
+        // Create circles
+        for (let i = 0; i < circleCount; i++) {
+            const circle = document.createElement('div');
+            circle.classList.add('cursor-circle');
+            container.appendChild(circle);
+            circles.push({ el: circle, x: 0, y: 0 });
+        }
 
-// Create circles
-for (let i = 0; i < circleCount; i++) {
-    const circle = document.createElement('div');
-    circle.classList.add('cursor-circle');
-    container.appendChild(circle);
-    circles.push({ el: circle, x: 0, y: 0 });
-}
+        // Mouse move
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
 
-// Mouse move
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
+        // Click effects
+        document.addEventListener('mousedown', () => {
+            circles.forEach(c => c.el.classList.add('cursor-clicking'));
+        });
+        document.addEventListener('mouseup', () => {
+            circles.forEach(c => c.el.classList.remove('cursor-clicking'));
+        });
 
-// Click effects
-document.addEventListener('mousedown', () => {
-    circles.forEach(c => c.el.classList.add('cursor-clicking'));
-});
-document.addEventListener('mouseup', () => {
-    circles.forEach(c => c.el.classList.remove('cursor-clicking'));
-});
+        // Hover effects on interactive elements
+        document.addEventListener('mouseover', (e) => {
+            if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+                circles.forEach(c => c.el.classList.add('cursor-hovering'));
+            }
+        });
+        document.addEventListener('mouseout', (e) => {
+            if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+                circles.forEach(c => c.el.classList.remove('cursor-hovering'));
+            }
+        });
 
-// Hover effects on interactive elements
-document.addEventListener('mouseover', (e) => {
-    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
-        circles.forEach(c => c.el.classList.add('cursor-hovering'));
-    }
-});
-document.addEventListener('mouseout', (e) => {
-    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
-        circles.forEach(c => c.el.classList.remove('cursor-hovering'));
-    }
-});
+        // Animate trailing effect
+        function animateCursor() {
+            let x = mouseX;
+            let y = mouseY;
 
-// Animate trailing effect
-function animateCursor() {
-    let x = mouseX;
-    let y = mouseY;
+            circles.forEach((circle) => {
+                circle.x += (x - circle.x) * 0.25;
+                circle.y += (y - circle.y) * 0.25;
 
-    circles.forEach((circle) => {
-        circle.x += (x - circle.x) * 0.25;
-        circle.y += (y - circle.y) * 0.25;
+                circle.el.style.left = circle.x + 'px';
+                circle.el.style.top = circle.y + 'px';
 
-        circle.el.style.left = circle.x + 'px';
-        circle.el.style.top = circle.y + 'px';
+                x = circle.x;
+                y = circle.y;
+            });
 
-        x = circle.x;
-        y = circle.y;
-    });
-
-    requestAnimationFrame(animateCursor);
-}
-animateCursor();
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
     </script>
     <script src="theme.js"></script>
     <script src="auth.js"></script>
