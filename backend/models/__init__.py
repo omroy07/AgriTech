@@ -43,6 +43,7 @@ from .financials import FarmBalanceSheet, SolvencySnapshot, ProfitabilityIndex
 from .reliability_log import ReliabilityLog
 from .market import ForwardContract, PriceHedgingLog
 from .circular import WasteInventory, BioEnergyOutput, CircularCredit
+from .iot_maintenance import AssetTelemetry, MaintenancePrediction, ComponentWearMap
 from .disease import MigrationVector, ContainmentZone
 from .ledger import (
     LedgerAccount, LedgerTransaction, LedgerEntry,
@@ -115,6 +116,8 @@ __all__ = [
     'ReliabilityLog', 'ForwardContract', 'PriceHedgingLog',
     # Circular Economy
     'WasteInventory', 'BioEnergyOutput', 'CircularCredit',
+    # IoT Predictive Maintenance (L3-1641)
+    'AssetTelemetry', 'MaintenancePrediction', 'ComponentWearMap',
     # Double-Entry Ledger
     'LedgerAccount', 'LedgerTransaction', 'LedgerEntry',
     'FXValuationSnapshot', 'Vault', 'VaultCurrencyPosition', 'FXRate',

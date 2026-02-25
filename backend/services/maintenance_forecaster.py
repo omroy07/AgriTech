@@ -60,3 +60,20 @@ class MaintenanceForecaster:
             
         db.session.commit()
         return prediction
+
+    @staticmethod
+    def update_wear_status(asset_id: int):
+        """
+        Calculates wear drift for critical components based on engine hours.
+        """
+        from backend.models.iot_maintenance import ComponentWearMap
+        components = ComponentWearMap.query.filter_by(asset_id=asset_id).all()
+        
+        for c in components:
+            # Simulate 0.5% wear per evaluation cycle
+            c.wear_percentage = min(100.0, c.wear_percentage + 0.5)
+            c.last_inspected_at = datetime.utcnow()
+            
+        db.session.commit()
+        return True
+

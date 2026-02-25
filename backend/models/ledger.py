@@ -44,6 +44,7 @@ class TransactionType(enum.Enum):
     DIVIDEND = 'DIVIDEND'
     FEE = 'FEE'
     INTEREST = 'INTEREST'
+    MAINTENANCE_ESCROW_RELEASE = 'MAINTENANCE_ESCROW_RELEASE' # Funds released for predictive repair work
     CARBON_CREDIT_MINT = 'CARBON_CREDIT_MINT'    # New credit minted from sequestration
     CARBON_CREDIT_SALE = 'CARBON_CREDIT_SALE'    # Credit sold to ESG buyer
 

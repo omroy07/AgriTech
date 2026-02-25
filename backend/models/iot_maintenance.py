@@ -38,3 +38,16 @@ class MaintenancePrediction(db.Model):
     
     generated_at = db.Column(db.DateTime, default=datetime.utcnow)
     status = db.Column(db.String(20), default='PENDING') # PENDING, ACTIONED, IGNORED
+
+class ComponentWearMap(db.Model):
+    __tablename__ = 'component_wear_maps'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    asset_id = db.Column(db.Integer, db.ForeignKey('farm_assets.id'), nullable=False)
+    
+    component_name = db.Column(db.String(100), nullable=False)
+    wear_percentage = db.Column(db.Float, default=0.0)
+    
+    last_inspected_at = db.Column(db.DateTime, default=datetime.utcnow)
+    replacement_threshold = db.Column(db.Float, default=80.0)
+
