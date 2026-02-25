@@ -43,6 +43,7 @@ from .financials import FarmBalanceSheet, SolvencySnapshot, ProfitabilityIndex
 from .reliability_log import ReliabilityLog
 from .market import ForwardContract, PriceHedgingLog
 from .circular import WasteInventory, BioEnergyOutput, CircularCredit
+from .carbon_escrow import CarbonTradeEscrow, EscrowAuditLog, CarbonCreditWallet
 from .disease import MigrationVector, ContainmentZone
 from .ledger import (
     LedgerAccount, LedgerTransaction, LedgerEntry,
@@ -115,6 +116,8 @@ __all__ = [
     'ReliabilityLog', 'ForwardContract', 'PriceHedgingLog',
     # Circular Economy
     'WasteInventory', 'BioEnergyOutput', 'CircularCredit',
+    # Carbon Trading Escrow (L3-1642)
+    'CarbonTradeEscrow', 'EscrowAuditLog', 'CarbonCreditWallet',
     # Double-Entry Ledger
     'LedgerAccount', 'LedgerTransaction', 'LedgerEntry',
     'FXValuationSnapshot', 'Vault', 'VaultCurrencyPosition', 'FXRate',

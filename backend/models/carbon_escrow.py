@@ -41,3 +41,16 @@ class EscrowAuditLog(db.Model):
     
     details = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+class CarbonCreditWallet(db.Model):
+    __tablename__ = 'carbon_credit_wallets'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True, nullable=False)
+    
+    total_credits_minted = db.Column(db.Float, default=0.0)
+    available_credits_for_sale = db.Column(db.Float, default=0.0)
+    
+    frozen_credits_in_escrow = db.Column(db.Float, default=0.0)
+    last_rebalancing_at = db.Column(db.DateTime, default=datetime.utcnow)
+
