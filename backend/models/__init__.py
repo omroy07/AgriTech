@@ -42,6 +42,8 @@ from .barter import BarterTransaction, BarterResource, ResourceValueIndex
 from .financials import FarmBalanceSheet, SolvencySnapshot, ProfitabilityIndex
 from .reliability_log import ReliabilityLog
 from .market import ForwardContract, PriceHedgingLog
+from .arbitrage import ArbitrageOpportunity, AlgorithmicTradeRecord
+from .spatial_yield import SpatialYieldGrid, TemporalYieldForex
 from .circular import WasteInventory, BioEnergyOutput, CircularCredit
 from .disease import MigrationVector, ContainmentZone
 from .ledger import (
@@ -113,6 +115,8 @@ __all__ = [
     'BarterTransaction', 'BarterResource', 'ResourceValueIndex',
     # Reliability & Market
     'ReliabilityLog', 'ForwardContract', 'PriceHedgingLog',
+    'ArbitrageOpportunity', 'AlgorithmicTradeRecord',
+    'SpatialYieldGrid', 'TemporalYieldForex',
     # Circular Economy
     'WasteInventory', 'BioEnergyOutput', 'CircularCredit',
     # Double-Entry Ledger

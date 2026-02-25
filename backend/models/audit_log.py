@@ -35,6 +35,9 @@ class AuditLog(db.Model):
     # Smart Freight (L3-1631)
     ai_logistics_flag = db.Column(db.Boolean, default=False) # For geo-fence & phyto auto-decisions
     
+    # Algorithmic Trading (L3-1635)
+    algo_arbitrage_flag = db.Column(db.Boolean, default=False) # For autonomous spatial yield futures trading
+    
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Meta data for extra context

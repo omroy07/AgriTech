@@ -27,6 +27,11 @@ class ForwardContract(db.Model):
     # Cascading Quality Adjustments (L3-1604)
     quality_penalty_clause = db.Column(db.Float, default=0.0) # Percentage deduction from final payout
     
+    # Arbitrage Metrics (L3-1635)
+    acquired_via_arbitrage = db.Column(db.Boolean, default=False)
+    algorithmic_arbitrage_margin_pct = db.Column(db.Float)
+    
+    
     def to_dict(self):
         return {
             'id': self.id,

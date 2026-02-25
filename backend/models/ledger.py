@@ -44,6 +44,7 @@ class TransactionType(enum.Enum):
     DIVIDEND = 'DIVIDEND'
     FEE = 'FEE'
     INTEREST = 'INTEREST'
+    ARBITRAGE_EXECUTION = 'ARBITRAGE_EXECUTION'  # Auto-execution of quant arbitrage trade
     CARBON_CREDIT_MINT = 'CARBON_CREDIT_MINT'    # New credit minted from sequestration
     CARBON_CREDIT_SALE = 'CARBON_CREDIT_SALE'    # Credit sold to ESG buyer
 

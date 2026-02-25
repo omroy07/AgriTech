@@ -45,6 +45,8 @@ from .futures import futures_bp
 from .circular import circular_bp
 from .biosecurity import biosecurity_bp
 from .vaults import vaults_bp
+from .arbitrage import arbitrage_bp
+from .spatial_yield import spatial_yield_bp
 from .carbon import carbon_bp
 from .logistics import smart_freight_bp
 
@@ -100,4 +102,5 @@ api_v1.register_blueprint(futures_bp, url_prefix='/futures')
 api_v1.register_blueprint(circular_bp, url_prefix='/circular')
 api_v1.register_blueprint(biosecurity_bp, url_prefix='/biosecurity')
 api_v1.register_blueprint(vaults_bp, url_prefix='/vaults')
-api_v1.register_blueprint(carbon_bp, url_prefix='/carbon')
+api_v1.register_blueprint(arbitrage_bp, url_prefix='/arbitrage')
+api_v1.register_blueprint(spatial_yield_bp, url_prefix='/spatial-yield')
