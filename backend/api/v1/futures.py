@@ -92,3 +92,34 @@ def get_hedging_history(current_user, farm_id):
             } for l in logs
         ]
     })
+
+@futures_bp.route('/yield-at-risk/<int:farm_id>', methods=['GET'])
+@token_required
+def get_yield_at_risk(current_user, farm_id):
+    """
+    Returns real-time climate risk exposure (YaR) for a farm.
+    """
+    from backend.services.yield_resilience_service import YieldResilienceEngine
+    risk_profile = YieldResilienceEngine.compute_yield_at_risk(farm_id)
+    return jsonify({
+        'status': 'success',
+        'data': risk_profile
+    }), 200
+
+@futures_bp.route('/contract/<int:contract_id>/climate-status', methods=['GET'])
+@token_required
+def get_contract_climate_status(current_user, contract_id):
+    """Shows if a specific contract is suspended due to Force Majeure."""
+    contract = ForwardContract.query.get(contract_id)
+    if not contract:
+        return jsonify({'error': 'Contract not found'}), 404
+    
+    return jsonify({
+        'status': 'success',
+        'data': {
+            'contract_id': contract.id,
+            'force_majeure_suspended': contract.force_majeure_suspended,
+            'climate_risk_discount_pct': contract.climate_risk_discount,
+            'yield_at_risk_pct': contract.yield_at_risk_pct
+        }
+    }), 200
