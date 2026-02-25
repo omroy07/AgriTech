@@ -49,6 +49,8 @@ from .arbitrage import arbitrage_bp
 from .spatial_yield import spatial_yield_bp
 from .carbon import carbon_bp
 from .logistics import smart_freight_bp
+from .genomics import genomics_bp
+from .virulence import virulence_bp
 
 # Create v1 API blueprint
 api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1')
@@ -104,3 +106,6 @@ api_v1.register_blueprint(biosecurity_bp, url_prefix='/biosecurity')
 api_v1.register_blueprint(vaults_bp, url_prefix='/vaults')
 api_v1.register_blueprint(arbitrage_bp, url_prefix='/arbitrage')
 api_v1.register_blueprint(spatial_yield_bp, url_prefix='/spatial-yield')
+api_v1.register_blueprint(carbon_bp, url_prefix='/carbon')
+api_v1.register_blueprint(genomics_bp, url_prefix='/genomics')
+api_v1.register_blueprint(virulence_bp, url_prefix='/virulence')

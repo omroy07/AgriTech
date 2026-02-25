@@ -15,6 +15,10 @@ from .farm import Farm, FarmMember, FarmAsset, FarmRole
 from .alert import Alert, AlertPreference
 from .audit_log import AuditLog, UserSession
 from .media_payload import MediaPayload
+from .weather import (
+    WeatherData, CropAdvisory, AdvisorySubscription, RiskTrigger,
+    ClimateTelemetryEvent, ForceMajeureAlert, ParametricPolicyTrigger
+)
 from .weather import WeatherData, CropAdvisory, AdvisorySubscription, RiskTrigger
 from .sustainability import (
     CarbonPractice, CreditLedger, AuditRequest, CarbonLedger,
@@ -24,6 +28,7 @@ from .vendor_profile import VendorProfile
 from .procurement import ProcurementItem, BulkOrder, OrderEvent
 from .irrigation import IrrigationZone, SensorLog, ValveStatus, IrrigationSchedule, AquiferLevel, WaterRightsQuota
 from .processing import ProcessingBatch, StageLog, QualityCheck, ProcessingStage, SpectralScanData, DynamicGradeAdjustment
+from .insurance_v2 import CropPolicy, ClaimRequest, PayoutLedger, AdjusterNote, ParametricAutoSettlement
 from .insurance_v2 import CropPolicy, ClaimRequest, PayoutLedger, AdjusterNote
 from .machinery import EngineHourLog, MaintenanceCycle, DamageReport, RepairOrder, AssetValueSnapshot, ComponentWearMap, MaintenanceEscrow
 from .soil_health import SoilTest, FertilizerRecommendation, ApplicationLog, RegenerativeFarmingLog, CarbonMintEvent
@@ -45,6 +50,8 @@ from .market import ForwardContract, PriceHedgingLog
 from .arbitrage import ArbitrageOpportunity, AlgorithmicTradeRecord
 from .spatial_yield import SpatialYieldGrid, TemporalYieldForex
 from .circular import WasteInventory, BioEnergyOutput, CircularCredit
+from .genomics import SeedGenomeProfile, LiveCropPhenotype, EpigeneticDriftLog
+from .virulence import PathogenStrain, InfectionCombatSimulation
 from .disease import MigrationVector, ContainmentZone
 from .ledger import (
     LedgerAccount, LedgerTransaction, LedgerEntry,
@@ -64,6 +71,7 @@ __all__ = [
     'SupplyBatch', 'CustodyLog', 'QualityGrade', 'BatchStatus',
     # Insurance
     'InsurancePolicy', 'LegacyClaim', 'RiskScoreHistory', 'DynamicPremiumLog', 'RiskFactorSnapshot',
+    'CropPolicy', 'ClaimRequest', 'PayoutLedger', 'AdjusterNote', 'ParametricAutoSettlement',
     'CropPolicy', 'ClaimRequest', 'PayoutLedger', 'AdjusterNote',
     # Community
     'ForumCategory', 'ForumThread', 'PostComment', 'Upvote', 'UserReputation',
@@ -78,6 +86,7 @@ __all__ = [
     'AuditLog', 'UserSession', 'MediaPayload',
     # Weather
     'WeatherData', 'CropAdvisory', 'AdvisorySubscription', 'RiskTrigger',
+    'ClimateTelemetryEvent', 'ForceMajeureAlert', 'ParametricPolicyTrigger',
     # Sustainability & ESG
     'CarbonPractice', 'CreditLedger', 'AuditRequest', 'CarbonLedger', 'EmissionSource',
     'SustainabilityScore', 'ESGMarketListing',
@@ -106,6 +115,8 @@ __all__ = [
     'WorkerProfile', 'WorkShift', 'HarvestLog', 'PayrollEntry', 'LaborROIHistory',
     # Logistics
     'DriverProfile', 'DeliveryVehicle', 'TransportRoute', 'FuelLog',
+    'PhytoSanitaryCertificate', 'FreightEscrow', 'CustomsCheckpoint', 'GPSTelemetry',
+    # Transparency & Barter
     # Transparency & Barter
     'PhytoSanitaryCertificate', 'FreightEscrow', 'CustomsCheckpoint', 'GPSTelemetry',
     'Alert', 'AlertPreference',
@@ -115,8 +126,8 @@ __all__ = [
     'BarterTransaction', 'BarterResource', 'ResourceValueIndex',
     # Reliability & Market
     'ReliabilityLog', 'ForwardContract', 'PriceHedgingLog',
-    'ArbitrageOpportunity', 'AlgorithmicTradeRecord',
-    'SpatialYieldGrid', 'TemporalYieldForex',
+    'SeedGenomeProfile', 'LiveCropPhenotype', 'EpigeneticDriftLog',
+    'PathogenStrain', 'InfectionCombatSimulation',
     # Circular Economy
     'WasteInventory', 'BioEnergyOutput', 'CircularCredit',
     # Double-Entry Ledger
