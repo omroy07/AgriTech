@@ -43,6 +43,8 @@ from .financials import FarmBalanceSheet, SolvencySnapshot, ProfitabilityIndex
 from .reliability_log import ReliabilityLog
 from .market import ForwardContract, PriceHedgingLog
 from .circular import WasteInventory, BioEnergyOutput, CircularCredit
+from .autonomous_supply import SmartContractOrder, FreightGeoFence
+from .freight_v2 import AutonomousVehicle, VehicleMission
 from .disease import MigrationVector, ContainmentZone
 from .ledger import (
     LedgerAccount, LedgerTransaction, LedgerEntry,
@@ -115,6 +117,8 @@ __all__ = [
     'ReliabilityLog', 'ForwardContract', 'PriceHedgingLog',
     # Circular Economy
     'WasteInventory', 'BioEnergyOutput', 'CircularCredit',
+    # Autonomous Supply Chain (L3-1644)
+    'SmartContractOrder', 'FreightGeoFence', 'AutonomousVehicle', 'VehicleMission',
     # Double-Entry Ledger
     'LedgerAccount', 'LedgerTransaction', 'LedgerEntry',
     'FXValuationSnapshot', 'Vault', 'VaultCurrencyPosition', 'FXRate',
