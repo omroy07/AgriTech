@@ -37,6 +37,8 @@ class AuditLog(db.Model):
     
     # Algorithmic Trading (L3-1635)
     algo_arbitrage_flag = db.Column(db.Boolean, default=False) # For autonomous spatial yield futures trading
+    # Virtual Power Plant Grid (L3-1636)
+    vpp_grid_flag = db.Column(db.Boolean, default=False)
     
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     

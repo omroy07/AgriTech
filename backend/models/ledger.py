@@ -45,6 +45,7 @@ class TransactionType(enum.Enum):
     FEE = 'FEE'
     INTEREST = 'INTEREST'
     ARBITRAGE_EXECUTION = 'ARBITRAGE_EXECUTION'  # Auto-execution of quant arbitrage trade
+    BIOMASS_ENERGY_MINT = 'BIOMASS_ENERGY_MINT'  # Decentralized VPP grid payout for biomass energy injected
     CARBON_CREDIT_MINT = 'CARBON_CREDIT_MINT'    # New credit minted from sequestration
     CARBON_CREDIT_SALE = 'CARBON_CREDIT_SALE'    # Credit sold to ESG buyer
 
