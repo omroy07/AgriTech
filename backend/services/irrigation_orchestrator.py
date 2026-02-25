@@ -72,3 +72,18 @@ class IrrigationOrchestrator:
             v.triggered_by_event_id = log_id
             
         logger.info(f"Hydrating Zone {zone_id} on Farm {farm_id} due to stress shift.")
+
+    @staticmethod
+    def check_aquifer_sustainability(aquifer_id: str):
+        """
+        Calculates if aquifer withdrawals are exceeding natural recharge rates.
+        """
+        from backend.models.precision_irrigation import AquiferMonitoring
+        latest = AquiferMonitoring.query.filter_by(aquifer_id=aquifer_id).order_by(AquiferMonitoring.recorded_at.desc()).first()
+        
+        if latest and latest.current_water_level_m < 15.0: # Below 15m is critical
+            latest.is_critical_depletion = True
+            db.session.commit()
+            return True
+        return False
+

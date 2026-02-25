@@ -44,6 +44,7 @@ class TransactionType(enum.Enum):
     DIVIDEND = 'DIVIDEND'
     FEE = 'FEE'
     INTEREST = 'INTEREST'
+    WATER_TX_SETTLEMENT = 'WATER_TX_SETTLEMENT'  # Automated payment for precision water consumption
     CARBON_CREDIT_MINT = 'CARBON_CREDIT_MINT'    # New credit minted from sequestration
     CARBON_CREDIT_SALE = 'CARBON_CREDIT_SALE'    # Credit sold to ESG buyer
 

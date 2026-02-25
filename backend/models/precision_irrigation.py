@@ -60,3 +60,17 @@ class IrrigationValveAutomation(db.Model):
             'flow_rate': self.flow_rate_lpm,
             'total_vol': self.total_volume_injected_l
         }
+
+class AquiferMonitoring(db.Model):
+    __tablename__ = 'aquifer_monitoring_logs'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    aquifer_id = db.Column(db.String(50), nullable=False)
+    
+    current_water_level_m = db.Column(db.Float)
+    recharge_rate_lps = db.Column(db.Float)
+    
+    # Sustainability indicator
+    is_critical_depletion = db.Column(db.Boolean, default=False)
+    recorded_at = db.Column(db.DateTime, default=datetime.utcnow)
+
