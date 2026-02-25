@@ -37,8 +37,10 @@ class TransactionType(enum.Enum):
     FX_REVALUATION = 'FX_REVALUATION'
     FX_REALIZED_GAIN = 'FX_REALIZED_GAIN'
     FX_UNREALIZED_GAIN = 'FX_UNREALIZED_GAIN'
-    INVESTMENT_PURCHASE = 'INVESTMENT_PURCHASE'
-    INVESTMENT_SALE = 'INVESTMENT_SALE'
+    CARBON_CREDIT_MINT = 'CARBON_CREDIT_MINT'    # New credit minted from sequestration
+    CARBON_CREDIT_SALE = 'CARBON_CREDIT_SALE'    # Credit sold to ESG buyer
+    FREIGHT_ESCROW_HOLD = 'FREIGHT_ESCROW_HOLD'  # Funds locked into freight escrow
+    FREIGHT_RELEASE = 'FREIGHT_RELEASE'          # Smart-contract release on geo-fence confirm
     DIVIDEND = 'DIVIDEND'
     FEE = 'FEE'
     INTEREST = 'INTEREST'
@@ -46,6 +48,8 @@ class TransactionType(enum.Enum):
     FREIGHT_RELEASE = 'FREIGHT_RELEASE'          # Smart-contract release on geo-fence confirm
     PARAMETRIC_SETTLEMENT = 'PARAMETRIC_SETTLEMENT'  # Auto-payout on Force Majeure trigger
     YIELD_RISK_ADJUSTMENT = 'YIELD_RISK_ADJUSTMENT'  # Mark-to-market futures discount
+    CARBON_CREDIT_MINT = 'CARBON_CREDIT_MINT'    # New credit minted from sequestration
+    CARBON_CREDIT_SALE = 'CARBON_CREDIT_SALE'    # Credit sold to ESG buyer
 
 
 class LedgerAccount(db.Model):

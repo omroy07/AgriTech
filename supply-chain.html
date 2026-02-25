@@ -40,6 +40,7 @@
             --shadow: rgba(0, 0, 0, 0.4);
             --accent-blue: #818cf8;
         }
+
         /* ================= THEME VARIABLES ================= */
         :root {
             /* existing light mode colors (unchanged) */
@@ -50,34 +51,34 @@
             --heading: #2c3e50;
         }
 
-            /* ================= THEME VARIABLES ================= */
-            :root {
-                /* existing light mode colors (unchanged) */
-                --bg-gradient: linear-gradient(135deg, #4877b8 0%, #0e745e 100%);
-                --card-bg: rgba(210, 204, 212, 0.95);
-                --header-bg: rgba(190, 208, 212, 0.95);
-                --text-main: #333;
-                --heading: #2c3e50;
-            }
+        /* ================= THEME VARIABLES ================= */
+        :root {
+            /* existing light mode colors (unchanged) */
+            --bg-gradient: linear-gradient(135deg, #4877b8 0%, #0e745e 100%);
+            --card-bg: rgba(210, 204, 212, 0.95);
+            --header-bg: rgba(190, 208, 212, 0.95);
+            --text-main: #333;
+            --heading: #2c3e50;
+        }
 
-            /* Enhanced dark mode – only affects when data-theme="dark" */
-            [data-theme="dark"] {
-                --bg-gradient: linear-gradient(135deg, #020617 0%, #0b1120 40%, #022c22 100%);
-                --card-bg: rgba(15, 23, 42, 0.92);
-                --header-bg: rgba(15, 23, 42, 0.98);
-                --text-main: #e5e7eb;
-                --heading: #f9fafb;
-            }
+        /* Enhanced dark mode – only affects when data-theme="dark" */
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #020617 0%, #0b1120 40%, #022c22 100%);
+            --card-bg: rgba(15, 23, 42, 0.92);
+            --header-bg: rgba(15, 23, 42, 0.98);
+            --text-main: #e5e7eb;
+            --heading: #f9fafb;
+        }
 
-            body {
-                font-family: 'Open Sans', sans-serif;
-                line-height: 1.6;
-                min-height: 100vh;
-                background: var(--bg-gradient);
-                color: var(--text-main);
-                transition: background 0.4s ease, color 0.3s ease;
-            }
-        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            transition: background 0.4s ease, color 0.3s ease;
+        }
+
 
         .header,
         .supply-chain-flow,
@@ -149,54 +150,45 @@
             box-shadow: 0 10px 30px rgba(15, 23, 42, 0.8);
         }
 
-        /* Theme toggle button – fixed to support icon + text */
-.theme-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
 
-    min-width: 56px;
-    height: 56px;
-    padding: 0 14px;
+        .theme-toggle i {
+            color: #fbbf24 !important;
+            /* Vibrant Sun Yellow */
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: capitalize;
+        }
 
-    border-radius: 50px;
-    border: none;
-    cursor: pointer;
+        .theme-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 22px;
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%) !important;
+            /* Premium Indigo */
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border-radius: 999px !important;
+            /* Standardized Pill Shape */
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            /* Atmospheric Blue Glow */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1100;
+        }
 
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: initial !important;
-    font-weight: 600;
-
-    z-index: 1200;
-    background: #111827;
-    color: #f9fafb;
-
-    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.8);
-    transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
-}
-.theme-toggle i {
-    font-size: 2.2rem !important;    /* increase icon size */
-    line-height: 1;
-}
-.theme-toggle {
-    width: 56px !important;
-    height: 56px !important;
-    padding: 0 !important;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.theme-toggle span {
-    display: none;
-}
+        .theme-toggle span {
+            color: #fbbf24 !important;
+            /* Vibrant Sun Yellow */
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: capitalize;
+        }
 
 
         .theme-toggle:hover {
-            transform: scale(1.08);
-            box-shadow: 0 14px 35px rgba(15, 23, 42, 0.9);
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.5);
+            background: linear-gradient(135deg, #312e81 0%, #3730a3 100%) !important;
         }
 
         [data-theme="dark"] .theme-toggle {
@@ -488,14 +480,16 @@
         }
 
         .progress-bar {
-    width: 100%;
-    height: 18px; /* increased height for text visibility */
-    background: #e9ecef;
-    border-radius: 8px;
-    margin: 15px 0;
-    overflow: hidden;
-    position: relative; /* IMPORTANT */
-}
+            width: 100%;
+            height: 18px;
+            /* increased height for text visibility */
+            background: #e9ecef;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow: hidden;
+            position: relative;
+            /* IMPORTANT */
+        }
 
         .progress-fill {
             height: 100%;
@@ -503,20 +497,22 @@
             border-radius: 3px;
             transition: width 0.3s ease;
         }
-        .progress-fill {
-    position: relative; /* ADD THIS LINE */
-}
 
-.progress-text {
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 11px;
-    font-weight: 700;
-    color: white;
-    pointer-events: none;
-}
+        .progress-fill {
+            position: relative;
+            /* ADD THIS LINE */
+        }
+
+        .progress-text {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+            pointer-events: none;
+        }
 
         .metrics-row {
             display: grid;
@@ -602,51 +598,52 @@
                 grid-template-columns: 1fr;
             }
         }
+
         /* --- Cursor Trail Container --- */
-.circle-container {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 999999;
-}
+        .circle-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 999999;
+        }
 
-/* --- Individual Trail Circles --- */
-.cursor-circle {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #ff8c00;
-  box-shadow: 0 0 15px rgba(255, 140, 0, 0.7);
-  transform: translate(-50%, -50%);
-  will-change: transform;
-  mix-blend-mode: screen;
-  transition: transform 0.1s ease-out;
-}
+        /* --- Individual Trail Circles --- */
+        .cursor-circle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ff8c00;
+            box-shadow: 0 0 15px rgba(255, 140, 0, 0.7);
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            mix-blend-mode: screen;
+            transition: transform 0.1s ease-out;
+        }
 
-/* --- The Leading "Head" Circle --- */
-.cursor-circle:first-child {
-  width: 14px;
-  height: 14px;
-  background-color: #ffcc00;
-  box-shadow:
-    0 0 20px #ff8c00,
-    0 0 40px rgba(255, 140, 0, 0.5);
-}
+        /* --- The Leading "Head" Circle --- */
+        .cursor-circle:first-child {
+            width: 14px;
+            height: 14px;
+            background-color: #ffcc00;
+            box-shadow:
+                0 0 20px #ff8c00,
+                0 0 40px rgba(255, 140, 0, 0.5);
+        }
 
-/* --- Interaction States --- */
-.cursor-clicking {
-  transform: translate(-50%, -50%) scale(2.5) !important;
-  background-color: #ffffff !important;
-  box-shadow: 0 0 30px #ffffff !important;
-}
+        /* --- Interaction States --- */
+        .cursor-clicking {
+            transform: translate(-50%, -50%) scale(2.5) !important;
+            background-color: #ffffff !important;
+            box-shadow: 0 0 30px #ffffff !important;
+        }
 
-.cursor-hovering {
-  transform: translate(-50%, -50%) scale(1.8);
-  background-color: #22c55e; /* AgriTech green */
-  box-shadow: 0 0 20px #22c55e;
-}
-
+        .cursor-hovering {
+            transform: translate(-50%, -50%) scale(1.8);
+            background-color: #22c55e;
+            /* AgriTech green */
+            box-shadow: 0 0 20px #22c55e;
+        }
     </style>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -656,9 +653,9 @@
         <a href="index.html" class="nav-back">
             <i class="fas fa-arrow-left"></i> Back to Home
         </a>
-        <button class="theme-toggle" id="theme-toggle">
-            <i class="fas fa-moon moon-icon"></i>
-            <i class="fas fa-sun sun-icon"></i>
+        <button class="theme-toggle" id="themeToggleHub">
+            <i class="fas fa-sun" id="hubThemeIcon"></i>
+            <span id="hubThemeText">Light</span>
         </button>
     </div>
 
@@ -770,10 +767,10 @@
                     <p><strong>To:</strong> Delhi Market</p>
                     <p><strong>Product:</strong> Fresh Vegetables</p>
                     <div class="progress-bar">
-    <div class="progress-fill" style="width: 65%">
-        <span class="progress-text">65%</span>
-    </div>
-</div>
+                        <div class="progress-fill" style="width: 65%">
+                            <span class="progress-text">65%</span>
+                        </div>
+                    </div>
                     <p><small>ETA: Tomorrow 10:00 AM</small></p>
                 </div>
 
@@ -786,10 +783,10 @@
                     <p><strong>To:</strong> Mumbai Market</p>
                     <p><strong>Product:</strong> Fruits & Grains</p>
                     <div class="progress-bar">
-    <div class="progress-fill" style="width: 100%">
-        <span class="progress-text">100%</span>
-    </div>
-</div>
+                        <div class="progress-fill" style="width: 100%">
+                            <span class="progress-text">100%</span>
+                        </div>
+                    </div>
                     <p><small>Delivered: Today 08:30 AM</small></p>
                 </div>
 
@@ -801,11 +798,11 @@
                     <p><strong>From:</strong> Rajasthan Farms</p>
                     <p><strong>To:</strong> Jaipur Market</p>
                     <p><strong>Product:</strong> Pulses & Grains</p>
-                   <div class="progress-bar">
-    <div class="progress-fill" style="width: 25%">
-        <span class="progress-text">25%</span>
-    </div>
-</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 25%">
+                            <span class="progress-text">25%</span>
+                        </div>
+                    </div>
                     <p><small>Scheduled: Tomorrow 06:00 AM</small></p>
                 </div>
 
@@ -818,10 +815,10 @@
                     <p><strong>To:</strong> Bangalore Market</p>
                     <p><strong>Product:</strong> Rice & Spices</p>
                     <div class="progress-bar">
-    <div class="progress-fill" style="width: 80%">
-        <span class="progress-text">80%</span>
-    </div>
-</div>
+                        <div class="progress-fill" style="width: 80%">
+                            <span class="progress-text">80%</span>
+                        </div>
+                    </div>
                     <p><small>ETA: Tonight 11:00 PM</small></p>
                 </div>
             </div>
@@ -835,8 +832,8 @@
             <a href="#" class="cta-button">Contact Support</a>
         </div>
     </div>
-     <!-- Cursor Trail -->
-<div class="circle-container" id="cursorTrail"></div>
+    <!-- Cursor Trail -->
+    <div class="circle-container" id="cursorTrail"></div>
 
     <script>
         // 1. Theme Toggle Logic
@@ -876,21 +873,21 @@
 
             // Progress Bars
             const progressBars = document.querySelectorAll('.progress-fill');
-progressBars.forEach((bar, index) => {
-    const width = bar.style.width;
-    
-    // Set percentage text dynamically
-    const textEl = bar.querySelector('.progress-text');
-    if (textEl) {
-        textEl.textContent = width;
-    }
+            progressBars.forEach((bar, index) => {
+                const width = bar.style.width;
 
-    // Animate progress
-    bar.style.width = '0%';
-    setTimeout(() => {
-        bar.style.width = width;
-    }, index * 200);
-});
+                // Set percentage text dynamically
+                const textEl = bar.querySelector('.progress-text');
+                if (textEl) {
+                    textEl.textContent = width;
+                }
+
+                // Animate progress
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, index * 200);
+            });
 
             // Card Entrance
             const cards = document.querySelectorAll('.service-card, .shipment-card');
@@ -916,13 +913,13 @@ progressBars.forEach((bar, index) => {
                     const currentWidth = parseInt(progressBar.style.width) || 0;
                     if (currentWidth < 100) {
                         const newWidth = Math.min(100, currentWidth + Math.floor(Math.random() * 10 + 5)) + '%';
-progressBar.style.width = newWidth;
+                        progressBar.style.width = newWidth;
 
-// Update percentage text dynamically
-const textEl = progressBar.querySelector('.progress-text');
-if (textEl) {
-    textEl.textContent = newWidth;
-}
+                        // Update percentage text dynamically
+                        const textEl = progressBar.querySelector('.progress-text');
+                        if (textEl) {
+                            textEl.textContent = newWidth;
+                        }
                     }
                 }
             }
@@ -930,130 +927,161 @@ if (textEl) {
 
         setInterval(simulateShipmentUpdate, 15000);
         // --- Cursor Trailing Effect ---
-const container = document.getElementById('cursorTrail');
-const circleCount = 12;
-const circles = [];
+        const container = document.getElementById('cursorTrail');
+        const circleCount = 12;
+        const circles = [];
 
-let mouseX = 0;
-let mouseY = 0;
+        let mouseX = 0;
+        let mouseY = 0;
 
-// Create circles
-for (let i = 0; i < circleCount; i++) {
-    const circle = document.createElement('div');
-    circle.classList.add('cursor-circle');
-    container.appendChild(circle);
-    circles.push({ el: circle, x: 0, y: 0 });
-}
+        // Create circles
+        for (let i = 0; i < circleCount; i++) {
+            const circle = document.createElement('div');
+            circle.classList.add('cursor-circle');
+            container.appendChild(circle);
+            circles.push({ el: circle, x: 0, y: 0 });
+        }
 
-// Mouse move
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
+        // Mouse move
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
 
-// Click effects
-document.addEventListener('mousedown', () => {
-    circles.forEach(c => c.el.classList.add('cursor-clicking'));
-});
-document.addEventListener('mouseup', () => {
-    circles.forEach(c => c.el.classList.remove('cursor-clicking'));
-});
+        // Click effects
+        document.addEventListener('mousedown', () => {
+            circles.forEach(c => c.el.classList.add('cursor-clicking'));
+        });
+        document.addEventListener('mouseup', () => {
+            circles.forEach(c => c.el.classList.remove('cursor-clicking'));
+        });
 
-// Hover effects on interactive elements
-document.addEventListener('mouseover', (e) => {
-    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
-        circles.forEach(c => c.el.classList.add('cursor-hovering'));
-    }
-});
-document.addEventListener('mouseout', (e) => {
-    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
-        circles.forEach(c => c.el.classList.remove('cursor-hovering'));
-    }
-});
+        // Hover effects on interactive elements
+        document.addEventListener('mouseover', (e) => {
+            if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+                circles.forEach(c => c.el.classList.add('cursor-hovering'));
+            }
+        });
+        document.addEventListener('mouseout', (e) => {
+            if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+                circles.forEach(c => c.el.classList.remove('cursor-hovering'));
+            }
+        });
 
-// Animate trailing effect
-function animateCursor() {
-    let x = mouseX;
-    let y = mouseY;
+        // Animate trailing effect
+        function animateCursor() {
+            let x = mouseX;
+            let y = mouseY;
 
-    circles.forEach((circle) => {
-        circle.x += (x - circle.x) * 0.25;
-        circle.y += (y - circle.y) * 0.25;
+            circles.forEach((circle) => {
+                circle.x += (x - circle.x) * 0.25;
+                circle.y += (y - circle.y) * 0.25;
 
-        circle.el.style.left = circle.x + 'px';
-        circle.el.style.top = circle.y + 'px';
+                circle.el.style.left = circle.x + 'px';
+                circle.el.style.top = circle.y + 'px';
 
-        x = circle.x;
-        y = circle.y;
-    });
+                x = circle.x;
+                y = circle.y;
+            });
 
-    requestAnimationFrame(animateCursor);
-}
-animateCursor();
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
 
     </script>
-<!-- ===== Universal Back To Top Button (All Pages) ===== -->
-<style>
-  #globalBackToTop {
-    position: fixed;
-    bottom: 25px; /* prevents overlap with chatbot/floating icons */
-    right: 25px;
-    z-index: 9999;
-    display: none;
-    background: #2ecc71;
-    color: #ffffff;
-    border: none;
-    border-radius: 50%;
-    width: 52px;
-    height: 52px;
-    font-size: 22px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-    transition: opacity 0.3s ease, transform 0.2s ease;
-  }
+    <!-- ===== Universal Back To Top Button (All Pages) ===== -->
+    <style>
+        #globalBackToTop {
+            position: fixed;
+            bottom: 25px;
+            /* prevents overlap with chatbot/floating icons */
+            right: 25px;
+            z-index: 9999;
+            display: none;
+            background: #2ecc71;
+            color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            width: 52px;
+            height: 52px;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+            transition: opacity 0.3s ease, transform 0.2s ease;
+        }
 
-  #globalBackToTop:hover {
-    transform: scale(1.12);
-    background: #27ae60;
-  }
+        #globalBackToTop:hover {
+            transform: scale(1.12);
+            background: #27ae60;
+        }
 
-  @media (max-width: 768px) {
-    #globalBackToTop {
-      bottom: 50px; /* better spacing on mobile */
-      right: 18px;
-      width: 48px;
-      height: 48px;
-      font-size: 20px;
-    }
-  }
-</style>
+        @media (max-width: 768px) {
+            #globalBackToTop {
+                bottom: 50px;
+                /* better spacing on mobile */
+                right: 18px;
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
+            }
+        }
+    </style>
 
-<button id="globalBackToTop" title="Back to Top">↑</button>
+    <button id="globalBackToTop" title="Back to Top">↑</button>
 
-<script>
-  (function () {
-    const btn = document.getElementById("globalBackToTop");
+    <script>
+        (function () {
+            const btn = document.getElementById("globalBackToTop");
 
-    // Show button after scrolling down
-    window.addEventListener("scroll", function () {
-      if (window.scrollY > 300) {
-        btn.style.display = "block";
-      } else {
-        btn.style.display = "none";
-      }
-    });
+            // Show button after scrolling down
+            window.addEventListener("scroll", function () {
+                if (window.scrollY > 300) {
+                    btn.style.display = "block";
+                } else {
+                    btn.style.display = "none";
+                }
+            });
 
-    // Smooth scroll to top on click
-    btn.addEventListener("click", function () {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    });
-  })();
-</script>
-<!-- ===== End Back To Top Button ===== -->
+            // Smooth scroll to top on click
+            btn.addEventListener("click", function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            });
+        })();
+
+        /* ============================================================
+         FEATURE: Animated Theme Toggle (Word Swap Logic)
+         ============================================================ */
+        (function () {
+            const hubToggle = document.getElementById("themeToggleHub");
+            const hubIcon = document.getElementById("hubThemeIcon");
+            const hubText = document.getElementById("hubThemeText");
+
+            if (hubToggle) {
+                hubToggle.addEventListener("click", () => {
+                    const currentTheme = document.documentElement.getAttribute("data-theme");
+                    const newTheme = currentTheme === "light" ? "dark" : "light";
+
+                    // Toggle Theme and Persist
+                    document.documentElement.setAttribute("data-theme", newTheme);
+                    localStorage.setItem("agritech-theme", newTheme);
+
+                    // Requirement: Word & Icon Swap Logic
+                    if (newTheme === "light") {
+                        hubIcon.className = "fas fa-moon";
+                        hubText.innerText = "Dark"; // Showing current target action
+                    } else {
+                        hubIcon.className = "fas fa-sun";
+                        hubText.innerText = "Light"; // Showing current target action
+                    }
+                });
+            }
+        })();
+    </script>
+    <!-- ===== End Back To Top Button ===== -->
 
 </body>
 

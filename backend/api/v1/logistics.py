@@ -1,464 +1,193 @@
 """
-Farm Logistics & Route Optimization API Endpoints
-Provides endpoints for harvest pickup coordination, route optimization,
-and cost-sharing logistics.
+Smart Freight & Digital Corridor API — L3-1631
 """
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import jwt_required, get_jwt_identity
-from marshmallow import ValidationError
-from datetime import datetime
+from auth_utils import token_required
+from backend.extensions import db
+from backend.services.logistics_orchestrator import LogisticsOrchestrator
+from backend.models.logistics_v2 import (
+    TransportRoute, PhytoSanitaryCertificate, FreightEscrow,
+    CustomsCheckpoint, GPSTelemetry
+)
+from backend.models.traceability import SupplyBatch
 import logging
 
-from services.logistics_service import LogisticsService
-from schemas.asset_schema import LogisticsOrderSchema, VehicleAssignmentSchema
-
 logger = logging.getLogger(__name__)
+smart_freight_bp = Blueprint('smart_freight', __name__)
 
-logistics_bp = Blueprint('logistics', __name__, url_prefix='/api/v1/logistics')
 
-
-@logistics_bp.route('/orders/create', methods=['POST'])
-@jwt_required()
-def create_order():
+# ─── 1. Issue Phyto-Sanitary Certificate ──────────────────────────────────────
+@smart_freight_bp.route('/phyto-cert/issue', methods=['POST'])
+@token_required
+def issue_phyto_cert(current_user):
     """
-    Create a new logistics pickup order.
-    
-    Request Body:
-        {
-            "crop_type": "wheat",
-            "quantity_tons": 5.5,
-            "pickup_location": "Farm Site A, GPS: lat,lon",
-            "pickup_latitude": 28.6139,
-            "pickup_longitude": 77.2090,
-            "destination_location": "Market Hub Delhi",
-            "destination_latitude": 28.7041,
-            "destination_longitude": 77.1025,
-            "requested_pickup_date": "2024-06-15T08:00:00",
-            "priority": "NORMAL",
-            "requires_refrigeration": false
+    Autonomously generates and signs a Phyto-Sanitary Certificate for a shipment.
+    Required: route_id, batch_id, origin_country, destination_country
+    """
+    data = request.get_json()
+    required = ['route_id', 'batch_id', 'origin_country', 'destination_country']
+    if not data or not all(k in data for k in required):
+        return jsonify({'status': 'error', 'message': f'Missing required fields: {required}'}), 400
+
+    cert, err = LogisticsOrchestrator.generate_phyto_cert(
+        route_id=data['route_id'],
+        batch_id=data['batch_id'],
+        origin_country=data['origin_country'],
+        destination_country=data['destination_country']
+    )
+    if err:
+        return jsonify({'status': 'error', 'message': err}), 400
+
+    return jsonify({'status': 'success', 'data': cert.to_dict()}), 201
+
+
+# ─── 2. Verify Phyto Certificate ──────────────────────────────────────────────
+@smart_freight_bp.route('/phyto-cert/verify/<cert_number>', methods=['GET'])
+def verify_phyto_cert(cert_number):
+    """Public-facing endpoint for border agents to verify certificate authenticity."""
+    cert = PhytoSanitaryCertificate.query.filter_by(certificate_number=cert_number).first()
+    if not cert:
+        return jsonify({'status': 'error', 'message': 'Certificate not found.'}), 404
+
+    import hashlib, json
+    recalc = hashlib.sha256(cert.certificate_payload_json.encode()).hexdigest()
+    is_valid = recalc == cert.signature_hash
+
+    return jsonify({
+        'status': 'success',
+        'valid': is_valid,
+        'cert_status': cert.status,
+        'data': cert.to_dict()
+    }), 200
+
+
+# ─── 3. Lock Freight Escrow ────────────────────────────────────────────────────
+@smart_freight_bp.route('/escrow/lock', methods=['POST'])
+@token_required
+def lock_escrow(current_user):
+    """
+    Creates a smart-contract freight escrow. Funds locked until GPS delivery confirmed.
+    Required: route_id, driver_id, dest_lat, dest_lng, estimated_distance_km
+    Optional: current_fuel_price (USD/L)
+    """
+    data = request.get_json()
+    required = ['route_id', 'driver_id', 'dest_lat', 'dest_lng', 'estimated_distance_km']
+    if not data or not all(k in data for k in required):
+        return jsonify({'status': 'error', 'message': f'Missing fields: {required}'}), 400
+
+    escrow, err = LogisticsOrchestrator.lock_freight_escrow(
+        route_id=data['route_id'],
+        driver_id=data['driver_id'],
+        dest_lat=float(data['dest_lat']),
+        dest_lng=float(data['dest_lng']),
+        estimated_distance_km=float(data['estimated_distance_km']),
+        current_fuel_price=float(data.get('current_fuel_price', 1.10))
+    )
+    if err:
+        return jsonify({'status': 'error', 'message': err}), 400
+
+    return jsonify({
+        'status': 'success',
+        'message': 'Freight escrow locked. Release pending GPS geo-fence confirmation.',
+        'data': escrow.to_dict()
+    }), 201
+
+
+# ─── 4. Ingest GPS Telemetry Ping ─────────────────────────────────────────────
+@smart_freight_bp.route('/gps/ping', methods=['POST'])
+def ingest_gps():
+    """
+    IoT gateway endpoint for real-time GPS pings.
+    Evaluates geo-fence and triggers escrow release autonomously.
+    Required: route_id, vehicle_id, lat, lng
+    Optional: speed, fuel_price
+    """
+    data = request.get_json()
+    if not data or not all(k in data for k in ['route_id', 'vehicle_id', 'lat', 'lng']):
+        return jsonify({'status': 'error', 'message': 'route_id, vehicle_id, lat, lng required.'}), 400
+
+    result = LogisticsOrchestrator.ingest_gps_ping(
+        route_id=data['route_id'],
+        vehicle_id=data['vehicle_id'],
+        lat=float(data['lat']),
+        lng=float(data['lng']),
+        speed=float(data.get('speed', 0.0)),
+        fuel_price=float(data.get('fuel_price', 1.10))
+    )
+
+    return jsonify({'status': 'success', 'data': result}), 200
+
+
+# ─── 5. Log Customs Arrival ───────────────────────────────────────────────────
+@smart_freight_bp.route('/customs/arrive', methods=['POST'])
+@token_required
+def customs_arrive(current_user):
+    """Logs vehicle arrival at a customs checkpoint."""
+    data = request.get_json()
+    if not data or 'route_id' not in data or 'checkpoint_name' not in data:
+        return jsonify({'status': 'error', 'message': 'route_id and checkpoint_name required.'}), 400
+
+    cp = LogisticsOrchestrator.log_customs_arrival(
+        route_id=data['route_id'],
+        checkpoint_name=data['checkpoint_name'],
+        country=data.get('country', 'Unknown'),
+        phyto_cert_id=data.get('phyto_cert_id')
+    )
+    return jsonify({'status': 'success', 'data': cp.to_dict()}), 201
+
+
+# ─── 6. Clear Customs Checkpoint ─────────────────────────────────────────────
+@smart_freight_bp.route('/customs/<int:checkpoint_id>/clear', methods=['PATCH'])
+@token_required
+def clear_customs(current_user, checkpoint_id):
+    """
+    Clears a customs checkpoint, calculates wait time, and applies
+    dynamic delay surcharge to the freight escrow.
+    """
+    data = request.get_json(silent=True) or {}
+    cp, err = LogisticsOrchestrator.clear_customs(checkpoint_id, notes=data.get('notes'))
+    if err:
+        return jsonify({'status': 'error', 'message': err}), 400
+
+    return jsonify({
+        'status': 'success',
+        'data': {
+            **cp.to_dict(),
+            'delay_surcharge_applied': cp.wait_hours > 4.0
         }
-    
-    Returns:
-        201: Order created successfully
-        400: Invalid data
-        500: Server error
-    """
-    try:
-        current_user_id = get_jwt_identity()
-        data = request.get_json()
-        
-        # Validate input
-        schema = LogisticsOrderSchema()
-        validated_data = schema.load(data)
-        
-        # Create order
-        order = LogisticsService.create_order(current_user_id, validated_data)
-        
-        return jsonify({
-            'success': True,
-            'message': 'Logistics order created successfully',
-            'data': order.to_dict()
-        }), 201
-        
-    except ValidationError as e:
-        logger.warning(f"Validation error in create_order: {e.messages}")
-        return jsonify({'success': False, 'errors': e.messages}), 400
-    
-    except Exception as e:
-        logger.error(f"Error in create_order: {str(e)}")
-        return jsonify({'success': False, 'message': str(e)}), 500
+    }), 200
 
 
-@logistics_bp.route('/routes/optimize', methods=['POST'])
-@jwt_required()
-def optimize_routes():
-    """
-    Optimize pickup routes for a specific date.
-    Groups nearby farmers to minimize costs and maximize efficiency.
-    
-    Request Body:
-        {
-            "date": "2024-06-15",
-            "region": "north-delhi"
-        }
-    
-    Returns:
-        200: Routes optimized
-        400: Invalid data
-        500: Server error
-    """
-    try:
-        data = request.get_json()
-        
-        if not data.get('date'):
-            return jsonify({'success': False, 'message': 'Date is required'}), 400
-        
-        target_date = datetime.fromisoformat(data['date'])
-        region = data.get('region')
-        
-        # Optimize routes
-        routes = LogisticsService.optimize_routes(target_date, region)
-        
-        return jsonify({
-            'success': True,
-            'message': f'Route optimization completed: {len(routes)} routes created',
-            'count': len(routes),
-            'data': routes
-        }), 200
-        
-    except ValueError as e:
-        return jsonify({'success': False, 'message': f'Invalid date format: {str(e)}'}), 400
-    
-    except Exception as e:
-        logger.error(f"Error in optimize_routes: {str(e)}")
-        return jsonify({'success': False, 'message': str(e)}), 500
+# ─── 7. Escrow Status & Freight Dashboard ────────────────────────────────────
+@smart_freight_bp.route('/escrow/<int:route_id>', methods=['GET'])
+@token_required
+def get_escrow_status(current_user, route_id):
+    """Returns live freight escrow status, pricing breakdown, and geo-fence config."""
+    escrow = FreightEscrow.query.filter_by(route_id=route_id).first()
+    if not escrow:
+        return jsonify({'status': 'error', 'message': 'No escrow found for this route.'}), 404
 
+    checkpoints = CustomsCheckpoint.query.filter_by(route_id=route_id).all()
+    latest_ping = GPSTelemetry.query.filter_by(route_id=route_id).order_by(
+        GPSTelemetry.recorded_at.desc()
+    ).first()
 
-@logistics_bp.route('/routes/<route_group_id>/assign-vehicle', methods=['POST'])
-@jwt_required()
-def assign_vehicle(route_group_id):
-    """
-    Assign a vehicle and driver to a route group.
-    
-    Path Parameters:
-        route_group_id: Route identifier
-    
-    Request Body:
-        {
-            "vehicle_id": "TRUCK-101",
-            "driver_name": "Rajesh Kumar",
-            "driver_phone": "+91-9876543210",
-            "scheduled_pickup_date": "2024-06-15T07:00:00"
-        }
-    
-    Returns:
-        200: Vehicle assigned
-        400: Invalid data
-        404: Route not found
-        500: Server error
-    """
-    try:
-        data = request.get_json()
-        
-        # Validate input
-        schema = VehicleAssignmentSchema()
-        validated_data = schema.load(data)
-        
-        # Assign vehicle
-        orders = LogisticsService.assign_vehicle(route_group_id, validated_data)
-        
-        return jsonify({
-            'success': True,
-            'message': f'Vehicle assigned to {len(orders)} orders',
-            'data': {
-                'route_group_id': route_group_id,
-                'orders_updated': len(orders),
-                'vehicle_id': validated_data['vehicle_id'],
-                'driver': validated_data['driver_name']
+    return jsonify({
+        'status': 'success',
+        'data': {
+            'escrow': escrow.to_dict(),
+            'geo_fence': {
+                'destination_lat': escrow.destination_lat,
+                'destination_lng': escrow.destination_lng,
+                'radius_meters': escrow.geo_fence_radius_meters,
+                'passed': escrow.geo_fence_passed
+            },
+            'customs_checkpoints': [c.to_dict() for c in checkpoints],
+            'latest_gps': {
+                'lat': latest_ping.latitude if latest_ping else None,
+                'lng': latest_ping.longitude if latest_ping else None,
+                'speed': latest_ping.speed_kmh if latest_ping else None,
+                'recorded_at': latest_ping.recorded_at.isoformat() if latest_ping else None
             }
-        }), 200
-        
-    except ValidationError as e:
-        logger.warning(f"Validation error in assign_vehicle: {e.messages}")
-        return jsonify({'success': False, 'errors': e.messages}), 400
-    
-    except ValueError as e:
-        return jsonify({'success': False, 'message': str(e)}), 404
-    
-    except Exception as e:
-        logger.error(f"Error in assign_vehicle: {str(e)}")
-        return jsonify({'success': False, 'message': str(e)}), 500
-
-
-@logistics_bp.route('/orders/<order_id>/status', methods=['PUT'])
-@jwt_required()
-def update_order_status(order_id):
-    """
-    Update logistics order status.
-    
-    Path Parameters:
-        order_id: Order identifier
-    
-    Request Body:
-        {
-            "status": "IN_TRANSIT",
-            "actual_pickup_date": "2024-06-15T07:30:00"
         }
-    
-    Returns:
-        200: Status updated
-        400: Invalid data
-        404: Order not found
-        500: Server error
-    """
-    try:
-        data = request.get_json()
-        
-        if not data.get('status'):
-            return jsonify({'success': False, 'message': 'Status is required'}), 400
-        
-        status = data['status']
-        update_data = {}
-        
-        if 'actual_pickup_date' in data:
-            update_data['actual_pickup_date'] = data['actual_pickup_date']
-        
-        if 'actual_delivery_date' in data:
-            update_data['actual_delivery_date'] = data['actual_delivery_date']
-        
-        # Update order
-        order = LogisticsService.update_order_status(order_id, status, update_data)
-        
-        return jsonify({
-            'success': True,
-            'message': 'Order status updated successfully',
-            'data': order.to_dict()
-        }), 200
-        
-    except ValueError as e:
-        return jsonify({'success': False, 'message': str(e)}), 404
-    
-    except Exception as e:
-        logger.error(f"Error in update_order_status: {str(e)}")
-        return jsonify({'success': False, 'message': str(e)}), 500
-
-
-@logistics_bp.route('/orders/my-orders', methods=['GET'])
-@jwt_required()
-def get_my_orders():
-    """
-    Get logistics orders for the current user.
-    
-    Query Parameters:
-        status: Filter by status (PENDING, SCHEDULED, IN_TRANSIT, DELIVERED)
-        from_date: Start date (ISO format)
-        to_date: End date (ISO format)
-    
-    Returns:
-        200: List of orders
-        500: Server error
-    """
-    try:
-        current_user_id = get_jwt_identity()
-        
-        # Parse filters
-        filters = {}
-        if request.args.get('status'):
-            filters['status'] = request.args.get('status')
-        if request.args.get('from_date'):
-            filters['from_date'] = request.args.get('from_date')
-        if request.args.get('to_date'):
-            filters['to_date'] = request.args.get('to_date')
-        
-        # Get orders
-        orders = LogisticsService.get_orders_by_user(current_user_id, filters)
-        
-        return jsonify({
-            'success': True,
-            'count': len(orders),
-            'data': [order.to_dict() for order in orders]
-        }), 200
-        
-    except Exception as e:
-        logger.error(f"Error in get_my_orders: {str(e)}")
-        return jsonify({'success': False, 'message': str(e)}), 500
-
-
-@logistics_bp.route('/routes/<route_group_id>/summary', methods=['GET'])
-@jwt_required()
-def get_route_summary(route_group_id):
-    """
-    Get summary details for a route group.
-    
-    Path Parameters:
-        route_group_id: Route identifier
-    
-    Returns:
-        200: Route summary
-        404: Route not found
-        500: Server error
-    """
-    try:
-        summary = LogisticsService.get_route_summary(route_group_id)
-        
-        if not summary:
-            return jsonify({'success': False, 'message': 'Route not found'}), 404
-        
-        return jsonify({
-            'success': True,
-            'data': summary
-        }), 200
-        
-    except Exception as e:
-        logger.error(f"Error in get_route_summary: {str(e)}")
-        return jsonify({'success': False, 'message': str(e)}), 500
-
-
-@logistics_bp.route('/analytics', methods=['GET'])
-@jwt_required()
-def get_analytics():
-    """
-    Get logistics performance analytics.
-    
-    Query Parameters:
-        days: Number of days to analyze (default: 30)
-        user_id: Filter by user (optional, admin only)
-    
-    Returns:
-        200: Analytics data
-        500: Server error
-    """
-    try:
-        current_user_id = get_jwt_identity()
-        
-        days = int(request.args.get('days', 30))
-        user_filter = request.args.get('user_id')
-        
-        # Use current user unless admin requests different user
-        analytics_user_id = current_user_id
-        if user_filter:
-            # TODO: Add admin role check here
-            analytics_user_id = int(user_filter)
-        
-        # Get analytics
-        analytics = LogisticsService.get_logistics_analytics(analytics_user_id, days)
-        
-        return jsonify({
-            'success': True,
-            'data': analytics
-        }), 200
-        
-    except Exception as e:
-        logger.error(f"Error in get_analytics: {str(e)}")
-        return jsonify({'success': False, 'message': str(e)}), 500
-
-
-@logistics_bp.route('/orders/<order_id>', methods=['GET'])
-@jwt_required()
-def get_order_details(order_id):
-    """
-    Get detailed information for a specific order.
-    
-    Path Parameters:
-        order_id: Order identifier
-    
-    Returns:
-        200: Order details
-        404: Order not found
-        500: Server error
-    """
-    try:
-        from models import LogisticsOrder
-        current_user_id = get_jwt_identity()
-        
-        order = LogisticsOrder.query.filter_by(order_id=order_id).first()
-        
-        if not order:
-            return jsonify({'success': False, 'message': 'Order not found'}), 404
-        
-        # Verify ownership
-        if order.user_id != current_user_id:
-            return jsonify({'success': False, 'message': 'Unauthorized'}), 403
-        
-        return jsonify({
-            'success': True,
-            'data': order.to_dict()
-        }), 200
-        
-    except Exception as e:
-        logger.error(f"Error in get_order_details: {str(e)}")
-        return jsonify({'success': False, 'message': str(e)}), 500
-
-
-@logistics_bp.route('/orders/<order_id>', methods=['DELETE'])
-@jwt_required()
-def cancel_order(order_id):
-    """
-    Cancel a logistics order.
-    
-    Path Parameters:
-        order_id: Order identifier
-    
-    Returns:
-        200: Order cancelled
-        404: Order not found
-        400: Cannot cancel order in current status
-        500: Server error
-    """
-    try:
-        from models import LogisticsOrder
-        from extensions import db
-        current_user_id = get_jwt_identity()
-        
-        order = LogisticsOrder.query.filter_by(order_id=order_id).first()
-        
-        if not order:
-            return jsonify({'success': False, 'message': 'Order not found'}), 404
-        
-        # Verify ownership
-        if order.user_id != current_user_id:
-            return jsonify({'success': False, 'message': 'Unauthorized'}), 403
-        
-        # Check if cancellable
-        if order.status in ['DELIVERED', 'CANCELLED']:
-            return jsonify({'success': False, 'message': f'Cannot cancel order with status: {order.status}'}), 400
-        
-        # Cancel order
-        order.status = 'CANCELLED'
-        db.session.commit()
-        
-        return jsonify({
-            'success': True,
-            'message': 'Order cancelled successfully'
-        }), 200
-        
-    except Exception as e:
-        logger.error(f"Error in cancel_order: {str(e)}")
-        from extensions import db
-        db.session.rollback()
-        return jsonify({'success': False, 'message': str(e)}), 500
-
-
-@logistics_bp.route('/routes/active', methods=['GET'])
-@jwt_required()
-def get_active_routes():
-    """
-    Get all active routes (scheduled or in-transit).
-    
-    Query Parameters:
-        date: Filter by date (ISO format)
-    
-    Returns:
-        200: List of active routes
-        500: Server error
-    """
-    try:
-        from models import LogisticsOrder
-        from sqlalchemy import distinct
-        
-        # Get unique route groups with active orders
-        query = LogisticsOrder.query.filter(
-            LogisticsOrder.status.in_(['SCHEDULED', 'IN_TRANSIT'])
-        )
-        
-        if request.args.get('date'):
-            target_date = datetime.fromisoformat(request.args.get('date'))
-            query = query.filter(
-                LogisticsOrder.scheduled_pickup_date.cast(db.Date) == target_date.date()
-            )
-        
-        # Get distinct route group IDs
-        route_ids = [r.route_group_id for r in query.distinct(LogisticsOrder.route_group_id).all() if r.route_group_id]
-        
-        # Get summary for each route
-        routes = [LogisticsService.get_route_summary(rid) for rid in route_ids]
-        
-        return jsonify({
-            'success': True,
-            'count': len(routes),
-            'data': routes
-        }), 200
-        
-    except Exception as e:
-        logger.error(f"Error in get_active_routes: {str(e)}")
-        return jsonify({'success': False, 'message': str(e)}), 500
+    }), 200
