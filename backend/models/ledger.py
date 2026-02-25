@@ -44,6 +44,7 @@ class TransactionType(enum.Enum):
     DIVIDEND = 'DIVIDEND'
     FEE = 'FEE'
     INTEREST = 'INTEREST'
+    DIAGNOSTIC_SUB_PAYMENT = 'DIAGNOSTIC_SUB_PAYMENT' # Subscription payment for AI diagnostic services
     CARBON_CREDIT_MINT = 'CARBON_CREDIT_MINT'    # New credit minted from sequestration
     CARBON_CREDIT_SALE = 'CARBON_CREDIT_SALE'    # Credit sold to ESG buyer
 

@@ -43,6 +43,7 @@ from .financials import FarmBalanceSheet, SolvencySnapshot, ProfitabilityIndex
 from .reliability_log import ReliabilityLog
 from .market import ForwardContract, PriceHedgingLog
 from .circular import WasteInventory, BioEnergyOutput, CircularCredit
+from .ai_diagnostics import CropDiagnosticReport, DiagnosticVerification, PathogenKnowledgeBase
 from .disease import MigrationVector, ContainmentZone
 from .ledger import (
     LedgerAccount, LedgerTransaction, LedgerEntry,
@@ -115,6 +116,8 @@ __all__ = [
     'ReliabilityLog', 'ForwardContract', 'PriceHedgingLog',
     # Circular Economy
     'WasteInventory', 'BioEnergyOutput', 'CircularCredit',
+    # AI Crop Diagnostics (L3-1643)
+    'CropDiagnosticReport', 'DiagnosticVerification', 'PathogenKnowledgeBase',
     # Double-Entry Ledger
     'LedgerAccount', 'LedgerTransaction', 'LedgerEntry',
     'FXValuationSnapshot', 'Vault', 'VaultCurrencyPosition', 'FXRate',

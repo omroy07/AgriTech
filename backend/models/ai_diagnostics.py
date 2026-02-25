@@ -42,3 +42,16 @@ class DiagnosticVerification(db.Model):
     expert_notes = db.Column(db.Text)
     
     verified_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class PathogenKnowledgeBase(db.Model):
+    __tablename__ = 'pathogen_knowledge_base'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    pathogen_name = db.Column(db.String(100), unique=True, nullable=False)
+    
+    typical_symptoms = db.Column(db.Text)
+    suggested_chemical_treatment = db.Column(db.Text)
+    organic_alternative = db.Column(db.Text)
+    
+    mortality_rate_potential = db.Column(db.Float)
+

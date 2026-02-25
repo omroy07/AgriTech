@@ -70,3 +70,16 @@ class DiagnosticEngine:
             db.session.commit()
             return True
         return False
+
+    @staticmethod
+    def calculate_lesion_spread(image_metadata: dict):
+        """
+        Simulates pixel-level analysis of Chlorosis vs healthy tissue.
+        """
+        # Logic to simulate segmented tissue analysis
+        lesion_count = image_metadata.get('spectral_lesions', 5)
+        leaf_area = 1000.0 # sq mm
+        
+        spread_ratio = (lesion_count * 15.0) / leaf_area
+        return min(1.0, spread_ratio)
+
