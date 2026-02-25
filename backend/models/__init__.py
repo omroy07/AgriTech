@@ -43,6 +43,8 @@ from .financials import FarmBalanceSheet, SolvencySnapshot, ProfitabilityIndex
 from .reliability_log import ReliabilityLog
 from .market import ForwardContract, PriceHedgingLog
 from .circular import WasteInventory, BioEnergyOutput, CircularCredit
+from .genomics import SeedGenomeProfile, LiveCropPhenotype, EpigeneticDriftLog
+from .virulence import PathogenStrain, InfectionCombatSimulation
 from .disease import MigrationVector, ContainmentZone
 from .ledger import (
     LedgerAccount, LedgerTransaction, LedgerEntry,
@@ -113,6 +115,8 @@ __all__ = [
     'BarterTransaction', 'BarterResource', 'ResourceValueIndex',
     # Reliability & Market
     'ReliabilityLog', 'ForwardContract', 'PriceHedgingLog',
+    'SeedGenomeProfile', 'LiveCropPhenotype', 'EpigeneticDriftLog',
+    'PathogenStrain', 'InfectionCombatSimulation',
     # Circular Economy
     'WasteInventory', 'BioEnergyOutput', 'CircularCredit',
     # Double-Entry Ledger
