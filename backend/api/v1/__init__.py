@@ -47,6 +47,8 @@ from .biosecurity import biosecurity_bp
 from .vaults import vaults_bp
 from .carbon import carbon_bp
 from .logistics import smart_freight_bp
+from .biomass import biomass_bp
+from .energy_grid import energy_grid_bp
 
 # Create v1 API blueprint
 api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1')
@@ -101,3 +103,5 @@ api_v1.register_blueprint(circular_bp, url_prefix='/circular')
 api_v1.register_blueprint(biosecurity_bp, url_prefix='/biosecurity')
 api_v1.register_blueprint(vaults_bp, url_prefix='/vaults')
 api_v1.register_blueprint(carbon_bp, url_prefix='/carbon')
+api_v1.register_blueprint(biomass_bp, url_prefix='/biomass')
+api_v1.register_blueprint(energy_grid_bp, url_prefix='/vpp-grid')
