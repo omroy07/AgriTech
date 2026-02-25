@@ -27,6 +27,11 @@ class ForwardContract(db.Model):
     # Cascading Quality Adjustments (L3-1604)
     quality_penalty_clause = db.Column(db.Float, default=0.0) # Percentage deduction from final payout
     
+    # Yield-at-Risk / Climate Resilience (L3-1630)
+    yield_at_risk_pct = db.Column(db.Float, default=0.0)          # Engine-computed exposure %
+    climate_risk_discount = db.Column(db.Float, default=0.0)      # Discount on locked_price due to risk
+    force_majeure_suspended = db.Column(db.Boolean, default=False) # True if auto-halted by engine
+    
     def to_dict(self):
         return {
             'id': self.id,

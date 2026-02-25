@@ -42,6 +42,10 @@ class TransactionType(enum.Enum):
     DIVIDEND = 'DIVIDEND'
     FEE = 'FEE'
     INTEREST = 'INTEREST'
+    FREIGHT_ESCROW_HOLD = 'FREIGHT_ESCROW_HOLD'  # Funds locked into freight escrow
+    FREIGHT_RELEASE = 'FREIGHT_RELEASE'          # Smart-contract release on geo-fence confirm
+    PARAMETRIC_SETTLEMENT = 'PARAMETRIC_SETTLEMENT'  # Auto-payout on Force Majeure trigger
+    YIELD_RISK_ADJUSTMENT = 'YIELD_RISK_ADJUSTMENT'  # Mark-to-market futures discount
 
 
 class LedgerAccount(db.Model):
