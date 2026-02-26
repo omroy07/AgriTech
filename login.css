@@ -54,6 +54,7 @@ body {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid rgba(46, 125, 50, 0.1);
   color: var(--text-primary, #333);
+  overflow: hidden;
 }
 
 .form-container:hover {
@@ -221,6 +222,21 @@ body {
   font-size: 15px;
 }
 
+/* Hide browser's native password reveal button */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-contacts-auto-fill-button,
+input[type="password"]::-webkit-credentials-auto-fill-button {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* For Edge/Chrome native eye icon */
+input::-webkit-reveal {
+  display: none !important;
+}
+
 .password-toggle {
   position: absolute;
   right: 15px;
@@ -300,6 +316,10 @@ body {
   box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
   margin-bottom: 25px;
   margin-top: 5px;
+}
+
+[data-theme="light"] .form-container button[type="submit"] {
+  color: var(--text-primary);
 }
 
 .form-container button[type="submit"]:hover {
@@ -461,8 +481,9 @@ body {
   body {
     padding: 15px;
     min-height: 100vh;
-    align-items: flex-start;
-    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .form-container {

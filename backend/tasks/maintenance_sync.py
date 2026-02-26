@@ -1,35 +1,25 @@
 from backend.celery_app import celery_app
-from backend.models.equipment import Equipment, EngineHourLog
-from backend.services.predictive_maintenance import PredictiveMaintenance
-from backend.extensions import db
-from datetime import datetime, timedelta
+from backend.models.farm import FarmAsset
+from backend.services.maintenance_forecaster import MaintenanceForecaster
 import logging
 
 logger = logging.getLogger(__name__)
 
-@celery_app.task(name='tasks.maintenance_sync')
-def maintenance_sync():
+@celery_app.task(name='tasks.predictive_maintenance_run')
+def run_fleet_maintenance_sweep():
     """
-    Daily task to scan machinery usage and update microscopic wear/depreciation.
+    Automated fleet analysis task. Iterates through all machinery to update wear maps
+    and detect failure risks.
     """
-    logger.info("Starting Daily Equipment Maintenance Sync...")
+    logger.info("🚜 [L3-1641] Scanning fleet for mechanical anomalies...")
     
-    # Process logs from the last 24 hours
-    yesterday = datetime.utcnow() - timedelta(days=1)
-    new_logs = EngineHourLog.query.filter(EngineHourLog.logged_at >= yesterday).all()
+    # In a real system, we'd query assets with categories like 'Tractor'
+    assets = FarmAsset.query.all() 
     
-    sync_count = 0
-    for log in new_logs:
-        usage = log.hours_end - log.hours_start
-        if usage > 0:
-            equipment = Equipment.query.get(log.equipment_id)
-            if equipment:
-                PredictiveMaintenance.calculate_wear_impact(
-                    equipment_id=equipment.id,
-                    usage_hours=usage,
-                    farm_id=equipment.owner_id
-                )
-                sync_count += 1
-                
-    logger.info(f"Synchronized depreciation for {sync_count} equipment logs.")
-    return {'status': 'completed', 'updated_count': sync_count}
+    for asset in assets:
+        MaintenanceForecaster.update_wear_status(asset.id)
+        # Check if we need to run a full failure inference
+        MaintenanceForecaster.run_inference(asset.id)
+        
+    logger.info(f"Mechanical health sweep complete for {len(assets)} assets.")
+    return True
