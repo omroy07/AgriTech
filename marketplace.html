@@ -17,6 +17,15 @@
 
   <link rel="icon" type="image/png" href="images/logo.png" />
 
+      <!-- Prevent theme flash on page load -->
+      <script>
+        (function () {
+          const saved = localStorage.getItem('theme');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+        })();
+      </script>
+
   <style>
     :root {
       --bg-primary: #021234;
@@ -136,26 +145,89 @@
       transform: translateX(-3px);
     }
 
-    .theme-toggle {
-      background: var(--accent-gradient);
-      color: #fff;
-      border: none;
-      border-radius: 999px;
-      padding: 8px 18px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.5);
-      transition: all 0.25s ease;
-    }
+    /* Animated Theme Toggle  */
+        .theme-toggle {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color, #d1d5db);
+        cursor: pointer;
+        padding: 0;
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        border-radius: 50%;
+        color: var(--text-primary, #111827);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+        flex-shrink: 0;
+        align-self: center;
+        box-shadow: none !important;
+        }
 
-    .theme-toggle:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 40px rgba(37, 99, 235, 0.7);
-    }
+        .theme-toggle:hover {
+        background-color: var(--bg-secondary, #f3f4f6);
+        border-color: var(--primary-green, #16a34a) !important;
+        }
+
+        .theme-icon {
+        width: 22px;
+        height: 22px;
+        overflow: visible;
+        transition: transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+        display: block;
+        }
+
+        .sun-core {
+        transform-origin: center;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sun-rays {
+        transform-origin: center;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+        }
+
+        .moon-bite {
+        transform-origin: center;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Light mode → Sun */
+        [data-theme="light"] .theme-icon {
+        transform: rotate(0deg);
+        }
+
+        [data-theme="light"] .sun-core {
+        transform: scale(1);
+        }
+
+        [data-theme="light"] .sun-rays {
+        transform: scale(1.1);
+        opacity: 1;
+        }
+
+        [data-theme="light"] .moon-bite {
+        transform: translate(20px, -20px);
+        }
+
+        /* Dark mode → Moon */
+        [data-theme="dark"] .theme-icon {
+        transform: rotate(-10deg);
+        }
+
+        [data-theme="dark"] .sun-core {
+        transform: scale(1.4);
+        }
+
+        [data-theme="dark"] .sun-rays {
+        transform: scale(0.1);
+        opacity: 0;
+        }
+
+        [data-theme="dark"] .moon-bite {
+        transform: translate(5px, -1.5px) scale(0.6);
+        }
 
     /* Header */
     .header {
@@ -1534,7 +1606,7 @@
   </style>
 </head>
 
-<body data-theme="dark">
+<body>
   <div class="loading-overlay" id="loadingOverlay">
     <div class="loading-spinner"></div>
   </div>
@@ -1547,9 +1619,27 @@
           <span>Back to Home</span>
         </a>
       </div>
-      <button id="themeToggle" class="theme-toggle">
-        <i id="themeIcon" class="fas fa-sun"></i>
-        <span id="themeText">Light</span>
+      <!-- Animated Sun/Moon Toggle -->
+      <button class="theme-toggle" type="button" id="themeToggle" title="Switch to dark mode"
+        aria-label="Switch to dark mode">
+        <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <mask id="moon-mask">
+            <rect x="0" y="0" width="100%" height="100%" fill="white" />
+            <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
+          </mask>
+          <circle class="sun-core" cx="12" cy="12" r="7" fill="currentColor" mask="url(#moon-mask)" />
+          <g class="sun-rays" stroke="currentColor">
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </g>
+        </svg>
       </button>
     </nav>
 
@@ -2067,31 +2157,6 @@
     let cartFilterActive = false;
 
     document.addEventListener("DOMContentLoaded", () => {
-      const themeToggle = document.getElementById("themeToggle");
-      const themeIcon = document.getElementById("themeIcon");
-      const themeText = document.getElementById("themeText");
-
-      const savedTheme = localStorage.getItem("theme") || "dark";
-      applyTheme(savedTheme);
-
-      themeToggle.addEventListener("click", () => {
-        const currentTheme = document.body.getAttribute("data-theme");
-        const newTheme = currentTheme === "dark" ? "light" : "dark";
-        applyTheme(newTheme);
-        localStorage.setItem("theme", newTheme);
-      });
-
-      function applyTheme(theme) {
-        document.body.setAttribute("data-theme", theme);
-        if (theme === "dark") {
-          themeIcon.className = "fas fa-sun";
-          themeText.textContent = "Light";
-        } else {
-          themeIcon.className = "fas fa-moon";
-          themeText.textContent = "Dark";
-        }
-      }
-
       const scrollBtn = document.getElementById("scrollToTop");
       window.addEventListener("scroll", () => {
         if (window.pageYOffset > 300) {
@@ -2746,9 +2811,8 @@
     })();
   </script>
 
-    <script src="auth.js"></script>
-
   <script src="auth.js"></script>
+  <script src="theme.js"></script>
 </body>
 
 </html>
