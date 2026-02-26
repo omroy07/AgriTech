@@ -232,6 +232,30 @@ body::before {
   padding: 10px;
 }
 
+/* Hide browser's native password reveal button */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-contacts-auto-fill-button,
+input[type="password"]::-webkit-credentials-auto-fill-button {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* For Edge/Chrome native eye icon */
+input::-webkit-reveal {
+  display: none !important;
+}
+
+/* Password strength indicator */
+.password-strength {
+  height: 3px;
+  background: #e0e0e0;
+  border-radius: 3px;
+  margin-top: 5px;
+  overflow: hidden;
+}
+
 .strength-bar {
   height: 100%;
   width: 0%;
