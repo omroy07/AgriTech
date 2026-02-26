@@ -99,7 +99,6 @@ const closeModal = document.getElementById('closeNewsModal');
 const loadMoreBtn = document.getElementById('loadMoreBtn');
 const refreshBtn = document.getElementById('refreshBtn');
 const emptyState = document.getElementById('empty-news-state');
-const themeToggle = document.getElementById('themeToggle');
 const backToTopBtn = document.getElementById('backToTopBtn');
 const clearFiltersBtn = document.getElementById('clearFiltersBtn');
 
@@ -110,33 +109,9 @@ let displayedArticles = 6;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-  initializeTheme();
   renderNews();
   setupEventListeners();
 });
-
-// Initialize theme based on system preference
-function initializeTheme() {
-  const savedTheme = localStorage.getItem('theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const theme = savedTheme || (prefersDark ? 'dark' : 'light');
-
-  document.documentElement.setAttribute('data-theme', theme);
-  updateThemeIcon(theme);
-}
-
-// Update theme icon and text
-function updateThemeIcon(theme) {
-  const icon = document.getElementById('themeIcon');
-  const text = document.getElementById('themeText');
-  if (theme === 'dark') {
-    icon.textContent = '☀️';
-    text.textContent = 'Light Mode';
-  } else {
-    icon.textContent = '🌙';
-    text.textContent = 'Dark Mode';
-  }
-}
 
 // Setup Event Listeners
 function setupEventListeners() {
@@ -210,15 +185,6 @@ function setupEventListeners() {
   clearFiltersBtn.addEventListener('click', () => {
     resetFiltersAndSearch();
     renderNews();
-  });
-
-  // Theme Toggle
-  themeToggle.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    updateThemeIcon(newTheme);
   });
 
   // Close Modal
