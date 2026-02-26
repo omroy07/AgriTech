@@ -44,9 +44,7 @@ class TransactionType(enum.Enum):
     DIVIDEND = 'DIVIDEND'
     FEE = 'FEE'
     INTEREST = 'INTEREST'
-    ARBITRAGE_EXECUTION = 'ARBITRAGE_EXECUTION'  # Auto-execution of quant arbitrage trade
-    BIOMASS_ENERGY_MINT = 'BIOMASS_ENERGY_MINT'  # Decentralized VPP grid payout for biomass energy injected
-    AUTONOMOUS_PROCUREMENT = 'AUTONOMOUS_PROCUREMENT' # Automated payment for supply chain fulfillment
+    DIAGNOSTIC_SUB_PAYMENT = 'DIAGNOSTIC_SUB_PAYMENT' # Subscription payment for AI diagnostic services
     CARBON_CREDIT_MINT = 'CARBON_CREDIT_MINT'    # New credit minted from sequestration
     CARBON_CREDIT_SALE = 'CARBON_CREDIT_SALE'    # Credit sold to ESG buyer
 
