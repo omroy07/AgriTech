@@ -49,8 +49,7 @@ from .arbitrage import arbitrage_bp
 from .spatial_yield import spatial_yield_bp
 from .carbon import carbon_bp
 from .logistics import smart_freight_bp
-from .biomass import biomass_bp
-from .energy_grid import energy_grid_bp
+from .supply_chain import supply_chain_bp
 
 # Create v1 API blueprint
 api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1')
@@ -107,5 +106,4 @@ api_v1.register_blueprint(vaults_bp, url_prefix='/vaults')
 api_v1.register_blueprint(arbitrage_bp, url_prefix='/arbitrage')
 api_v1.register_blueprint(spatial_yield_bp, url_prefix='/spatial-yield')
 api_v1.register_blueprint(carbon_bp, url_prefix='/carbon')
-api_v1.register_blueprint(biomass_bp, url_prefix='/biomass')
-api_v1.register_blueprint(energy_grid_bp, url_prefix='/vpp-grid')
+api_v1.register_blueprint(supply_chain_bp, url_prefix='/autonomous-supply')

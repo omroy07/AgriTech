@@ -551,53 +551,88 @@ html {
   border-color: var(--primary-green);
 }
 
-/* Theme Toggle Button */
+/* Animated Theme Toggle  */
 .theme-toggle {
-  background: transparent;
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 0.6rem 1rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color, #d1d5db);
   cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  color: var(--text-primary, #111827);
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  font-weight: 500;
-  font-size: 0.9rem;
-  position: relative;
+  justify-content: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  flex-shrink: 0;
+  align-self: center;
+  box-shadow: none !important;
 }
 
 .theme-toggle:hover {
-  background: var(--bg-secondary);
-  border-color: var(--primary-green);
-  color: var(--primary-green);
+  background-color: var(--bg-secondary, #f3f4f6);
+  border-color: var(--primary-green, #16a34a) !important;
 }
 
-.theme-toggle i {
-  font-size: 0.9rem;
+.theme-icon {
+  width: 22px;
+  height: 22px;
+  overflow: visible;
+  transition: transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  display: block;
 }
 
-.theme-toggle .sun-icon {
-  opacity: 0;
-  transform: rotate(180deg);
-  position: absolute;
-  left: 12px;
+.sun-core {
+  transform-origin: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.theme-toggle .moon-icon {
-  opacity: 1;
+.sun-rays {
+  transform-origin: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+}
+
+.moon-bite {
+  transform-origin: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light mode → Sun */
+[data-theme="light"] .theme-icon {
   transform: rotate(0deg);
 }
 
-[data-theme="dark"] .theme-toggle .sun-icon {
-  opacity: 1;
-  transform: rotate(0deg);
+[data-theme="light"] .sun-core {
+  transform: scale(1);
 }
 
-[data-theme="dark"] .theme-toggle .moon-icon {
+[data-theme="light"] .sun-rays {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+[data-theme="light"] .moon-bite {
+  transform: translate(20px, -20px);
+}
+
+/* Dark mode → Moon */
+[data-theme="dark"] .theme-icon {
+  transform: rotate(-10deg);
+}
+
+[data-theme="dark"] .sun-core {
+  transform: scale(1.4);
+}
+
+[data-theme="dark"] .sun-rays {
+  transform: scale(0.1);
   opacity: 0;
-  transform: rotate(180deg);
+}
+
+[data-theme="dark"] .moon-bite {
+  transform: translate(5px, -1.5px) scale(0.6);
 }
 
 /* Mobile Navigation - Hamburger Menu */
