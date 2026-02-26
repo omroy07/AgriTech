@@ -47,6 +47,8 @@ from .barter import BarterTransaction, BarterResource, ResourceValueIndex
 from .financials import FarmBalanceSheet, SolvencySnapshot, ProfitabilityIndex
 from .reliability_log import ReliabilityLog
 from .market import ForwardContract, PriceHedgingLog
+from .arbitrage import ArbitrageOpportunity, AlgorithmicTradeRecord
+from .spatial_yield import SpatialYieldGrid, TemporalYieldForex
 from .circular import WasteInventory, BioEnergyOutput, CircularCredit
 from .iot_maintenance import AssetTelemetry, MaintenancePrediction, ComponentWearMap
 from .disease import MigrationVector, ContainmentZone
