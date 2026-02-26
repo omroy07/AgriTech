@@ -50,7 +50,7 @@ from .market import ForwardContract, PriceHedgingLog
 from .arbitrage import ArbitrageOpportunity, AlgorithmicTradeRecord
 from .spatial_yield import SpatialYieldGrid, TemporalYieldForex
 from .circular import WasteInventory, BioEnergyOutput, CircularCredit
-from .ai_diagnostics import CropDiagnosticReport, DiagnosticVerification, PathogenKnowledgeBase
+from .iot_maintenance import AssetTelemetry, MaintenancePrediction, ComponentWearMap
 from .disease import MigrationVector, ContainmentZone
 from .ledger import (
     LedgerAccount, LedgerTransaction, LedgerEntry,
@@ -127,8 +127,8 @@ __all__ = [
     'ReliabilityLog', 'ForwardContract', 'PriceHedgingLog',
     # Circular Economy & Biomass Energy
     'WasteInventory', 'BioEnergyOutput', 'CircularCredit',
-    # AI Crop Diagnostics (L3-1643)
-    'CropDiagnosticReport', 'DiagnosticVerification', 'PathogenKnowledgeBase',
+    # IoT Predictive Maintenance (L3-1641)
+    'AssetTelemetry', 'MaintenancePrediction', 'ComponentWearMap',
     # Double-Entry Ledger
     'LedgerAccount', 'LedgerTransaction', 'LedgerEntry',
     'FXValuationSnapshot', 'Vault', 'VaultCurrencyPosition', 'FXRate',
