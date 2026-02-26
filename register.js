@@ -41,6 +41,14 @@ function checkPasswordStrength() {
   const strengthBar  = document.getElementById("strength-bar");
   const strengthText = document.getElementById("strength-text");
 
+  // Empty field — reset completely
+  if (password.length === 0) {
+    strengthBar.className = "strength-bar";
+    strengthBar.style.width = "0%";
+    strengthText.textContent = "";
+    return;
+  }
+
   let strength = 0;
   if (password.length >= 8)       strength += 25;
   if (/[a-z]/.test(password))     strength += 25;
@@ -48,23 +56,26 @@ function checkPasswordStrength() {
   if (/[\d\W]/.test(password))    strength += 25;
 
   strengthBar.className = "strength-bar";
-  let feedback = "";
+
+  // Extra credit for very long passwords
+  if (password.length >= 16) strength = Math.min(strength + 10, 100);
+
+  strengthBar.className = "strength-bar";
+  strengthBar.style.width = strength + "%";
 
   if (strength <= 25) {
     strengthBar.classList.add("strength-weak");
-    feedback = "Weak password";
+    strengthText.textContent = "Weak password";
   } else if (strength <= 50) {
     strengthBar.classList.add("strength-fair");
-    feedback = "Fair password";
+    strengthText.textContent = "Fair password";
   } else if (strength <= 75) {
     strengthBar.classList.add("strength-good");
-    feedback = "Good password";
+    strengthText.textContent = "Good password";
   } else {
     strengthBar.classList.add("strength-strong");
-    feedback = "Strong password";
+    strengthText.textContent = "Strong password";
   }
-
-  strengthText.textContent = password.length > 0 ? feedback : "";
 }
 
 function updateProgress() {
@@ -166,3 +177,4 @@ document.addEventListener("keydown", function (e) {
 });
 
 document.addEventListener("DOMContentLoaded", updateProgress);
+document.getElementById("password").addEventListener("input", checkPasswordStrength);
