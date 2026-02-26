@@ -17,6 +17,15 @@
     <link rel="icon" type="image/png" href="images/logo.png">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Prevent theme flash on page load -->
+    <script>
+        (function () {
+            const saved = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+        })();
+    </script>
     <style>
         :root {
             /* Dark Theme Variables */
@@ -66,66 +75,66 @@
             transition: all 0.3s ease;
         }
 
-        [data-theme="light"] body {
-            background: linear-gradient(135deg, #ecfdf5 0%, #f0fdfa 100%);
+        [data-theme="light"] body,
+        html[data-theme="light"] body {
+            background: linear-gradient(135deg, #ecfdf5 0%, #f0fdfa 100%) !important;
         }
 
         /* Light theme container overrides */
-        body[data-theme="light"] .top-nav,
-        body[data-theme="light"] .header,
-        body[data-theme="light"] .sustainability-metrics,
-        body[data-theme="light"] .eco-impact,
-        body[data-theme="light"] .tips-section,
-        body[data-theme="light"] .assessment-tool,
-        body[data-theme="light"] .cta-section,
-        body[data-theme="light"] .practice-card {
+        [data-theme="light"] .top-nav,
+        [data-theme="light"] .header,
+        [data-theme="light"] .sustainability-metrics,
+        [data-theme="light"] .eco-impact,
+        [data-theme="light"] .tips-section,
+        [data-theme="light"] .assessment-tool,
+        [data-theme="light"] .cta-section,
+        [data-theme="light"] .practice-card {
             background: rgba(248, 250, 252, 0.95);
             border-color: var(--border-color);
             box-shadow: 0 8px 25px var(--shadow-light);
         }
 
         /* Ensure text uses design tokens in light mode */
-        body[data-theme="light"] .header h1,
-        body[data-theme="light"] .metrics-header h2,
-        body[data-theme="light"] .impact-header h2,
-        body[data-theme="light"] .tips-header h2,
-        body[data-theme="light"] .tool-header h2,
-        body[data-theme="light"] .cta-section h2,
-        body[data-theme="light"] .practice-card h3 {
+        [data-theme="light"] .header h1,
+        [data-theme="light"] .metrics-header h2,
+        [data-theme="light"] .impact-header h2,
+        [data-theme="light"] .tips-header h2,
+        [data-theme="light"] .tool-header h2,
+        [data-theme="light"] .cta-section h2,
+        [data-theme="light"] .practice-card h3 {
             color: var(--text-primary);
         }
 
-        body[data-theme="light"] p,
-        body[data-theme="light"] .metrics-header p,
-        body[data-theme="light"] .impact-header p,
-        body[data-theme="light"] .tips-header p,
-        body[data-theme="light"] .tool-header p,
-        body[data-theme="light"] .cta-section p,
-        body[data-theme="light"] .practice-card p,
-        body[data-theme="light"] .practice-benefits li,
-        body[data-theme="light"] .tip-card p,
-        body[data-theme="light"] .impact-description,
-        body[data-theme="light"] .form-group label,
-        body[data-theme="light"] .range-value,
-        body[data-theme="light"] .tip-title {
+        [data-theme="light"] p,
+        [data-theme="light"] .metrics-header p,
+        [data-theme="light"] .impact-header p,
+        [data-theme="light"] .tips-header p,
+        [data-theme="light"] .tool-header p,
+        [data-theme="light"] .cta-section p,
+        [data-theme="light"] .practice-card p,
+        [data-theme="light"] .practice-benefits li,
+        [data-theme="light"] .tip-card p,
+        [data-theme="light"] .impact-description,
+        [data-theme="light"] .form-group label,
+        [data-theme="light"] .range-value,
+        [data-theme="light"] .tip-title {
             color: var(--text-secondary);
         }
 
-        /* Fix assessment and impact blocks in light mode */
-        body[data-theme="light"] .impact-stat {
+        [data-theme="light"] .impact-stat {
             background: var(--bg-secondary);
             border-color: var(--border-color);
         }
 
-        body[data-theme="light"] .results-section {
+        [data-theme="light"] .results-section {
             background: rgba(16, 185, 129, 0.08);
         }
 
-        body[data-theme="light"] .score-progress {
+        [data-theme="light"] .score-progress {
             background: var(--bg-tertiary);
         }
 
-        body[data-theme="light"] .tip-card {
+        [data-theme="light"] .tip-card {
             background: linear-gradient(135deg, rgba(0, 184, 148, 0.05), rgba(0, 206, 201, 0.05));
         }
 
@@ -179,22 +188,88 @@
             color: white;
         }
 
+        /* Animated Theme Toggle  */
         .theme-toggle {
-            background: var(--accent-primary);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color, #d1d5db);
+        cursor: pointer;
+        padding: 0;
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        border-radius: 50%;
+        color: var(--text-primary, #111827);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+        flex-shrink: 0;
+        align-self: center;
+        box-shadow: none !important;
         }
 
         .theme-toggle:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px var(--shadow-medium);
+        background-color: var(--bg-secondary, #f3f4f6);
+        border-color: var(--primary-green, #16a34a) !important;
+        }
+
+        .theme-icon {
+        width: 22px;
+        height: 22px;
+        overflow: visible;
+        transition: transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+        display: block;
+        }
+
+        .sun-core {
+        transform-origin: center;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sun-rays {
+        transform-origin: center;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+        }
+
+        .moon-bite {
+        transform-origin: center;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Light mode → Sun */
+        [data-theme="light"] .theme-icon {
+        transform: rotate(0deg);
+        }
+
+        [data-theme="light"] .sun-core {
+        transform: scale(1);
+        }
+
+        [data-theme="light"] .sun-rays {
+        transform: scale(1.1);
+        opacity: 1;
+        }
+
+        [data-theme="light"] .moon-bite {
+        transform: translate(20px, -20px);
+        }
+
+        /* Dark mode → Moon */
+        [data-theme="dark"] .theme-icon {
+        transform: rotate(-10deg);
+        }
+
+        [data-theme="dark"] .sun-core {
+        transform: scale(1.4);
+        }
+
+        [data-theme="dark"] .sun-rays {
+        transform: scale(0.1);
+        opacity: 0;
+        }
+
+        [data-theme="dark"] .moon-bite {
+        transform: translate(5px, -1.5px) scale(0.6);
         }
 
         .header {
@@ -869,7 +944,7 @@
     </style>
 </head>
 
-<body data-theme="dark">
+<body>
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
     </div>
@@ -882,10 +957,28 @@
                 </a>
             </div>
             <div>
-                <button class="theme-toggle" id="themeToggle">
-                    <i class="fas fa-sun" id="themeIcon"></i>
-                    <span id="themeText">Light</span>
-                </button>
+                <!-- Animated Sun/Moon Toggle -->
+        <button class="theme-toggle" type="button" id="themeToggle" title="Switch to dark mode"
+            aria-label="Switch to dark mode">
+            <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <mask id="moon-mask">
+                    <rect x="0" y="0" width="100%" height="100%" fill="white" />
+                    <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
+                </mask>
+                <circle class="sun-core" cx="12" cy="12" r="7" fill="currentColor" mask="url(#moon-mask)" />
+                <g class="sun-rays" stroke="currentColor">
+                    <line x1="12" y1="1" x2="12" y2="3" />
+                    <line x1="12" y1="21" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="3" y2="12" />
+                    <line x1="21" y1="12" x2="23" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </g>
+            </svg>
+        </button>
             </div>
         </nav>
 
@@ -1190,36 +1283,6 @@
 <!-- Cursor Trail -->
 <div class="circle-container" id="cursorTrail"></div>
     <script>
-        // Theme Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const themeText = document.getElementById('themeText');
-
-        // Check for saved theme
-        const savedTheme = localStorage.getItem('sustainableTheme') || 'dark';
-        document.body.setAttribute('data-theme', savedTheme);
-        updateThemeButton(savedTheme);
-
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-            document.body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('sustainableTheme', newTheme);
-            updateThemeButton(newTheme);
-            showNotification(`Switched to ${newTheme} theme`, 'info');
-        });
-
-        function updateThemeButton(theme) {
-            if (theme === 'dark') {
-                themeIcon.className = 'fas fa-sun';
-                themeText.textContent = 'Light';
-            } else {
-                themeIcon.className = 'fas fa-moon';
-                themeText.textContent = 'Dark';
-            }
-        }
-
         // Update range slider values
         ['currentPractices', 'waterUsage', 'organicUse', 'energyEfficiency'].forEach(id => {
             const slider = document.getElementById(id);

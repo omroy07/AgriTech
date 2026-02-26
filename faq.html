@@ -14,6 +14,16 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
     rel="stylesheet" />
+
+    <!-- Prevent theme flash on page load -->
+    <script>
+      (function () {
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+      })();
+    </script>
+
   <link href="style.css" rel="stylesheet" />
   <link href="faq.css" rel="stylesheet" />
   <style>
@@ -75,16 +85,33 @@
 
       <!-- Right side: Buttons -->
       <div class="nav-buttons">
-        <button class="theme-toggle btn" aria-label="Toggle dark/light mode">
-          <i class="fas fa-sun sun-icon"></i>
-          <i class="fas fa-moon moon-icon"></i>
-          <span class="theme-text">Light</span>
-        </button>
-
         <a href="login.html" class="btn btn-secondary login-btn-desktop">Login</a>
         <a href="faq.html" class="btn btn-secondary active">FAQ</a>
         <a href="#" class="btn btn-secondary logout-button" style="display: none;">Logout</a>
         <a href="register.html" class="btn btn-primary register-btn-desktop">Register</a>
+
+      <!-- Animated Sun/Moon Toggle -->
+                <button class="theme-toggle" type="button" id="themeToggle" title="Switch to dark mode"
+                    aria-label="Switch to dark mode">
+                    <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <mask id="moon-mask">
+                            <rect x="0" y="0" width="100%" height="100%" fill="white" />
+                            <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
+                        </mask>
+                        <circle class="sun-core" cx="12" cy="12" r="7" fill="currentColor" mask="url(#moon-mask)" />
+                        <g class="sun-rays" stroke="currentColor">
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </g>
+                    </svg>
+                </button>
       </div>
 
       <!-- Mobile Hamburger Menu Button -->
@@ -112,10 +139,26 @@
     </div>
 
     <div class="mobile-nav-buttons">
-      <button class="theme-toggle btn" id="mobileThemeToggle" aria-label="Toggle dark/light mode">
-        <i class="fas fa-sun sun-icon"></i>
-        <i class="fas fa-moon moon-icon"></i>
-        <span class="theme-text">Light</span>
+      <button class="theme-toggle mobile-theme-toggle-btn" type="button" id="mobileThemeToggle"
+        aria-label="Toggle dark/light mode">
+        <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <mask id="moon-mask-mobile">
+            <rect x="0" y="0" width="100%" height="100%" fill="white" />
+            <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
+          </mask>
+          <circle class="sun-core" cx="12" cy="12" r="7" fill="currentColor" mask="url(#moon-mask-mobile)" />
+          <g class="sun-rays" stroke="currentColor">
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </g>
+        </svg>
       </button>
 
       <a href="login.html" class="btn btn-secondary login-btn-mobile">Login</a>
@@ -727,24 +770,6 @@
       });
     }
 
-    // Theme toggle functionality
-    const themeToggle = document.querySelector('.theme-toggle');
-    const themeText = document.querySelector('.theme-text');
-
-    // Check for saved theme preference
-    const currentTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    themeText.textContent = currentTheme === 'dark' ? 'Light' : 'Dark';
-
-    themeToggle.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      themeText.textContent = newTheme === 'dark' ? 'Light' : 'Dark';
-    });
-
     // Scroll button functionality
     const scrollBtn = document.getElementById("scrollBtn");
     const scrollIcon = document.getElementById("scrollIcon");
@@ -866,6 +891,7 @@ function handleSearch(query) {
 </script>
 
   <script src="auth.js"></script>
+  <script src="theme.js"></script>
   <!-- ===== Universal Back To Top Button (All Pages) ===== -->
 <style>
   #globalBackToTop {
