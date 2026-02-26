@@ -39,10 +39,13 @@
           --bg-card: #ffffff;
           --bg-header: rgba(255, 255, 255, 0.9);
           --bg-secondary-btn: transparent;
+          --secondary: #70828f;
           --bg-hover-soft: #f9fdf9;
           --text-primary: #1e2f1e;
           --text-secondary: #4a5568;
+          --text-muted: #b2ffbf;
           --border-color: #e2e8f0;
+          --border: #caefe3;
           --border-color-soft: rgba(45, 143, 133, 0.1);
           --shadow-light: rgba(42, 122, 42, 0.08);
           --shadow-medium: rgba(42, 122, 42, 0.15);
@@ -61,11 +64,14 @@
           --bg-page: #011337; 
           --bg-card: #31405a; 
           --bg-header: rgba(29, 50, 86, 0.9);
-          --bg-secondary-btn: transparent; 
+          --bg-secondary-btn: transparent;
+          --secondary: #70828f;
           --bg-hover-soft: #394354;
           --text-primary: #e2e8f0;
           --text-secondary: #a0aec0;
+          --text-muted: #6996d5;
           --border-color: #4a5568;
+          --border: #4a5568;
           --border-color-soft: rgba(102, 199, 179, 0.15);
           --shadow-light: rgba(0, 0, 0, 0.3);
           --shadow-medium: rgba(0, 0, 0, 0.5);
@@ -644,6 +650,24 @@
   box-shadow: 0 0 20px #22c55e;
 }
       
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
     </style>
     </head>
   <body>
