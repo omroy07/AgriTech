@@ -12,6 +12,16 @@
         href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Libertinus+Serif:wght@400;600&display=swap"
         rel="stylesheet">
     <link rel="icon" type="image/png" href="images/logo.png">
+
+        <!-- Prevent theme flash on page load -->
+        <script>
+            (function () {
+                const saved = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+            })();
+        </script>
+
     <link rel="stylesheet" href="style.css">
     <style>
         /* --- DARK MODE SYSTEM --- */
@@ -150,53 +160,6 @@
             box-shadow: 0 10px 30px rgba(15, 23, 42, 0.8);
         }
 
-
-        .theme-toggle i {
-            color: #fbbf24 !important;
-            /* Vibrant Sun Yellow */
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-transform: capitalize;
-        }
-
-        .theme-toggle {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 22px;
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%) !important;
-            /* Premium Indigo */
-            border: 1px solid rgba(255, 255, 255, 0.15) !important;
-            border-radius: 999px !important;
-            /* Standardized Pill Shape */
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-            /* Atmospheric Blue Glow */
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 1100;
-        }
-
-        .theme-toggle span {
-            color: #fbbf24 !important;
-            /* Vibrant Sun Yellow */
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-transform: capitalize;
-        }
-
-
-        .theme-toggle:hover {
-            transform: scale(1.08) translateY(-2px);
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.5);
-            background: linear-gradient(135deg, #312e81 0%, #3730a3 100%) !important;
-        }
-
-        [data-theme="dark"] .theme-toggle {
-            background: #facc15;
-            color: #1e293b;
-            box-shadow: 0 14px 35px rgba(250, 204, 21, 0.55);
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -223,8 +186,7 @@
             z-index: 1000;
         }
 
-        .nav-back,
-        .theme-toggle {
+        .nav-back {
             background: var(--bg-nav);
             color: var(--text-body);
             padding: 10px 22px;
@@ -237,23 +199,9 @@
             font-weight: 600;
         }
 
-        .nav-back:hover,
-        .theme-toggle:hover {
+        .nav-back:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Toggle Icon Visibility */
-        .sun-icon {
-            display: none;
-        }
-
-        [data-theme="dark"] .sun-icon {
-            display: block;
-        }
-
-        [data-theme="dark"] .moon-icon {
-            display: none;
         }
 
         .container {
@@ -653,9 +601,27 @@
         <a href="index.html" class="nav-back">
             <i class="fas fa-arrow-left"></i> Back to Home
         </a>
-        <button class="theme-toggle" id="themeToggleHub">
-            <i class="fas fa-sun" id="hubThemeIcon"></i>
-            <span id="hubThemeText">Light</span>
+        <!-- Animated Sun/Moon Toggle -->
+        <button class="theme-toggle" type="button" id="themeToggle" title="Switch to dark mode"
+            aria-label="Switch to dark mode">
+            <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <mask id="moon-mask">
+                    <rect x="0" y="0" width="100%" height="100%" fill="white" />
+                    <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
+                </mask>
+                <circle class="sun-core" cx="12" cy="12" r="7" fill="currentColor" mask="url(#moon-mask)" />
+                <g class="sun-rays" stroke="currentColor">
+                    <line x1="12" y1="1" x2="12" y2="3" />
+                    <line x1="12" y1="21" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="3" y2="12" />
+                    <line x1="21" y1="12" x2="23" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </g>
+            </svg>
         </button>
     </div>
 
@@ -835,22 +801,8 @@
     <!-- Cursor Trail -->
     <div class="circle-container" id="cursorTrail"></div>
 
+    <script src="theme.js"></script>
     <script>
-        // 1. Theme Toggle Logic
-        const themeToggle = document.getElementById('theme-toggle');
-        const htmlElement = document.documentElement;
-
-        // Load saved preference
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        htmlElement.setAttribute('data-theme', savedTheme);
-
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = htmlElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            htmlElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-        });
-
         // 2. Original Real-time Metrics Simulation
         function updateMetrics() {
             const active = document.getElementById('activeShipments');
@@ -1050,35 +1002,6 @@
                     behavior: "smooth"
                 });
             });
-        })();
-
-        /* ============================================================
-         FEATURE: Animated Theme Toggle (Word Swap Logic)
-         ============================================================ */
-        (function () {
-            const hubToggle = document.getElementById("themeToggleHub");
-            const hubIcon = document.getElementById("hubThemeIcon");
-            const hubText = document.getElementById("hubThemeText");
-
-            if (hubToggle) {
-                hubToggle.addEventListener("click", () => {
-                    const currentTheme = document.documentElement.getAttribute("data-theme");
-                    const newTheme = currentTheme === "light" ? "dark" : "light";
-
-                    // Toggle Theme and Persist
-                    document.documentElement.setAttribute("data-theme", newTheme);
-                    localStorage.setItem("agritech-theme", newTheme);
-
-                    // Requirement: Word & Icon Swap Logic
-                    if (newTheme === "light") {
-                        hubIcon.className = "fas fa-moon";
-                        hubText.innerText = "Dark"; // Showing current target action
-                    } else {
-                        hubIcon.className = "fas fa-sun";
-                        hubText.innerText = "Light"; // Showing current target action
-                    }
-                });
-            }
         })();
     </script>
     <!-- ===== End Back To Top Button ===== -->

@@ -91,8 +91,7 @@ body {
   flex-wrap: wrap;
 }
 
-.home-btn,
-.theme-toggle {
+.home-btn {
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
   text-decoration: none;
@@ -109,11 +108,100 @@ body {
   white-space: nowrap;
 }
 
-.home-btn:hover,
-.theme-toggle:hover {
+.home-btn:hover {
   background: var(--accent-color);
   color: white;
   border-color: var(--accent-color);
+}
+
+/* Animated Theme Toggle  */
+.theme-toggle {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color, #d1d5db);
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  color: var(--text-primary, #111827);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  flex-shrink: 0;
+  align-self: center;
+  box-shadow: none !important;
+}
+
+[data-theme="dark"] .theme-toggle {
+  background: #1e293b !important;
+  border: 1px solid #475569 !important;
+  color: #f1f5f9 !important;
+}
+
+.theme-toggle:hover {
+  background-color: var(--bg-secondary, #f3f4f6);
+  border-color: var(--primary-green, #16a34a) !important;
+}
+
+.theme-icon {
+  width: 22px;
+  height: 22px;
+  overflow: visible;
+  transition: transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  display: block;
+}
+
+.sun-core {
+  transform-origin: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sun-rays {
+  transform-origin: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+}
+
+.moon-bite {
+  transform-origin: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light mode → Sun */
+[data-theme="light"] .theme-icon {
+  transform: rotate(0deg);
+}
+
+[data-theme="light"] .sun-core {
+  transform: scale(1);
+}
+
+[data-theme="light"] .sun-rays {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+[data-theme="light"] .moon-bite {
+  transform: translate(20px, -20px);
+}
+
+/* Dark mode → Moon */
+[data-theme="dark"] .theme-icon {
+  transform: rotate(-10deg);
+}
+
+[data-theme="dark"] .sun-core {
+  transform: scale(1.4);
+}
+
+[data-theme="dark"] .sun-rays {
+  transform: scale(0.1);
+  opacity: 0;
+}
+
+[data-theme="dark"] .moon-bite {
+  transform: translate(5px, -1.5px) scale(0.6);
 }
 
 .news-title {
@@ -611,8 +699,7 @@ body {
     gap: 0.8rem;
   }
 
-  .home-btn,
-  .theme-toggle {
+  .home-btn {
     width: 100%;
     justify-content: center;
   }
