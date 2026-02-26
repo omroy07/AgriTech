@@ -488,19 +488,93 @@ body.dark-mode .nav-btn {
 body.dark-mode a {
   color: #4CAF50 !important;
 }
-#themeToggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  font-size: 16px;
+
+/* Animated Theme Toggle  */
+.theme-toggle {
+    background: var(--bg-main, #f8fafc);
+    border: 1px solid #d1d5db ;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 50%;
+    color: var(--text-main, #1e293b);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    flex-shrink: 0;
+    align-self: center;
+    box-shadow: none !important;
 }
 
-#themeToggle i {
-  transition: transform 0.3s ease;
+body.dark-mode .theme-toggle {
+    background: transparent;
+    border: 1px solid var(--border, #475569);
+    color: var(--text-main, #f1f5f9);
 }
 
-#themeToggle:hover i {
-  transform: rotate(20deg);
+.theme-toggle:hover {
+    background-color: var(--bg-secondary, #f3f4f6);
+    border-color: var(--primary-green, #16a34a) !important;
+}
+
+.theme-icon {
+    width: 22px;
+    height: 22px;
+    overflow: visible;
+    transition: transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    display: block;
+}
+
+.sun-core {
+    transform-origin: center;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sun-rays {
+    transform-origin: center;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+}
+
+.moon-bite {
+    transform-origin: center;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light mode → Sun */
+[data-theme="light"] .theme-icon {
+    transform: rotate(0deg);
+}
+
+[data-theme="light"] .sun-core {
+    transform: scale(1);
+}
+
+[data-theme="light"] .sun-rays {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+[data-theme="light"] .moon-bite {
+    transform: translate(20px, -20px);
+}
+
+/* Dark mode → Moon */
+[data-theme="dark"] .theme-icon {
+    transform: rotate(-10deg);
+}
+
+[data-theme="dark"] .sun-core {
+    transform: scale(1.4);
+}
+
+[data-theme="dark"] .sun-rays {
+    transform: scale(0.1);
+    opacity: 0;
+}
+
+[data-theme="dark"] .moon-bite {
+    transform: translate(5px, -1.5px) scale(0.6);
 }
