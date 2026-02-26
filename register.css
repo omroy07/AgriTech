@@ -76,6 +76,7 @@ body::before {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid rgba(46, 125, 50, 0.1);
   color: var(--text-primary, #333);
+  overflow: hidden;
 }
 
 .form-container:hover {
@@ -105,32 +106,6 @@ body::before {
   50% {
     background-position: 200% 0;
   }
-}
-
-/* NEW: back button styling */
-.back-button {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background: rgba(46, 125, 50, 0.08);
-  border: 1px solid rgba(46, 125, 50, 0.3);
-  color: #1b5e20;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  outline: none;
-}
-
-.back-button i {
-  font-size: 16px;
-}
-
-.back-button:hover {
-  background: rgba(46, 125, 50, 0.16);
 }
 
 /* Logo/Brand area */
@@ -255,15 +230,6 @@ body::before {
   color: var(--text-primary, #333);
   background: var(--bg-primary, white);
   padding: 10px;
-}
-
-/* Password strength indicator */
-.password-strength {
-  height: 3px;
-  background: #e0e0e0;
-  border-radius: 3px;
-  margin-top: 5px;
-  overflow: hidden;
 }
 
 .strength-bar {
