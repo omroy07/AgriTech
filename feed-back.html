@@ -47,6 +47,8 @@
             --light-green: #f0fdf4;
             --dark-green: #15803d;
             --green-hover: #15803d;
+
+            --border: #d0d5d1;
         }
 
         .dark-theme {
@@ -70,6 +72,7 @@
             /* Homepage green palette for dark mode */
             --light-green: #1a2e1a;
             --green-hover: #22c55e;
+            --border: rgba(102, 187, 106, 0.3);
         }
 
         * {
@@ -1337,6 +1340,25 @@
   transform: translate(-50%, -50%) scale(1.8);
   background-color: #22c55e; /* AgriTech green */
   box-shadow: 0 0 20px #22c55e;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }
     </style>
 </head>

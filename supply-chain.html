@@ -30,10 +30,13 @@
             --bg-card: rgba(255, 255, 255, 0.95);
             --bg-nav: #fff;
             --bg-shipment: #f8f9fa;
+            --bg-secondary: #f8fafc;
             --text-header: #2c3e50;
             --text-body: #333;
             --text-muted: #555;
+            --muted: #94a3b8;
             --text-cta-sub: #666;
+            --border-color: #74b9ff;
             --shadow: rgba(0, 0, 0, 0.1);
             --accent-blue: #74b9ff;
         }
@@ -43,9 +46,12 @@
             --bg-card: rgba(30, 41, 59, 0.95);
             --bg-nav: #1e293b;
             --bg-shipment: #2d3748;
+            --bg-secondary: #0b1220;
             --text-header: #f8fafc;
             --text-body: #e2e8f0;
+            --border-color: #334155;
             --text-muted: #cbd5e1;
+            --muted: #94a3b8;
             --text-cta-sub: #94a3b8;
             --shadow: rgba(0, 0, 0, 0.4);
             --accent-blue: #818cf8;
@@ -592,8 +598,26 @@
             /* AgriTech green */
             box-shadow: 0 0 20px #22c55e;
         }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+        background: var(--border-color);
+        border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+        background: var(--muted);
+        }
     </style>
-    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
