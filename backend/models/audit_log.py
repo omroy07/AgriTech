@@ -35,8 +35,8 @@ class AuditLog(db.Model):
     # Smart Freight (L3-1631)
     ai_logistics_flag = db.Column(db.Boolean, default=False) # For geo-fence & phyto auto-decisions
     
-    # IoT Predictive Maintenance (L3-1641)
-    iot_maintenance_flag = db.Column(db.Boolean, default=False)
+    # Carbon Trading Escrow (L3-1642)
+    carbon_escrow_flag = db.Column(db.Boolean, default=False)
     
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     

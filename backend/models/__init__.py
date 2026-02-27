@@ -50,7 +50,7 @@ from .market import ForwardContract, PriceHedgingLog
 from .arbitrage import ArbitrageOpportunity, AlgorithmicTradeRecord
 from .spatial_yield import SpatialYieldGrid, TemporalYieldForex
 from .circular import WasteInventory, BioEnergyOutput, CircularCredit
-from .iot_maintenance import AssetTelemetry, MaintenancePrediction, ComponentWearMap
+from .carbon_escrow import CarbonTradeEscrow, EscrowAuditLog, CarbonCreditWallet
 from .disease import MigrationVector, ContainmentZone
 from .ledger import (
     LedgerAccount, LedgerTransaction, LedgerEntry,
@@ -127,8 +127,8 @@ __all__ = [
     'ReliabilityLog', 'ForwardContract', 'PriceHedgingLog',
     # Circular Economy & Biomass Energy
     'WasteInventory', 'BioEnergyOutput', 'CircularCredit',
-    # IoT Predictive Maintenance (L3-1641)
-    'AssetTelemetry', 'MaintenancePrediction', 'ComponentWearMap',
+    # Carbon Trading Escrow (L3-1642)
+    'CarbonTradeEscrow', 'EscrowAuditLog', 'CarbonCreditWallet',
     # Double-Entry Ledger
     'LedgerAccount', 'LedgerTransaction', 'LedgerEntry',
     'FXValuationSnapshot', 'Vault', 'VaultCurrencyPosition', 'FXRate',
