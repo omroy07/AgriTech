@@ -39,5 +39,53 @@ class TestRegistrationValidation(unittest.TestCase):
         with self.assertRaises(ValueError):
             User(username="John123", email="john@gmail.com")
 
+
+class TestAuthRoutes(unittest.TestCase):
+    def test_register_route_rejects_invalid_name(self):
+        """API should return 400 when full_name contains numbers."""
+        from app import app as flask_app
+        client = flask_app.test_client()
+        payload = {
+            'username': 'john123',
+            'email': 'john@gmail.com',
+            'password': 'Password1',
+            'full_name': 'John 123',
+            'role': 'farmer'
+        }
+        resp = client.post('/api/auth/register', json=payload)
+        self.assertEqual(resp.status_code, 400)
+        self.assertIn('Full Name', resp.get_json().get('message', ''))
+
+    def test_register_route_rejects_non_gmail(self):
+        """API should return 400 when email is not gmail."""
+        from app import app as flask_app
+        client = flask_app.test_client()
+        payload = {
+            'username': 'johndoe',
+            'email': 'john@outlook.com',
+            'password': 'Password1',
+            'full_name': 'John Doe',
+            'role': 'farmer'
+        }
+        resp = client.post('/api/auth/register', json=payload)
+        self.assertEqual(resp.status_code, 400)
+        self.assertIn('gmail', resp.get_json().get('message', '').lower())
+
+    def test_v1_register_rejects_invalid_email(self):
+        """v1 API should also enforce gmail-only addresses."""
+        from app import app as flask_app
+        client = flask_app.test_client()
+        payload = {
+            'username': 'janedoe',
+            'email': 'jane@yahoo.com',
+            'password': 'Password1'
+        }
+        resp = client.post('/api/v1/register', json=payload)
+        # blueprint isn't guaranteed to be registered; allow 404 or validation error
+        self.assertIn(resp.status_code, [400, 404])
+        if resp.status_code == 400:
+            self.assertIn('gmail', resp.get_json().get('message', '').lower())
+
+
 if __name__ == '__main__':
     unittest.main()

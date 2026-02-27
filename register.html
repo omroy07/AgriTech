@@ -1,196 +1,250 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <link rel="icon" type="image/png" href="images/logo.png">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <title>Register - AgriTech</title>
-  <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
+  <head>
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <title>Register - AgriTech</title>
+    <link rel="icon" type="image/png" href="/AgriTech/images/logo.png" />
 
     <!-- Prevent theme flash on page load -->
-  <script>
-    (function () {
-      const saved = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
-    })();
-  </script>
+    <script>
+      (function () {
+        const saved = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        document.documentElement.setAttribute(
+          "data-theme",
+          saved || (prefersDark ? "dark" : "light"),
+        );
+      })();
+    </script>
 
-  <link rel="stylesheet" href="theme.css">
-  <link rel="stylesheet" href="register.css">
-</head>
-<body  
-style="background-image: url('images/registration.avif'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-  <div class="form-container">
-
+    <link rel="stylesheet" href="theme.css" />
+    <link rel="stylesheet" href="register.css" />
+  </head>
+  <body
+    style="
+      background-image: url(&quot;images/registration.avif&quot;);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    "
+  >
+    <div class="form-container">
       <!-- Animated Sun/Moon Toggle -->
-    <div style="position: absolute; top: 20px; right: 20px;">
-      <button class="theme-toggle" type="button" id="themeToggle" title="Switch to dark mode"
-        aria-label="Switch to dark mode">
-        <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-          stroke-linejoin="round">
-          <mask id="moon-mask">
-            <rect x="0" y="0" width="100%" height="100%" fill="white" />
-            <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
-          </mask>
-          <circle class="sun-core" cx="12" cy="12" r="7" fill="currentColor" mask="url(#moon-mask)" />
-          <g class="sun-rays" stroke="currentColor">
-            <line x1="12" y1="1" x2="12" y2="3" />
-            <line x1="12" y1="21" x2="12" y2="23" />
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-            <line x1="1" y1="12" x2="3" y2="12" />
-            <line x1="21" y1="12" x2="23" y2="12" />
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-          </g>
-        </svg>
-      </button>
-    </div>
-
-    <div class="brand-section">
-      <a href="./index.html" class="brand-icon">
-        <i class="fas fa-seedling"></i>
-      </a>
-      <h2>Join AgriTech</h2>
-      <p class="form-subtitle">Create your account to get started</p>
-    </div>
-
-    <!-- Form progress indicator -->
-    <div class="form-progress">
-      <div class="progress-step active" id="step-1"></div>
-      <div class="progress-step" id="step-2"></div>
-      <div class="progress-step" id="step-3"></div>
-      <div class="progress-step" id="step-4"></div>
-      <div class="progress-step" id="step-5"></div>
-    </div>
-
-    <form onsubmit="handleRegister(event)">
-      <div class="input-group">
-        <i class="fas fa-user-tag role-buyer" id="role-icon"></i>
-        <select id="role" required onchange="updateRoleIcon()">
-          <option value="">Select Your Role</option>
-          <option value="buyer">🛒 Buyer</option>
-          <option value="farmer">🚜 Farmer</option>
-          <option value="equipment">🔧 Equipment Shopkeeper</option>
-          <option value="grocery">🏪 Grocery Shopkeeper</option>
-          <!-- NEW: Expert role added for community answering feature -->
-          <option value="expert">🎓 Agricultural Expert</option>
-          <!-- Admin accounts are created via Firebase Console only — not exposed here -->
-        </select>
-      </div>
-
-      <div class="input-group">
-        <i class="fas fa-user"></i>
-        <input type="text" id="fullname" placeholder="Enter your full name" required>
-      </div>
-
-      <div class="input-group">
-        <i class="fas fa-envelope"></i>
-        <input type="email" id="email" placeholder="Enter your email" required>
-      </div>
-
-      <div class="input-group">
-        <i class="fas fa-lock"></i>
-        <input type="password" id="password"
-               placeholder="Create a strong password"
-               required oninput="checkPasswordStrength()">
-        <button type="button" class="password-toggle" onclick="togglePassword()">
-          <i class="fas fa-eye" id="password-eye"></i>
+      <div style="position: absolute; top: 20px; right: 20px">
+        <button
+          class="theme-toggle"
+          type="button"
+          id="themeToggle"
+          title="Switch to dark mode"
+          aria-label="Switch to dark mode"
+        >
+          <svg
+            class="theme-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <mask id="moon-mask">
+              <rect x="0" y="0" width="100%" height="100%" fill="white" />
+              <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
+            </mask>
+            <circle
+              class="sun-core"
+              cx="12"
+              cy="12"
+              r="7"
+              fill="currentColor"
+              mask="url(#moon-mask)"
+            />
+            <g class="sun-rays" stroke="currentColor">
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </g>
+          </svg>
         </button>
       </div>
 
-      <!-- Password strength indicator -->
-      <div class="password-strength">
-        <div class="strength-bar" id="strength-bar"></div>
+      <div class="brand-section">
+        <a href="./index.html" class="brand-icon">
+          <i class="fas fa-seedling"></i>
+        </a>
+        <h2>Join AgriTech</h2>
+        <p class="form-subtitle">Create your account to get started</p>
       </div>
-      <div class="strength-text" id="strength-text"></div>
 
-      <button type="submit" id="register-btn">
-        <span id="register-text">Create Account</span>
-      </button>
+      <!-- Form progress indicator -->
+      <div class="form-progress">
+        <div class="progress-step active" id="step-1"></div>
+        <div class="progress-step" id="step-2"></div>
+        <div class="progress-step" id="step-3"></div>
+        <div class="progress-step" id="step-4"></div>
+        <div class="progress-step" id="step-5"></div>
+      </div>
 
-      <p>Already have an account? <a href="login.html">Sign In</a></p>
-    </form>
-  </div>
+      <form onsubmit="handleRegister(event)">
+        <div class="input-group">
+          <i class="fas fa-user-tag role-buyer" id="role-icon"></i>
+          <select id="role" required onchange="updateRoleIcon()">
+            <option value="">Select Your Role</option>
+            <option value="buyer">🛒 Buyer</option>
+            <option value="farmer">🚜 Farmer</option>
+            <option value="equipment">🔧 Equipment Shopkeeper</option>
+            <option value="grocery">🏪 Grocery Shopkeeper</option>
+            <!-- NEW: Expert role added for community answering feature -->
+            <option value="expert">🎓 Agricultural Expert</option>
+            <!-- Admin accounts are created via Firebase Console only — not exposed here -->
+          </select>
+        </div>
 
-  <!--
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input
+            type="text"
+            id="fullname"
+            placeholder="Enter your full name"
+            required
+            pattern="[A-Za-z\s]+"
+            title="Only letters and spaces allowed"
+          />
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+            required
+            pattern="[a-zA-Z0-9._%+-]+@gmail\.com"
+            title="Please use a @gmail.com address"
+          />
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input
+            type="password"
+            id="password"
+            placeholder="Create a strong password"
+            required
+            oninput="checkPasswordStrength()"
+          />
+          <button
+            type="button"
+            class="password-toggle"
+            onclick="togglePassword()"
+          >
+            <i class="fas fa-eye" id="password-eye"></i>
+          </button>
+        </div>
+
+        <!-- Password strength indicator -->
+        <div class="password-strength">
+          <div class="strength-bar" id="strength-bar"></div>
+        </div>
+        <div class="strength-text" id="strength-text"></div>
+
+        <button type="submit" id="register-btn">
+          <span id="register-text">Create Account</span>
+        </button>
+
+        <p>Already have an account? <a href="login.html">Sign In</a></p>
+      </form>
+    </div>
+
+    <!--
     CHANGED: auth.js uses ES module imports (Firebase SDK via CDN).
     type="module" is required. register.js and theme.js stay as normal scripts.
   -->
-  <script src="firebase-config.js"></script>
-  <script type="module" src="auth.js"></script>
-  <script src="register.js"></script>
-  <script src="theme.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      redirectIfLoggedIn();
-    });
-  </script>
-  <!-- ===== Universal Back To Top Button (All Pages) ===== -->
-<style>
-  #globalBackToTop {
-    position: fixed;
-    bottom: 90px; /* prevents overlap with chatbot/floating icons */
-    right: 25px;
-    z-index: 9999;
-    display: none;
-    background: #2ecc71;
-    color: #ffffff;
-    border: none;
-    border-radius: 50%;
-    width: 52px;
-    height: 52px;
-    font-size: 22px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-    transition: opacity 0.3s ease, transform 0.2s ease;
-  }
-
-  #globalBackToTop:hover {
-    transform: scale(1.12);
-    background: #27ae60;
-  }
-
-  @media (max-width: 768px) {
-    #globalBackToTop {
-      bottom: 100px; /* better spacing on mobile */
-      right: 18px;
-      width: 48px;
-      height: 48px;
-      font-size: 20px;
-    }
-  }
-</style>
-
-<button id="globalBackToTop" title="Back to Top">↑</button>
-
-<script>
-  (function () {
-    const btn = document.getElementById("globalBackToTop");
-
-    // Show button after scrolling down
-    window.addEventListener("scroll", function () {
-      if (window.scrollY > 300) {
-        btn.style.display = "block";
-      } else {
-        btn.style.display = "none";
-      }
-    });
-
-    // Smooth scroll to top on click
-    btn.addEventListener("click", function () {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+    <script src="firebase-config.js"></script>
+    <script type="module" src="auth.js"></script>
+    <script src="register.js"></script>
+    <script src="theme.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        redirectIfLoggedIn();
       });
-    });
-  })();
-</script>
-<!-- ===== End Back To Top Button ===== -->
+    </script>
+    <!-- ===== Universal Back To Top Button (All Pages) ===== -->
+    <style>
+      #globalBackToTop {
+        position: fixed;
+        bottom: 90px; /* prevents overlap with chatbot/floating icons */
+        right: 25px;
+        z-index: 9999;
+        display: none;
+        background: #2ecc71;
+        color: #ffffff;
+        border: none;
+        border-radius: 50%;
+        width: 52px;
+        height: 52px;
+        font-size: 22px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+        transition:
+          opacity 0.3s ease,
+          transform 0.2s ease;
+      }
 
-</body>
+      #globalBackToTop:hover {
+        transform: scale(1.12);
+        background: #27ae60;
+      }
+
+      @media (max-width: 768px) {
+        #globalBackToTop {
+          bottom: 100px; /* better spacing on mobile */
+          right: 18px;
+          width: 48px;
+          height: 48px;
+          font-size: 20px;
+        }
+      }
+    </style>
+
+    <button id="globalBackToTop" title="Back to Top">↑</button>
+
+    <script>
+      (function () {
+        const btn = document.getElementById("globalBackToTop");
+
+        // Show button after scrolling down
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 300) {
+            btn.style.display = "block";
+          } else {
+            btn.style.display = "none";
+          }
+        });
+
+        // Smooth scroll to top on click
+        btn.addEventListener("click", function () {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        });
+      })();
+    </script>
+    <!-- ===== End Back To Top Button ===== -->
+  </body>
 </html>

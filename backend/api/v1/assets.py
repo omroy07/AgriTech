@@ -8,12 +8,12 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from marshmallow import ValidationError
 import logging
 
-from services.asset_service import AssetService
-from schemas.asset_schema import (
+from backend.services.asset_service import AssetService
+from backend.schemas.asset_schema import (
     AssetCreateSchema, AssetUpdateSchema, TelemetrySchema,
     MaintenanceLogSchema, AssetQuerySchema
 )
-from services.audit_service import AuditService
+from backend.services.audit_service import AuditService
 
 logger = logging.getLogger(__name__)
 
@@ -349,7 +349,7 @@ def get_asset_details(asset_id):
         500: Server error
     """
     try:
-        from models import FarmAsset
+        from backend.models import FarmAsset
         current_user_id = get_jwt_identity()
         
         asset = FarmAsset.query.filter_by(asset_id=asset_id).first()
@@ -394,7 +394,7 @@ def update_asset(asset_id):
         500: Server error
     """
     try:
-        from models import FarmAsset
+        from backend.models import FarmAsset
         current_user_id = get_jwt_identity()
         data = request.get_json()
         
@@ -415,7 +415,7 @@ def update_asset(asset_id):
             if hasattr(asset, key):
                 setattr(asset, key, value)
         
-        from extensions import db
+        from backend.extensions import db
         db.session.commit()
         
         return jsonify({
@@ -430,7 +430,7 @@ def update_asset(asset_id):
     
     except Exception as e:
         logger.error(f"Error in update_asset: {str(e)}")
-        from extensions import db
+        from backend.extensions import db
         db.session.rollback()
         return jsonify({'success': False, 'message': str(e)}), 500
 
@@ -450,8 +450,8 @@ def delete_asset(asset_id):
         500: Server error
     """
     try:
-        from models import FarmAsset
-        from extensions import db
+        from backend.models import FarmAsset
+        from backend.extensions import db
         current_user_id = get_jwt_identity()
         
         asset = FarmAsset.query.filter_by(asset_id=asset_id).first()
@@ -482,6 +482,6 @@ def delete_asset(asset_id):
         
     except Exception as e:
         logger.error(f"Error in delete_asset: {str(e)}")
-        from extensions import db
+        from backend.extensions import db
         db.session.rollback()
         return jsonify({'success': False, 'message': str(e)}), 500

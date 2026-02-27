@@ -74,13 +74,20 @@ def register():
         phone = data.get('phone', '').strip()
         location = data.get('location', '').strip()
         
-        # Validate email
+        # Validate email domain
         if not validate_email(email):
             return jsonify({
                 'status': 'error',
                 'message': 'Please use a @gmail.com address'
             }), 400
         
+        # Validate full name pattern (letters and spaces only)
+        if not re.match(r'^[A-Za-z\s]+$', full_name):
+            return jsonify({
+                'status': 'error',
+                'message': 'Full Name should only contain letters and spaces'
+            }), 400
+
         # Validate password
         is_valid, message = validate_password(password)
         if not is_valid:

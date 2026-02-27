@@ -24,8 +24,7 @@ from .sustainability import (
     CarbonPractice, CreditLedger, AuditRequest, CarbonLedger,
     EmissionSource, SustainabilityScore, ESGMarketListing
 )
-from .vendor_profile import VendorProfile
-from .procurement import ProcurementItem, BulkOrder, OrderEvent
+from .procurement import VendorProfile, ProcurementItem, BulkOrder, OrderEvent
 from .irrigation import IrrigationZone, SensorLog, ValveStatus, IrrigationSchedule, AquiferLevel, WaterRightsQuota
 from .processing import ProcessingBatch, StageLog, QualityCheck, ProcessingStage, SpectralScanData, DynamicGradeAdjustment
 from .insurance_v2 import CropPolicy, ClaimRequest, PayoutLedger, AdjusterNote, ParametricAutoSettlement
