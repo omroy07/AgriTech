@@ -38,6 +38,9 @@ class AuditLog(db.Model):
     # Carbon Trading Escrow (L3-1642)
     carbon_escrow_flag = db.Column(db.Boolean, default=False)
     
+    # Nutrient Optimization (L3-1645)
+    nutrient_optimization_flag = db.Column(db.Boolean, default=False)
+    
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Meta data for extra context
