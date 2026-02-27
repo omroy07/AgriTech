@@ -1254,3 +1254,34 @@ header,
 .faq-item:hover::before {
   left: 100%;
 }
+
+:root {
+    --bg-secondary: #d4d7d1;
+    --text-muted: #6b7280;
+    --border-color: rgba(34, 139, 34, 0.2);
+}
+
+[data-theme="dark"] {
+    --bg-secondary: #2e3b2e;
+    --text-muted: #a5d6a7;
+    --border-color: rgba(76, 175, 80, 0.3);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}

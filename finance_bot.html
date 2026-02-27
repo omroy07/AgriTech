@@ -19,13 +19,22 @@
   --accent: #22c55e;
   --bg-light: #f4f7fb;
   --bg-dark: #0b1220;
+  --bg-secondary: #e5e7eb;
+  --border-color: #94a3b8;
   --glass-light: rgba(255,255,255,0.85);
   --glass-dark: rgba(17,25,40,0.85);
   --text-light: #1f2937;
   --text-dark: #e5e7eb;
+  --text-muted: #6b7280;
   --muted-light: #6b7280;
   --muted-dark: #9ca3af;
   --shadow: 0 20px 50px rgba(0,0,0,0.15);
+}
+
+[data-theme="dark"] {
+  --bg-secondary: #0b1220;
+  --border-color: #334155;
+  --text-muted: #94a3b8;
 }
 
 body {
@@ -310,6 +319,25 @@ button[type="submit"]:hover { transform: translateY(-2px); box-shadow: 0 10px 30
   color: var(--muted-light);
 }
 [data-theme="dark"] .site-footer { color: var(--muted-dark); }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
 </style>
 </head>
 

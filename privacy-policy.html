@@ -24,6 +24,16 @@
   --muted: #94a3b8;
   --accent: #22c55e;
   --border: #334155;
+
+  --bg-secondary: #e0e4dd;
+  --border-color: #b2cfba;
+  --text-muted: #94a3b8;
+}
+
+[data-theme="dark"] {
+  --bg-secondary: #0d1a34;
+  --border-color: #475569;
+  --text-muted: #94a3b8;
 }
 
 [data-theme="light"] {
@@ -232,6 +242,26 @@ footer {
   margin-top: 40px;
   font-size: 0.9rem;
 }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
 </style>
 </head>
 
