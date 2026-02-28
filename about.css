@@ -217,14 +217,25 @@ section:hover::before {
 }
 
 /* Headings */
-h2 {
-  font-family: 'Poppins', sans-serif;
-  font-size: 2rem;
-  color: var(--primary-green);
-  margin-bottom: 1.5rem;
-  font-weight: 700;
-  position: relative;
-  padding-bottom: 1rem;
+.h2 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: -1px;
+
+  /* Background Image */
+  background-image: url("assets/bg.png"); /* put your image path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Make text transparent & show bg inside */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  /* Smooth moving animation */
+  animation: moveBg 15s linear infinite;
 }
 
 h2::after {
