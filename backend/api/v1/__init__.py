@@ -50,6 +50,8 @@ from .arbitrage import arbitrage_bp
 from .spatial_yield import spatial_yield_bp
 from .carbon import carbon_bp
 from .logistics import smart_freight_bp
+from .carbon_v2 import carbon_v2_bp
+from .crop_advisory import advisory_bp
 from .irrigation_v2 import irrigation_v2_bp
 
 # Create v1 API blueprint
@@ -109,6 +111,7 @@ api_v1.register_blueprint(spatial_yield_bp, url_prefix="/spatial-yield")
 api_v1.register_blueprint(carbon_bp, url_prefix="/carbon")
 api_v1.register_blueprint(carbon_v2_bp, url_prefix="/carbon-v2")
 api_v1.register_blueprint(gov_schemes_bp, url_prefix="/government-schemes")
+api_v1.register_blueprint(advisory_bp, url_prefix="/crop-advisory")
 api_v1.register_blueprint(gews_bp, url_prefix='/gews')
 api_v1.register_blueprint(transparency_bp, url_prefix='/transparency')
 api_v1.register_blueprint(barter_bp, url_prefix='/barter')
