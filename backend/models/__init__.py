@@ -19,7 +19,6 @@ from .weather import (
     WeatherData, CropAdvisory, AdvisorySubscription, RiskTrigger,
     ClimateTelemetryEvent, ForceMajeureAlert, ParametricPolicyTrigger
 )
-from .weather import WeatherData, CropAdvisory, AdvisorySubscription, RiskTrigger
 from .sustainability import (
     CarbonPractice, CreditLedger, AuditRequest, CarbonLedger,
     EmissionSource, SustainabilityScore, ESGMarketListing
@@ -28,15 +27,12 @@ from .procurement import VendorProfile, ProcurementItem, BulkOrder, OrderEvent
 from .irrigation import IrrigationZone, SensorLog, ValveStatus, IrrigationSchedule, AquiferLevel, WaterRightsQuota
 from .processing import ProcessingBatch, StageLog, QualityCheck, ProcessingStage, SpectralScanData, DynamicGradeAdjustment
 from .insurance_v2 import CropPolicy, ClaimRequest, PayoutLedger, AdjusterNote, ParametricAutoSettlement
-from .insurance_v2 import CropPolicy, ClaimRequest, PayoutLedger, AdjusterNote
 from .machinery import EngineHourLog, MaintenanceCycle, DamageReport, RepairOrder, AssetValueSnapshot, ComponentWearMap, MaintenanceEscrow
 from .soil_health import SoilTest, FertilizerRecommendation, ApplicationLog, RegenerativeFarmingLog, CarbonMintEvent
 from .loan_v2 import RepaymentSchedule, PaymentHistory, DefaultRiskScore, CollectionNote
 from .warehouse import WarehouseLocation, StockItem, StockMovement, ReconciliationLog
 from .climate import ClimateZone, SensorNode, TelemetryLog, AutomationTrigger
 from .labor import WorkerProfile, WorkShift, HarvestLog, PayrollEntry, LaborROIHistory
-from .logistics_v2 import DriverProfile, DeliveryVehicle, TransportRoute, FuelLog
-from .labor import WorkerProfile, WorkShift, HarvestLog, PayrollEntry
 from .logistics_v2 import (
     DriverProfile, DeliveryVehicle, TransportRoute, FuelLog,
     PhytoSanitaryCertificate, FreightEscrow, CustomsCheckpoint, GPSTelemetry
@@ -70,7 +66,6 @@ __all__ = [
     # Insurance
     'InsurancePolicy', 'LegacyClaim', 'RiskScoreHistory', 'DynamicPremiumLog', 'RiskFactorSnapshot',
     'CropPolicy', 'ClaimRequest', 'PayoutLedger', 'AdjusterNote', 'ParametricAutoSettlement',
-    'CropPolicy', 'ClaimRequest', 'PayoutLedger', 'AdjusterNote',
     # Community
     'ForumCategory', 'ForumThread', 'PostComment', 'Upvote', 'UserReputation',
     'Question', 'Answer', 'KnowledgeVote', 'Badge', 'UserBadge', 'UserExpertise',
@@ -115,11 +110,6 @@ __all__ = [
     'DriverProfile', 'DeliveryVehicle', 'TransportRoute', 'FuelLog',
     'PhytoSanitaryCertificate', 'FreightEscrow', 'CustomsCheckpoint', 'GPSTelemetry',
     # Transparency & Barter
-    # Transparency & Barter
-    'PhytoSanitaryCertificate', 'FreightEscrow', 'CustomsCheckpoint', 'GPSTelemetry',
-    'Alert', 'AlertPreference',
-    'AuditLog', 'UserSession',
-    'MediaPayload',
     'ProduceReview', 'PriceAdjustmentLog',
     'BarterTransaction', 'BarterResource', 'ResourceValueIndex',
     # Reliability & Market
