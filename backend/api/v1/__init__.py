@@ -11,6 +11,7 @@ from .contributions import contributions_bp
 from .market import market_bp
 from .risk import risk_bp
 from .schemes import schemes_bp
+from .government_schemes import gov_schemes_bp
 from .weather import weather_bp
 from .traceability import traceability_bp
 from .disease import disease_bp
@@ -109,6 +110,7 @@ api_v1.register_blueprint(arbitrage_bp, url_prefix="/arbitrage")
 api_v1.register_blueprint(spatial_yield_bp, url_prefix="/spatial-yield")
 api_v1.register_blueprint(carbon_bp, url_prefix="/carbon")
 api_v1.register_blueprint(carbon_v2_bp, url_prefix="/carbon-v2")
+api_v1.register_blueprint(gov_schemes_bp, url_prefix="/government-schemes")
 api_v1.register_blueprint(advisory_bp, url_prefix="/crop-advisory")
 api_v1.register_blueprint(gews_bp, url_prefix='/gews')
 api_v1.register_blueprint(transparency_bp, url_prefix='/transparency')
