@@ -117,6 +117,8 @@ from .market import ForwardContract, PriceHedgingLog
 from .arbitrage import ArbitrageOpportunity, AlgorithmicTradeRecord
 from .spatial_yield import SpatialYieldGrid, TemporalYieldForex
 from .circular import WasteInventory, BioEnergyOutput, CircularCredit
+from .carbon_escrow import CarbonTradeEscrow, EscrowAuditLog, CarbonCreditWallet
+from .fertigation_v2 import FieldMicronutrients, NutrientInjectionLog
 from .precision_irrigation import WaterStressIndex, IrrigationValveAutomation, AquiferMonitoring
 from .disease import MigrationVector, ContainmentZone
 from .ledger import (
@@ -311,6 +313,9 @@ __all__ = [
     "BioEnergyOutput",
     "CircularCredit",
     # Carbon Trading Escrow (L3-1642)
+    'CarbonTradeEscrow', 'EscrowAuditLog', 'CarbonCreditWallet',
+    # Nutrient Optimization (L3-1645)
+    'FieldMicronutrients', 'NutrientInjectionLog',
     "CarbonTradeEscrow",
     "EscrowAuditLog",
     "CarbonCreditWallet",

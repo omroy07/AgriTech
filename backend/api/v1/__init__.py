@@ -51,6 +51,7 @@ from .spatial_yield import spatial_yield_bp
 from .carbon import carbon_bp
 from .logistics import smart_freight_bp
 from .carbon_v2 import carbon_v2_bp
+from .nutrient_api import nutrient_api_bp
 from .ai_disease import ai_disease_bp
 from .government_scheme import gov_scheme_bp
 from .soil_analytics import soil_analytics_bp
@@ -129,4 +130,6 @@ api_v1.register_blueprint(vaults_bp, url_prefix='/vaults')
 api_v1.register_blueprint(arbitrage_bp, url_prefix='/arbitrage')
 api_v1.register_blueprint(spatial_yield_bp, url_prefix='/spatial-yield')
 api_v1.register_blueprint(carbon_bp, url_prefix='/carbon')
+api_v1.register_blueprint(carbon_v2_bp, url_prefix='/carbon-v2')
+api_v1.register_blueprint(nutrient_api_bp, url_prefix='/nutrient-optimization')
 api_v1.register_blueprint(irrigation_v2_bp, url_prefix='/irrigation-v2')
