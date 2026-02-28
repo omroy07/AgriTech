@@ -114,7 +114,7 @@ from .market import ForwardContract, PriceHedgingLog
 from .arbitrage import ArbitrageOpportunity, AlgorithmicTradeRecord
 from .spatial_yield import SpatialYieldGrid, TemporalYieldForex
 from .circular import WasteInventory, BioEnergyOutput, CircularCredit
-from .carbon_escrow import CarbonTradeEscrow, EscrowAuditLog, CarbonCreditWallet
+from .precision_irrigation import WaterStressIndex, IrrigationValveAutomation, AquiferMonitoring
 from .disease import MigrationVector, ContainmentZone
 from .ledger import (
     LedgerAccount,
@@ -307,6 +307,9 @@ __all__ = [
     "CarbonTradeEscrow",
     "EscrowAuditLog",
     "CarbonCreditWallet",
+    'WasteInventory', 'BioEnergyOutput', 'CircularCredit',
+    # Precision Irrigation (L3-1640)
+    'WaterStressIndex', 'IrrigationValveAutomation', 'AquiferMonitoring',
     # Double-Entry Ledger
     "LedgerAccount",
     "LedgerTransaction",
