@@ -52,6 +52,8 @@ from .carbon import carbon_bp
 from .logistics import smart_freight_bp
 from .carbon_v2 import carbon_v2_bp
 from .ai_disease import ai_disease_bp
+from .government_scheme import gov_scheme_bp
+from .soil_analytics import soil_analytics_bp
 from .crop_advisory import advisory_bp
 from .irrigation_v2 import irrigation_v2_bp
 
@@ -112,6 +114,8 @@ api_v1.register_blueprint(spatial_yield_bp, url_prefix="/spatial-yield")
 api_v1.register_blueprint(carbon_bp, url_prefix="/carbon")
 api_v1.register_blueprint(carbon_v2_bp, url_prefix="/carbon-v2")
 api_v1.register_blueprint(ai_disease_bp, url_prefix="/ai-disease")
+api_v1.register_blueprint(gov_scheme_bp, url_prefix="/government-schemes")
+api_v1.register_blueprint(soil_analytics_bp, url_prefix="/soil-analytics")
 api_v1.register_blueprint(gov_schemes_bp, url_prefix="/government-schemes")
 api_v1.register_blueprint(advisory_bp, url_prefix="/crop-advisory")
 api_v1.register_blueprint(gews_bp, url_prefix='/gews')
