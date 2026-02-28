@@ -129,6 +129,7 @@ from .ledger import (
     TransactionType,
 )
 from .iot_sensor import IoTSensor, SensorReading, SensorAlert
+from .government_schemes import GovernmentScheme, SchemeApplication, SchemeReminder
 
 __all__ = [
     # Core
@@ -321,8 +322,8 @@ __all__ = [
     "AccountType",
     "EntryType",
     "TransactionType",
-    # IoT Sensors
-    "IoTSensor",
-    "SensorReading",
-    "SensorAlert",
+    # Government Schemes
+    "GovernmentScheme",
+    "SchemeApplication",
+    "SchemeReminder",
 ]
