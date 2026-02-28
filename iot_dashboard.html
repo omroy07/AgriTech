@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Sensor Dashboard | AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #10b981;
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            margin: 0;
+        }
+
+        .app-shell {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: var(--primary);
+            color: white;
+            padding: 2rem;
+        }
+
+        .nav-link {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .main-content {
+            padding: 3rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card h3 {
+            color: #64748b;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .sensors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .sensor-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: 0.3s;
+        }
+
+        .sensor-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px -5px rgb(0 0 0 / 0.1);
+        }
+
+        .sensor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .sensor-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-inactive {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .reading-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .reading-item {
+            background: var(--bg);
+            padding: 0.75rem;
+            border-radius: 8px;
+        }
+
+        .reading-item .label {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .reading-item .value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .alert-item {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            border-left: 4px solid;
+        }
+
+        .alert-high {
+            background: #fef2f2;
+            border-color: var(--danger);
+        }
+
+        .alert-medium {
+            background: #fffbeb;
+            border-color: var(--warning);
+        }
+
+        .alert-info {
+            background: #eff6ff;
+            border-color: var(--info);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #059669;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+
+        .history-chart {
+            height: 300px;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-shell">
+        <div class="sidebar">
+            <h2 style="margin-bottom: 2rem;"><i class="fas fa-seedling"></i> AgriTech</h2>
+            <nav>
+                <div class="nav-link" onclick="window.location.href='index.html'">
+                    <i class="fas fa-home"></i> Dashboard
+                </div>
+                <div class="nav-link" onclick="window.location.href='iot_dashboard.html'">
+                    <i class="fas fa-microchip"></i> IoT Sensors
+                </div>
+                <div class="nav-link" onclick="window.location.href='weather.html'">
+                    <i class="fas fa-cloud-sun"></i> Weather
+                </div>
+                <div class="nav-link" onclick="window.location.href='soil_portal.html'">
+                    <i class="fas fa-mountain"></i> Soil Health
+                </div>
+                <div class="nav-link" onclick="window.location.href='marketplace.html'">
+                    <i class="fas fa-store"></i> Marketplace
+                </div>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <div class="header">
+                <h1>IoT Sensor Dashboard</h1>
+                <button class="btn btn-primary" onclick="openAddSensorModal()">
+                    <i class="fas fa-plus"></i> Add Sensor
+                </button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Active Sensors</h3>
+                    <div class="value" id="activeSensors">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Readings</h3>
+                    <div class="value" id="totalReadings">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Alerts</h3>
+                    <div class="value" id="activeAlerts">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Avg Soil Moisture</h3>
+                    <div class="value" id="avgMoisture">0%</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Active Alerts</h2>
+                <div id="alertsContainer"></div>
+            </div>
+
+            <div class="card">
+                <h2>Your Sensors</h2>
+                <div class="sensors-grid" id="sensorsContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="addSensorModal">
+        <div class="modal-content">
+            <h2>Add New Sensor</h2>
+            <form onsubmit="addSensor(event)">
+                <div class="form-group">
+                    <label>Sensor ID</label>
+                    <input type="text" id="sensorId" required>
+                </div>
+                <div class="form-group">
+                    <label>Farm</label>
+                    <select id="farmId" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Sensor Type</label>
+                    <select id="sensorType" required>
+                        <option value="soil_moisture">Soil Moisture</option>
+                        <option value="weather">Weather Station</option>
+                        <option value="ph_sensor">pH Sensor</option>
+                        <option value="nutrient">Nutrient Sensor</option>
+                        <option value="multi">Multi-Sensor</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="sensorLocation" required>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <button type="submit" class="btn btn-primary">Add Sensor</button>
+                    <button type="button" class="btn" onclick="closeAddSensorModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="iot_dashboard.js"></script>
+</body>
+</html>

@@ -128,6 +128,7 @@ from .ledger import (
     EntryType,
     TransactionType,
 )
+from .iot_sensor import IoTSensor, SensorReading, SensorAlert
 from .government_schemes import GovernmentScheme, SchemeApplication, SchemeReminder
 
 __all__ = [
