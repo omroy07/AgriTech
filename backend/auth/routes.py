@@ -12,8 +12,8 @@ auth_bp = Blueprint('auth', __name__, url_prefix='/api/auth')
 
 
 def validate_email(email):
-    """Validate email format."""
-    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    """Validate email format and restrict to @gmail.com."""
+    pattern = r'^[a-zA-Z0-9._%+-]+@gmail\.com$'
     return re.match(pattern, email) is not None
 
 
@@ -74,13 +74,20 @@ def register():
         phone = data.get('phone', '').strip()
         location = data.get('location', '').strip()
         
-        # Validate email
+        # Validate email domain
         if not validate_email(email):
             return jsonify({
                 'status': 'error',
-                'message': 'Invalid email format'
+                'message': 'Please use a @gmail.com address'
             }), 400
         
+        # Validate full name pattern (letters and spaces only)
+        if not re.match(r'^[A-Za-z\s]+$', full_name):
+            return jsonify({
+                'status': 'error',
+                'message': 'Full Name should only contain letters and spaces'
+            }), 400
+
         # Validate password
         is_valid, message = validate_password(password)
         if not is_valid:
@@ -127,6 +134,12 @@ def register():
             'user': new_user.to_dict()
         }), 201
         
+    except ValueError as e:
+        db.session.rollback()
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 400
     except Exception as e:
         db.session.rollback()
         return jsonify({
