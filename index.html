@@ -120,9 +120,7 @@
       z-index: -1;
     }
 
-    .serif {
-      font-family: "Libertinus Serif", serif;
-    }
+
 
     /* 3. NAVBAR STYLES */
     .navbar {
@@ -532,11 +530,33 @@
     }
 
     .hero-content h2 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      color: var(--accent-color);
-    }
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: -1px;
 
+  /* Background Image inside text */
+  background-image: url("assets/bg.png"); /* apna image path daalo */
+  background-size: 200% auto;
+  background-position: 0% center;
+  background-repeat: no-repeat;
+
+  /* Transparent text */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  /* Smooth moving animation */
+  animation: moveBg 12s linear infinite;
+}
+@keyframes moveBg {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
     .hero-content p {
       font-size: 1.1rem;
       line-height: 1.8;
@@ -630,11 +650,34 @@
       font-size: 1.3rem;
     }
 
-    .tagline {
-      margin: 0.8rem 0 1.2rem;
-      line-height: 1.6;
-      color: var(--text-muted);
-    }
+   .serif{
+  font-size: 3.5rem;
+  font-weight: 700;
+  font-family: "Noto Sans", sans-serif;
+  margin-bottom: 1rem;
+
+  background-image: url("assets/bg.png");
+  background-size: 200% auto;
+  background-position: 0% 50;
+  background-repeat: no-repeat;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  animation: animate 20s linear infinite;
+}
+@keyframes animate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 
     .social-icons {
       display: flex;
