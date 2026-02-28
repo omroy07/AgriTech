@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grocery Shopkeeper Hub - AgriTech</title>
+    <link rel="icon" type="image/png" href="/AgriTech/images/logo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="farmer.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <style>
+      .hero-section {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        color: white;
+        padding: 60px 20px;
+        text-align: center;
+      }
+
+      .hero-section h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        font-weight: 700;
+      }
+
+      .hero-section p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        opacity: 0.95;
+      }
+
+      .marketplace-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        padding: 50px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .marketplace-card {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .marketplace-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .marketplace-card i {
+        font-size: 3rem;
+        color: #f59e0b;
+        margin-bottom: 20px;
+      }
+
+      .marketplace-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .marketplace-card p {
+        color: #666;
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+      }
+
+      .btn-primary:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="nav-brand">
+          <img src="images/logo.png" alt="AgriTech Logo" class="nav-logo" />
+          <span class="brand-name">AgriTech</span>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="main.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="marketplace.html" class="nav-link">Marketplace</a></li>
+        </ul>
+        <div class="nav-actions">
+          <span
+            id="nav-user-name"
+            style="
+              font-size: 0.9rem;
+              color: #f59e0b;
+              font-weight: 600;
+              display: none;
+              margin-right: 0.5rem;
+            "
+          ></span>
+          <button
+            id="nav-logout-btn"
+            style="
+              display: none;
+              background: none;
+              border: 1.5px solid #ef5350;
+              color: #ef5350;
+              padding: 0.3rem 0.85rem;
+              border-radius: 8px;
+              cursor: pointer;
+              font-size: 0.85rem;
+              font-weight: 600;
+            "
+          >
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero-section">
+        <h1>Welcome to AgriTech Grocery Shopkeeper Hub</h1>
+        <p>
+          Manage your inventory and connect with farmers for wholesale supplies
+        </p>
+      </section>
+
+      <section class="marketplace-grid">
+        <div class="marketplace-card">
+          <i class="fas fa-store"></i>
+          <h3>My Inventory</h3>
+          <p>Manage your grocery store inventory and stock levels</p>
+          <a href="#" class="btn-primary">View Inventory</a>
+        </div>
+
+        <div class="marketplace-card">
+          <i class="fas fa-handshake"></i>
+          <h3>Connect with Farmers</h3>
+          <p>Source premium products directly from verified farmers</p>
+          <a href="#" class="btn-primary">View Suppliers</a>
+        </div>
+
+        <div class="marketplace-card">
+          <i class="fas fa-chart-bar"></i>
+          <h3>Sales Analytics</h3>
+          <p>Track sales trends and optimize your offerings</p>
+          <a href="#" class="btn-primary">View Reports</a>
+        </div>
+
+        <div class="marketplace-card">
+          <i class="fas fa-truck"></i>
+          <h3>Order Management</h3>
+          <p>Place bulk orders and manage deliveries efficiently</p>
+          <a href="#" class="btn-primary">Place Order</a>
+        </div>
+
+        <div class="marketplace-card">
+          <i class="fas fa-certificate"></i>
+          <h3>Quality Standards</h3>
+          <p>Ensure compliance with agricultural quality standards</p>
+          <a href="#" class="btn-primary">Learn More</a>
+        </div>
+
+        <div class="marketplace-card">
+          <i class="fas fa-headset"></i>
+          <h3>Support</h3>
+          <p>Get help from our dedicated support team</p>
+          <a href="contact.html" class="btn-primary">Contact Us</a>
+        </div>
+      </section>
+    </main>
+
+    <footer
+      style="background: #333; color: white; text-align: center; padding: 20px"
+    >
+      <p>&copy; 2026 AgriTech. All rights reserved.</p>
+    </footer>
+
+    <script src="firebase-config.js"></script>
+    <script type="module" src="auth.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (!requireAuth()) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        const user = window.authManager.getCurrentUser();
+        if (user && user.role === "grocery") {
+          document.getElementById("nav-user-name").textContent =
+            `${user.fullname}`;
+          document.getElementById("nav-user-name").style.display = "inline";
+          document.getElementById("nav-logout-btn").style.display =
+            "inline-block";
+
+          document.getElementById("nav-logout-btn").onclick = (e) => {
+            e.preventDefault();
+            window.authManager.logout();
+          };
+        }
+      });
+    </script>
+  </body>
+</html>

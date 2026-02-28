@@ -3,13 +3,13 @@
 
 function togglePassword() {
   const passwordInput = document.getElementById("password");
-  const eyeIcon       = document.getElementById("password-eye");
+  const eyeIcon = document.getElementById("password-eye");
   if (passwordInput.type === "password") {
     passwordInput.type = "text";
-    eyeIcon.className  = "fas fa-eye-slash";
+    eyeIcon.className = "fas fa-eye-slash";
   } else {
     passwordInput.type = "password";
-    eyeIcon.className  = "fas fa-eye";
+    eyeIcon.className = "fas fa-eye";
   }
 }
 
@@ -23,22 +23,22 @@ function handleBack() {
 
 function updateRoleIcon() {
   const roleSelect = document.getElementById("role");
-  const roleIcon   = document.getElementById("role-icon");
-  const value      = roleSelect.value;
+  const roleIcon = document.getElementById("role-icon");
+  const value = roleSelect.value;
 
   const iconMap = {
-    buyer:     "fas fa-shopping-cart role-buyer",
-    farmer:    "fas fa-tractor role-farmer",
+    buyer: "fas fa-shopping-cart role-buyer",
+    farmer: "fas fa-tractor role-farmer",
     equipment: "fas fa-tools role-equipment",
-    grocery:   "fas fa-store role-grocery",
-    expert:    "fas fa-user-graduate role-expert",
+    grocery: "fas fa-store role-grocery",
+    expert: "fas fa-user-graduate role-expert",
   };
   roleIcon.className = iconMap[value] || "fas fa-user-tag";
 }
 
 function checkPasswordStrength() {
-  const password     = document.getElementById("password").value;
-  const strengthBar  = document.getElementById("strength-bar");
+  const password = document.getElementById("password").value;
+  const strengthBar = document.getElementById("strength-bar");
   const strengthText = document.getElementById("strength-text");
 
   // Empty field — reset completely
@@ -50,10 +50,10 @@ function checkPasswordStrength() {
   }
 
   let strength = 0;
-  if (password.length >= 8)       strength += 25;
-  if (/[a-z]/.test(password))     strength += 25;
-  if (/[A-Z]/.test(password))     strength += 25;
-  if (/[\d\W]/.test(password))    strength += 25;
+  if (password.length >= 8) strength += 25;
+  if (/[a-z]/.test(password)) strength += 25;
+  if (/[A-Z]/.test(password)) strength += 25;
+  if (/[\d\W]/.test(password)) strength += 25;
 
   strengthBar.className = "strength-bar";
 
@@ -82,7 +82,7 @@ function updateProgress() {
   const fields = ["role", "fullname", "email", "password"];
   fields.forEach((fieldId, index) => {
     const field = document.getElementById(fieldId);
-    const step  = document.getElementById(`step-${index + 1}`);
+    const step = document.getElementById(`step-${index + 1}`);
     if (field && field.value.trim() !== "") {
       step.classList.add("completed");
     } else if (step) {
@@ -90,7 +90,7 @@ function updateProgress() {
     }
   });
 
-  const password  = document.getElementById("password").value;
+  const password = document.getElementById("password").value;
   const finalStep = document.getElementById("step-5");
   if (finalStep) {
     if (
@@ -110,21 +110,21 @@ function updateProgress() {
 async function handleRegister(event) {
   event.preventDefault();
 
-  const registerBtn  = document.getElementById("register-btn");
+  const registerBtn = document.getElementById("register-btn");
   const registerText = document.getElementById("register-text");
-  const inputs       = document.querySelectorAll("input, select");
+  const inputs = document.querySelectorAll("input, select");
 
   registerBtn.classList.add("loading");
   registerText.textContent = "Creating Account...";
-  registerBtn.disabled     = true;
+  registerBtn.disabled = true;
 
   inputs.forEach((input) => input.classList.remove("error", "success"));
 
   const formData = {
-    role:      document.getElementById("role").value,
-    fullname:  document.getElementById("fullname").value.trim(),
-    email:     document.getElementById("email").value.trim(),
-    password:  document.getElementById("password").value,
+    role: document.getElementById("role").value,
+    fullname: document.getElementById("fullname").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    password: document.getElementById("password").value,
   };
 
   const result = await window.authManager.register(formData);
@@ -141,21 +141,22 @@ async function handleRegister(event) {
     showAuthMessage(result.message, "error");
 
     const msg = result.message.toLowerCase();
-    if (msg.includes("email"))    document.getElementById("email").classList.add("error");
+    if (msg.includes("email") || msg.includes("gmail")) document.getElementById("email").classList.add("error");
+    if (msg.includes("fullname") || msg.includes("full name")) document.getElementById("fullname").classList.add("error");
     if (msg.includes("password")) document.getElementById("password").classList.add("error");
 
     registerBtn.classList.remove("loading");
     registerText.textContent = "Create Account";
-    registerBtn.disabled     = false;
+    registerBtn.disabled = false;
   }
 }
 
 // Input listeners
 document.querySelectorAll("input, select").forEach((input) => {
-  input.addEventListener("input",  updateProgress);
+  input.addEventListener("input", updateProgress);
   input.addEventListener("change", updateProgress);
-  input.addEventListener("focus",  function () { this.parentElement.style.transform = "translateY(-2px)"; });
-  input.addEventListener("blur",   function () { this.parentElement.style.transform = "translateY(0)"; });
+  input.addEventListener("focus", function () { this.parentElement.style.transform = "translateY(-2px)"; });
+  input.addEventListener("blur", function () { this.parentElement.style.transform = "translateY(0)"; });
 });
 
 document.addEventListener("keydown", function (e) {
@@ -166,7 +167,7 @@ document.addEventListener("keydown", function (e) {
       document.activeElement.tagName === "SELECT"
     ) {
       const inputs = Array.from(form.querySelectorAll("input, select"));
-      const idx    = inputs.indexOf(document.activeElement);
+      const idx = inputs.indexOf(document.activeElement);
       if (idx < inputs.length - 1) {
         inputs[idx + 1].focus();
       } else {

@@ -38,7 +38,6 @@ from .weather import (
     ForceMajeureAlert,
     ParametricPolicyTrigger,
 )
-from .weather import WeatherData, CropAdvisory, AdvisorySubscription, RiskTrigger
 from .sustainability import (
     CarbonPractice,
     CreditLedger,
@@ -48,6 +47,12 @@ from .sustainability import (
     SustainabilityScore,
     ESGMarketListing,
 )
+from .procurement import VendorProfile, ProcurementItem, BulkOrder, OrderEvent
+from .irrigation import IrrigationZone, SensorLog, ValveStatus, IrrigationSchedule, AquiferLevel, WaterRightsQuota
+from .processing import ProcessingBatch, StageLog, QualityCheck, ProcessingStage, SpectralScanData, DynamicGradeAdjustment
+from .insurance_v2 import CropPolicy, ClaimRequest, PayoutLedger, AdjusterNote, ParametricAutoSettlement
+from .machinery import EngineHourLog, MaintenanceCycle, DamageReport, RepairOrder, AssetValueSnapshot, ComponentWearMap, MaintenanceEscrow
+from .soil_health import SoilTest, FertilizerRecommendation, ApplicationLog, RegenerativeFarmingLog, CarbonMintEvent
 from .vendor_profile import VendorProfile
 from .procurement import ProcurementItem, BulkOrder, OrderEvent
 from .irrigation import (
@@ -94,8 +99,6 @@ from .loan_v2 import RepaymentSchedule, PaymentHistory, DefaultRiskScore, Collec
 from .warehouse import WarehouseLocation, StockItem, StockMovement, ReconciliationLog
 from .climate import ClimateZone, SensorNode, TelemetryLog, AutomationTrigger
 from .labor import WorkerProfile, WorkShift, HarvestLog, PayrollEntry, LaborROIHistory
-from .logistics_v2 import DriverProfile, DeliveryVehicle, TransportRoute, FuelLog
-from .labor import WorkerProfile, WorkShift, HarvestLog, PayrollEntry
 from .logistics_v2 import (
     DriverProfile,
     DeliveryVehicle,
@@ -154,6 +157,8 @@ __all__ = [
     "QualityGrade",
     "BatchStatus",
     # Insurance
+    'InsurancePolicy', 'LegacyClaim', 'RiskScoreHistory', 'DynamicPremiumLog', 'RiskFactorSnapshot',
+    'CropPolicy', 'ClaimRequest', 'PayoutLedger', 'AdjusterNote', 'ParametricAutoSettlement',
     "InsurancePolicy",
     "LegacyClaim",
     "RiskScoreHistory",
@@ -280,6 +285,8 @@ __all__ = [
     "CustomsCheckpoint",
     "GPSTelemetry",
     # Transparency & Barter
+    'ProduceReview', 'PriceAdjustmentLog',
+    'BarterTransaction', 'BarterResource', 'ResourceValueIndex',
     # Transparency & Barter
     "PhytoSanitaryCertificate",
     "FreightEscrow",

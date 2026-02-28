@@ -79,7 +79,10 @@ class AuthManager {
       return { success: false, message: "All fields are required" };
 
     if (!this._validateEmail(email))
-      return { success: false, message: "Please enter a valid email address" };
+      return { success: false, message: "Please use a @gmail.com address" };
+
+    if (!/^[a-zA-Z\s]+$/.test(fullname))
+      return { success: false, message: "Full Name should only contain letters and spaces" };
 
     const pwCheck = this._validatePassword(password);
     if (!pwCheck.valid) return { success: false, message: pwCheck.message };
@@ -233,7 +236,7 @@ class AuthManager {
   }
 
   _validateEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    return /^[^\s@]+@gmail\.com$/.test(email);
   }
 
   _validatePassword(password) {
