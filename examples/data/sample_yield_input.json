@@ -1,0 +1,100 @@
+{
+  "description": "Sample input for Crop Yield Prediction API",
+  "single_prediction": {
+    "crop": "Wheat",
+    "crop_year": 2024,
+    "season": "Rabi",
+    "state": "Gujarat",
+    "area": 1500.0,
+    "annual_rainfall": 750.5,
+    "fertilizer": 200.0,
+    "pesticide": 15.0
+  },
+  "batch_predictions": [
+    {
+      "id": 1,
+      "crop": "Wheat",
+      "crop_year": 2024,
+      "season": "Rabi",
+      "state": "Gujarat",
+      "area": 1500.0,
+      "annual_rainfall": 750.5,
+      "fertilizer": 200.0,
+      "pesticide": 15.0,
+      "expected_yield_tons": 4.2
+    },
+    {
+      "id": 2,
+      "crop": "Rice",
+      "crop_year": 2024,
+      "season": "Kharif",
+      "state": "West Bengal",
+      "area": 2500.0,
+      "annual_rainfall": 1600.0,
+      "fertilizer": 350.0,
+      "pesticide": 22.5,
+      "expected_yield_tons": 5.8
+    },
+    {
+      "id": 3,
+      "crop": "Maize",
+      "crop_year": 2023,
+      "season": "Kharif",
+      "state": "Karnataka",
+      "area": 800.0,
+      "annual_rainfall": 900.0,
+      "fertilizer": 180.0,
+      "pesticide": 10.0,
+      "expected_yield_tons": 3.1
+    },
+    {
+      "id": 4,
+      "crop": "Cotton",
+      "crop_year": 2024,
+      "season": "Kharif",
+      "state": "Maharashtra",
+      "area": 3200.0,
+      "annual_rainfall": 650.0,
+      "fertilizer": 275.0,
+      "pesticide": 30.0,
+      "expected_yield_tons": 2.4
+    },
+    {
+      "id": 5,
+      "crop": "Sugarcane",
+      "crop_year": 2024,
+      "season": "Whole Year",
+      "state": "Uttar Pradesh",
+      "area": 4000.0,
+      "annual_rainfall": 1100.0,
+      "fertilizer": 500.0,
+      "pesticide": 45.0,
+      "expected_yield_tons": 70.5
+    }
+  ],
+  "field_descriptions": {
+    "crop": "Name of the crop",
+    "crop_year": "Year of cultivation",
+    "season": "Kharif | Rabi | Zaid | Whole Year | Autumn | Summer | Winter",
+    "state": "Indian state where crop is grown",
+    "area": "Area under cultivation in hectares",
+    "annual_rainfall": "Annual rainfall in mm",
+    "fertilizer": "Total fertilizer used in kg/ha",
+    "pesticide": "Total pesticide used in kg/ha"
+  },
+  "valid_seasons": ["Kharif", "Rabi", "Zaid", "Whole Year", "Autumn", "Summer", "Winter"],
+  "valid_crops": [
+    "Arecanut", "Arhar/Tur", "Bajra", "Banana", "Barley",
+    "Black pepper", "Cardamom", "Cashewnut", "Castor seed",
+    "Coconut", "Colocasia", "Coriander", "Cotton(lint)",
+    "Cowpea(Lobia)", "Dry chillies", "Garlic", "Ginger",
+    "Gram", "Groundnut", "Guar seed", "Horse-gram", "Jowar",
+    "Jute", "Khesari", "Linseed", "Maize", "Masoor", "Mesta",
+    "Moong(Green Gram)", "Moth", "Niger seed", "Oilseeds total",
+    "Onion", "Other  Rabi pulses", "Peas & beans (Pulses)",
+    "Potato", "Ragi", "Rapeseed &Mustard", "Rice", "Rubber",
+    "Safflower", "Sannhamp", "Sesamum", "Small millets",
+    "Soyabean", "Sugarcane", "Sunflower", "Sweet potato",
+    "Tapioca", "Tobacco", "Turmeric", "Urad", "Wheat"
+  ]
+}
