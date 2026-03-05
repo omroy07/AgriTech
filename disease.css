@@ -6,10 +6,13 @@
   --bg-page: #f5f7fa;
   --bg-white: #ffffff;
   --bg-light: #f8fff8;
+  --bg-secondary: #f8fafc;
   --text-dark: #1e2f1e;
   --text-gray: #555;
+  --text-primary: #1e293b;
   --border: #e0e0e0;
   --border-soft: #e8f5e8;
+  --border-color: #e2e8f0;
   --shadow: 0 2px 8px rgba(0,0,0,0.08);
   --shadow-hover: 0 4px 16px rgba(0,0,0,0.12);
 }
@@ -21,10 +24,13 @@
   --bg-page: #0d1b2a;
   --bg-white: #1b263b;
   --bg-light: #243447;
+  --bg-secondary: #0b1220;
   --text-dark: #e0e1dd;
   --text-gray: #a8b0bd;
+  --text-primary: #e5e7eb;
   --border: #2d3e50;
   --border-soft: #2d3e50;
+  --border-color: #334155;
   --shadow: 0 2px 8px rgba(0,0,0,0.3);
   --shadow-hover: 0 4px 16px rgba(0,0,0,0.5);
 }
@@ -128,26 +134,88 @@ body {
   width: 100%;
 }
 
+/* Animated Theme Toggle  */
 .theme-toggle {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 20px;
-  background: linear-gradient(135deg, var(--color-brand), var(--color-accent));
-  color: white;
-  border: none;
-  border-radius: 50px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color, #d1d5db);
   cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  color: var(--text-primary, #111827);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  flex-shrink: 0;
+  align-self: center;
+  box-shadow: none !important;
 }
 
 .theme-toggle:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+  background-color: var(--bg-secondary, #f3f4f6);
+  border-color: var(--primary-green, #16a34a);
+}
+
+.theme-icon {
+  width: 22px;
+  height: 22px;
+  overflow: visible;
+  transition: transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  display: block;
+}
+
+.sun-core {
+  transform-origin: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sun-rays {
+  transform-origin: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+}
+
+.moon-bite {
+  transform-origin: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light mode → Sun */
+[data-theme="light"] .theme-icon {
+  transform: rotate(0deg);
+}
+
+[data-theme="light"] .sun-core {
+  transform: scale(1);
+}
+
+[data-theme="light"] .sun-rays {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+[data-theme="light"] .moon-bite {
+  transform: translate(20px, -20px);
+}
+
+/* Dark mode → Moon */
+[data-theme="dark"] .theme-icon {
+  transform: rotate(-10deg);
+}
+
+[data-theme="dark"] .sun-core {
+  transform: scale(1.4);
+}
+
+[data-theme="dark"] .sun-rays {
+  transform: scale(0.1);
+  opacity: 0;
+}
+
+[data-theme="dark"] .moon-bite {
+  transform: translate(5px, -1.5px) scale(0.6);
 }
 
 /* === HERO SECTION === */
