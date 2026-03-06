@@ -618,39 +618,6 @@ const loadingState = document.getElementById('loadingState');
 const noResults = document.getElementById('noResults');
 const lastUpdated = document.getElementById('lastUpdated');
 
-// Theme Management
-let isDarkMode = localStorage.getItem('darkMode') === 'true';
-
-function toggleTheme() {
-    isDarkMode = !isDarkMode;
-    document.body.classList.toggle('dark-mode', isDarkMode);
-    localStorage.setItem('darkMode', isDarkMode);
-    
-    const themeBtn = document.querySelector('.theme-btn');
-    const themeIcon = document.querySelector('.theme-icon');
-    
-    if (isDarkMode) {
-        themeIcon.textContent = '🌙';
-        themeBtn.childNodes[1].textContent = ' Dark Mode';
-    } else {
-        themeIcon.textContent = '🌞';
-        themeBtn.childNodes[1].textContent = ' Light Mode';
-    }
-}
-
-// Initialize theme
-function initializeTheme() {
-    if (isDarkMode) {
-        document.body.classList.add('dark-mode');
-        const themeIcon = document.querySelector('.theme-icon');
-        const themeBtn = document.querySelector('.theme-btn');
-        if (themeIcon && themeBtn) {
-            themeIcon.textContent = '🌙';
-            themeBtn.childNodes[1].textContent = ' Dark Mode';
-        }
-    }
-}
-
 // Filter by gender
 function filterByGender(gender) {
     currentGenderFilter = gender;
@@ -863,9 +830,6 @@ function initialize() {
         lastUpdated.textContent = new Date().toLocaleDateString('en-IN');
     }
     
-    // Initialize theme
-    initializeTheme();
-    
     // Add event listeners
     if (searchInput) {
         searchInput.addEventListener('input', debounce(applyFilters, 300));
@@ -917,7 +881,7 @@ document.addEventListener('keydown', function(e) {
     // T key to toggle theme
     if (e.key === 't' && e.target.tagName !== 'INPUT') {
         e.preventDefault();
-        toggleTheme();
+        window.themeManager?.toggleTheme();
     }
 });
 

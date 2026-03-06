@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Government Sponsored Agricultural Schemes Portal</title>
   <link rel="icon" type="image/png" href="../images/logo.png" />
+  <script>
+    (function () {
+      const saved = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
+      document.documentElement.setAttribute(
+        "data-theme",
+        saved || (prefersDark ? "dark" : "light"),
+      );
+    })();
+  </script>
   <link rel="stylesheet" href="styles_scheme.css" />
   <link rel="stylesheet" href="/index.css">
 </head>
@@ -16,22 +28,29 @@
       <p>Your complete directory of central and state-backed agriculture schemes</p>
 
       <div class="header-actions">
-        <!-- THEME TOGGLE BUTTON -->
-        <!-- When in LIGHT mode: shows 🌙 Dark Mode -->
-        <!-- When in DARK mode:  shows 🌞 Light Mode -->
-        <button
-          type="button"
-          class="theme-btn"
-          id="themeToggle"
-          aria-label="Toggle color theme"
-        >
-          <span class="theme-icon" id="themeIcon">🌙</span>
-          <span id="themeLabel">Dark Mode</span>
-        </button>
-
         <!-- BACK BUTTON -->
         <button class="back-btn" type="button" onclick="handleBackNavigation()">
           ← Back
+        </button>
+        <button class="theme-toggle" type="button" id="themeToggle" title="Switch theme" aria-label="Switch theme">
+          <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" style="width:22px;height:22px;pointer-events:none;">
+            <mask id="moon-mask">
+              <rect x="0" y="0" width="100%" height="100%" fill="white" />
+              <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
+            </mask>
+            <circle class="sun-core" cx="12" cy="12" r="7" fill="currentColor" mask="url(#moon-mask)" />
+            <g class="sun-rays" stroke="currentColor">
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </g>
+          </svg>
         </button>
       </div>
     </div>
@@ -238,51 +257,8 @@
 </footer>
  <!-- Cursor Trail -->
 <div class="circle-container" id="cursorTrail"></div>
-  <!-- THEME + BACK BUTTON JS -->
+  <!-- BACK BUTTON JS -->
   <script>
-    // Initialise theme on load (localStorage > default)[web:30][web:33]
-    document.addEventListener("DOMContentLoaded", function () {
-      const body = document.body;
-      const themeIcon = document.getElementById("themeIcon");
-      const themeLabel = document.getElementById("themeLabel");
-      const savedTheme = localStorage.getItem("theme");
-
-      if (savedTheme === "dark") {
-        body.classList.add("dark-mode");
-        // Page is dark -> button offers Light Mode
-        themeIcon.textContent = "🌞";
-        themeLabel.textContent = "Light Mode";
-      } else {
-        body.classList.remove("dark-mode");
-        // Page is light -> button offers Dark Mode
-        themeIcon.textContent = "🌙";
-        themeLabel.textContent = "Dark Mode";
-      }
-    });
-
-    // Toggle theme: text always indicates TARGET theme
-    function toggleTheme() {
-      const body = document.body;
-      const themeIcon = document.getElementById("themeIcon");
-      const themeLabel = document.getElementById("themeLabel");
-
-      const isDark = body.classList.toggle("dark-mode");
-
-      if (isDark) {
-        // Now in dark mode → show Light Mode in button
-        themeIcon.textContent = "🌞";
-        themeLabel.textContent = "Light Mode";
-        localStorage.setItem("theme", "dark");
-      } else {
-        // Now in light mode → show Dark Mode in button
-        themeIcon.textContent = "🌙";
-        themeLabel.textContent = "Dark Mode";
-        localStorage.setItem("theme", "light");
-      }
-    }
-
-    document.getElementById("themeToggle").addEventListener("click", toggleTheme);
-
     // Back navigation with history + fallback
     function handleBackNavigation() {
       if (window.history.length > 1 && document.referrer !== "") {
@@ -300,12 +276,13 @@ let mouseX = 0;
 let mouseY = 0;
 
 // Create circles
-for (let i = 0; i < circleCount; i++) {
+  for (let i = 0; i < circleCount; i++) {
     const circle = document.createElement('div');
     circle.classList.add('cursor-circle');
+    circle.style.pointerEvents = 'none';
     container.appendChild(circle);
     circles.push({ el: circle, x: 0, y: 0 });
-}
+  }
 
 // Mouse move
 document.addEventListener('mousemove', (e) => {
@@ -354,7 +331,7 @@ function animateCursor() {
 animateCursor();
   </script>
 
- 
+  <script src="../theme.js"></script>
   <script src="app_scheme.js"></script>
 </body>
 </html>
