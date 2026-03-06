@@ -17,7 +17,35 @@ body {
 }
 
 .serif {
-  font-family: var(--font-serif, 'Libertinus Serif', Georgia, serif);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: -1px;
+
+  /* Background Image */
+  background-image: url("assets/your-bg-image.jpg"); /* put your image path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Make text transparent & show bg inside */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  /* Smooth moving animation */
+  animation: moveBg 15s linear infinite;
+}
+@keyframes moveBg {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Navigation Bar */

@@ -8,8 +8,8 @@ import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
 from sqlalchemy import and_, or_, func
-from extensions import db
-from models import FarmAsset, MaintenanceLog, User
+from backend.extensions import db
+from backend.models import FarmAsset, MaintenanceLog, User
 import google.generativeai as genai
 
 logger = logging.getLogger(__name__)

@@ -1,5 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AgriTech – Organic Farming</title>
+    
+    <link rel="icon" type="image/png" href="images/logo.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Prevent theme flash on page load -->
+    <script>
+      (function () {
+        const saved = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        document.documentElement.setAttribute(
+          "data-theme",
+          saved || (prefersDark ? "dark" : "light"),
+        );
+      })();
+    </script>
+    <link rel="stylesheet" href="organic.css" />
+    <link rel="stylesheet" href="theme.css" />
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+
+  <body>
+    <div id="particles-js"></div>
+
+    <div class="scroll-indicator">
+      <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <header class="sticky-header">
+  <div class="container header-content navbar">
+
+    <!-- Left: Logo -->
+    <a href="/" class="logo">
+      <img src="/images/logo.png" alt="AgriTech Logo">
+      <span class="logo-text">AgriTech</span>
+    </a>
+
+    <!-- Center: Navigation -->
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="blog.html">Blog</a>
+    </nav>
+
+      <button class="theme-toggle" type="button" id="themeToggle" title="Switch theme" aria-label="Switch theme">
+        <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <mask id="moon-mask">
+            <rect x="0" y="0" width="100%" height="100%" fill="white" />
+            <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
+          </mask>
+          <circle class="sun-core" cx="12" cy="12" r="7" fill="currentColor" mask="url(#moon-mask)" />
+          <g class="sun-rays" stroke="currentColor">
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </g>
+        </svg>
+      </button>
 
 <head>
   <meta charset="UTF-8" />
@@ -220,42 +291,50 @@
           <li><a href="chat.html">AI Assistant</a></li>
         </ul>
       </div>
-      <div class="footer-links">
-        <h4>Smart Tools</h4>
-        <ul>
-          <li><a href="crop_recommendation/templates/index.html">Crop Recommendation</a></li>
-          <li><a href="disease.html">Disease Detector</a></li>
-          <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© <span id="currentYear"></span> AgriTech. All rights reserved.</p>
-    </div>
-  </footer>
+    </footer>
 
-  <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
-    <i class="fas fa-robot"></i>
-  </a>
-  <!-- Cursor Trail -->
-  <div class="circle-container" id="cursorTrail"></div>
-  <script src="organic.js"></script>
-  <script src="theme.js"></script>
-  <script>
-    // --- Cursor Trailing Effect ---
-    const container = document.getElementById('cursorTrail');
-    const circleCount = 12;
-    const circles = [];
+    <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
+      <i class="fas fa-robot"></i>
+    </a>
+    <!-- Cursor Trail -->
+<div class="circle-container" id="cursorTrail"></div>
+    <script src="organic.js"></script>
+    <script src="theme.js"></script>
+    <script>
+       // --- Cursor Trailing Effect ---
+const container = document.getElementById('cursorTrail');
+const circleCount = 12;
+const circles = [];
 
-    let mouseX = 0;
-    let mouseY = 0;
+let mouseX = 0;
+let mouseY = 0;
 
-    // Create circles
-    for (let i = 0; i < circleCount; i++) {
-      const circle = document.createElement('div');
-      circle.classList.add('cursor-circle');
-      container.appendChild(circle);
-      circles.push({ el: circle, x: 0, y: 0 });
+// Create circles
+for (let i = 0; i < circleCount; i++) {
+    const circle = document.createElement('div');
+    circle.classList.add('cursor-circle');
+    container.appendChild(circle);
+    circles.push({ el: circle, x: 0, y: 0 });
+}
+
+// Mouse move
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
+
+// Click effects
+document.addEventListener('mousedown', () => {
+    circles.forEach(c => c.el.classList.add('cursor-clicking'));
+});
+document.addEventListener('mouseup', () => {
+    circles.forEach(c => c.el.classList.remove('cursor-clicking'));
+});
+
+// Hover effects on interactive elements
+document.addEventListener('mouseover', (e) => {
+    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+        circles.forEach(c => c.el.classList.add('cursor-hovering'));
     }
 
     // Mouse move

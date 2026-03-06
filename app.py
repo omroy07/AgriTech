@@ -120,7 +120,7 @@ model = genai.GenerativeModel(app.config['GEMINI_MODEL_ID'])
 def get_firebase_config():
     try:
         return jsonify({
-            'apikey': app.config['FIREBASE_API_KEY'],
+            'apiKey': app.config['FIREBASE_API_KEY'],
             'authDomain': app.config['FIREBASE_AUTH_DOMAIN'],
             'projectId': app.config['FIREBASE_PROJECT_ID'],
             'storageBucket': app.config['FIREBASE_STORAGE_BUCKET'],

@@ -14,7 +14,22 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
+  <!-- Prevent theme flash on page load -->
+  <script>
+    (function () {
+      const saved = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
+      document.documentElement.setAttribute(
+        "data-theme",
+        saved || (prefersDark ? "dark" : "light"),
+      );
+    })();
+  </script>
+
   <link rel="stylesheet" href="cropCalendar.css" />
+  <link rel="stylesheet" href="theme.css">
   <style>
     /* 1. GLOBAL VARIABLES (Matching index.html) */
     :root {
@@ -106,24 +121,6 @@
 
     .back-btn:hover {
       background-color: var(--border-color);
-    }
-
-    .theme-toggle {
-      background: none;
-      border: 1px solid var(--border-color);
-      color: var(--text-color);
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.2s;
-    }
-
-    .theme-toggle:hover {
-      border-color: var(--accent-color);
-      color: var(--accent-color);
     }
 
     /* 4. MAIN LAYOUT */
@@ -340,14 +337,29 @@
   <header>
     <h1>Crop Calendar</h1>
     <div class="header-actions">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
-        <i class="fas fa-sun sun-icon" style="display: none;"></i>
-        <i class="fas fa-moon moon-icon"></i>
-        <span class="theme-text">Dark</span>
-      </button>
       <a href="../index.html" class="back-btn">
         <i class="fas fa-arrow-left"></i> Back to Home
       </a>
+    <button class="theme-toggle" type="button" id="themeToggle" title="Switch theme" aria-label="Switch theme">
+      <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round">
+        <mask id="moon-mask">
+          <rect x="0" y="0" width="100%" height="100%" fill="white" />
+          <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
+        </mask>
+        <circle class="sun-core" cx="12" cy="12" r="7" fill="currentColor" mask="url(#moon-mask)" />
+        <g class="sun-rays" stroke="currentColor">
+          <line x1="12" y1="1" x2="12" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="23" />
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+          <line x1="1" y1="12" x2="3" y2="12" />
+          <line x1="21" y1="12" x2="23" y2="12" />
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </g>
+      </svg>
+    </button>
     </div>
   </header>
 
@@ -411,37 +423,7 @@
  <!-- Cursor Trail -->
 <div class="circle-container" id="cursorTrail"></div>
   <script src="cropCalendar.js"></script>
-  <script>
-    const toggle = document.getElementById('themeToggle');
-    const sun = document.querySelector('.sun-icon');
-    const moon = document.querySelector('.moon-icon');
-    const text = document.querySelector('.theme-text');
-
-    // Check Local Storage
-    if(localStorage.getItem('theme') === 'dark') {
-      document.body.setAttribute('data-theme', 'dark');
-      sun.style.display = 'inline';
-      moon.style.display = 'none';
-      text.textContent = 'Light';
-    }
-
-    toggle.addEventListener('click', () => {
-      const isDark = document.body.getAttribute('data-theme') === 'dark';
-      if (isDark) {
-        document.body.removeAttribute('data-theme');
-        localStorage.setItem('theme', 'light');
-        sun.style.display = 'none';
-        moon.style.display = 'inline';
-        text.textContent = 'Dark';
-      } else {
-        document.body.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-        sun.style.display = 'inline';
-        moon.style.display = 'none';
-        text.textContent = 'Light';
-      }
-    });
-  </script>
+  <script src="theme.js"></script>
 
   <!-- ===== Universal Back To Top Button (All Pages) ===== -->
 <style>

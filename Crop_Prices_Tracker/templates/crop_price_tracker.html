@@ -1,5 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <link rel="icon" type="image/png" href="/images/logo.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crop Price Tracker</title>
+    <script>
+      (function () {
+        const saved = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        document.documentElement.setAttribute(
+          "data-theme",
+          saved || (prefersDark ? "dark" : "light"),
+        );
+      })();
+    </script>
+    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="stylesheet" href="../../theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+      /* --- GLOBAL RESET --- */
+      html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+        min-height: 100vh;
+      }
+
+      /* --- 1. THEME VARIABLES --- */
+      :root {
+        --bg-color: #030712;
+        --text-color: #ffffff;
+        --text-muted: #cbd5e1;
+        --surface-color: rgba(15, 23, 42, 0.9);
+        --section-bg: rgba(30, 41, 59, 0.7);
+        --border-color: #334155;
+        --accent-color: #22c55e;
+        --shadow-color: rgba(0, 0, 0, 0.3);
+      }
 
 <head>
   <link rel="icon" type="image/png" href="/images/logo.png">
@@ -552,29 +595,84 @@
         </select>
       </div>
 
-      <button type="submit" class="submit-button" id="submitBtn" disabled>
-        Track Prices
+    <div class="header">
+      <a href="/main.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Main</a>
+        <button
+          style="position:fixed;top:2rem;right:2rem;z-index:999;display:flex;align-items:center;justify-content:center;"
+          class="theme-toggle" type="button" id="themeToggle" title="Switch theme" aria-label="Switch theme">
+          <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" style="width:22px;height:22px;">
+          <mask id="moon-mask">
+            <rect x="0" y="0" width="100%" height="100%" fill="white" />
+            <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
+          </mask>
+          <circle class="sun-core" cx="12" cy="12" r="7" fill="currentColor" mask="url(#moon-mask)" />
+          <g class="sun-rays" stroke="currentColor">
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </g>
+        </svg>
       </button>
-    </form>
-  </div>
+      <h2>🌾 Crop Price Tracker</h2>
+      <div style="width: 50px;"></div> 
+    </div>
 
-  <div class="results-container">
-    <h3>📈 Latest Market Prices (Preview)</h3>
-    <div class="price-grid">
-      <div class="price-card">
-        <div class="price-date">14 JAN 2026</div>
-        <div class="price-amount">₹2,450 / quintal</div>
-        <div class="price-location"><i class="fas fa-map-marker-alt"></i> Ahmedabad, Gujarat</div>
-      </div>
-      <div class="price-card">
-        <div class="price-date">13 JAN 2026</div>
-        <div class="price-amount">₹2,380 / quintal</div>
-        <div class="price-location"><i class="fas fa-map-marker-alt"></i> Rajkot, Gujarat</div>
-      </div>
-      <div class="price-card">
-        <div class="price-date">12 JAN 2026</div>
-        <div class="price-amount">₹2,410 / quintal</div>
-        <div class="price-location"><i class="fas fa-map-marker-alt"></i> Surat, Gujarat</div>
+    <div class="form-container">
+      <form method="POST" id="priceForm">
+        <div class="form-row">
+          <label for="crop" class="form-label">Select Crop</label>
+          <select name="crop" id="crop" required>
+            <option value="">-- Choose your crop --</option>
+            <option value="Wheat">Wheat</option>
+            <option value="Rice">Rice</option>
+            <option value="Cotton">Cotton</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="state" class="form-label">Select State</label>
+          <select name="state" id="state" required disabled>
+            <option value="">-- First select a crop --</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="market" class="form-label">Select Market</label>
+          <select name="market" id="market" required disabled>
+            <option value="">-- First select a state --</option>
+          </select>
+        </div>
+
+        <button type="submit" class="submit-button" id="submitBtn" disabled>
+          Track Prices
+        </button>
+      </form>
+    </div>
+
+    <div class="results-container">
+      <h3>📈 Latest Market Prices (Preview)</h3>
+      <div class="price-grid">
+        <div class="price-card">
+          <div class="price-date">14 JAN 2026</div>
+          <div class="price-amount">₹2,450 / quintal</div>
+          <div class="price-location"><i class="fas fa-map-marker-alt"></i> Ahmedabad, Gujarat</div>
+        </div>
+        <div class="price-card">
+          <div class="price-date">13 JAN 2026</div>
+          <div class="price-amount">₹2,380 / quintal</div>
+          <div class="price-location"><i class="fas fa-map-marker-alt"></i> Rajkot, Gujarat</div>
+        </div>
+        <div class="price-card">
+          <div class="price-date">12 JAN 2026</div>
+          <div class="price-amount">₹2,410 / quintal</div>
+          <div class="price-location"><i class="fas fa-map-marker-alt"></i> Surat, Gujarat</div>
+        </div>
       </div>
     </div>
   </div>

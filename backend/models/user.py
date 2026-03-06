@@ -40,6 +40,12 @@ class User(db.Model):
     files = db.relationship('File', backref='user', lazy=True)
     
     def __init__(self, username, email, full_name=None, role='farmer', phone=None, location=None):
+        import re
+        if not re.match(r"^[a-zA-Z\s]+$", (full_name or username)):
+            raise ValueError("Full Name should only contain letters and spaces")
+        if not email.endswith("@gmail.com"):
+            raise ValueError("Please use a @gmail.com address")
+            
         self.username = username
         self.email = email
         self.full_name = full_name or username

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Advisory System | AgriTech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #10b981;
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --warning: #f59e0b;
+            --info: #3b82f6;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            color: var(--primary);
+            margin: 0 0 0.5rem 0;
+        }
+
+        .header p {
+            color: #64748b;
+            margin: 0;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #059669;
+        }
+
+        .recommendations-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .recommendation-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: 0.3s;
+        }
+
+        .recommendation-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .recommendation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .recommendation-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .score-badge {
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .reasons-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .reasons-list li {
+            padding: 0.5rem 0;
+            color: #4b5563;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .reasons-list li::before {
+            content: '✓';
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .info-item {
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .info-item label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+
+        .info-item span {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .alert-item {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid;
+        }
+
+        .alert-high {
+            background: #fef2f2;
+            border-color: var(--accent);
+        }
+
+        .alert-high .alert-icon {
+            color: var(--accent);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            color: #64748b;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #64748b;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .current-weather {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .weather-item {
+            background: #eff6ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .weather-item .label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+
+        .weather-item .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--info);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-cloud-sun"></i> Weather-Based Crop Advisory</h1>
+            <p>Get personalized crop recommendations based on weather forecasts and climate patterns</p>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-search"></i> Get Recommendations</h2>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" placeholder="Enter your location (e.g., Pune, Maharashtra)">
+            </div>
+            <div class="form-group">
+                <label for="soilType">Soil Type (Optional)</label>
+                <select id="soilType">
+                    <option value="">Select soil type</option>
+                    <option value="sandy">Sandy</option>
+                    <option value="loam">Loam</option>
+                    <option value="clay">Clay</option>
+                    <option value="silt">Silt</option>
+                    <option value="peat">Peat</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" onclick="getRecommendations()">
+                <i class="fas fa-magic"></i> Get Crop Recommendations
+            </button>
+        </div>
+
+        <div class="stats-container hidden" id="weatherStats">
+            <div class="stat-card">
+                <h3>Temperature</h3>
+                <div class="value" id="statTemp">--</div>
+            </div>
+            <div class="stat-card">
+                <h3>Humidity</h3>
+                <div class="value" id="statHumidity">--</div>
+            </div>
+            <div class="stat-card">
+                <h3>Condition</h3>
+                <div class="value" id="statCondition">--</div>
+            </div>
+        </div>
+
+        <div class="card hidden" id="recommendationsCard">
+            <h2><i class="fas fa-seedling"></i> Recommended Crops</h2>
+            <div id="recommendationsContainer"></div>
+        </div>
+
+        <div class="card hidden" id="alertsCard">
+            <h2><i class="fas fa-bell"></i> Active Alerts</h2>
+            <div id="alertsContainer"></div>
+        </div>
+
+        <div class="card hidden" id="climateCard">
+            <h2><i class="fas fa-chart-line"></i> Climate Analysis (Last 30 Days)</h2>
+            <div id="climateContainer"></div>
+        </div>
+    </div>
+
+    <script src="crop_advisory.js"></script>
+</body>
+</html>

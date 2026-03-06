@@ -12,9 +12,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet" />
+<script>
+  (function () {
+    const saved = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
+    document.documentElement.setAttribute(
+      "data-theme",
+      saved || (prefersDark ? "dark" : "light"),
+    );
+  })();
+</script>
+  <link rel="stylesheet" href="theme.css">
   <link rel="stylesheet" href="weather-banner.css">
   <link rel="stylesheet" href="farmer.css">
-  <link rel="stylesheet" href="theme.css">
 </head>
 
 <body>
@@ -50,10 +62,25 @@
           <i class="fas fa-sign-out-alt"></i> Logout
         </button>
         <!-- END ADDED -->
-        <button class="theme-toggle" aria-label="Toggle dark/light mode">
-          <i class="fas fa-sun sun-icon"></i>
-          <i class="fas fa-moon moon-icon"></i>
-          <span class="theme-text">Light Mode</span>
+        <button class="theme-toggle" type="button" id="themeToggle" title="Switch theme" aria-label="Switch theme">
+          <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <mask id="moon-mask">
+              <rect x="0" y="0" width="100%" height="100%" fill="white" />
+              <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
+            </mask>
+            <circle class="sun-core" cx="12" cy="12" r="7" fill="currentColor" mask="url(#moon-mask)" />
+            <g class="sun-rays" stroke="currentColor">
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </g>
+          </svg>
         </button>
       </div>
     </nav>
@@ -315,15 +342,33 @@
           </a>
         </div>
       </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="main.html">Dashboard</a></li>
+          <li><a href="feed-back.html">Feedback</a></li>
+          <li><a href="chat.html">AI Assistant</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="Crop Recommendation/templates/index.html">Crop Recommendation</a></li>
+          <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
+          <li><a href="Disease prediction/template/index.html">Disease Detector</a></li>
+          <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
+        </ul>
+      </div>
+      </div>
       <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div>
     </footer>
 <!-- Floating Chatbot Button -->
-<a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
-  <i class="fas fa-robot"></i>
-</a>
-    <script src="voice-input.js"></script>
-    <script src="farmer.js"></script>
-    <script src="theme.js"></script>
+  <div class="circle-container" id="cursorTrail"></div>
+  <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
+    <i class="fas fa-robot"></i>
+  </a>
+    
     <!-- ===== Universal Back To Top Button (All Pages) ===== -->
 <style>
   #globalBackToTop {
@@ -385,64 +430,33 @@
     });
   })();
 </script>
-<!-- ===== End Back To Top Button ===== -->
-
-  </body>
-</html>
-      <div class="footer-links">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="main.html">Dashboard</a></li>
-          <li><a href="feed-back.html">Feedback</a></li>
-          <li><a href="chat.html">AI Assistant</a></li>
-        </ul>
-      </div>
-      <div class="footer-links">
-        <h4>Tools</h4>
-        <ul>
-          <li><a href="Crop Recommendation/templates/index.html">Crop Recommendation</a></li>
-          <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
-          <li><a href="Disease prediction/template/index.html">Disease Detector</a></li>
-          <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div>
-  </footer>
-
-  <div class="circle-container" id="cursorTrail"></div>
-  <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
-    <i class="fas fa-robot"></i>
-  </a>
-
-  <script src="voice-input.js"></script>
-  <script src="farmer.js"></script>
-  <script src="theme.js"></script>
-
-  <!--
+<!--
       ADDED: auth guard.
       type="module" is required for auth.js (it uses Firebase ESM imports).
       Only farmers and admins can access this page.
     -->
-  <script src="firebase-config.js"></script>
-  <script type="module" src="auth.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      if (!requireAuth(['farmer', 'admin'])) return;
+<script src="firebase-config.js"></script>
+<script type="module" src="auth.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!requireAuth(['farmer', 'admin'])) return;
 
-      const user = window.authManager.getCurrentUser();
-      if (user) {
-        const nameEl = document.getElementById('nav-user-name');
-        const logoutEl = document.getElementById('nav-logout-btn');
-        nameEl.textContent = '👤 ' + (user.fullname || user.email);
-        nameEl.style.display = 'inline';
-        logoutEl.style.display = 'inline-flex';
-        logoutEl.addEventListener('click', () => window.authManager.logout());
-      }
-    });
-  </script>
-  <script src="weather-banner.js"></script>
-</body>
+    const user = window.authManager.getCurrentUser();
+    if (user) {
+      const nameEl = document.getElementById('nav-user-name');
+      const logoutEl = document.getElementById('nav-logout-btn');
+      nameEl.textContent = '👤 ' + (user.fullname || user.email);
+      nameEl.style.display = 'inline';
+      logoutEl.style.display = 'inline-flex';
+      logoutEl.addEventListener('click', () => window.authManager.logout());
+    }
+  });
+</script>
+<script src="weather-banner.js"></script>
+  <script src="voice-input.js"></script>
+  <script src="farmer.js"></script>
+  <script src="theme.js"></script>
+<!-- ===== End Back To Top Button ===== -->
 
+  </body>
 </html>

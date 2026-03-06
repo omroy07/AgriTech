@@ -5,6 +5,14 @@ const jwt = require("jsonwebtoken");
 exports.register = async (req, res) => {
   const { username, email, password, role } = req.body;
   try {
+    // Validate Name and Email
+    if (!/^[a-zA-Z\s]+$/.test(username)) {
+      return res.status(400).json({ message: "Username/Full Name should only contain letters and spaces" });
+    }
+    if (!email.endsWith("@gmail.com")) {
+      return res.status(400).json({ message: "Please use a @gmail.com address" });
+    }
+
     // Check if user exists
     const existingUser = await User.findOne({ email });
     if (existingUser)

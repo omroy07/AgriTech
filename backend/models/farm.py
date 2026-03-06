@@ -32,6 +32,10 @@ class Farm(db.Model):
     sequestration_tier = db.Column(db.String(20), default='TIER_1') # TIER_1 to TIER_4
     total_carbon_credits_minted = db.Column(db.Float, default=0.0) # Lifetime credits earned
     
+    # Regional Yield Prophet (L3-1635)
+    spatial_grid_id = db.Column(db.Integer, db.ForeignKey('spatial_yield_grids.id'))
+    
+    
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Relationships

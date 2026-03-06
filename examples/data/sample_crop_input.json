@@ -1,0 +1,84 @@
+{
+  "description": "Sample input for Crop Recommendation API",
+  "single_prediction": {
+    "N": 90,
+    "P": 42,
+    "K": 43,
+    "temperature": 20.87974371,
+    "humidity": 82.00274423,
+    "ph": 6.502985292,
+    "rainfall": 202.9355362
+  },
+  "batch_predictions": [
+    {
+      "id": 1,
+      "N": 90,
+      "P": 42,
+      "K": 43,
+      "temperature": 20.87,
+      "humidity": 82.00,
+      "ph": 6.50,
+      "rainfall": 202.93,
+      "expected_crop": "rice"
+    },
+    {
+      "id": 2,
+      "N": 85,
+      "P": 58,
+      "K": 41,
+      "temperature": 21.77,
+      "humidity": 80.31,
+      "ph": 7.03,
+      "rainfall": 226.65,
+      "expected_crop": "rice"
+    },
+    {
+      "id": 3,
+      "N": 60,
+      "P": 55,
+      "K": 44,
+      "temperature": 23.00,
+      "humidity": 82.32,
+      "ph": 7.84,
+      "rainfall": 263.96,
+      "expected_crop": "jute"
+    },
+    {
+      "id": 4,
+      "N": 74,
+      "P": 35,
+      "K": 40,
+      "temperature": 26.49,
+      "humidity": 80.15,
+      "ph": 6.98,
+      "rainfall": 242.86,
+      "expected_crop": "maize"
+    },
+    {
+      "id": 5,
+      "N": 78,
+      "P": 42,
+      "K": 42,
+      "temperature": 20.13,
+      "humidity": 81.60,
+      "ph": 7.63,
+      "rainfall": 245.73,
+      "expected_crop": "chickpea"
+    }
+  ],
+  "field_descriptions": {
+    "N": "Ratio of Nitrogen content in soil (kg/ha)",
+    "P": "Ratio of Phosphorous content in soil (kg/ha)",
+    "K": "Ratio of Potassium content in soil (kg/ha)",
+    "temperature": "Temperature in degree Celsius",
+    "humidity": "Relative humidity in %",
+    "ph": "pH value of the soil (0-14)",
+    "rainfall": "Rainfall in mm"
+  },
+  "valid_crops": [
+    "rice", "maize", "chickpea", "kidneybeans", "pigeonpeas",
+    "mothbeans", "mungbean", "blackgram", "lentil", "pomegranate",
+    "banana", "mango", "grapes", "watermelon", "muskmelon",
+    "apple", "orange", "papaya", "coconut", "cotton", "jute", "coffee"
+  ]
+}

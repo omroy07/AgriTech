@@ -829,7 +829,7 @@ function initialize() {
     if (lastUpdated) {
         lastUpdated.textContent = new Date().toLocaleDateString('en-IN');
     }
-
+    
     // Add event listeners
     if (searchInput) {
         searchInput.addEventListener('input', debounce(applyFilters, 300));

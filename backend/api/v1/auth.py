@@ -17,7 +17,16 @@ def register():
     
     if not username or not email or not password:
         return jsonify({'status': 'error', 'message': 'Missing fields'}), 400
-    
+
+    # Validate email domain
+    if not email.lower().endswith("@gmail.com"):
+        return jsonify({'status': 'error', 'message': 'Please use a @gmail.com address'}), 400
+
+    # Validate username/full_name pattern
+    import re
+    if not re.match(r'^[A-Za-z\s]+$', username):
+        return jsonify({'status': 'error', 'message': 'Full Name should only contain letters and spaces'}), 400
+
     if User.query.filter_by(email=email).first():
         return jsonify({'status': 'error', 'message': 'Email already exists'}), 400
         

@@ -35,8 +35,11 @@ class AuditLog(db.Model):
     # Smart Freight (L3-1631)
     ai_logistics_flag = db.Column(db.Boolean, default=False) # For geo-fence & phyto auto-decisions
     
-    # Virtual Power Plant Grid (L3-1636)
-    vpp_grid_flag = db.Column(db.Boolean, default=False)
+    # Precision Irrigation (L3-1640)
+    irrigation_auto_flag = db.Column(db.Boolean, default=False)
+    
+    # Nutrient Optimization (L3-1645)
+    nutrient_optimization_flag = db.Column(db.Boolean, default=False)
     
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     

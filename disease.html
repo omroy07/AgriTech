@@ -502,26 +502,26 @@
 
   <script src="theme.js"></script>
   <script>
-    (function () {
-      const btn = document.getElementById("globalBackToTop");
+      (function () {
+        const btn = document.getElementById("globalBackToTop");
 
-      // Show button after scrolling down
-      window.addEventListener("scroll", function () {
-        if (window.scrollY > 300) {
-          btn.style.display = "block";
-        } else {
-          btn.style.display = "none";
-        }
-      });
-
-      // Smooth scroll to top on click
-      btn.addEventListener("click", function () {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
+        // Show button after scrolling down
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 300) {
+            btn.style.display = "block";
+          } else {
+            btn.style.display = "none";
+          }
         });
-      });
-    })();
+
+        // Smooth scroll to top on click
+        btn.addEventListener("click", function () {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+        });
+      })();
   </script>
   <!-- ===== End Back To Top Button ===== -->
 

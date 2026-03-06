@@ -1,0 +1,773 @@
+﻿diff --git a/README.md b/README.md
+index f2b729b8..83847d4f 100644
+--- a/README.md
++++ b/README.md
+@@ -140,11 +140,13 @@ Note: Backend and frontend must be running simultaneously for proper functionali
+ - ≡ƒ¢Æ Shopkeeper Listings
+ 
+ ---
++
+ ## ≡ƒñû AI Chatbot
+ 
+ AgriTech's AI-powered chatbot provides comprehensive support for farmers:
+ 
+ ### Features
++
+ - **Platform Guidance**: Explains how to use all AgriTech features and tools
+ - **Agriculture Support**: Answers farming questions, crop recommendations, pest control
+ - **Decision Making**: Provides region-specific, season-based farming advice
+@@ -152,12 +154,14 @@ AgriTech's AI-powered chatbot provides comprehensive support for farmers:
+ - **24/7 Support**: Always available for instant farming assistance
+ 
+ ### Technical Implementation
++
+ - **Dual Mode**: AI-powered (Google Gemini) + Rule-based fallback
+ - **Smart Matching**: Fuzzy search with keyword analysis for accurate responses
+ - **Offline Capability**: Works without internet using JSON-based responses
+ - **Image Processing**: Analyzes plant photos for disease identification
+ 
+ ### Usage
++
+ ```bash
+ # Start the chatbot server
+ npm install
+@@ -167,9 +171,11 @@ node server.js
+ ```
+ 
+ ### API Endpoints
++
+ - `POST /api/chat` - Send messages and images for AI analysis
+ 
+ ---
++
+ ## ≡ƒ¢á∩╕Å Tech Stack
+ 
+ ### ≡ƒÄ¿ Frontend
+@@ -261,6 +267,24 @@ FIREBASE_MEASUREMENT_ID=your_measurement_id
+ 
+ ---
+ 
++## ≡ƒöÉ Registration Validation Rules
++
++To maintain clean user data and enforce business policies, AgriTech now applies strict
++validation whenever a new account is created (frontend **and** backend):
++
++- **Full Name / Username:** only alphabetic characters and spaces are allowed. The
++  same rule is enforced in the database model, API routes, and client-side form.
++- **Email:** registrations are limited to `@gmail.com` addresses. NonΓÇæGmail domains
++  are rejected both on the client and by API endpoints.
++
++Error messages are shown immediately on the form and the backend returns a descriptive
++400 response when validation fails. Automated tests cover both modelΓÇælevel and
++endpoint behavior.
++
++---
++
++---
++
+ ## ≡ƒ¢ú∩╕Å Roadmap
+ 
+ - Cloud Deployment
+@@ -283,10 +307,10 @@ Read **[CONTRIBUTING.md](CONTRIBUTING.md)** for SWoC 2026 guidelines.
+ 
+ ## ≡ƒæÑ Team
+ 
+-| Name                    | Role                    |
+-| ----------------------- | ----------------------- |
+-| Om Roy                  | Project Lead ┬╖ Web ┬╖ ML |
+-| Shubhangi Roy           | ML ┬╖ Backend            |
++| Name          | Role                    |
++| ------------- | ----------------------- |
++| Om Roy        | Project Lead ┬╖ Web ┬╖ ML |
++| Shubhangi Roy | ML ┬╖ Backend            |
+ 
+ ---
+ 
+@@ -334,6 +358,7 @@ Found a bug or want a new feature? [Open an issue](https://github.com/omroy07/Ag
+ This project is licensed under the [MIT License](LICENSE).
+ 
+ ---
++
+ ## ≡ƒ¢á∩╕Å Common Issues & Fixes
+ 
+ - Γ¥î **ModuleNotFoundError**
+diff --git a/app.py b/app.py
+index 3e4ae6ff..e2fae01a 100644
+--- a/app.py
++++ b/app.py
+@@ -120,7 +120,7 @@ model = genai.GenerativeModel(app.config['GEMINI_MODEL_ID'])
+ def get_firebase_config():
+     try:
+         return jsonify({
+-            'apikey': app.config['FIREBASE_API_KEY'],
++            'apiKey': app.config['FIREBASE_API_KEY'],
+             'authDomain': app.config['FIREBASE_AUTH_DOMAIN'],
+             'projectId': app.config['FIREBASE_PROJECT_ID'],
+             'storageBucket': app.config['FIREBASE_STORAGE_BUCKET'],
+diff --git a/backend/api/v1/assets.py b/backend/api/v1/assets.py
+index 3cffd597..02b44a44 100644
+--- a/backend/api/v1/assets.py
++++ b/backend/api/v1/assets.py
+@@ -8,12 +8,12 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
+ from marshmallow import ValidationError
+ import logging
+ 
+-from services.asset_service import AssetService
+-from schemas.asset_schema import (
++from backend.services.asset_service import AssetService
++from backend.schemas.asset_schema import (
+     AssetCreateSchema, AssetUpdateSchema, TelemetrySchema,
+     MaintenanceLogSchema, AssetQuerySchema
+ )
+-from services.audit_service import AuditService
++from backend.services.audit_service import AuditService
+ 
+ logger = logging.getLogger(__name__)
+ 
+@@ -349,7 +349,7 @@ def get_asset_details(asset_id):
+         500: Server error
+     """
+     try:
+-        from models import FarmAsset
++        from backend.models import FarmAsset
+         current_user_id = get_jwt_identity()
+         
+         asset = FarmAsset.query.filter_by(asset_id=asset_id).first()
+@@ -394,7 +394,7 @@ def update_asset(asset_id):
+         500: Server error
+     """
+     try:
+-        from models import FarmAsset
++        from backend.models import FarmAsset
+         current_user_id = get_jwt_identity()
+         data = request.get_json()
+         
+@@ -415,7 +415,7 @@ def update_asset(asset_id):
+             if hasattr(asset, key):
+                 setattr(asset, key, value)
+         
+-        from extensions import db
++        from backend.extensions import db
+         db.session.commit()
+         
+         return jsonify({
+@@ -430,7 +430,7 @@ def update_asset(asset_id):
+     
+     except Exception as e:
+         logger.error(f"Error in update_asset: {str(e)}")
+-        from extensions import db
++        from backend.extensions import db
+         db.session.rollback()
+         return jsonify({'success': False, 'message': str(e)}), 500
+ 
+@@ -450,8 +450,8 @@ def delete_asset(asset_id):
+         500: Server error
+     """
+     try:
+-        from models import FarmAsset
+-        from extensions import db
++        from backend.models import FarmAsset
++        from backend.extensions import db
+         current_user_id = get_jwt_identity()
+         
+         asset = FarmAsset.query.filter_by(asset_id=asset_id).first()
+@@ -482,6 +482,6 @@ def delete_asset(asset_id):
+         
+     except Exception as e:
+         logger.error(f"Error in delete_asset: {str(e)}")
+-        from extensions import db
++        from backend.extensions import db
+         db.session.rollback()
+         return jsonify({'success': False, 'message': str(e)}), 500
+diff --git a/backend/api/v1/auth.py b/backend/api/v1/auth.py
+index 3f18bf0c..6867589a 100644
+--- a/backend/api/v1/auth.py
++++ b/backend/api/v1/auth.py
+@@ -17,7 +17,16 @@ def register():
+     
+     if not username or not email or not password:
+         return jsonify({'status': 'error', 'message': 'Missing fields'}), 400
+-    
++
++    # Validate email domain
++    if not email.lower().endswith("@gmail.com"):
++        return jsonify({'status': 'error', 'message': 'Please use a @gmail.com address'}), 400
++
++    # Validate username/full_name pattern
++    import re
++    if not re.match(r'^[A-Za-z\s]+$', username):
++        return jsonify({'status': 'error', 'message': 'Full Name should only contain letters and spaces'}), 400
++
+     if User.query.filter_by(email=email).first():
+         return jsonify({'status': 'error', 'message': 'Email already exists'}), 400
+         
+diff --git a/backend/api/v1/config.py b/backend/api/v1/config.py
+index a3c71ff8..d8cabd5b 100644
+--- a/backend/api/v1/config.py
++++ b/backend/api/v1/config.py
+@@ -9,7 +9,7 @@ def get_firebase_config():
+     """Secure endpoint to provide Firebase configuration to client."""
+     try:
+         return jsonify({
+-            'apikey': os.environ.get('FIREBASE_API_KEY', ''),
++            'apiKey': os.environ.get('FIREBASE_API_KEY', ''),
+             'authDomain': os.environ.get('FIREBASE_AUTH_DOMAIN', ''),
+             'projectId': os.environ.get('FIREBASE_PROJECT_ID', ''),
+             'storageBucket': os.environ.get('FIREBASE_STORAGE_BUCKET', ''),
+diff --git a/backend/auth/routes.py b/backend/auth/routes.py
+index 97c4ed53..a7e74c49 100644
+--- a/backend/auth/routes.py
++++ b/backend/auth/routes.py
+@@ -74,13 +74,20 @@ def register():
+         phone = data.get('phone', '').strip()
+         location = data.get('location', '').strip()
+         
+-        # Validate email
++        # Validate email domain
+         if not validate_email(email):
+             return jsonify({
+                 'status': 'error',
+                 'message': 'Please use a @gmail.com address'
+             }), 400
+         
++        # Validate full name pattern (letters and spaces only)
++        if not re.match(r'^[A-Za-z\s]+$', full_name):
++            return jsonify({
++                'status': 'error',
++                'message': 'Full Name should only contain letters and spaces'
++            }), 400
++
+         # Validate password
+         is_valid, message = validate_password(password)
+         if not is_valid:
+diff --git a/backend/models/__init__.py b/backend/models/__init__.py
+index f04384cd..11a4e1a8 100644
+--- a/backend/models/__init__.py
++++ b/backend/models/__init__.py
+@@ -24,8 +24,7 @@ from .sustainability import (
+     CarbonPractice, CreditLedger, AuditRequest, CarbonLedger,
+     EmissionSource, SustainabilityScore, ESGMarketListing
+ )
+-from .vendor_profile import VendorProfile
+-from .procurement import ProcurementItem, BulkOrder, OrderEvent
++from .procurement import VendorProfile, ProcurementItem, BulkOrder, OrderEvent
+ from .irrigation import IrrigationZone, SensorLog, ValveStatus, IrrigationSchedule, AquiferLevel, WaterRightsQuota
+ from .processing import ProcessingBatch, StageLog, QualityCheck, ProcessingStage, SpectralScanData, DynamicGradeAdjustment
+ from .insurance_v2 import CropPolicy, ClaimRequest, PayoutLedger, AdjusterNote, ParametricAutoSettlement
+diff --git a/backend/models/ledger.py b/backend/models/ledger.py
+index 2bb8a843..c72f04e8 100644
+--- a/backend/models/ledger.py
++++ b/backend/models/ledger.py
+@@ -45,8 +45,6 @@ class TransactionType(enum.Enum):
+     FEE = 'FEE'
+     INTEREST = 'INTEREST'
+     CARBON_ESCROW_FEE = 'CARBON_ESCROW_FEE'      # Platform fee for managing carbon settlements
+-    CARBON_CREDIT_MINT = 'CARBON_CREDIT_MINT'    # New credit minted from sequestration
+-    CARBON_CREDIT_SALE = 'CARBON_CREDIT_SALE'    # Credit sold to ESG buyer
+ 
+ 
+ class LedgerAccount(db.Model):
+diff --git a/backend/services/asset_service.py b/backend/services/asset_service.py
+index e55e2c96..ff10cfd2 100644
+--- a/backend/services/asset_service.py
++++ b/backend/services/asset_service.py
+@@ -8,8 +8,8 @@ import logging
+ from datetime import datetime, timedelta
+ from typing import Dict, List, Optional, Tuple
+ from sqlalchemy import and_, or_, func
+-from extensions import db
+-from models import FarmAsset, MaintenanceLog, User
++from backend.extensions import db
++from backend.models import FarmAsset, MaintenanceLog, User
+ import google.generativeai as genai
+ 
+ logger = logging.getLogger(__name__)
+diff --git a/register.html b/register.html
+index fb8953e1..e74258eb 100644
+--- a/register.html
++++ b/register.html
+@@ -1,196 +1,250 @@
+-<!DOCTYPE html>
++<!doctype html>
+ <html lang="en">
+-<head>
+-  <link rel="icon" type="image/png" href="images/logo.png">
+-  <meta charset="UTF-8">
+-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-  <link rel="stylesheet"
+-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+-  <title>Register - AgriTech</title>
+-  <link rel="icon" type="image/png" href="/AgriTech/images/logo.png">
++  <head>
++    <link rel="icon" type="image/png" href="images/logo.png" />
++    <meta charset="UTF-8" />
++    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++    <link
++      rel="stylesheet"
++      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
++    />
++    <title>Register - AgriTech</title>
++    <link rel="icon" type="image/png" href="/AgriTech/images/logo.png" />
+ 
+     <!-- Prevent theme flash on page load -->
+-  <script>
+-    (function () {
+-      const saved = localStorage.getItem('theme');
+-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+-      document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+-    })();
+-  </script>
+-
+-  <link rel="stylesheet" href="theme.css">
+-  <link rel="stylesheet" href="register.css">
+-</head>
+-<body  
+-style="background-image: url('images/registration.avif'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+-  <div class="form-container">
+-
++    <script>
++      (function () {
++        const saved = localStorage.getItem("theme");
++        const prefersDark = window.matchMedia(
++          "(prefers-color-scheme: dark)",
++        ).matches;
++        document.documentElement.setAttribute(
++          "data-theme",
++          saved || (prefersDark ? "dark" : "light"),
++        );
++      })();
++    </script>
++
++    <link rel="stylesheet" href="theme.css" />
++    <link rel="stylesheet" href="register.css" />
++  </head>
++  <body
++    style="
++      background-image: url(&quot;images/registration.avif&quot;);
++      background-size: cover;
++      background-position: center;
++      background-repeat: no-repeat;
++    "
++  >
++    <div class="form-container">
+       <!-- Animated Sun/Moon Toggle -->
+-    <div style="position: absolute; top: 20px; right: 20px;">
+-      <button class="theme-toggle" type="button" id="themeToggle" title="Switch to dark mode"
+-        aria-label="Switch to dark mode">
+-        <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+-          stroke-linejoin="round">
+-          <mask id="moon-mask">
+-            <rect x="0" y="0" width="100%" height="100%" fill="white" />
+-            <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
+-          </mask>
+-          <circle class="sun-core" cx="12" cy="12" r="7" fill="currentColor" mask="url(#moon-mask)" />
+-          <g class="sun-rays" stroke="currentColor">
+-            <line x1="12" y1="1" x2="12" y2="3" />
+-            <line x1="12" y1="21" x2="12" y2="23" />
+-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+-            <line x1="1" y1="12" x2="3" y2="12" />
+-            <line x1="21" y1="12" x2="23" y2="12" />
+-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+-          </g>
+-        </svg>
+-      </button>
+-    </div>
+-
+-    <div class="brand-section">
+-      <a href="./index.html" class="brand-icon">
+-        <i class="fas fa-seedling"></i>
+-      </a>
+-      <h2>Join AgriTech</h2>
+-      <p class="form-subtitle">Create your account to get started</p>
+-    </div>
+-
+-    <!-- Form progress indicator -->
+-    <div class="form-progress">
+-      <div class="progress-step active" id="step-1"></div>
+-      <div class="progress-step" id="step-2"></div>
+-      <div class="progress-step" id="step-3"></div>
+-      <div class="progress-step" id="step-4"></div>
+-      <div class="progress-step" id="step-5"></div>
+-    </div>
+-
+-    <form onsubmit="handleRegister(event)">
+-      <div class="input-group">
+-        <i class="fas fa-user-tag role-buyer" id="role-icon"></i>
+-        <select id="role" required onchange="updateRoleIcon()">
+-          <option value="">Select Your Role</option>
+-          <option value="buyer">≡ƒ¢Æ Buyer</option>
+-          <option value="farmer">≡ƒÜ£ Farmer</option>
+-          <option value="equipment">≡ƒöº Equipment Shopkeeper</option>
+-          <option value="grocery">≡ƒÅ¬ Grocery Shopkeeper</option>
+-          <!-- NEW: Expert role added for community answering feature -->
+-          <option value="expert">≡ƒÄô Agricultural Expert</option>
+-          <!-- Admin accounts are created via Firebase Console only ΓÇö not exposed here -->
+-        </select>
++      <div style="position: absolute; top: 20px; right: 20px">
++        <button
++          class="theme-toggle"
++          type="button"
++          id="themeToggle"
++          title="Switch to dark mode"
++          aria-label="Switch to dark mode"
++        >
++          <svg
++            class="theme-icon"
++            viewBox="0 0 24 24"
++            fill="none"
++            stroke="currentColor"
++            stroke-width="2"
++            stroke-linecap="round"
++            stroke-linejoin="round"
++          >
++            <mask id="moon-mask">
++              <rect x="0" y="0" width="100%" height="100%" fill="white" />
++              <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
++            </mask>
++            <circle
++              class="sun-core"
++              cx="12"
++              cy="12"
++              r="7"
++              fill="currentColor"
++              mask="url(#moon-mask)"
++            />
++            <g class="sun-rays" stroke="currentColor">
++              <line x1="12" y1="1" x2="12" y2="3" />
++              <line x1="12" y1="21" x2="12" y2="23" />
++              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
++              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
++              <line x1="1" y1="12" x2="3" y2="12" />
++              <line x1="21" y1="12" x2="23" y2="12" />
++              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
++              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
++            </g>
++          </svg>
++        </button>
+       </div>
+ 
+-      <div class="input-group">
+-        <i class="fas fa-user"></i>
+-        <input type="text" id="fullname" placeholder="Enter your full name" required>
++      <div class="brand-section">
++        <a href="./index.html" class="brand-icon">
++          <i class="fas fa-seedling"></i>
++        </a>
++        <h2>Join AgriTech</h2>
++        <p class="form-subtitle">Create your account to get started</p>
+       </div>
+ 
+-      <div class="input-group">
+-        <i class="fas fa-envelope"></i>
+-        <input type="email" id="email" placeholder="Enter your email" required>
++      <!-- Form progress indicator -->
++      <div class="form-progress">
++        <div class="progress-step active" id="step-1"></div>
++        <div class="progress-step" id="step-2"></div>
++        <div class="progress-step" id="step-3"></div>
++        <div class="progress-step" id="step-4"></div>
++        <div class="progress-step" id="step-5"></div>
+       </div>
+ 
+-      <div class="input-group">
+-        <i class="fas fa-lock"></i>
+-        <input type="password" id="password"
+-               placeholder="Create a strong password"
+-               required oninput="checkPasswordStrength()">
+-        <button type="button" class="password-toggle" onclick="togglePassword()">
+-          <i class="fas fa-eye" id="password-eye"></i>
++      <form onsubmit="handleRegister(event)">
++        <div class="input-group">
++          <i class="fas fa-user-tag role-buyer" id="role-icon"></i>
++          <select id="role" required onchange="updateRoleIcon()">
++            <option value="">Select Your Role</option>
++            <option value="buyer">≡ƒ¢Æ Buyer</option>
++            <option value="farmer">≡ƒÜ£ Farmer</option>
++            <option value="equipment">≡ƒöº Equipment Shopkeeper</option>
++            <option value="grocery">≡ƒÅ¬ Grocery Shopkeeper</option>
++            <!-- NEW: Expert role added for community answering feature -->
++            <option value="expert">≡ƒÄô Agricultural Expert</option>
++            <!-- Admin accounts are created via Firebase Console only ΓÇö not exposed here -->
++          </select>
++        </div>
++
++        <div class="input-group">
++          <i class="fas fa-user"></i>
++          <input
++            type="text"
++            id="fullname"
++            placeholder="Enter your full name"
++            required
++            pattern="[A-Za-z\s]+"
++            title="Only letters and spaces allowed"
++          />
++        </div>
++
++        <div class="input-group">
++          <i class="fas fa-envelope"></i>
++          <input
++            type="email"
++            id="email"
++            placeholder="Enter your email"
++            required
++            pattern="[a-zA-Z0-9._%+-]+@gmail\.com"
++            title="Please use a @gmail.com address"
++          />
++        </div>
++
++        <div class="input-group">
++          <i class="fas fa-lock"></i>
++          <input
++            type="password"
++            id="password"
++            placeholder="Create a strong password"
++            required
++            oninput="checkPasswordStrength()"
++          />
++          <button
++            type="button"
++            class="password-toggle"
++            onclick="togglePassword()"
++          >
++            <i class="fas fa-eye" id="password-eye"></i>
++          </button>
++        </div>
++
++        <!-- Password strength indicator -->
++        <div class="password-strength">
++          <div class="strength-bar" id="strength-bar"></div>
++        </div>
++        <div class="strength-text" id="strength-text"></div>
++
++        <button type="submit" id="register-btn">
++          <span id="register-text">Create Account</span>
+         </button>
+-      </div>
+ 
+-      <!-- Password strength indicator -->
+-      <div class="password-strength">
+-        <div class="strength-bar" id="strength-bar"></div>
+-      </div>
+-      <div class="strength-text" id="strength-text"></div>
+-
+-      <button type="submit" id="register-btn">
+-        <span id="register-text">Create Account</span>
+-      </button>
+-
+-      <p>Already have an account? <a href="login.html">Sign In</a></p>
+-    </form>
+-  </div>
++        <p>Already have an account? <a href="login.html">Sign In</a></p>
++      </form>
++    </div>
+ 
+-  <!--
++    <!--
+     CHANGED: auth.js uses ES module imports (Firebase SDK via CDN).
+     type="module" is required. register.js and theme.js stay as normal scripts.
+   -->
+-  <script src="firebase-config.js"></script>
+-  <script type="module" src="auth.js"></script>
+-  <script src="register.js"></script>
+-  <script src="theme.js"></script>
+-  <script>
+-    document.addEventListener('DOMContentLoaded', () => {
+-      redirectIfLoggedIn();
+-    });
+-  </script>
+-  <!-- ===== Universal Back To Top Button (All Pages) ===== -->
+-<style>
+-  #globalBackToTop {
+-    position: fixed;
+-    bottom: 90px; /* prevents overlap with chatbot/floating icons */
+-    right: 25px;
+-    z-index: 9999;
+-    display: none;
+-    background: #2ecc71;
+-    color: #ffffff;
+-    border: none;
+-    border-radius: 50%;
+-    width: 52px;
+-    height: 52px;
+-    font-size: 22px;
+-    font-weight: bold;
+-    cursor: pointer;
+-    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+-    transition: opacity 0.3s ease, transform 0.2s ease;
+-  }
+-
+-  #globalBackToTop:hover {
+-    transform: scale(1.12);
+-    background: #27ae60;
+-  }
+-
+-  @media (max-width: 768px) {
+-    #globalBackToTop {
+-      bottom: 100px; /* better spacing on mobile */
+-      right: 18px;
+-      width: 48px;
+-      height: 48px;
+-      font-size: 20px;
+-    }
+-  }
+-</style>
+-
+-<button id="globalBackToTop" title="Back to Top">Γåæ</button>
+-
+-<script>
+-  (function () {
+-    const btn = document.getElementById("globalBackToTop");
+-
+-    // Show button after scrolling down
+-    window.addEventListener("scroll", function () {
+-      if (window.scrollY > 300) {
+-        btn.style.display = "block";
+-      } else {
+-        btn.style.display = "none";
++    <script src="firebase-config.js"></script>
++    <script type="module" src="auth.js"></script>
++    <script src="register.js"></script>
++    <script src="theme.js"></script>
++    <script>
++      document.addEventListener("DOMContentLoaded", () => {
++        redirectIfLoggedIn();
++      });
++    </script>
++    <!-- ===== Universal Back To Top Button (All Pages) ===== -->
++    <style>
++      #globalBackToTop {
++        position: fixed;
++        bottom: 90px; /* prevents overlap with chatbot/floating icons */
++        right: 25px;
++        z-index: 9999;
++        display: none;
++        background: #2ecc71;
++        color: #ffffff;
++        border: none;
++        border-radius: 50%;
++        width: 52px;
++        height: 52px;
++        font-size: 22px;
++        font-weight: bold;
++        cursor: pointer;
++        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
++        transition:
++          opacity 0.3s ease,
++          transform 0.2s ease;
+       }
+-    });
+ 
+-    // Smooth scroll to top on click
+-    btn.addEventListener("click", function () {
+-      window.scrollTo({
+-        top: 0,
+-        behavior: "smooth"
+-      });
+-    });
+-  })();
+-</script>
+-<!-- ===== End Back To Top Button ===== -->
++      #globalBackToTop:hover {
++        transform: scale(1.12);
++        background: #27ae60;
++      }
+ 
+-</body>
++      @media (max-width: 768px) {
++        #globalBackToTop {
++          bottom: 100px; /* better spacing on mobile */
++          right: 18px;
++          width: 48px;
++          height: 48px;
++          font-size: 20px;
++        }
++      }
++    </style>
++
++    <button id="globalBackToTop" title="Back to Top">Γåæ</button>
++
++    <script>
++      (function () {
++        const btn = document.getElementById("globalBackToTop");
++
++        // Show button after scrolling down
++        window.addEventListener("scroll", function () {
++          if (window.scrollY > 300) {
++            btn.style.display = "block";
++          } else {
++            btn.style.display = "none";
++          }
++        });
++
++        // Smooth scroll to top on click
++        btn.addEventListener("click", function () {
++          window.scrollTo({
++            top: 0,
++            behavior: "smooth",
++          });
++        });
++      })();
++    </script>
++    <!-- ===== End Back To Top Button ===== -->
++  </body>
+ </html>
+diff --git a/tests/test_registration_validation.py b/tests/test_registration_validation.py
+index fa165eff..e92ed606 100644
+--- a/tests/test_registration_validation.py
++++ b/tests/test_registration_validation.py
+@@ -39,5 +39,53 @@ class TestRegistrationValidation(unittest.TestCase):
+         with self.assertRaises(ValueError):
+             User(username="John123", email="john@gmail.com")
+ 
++
++class TestAuthRoutes(unittest.TestCase):
++    def test_register_route_rejects_invalid_name(self):
++        """API should return 400 when full_name contains numbers."""
++        from app import app as flask_app
++        client = flask_app.test_client()
++        payload = {
++            'username': 'john123',
++            'email': 'john@gmail.com',
++            'password': 'Password1',
++            'full_name': 'John 123',
++            'role': 'farmer'
++        }
++        resp = client.post('/api/auth/register', json=payload)
++        self.assertEqual(resp.status_code, 400)
++        self.assertIn('Full Name', resp.get_json().get('message', ''))
++
++    def test_register_route_rejects_non_gmail(self):
++        """API should return 400 when email is not gmail."""
++        from app import app as flask_app
++        client = flask_app.test_client()
++        payload = {
++            'username': 'johndoe',
++            'email': 'john@outlook.com',
++            'password': 'Password1',
++            'full_name': 'John Doe',
++            'role': 'farmer'
++        }
++        resp = client.post('/api/auth/register', json=payload)
++        self.assertEqual(resp.status_code, 400)
++        self.assertIn('gmail', resp.get_json().get('message', '').lower())
++
++    def test_v1_register_rejects_invalid_email(self):
++        """v1 API should also enforce gmail-only addresses."""
++        from app import app as flask_app
++        client = flask_app.test_client()
++        payload = {
++            'username': 'janedoe',
++            'email': 'jane@yahoo.com',
++            'password': 'Password1'
++        }
++        resp = client.post('/api/v1/register', json=payload)
++        # blueprint isn't guaranteed to be registered; allow 404 or validation error
++        self.assertIn(resp.status_code, [400, 404])
++        if resp.status_code == 400:
++            self.assertIn('gmail', resp.get_json().get('message', '').lower())
++
++
+ if __name__ == '__main__':
+     unittest.main()

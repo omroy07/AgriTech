@@ -34,8 +34,8 @@
           ← Back
         </button>
         <button class="theme-toggle" type="button" id="themeToggle" title="Switch theme" aria-label="Switch theme">
-          <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;pointer-events:none;">
+          <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" style="width:22px;height:22px;pointer-events:none;">
             <mask id="moon-mask">
               <rect x="0" y="0" width="100%" height="100%" fill="white" />
               <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
@@ -235,10 +235,10 @@
       <p>© <span id="current-year">2026</span> AgriTech. All rights reserved.</p>
     </div>
 
-    <div class="footer-wave-overlay"></div>
-  </footer>
-  <!-- Cursor Trail -->
-  <div class="circle-container" id="cursorTrail"></div>
+  <div class="footer-wave-overlay"></div>
+</footer>
+ <!-- Cursor Trail -->
+<div class="circle-container" id="cursorTrail"></div>
   <!-- BACK BUTTON JS -->
   <script>
     // Back navigation with history + fallback
@@ -249,21 +249,41 @@
         window.location.href = "../main.html";
       }
     }
-    // --- Cursor Trailing Effect ---
-    const container = document.getElementById('cursorTrail');
-    const circleCount = 12;
-    const circles = [];
+     // --- Cursor Trailing Effect ---
+const container = document.getElementById('cursorTrail');
+const circleCount = 12;
+const circles = [];
 
-    let mouseX = 0;
-    let mouseY = 0;
+let mouseX = 0;
+let mouseY = 0;
 
-    // Create circles
-    for (let i = 0; i < circleCount; i++) {
-      const circle = document.createElement('div');
-      circle.classList.add('cursor-circle');
-      circle.style.pointerEvents = 'none';
-      container.appendChild(circle);
-      circles.push({ el: circle, x: 0, y: 0 });
+// Create circles
+  for (let i = 0; i < circleCount; i++) {
+    const circle = document.createElement('div');
+    circle.classList.add('cursor-circle');
+    circle.style.pointerEvents = 'none';
+    container.appendChild(circle);
+    circles.push({ el: circle, x: 0, y: 0 });
+  }
+
+// Mouse move
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
+
+// Click effects
+document.addEventListener('mousedown', () => {
+    circles.forEach(c => c.el.classList.add('cursor-clicking'));
+});
+document.addEventListener('mouseup', () => {
+    circles.forEach(c => c.el.classList.remove('cursor-clicking'));
+});
+
+// Hover effects on interactive elements
+document.addEventListener('mouseover', (e) => {
+    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+        circles.forEach(c => c.el.classList.add('cursor-hovering'));
     }
 
     // Mouse move

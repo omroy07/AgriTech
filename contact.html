@@ -5,14 +5,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact Us - AgriTech</title>
-  <link rel="stylesheet" href="contact.css">
-  <!-- our new fix styles -->
-  <!-- <link rel="stylesheet" href="contact.css"> -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/logo.png">
 
+  <!-- Prevent theme flash on page load -->
+  <script>
+    (function () {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+    })();
+  </script>
+
+    <link rel="stylesheet" href="contact.css">
   <style>
     :root {
       --primary-green: #2e7d32;
@@ -127,26 +134,6 @@
       font-size: 1.25rem;
       font-weight: 700;
       color: white;
-    }
-
-    .theme-toggle {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: white;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.2rem;
-      transition: all 0.3s ease;
-    }
-
-    .theme-toggle:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: rotate(15deg);
     }
 
     /* --- HERO ADJUSTED --- */
@@ -374,8 +361,27 @@
           <i class="fas fa-seedling"></i>
           <span>AgriTech</span>
         </div>
-        <button class="theme-toggle" id="themeToggle">
-          <i class="fas fa-sun"></i>
+        <!-- Animated Sun/Moon Toggle -->
+        <button class="theme-toggle" type="button"
+          id="themeToggle" title="Switch to dark mode" aria-label="Switch to dark mode">
+          <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <mask id="moon-mask">
+              <rect x="0" y="0" width="100%" height="100%" fill="white" />
+              <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
+            </mask>
+            <circle class="sun-core" cx="12" cy="12" r="7" fill="currentColor" mask="url(#moon-mask)" />
+            <g class="sun-rays" stroke="currentColor">
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </g>
+          </svg>
         </button>
       </div>
     </header>
@@ -662,28 +668,7 @@ document.querySelectorAll(".faq-question").forEach(button => {
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
   });
 
-  // --- THEME TOGGLE (CSS-ALIGNED) ---
-  const themeToggle = document.getElementById('themeToggle');
-  const themeIcon = themeToggle.querySelector('i');
   const body = document.body;
-
-  // Load saved theme
-  const savedTheme = localStorage.getItem('agritech-theme');
-
-  if (savedTheme === 'dark') {
-    body.classList.add('dark-mode');
-    themeIcon.className = 'fas fa-moon';
-  } else {
-    body.classList.remove('dark-mode');
-    themeIcon.className = 'fas fa-sun';
-  }
-
-  themeToggle.addEventListener('click', () => {
-    const isDark = body.classList.toggle('dark-mode');
-
-    localStorage.setItem('agritech-theme', isDark ? 'dark' : 'light');
-    themeIcon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
-  });
 
   // --- MESSAGE CHARACTER COUNTER ---
   const messageInput = document.getElementById('message');

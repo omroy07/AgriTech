@@ -35,8 +35,8 @@ class FertigationService:
             n_deficit = max(0, 100.0 - soil_test.nitrogen)
 
         # 2. Evaporation Rate Impact (Weather Correction)
-        # Fetch latest weather for the zone's farm location (mocked/simplified)
-        weather = WeatherService.get_latest_weather("Farm_Location") # Placeholder
+        # FIX: Fetch latest weather for the zone's specific micro-climate
+        weather = WeatherService.get_latest_weather("Zone_" + str(zone_id))
         temp = weather.temperature if weather else 25.0
         humidity = weather.humidity if weather else 50.0
         
@@ -113,11 +113,15 @@ class FertigationService:
         zone.fertigation_valve_status = ValveStatus.OPEN.value
         
         # Log the injection
+        # FIX: Calculate volume based on zone capacity and moisture deficit
+        moisture_def = max(0, zone.moisture_threshold_max - 40.0) # Mock current moisture 40
+        calc_volume = 100.0 * (moisture_def / 10.0)
+        
         log = FertigationLog(
             zone_id=zone.id,
             injectant_type="N-MIX",
             concentration_ppm=target_concentration,
-            volume_liters=100.0, # Placeholder volume
+            volume_liters=calc_volume,
             washout_risk_score=risk_score
         )
         db.session.add(log)

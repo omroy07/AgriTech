@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <link rel="icon" type="image/png" href="../../images/logo.png" />
 
-<head>
-  <link rel="icon" type="image/png" href="../../images/logo.png" />
-
-  <link rel="icon" type="image/png" href="/images/logo.png">
-  <meta charset="UTF-8" />
-  <title>Crop Recommendation Result</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <script src="../../static/script.js"></script>
+   <link rel="icon" type="image/png" href="/images/logo.png">
+    <meta charset="UTF-8" />
+    <title>Crop Recommendation Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <script src="../../static/script.js"></script>
 
   <!-- Prevent theme flash on page load -->
   <script>
@@ -23,53 +27,93 @@
     })();
   </script>
 
-  <style>
-    /* ================= THEME VARIABLES ================= */
+    <style>
+/* ================= THEME VARIABLES ================= */
 
-    /* Light Theme */
-    :root {
-      --color-brand: #0cb642;
-      --color-highlight: #4caf50;
-      --color-gradient: linear-gradient(135deg, #0cb642, #1e6f67);
+/* Light Theme */
+:root {
+  --color-brand: #0cb642;
+  --color-highlight: #4caf50;
+  --color-gradient: linear-gradient(135deg, #0cb642, #1e6f67);
 
-      --bg-page: #f5f9ff;
-      --bg-card: #ffffff;
-      --bg-header: rgba(255, 255, 255, 0.9);
-      --bg-secondary:#f8fafc;
-      --bg-tertiary: #b9c4d4;
+  --bg-page: #f5f9ff;
+  --bg-card: #ffffff;
+  --bg-header: rgba(255, 255, 255, 0.9);
 
-      --text-primary: #1e2f1e;
-      --text-secondary: #64748b;
+  --text-primary: #1e2f1e;
+  --text-secondary: #64748b;
 
-      --border-color: #e2e8f0;
-      --shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  --border-color: #e2e8f0;
+  --shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 
-      --radius: 14px;
-      --radius-lg: 22px;
+  --radius: 14px;
+  --radius-lg: 22px;
 
-      --transition: 0.3s ease;
-    }
+  --transition: 0.3s ease;
+}
 
-    /* Dark Theme */
-    [data-theme="dark"] {
-      --bg-page: #0f172a;
-      --bg-card: #1e293b;
-      --bg-header: rgba(15, 23, 42, 0.9);
-      --bg-secondary: #0b1220;
-      --bg-tertiary: #152b46;
-      --text-primary: #f1f5f9;
-      --text-secondary: #94a3b8;
+/* Dark Theme */
+[data-theme="dark"] {
+  --bg-page: #0f172a;
+  --bg-card: #1e293b;
+  --bg-header: rgba(15, 23, 42, 0.9);
 
-      --border-color: #334155;
-      --shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-    }
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
 
-    /* ================= RESET ================= */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  --border-color: #334155;
+  --shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* ================= RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ================= BASE ================= */
+body {
+  font-family: "Inter", "Poppins", sans-serif;
+  font-size: 16px;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+/* ================= TYPOGRAPHY ================= */
+h1 {
+  font-size: 1.9rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+/* ================= NAVBAR ================= */
+.sticky-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: var(--bg-header);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  z-index: 100;
+}
 
     /* ================= BASE ================= */
     body {
@@ -82,378 +126,267 @@
       padding-top: 80px;
     }
 
-    /* ================= TYPOGRAPHY ================= */
-    h1 {
-      font-size: 1.9rem;
-      font-weight: 700;
-    }
-
-    h2 {
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
-
-    h3 {
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
-
-    p {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-    }
-
-    /* ================= NAVBAR ================= */
-    .sticky-header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: var(--bg-header);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      z-index: 100;
-    }
-
-    .navbar {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-    }
-
-    .logo img {
-      width: 38px;
-      height: 38px;
-    }
-
-    .logo-text {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--color-brand);
-    }
-
-    .nav-links {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-    }
-
-    .nav-links a {
-      font-size: 0.95rem;
-      text-decoration: none;
-      color: var(--text-primary);
-      transition: var(--transition);
-    }
-
-    .nav-links a:hover {
-      color: var(--color-brand);
-    }
-
-    /* ================= LAYOUT ================= */
-    .container {
-      max-width: 1200px;
-      margin: 1.5rem auto;
-      padding: 0 2rem;
-    }
-
-    .main-layout {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 40px;
-      padding: 40px 0;
-    }
-
-    /* ================= RESULT CARD ================= */
-    .result-card {
-      background: var(--bg-card);
-      border-radius: var(--radius-lg);
-      padding: 40px;
-      text-align: center;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border-color);
-      margin-top: 30px;
-    }
-
-    .success-icon {
-      width: 50px;
-      height: 50px;
-      margin: 0 auto 20px;
-      background: var(--color-highlight);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 20px;
-    }
-
-    .result-value {
-      font-size: 2.4rem;
-      font-weight: 700;
-      color: var(--color-highlight);
-      margin: 15px 0;
-    }
-
-    .result-stats {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 25px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border-color);
-    }
-
-    .stat {
-      font-size: 0.9rem;
-    }
-
-    .stat-icon {
-      display: block;
-      margin-bottom: 5px;
-      color: var(--color-brand);
-    }
-
-    /* ================= BUTTONS ================= */
-    .action-buttons-group {
-      display: flex;
-      gap: 15px;
-      margin-top: 30px;
-    }
-
-    .action-buttons-group form,
-    .action-buttons-group a {
-      flex: 1;
-    }
-
-    .btn {
-      width: 100%;
-      padding: 14px;
-      border-radius: var(--radius);
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-      text-align: center;
-      text-decoration: none;
-      border: none;
-    }
-
-    .btn-primary {
-      background: var(--color-gradient);
-      color: white;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      border: 2px solid var(--color-brand);
-      color: var(--color-brand);
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow);
-    }
-
-    /* ================= SIDEBAR ================= */
-    .yield-insights {
-      background: var(--bg-card);
-      border-radius: var(--radius-lg);
-      padding: 30px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border-color);
-    }
-
-    .yield-insights h3 {
-      margin-bottom: 20px;
-      color: var(--color-brand);
-    }
-
-    .yield-insights ul {
-      list-style: none;
-    }
-
-    .yield-insights li {
-      padding: 12px;
-      margin-bottom: 10px;
-      border-radius: var(--radius);
-      background: rgba(76, 175, 80, 0.05);
-      font-size: 0.9rem;
-    }
-
-    /* Animated Theme Toggle  */
-.theme-toggle {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color, #d1d5db);
-  cursor: pointer;
-  padding: 0;
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  border-radius: 50%;
-  color: var(--text-primary, #111827);
-  display: inline-flex;
+.logo {
+  display: flex;
   align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logo img {
+  width: 38px;
+  height: 38px;
+}
+
+.logo-text {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-brand);
+}
+
+.nav-links {
+  display: flex;
   justify-content: center;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-  flex-shrink: 0;
-  align-self: center;
-  box-shadow: none !important;
-}
-
-.theme-toggle:hover {
-  background-color: var(--bg-secondary, #f3f4f6);
-  border-color: var(--primary-green, #16a34a);
-}
-
-.theme-icon {
-  width: 22px;
-  height: 22px;
-  overflow: visible;
-  transition: transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
-  display: block;
-}
-
-.sun-core {
-  transform-origin: center;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.sun-rays {
-  transform-origin: center;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
-}
-
-.moon-bite {
-  transform-origin: center;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Light mode → Sun */
-[data-theme="light"] .theme-icon {
-  transform: rotate(0deg);
-}
-
-[data-theme="light"] .sun-core {
-  transform: scale(1);
-}
-
-[data-theme="light"] .sun-rays {
-  transform: scale(1.1);
-  opacity: 1;
-}
-
-[data-theme="light"] .moon-bite {
-  transform: translate(20px, -20px);
-}
-
-/* Dark mode → Moon */
-[data-theme="dark"] .theme-icon {
-  transform: rotate(-10deg);
-}
-
-[data-theme="dark"] .sun-core {
-  transform: scale(1.4);
-}
-
-[data-theme="dark"] .sun-rays {
-  transform: scale(0.1);
-  opacity: 0;
-}
-
-[data-theme="dark"] .moon-bite {
-  transform: translate(5px, -1.5px) scale(0.6);
-}
-
-    /* ================= FOOTER ================= */
-    .site-footer {
-  background: linear-gradient(135deg, #2e7d32, #66bb6a);
-  color: white;
-  padding: 3rem 1.5rem;
-  margin-top: auto;
-}
-
-.footer-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
 }
 
-.footer-links h4 {
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  display: inline-block;
-  padding-bottom: 5px;
-}
-
-.footer-links ul {
-  list-style: none;
-}
-
-.footer-links a {
-  color: rgba(255, 255, 255, 0.8);
+.nav-links a {
+  font-size: 0.95rem;
   text-decoration: none;
-  display: block;
-  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  transition: var(--transition);
 }
 
-.footer-links a:hover {
-  color: white;
-  text-decoration: underline;
+.nav-links a:hover {
+  color: var(--color-brand);
 }
 
-.social-media {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
+/* ================= LAYOUT ================= */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
 
-.social-media a {
-  width: 35px;
-  height: 35px;
-  background: rgba(255, 255, 255, 0.2);
+.main-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  padding: 40px 0;
+}
+
+/* ================= RESULT CARD ================= */
+.result-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+  margin-top: 30px;
+}
+
+.success-icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 20px;
+  background: var(--color-highlight);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
   color: white;
-  text-decoration: none;
+  font-size: 20px;
 }
 
-.footer-bottom {
-  text-align: center;
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+.result-value {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--color-highlight);
+  margin: 15px 0;
+}
+
+.result-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.stat {
   font-size: 0.9rem;
 }
 
-.footer-bottom p {
-  color: var(--text-primary);
+.stat-icon {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--color-brand);
 }
 
-/* Custom Scrollbar for Sidebar */
-html::-webkit-scrollbar {
-  width: 8px;
+/* ================= BUTTONS ================= */
+.action-buttons-group {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
 }
 
-html::-webkit-scrollbar-track {
-  background: var(--bg-tertiary);
-  border-radius: 10px;
+.action-buttons-group form,
+.action-buttons-group a {
+  flex: 1;
 }
 
-html::-webkit-scrollbar-thumb {
-  background: #80eeae;
-  border-radius: 10px;
+.btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+  text-decoration: none;
+  border: none;
 }
+
+.btn-primary {
+  background: var(--color-gradient);
+  color: white;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 2px solid var(--color-brand);
+  color: var(--color-brand);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+/* ================= SIDEBAR ================= */
+.yield-insights {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+}
+
+.yield-insights h3 {
+  margin-bottom: 20px;
+  color: var(--color-brand);
+}
+
+.yield-insights ul {
+  list-style: none;
+}
+
+.yield-insights li {
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: var(--radius);
+  background: rgba(76, 175, 80, 0.05);
+  font-size: 0.9rem;
+}
+
+/* ================= FOOTER ================= */
+.footer {
+  margin-top: 60px;
+  padding: 30px 0;
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+}
+
+.footer-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1024px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .result-value {
+    font-size: 1.8rem;
+  }
+
+  .action-buttons-group {
+    flex-direction: column;
+  }
+
+  .nav-links {
+    display: none;
+  }
+}
+    </style>
+    </head>
+  <body>
+   <header class="sticky-header">
+  <div class="container header-content navbar">
+
+    <!-- Left: Logo -->
+    <a href="/" class="logo">
+      <img src="/images/logo.png" alt="AgriTech Logo">
+      <span class="logo-text">AgriTech</span>
+    </a>
+
+    <!-- Center: Navigation -->
+    <nav class="nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/community_forum.html">Community Forum</a>
+      <a href="/faq.html">FAQ</a>
+      <a href="/news.html">News</a>
+    </nav>
+
+    <!-- Animated Sun/Moon Toggle -->
+    <button class="theme-toggle" type="button" id="themeToggle" title="Switch to dark mode"
+      aria-label="Switch to dark mode">
+      <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round">
+        <mask id="moon-mask">
+          <rect x="0" y="0" width="100%" height="100%" fill="white" />
+          <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
+        </mask>
+        <circle class="sun-core" cx="12" cy="12" r="7" fill="currentColor" mask="url(#moon-mask)" />
+        <g class="sun-rays" stroke="currentColor">
+          <line x1="12" y1="1" x2="12" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="23" />
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+          <line x1="1" y1="12" x2="3" y2="12" />
+          <line x1="21" y1="12" x2="23" y2="12" />
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </g>
+      </svg>
+    </button>
+
+  </div>
+</header>
+
+
+    <main class="main-layout container">
+      <div class="content-left">
+        
+        <div class="header">
+          <h1>Optimal Crop yield prediction 🎯</h1>
+          <p>
+            Based on your provided soil and climate data, the following crop is
+            highly recommended for maximum yield and sustainability.
+          </p>
+        </div>
 
 html::-webkit-scrollbar-thumb:hover {
   background: #94ffab;
@@ -655,25 +588,18 @@ html::-webkit-scrollbar-thumb:hover {
           <li><a href="chat.html">AI Assistant</a></li>
         </ul>
       </div>
-      <div class="footer-links">
-        <h4>Smart Tools</h4>
-        <ul>
-          <li><a href="crop_recommendation/templates/index.html">Crop Recommendation</a></li>
-          <li><a href="disease.html">Disease Detector</a></li>
-          <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© <span id="currentYear"></span>2026 AgriTech. All rights reserved.</p>
-    </div>
-  </footer>
-  <!-- Cursor Trail -->
-  <div class="circle-container" id="cursorTrail"></div>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">© 2026 AgriTech. Empowering farmers with intelligent agriculture solutions.</p>
+        </div>
+    </footer>
+    <!-- Cursor Trail -->
+<div class="circle-container" id="cursorTrail"></div>
 
-  <script src="../../theme.js"></script>
-  <script>
-    // Self-contained theme toggle - no external dependencies
+<script src="../../theme.js"></script>
+<script>
+  // Self-contained theme toggle - no external dependencies
     (function () {
       const btn = document.getElementById('themeToggle');
       if (!btn) { console.error('themeToggle button not found!'); return; }
@@ -698,15 +624,15 @@ html::-webkit-scrollbar-thumb:hover {
       });
     })();
 
-    function createConfetti() {
-      const colors = ["#4caf50", "#2d8f85", "#66bb6a", "#81c784"];
-      const style = document.createElement("style");
-      style.textContent = `@keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } }`;
-      document.head.appendChild(style);
+      function createConfetti() {
+        const colors = ["#4caf50", "#2d8f85", "#66bb6a", "#81c784"];
+        const style = document.createElement("style");
+        style.textContent = `@keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } }`;
+        document.head.appendChild(style);
 
-      for (let i = 0; i < 50; i++) {
-        const confetti = document.createElement("div");
-        confetti.style.cssText = `
+        for (let i = 0; i < 50; i++) {
+          const confetti = document.createElement("div");
+          confetti.style.cssText = `
             position: fixed;
             width: 10px;
             height: 10px;
@@ -719,24 +645,23 @@ html::-webkit-scrollbar-thumb:hover {
         document.body.appendChild(confetti);
         setTimeout(() => { confetti.remove(); }, 5000);
       }
-    }
-    setTimeout(createConfetti, 1000);
+      setTimeout(createConfetti, 1000);
+      
+                  // --- Cursor Trailing Effect ---
+const container = document.getElementById('cursorTrail');
+const circleCount = 12;
+const circles = [];
 
-    // --- Cursor Trailing Effect ---
-    const container = document.getElementById('cursorTrail');
-    const circleCount = 12;
-    const circles = [];
+let mouseX = 0;
+let mouseY = 0;
 
-    let mouseX = 0;
-    let mouseY = 0;
-
-    // Create circles
-    for (let i = 0; i < circleCount; i++) {
-      const circle = document.createElement('div');
-      circle.classList.add('cursor-circle');
-      container.appendChild(circle);
-      circles.push({ el: circle, x: 0, y: 0 });
-    }
+// Create circles
+for (let i = 0; i < circleCount; i++) {
+    const circle = document.createElement('div');
+    circle.classList.add('cursor-circle');
+    container.appendChild(circle);
+    circles.push({ el: circle, x: 0, y: 0 });
+}
 
     // Mouse move
     document.addEventListener('mousemove', (e) => {
