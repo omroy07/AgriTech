@@ -21,7 +21,7 @@ const schemesDatabase = [
         id: 2,
         title: "NABARD Refinance Scheme",
         category: "credit",
-        state: "national", 
+        state: "national",
         gender: "all",
         description: "Provides refinance to banks for agricultural and rural development activities through various schemes.",
         benefits: [
@@ -40,7 +40,7 @@ const schemesDatabase = [
         title: "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
         category: "subsidy",
         state: "national",
-        gender: "all", 
+        gender: "all",
         description: "Direct income support to farmers with landholding up to 2 hectares to supplement financial needs.",
         benefits: [
             "₹6,000 per year in three installments",
@@ -123,7 +123,7 @@ const schemesDatabase = [
         id: 8,
         title: "Mission for Integrated Development of Horticulture (MIDH)",
         category: "subsidy",
-        state: "national", 
+        state: "national",
         gender: "all",
         description: "Holistic development of horticulture sector covering fruits, vegetables, root & tuber crops, mushrooms, spices, flowers, aromatic plants, coconut and cashew.",
         benefits: [
@@ -260,7 +260,7 @@ const schemesDatabase = [
     {
         id: 16,
         title: "Karnataka Mahila Kisan Empowerment",
-        category: "women", 
+        category: "women",
         state: "karnataka",
         gender: "female",
         description: "Empowers women farmers through skill development, financial support, and leadership training.",
@@ -298,7 +298,7 @@ const schemesDatabase = [
         title: "Tamil Nadu Comprehensive Crop Insurance Scheme",
         category: "insurance",
         state: "tamil-nadu",
-        gender: "all", 
+        gender: "all",
         description: "State-sponsored crop insurance providing comprehensive coverage against natural calamities and pests.",
         benefits: [
             "Higher sum insured than PMFBY",
@@ -313,7 +313,7 @@ const schemesDatabase = [
         id: 19,
         title: "Tamil Nadu Women Farmers Collectivization",
         category: "women",
-        state: "tamil-nadu", 
+        state: "tamil-nadu",
         gender: "female",
         description: "Promotes collectivization of women farmers into groups for better access to resources and markets.",
         benefits: [
@@ -388,7 +388,7 @@ const schemesDatabase = [
         description: "Specialized skill development programs focusing on enhancing technical skills of women in agriculture.",
         benefits: [
             "Technical skill enhancement",
-            "Entrepreneurship development", 
+            "Entrepreneurship development",
             "Modern farming technique training",
             "Certification and placement support"
         ],
@@ -610,7 +610,7 @@ let currentGenderFilter = 'all';
 // DOM Elements
 const searchInput = document.getElementById('searchInput');
 const categoryFilter = document.getElementById('categoryFilter');
-const stateFilter = document.getElementById('stateFilter'); 
+const stateFilter = document.getElementById('stateFilter');
 const sortFilter = document.getElementById('sortFilter');
 const schemesContainer = document.getElementById('schemesContainer');
 const schemeCount = document.getElementById('schemeCount');
@@ -618,43 +618,10 @@ const loadingState = document.getElementById('loadingState');
 const noResults = document.getElementById('noResults');
 const lastUpdated = document.getElementById('lastUpdated');
 
-// Theme Management
-let isDarkMode = localStorage.getItem('darkMode') === 'true';
-
-function toggleTheme() {
-    isDarkMode = !isDarkMode;
-    document.body.classList.toggle('dark-mode', isDarkMode);
-    localStorage.setItem('darkMode', isDarkMode);
-    
-    const themeBtn = document.querySelector('.theme-btn');
-    const themeIcon = document.querySelector('.theme-icon');
-    
-    if (isDarkMode) {
-        themeIcon.textContent = '🌙';
-        themeBtn.childNodes[1].textContent = ' Dark Mode';
-    } else {
-        themeIcon.textContent = '🌞';
-        themeBtn.childNodes[1].textContent = ' Light Mode';
-    }
-}
-
-// Initialize theme
-function initializeTheme() {
-    if (isDarkMode) {
-        document.body.classList.add('dark-mode');
-        const themeIcon = document.querySelector('.theme-icon');
-        const themeBtn = document.querySelector('.theme-btn');
-        if (themeIcon && themeBtn) {
-            themeIcon.textContent = '🌙';
-            themeBtn.childNodes[1].textContent = ' Dark Mode';
-        }
-    }
-}
-
 // Filter by gender
 function filterByGender(gender) {
     currentGenderFilter = gender;
-    
+
     // Update active button
     document.querySelectorAll('.gender-btn').forEach(btn => {
         btn.classList.remove('active');
@@ -663,7 +630,7 @@ function filterByGender(gender) {
     if (activeBtn) {
         activeBtn.classList.add('active');
     }
-    
+
     applyFilters();
 }
 
@@ -671,7 +638,7 @@ function filterByGender(gender) {
 function toggleView(view) {
     currentView = view;
     schemesContainer.className = `schemes-container ${view}-view`;
-    
+
     document.querySelectorAll('.view-btn').forEach(btn => {
         btn.classList.remove('active');
     });
@@ -679,7 +646,7 @@ function toggleView(view) {
     if (activeBtn) {
         activeBtn.classList.add('active');
     }
-    
+
     renderSchemes();
 }
 
@@ -688,21 +655,21 @@ function applyFilters() {
     const searchTerm = searchInput.value.toLowerCase();
     const categoryValue = categoryFilter.value;
     const stateValue = stateFilter.value;
-    
+
     filteredSchemes = schemesDatabase.filter(scheme => {
-        const matchesSearch = !searchTerm || 
+        const matchesSearch = !searchTerm ||
             scheme.title.toLowerCase().includes(searchTerm) ||
             scheme.description.toLowerCase().includes(searchTerm) ||
             scheme.benefits.some(benefit => benefit.toLowerCase().includes(searchTerm));
-            
+
         const matchesCategory = !categoryValue || scheme.category === categoryValue;
         const matchesState = !stateValue || scheme.state === stateValue;
-        const matchesGender = currentGenderFilter === 'all' || 
+        const matchesGender = currentGenderFilter === 'all' ||
             scheme.gender === 'all' || scheme.gender === currentGenderFilter;
-        
+
         return matchesSearch && matchesCategory && matchesState && matchesGender;
     });
-    
+
     sortSchemes();
     renderSchemes();
 }
@@ -710,7 +677,7 @@ function applyFilters() {
 // Sort schemes
 function sortSchemes() {
     const sortValue = sortFilter.value;
-    
+
     filteredSchemes.sort((a, b) => {
         switch (sortValue) {
             case 'name':
@@ -731,12 +698,12 @@ function renderSchemes() {
     if (loadingState) {
         loadingState.style.display = 'none';
     }
-    
+
     // Update scheme count
     if (schemeCount) {
         schemeCount.textContent = `(${filteredSchemes.length} schemes found)`;
     }
-    
+
     if (filteredSchemes.length === 0) {
         if (schemesContainer) {
             schemesContainer.style.display = 'none';
@@ -746,20 +713,20 @@ function renderSchemes() {
         }
         return;
     }
-    
+
     if (noResults) {
         noResults.style.display = 'none';
     }
     if (schemesContainer) {
         schemesContainer.style.display = 'grid';
     }
-    
+
     if (!schemesContainer) return;
-    
+
     schemesContainer.innerHTML = filteredSchemes.map(scheme => {
         const categoryNames = {
             'credit': 'Credit & Finance',
-            'subsidy': 'Subsidy Schemes', 
+            'subsidy': 'Subsidy Schemes',
             'insurance': 'Insurance',
             'technology': 'Technology & Equipment',
             'training': 'Training & Development',
@@ -767,12 +734,12 @@ function renderSchemes() {
             'youth': 'Youth & Startup',
             'organic': 'Organic Farming'
         };
-        
+
         const stateNames = {
             'national': 'National',
             'andhra-pradesh': 'Andhra Pradesh',
             'assam': 'Assam',
-            'bihar': 'Bihar', 
+            'bihar': 'Bihar',
             'chhattisgarh': 'Chhattisgarh',
             'gujarat': 'Gujarat',
             'haryana': 'Haryana',
@@ -788,10 +755,10 @@ function renderSchemes() {
             'uttar-pradesh': 'Uttar Pradesh',
             'west-bengal': 'West Bengal'
         };
-        
-        const genderDisplay = scheme.gender === 'all' ? 'All Farmers' : 
-                            scheme.gender === 'male' ? 'Male Farmers' : 'Women Farmers';
-        
+
+        const genderDisplay = scheme.gender === 'all' ? 'All Farmers' :
+            scheme.gender === 'male' ? 'Male Farmers' : 'Women Farmers';
+
         return `
             <div class="scheme-card" data-id="${scheme.id}">
                 <div class="scheme-header">
@@ -809,12 +776,12 @@ function renderSchemes() {
                     <div class="scheme-benefits">
                         <h4>Key Benefits:</h4>
                         <ul class="benefits-list">
-                            ${scheme.benefits.slice(0, 3).map(benefit => 
-                                `<li>${benefit}</li>`
-                            ).join('')}
-                            ${scheme.benefits.length > 3 ? 
-                                `<li><strong>+${scheme.benefits.length - 3} more benefits</strong></li>` : ''
-                            }
+                            ${scheme.benefits.slice(0, 3).map(benefit =>
+            `<li>${benefit}</li>`
+        ).join('')}
+                            ${scheme.benefits.length > 3 ?
+                `<li><strong>+${scheme.benefits.length - 3} more benefits</strong></li>` : ''
+            }
                         </ul>
                     </div>
                 </div>
@@ -835,7 +802,7 @@ function formatDate(dateString) {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-IN', {
         year: 'numeric',
-        month: 'short', 
+        month: 'short',
         day: 'numeric'
     });
 }
@@ -851,7 +818,7 @@ function resetFilters() {
     if (categoryFilter) categoryFilter.selectedIndex = 0;
     if (stateFilter) stateFilter.selectedIndex = 0;
     if (sortFilter) sortFilter.selectedIndex = 0;
-    
+
     // Reset gender filter to 'all'
     filterByGender('all');
 }
@@ -862,10 +829,7 @@ function initialize() {
     if (lastUpdated) {
         lastUpdated.textContent = new Date().toLocaleDateString('en-IN');
     }
-    
-    // Initialize theme
-    initializeTheme();
-    
+
     // Add event listeners
     if (searchInput) {
         searchInput.addEventListener('input', debounce(applyFilters, 300));
@@ -879,7 +843,7 @@ function initialize() {
     if (sortFilter) {
         sortFilter.addEventListener('change', applyFilters);
     }
-    
+
     // Initial render with delay to show loading state
     setTimeout(() => {
         applyFilters();
@@ -900,12 +864,12 @@ function debounce(func, wait) {
 }
 
 // Keyboard navigation support
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     // ESC key to reset filters
     if (e.key === 'Escape') {
         resetFilters();
     }
-    
+
     // F key to focus search (when not in input)
     if (e.key === 'f' && e.target.tagName !== 'INPUT') {
         e.preventDefault();
@@ -913,11 +877,11 @@ document.addEventListener('keydown', function(e) {
             searchInput.focus();
         }
     }
-    
+
     // T key to toggle theme
     if (e.key === 't' && e.target.tagName !== 'INPUT') {
         e.preventDefault();
-        toggleTheme();
+        window.themeManager?.toggleTheme();
     }
 });
 
@@ -936,7 +900,7 @@ if ('IntersectionObserver' in window) {
         rootMargin: '50px',
         threshold: 0.1
     };
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -944,7 +908,7 @@ if ('IntersectionObserver' in window) {
             }
         });
     }, observerOptions);
-    
+
     // Observe scheme cards when they're rendered
     function observeSchemeCards() {
         const cards = document.querySelectorAll('.scheme-card');
@@ -952,7 +916,7 @@ if ('IntersectionObserver' in window) {
             observer.observe(card);
         });
     }
-    
+
     // Call this after rendering schemes
     setTimeout(observeSchemeCards, 600);
 }
