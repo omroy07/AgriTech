@@ -109,7 +109,10 @@ body {
   left: 50%;
   transform: translateX(-50%);
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 2.5rem;
+  border: none;
 }
 
 .nav-links a {
@@ -148,50 +151,6 @@ body {
 
 .nav-links a:hover::after {
   width: 100%;
-}
-
-.theme-toggle {
-  background: var(--bg-card, white);
-  border: 1px solid var(--border-color, #e2e8f0);
-  color: var(--text-secondary, #4a5568);
-  padding: 8px 14px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 2px 8px var(--shadow-light);
-  transition: var(--transition);
-  z-index: 10;
-}
-
-[data-theme="dark"] .theme-toggle {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #e2e8f0;
-}
-
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px var(--shadow-medium);
-}
-
-[data-theme="dark"] .theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.theme-toggle .moon-icon {
-  display: none;
-}
-
-[data-theme="dark"] .theme-toggle .sun-icon {
-  display: none;
-}
-
-[data-theme="dark"] .theme-toggle .moon-icon {
-  display: inline;
 }
 
 .hamburger {

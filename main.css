@@ -224,60 +224,6 @@ body {
   box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
 }
 
-/* Theme Toggle - UPDATED FOR OPPOSITE COLORS */
-.theme-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-  background: rgba(0, 0, 0, 0.7);
-  border: 2px solid rgba(0, 0, 0, 0.8);
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.theme-toggle:hover {
-  background: rgba(0, 0, 0, 0.85);
-  transform: scale(1.1);
-}
-
-.theme-toggle i {
-  font-size: 1.2rem;
-  color: #ffd700;
-  transition: all 0.3s ease;
-}
-
-.moon-icon {
-  display: none;
-}
-
-[data-theme="dark"] .sun-icon {
-  display: none;
-}
-
-[data-theme="dark"] .moon-icon {
-  display: block;
-}
-
-/* Dark mode - white/light button */
-[data-theme="dark"] .theme-toggle {
-  background: rgba(255, 255, 255, 0.9);
-  border: 2px solid rgba(255, 255, 255, 1);
-}
-
-[data-theme="dark"] .theme-toggle:hover {
-  background: rgba(255, 255, 255, 1);
-  transform: scale(1.1);
-}
-
-[data-theme="dark"] .theme-toggle i {
-  color: #1a1a1a;
-}
-
 /* Mobile Menu Toggle */
 .mobile-menu-toggle {
   display: none;
@@ -675,6 +621,7 @@ button,
     box-shadow 0.25s ease,
     transform 0.2s ease;
 }
+
 .btn-green {
   display: inline-block;
   background: linear-gradient(135deg, #2e7d32, #4caf50);
@@ -687,6 +634,7 @@ button,
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
 }
+
 button:focus-visible,
 .nav-btn:focus-visible,
 .btn-green:focus-visible,
@@ -1187,7 +1135,7 @@ select.language-select:focus {
   }
 }
 
-  /* --- Cursor Trail Container --- */
+/* --- Cursor Trail Container --- */
 .circle-container {
   position: fixed;
   inset: 0;

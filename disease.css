@@ -6,10 +6,13 @@
   --bg-page: #f5f7fa;
   --bg-white: #ffffff;
   --bg-light: #f8fff8;
+  --bg-secondary: #f8fafc;
   --text-dark: #1e2f1e;
   --text-gray: #555;
+  --text-primary: #1e293b;
   --border: #e0e0e0;
   --border-soft: #e8f5e8;
+  --border-color: #e2e8f0;
   --shadow: 0 2px 8px rgba(0,0,0,0.08);
   --shadow-hover: 0 4px 16px rgba(0,0,0,0.12);
 }
@@ -21,10 +24,13 @@
   --bg-page: #0d1b2a;
   --bg-white: #1b263b;
   --bg-light: #243447;
+  --bg-secondary: #0b1220;
   --text-dark: #e0e1dd;
   --text-gray: #a8b0bd;
+  --text-primary: #e5e7eb;
   --border: #2d3e50;
   --border-soft: #2d3e50;
+  --border-color: #334155;
   --shadow: 0 2px 8px rgba(0,0,0,0.3);
   --shadow-hover: 0 4px 16px rgba(0,0,0,0.5);
 }
@@ -128,26 +134,88 @@ body {
   width: 100%;
 }
 
+/* Animated Theme Toggle  */
 .theme-toggle {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 20px;
-  background: linear-gradient(135deg, var(--color-brand), var(--color-accent));
-  color: white;
-  border: none;
-  border-radius: 50px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color, #d1d5db);
   cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  color: var(--text-primary, #111827);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  flex-shrink: 0;
+  align-self: center;
+  box-shadow: none !important;
 }
 
 .theme-toggle:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+  background-color: var(--bg-secondary, #f3f4f6);
+  border-color: var(--primary-green, #16a34a);
+}
+
+.theme-icon {
+  width: 22px;
+  height: 22px;
+  overflow: visible;
+  transition: transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  display: block;
+}
+
+.sun-core {
+  transform-origin: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sun-rays {
+  transform-origin: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+}
+
+.moon-bite {
+  transform-origin: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light mode → Sun */
+[data-theme="light"] .theme-icon {
+  transform: rotate(0deg);
+}
+
+[data-theme="light"] .sun-core {
+  transform: scale(1);
+}
+
+[data-theme="light"] .sun-rays {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+[data-theme="light"] .moon-bite {
+  transform: translate(20px, -20px);
+}
+
+/* Dark mode → Moon */
+[data-theme="dark"] .theme-icon {
+  transform: rotate(-10deg);
+}
+
+[data-theme="dark"] .sun-core {
+  transform: scale(1.4);
+}
+
+[data-theme="dark"] .sun-rays {
+  transform: scale(0.1);
+  opacity: 0;
+}
+
+[data-theme="dark"] .moon-bite {
+  transform: translate(5px, -1.5px) scale(0.6);
 }
 
 /* === HERO SECTION === */
@@ -156,9 +224,9 @@ body {
   position: relative;
   min-height: 90vh;
   padding-top: 100px;
-  background: linear-gradient(135deg, 
-    rgba(76, 175, 80, 0.05) 0%, 
-    rgba(102, 187, 106, 0.05) 100%);
+  background: linear-gradient(135deg,
+      rgba(76, 175, 80, 0.05) 0%,
+      rgba(102, 187, 106, 0.05) 100%);
   overflow: hidden;
 }
 
@@ -181,6 +249,7 @@ body {
     opacity: 0;
     transform: translateX(-30px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -203,8 +272,15 @@ body {
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 .hero-title {
@@ -259,7 +335,8 @@ body {
   flex-wrap: wrap;
 }
 
-.btn-primary, .btn-secondary {
+.btn-primary,
+.btn-secondary {
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -312,56 +389,78 @@ body {
 
 .float-icon {
   position: absolute;
-  font-size: 4rem; 
+  font-size: 4rem;
   animation: floatAround 8s ease-in-out infinite;
   animation-delay: var(--delay);
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
 }
 
-.float-icon:nth-child(1) { 
-  top: 10%; 
-  left: 0%; 
+.float-icon:nth-child(1) {
+  top: 10%;
+  left: 0%;
   --delay: 0s;
 }
 
-.float-icon:nth-child(2) { 
-  top: 15%; 
-  right: 5%; 
+.float-icon:nth-child(2) {
+  top: 15%;
+  right: 5%;
   --delay: 0.5s;
 }
 
-.float-icon:nth-child(3) { 
-  bottom: 25%; 
-  left: 5%; 
+.float-icon:nth-child(3) {
+  bottom: 25%;
+  left: 5%;
   --delay: 1s;
 }
 
-.float-icon:nth-child(4) { 
-  bottom: 20%; 
-  right: 0%; 
+.float-icon:nth-child(4) {
+  bottom: 20%;
+  right: 0%;
   --delay: 1.5s;
 }
 
-.float-icon:nth-child(5) { 
-  top: 50%; 
-  left: 50%; 
+.float-icon:nth-child(5) {
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   --delay: 2s;
 }
 
-.float-icon:nth-child(6) { 
-  top: 40%; 
-  left: 10%; 
+.float-icon:nth-child(6) {
+  top: 40%;
+  left: 10%;
   --delay: 2.5s;
 }
 
 @keyframes floatAround {
-  0%, 100% { 
-    transform: translateY(0) rotate(0deg); 
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
   }
-  50% { 
-    transform: translateY(-25px) rotate(5deg); 
+
+  50% {
+    transform: translateY(-25px) rotate(5deg);
   }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }
 
 @media (max-width: 1024px) {
@@ -395,7 +494,7 @@ body {
     width: 320px;
     height: 300px;
   }
-  
+
   .float-icon {
     display: none;
   }
@@ -569,7 +668,9 @@ body {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .no-results {
@@ -661,6 +762,7 @@ body {
     opacity: 0;
     transform: translateY(-50px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -724,8 +826,15 @@ body {
 }
 
 @keyframes breathe {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.08); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
 }
 
 #chatbotBtn:hover {
@@ -779,7 +888,8 @@ body {
     width: 100%;
   }
 
-  .btn-primary, .btn-secondary {
+  .btn-primary,
+  .btn-secondary {
     width: 100%;
     justify-content: center;
   }
