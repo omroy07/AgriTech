@@ -72,160 +72,224 @@
         </svg>
       </button>
 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AgriTech – Organic Farming</title>
+
+  <link rel="icon" type="image/png" href="images/logo.png">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <!-- Prevent theme flash on page load -->
+  <script>
+    (function () {
+      const saved = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
+      document.documentElement.setAttribute(
+        "data-theme",
+        saved || (prefersDark ? "dark" : "light"),
+      );
+    })();
+  </script>
+  <link rel="stylesheet" href="organic.css" />
+  <link rel="stylesheet" href="theme.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+  <div id="particles-js"></div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-progress" id="scrollProgress"></div>
   </div>
-</header>
 
-    <div class="main-wrapper">
-      <div class="page-hero">
-        <h1>🌿 Organic Farming Excellence</h1>
-        <p>
-          Discover sustainable agricultural practices that enhance soil health,
-          preserve ecosystems, and produce premium quality crops.
-        </p>
-      </div>
+  <header class="sticky-header">
+    <div class="container header-content navbar">
 
-      <main>
-        <section id="principles" class="animate-in">
-          <h2>🌿 Principles of Organic Farming</h2>
-          <ul>
-            <li><strong>Ecology</strong>: Work harmoniously with living systems and natural nutrient cycles</li>
-            <li><strong>Health</strong>: Sustain soil vitality, ecosystem balance, climate stability, and human well‑being</li>
-            <li><strong>Fairness</strong>: Foster equitable relationships between people and the environment</li>
-            <li><strong>Care</strong>: Practice responsible farming to protect future generations</li>
-          </ul>
-        </section>
+      <!-- Left: Logo -->
+      <a href="/" class="logo">
+        <img src="/images/logo.png" alt="AgriTech Logo">
+        <span class="logo-text">AgriTech</span>
+      </a>
 
-        <section id="step-by-step" class="animate-in">
-          <h2>✅ Complete Organic Farming Process</h2>
-          <div class="crop-grid">
-            <div class="crop-item">
-              <h3>1. 🔍 Site Assessment</h3>
-              <ul>
-                <li>Analyze plot characteristics: drainage patterns, soil depth</li>
-                <li>Comprehensive soil testing for pH levels</li>
-                <li>Enhance fertility using green manure</li>
-              </ul>
-            </div>
-            <div class="crop-item">
-              <h3>2. 🔄 Strategic Crop Planning</h3>
-              <ul>
-                <li>Select diverse crop varieties based on local microclimate</li>
-                <li>Design comprehensive rotation cycles (3–8 years)</li>
-                <li>Integrate nitrogen-fixing legumes</li>
-              </ul>
-            </div>
-            <div class="crop-item">
-              <h3>3. 💧 Soil Management</h3>
-              <ul>
-                <li>Deploy cover crops like clover and mustard</li>
-                <li>Enrich soil biology with premium vermicompost</li>
-                <li>Implement conservation agriculture</li>
-              </ul>
-            </div>
-            <div class="crop-item">
-              <h3>4. 🛡️ Pest Management (IPM)</h3>
-              <ul>
-                <li>Monitor pest populations systematically</li>
-                <li>Apply cultural controls: crop hygiene</li>
-                <li>Use botanical sprays from neem and garlic</li>
-              </ul>
-            </div>
-            <div class="crop-item">
-              <h3>5. 💧 Water Management</h3>
-              <ul>
-                <li>Construct rainwater harvesting bunds</li>
-                <li>Install precision drip irrigation systems</li>
-                <li>Maintain soil moisture using organic mulches</li>
-              </ul>
-            </div>
-            <div class="crop-item">
-              <h3>6. 📋 Certification</h3>
-              <ul>
-                <li>Develop comprehensive Organic System Plan (OSP)</li>
-                <li>Maintain meticulous records of inputs</li>
-                <li>Explore Participatory Guarantee Systems (PGS)</li>
-              </ul>
-            </div>
-          </div>
-        </section>
+      <!-- Center: Navigation -->
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blog</a>
+      </nav>
 
-        <section id="crop-details" class="animate-in">
-          <h2>🌾 Crop-Specific Organic Best Practices</h2>
-          <div class="crop-grid">
-            <div class="crop-item">
-              <h3>🍚 Rice (SRI Method)</h3>
-              <p>Transplant young seedlings at 8–12 days with optimized wide spacing. Use intermittent wetting techniques.</p>
-            </div>
-            <div class="crop-item">
-              <h3>🌾 Millets</h3>
-              <p>Cultivate these hardy, drought-resistant crops. Strategically intercrop with nitrogen-fixing legumes.</p>
-            </div>
-            <div class="crop-item">
-              <h3>🫘 Guar (Cluster Bean)</h3>
-              <p>Grow this heat-tolerant crop using farmyard manure combined with beneficial biofertilizers.</p>
-            </div>
-            <div class="crop-item">
-              <h3>🧵 Organic Cotton</h3>
-              <p>Integrate natural pest-repellent companion plants and apply targeted biofertilizers.</p>
-            </div>
-          </div>
-        </section>
+      <button class="theme-toggle" type="button" id="themeToggle" title="Switch theme" aria-label="Switch theme">
+        <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <mask id="moon-mask">
+            <rect x="0" y="0" width="100%" height="100%" fill="white" />
+            <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
+          </mask>
+          <circle class="sun-core" cx="12" cy="12" r="7" fill="currentColor" mask="url(#moon-mask)" />
+          <g class="sun-rays" stroke="currentColor">
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </g>
+        </svg>
+      </button>
 
-        <section id="case-study" class="animate-in">
-          <h2>📈 Success Story: Organic Wheat in Punjab</h2>
-          <p><strong>Sucha Singh Pabla's journey:</strong> Successfully transitioned 27 acres to certified organic wheat, achieving exceptional results.</p>
-          <div class="crop-grid" style="margin-top: 2rem;">
-            <div class="crop-item" style="border-left-color: #ff9800">
-              <h3>💰 Economic Impact</h3>
-              <p>Premium market price of ₹3,500 per quintal with ~50% improved profit margins.</p>
-            </div>
-            <div class="crop-item" style="border-left-color: #4caf50">
-              <h3>🌱 Environmental Benefits</h3>
-              <p>Healthier soil microbiome, improved air quality, and elimination of stubble burning.</p>
-            </div>
-            <div class="crop-item" style="border-left-color: #2196f3">
-              <h3>📉 Cost Optimization</h3>
-              <p>Substantial reduction in input costs through elimination of synthetic fertilizers.</p>
-            </div>
-          </div>
-        </section>
-      </main>
+    </div>
+  </header>
+
+  <div class="main-wrapper">
+    <div class="page-hero">
+      <h1>🌿 Organic Farming Excellence</h1>
+      <p>
+        Discover sustainable agricultural practices that enhance soil health,
+        preserve ecosystems, and produce premium quality crops.
+      </p>
     </div>
 
-    <footer class="site-footer">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <img src="images/logo.png" alt="AgriTech logo" style="height: 40px; border-radius: 6px;">
-            <h3>AgriTech</h3>
+    <main>
+      <section id="principles" class="animate-in">
+        <h2>🌿 Principles of Organic Farming</h2>
+        <ul>
+          <li><strong>Ecology</strong>: Work harmoniously with living systems and natural nutrient cycles</li>
+          <li><strong>Health</strong>: Sustain soil vitality, ecosystem balance, climate stability, and human well‑being
+          </li>
+          <li><strong>Fairness</strong>: Foster equitable relationships between people and the environment</li>
+          <li><strong>Care</strong>: Practice responsible farming to protect future generations</li>
+        </ul>
+      </section>
+
+      <section id="step-by-step" class="animate-in">
+        <h2>✅ Complete Organic Farming Process</h2>
+        <div class="crop-grid">
+          <div class="crop-item">
+            <h3>1. 🔍 Site Assessment</h3>
+            <ul>
+              <li>Analyze plot characteristics: drainage patterns, soil depth</li>
+              <li>Comprehensive soil testing for pH levels</li>
+              <li>Enhance fertility using green manure</li>
+            </ul>
           </div>
-          <p style="margin-top: 10px; font-size: 0.9rem;">Empowering India's Farming Future.</p>
-          <div class="social-media">
-            <a  href="https://instagram.com" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
-            <a href="https://github.com" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+          <div class="crop-item">
+            <h3>2. 🔄 Strategic Crop Planning</h3>
+            <ul>
+              <li>Select diverse crop varieties based on local microclimate</li>
+              <li>Design comprehensive rotation cycles (3–8 years)</li>
+              <li>Integrate nitrogen-fixing legumes</li>
+            </ul>
+          </div>
+          <div class="crop-item">
+            <h3>3. 💧 Soil Management</h3>
+            <ul>
+              <li>Deploy cover crops like clover and mustard</li>
+              <li>Enrich soil biology with premium vermicompost</li>
+              <li>Implement conservation agriculture</li>
+            </ul>
+          </div>
+          <div class="crop-item">
+            <h3>4. 🛡️ Pest Management (IPM)</h3>
+            <ul>
+              <li>Monitor pest populations systematically</li>
+              <li>Apply cultural controls: crop hygiene</li>
+              <li>Use botanical sprays from neem and garlic</li>
+            </ul>
+          </div>
+          <div class="crop-item">
+            <h3>5. 💧 Water Management</h3>
+            <ul>
+              <li>Construct rainwater harvesting bunds</li>
+              <li>Install precision drip irrigation systems</li>
+              <li>Maintain soil moisture using organic mulches</li>
+            </ul>
+          </div>
+          <div class="crop-item">
+            <h3>6. 📋 Certification</h3>
+            <ul>
+              <li>Develop comprehensive Organic System Plan (OSP)</li>
+              <li>Maintain meticulous records of inputs</li>
+              <li>Explore Participatory Guarantee Systems (PGS)</li>
+            </ul>
           </div>
         </div>
-        <div class="footer-links">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="main.html">Dashboard</a></li>
-            <li><a href="feed-back.html">Feedback</a></li>
-            <li><a href="chat.html">AI Assistant</a></li>
-          </ul>
+      </section>
+
+      <section id="crop-details" class="animate-in">
+        <h2>🌾 Crop-Specific Organic Best Practices</h2>
+        <div class="crop-grid">
+          <div class="crop-item">
+            <h3>🍚 Rice (SRI Method)</h3>
+            <p>Transplant young seedlings at 8–12 days with optimized wide spacing. Use intermittent wetting techniques.
+            </p>
+          </div>
+          <div class="crop-item">
+            <h3>🌾 Millets</h3>
+            <p>Cultivate these hardy, drought-resistant crops. Strategically intercrop with nitrogen-fixing legumes.</p>
+          </div>
+          <div class="crop-item">
+            <h3>🫘 Guar (Cluster Bean)</h3>
+            <p>Grow this heat-tolerant crop using farmyard manure combined with beneficial biofertilizers.</p>
+          </div>
+          <div class="crop-item">
+            <h3>🧵 Organic Cotton</h3>
+            <p>Integrate natural pest-repellent companion plants and apply targeted biofertilizers.</p>
+          </div>
         </div>
-        <div class="footer-links">
-          <h4>Smart Tools</h4>
-          <ul>
-            <li><a href="crop_recommendation/templates/index.html">Crop Recommendation</a></li>
-            <li><a href="disease.html">Disease Detector</a></li>
-            <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
-          </ul>
+      </section>
+
+      <section id="case-study" class="animate-in">
+        <h2>📈 Success Story: Organic Wheat in Punjab</h2>
+        <p><strong>Sucha Singh Pabla's journey:</strong> Successfully transitioned 27 acres to certified organic wheat,
+          achieving exceptional results.</p>
+        <div class="crop-grid" style="margin-top: 2rem;">
+          <div class="crop-item" style="border-left-color: #ff9800">
+            <h3>💰 Economic Impact</h3>
+            <p>Premium market price of ₹3,500 per quintal with ~50% improved profit margins.</p>
+          </div>
+          <div class="crop-item" style="border-left-color: #4caf50">
+            <h3>🌱 Environmental Benefits</h3>
+            <p>Healthier soil microbiome, improved air quality, and elimination of stubble burning.</p>
+          </div>
+          <div class="crop-item" style="border-left-color: #2196f3">
+            <h3>📉 Cost Optimization</h3>
+            <p>Substantial reduction in input costs through elimination of synthetic fertilizers.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="images/logo.png" alt="AgriTech logo" style="height: 40px; border-radius: 6px;">
+          <h3>AgriTech</h3>
+        </div>
+        <p style="margin-top: 10px; font-size: 0.9rem;">Empowering India's Farming Future.</p>
+        <div class="social-media">
+          <a href="https://instagram.com" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+          <a href="https://github.com" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>© <span id="currentYear"></span> AgriTech. All rights reserved.</p>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="main.html">Dashboard</a></li>
+          <li><a href="feed-back.html">Feedback</a></li>
+          <li><a href="chat.html">AI Assistant</a></li>
+        </ul>
       </div>
     </footer>
 
@@ -272,19 +336,39 @@ document.addEventListener('mouseover', (e) => {
     if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
         circles.forEach(c => c.el.classList.add('cursor-hovering'));
     }
-});
-document.addEventListener('mouseout', (e) => {
-    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+
+    // Mouse move
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    // Click effects
+    document.addEventListener('mousedown', () => {
+      circles.forEach(c => c.el.classList.add('cursor-clicking'));
+    });
+    document.addEventListener('mouseup', () => {
+      circles.forEach(c => c.el.classList.remove('cursor-clicking'));
+    });
+
+    // Hover effects on interactive elements
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+        circles.forEach(c => c.el.classList.add('cursor-hovering'));
+      }
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
         circles.forEach(c => c.el.classList.remove('cursor-hovering'));
-    }
-});
+      }
+    });
 
-// Animate trailing effect
-function animateCursor() {
-    let x = mouseX;
-    let y = mouseY;
+    // Animate trailing effect
+    function animateCursor() {
+      let x = mouseX;
+      let y = mouseY;
 
-    circles.forEach((circle) => {
+      circles.forEach((circle) => {
         circle.x += (x - circle.x) * 0.25;
         circle.y += (y - circle.y) * 0.25;
 
@@ -293,78 +377,81 @@ function animateCursor() {
 
         x = circle.x;
         y = circle.y;
-    });
-
-    requestAnimationFrame(animateCursor);
-}
-animateCursor();
-    </script>
-    <script>
-      document.getElementById("currentYear").textContent =
-        new Date().getFullYear();
-    </script>
-    <!-- ===== Universal Back To Top Button (All Pages) ===== -->
-<style>
-  #globalBackToTop {
-    position: fixed;
-    bottom: 90px; /* prevents overlap with chatbot/floating icons */
-    right: 25px;
-    z-index: 9999;
-    display: none;
-    background: #2ecc71;
-    color: #ffffff;
-    border: none;
-    border-radius: 50%;
-    width: 52px;
-    height: 52px;
-    font-size: 22px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-    transition: opacity 0.3s ease, transform 0.2s ease;
-  }
-
-  #globalBackToTop:hover {
-    transform: scale(1.12);
-    background: #27ae60;
-  }
-
-  @media (max-width: 768px) {
-    #globalBackToTop {
-      bottom: 100px; /* better spacing on mobile */
-      right: 18px;
-      width: 48px;
-      height: 48px;
-      font-size: 20px;
-    }
-  }
-</style>
-
-<button id="globalBackToTop" title="Back to Top">↑</button>
-
-<script>
-  (function () {
-    const btn = document.getElementById("globalBackToTop");
-
-    // Show button after scrolling down
-    window.addEventListener("scroll", function () {
-      if (window.scrollY > 300) {
-        btn.style.display = "block";
-      } else {
-        btn.style.display = "none";
-      }
-    });
-
-    // Smooth scroll to top on click
-    btn.addEventListener("click", function () {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
       });
-    });
-  })();
-</script>
-<!-- ===== End Back To Top Button ===== -->
 
-  </body>
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+  </script>
+  <script>
+    document.getElementById("currentYear").textContent =
+      new Date().getFullYear();
+  </script>
+  <!-- ===== Universal Back To Top Button (All Pages) ===== -->
+  <style>
+    #globalBackToTop {
+      position: fixed;
+      bottom: 90px;
+      /* prevents overlap with chatbot/floating icons */
+      right: 25px;
+      z-index: 9999;
+      display: none;
+      background: #2ecc71;
+      color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      width: 52px;
+      height: 52px;
+      font-size: 22px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      transition: opacity 0.3s ease, transform 0.2s ease;
+    }
+
+    #globalBackToTop:hover {
+      transform: scale(1.12);
+      background: #27ae60;
+    }
+
+    @media (max-width: 768px) {
+      #globalBackToTop {
+        bottom: 100px;
+        /* better spacing on mobile */
+        right: 18px;
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+      }
+    }
+  </style>
+
+  <button id="globalBackToTop" title="Back to Top">↑</button>
+
+  <script>
+    (function () {
+      const btn = document.getElementById("globalBackToTop");
+
+      // Show button after scrolling down
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 300) {
+          btn.style.display = "block";
+        } else {
+          btn.style.display = "none";
+        }
+      });
+
+      // Smooth scroll to top on click
+      btn.addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      });
+    })();
+  </script>
+  <!-- ===== End Back To Top Button ===== -->
+
+</body>
+
 </html>

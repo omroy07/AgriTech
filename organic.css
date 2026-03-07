@@ -27,7 +27,9 @@ body {
   font-family: "Poppins", sans-serif;
   width: 100%;
   margin: 0;
+  padding-top: 7rem;
 }
+
 .navbar {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -59,7 +61,9 @@ body {
 .nav-links {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 2.5rem;
+  border: none;
 }
 
 .nav-links a {
@@ -103,32 +107,32 @@ body {
 }
 
 
-      .container {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 0 2rem; 
-          
-      }
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
 
-      /* Header */
-      .sticky-header {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          background: var(--bg-header); 
-          backdrop-filter: blur(10px);
-          box-shadow: 0 2px 15px var(--shadow-header); 
-          z-index: 100;
-          
-      }
+}
 
-      .header-content {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 15px 0;
-      }
+/* Header */
+.sticky-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--bg-header);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 15px var(--shadow-header);
+  z-index: 100;
+
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+}
 
 
 /* =========================================
@@ -174,8 +178,8 @@ section {
   background: var(--bg-primary);
   padding: 2.5rem;
   border-radius: 16px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 section h2 {
@@ -224,7 +228,7 @@ section ul li::before {
 .crop-item:hover {
   transform: translateY(-5px);
   background: var(--bg-primary);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .crop-item h3 {
@@ -233,7 +237,8 @@ section ul li::before {
   margin-bottom: 0.5rem;
 }
 
-.crop-item p, .crop-item li {
+.crop-item p,
+.crop-item li {
   font-size: 0.9rem;
   color: var(--text-primary);
   opacity: 0.8;
@@ -260,7 +265,7 @@ section ul li::before {
 .footer-links h4 {
   margin-bottom: 1rem;
   font-size: 1.1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   display: inline-block;
   padding-bottom: 5px;
 }
@@ -270,7 +275,7 @@ section ul li::before {
 }
 
 .footer-links a {
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
   display: block;
   margin-bottom: 0.5rem;
@@ -290,7 +295,7 @@ section ul li::before {
 .social-media a {
   width: 35px;
   height: 35px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -303,7 +308,7 @@ section ul li::before {
   text-align: center;
   margin-top: 2rem;
   padding-top: 1rem;
-  border-top: 1px solid rgba(255,255,255,0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
   font-size: 0.9rem;
 }
 
@@ -321,7 +326,7 @@ section ul li::before {
   align-items: center;
   justify-content: center;
   font-size: 24px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   text-decoration: none;
   transition: transform 0.2s;
@@ -343,19 +348,21 @@ section ul li::before {
 }
 
 [data-theme="dark"] .crop-item {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 @media (max-width: 768px) {
   .header-content {
     padding: 0 1rem;
   }
+
   .brand-name {
     display: none; /* Hide text on small screens if needed */
   }
 }
-       /* Individual styles for Crop Recommendation page */
-   /* --- Cursor Trail Container --- */
+
+/* Individual styles for Crop Recommendation page */
+/* --- Cursor Trail Container --- */
 .circle-container {
   position: fixed;
   inset: 0;

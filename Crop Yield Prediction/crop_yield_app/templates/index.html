@@ -115,12 +115,16 @@ p {
   z-index: 100;
 }
 
-.navbar {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 2rem;
-}
+    /* ================= BASE ================= */
+    body {
+      font-family: "Inter", "Poppins", sans-serif;
+      font-size: 16px;
+      background: var(--bg-page);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding-top: 80px;
+    }
 
 .logo {
   display: flex;
@@ -384,93 +388,205 @@ p {
           </p>
         </div>
 
-        <div class="result-card">
-          <div class="success-icon">✓</div>
-          <div class="result-value">
-            <i class="fas fa-seedling"></i>
-            <span class="recommended-crop"><h1 id="predictedCrop">Crop Result</h1>
-</span>
-          </div>
-          <p class="insight-note">
-            This is the most suitable crop for your current soil nutrient profile.
-          </p>
-          
-          <div class="result-stats">
-            <div class="stat">
-                <i class="fas fa-vial stat-icon"></i> 
-                <span class="stat-label">Nitrogen (N): <span id="nValue">--</span></span>
-            </div>
-            <div class="stat">
-                <i class="fas fa-flask stat-icon"></i> 
-                <span class="stat-label">Phosphorus (P): <span id="pValue">--</span></span>
-            </div>
-            <div class="stat">
-                <i class="fas fa-microscope stat-icon"></i> 
-                <span class="stat-label">Potassium (K): <span id="kValue">--</span></span>
-            </div>
-          </div>
+html::-webkit-scrollbar-thumb:hover {
+  background: #94ffab;
+}
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 1024px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .result-value {
+        font-size: 1.8rem;
+      }
+
+      .action-buttons-group {
+        flex-direction: column;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="sticky-header">
+    <div class="container header-content navbar">
+
+      <!-- Left: Logo -->
+      <a href="/" class="logo">
+        <img src="/images/logo.png" alt="AgriTech Logo">
+        <span class="logo-text">AgriTech</span>
+      </a>
+
+      <!-- Center: Navigation -->
+      <nav class="nav-links">
+        <a href="/index.html">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/blog.html">Blog</a>
+        <a href="/community_forum.html">Community Forum</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/news.html">News</a>
+      </nav>
+
+      <!-- Animated Sun/Moon Toggle -->
+      <button class="theme-toggle" type="button" id="themeToggle" title="Switch to dark mode"
+        aria-label="Switch to dark mode">
+        <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <mask id="moon-mask">
+            <rect x="0" y="0" width="100%" height="100%" fill="white" />
+            <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
+          </mask>
+          <circle class="sun-core" cx="12" cy="12" r="7" fill="currentColor" mask="url(#moon-mask)" />
+          <g class="sun-rays" stroke="currentColor">
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </g>
+        </svg>
+      </button>
+
+    </div>
+  </header>
+
+
+  <main class="main-layout container">
+    <div class="content-left">
+
+      <div class="header">
+        <h1>Optimal Crop yield prediction 🎯</h1>
+        <p>
+          Based on your provided soil and climate data, the following crop is
+          highly recommended for maximum yield and sustainability.
+        </p>
+      </div>
+
+      <div class="result-card">
+        <div class="success-icon">✓</div>
+        <div class="result-value">
+          <i class="fas fa-seedling"></i>
+          <span class="recommended-crop">
+            <h1 id="predictedCrop">Crop Result</h1>
+          </span>
         </div>
+        <p class="insight-note">
+          This is the most suitable crop for your current soil nutrient profile.
+        </p>
 
-        <div class="action-buttons-group">
-          <form method="post" action="/download_report">
-            
-            <input type="hidden" name="{{ key }}" value="{{ value }}" />
-            
-            <input type="hidden" name="crop" value="{{ crop }}" />
-            
-            <button
-              type="submit"
-              class="btn btn-primary"
-              onclick="this.classList.add('loading'); this.innerHTML='<i class=\'fas fa-spinner fa-spin\'></i> Generating PDF...';"
-            >
-              <i class="fas fa-file-pdf"></i> Download Full Report
-            </button>
-          </form>
-
-          <a href="/" class="btn btn-secondary">
-            <i class="fas fa-redo-alt"></i> New Analysis
-          </a>
+        <div class="result-stats">
+          <div class="stat">
+            <i class="fas fa-vial stat-icon"></i>
+            <span class="stat-label">Nitrogen (N): <span id="nValue">--</span></span>
+          </div>
+          <div class="stat">
+            <i class="fas fa-flask stat-icon"></i>
+            <span class="stat-label">Phosphorus (P): <span id="pValue">--</span></span>
+          </div>
+          <div class="stat">
+            <i class="fas fa-microscope stat-icon"></i>
+            <span class="stat-label">Potassium (K): <span id="kValue">--</span></span>
+          </div>
         </div>
       </div>
 
-      <div class="content-right">
-        <div class="yield-insights">
-          <h3><i class="fas fa-chart-line"></i> Input Details</h3>
-          <ul>
-            <li>
-              <i class="fas fa-thermometer-half"></i>
-              <div>
-                <strong>Temperature</strong>
-                <p class="insight-note"><span id="temperatureValue">--</span>°C
-</p>
-              </div>
-            </li>
-            <li>
-              <i class="fas fa-cloud-showers-heavy"></i>
-              <div>
-                <strong>Climate Data</strong>
-                <p class="insight-note">Rainfall: <span id="rainfallValue">--</span> mm
- | Humidity: <span id="humidityValue">--</span>%
-</p>
-              </div>
-            </li>
-            <li>
-              <i class="fas fa-tint"></i>
-              <div>
-                <strong>Soil pH Level</strong>
-                <p class="insight-note">pH: <span id="phValue">--</span>
-</p>
-              </div>
-            </li>
-            <li>
-              <i class="fas fa-map-marker-alt"></i>
-              <div>
-                <strong>Location Context</strong>
-                <p class="insight-note">Analyzed for local conditions.</p>
-              </div>
-            </li>
-          </ul>
+      <div class="action-buttons-group">
+        <form method="post" action="/download_report">
+
+          <input type="hidden" name="{{ key }}" value="{{ value }}" />
+
+          <input type="hidden" name="crop" value="{{ crop }}" />
+
+          <button type="submit" class="btn btn-primary"
+            onclick="this.classList.add('loading'); this.innerHTML='<i class=\'fas fa-spinner fa-spin\'></i> Generating PDF...';">
+            <i class="fas fa-file-pdf"></i> Download Full Report
+          </button>
+        </form>
+
+        <a href="/" class="btn btn-secondary">
+          <i class="fas fa-redo-alt"></i> New Analysis
+        </a>
+      </div>
+    </div>
+
+    <div class="content-right">
+      <div class="yield-insights">
+        <h3><i class="fas fa-chart-line"></i> Input Details</h3>
+        <ul>
+          <li>
+            <i class="fas fa-thermometer-half"></i>
+            <div>
+              <strong>Temperature</strong>
+              <p class="insight-note"><span id="temperatureValue">--</span>°C
+              </p>
+            </div>
+          </li>
+          <li>
+            <i class="fas fa-cloud-showers-heavy"></i>
+            <div>
+              <strong>Climate Data</strong>
+              <p class="insight-note">Rainfall: <span id="rainfallValue">--</span> mm
+                | Humidity: <span id="humidityValue">--</span>%
+              </p>
+            </div>
+          </li>
+          <li>
+            <i class="fas fa-tint"></i>
+            <div>
+              <strong>Soil pH Level</strong>
+              <p class="insight-note">pH: <span id="phValue">--</span>
+              </p>
+            </div>
+          </li>
+          <li>
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+              <strong>Location Context</strong>
+              <p class="insight-note">Analyzed for local conditions.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="../../../images/logo.png" alt="AgriTech logo" style="height: 40px; border-radius: 6px;">
+          <h3>AgriTech</h3>
         </div>
+        <p style="color: var(--text-primary); margin-top: 10px; font-size: 0.9rem;">Empowering India's Farming Future.</p>
+        <div class="social-media">
+          <a href="https://instagram.com" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+          <a href="https://github.com" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="main.html">Dashboard</a></li>
+          <li><a href="feed-back.html">Feedback</a></li>
+          <li><a href="chat.html">AI Assistant</a></li>
+        </ul>
       </div>
     </main>
     <footer class="footer">
@@ -526,9 +642,8 @@ p {
             z-index: 1000;
             border-radius: 50%;
           `;
-          document.body.appendChild(confetti);
-          setTimeout(() => { confetti.remove(); }, 5000);
-        }
+        document.body.appendChild(confetti);
+        setTimeout(() => { confetti.remove(); }, 5000);
       }
       setTimeout(createConfetti, 1000);
       
@@ -548,38 +663,38 @@ for (let i = 0; i < circleCount; i++) {
     circles.push({ el: circle, x: 0, y: 0 });
 }
 
-// Mouse move
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
+    // Mouse move
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
 
-// Click effects
-document.addEventListener('mousedown', () => {
-    circles.forEach(c => c.el.classList.add('cursor-clicking'));
-});
-document.addEventListener('mouseup', () => {
-    circles.forEach(c => c.el.classList.remove('cursor-clicking'));
-});
+    // Click effects
+    document.addEventListener('mousedown', () => {
+      circles.forEach(c => c.el.classList.add('cursor-clicking'));
+    });
+    document.addEventListener('mouseup', () => {
+      circles.forEach(c => c.el.classList.remove('cursor-clicking'));
+    });
 
-// Hover effects on interactive elements
-document.addEventListener('mouseover', (e) => {
-    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+    // Hover effects on interactive elements
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
         circles.forEach(c => c.el.classList.add('cursor-hovering'));
-    }
-});
-document.addEventListener('mouseout', (e) => {
-    if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
+      }
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest('a, button, .cta-button, .service-card, .shipment-card')) {
         circles.forEach(c => c.el.classList.remove('cursor-hovering'));
-    }
-});
+      }
+    });
 
-// Animate trailing effect
-function animateCursor() {
-    let x = mouseX;
-    let y = mouseY;
+    // Animate trailing effect
+    function animateCursor() {
+      let x = mouseX;
+      let y = mouseY;
 
-    circles.forEach((circle) => {
+      circles.forEach((circle) => {
         circle.x += (x - circle.x) * 0.25;
         circle.y += (y - circle.y) * 0.25;
 
@@ -588,50 +703,51 @@ function animateCursor() {
 
         x = circle.x;
         y = circle.y;
-    });
+      });
 
-    requestAnimationFrame(animateCursor);
-}
-animateCursor();
-    </script>
-    <script>
-/*
-Frontend-only replacement for Jinja placeholders
-Reads values from URL query params
-Example URL:
-result.html?crop=Wheat&temperature=25&humidity=60&rainfall=120&ph=6.5&N=90&P=40&K=50
-*/
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+  </script>
+  <script>
+    /*
+    Frontend-only replacement for Jinja placeholders
+    Reads values from URL query params
+    Example URL:
+    result.html?crop=Wheat&temperature=25&humidity=60&rainfall=120&ph=6.5&N=90&P=40&K=50
+    */
 
-function getParam(name) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(name);
-}
+    function getParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
 
-// Set dynamic values
-document.getElementById("predictedCrop").textContent =
-    (getParam("crop") || "Recommended Crop").toUpperCase();
+    // Set dynamic values
+    document.getElementById("predictedCrop").textContent =
+      (getParam("crop") || "Recommended Crop").toUpperCase();
 
-document.getElementById("temperatureValue").textContent =
-    getParam("temperature") || "--";
+    document.getElementById("temperatureValue").textContent =
+      getParam("temperature") || "--";
 
-document.getElementById("humidityValue").textContent =
-    getParam("humidity") || "--";
+    document.getElementById("humidityValue").textContent =
+      getParam("humidity") || "--";
 
-document.getElementById("rainfallValue").textContent =
-    getParam("rainfall") || "--";
+    document.getElementById("rainfallValue").textContent =
+      getParam("rainfall") || "--";
 
-document.getElementById("phValue").textContent =
-    getParam("ph") || "--";
+    document.getElementById("phValue").textContent =
+      getParam("ph") || "--";
 
-document.getElementById("nValue").textContent =
-    getParam("N") || "--";
+    document.getElementById("nValue").textContent =
+      getParam("N") || "--";
 
-document.getElementById("pValue").textContent =
-    getParam("P") || "--";
+    document.getElementById("pValue").textContent =
+      getParam("P") || "--";
 
-document.getElementById("kValue").textContent =
-    getParam("K") || "--";
-</script>
+    document.getElementById("kValue").textContent =
+      getParam("K") || "--";
+  </script>
 
-  </body>
+</body>
+
 </html>
