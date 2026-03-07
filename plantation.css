@@ -1166,4 +1166,151 @@ a:focus,
   transform: translate(-50%, -50%) scale(1.8);
   background-color: #22c55e; /* AgriTech green */
   box-shadow: 0 0 20px #22c55e;
+}/* ==========================
+   THEME VARIABLES
+========================== */
+
+/* Light Theme (Default) */
+:root {
+  --bg-primary: #f8f9fa;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f0f2f5;
+
+  --text-primary: #2c3e50;
+  --text-secondary: #5a6c7d;
+
+  --border-color: #e1e8ed;
+
+  --primary-green: #2ecc71;
+  --dark-green: #27ae60;
+  --light-green: #58d68d;
+
+  --card-bg: #ffffff;
+
+  --shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-tertiary: #242424;
+
+  --text-primary: #e8eaed;
+  --text-secondary: #b8bdc3;
+
+  --border-color: #3a3a3a;
+
+  --primary-green: #2ecc71;
+  --dark-green: #1b5e20;
+  --light-green: #4ade80;
+
+  --card-bg: #1f2937;
+
+  --shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+/* ==========================
+   GLOBAL BODY
+========================== */
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ==========================
+   CARDS
+========================== */
+
+.info-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+  transition: 0.3s ease;
+}
+
+/* ==========================
+   HERO SECTION
+========================== */
+
+.hero-section {
+  background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+  color: white;
+}
+
+/* Dark mode hero */
+[data-theme="dark"] .hero-section {
+  background: linear-gradient(135deg, #1b5e20, #2e7d32);
+}
+
+/* ==========================
+   NAVIGATION
+========================== */
+
+.nav-links a {
+  color: var(--text-primary);
+}
+
+.nav-links a:hover {
+  color: var(--primary-green);
+}
+
+/* ==========================
+   SIDEBAR
+========================== */
+
+.sidebar {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+
+/* ==========================
+   TAB BUTTONS
+========================== */
+
+.tab-btn {
+  color: var(--text-secondary);
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+  color: white;
+}
+
+/* ==========================
+   FOOTER
+========================== */
+
+footer {
+  background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+  color: white;
+}
+
+[data-theme="dark"] footer {
+  background: linear-gradient(135deg, #1b5e20, #2e7d32);
+}
+
+/* ==========================
+   THEME TOGGLE BUTTON
+========================== */
+
+.theme-toggle {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 8px 14px;
+}
+
+/* Icons */
+
+.sun-icon { display: none; }
+
+[data-theme="dark"] .sun-icon { display: inline; }
+[data-theme="dark"] .moon-icon { display: none; }
+
+:not([data-theme="dark"]) .moon-icon { display: inline; }

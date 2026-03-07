@@ -1618,31 +1618,27 @@
   }
 </style>
 
-<button id="globalBackToTop" title="Back to Top">↑</button>
-
 <script>
-  (function () {
-    const btn = document.getElementById("globalBackToTop");
+(function () {
+  const btn = document.getElementById("globalBackToTop");
 
-    // Show button after scrolling down
-    window.addEventListener("scroll", function () {
-      if (window.scrollY > 300) {
-        btn.style.display = "block";
-      } else {
-        btn.style.display = "none";
-      }
-    });
+  if (!btn) return; // stop if button doesn't exist
 
-    // Smooth scroll to top on click
-    btn.addEventListener("click", function () {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > 300) {
+      btn.style.display = "block";
+    } else {
+      btn.style.display = "none";
+    }
+  });
+
+  btn.addEventListener("click", function () {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
     });
-  })();
+  });
+})();
 </script>
-<!-- ===== End Back To Top Button ===== -->
-
-  </body>
+</body>
 </html>

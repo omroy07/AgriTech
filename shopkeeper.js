@@ -490,15 +490,55 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("touchstart", function () {}, {
   passive: true,
 });
-  document.getElementById("backToHomeBtn").addEventListener("click", () => {
-    // Preserve theme
+ // =============================
+// Back to Home Button
+// =============================
+const backBtn = document.getElementById("backToHomeBtn");
+
+if (backBtn) {
+  backBtn.addEventListener("click", () => {
     const currentTheme =
       document.documentElement.getAttribute("data-theme") || "light";
+
+    // Save theme preference
     localStorage.setItem("theme", currentTheme);
 
-    // Preserve scroll position of home page
+    // Save scroll position
     localStorage.setItem("homeScrollY", window.scrollY);
 
     // Navigate back
     window.location.href = "index.html";
   });
+}
+
+// =============================
+// Theme Toggle System
+// =============================
+const toggleBtn = document.getElementById("theme-toggle-btn");
+const body = document.body;
+const themeText = document.querySelector(".theme-text");
+
+// Load saved theme on page load
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "dark") {
+  body.classList.add("dark-mode");
+  if (themeText) themeText.textContent = "Dark";
+} else {
+  body.classList.remove("dark-mode");
+  if (themeText) themeText.textContent = "Light";
+}
+
+if (toggleBtn) {
+  toggleBtn.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+
+    if (body.classList.contains("dark-mode")) {
+      localStorage.setItem("theme", "dark");
+      if (themeText) themeText.textContent = "Dark";
+    } else {
+      localStorage.setItem("theme", "light");
+      if (themeText) themeText.textContent = "Light";
+    }
+  });
+}
