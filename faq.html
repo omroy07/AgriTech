@@ -927,6 +927,29 @@ function handleSearch(query) {
       font-size: 20px;
     }
   }
+  /* Cursor Trail Effect */
+.cursor-trail {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: rgba(46, 204, 113, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: fadeOut 0.6s linear forwards;
+  z-index: 9999;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) translate(-50%, -50%);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.3) translate(-50%, -50%);
+  }
+}
 </style>
 
 <script>
@@ -952,6 +975,26 @@ function handleSearch(query) {
   })();
 </script>
 <!-- ===== End Back To Top Button ===== -->
+
+<script>
+document.addEventListener("mousemove", function (e) {
+  createTrail(e);
+});
+
+function createTrail(e) {
+  const dot = document.createElement("div");
+  dot.className = "cursor-trail";
+
+  dot.style.left = e.clientX + "px";
+  dot.style.top = e.clientY + "px";
+
+  document.body.appendChild(dot);
+
+  setTimeout(() => {
+    dot.remove();
+  }, 600);
+}
+</script>
 
 </body>
 
