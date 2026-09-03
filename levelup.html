@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Level Up - Contributor Growth Hub | AgriTech</title>
+  <meta name="description" content="Highlighting open-source contributors, GitHub stats, merged feature impact, contribution streaks, and gamified levels for the AgriTech community." />
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/levelup.css" />
+
+  <style>
+    /* Global AgriTech Navigation Bar Styling */
+    .agritech-navbar {
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.92);
+      color: #ffffff;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+      box-shadow: 0 10px 28px rgba(2, 6, 23, 0.28);
+    }
+    [data-theme="light"] .agritech-navbar {
+      background: rgba(255, 255, 255, 0.94);
+      color: #0f172a;
+      border-bottom-color: rgba(148, 163, 184, 0.35);
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+    }
+    .agritech-navbar-spacer {
+      height: 76px;
+      width: 100%;
+    }
+    .agritech-navbar .navbar-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0.9rem 1.25rem;
+    }
+    .agritech-navbar .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+    }
+    .agritech-navbar .brand img {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+    }
+    .agritech-navbar .brand-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+    .agritech-navbar .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .agritech-navbar .nav-link {
+      color: inherit;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .agritech-navbar .nav-link:hover,
+    .agritech-navbar .nav-link.active {
+      color: #22c55e;
+    }
+    .theme-toggle-btn {
+      background: transparent;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: inherit;
+      padding: 0.5rem 0.85rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  </style>
+</head>
+<body class="levelup-page">
+
+  <!-- Primary Navigation Bar -->
+  <nav class="agritech-navbar" aria-label="Primary navigation">
+    <div class="navbar-content">
+      <a class="brand" href="index.html" aria-label="AgriTech Home">
+        <img src="images/logo.png" alt="AgriTech logo" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/628/628324.png';" />
+        <span class="brand-name">AgriTech</span>
+      </a>
+
+      <div class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="marketplace.html" class="nav-link">Marketplace</a>
+        <a href="community_forum.html" class="nav-link">Community Forum</a>
+        <a href="levelup.html" class="nav-link active"><i class="fas fa-trophy"></i> Level Up</a>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <button class="theme-toggle-btn" id="themeToggleBtn" type="button" aria-label="Toggle theme">
+          <i class="fas fa-moon" id="themeIcon"></i>
+          <span id="themeText">Theme</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="agritech-navbar-spacer" aria-hidden="true"></div>
+
+  <!-- Main Container -->
+  <div class="lu-container">
+
+    <!-- Hero Section -->
+    <section class="lu-hero">
+      <div class="lu-hero-badge">
+        <i class="fas fa-rocket"></i> AgriTech Contributor Growth Hub
+      </div>
+      <h1>Level Up Your Open-Source Impact</h1>
+      <p>
+        Celebrating open-source contributors, tracking GitHub commits, PRs, contribution streaks, and gamified level progression for the AgriTech community.
+      </p>
+
+      <div class="lu-hero-actions">
+        <a href="#leaderboardSection" class="lu-btn lu-btn-primary">
+          <i class="fas fa-crown"></i> View Leaderboard
+        </a>
+        <a href="#tierSection" class="lu-btn lu-btn-secondary">
+          <i class="fas fa-layer-group"></i> Explore Level Tiers
+        </a>
+        <a href="https://github.com/omroy07/AgriTech/issues/new" target="_blank" rel="noopener noreferrer" class="lu-btn lu-btn-secondary">
+          <i class="fab fa-github"></i> Submit Feature Request
+        </a>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="lu-hero-stats">
+        <div class="lu-stat-box">
+          <div class="lu-stat-val" id="statTotalContributors">0</div>
+          <div class="lu-stat-lbl">Active Contributors</div>
+        </div>
+        <div class="lu-stat-box">
+          <div class="lu-stat-val" id="statTotalPRs">0</div>
+          <div class="lu-stat-lbl">Merged Feature PRs</div>
+        </div>
+        <div class="lu-stat-box">
+          <div class="lu-stat-val" id="statTotalPoints">0</div>
+          <div class="lu-stat-lbl">Total Community Points</div>
+        </div>
+        <div class="lu-stat-box">
+          <div class="lu-stat-val" id="statActiveStreak">0 Days</div>
+          <div class="lu-stat-lbl">Longest Active Streak</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Monthly Leaderboard Section -->
+    <section id="leaderboardSection" class="lu-leaderboard-wrapper">
+      <div class="lu-section-header">
+        <div>
+          <h2 class="lu-section-title"><i class="fas fa-trophy"></i> Monthly Leaderboard</h2>
+          <div class="lu-section-desc">Recognizing top community rankers by points, merged contributions, and active streaks.</div>
+        </div>
+
+        <div class="lu-controls">
+          <div class="lu-tabs">
+            <button class="lu-tab active" data-tab="month">This Month</button>
+            <button class="lu-tab" data-tab="alltime">All Time</button>
+          </div>
+          <div class="lu-search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="leaderboardSearch" placeholder="Search contributor or tier..." />
+          </div>
+        </div>
+      </div>
+
+      <!-- Top 3 Podium -->
+      <div class="lu-podium" id="podiumContainer">
+        <!-- Rendered dynamically via JS -->
+      </div>
+
+      <!-- Full Ranking Table -->
+      <div class="lu-table-responsive">
+        <table class="lu-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Contributor</th>
+              <th>Current Tier</th>
+              <th>Points Score</th>
+              <th>Merged PRs</th>
+              <th>Streak</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboardTableBody">
+            <!-- Rendered dynamically via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Level System Tiers -->
+    <section id="tierSection" style="margin-bottom: 3.5rem;">
+      <div class="lu-section-header">
+        <div>
+          <h2 class="lu-section-title"><i class="fas fa-chart-line"></i> Gamified Level Tiers</h2>
+          <div class="lu-section-desc">Unlock badges, community perks, and maintainer roles as you earn points.</div>
+        </div>
+      </div>
+
+      <div class="lu-tiers-grid">
+        <!-- Beginner Tier -->
+        <div class="lu-tier-card">
+          <div class="lu-tier-icon"><i class="fas fa-seedling"></i></div>
+          <h3 class="lu-tier-title">Beginner</h3>
+          <div class="lu-tier-points">0 - 250 pts</div>
+          <ul class="lu-tier-perks">
+            <li><i class="fas fa-check"></i> Community Forum Badge</li>
+            <li><i class="fas fa-check"></i> Welcome Contributor Role</li>
+            <li><i class="fas fa-check"></i> Good First Issue Access</li>
+          </ul>
+        </div>
+
+        <!-- Contributor Tier -->
+        <div class="lu-tier-card">
+          <div class="lu-tier-icon"><i class="fas fa-code-branch"></i></div>
+          <h3 class="lu-tier-title">Contributor</h3>
+          <div class="lu-tier-points">251 - 500 pts</div>
+          <ul class="lu-tier-perks">
+            <li><i class="fas fa-check"></i> Verified Contributor Shield</li>
+            <li><i class="fas fa-check"></i> Featured in Release Notes</li>
+            <li><i class="fas fa-check"></i> Priority PR Triage</li>
+          </ul>
+        </div>
+
+        <!-- Pro Tier -->
+        <div class="lu-tier-card">
+          <div class="lu-tier-icon"><i class="fas fa-medal"></i></div>
+          <h3 class="lu-tier-title">Pro</h3>
+          <div class="lu-tier-points">501 - 1,000 pts</div>
+          <ul class="lu-tier-perks">
+            <li><i class="fas fa-check"></i> Leaderboard Spotlight Card</li>
+            <li><i class="fas fa-check"></i> Code Reviewer Invite</li>
+            <li><i class="fas fa-check"></i> AgriTech Swag Eligibility</li>
+          </ul>
+        </div>
+
+        <!-- Master Tier -->
+        <div class="lu-tier-card">
+          <div class="lu-tier-icon"><i class="fas fa-gem"></i></div>
+          <h3 class="lu-tier-title">Master</h3>
+          <div class="lu-tier-points">1,001 - 2,000 pts</div>
+          <ul class="lu-tier-perks">
+            <li><i class="fas fa-check"></i> Master Contributor Rank</li>
+            <li><i class="fas fa-check"></i> Feature Request Vote Boost</li>
+            <li><i class="fas fa-check"></i> Core Team Mentorship</li>
+          </ul>
+        </div>
+
+        <!-- Elite Tier -->
+        <div class="lu-tier-card" style="border-color: var(--lu-gold);">
+          <div class="lu-tier-icon" style="color: var(--lu-gold);"><i class="fas fa-crown"></i></div>
+          <h3 class="lu-tier-title">Elite</h3>
+          <div class="lu-tier-points" style="color: var(--lu-gold);">2,000+ pts</div>
+          <ul class="lu-tier-perks">
+            <li><i class="fas fa-check"></i> Permanent Hall of Fame</li>
+            <li><i class="fas fa-check"></i> Repository Co-Maintainer</li>
+            <li><i class="fas fa-check"></i> Keynote Speaker Feature</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contributor Cards Grid -->
+    <section id="cardsSection" style="margin-bottom: 3.5rem;">
+      <div class="lu-section-header">
+        <div>
+          <h2 class="lu-section-title"><i class="fas fa-users"></i> Contributor Profiles & Stats</h2>
+          <div class="lu-section-desc">Explore individual GitHub stats, contribution streaks, and activity graphs.</div>
+        </div>
+      </div>
+
+      <div class="lu-cards-grid" id="contributorCardsGrid">
+        <!-- Rendered dynamically via JS -->
+      </div>
+    </section>
+
+    <!-- Feature Impact Table -->
+    <section id="impactSection" class="lu-impact-wrapper">
+      <div class="lu-section-header">
+        <div>
+          <h2 class="lu-section-title"><i class="fas fa-fire"></i> Feature Impact Table</h2>
+          <div class="lu-section-desc">Merged feature requests, pull requests, and assigned points for project growth.</div>
+        </div>
+
+        <div class="lu-controls">
+          <div class="lu-search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="impactSearch" placeholder="Search features, PRs..." />
+          </div>
+          <select id="impactCategory" style="padding:0.6rem 1rem; border-radius: var(--lu-radius-md); background: var(--lu-surface-card); border:1px solid var(--lu-border); color: var(--lu-text); font-size: 0.88rem;">
+            <option value="all">All Categories</option>
+            <option value="UI/UX">UI/UX</option>
+            <option value="Core Platform">Core Platform</option>
+            <option value="AI/ML">AI/ML</option>
+            <option value="Documentation">Documentation</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="lu-table-responsive">
+        <table class="lu-table">
+          <thead>
+            <tr>
+              <th>Feature Request / Enhancement</th>
+              <th>Contributor</th>
+              <th>Pull Request</th>
+              <th>Category</th>
+              <th>Points Awarded</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="impactTableBody">
+            <!-- Rendered dynamically via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Theme Handler Script -->
+  <script>
+    const themeBtn = document.getElementById("themeToggleBtn");
+    const themeIcon = document.getElementById("themeIcon");
+
+    function applyTheme(theme) {
+      document.body.setAttribute("data-theme", theme);
+      if (theme === "light") {
+        themeIcon.className = "fas fa-sun";
+      } else {
+        themeIcon.className = "fas fa-moon";
+      }
+      localStorage.setItem("theme", theme);
+    }
+
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    applyTheme(savedTheme);
+
+    if (themeBtn) {
+      themeBtn.addEventListener("click", () => {
+        const currentTheme = document.body.getAttribute("data-theme") || "dark";
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        applyTheme(newTheme);
+      });
+    }
+  </script>
+
+  <!-- Level Up JS -->
+  <script src="js/levelup.js"></script>
+</body>
+</html>
