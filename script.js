@@ -22,6 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
     { name: 'Financial Support', keywords: ['financial', 'insurance', 'support', 'loan', 'money', 'fund', 'grant', 'aid', 'credit', 'finance'], url: 'financial-support.html' },
     { name: 'AI Assistant', keywords: ['chat', 'ai', 'assistant', 'bot', 'help', 'virtual', 'support', 'question', 'ask', 'guide'], url: 'chat.html' },
     { name: 'Contact', keywords: ['contact', 'email', 'help', 'reach', 'connect', 'call', 'message', 'query', 'inquiry'], url: 'contact.html' },
+    { name: 'Livestock Management', keywords: ['livestock', 'animal', 'cow', 'cattle', 'goat', 'sheep', 'poultry', 'breeding', 'feed', 'health', 'milk', 'dairy', 'herd'], url: 'livestock.html' },
+    { name: 'IoT Farm Monitoring', keywords: ['iot', 'sensor', 'sensors', 'moisture', 'soil', 'temperature', 'humidity', 'monitoring', 'telemetry', 'realtime'], url: 'iot_monitoring.html' },
     // Add more as needed
   ];
 
