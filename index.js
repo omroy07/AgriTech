@@ -1066,6 +1066,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { name: 'Blog', url: 'blog.html', keywords: ['blog','articles','stories'] },
     { name: 'Forum', url: 'community_forum.html', keywords: ['forum','community','discuss'] },
     { name: 'Contact', url: 'contact.html', keywords: ['contact','support','help'] },
+    { name: 'Livestock Management', url: 'livestock.html', keywords: ['livestock','cattle','cow','goat','sheep','poultry','dairy','breeding','feed','health'] },
     { name: 'Login', url: 'login.html', keywords: ['login','sign in','signin'] }
   ];
 
