@@ -1067,6 +1067,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { name: 'Forum', url: 'community_forum.html', keywords: ['forum','community','discuss'] },
     { name: 'Contact', url: 'contact.html', keywords: ['contact','support','help'] },
     { name: 'Livestock Management', url: 'livestock.html', keywords: ['livestock','cattle','cow','goat','sheep','poultry','dairy','breeding','feed','health'] },
+    { name: 'IoT Farm Monitoring', url: 'iot_monitoring.html', keywords: ['iot','sensor','moisture','soil','temperature','humidity','telemetry'] },
     { name: 'Login', url: 'login.html', keywords: ['login','sign in','signin'] }
   ];
 

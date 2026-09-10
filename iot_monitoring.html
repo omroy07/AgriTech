@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Farm Monitoring | AgriTech</title>
+    <meta name="description"
+        content="Real-time IoT farm monitoring dashboard for soil moisture, temperature, humidity sensors, threshold alerts, and historical data analytics.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #020617;
+            --primary-card: #0f172a;
+            --accent-green: #10b981;
+            --accent-cyan: #06b6d4;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --card-border: rgba(226, 232, 240, 0.8);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+        }
+
+        [data-theme="dark"] {
+            --bg: #090d16;
+            --card-bg: #0f172a;
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --shadow-md: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* App Shell */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Nav */
+        .app-sidebar {
+            width: 280px;
+            background: var(--primary-card);
+            color: #ffffff;
+            padding: 1.5rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .brand-header {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            margin-bottom: 2rem;
+            padding: 0.5rem;
+            text-decoration: none;
+            color: white;
+        }
+
+        .brand-header img {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: white;
+            padding: 4px;
+        }
+
+        .brand-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .brand-title span {
+            color: var(--accent-cyan);
+        }
+
+        .sidebar-section-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #94a3b8;
+            margin: 1.25rem 0.5rem 0.5rem;
+            font-weight: 700;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            flex: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0.85rem 1rem;
+            border-radius: var(--radius-md);
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+
+        .nav-item.active {
+            background: var(--accent-cyan);
+            color: #ffffff;
+            font-weight: 600;
+            box-shadow: 0 4px 14px rgba(6, 182, 212, 0.35);
+        }
+
+        .nav-item i {
+            font-size: 1.1rem;
+            width: 22px;
+            text-align: center;
+        }
+
+        /* Pulse Live Indicator */
+        .live-pulse-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            animation: pulseGlow 1.5s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* Main Workspace */
+        .app-main {
+            flex: 1;
+            padding: 2rem 2.5rem;
+            max-width: 1500px;
+            overflow-x: hidden;
+        }
+
+        /* Top Header */
+        .main-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .page-title h1 {
+            font-size: 1.85rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .page-title p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            margin-top: 0.2rem;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.25rem;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .btn-cyan {
+            background: var(--accent-cyan);
+            color: white;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.25);
+        }
+
+        .btn-cyan:hover {
+            transform: translateY(-2px);
+            background: #0891b2;
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--text-main);
+            border-color: var(--card-border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(148, 163, 184, 0.1);
+        }
+
+        .btn-icon {
+            width: 42px;
+            height: 42px;
+            padding: 0;
+            border-radius: 50%;
+            justify-content: center;
+        }
+
+        /* Live Telemetry Cards Bar */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 1.35rem 1.5rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .icon-blue { background: rgba(59, 130, 246, 0.15); color: var(--accent-blue); }
+        .icon-cyan { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); }
+        .icon-amber { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); }
+        .icon-purple { background: rgba(139, 92, 246, 0.15); color: var(--accent-purple); }
+
+        .stat-value {
+            font-size: 2.1rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+            font-weight: 500;
+        }
+
+        .stat-sub {
+            font-size: 0.78rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* Tab Content Section */
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card Panels */
+        .panel-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .panel-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        /* Sensor Node Grid */
+        .sensor-nodes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .node-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 1.35rem;
+            position: relative;
+            transition: all 0.25s ease;
+        }
+
+        .node-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent-cyan);
+        }
+
+        .node-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .node-title-box h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .node-title-box span {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .node-telemetry-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+            margin: 1rem 0;
+            font-size: 0.88rem;
+        }
+
+        .telemetry-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.45rem 0.75rem;
+            background: rgba(148, 163, 184, 0.08);
+            border-radius: 8px;
+        }
+
+        .telemetry-row label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .telemetry-row strong {
+            font-size: 0.95rem;
+        }
+
+        .node-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--card-border);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .badge-green { background: rgba(16, 185, 129, 0.15); color: #059669; }
+        .badge-cyan { background: rgba(6, 182, 212, 0.15); color: #0891b2; }
+        .badge-amber { background: rgba(245, 158, 11, 0.15); color: #d97706; }
+        .badge-red { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
+
+        /* Grid Layout 2 Columns */
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.75rem;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-2col { grid-template-columns: 1fr; }
+            .app-sidebar { width: 80px; padding: 1.25rem 0.5rem; }
+            .brand-title, .sidebar-section-label, .nav-item span { display: none; }
+            .nav-item { justify-content: center; padding: 0.85rem; }
+            .app-main { padding: 1.5rem; }
+        }
+
+        /* Tables */
+        .table-responsive { width: 100%; overflow-x: auto; }
+        .custom-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; }
+        .custom-table th { background: rgba(148, 163, 184, 0.08); padding: 0.9rem 1rem; font-weight: 700; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; border-bottom: 1px solid var(--card-border); }
+        .custom-table td { padding: 1rem; border-bottom: 1px solid var(--card-border); vertical-align: middle; }
+        .custom-table tr:hover td { background: rgba(148, 163, 184, 0.05); }
+
+        /* Gauge Progress Bars */
+        .gauge-bar-bg { width: 100%; height: 8px; background: rgba(148, 163, 184, 0.2); border-radius: 999px; overflow: hidden; margin-top: 0.35rem; }
+        .gauge-bar-fill { height: 100%; background: var(--accent-cyan); border-radius: 999px; transition: width 0.5s ease; }
+
+        /* Modals */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 1rem; }
+        .modal-overlay.open { display: flex; }
+        .modal-card { background: var(--card-bg); border: 1px solid var(--card-border); width: 100%; max-width: 580px; border-radius: var(--radius-lg); padding: 2rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); max-height: 90vh; overflow-y: auto; }
+        .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+        .modal-header h3 { font-size: 1.3rem; font-weight: 700; }
+        .close-modal { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted); }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+        .form-group label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
+        .form-control { padding: 0.75rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--card-border); background: var(--bg); color: var(--text-main); font-family: inherit; font-size: 0.9rem; outline: none; }
+
+        /* Notifications & Toast */
+        .toast-container { position: fixed; bottom: 2rem; right: 2rem; z-index: 3000; display: flex; flex-direction: column; gap: 0.75rem; }
+        .toast { background: var(--primary-card); color: white; padding: 0.9rem 1.4rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md); display: flex; align-items: center; gap: 0.75rem; font-size: 0.9rem; font-weight: 500; border-left: 4px solid var(--accent-cyan); animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="app-sidebar">
+            <a href="index.html" class="brand-header">
+                <img src="images/logo.png" alt="AgriTech Logo" />
+                <span class="brand-title">Agri<span>Tech</span></span>
+            </a>
+
+            <div class="sidebar-section-label">IoT Telemetry</div>
+            <nav class="sidebar-nav">
+                <div class="nav-item active" onclick="switchTab('live')">
+                    <i class="fas fa-tower-cell"></i>
+                    <span>Live Telemetry</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('soil')">
+                    <i class="fas fa-droplet"></i>
+                    <span>Soil Moisture</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('climate')">
+                    <i class="fas fa-temperature-high"></i>
+                    <span>Temp & Humidity</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('alerts')">
+                    <i class="fas fa-triangle-exclamation"></i>
+                    <span>Alert Console</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('history')">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Historical Data</span>
+                </div>
+            </nav>
+
+            <div class="sidebar-section-label">Portals</div>
+            <nav class="sidebar-nav">
+                <a href="farmer.html" class="nav-item">
+                    <i class="fas fa-user-gear"></i>
+                    <span>Farmer Hub</span>
+                </a>
+                <a href="crop.html" class="nav-item">
+                    <i class="fas fa-seedling"></i>
+                    <span>Crop Advisor</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="app-main">
+            <!-- Top Main Header -->
+            <header class="main-header">
+                <div class="page-title">
+                    <h1 id="tabHeading">
+                        <i class="fas fa-satellite-dish" style="color:var(--accent-cyan)"></i> Real-Time IoT Farm Dashboard
+                    </h1>
+                    <p id="tabSubheading">Continuous multi-zone sensor telemetry stream & microclimate control</p>
+                </div>
+                <div class="header-actions">
+                    <div class="live-pulse-badge">
+                        <div class="pulse-dot"></div> LIVE STREAMING
+                    </div>
+                    <button class="btn btn-secondary btn-icon" onclick="toggleTheme()" title="Toggle Light/Dark Theme">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <button class="btn btn-secondary" onclick="exportSensorCSV()">
+                        <i class="fas fa-download"></i> Export Data
+                    </button>
+                    <button class="btn btn-cyan" onclick="openAddNodeModal()">
+                        <i class="fas fa-plus"></i> Connect Node
+                    </button>
+                </div>
+            </header>
+
+            <!-- Key Telemetry Cards Bar -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Avg Soil Moisture</span>
+                        <div class="stat-icon icon-cyan"><i class="fas fa-droplet"></i></div>
+                    </div>
+                    <div class="stat-value" id="valAvgMoisture">42%</div>
+                    <div class="gauge-bar-bg"><div class="gauge-bar-fill" id="barAvgMoisture" style="width:42%"></div></div>
+                    <div class="stat-sub" style="color:var(--accent-cyan)"><i class="fas fa-check-circle"></i> Optimal (35% - 60%)</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Avg Temperature</span>
+                        <div class="stat-icon icon-amber"><i class="fas fa-temperature-half"></i></div>
+                    </div>
+                    <div class="stat-value" id="valAvgTemp">28.4 °C</div>
+                    <div class="gauge-bar-bg"><div class="gauge-bar-fill" id="barAvgTemp" style="width:58%; background:var(--accent-amber);"></div></div>
+                    <div class="stat-sub" style="color:var(--accent-amber)"><i class="fas fa-sun"></i> Normal Day Range</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Avg Humidity</span>
+                        <div class="stat-icon icon-blue"><i class="fas fa-wind"></i></div>
+                    </div>
+                    <div class="stat-value" id="valAvgHumidity">65%</div>
+                    <div class="gauge-bar-bg"><div class="gauge-bar-fill" id="barAvgHumidity" style="width:65%; background:var(--accent-blue);"></div></div>
+                    <div class="stat-sub" style="color:var(--accent-blue)"><i class="fas fa-cloud"></i> Good Crop Humidity</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Active Sensors</span>
+                        <div class="stat-icon icon-purple"><i class="fas fa-tower-broadcast"></i></div>
+                    </div>
+                    <div class="stat-value" id="valActiveNodes">4 / 4</div>
+                    <div class="stat-sub" style="color:var(--accent-purple)"><i class="fas fa-wifi"></i> All Nodes Online (100%)</div>
+                </div>
+            </div>
+
+            <!-- TAB 1: LIVE TELEMETRY NODES -->
+            <section id="tab-live" class="tab-pane active">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2 class="panel-title"><i class="fas fa-network-wired"></i> Sensor Node Network</h2>
+                        <span style="font-size:0.82rem; color:var(--text-muted);">Auto-refreshing live data stream every 3s</span>
+                    </div>
+
+                    <div class="sensor-nodes-grid" id="sensorNodesGrid">
+                        <!-- Dynamic Node Cards -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: SOIL MOISTURE DEEP DIVE -->
+            <section id="tab-soil" class="tab-pane">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2 class="panel-title"><i class="fas fa-droplet"></i> Multi-Depth Soil Moisture Monitoring</h2>
+                        <button class="btn btn-cyan" onclick="triggerSmartIrrigation()">
+                            <i class="fas fa-faucet-drip"></i> Run Smart Irrigation
+                        </button>
+                    </div>
+
+                    <div class="grid-2col">
+                        <div class="table-responsive">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Zone / Sensor</th>
+                                        <th>10cm Root Depth</th>
+                                        <th>30cm Deep Depth</th>
+                                        <th>Moisture Status</th>
+                                        <th>Irrigation Valve</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="soilMoistureTable">
+                                    <!-- Dynamic Soil Rows -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div style="background:rgba(6, 182, 212, 0.05); border:1px dashed var(--accent-cyan); padding:1.25rem; border-radius:var(--radius-md);">
+                            <h3 style="font-size:1.05rem; font-weight:700; margin-bottom:0.75rem;">
+                                <i class="fas fa-droplet"></i> Soil Moisture Guidance
+                            </h3>
+                            <ul style="font-size:0.88rem; list-style:none; display:flex; flex-direction:column; gap:0.6rem;">
+                                <li><strong style="color:var(--accent-red)">Below 25%:</strong> Critical Dryness - Drip Irrigation Required</li>
+                                <li><strong style="color:var(--accent-green)">30% - 60%:</strong> Target Optimal Range for Wheat/Paddy</li>
+                                <li><strong style="color:var(--accent-amber)">Above 75%:</strong> Saturated - Risk of Root Rot</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: TEMP & HUMIDITY -->
+            <section id="tab-climate" class="tab-pane">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2 class="panel-title"><i class="fas fa-temperature-high"></i> Temperature & Microclimate Tracking</h2>
+                    </div>
+
+                    <div class="grid-2col">
+                        <div class="table-responsive">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Sensor Location</th>
+                                        <th>Ambient Temp</th>
+                                        <th>Relative Humidity</th>
+                                        <th>Heat Index</th>
+                                        <th>VPD Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="climateTable">
+                                    <!-- Dynamic Microclimate Rows -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div style="background:rgba(245, 158, 11, 0.05); border:1px dashed var(--accent-amber); padding:1.25rem; border-radius:var(--radius-md);">
+                            <h3 style="font-size:1.05rem; font-weight:700; margin-bottom:0.75rem;">
+                                <i class="fas fa-sun"></i> Heat & Frost Warning System
+                            </h3>
+                            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.75rem;">Vapor Pressure Deficit (VPD) indicator optimizes transpiration & greenhouse ventilation.</p>
+                            <p style="font-size:0.85rem;"><i class="fas fa-check-circle" style="color:var(--accent-green)"></i> <strong>Current Status:</strong> No Heat Stress Warning Active.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: ALERT CONSOLE -->
+            <section id="tab-alerts" class="tab-pane">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2 class="panel-title"><i class="fas fa-triangle-exclamation"></i> Real-Time Threshold Alert Console</h2>
+                        <button class="btn btn-secondary btn-xs" onclick="clearResolvedAlerts()">Clear Resolved</button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>Sensor Node</th>
+                                    <th>Severity</th>
+                                    <th>Condition Triggered</th>
+                                    <th>Telemetry Value</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="alertsTable">
+                                <!-- Dynamic Alert Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: HISTORICAL DATA ANALYSIS -->
+            <section id="tab-history" class="tab-pane">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2 class="panel-title"><i class="fas fa-chart-line"></i> Historical Telemetry Trends</h2>
+                        <select id="timeRange" class="form-control" style="width:auto;" onchange="renderHistoricalChart()">
+                            <option value="24h">Last 24 Hours</option>
+                            <option value="7d">Last 7 Days</option>
+                            <option value="30d">Last 30 Days</option>
+                        </select>
+                    </div>
+
+                    <div style="height:260px; width:100%; margin-top:1rem;" id="historicalChart">
+                        <svg width="100%" height="100%" viewBox="0 0 500 200" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="moistureGrad" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.4"/>
+                                    <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.0"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- Grid lines -->
+                            <line x1="0" y1="50" x2="500" y2="50" stroke="rgba(148, 163, 184, 0.2)" stroke-dasharray="4" />
+                            <line x1="0" y1="100" x2="500" y2="100" stroke="rgba(148, 163, 184, 0.2)" stroke-dasharray="4" />
+                            <line x1="0" y1="150" x2="500" y2="150" stroke="rgba(148, 163, 184, 0.2)" stroke-dasharray="4" />
+                            
+                            <!-- Area & Path -->
+                            <path d="M 0,140 Q 80,100 160,110 T 320,60 T 500,75 L 500,190 L 0,190 Z" fill="url(#moistureGrad)" />
+                            <path d="M 0,140 Q 80,100 160,110 T 320,60 T 500,75" fill="none" stroke="#06b6d4" stroke-width="3" />
+                            <path d="M 0,160 Q 80,140 160,130 T 320,110 T 500,90" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="3" />
+                        </svg>
+                    </div>
+                    <div style="display:flex; gap:1.5rem; justify-content:center; margin-top:1rem; font-size:0.85rem; color:var(--text-muted);">
+                        <span><i class="fas fa-square" style="color:var(--accent-cyan)"></i> Soil Moisture (%)</span>
+                        <span><i class="fas fa-square" style="color:var(--accent-amber)"></i> Temperature (°C)</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- MODAL: ADD SENSOR NODE -->
+    <div class="modal-overlay" id="nodeModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fas fa-satellite-dish"></i> Connect New IoT Sensor Node</h3>
+                <button class="close-modal" onclick="closeModal('nodeModal')">&times;</button>
+            </div>
+            <form onsubmit="saveNode(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Node ID *</label>
+                        <input type="text" id="nId" class="form-control" placeholder="e.g. NODE-05" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Zone / Location *</label>
+                        <input type="text" id="nLocation" class="form-control" placeholder="e.g. Greenhouse Section C" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Sensor Type</label>
+                        <select id="nType" class="form-control">
+                            <option value="Soil & Temp Combo">Soil Moisture & Temp Combo</option>
+                            <option value="Soil Moisture Probe">Soil Moisture Probe (Dual Depth)</option>
+                            <option value="Microclimate Station">Microclimate Station</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Protocol</label>
+                        <select id="nProtocol" class="form-control">
+                            <option value="LoRaWAN">LoRaWAN Long Range</option>
+                            <option value="Wi-Fi MQTT">Wi-Fi (MQTT)</option>
+                            <option value="NB-IoT">NB-IoT Cellular</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('nodeModal')">Cancel</button>
+                    <button type="submit" class="btn btn-cyan">Connect Node</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // Initial Sensor Nodes State
+        const DEFAULT_NODES = [
+            { id: "NODE-01", name: "North Field Zone A", moisture10: 42, moisture30: 48, temp: 27.5, humidity: 64, battery: 92, status: "Active", rssi: "-68 dBm" },
+            { id: "NODE-02", name: "Greenhouse B (Paddy)", moisture10: 38, moisture30: 41, temp: 29.8, humidity: 71, battery: 85, status: "Active", rssi: "-72 dBm" },
+            { id: "NODE-03", name: "South Orchard Block", moisture10: 22, moisture30: 29, temp: 34.2, humidity: 45, battery: 78, status: "Warning", rssi: "-81 dBm" },
+            { id: "NODE-04", name: "East Nursery Shed", moisture10: 55, moisture30: 58, temp: 25.1, humidity: 68, battery: 96, status: "Active", rssi: "-64 dBm" }
+        ];
+
+        const DEFAULT_ALERTS = [
+            { time: "10:14 AM", node: "NODE-03", severity: "Critical", condition: "Low Soil Moisture (< 25%)", value: "22%", status: "Active" },
+            { time: "08:30 AM", node: "NODE-03", severity: "Warning", condition: "High Temperature (> 33°C)", value: "34.2°C", status: "Active" }
+        ];
+
+        let nodes = JSON.parse(localStorage.getItem("agri_iot_nodes")) || DEFAULT_NODES;
+        let alerts = JSON.parse(localStorage.getItem("agri_iot_alerts")) || DEFAULT_ALERTS;
+
+        function saveState() {
+            localStorage.setItem("agri_iot_nodes", JSON.stringify(nodes));
+            localStorage.setItem("agri_iot_alerts", JSON.stringify(alerts));
+            updateMetrics();
+        }
+
+        // DOM Loaded Init
+        document.addEventListener("DOMContentLoaded", () => {
+            updateMetrics();
+            renderNodes();
+            renderSoilTable();
+            renderClimateTable();
+            renderAlertsTable();
+            
+            // Start live streaming telemetry simulation pulse (every 3.5 seconds)
+            setInterval(simulateLivePulse, 3500);
+        });
+
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll(".nav-item").forEach(el => el.classList.remove("active"));
+            document.querySelectorAll(".tab-pane").forEach(el => el.classList.remove("active"));
+
+            const navEl = document.querySelector(`.nav-item[onclick="switchTab('${tabId}')"]`);
+            if (navEl) navEl.classList.add("active");
+
+            const tabEl = document.getElementById(`tab-${tabId}`);
+            if (tabEl) tabEl.classList.add("active");
+        }
+
+        // Live Telemetry Simulation Engine
+        function simulateLivePulse() {
+            nodes.forEach(node => {
+                // Slight random fluctuations
+                const deltaM = (Math.random() - 0.48) * 1.2;
+                const deltaT = (Math.random() - 0.48) * 0.4;
+                const deltaH = (Math.random() - 0.48) * 0.8;
+
+                node.moisture10 = Math.min(95, Math.max(15, Math.round((node.moisture10 + deltaM) * 10) / 10));
+                node.temp = Math.min(48, Math.max(10, Math.round((node.temp + deltaT) * 10) / 10));
+                node.humidity = Math.min(95, Math.max(20, Math.round((node.humidity + deltaH) * 10) / 10));
+
+                // Check Threshold Alert Rules
+                if (node.moisture10 < 25 && !alerts.some(a => a.node === node.id && a.condition.includes("Moisture"))) {
+                    alerts.unshift({
+                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                        node: node.id,
+                        severity: "Critical",
+                        condition: "Low Soil Moisture (< 25%)",
+                        value: `${node.moisture10}%`,
+                        status: "Active"
+                    });
+                    showToast(`ALERT: Critical low moisture detected on ${node.name}!`);
+                }
+            });
+
+            saveState();
+            renderNodes();
+            renderSoilTable();
+            renderClimateTable();
+        }
+
+        // Metrics Calculation
+        function updateMetrics() {
+            const avgM = Math.round(nodes.reduce((acc, n) => acc + n.moisture10, 0) / nodes.length);
+            const avgT = (nodes.reduce((acc, n) => acc + n.temp, 0) / nodes.length).toFixed(1);
+            const avgH = Math.round(nodes.reduce((acc, n) => acc + n.humidity, 0) / nodes.length);
+
+            document.getElementById("valAvgMoisture").textContent = `${avgM}%`;
+            document.getElementById("barAvgMoisture").style.width = `${avgM}%`;
+
+            document.getElementById("valAvgTemp").textContent = `${avgT} °C`;
+            document.getElementById("barAvgTemp").style.width = `${Math.min(100, (avgT / 45) * 100)}%`;
+
+            document.getElementById("valAvgHumidity").textContent = `${avgH}%`;
+            document.getElementById("barAvgHumidity").style.width = `${avgH}%`;
+
+            document.getElementById("valActiveNodes").textContent = `${nodes.length} / ${nodes.length}`;
+        }
+
+        // Render Nodes Grid
+        function renderNodes() {
+            const grid = document.getElementById("sensorNodesGrid");
+            grid.innerHTML = nodes.map(n => `
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-title-box">
+                            <h3>${n.name}</h3>
+                            <span>${n.id} • ${n.rssi}</span>
+                        </div>
+                        <span class="badge ${n.moisture10 < 25 ? 'badge-red' : 'badge-green'}">${n.status}</span>
+                    </div>
+
+                    <div class="node-telemetry-list">
+                        <div class="telemetry-row">
+                            <label><i class="fas fa-droplet" style="color:var(--accent-cyan)"></i> Soil Moisture (10cm)</label>
+                            <strong>${n.moisture10}%</strong>
+                        </div>
+                        <div class="telemetry-row">
+                            <label><i class="fas fa-temperature-half" style="color:var(--accent-amber)"></i> Temperature</label>
+                            <strong>${n.temp} °C</strong>
+                        </div>
+                        <div class="telemetry-row">
+                            <label><i class="fas fa-wind" style="color:var(--accent-blue)"></i> Humidity</label>
+                            <strong>${n.humidity}%</strong>
+                        </div>
+                    </div>
+
+                    <div class="node-footer">
+                        <span><i class="fas fa-battery-three-quarters"></i> Battery: ${n.battery}%</span>
+                        <span><i class="fas fa-clock"></i> Updated Just Now</span>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        // Render Soil Table
+        function renderSoilTable() {
+            const table = document.getElementById("soilMoistureTable");
+            table.innerHTML = nodes.map(n => `
+                <tr>
+                    <td><strong>${n.name}</strong> (${n.id})</td>
+                    <td><strong style="color:var(--accent-cyan)">${n.moisture10}%</strong></td>
+                    <td>${n.moisture30}%</td>
+                    <td><span class="badge ${n.moisture10 < 25 ? 'badge-red' : 'badge-green'}">${n.moisture10 < 25 ? 'Dry - Needs Water' : 'Optimal'}</span></td>
+                    <td><button class="btn btn-secondary btn-xs" onclick="triggerZoneIrrigation('${n.id}')"><i class="fas fa-faucet-drip"></i> Valve ${n.moisture10 < 25 ? 'ON' : 'Auto'}</button></td>
+                </tr>
+            `).join("");
+        }
+
+        // Render Climate Table
+        function renderClimateTable() {
+            const table = document.getElementById("climateTable");
+            table.innerHTML = nodes.map(n => `
+                <tr>
+                    <td><strong>${n.name}</strong></td>
+                    <td>${n.temp} °C</td>
+                    <td>${n.humidity}%</td>
+                    <td>${(n.temp + 1.2).toFixed(1)} °C</td>
+                    <td><span class="badge badge-cyan">Optimal Transpiration</span></td>
+                </tr>
+            `).join("");
+        }
+
+        // Render Alerts Table
+        function renderAlertsTable() {
+            const table = document.getElementById("alertsTable");
+            if (alerts.length === 0) {
+                table.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:2rem;">No active alerts. All sensors operating within normal limits.</td></tr>`;
+                return;
+            }
+
+            table.innerHTML = alerts.map((a, i) => `
+                <tr>
+                    <td>${a.time}</td>
+                    <td><span class="badge badge-cyan">${a.node}</span></td>
+                    <td><span class="badge ${a.severity === 'Critical' ? 'badge-red' : 'badge-amber'}">${a.severity}</span></td>
+                    <td>${a.condition}</td>
+                    <td><strong>${a.value}</strong></td>
+                    <td><button class="btn btn-secondary btn-xs" onclick="dismissAlert(${i})">Resolve</button></td>
+                </tr>
+            `).join("");
+        }
+
+        // Modal Handlers
+        function openAddNodeModal() { document.getElementById("nodeModal").classList.add("open"); }
+        function closeModal(id) { document.getElementById(id).classList.remove("open"); }
+
+        function saveNode(e) {
+            e.preventDefault();
+            const newNode = {
+                id: document.getElementById("nId").value.trim(),
+                name: document.getElementById("nLocation").value.trim(),
+                moisture10: 45,
+                moisture30: 50,
+                temp: 26.5,
+                humidity: 60,
+                battery: 100,
+                status: "Active",
+                rssi: "-60 dBm"
+            };
+
+            nodes.unshift(newNode);
+            saveState();
+            renderNodes();
+            closeModal("nodeModal");
+            showToast("New IoT Sensor Node connected successfully!");
+        }
+
+        function triggerSmartIrrigation() {
+            showToast("Automated Smart Drip Irrigation triggered for dry zones.");
+        }
+
+        function triggerZoneIrrigation(nodeId) {
+            showToast(`Irrigation valve actuated for ${nodeId}.`);
+        }
+
+        function dismissAlert(index) {
+            alerts.splice(index, 1);
+            saveState();
+            renderAlertsTable();
+            showToast("Alert resolved.");
+        }
+
+        function clearResolvedAlerts() {
+            alerts = [];
+            saveState();
+            renderAlertsTable();
+            showToast("Cleared alert history.");
+        }
+
+        function exportSensorCSV() {
+            let csv = "Node ID,Location,Soil_Moisture_10cm,Soil_Moisture_30cm,Temp_C,Humidity_pct,Battery_pct\n";
+            nodes.forEach(n => {
+                csv += `"${n.id}","${n.name}","${n.moisture10}","${n.moisture30}","${n.temp}","${n.humidity}","${n.battery}"\n`;
+            });
+            const blob = new Blob([csv], { type: "text/csv" });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `sensor_telemetry_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            showToast("Exported sensor telemetry to CSV.");
+        }
+
+        function toggleTheme() {
+            const current = document.body.getAttribute("data-theme");
+            const next = current === "dark" ? "light" : "dark";
+            document.body.setAttribute("data-theme", next);
+            document.getElementById("themeIcon").className = next === "dark" ? "fas fa-sun" : "fas fa-moon";
+        }
+
+        function showToast(msg) {
+            const container = document.getElementById("toastContainer");
+            const toast = document.createElement("div");
+            toast.className = "toast";
+            toast.innerHTML = `<i class="fas fa-tower-broadcast" style="color:var(--accent-cyan)"></i> ${msg}`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3500);
+        }
+    </script>
+</body>
+
+</html>

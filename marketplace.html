@@ -1231,8 +1231,9 @@
       bottom: 0;
       width: 340px;
       max-width: 100vw;
-      height: 100vh;
-      max-height: 100vh;
+      height: 100%;
+      height: 100dvh;
+      max-height: 100dvh;
       box-sizing: border-box;
       background: radial-gradient(circle at top, rgba(37, 99, 235, 0.34), transparent 55%),
         rgba(15, 23, 42, 0.98);
@@ -1243,7 +1244,7 @@
       z-index: 1100;
       display: flex;
       flex-direction: column;
-      padding: 18px 16px 16px;
+      padding: 18px 16px max(16px, env(safe-area-inset-bottom, 16px));
       color: #e5e7eb;
       -webkit-backdrop-filter: blur(14px);
       backdrop-filter: blur(14px);
