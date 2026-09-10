@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livestock Management | AgriTech</title>
+    <meta name="description"
+        content="Smart Livestock Management System for tracking animal records, health & vaccinations, breeding, daily production, and feed planning.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --primary-light: #1e293b;
+            --accent-green: #10b981;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --card-border: rgba(226, 232, 240, 0.8);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+        }
+
+        [data-theme="dark"] {
+            --primary: #020617;
+            --primary-light: #0f172a;
+            --bg: #0b1329;
+            --card-bg: #111c38;
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --shadow-md: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* App Shell */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Nav */
+        .app-sidebar {
+            width: 280px;
+            background: var(--primary);
+            color: #ffffff;
+            padding: 1.5rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .brand-header {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            margin-bottom: 2rem;
+            padding: 0.5rem;
+            text-decoration: none;
+            color: white;
+        }
+
+        .brand-header img {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: white;
+            padding: 4px;
+        }
+
+        .brand-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .brand-title span {
+            color: var(--accent-green);
+        }
+
+        .sidebar-section-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #94a3b8;
+            margin: 1.25rem 0.5rem 0.5rem;
+            font-weight: 700;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            flex: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0.85rem 1rem;
+            border-radius: var(--radius-md);
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+
+        .nav-item.active {
+            background: var(--accent-green);
+            color: #ffffff;
+            font-weight: 600;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+        }
+
+        .nav-item i {
+            font-size: 1.1rem;
+            width: 22px;
+            text-align: center;
+        }
+
+        .user-quick-profile {
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+        }
+
+        .user-info {
+            font-size: 0.85rem;
+        }
+
+        .user-info strong {
+            display: block;
+            color: white;
+        }
+
+        .user-info span {
+            color: #94a3b8;
+            font-size: 0.75rem;
+        }
+
+        /* Main Workspace */
+        .app-main {
+            flex: 1;
+            padding: 2rem 2.5rem;
+            max-width: 1500px;
+            overflow-x: hidden;
+        }
+
+        /* Top Header */
+        .main-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .page-title h1 {
+            font-size: 1.85rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .page-title p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            margin-top: 0.2rem;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.25rem;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent-green);
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background: #059669;
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--text-main);
+            border-color: var(--card-border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(148, 163, 184, 0.1);
+        }
+
+        .btn-icon {
+            width: 42px;
+            height: 42px;
+            padding: 0;
+            border-radius: 50%;
+            justify-content: center;
+        }
+
+        /* Stat Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 1.35rem 1.5rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .icon-green { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); }
+        .icon-blue { background: rgba(59, 130, 246, 0.15); color: var(--accent-blue); }
+        .icon-purple { background: rgba(139, 92, 246, 0.15); color: var(--accent-purple); }
+        .icon-amber { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+            font-weight: 500;
+        }
+
+        .stat-sub {
+            font-size: 0.78rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--accent-green);
+        }
+
+        /* Tab Content Section */
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card Container */
+        .panel-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .panel-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        /* Filters & Controls */
+        .controls-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.7rem 1rem 0.7rem 2.6rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--card-border);
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-green);
+        }
+
+        .filter-select {
+            padding: 0.7rem 1.2rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--card-border);
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Tables */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        .custom-table th {
+            background: var(--bg);
+            padding: 0.9rem 1rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .custom-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--card-border);
+            vertical-align: middle;
+        }
+
+        .custom-table tr:hover td {
+            background: rgba(148, 163, 184, 0.05);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.3rem 0.7rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: capitalize;
+        }
+
+        .badge-green { background: rgba(16, 185, 129, 0.15); color: #059669; }
+        .badge-blue { background: rgba(59, 130, 246, 0.15); color: #2563eb; }
+        .badge-amber { background: rgba(245, 158, 11, 0.15); color: #d97706; }
+        .badge-purple { background: rgba(139, 92, 246, 0.15); color: #7c3aed; }
+        .badge-red { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
+
+        /* Animal Grid */
+        .animal-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .animal-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 1.35rem;
+            transition: all 0.25 ease;
+            position: relative;
+        }
+
+        .animal-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent-green);
+        }
+
+        .animal-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.85rem;
+        }
+
+        .tag-pill {
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            padding: 0.25rem 0.65rem;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            letter-spacing: 0.03em;
+        }
+
+        .animal-card-body h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .animal-meta {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            margin-top: 0.75rem;
+        }
+
+        .animal-meta div {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .animal-card-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1.25rem;
+            padding-top: 0.85rem;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .btn-xs {
+            padding: 0.4rem 0.75rem;
+            font-size: 0.78rem;
+            border-radius: 8px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        /* Grid 2 Column Layout */
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.75rem;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-2col {
+                grid-template-columns: 1fr;
+            }
+            .app-sidebar {
+                width: 80px;
+                padding: 1.25rem 0.5rem;
+            }
+            .brand-title, .sidebar-section-label, .nav-item span, .user-info {
+                display: none;
+            }
+            .nav-item {
+                justify-content: center;
+                padding: 0.85rem;
+            }
+            .app-main {
+                padding: 1.5rem;
+            }
+        }
+
+        /* SVG Chart Visual */
+        .chart-container {
+            width: 100%;
+            height: 220px;
+            margin-top: 1rem;
+        }
+
+        /* Ration Calculator Box */
+        .ration-box {
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px dashed var(--accent-green);
+            padding: 1.25rem;
+            border-radius: var(--radius-md);
+            margin-top: 1rem;
+        }
+
+        /* Modals */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            width: 100%;
+            max-width: 600px;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.92); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group.full {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .form-control {
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--card-border);
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-green);
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .toast {
+            background: var(--primary);
+            color: white;
+            padding: 0.9rem 1.4rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            animation: slideInRight 0.3s forwards;
+            border-left: 4px solid var(--accent-green);
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="app-sidebar">
+            <a href="index.html" class="brand-header">
+                <img src="images/logo.png" alt="AgriTech Logo" />
+                <span class="brand-title">Agri<span>Tech</span></span>
+            </a>
+
+            <div class="sidebar-section-label">Management</div>
+            <nav class="sidebar-nav">
+                <div class="nav-item active" onclick="switchTab('overview')">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Overview</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('animals')">
+                    <i class="fas fa-cow"></i>
+                    <span>Animal Records</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('health')">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>Health Tracking</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('breeding')">
+                    <i class="fas fa-dna"></i>
+                    <span>Breeding</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('production')">
+                    <i class="fas fa-fill-drip"></i>
+                    <span>Production</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('feed')">
+                    <i class="fas fa-wheat-awn"></i>
+                    <span>Feed Planning</span>
+                </div>
+            </nav>
+
+            <div class="sidebar-section-label">Portals</div>
+            <nav class="sidebar-nav">
+                <a href="farmer.html" class="nav-item">
+                    <i class="fas fa-user-gear"></i>
+                    <span>Farmer Hub</span>
+                </a>
+                <a href="marketplace.html" class="nav-item">
+                    <i class="fas fa-store"></i>
+                    <span>Marketplace</span>
+                </a>
+            </nav>
+
+            <div class="user-quick-profile">
+                <div class="user-avatar">FM</div>
+                <div class="user-info">
+                    <strong>Farm Manager</strong>
+                    <span>Green Valley Ranch</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="app-main">
+            <!-- Top Main Header -->
+            <header class="main-header">
+                <div class="page-title">
+                    <h1 id="tabHeading">Livestock Overview</h1>
+                    <p id="tabSubheading">Real-time monitoring and herd health management center</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary btn-icon" onclick="toggleTheme()" title="Toggle Theme">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <button class="btn btn-secondary" onclick="exportLivestockCSV()">
+                        <i class="fas fa-download"></i> Export Data
+                    </button>
+                    <button class="btn btn-primary" onclick="openAddAnimalModal()">
+                        <i class="fas fa-plus"></i> Add Animal
+                    </button>
+                </div>
+            </header>
+
+            <!-- Key Metrics Bar -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Total Livestock</span>
+                        <div class="stat-icon icon-green"><i class="fas fa-paw"></i></div>
+                    </div>
+                    <div class="stat-value" id="statTotalAnimals">0</div>
+                    <div class="stat-sub"><i class="fas fa-check-circle"></i> Active on farm</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Health Index</span>
+                        <div class="stat-icon icon-blue"><i class="fas fa-notes-medical"></i></div>
+                    </div>
+                    <div class="stat-value" id="statHealthPct">100%</div>
+                    <div class="stat-sub" style="color:var(--accent-blue)"><i class="fas fa-shield-heart"></i> Vaccinated & Healthy</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Milk Yield (Today)</span>
+                        <div class="stat-icon icon-purple"><i class="fas fa-glass-water"></i></div>
+                    </div>
+                    <div class="stat-value" id="statMilkYield">0 L</div>
+                    <div class="stat-sub" style="color:var(--accent-purple)"><i class="fas fa-arrow-up"></i> +4.2% vs last week</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Active Pregnancies</span>
+                        <div class="stat-icon icon-amber"><i class="fas fa-baby-carriage"></i></div>
+                    </div>
+                    <div class="stat-value" id="statPregnancies">0</div>
+                    <div class="stat-sub" style="color:var(--accent-amber)"><i class="fas fa-calendar"></i> Expected next 30 days</div>
+                </div>
+            </div>
+
+            <!-- TAB 1: OVERVIEW -->
+            <section id="tab-overview" class="tab-pane active">
+                <div class="grid-2col">
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <h2 class="panel-title"><i class="fas fa-history"></i> Recent Herd Activity</h2>
+                            <button class="btn btn-secondary btn-xs" onclick="switchTab('animals')">View All</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tag ID</th>
+                                        <th>Animal</th>
+                                        <th>Species</th>
+                                        <th>Status</th>
+                                        <th>Last Checked</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="overviewActivityTable">
+                                    <!-- Dynamic Rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <h2 class="panel-title"><i class="fas fa-bell"></i> Upcoming Health Alerts</h2>
+                        </div>
+                        <div id="alertsList" style="display:flex; flex-direction:column; gap:1rem;">
+                            <!-- Dynamic Alerts -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: ANIMAL RECORDS -->
+            <section id="tab-animals" class="tab-pane">
+                <div class="panel-card">
+                    <div class="controls-bar">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="animalSearch" class="search-input" placeholder="Search by Tag ID, Name, or Breed..." oninput="renderAnimalRecords()">
+                        </div>
+                        <select id="filterSpecies" class="filter-select" onchange="renderAnimalRecords()">
+                            <option value="ALL">All Species</option>
+                            <option value="Cattle">Cattle / Cows</option>
+                            <option value="Goat">Goats</option>
+                            <option value="Sheep">Sheep</option>
+                            <option value="Poultry">Poultry</option>
+                            <option value="Swine">Swine / Pigs</option>
+                        </select>
+                        <select id="filterStatus" class="filter-select" onchange="renderAnimalRecords()">
+                            <option value="ALL">All Statuses</option>
+                            <option value="Healthy">Healthy</option>
+                            <option value="Pregnant">Pregnant</option>
+                            <option value="Under Treatment">Under Treatment</option>
+                            <option value="Quarantined">Quarantined</option>
+                        </select>
+                    </div>
+
+                    <div class="animal-cards-grid" id="animalGrid">
+                        <!-- Dynamic Animal Cards -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: HEALTH TRACKING -->
+            <section id="tab-health" class="tab-pane">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2 class="panel-title"><i class="fas fa-syringe"></i> Vaccination & Medical Logs</h2>
+                        <button class="btn btn-primary" onclick="openHealthModal()">
+                            <i class="fas fa-plus"></i> Record Health Log
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Tag ID</th>
+                                    <th>Event Type</th>
+                                    <th>Medicine / Vaccine</th>
+                                    <th>Administered By</th>
+                                    <th>Next Due Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="healthLogsTable">
+                                <!-- Dynamic Health Logs -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: BREEDING MANAGEMENT -->
+            <section id="tab-breeding" class="tab-pane">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2 class="panel-title"><i class="fas fa-dna"></i> Breeding & Gestation Management</h2>
+                        <button class="btn btn-primary" onclick="openBreedingModal()">
+                            <i class="fas fa-plus"></i> Record Mating / AI Event
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Dam Tag ID</th>
+                                    <th>Sire Tag / AI Code</th>
+                                    <th>Mating Date</th>
+                                    <th>Breeding Type</th>
+                                    <th>Expected Calving/Birth</th>
+                                    <th>Countdown</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="breedingTable">
+                                <!-- Dynamic Breeding Logs -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: PRODUCTION TRACKING -->
+            <section id="tab-production" class="tab-pane">
+                <div class="grid-2col">
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <h2 class="panel-title"><i class="fas fa-chart-line"></i> Daily Yield Log</h2>
+                            <button class="btn btn-primary" onclick="openProductionModal()">
+                                <i class="fas fa-plus"></i> Record Yield
+                            </button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Group / Tag</th>
+                                        <th>Product Type</th>
+                                        <th>Quantity</th>
+                                        <th>Quality Grade</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productionTable">
+                                    <!-- Dynamic Yield Rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <h2 class="panel-title"><i class="fas fa-chart-column"></i> 7-Day Production Trend</h2>
+                        </div>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Daily milk yield analytics (Liters)</p>
+                        <div class="chart-container" id="yieldChart">
+                            <svg width="100%" height="100%" viewBox="0 0 400 180" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#10b981" stop-opacity="0.4"/>
+                                        <stop offset="100%" stop-color="#10b981" stop-opacity="0.0"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M 10,140 Q 60,90 120,110 T 240,60 T 360,40 L 360,170 L 10,170 Z" fill="url(#chartGrad)" />
+                                <path d="M 10,140 Q 60,90 120,110 T 240,60 T 360,40" fill="none" stroke="#10b981" stroke-width="3" />
+                                <circle cx="10" cy="140" r="4" fill="#10b981" />
+                                <circle cx="70" cy="100" r="4" fill="#10b981" />
+                                <circle cx="130" cy="110" r="4" fill="#10b981" />
+                                <circle cx="190" cy="80" r="4" fill="#10b981" />
+                                <circle cx="250" cy="60" r="4" fill="#10b981" />
+                                <circle cx="310" cy="50" r="4" fill="#10b981" />
+                                <circle cx="360" cy="40" r="4" fill="#10b981" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 6: FEED PLANNING -->
+            <section id="tab-feed" class="tab-pane">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2 class="panel-title"><i class="fas fa-wheat-field"></i> Feed Inventory & Ration Calculator</h2>
+                        <button class="btn btn-primary" onclick="openFeedModal()">
+                            <i class="fas fa-plus"></i> Add Feed Stock
+                        </button>
+                    </div>
+
+                    <div class="grid-2col">
+                        <div class="table-responsive">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Feed Name</th>
+                                        <th>Type</th>
+                                        <th>Current Stock (kg)</th>
+                                        <th>Status</th>
+                                        <th>Est. Daily Cost</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="feedTable">
+                                    <!-- Dynamic Feed Rows -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="ration-box">
+                            <h3 style="font-size:1.05rem; font-weight:700; margin-bottom:0.75rem;">
+                                <i class="fas fa-calculator"></i> Daily Herd Ration Estimator
+                            </h3>
+                            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Recommended daily diet composition per adult dairy cow:</p>
+                            <ul style="font-size:0.88rem; list-style:none; display:flex; flex-direction:column; gap:0.5rem;">
+                                <li><i class="fas fa-check text-green" style="color:var(--accent-green)"></i> <strong>Green Fodder:</strong> 25 - 30 kg</li>
+                                <li><i class="fas fa-check text-green" style="color:var(--accent-green)"></i> <strong>Dry Fodder:</strong> 5 - 8 kg</li>
+                                <li><i class="fas fa-check text-green" style="color:var(--accent-green)"></i> <strong>Concentrates:</strong> 3 - 5 kg</li>
+                                <li><i class="fas fa-check text-green" style="color:var(--accent-green)"></i> <strong>Mineral Mixture:</strong> 50 - 100 g</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- MODAL: ADD / EDIT ANIMAL -->
+    <div class="modal-overlay" id="animalModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fas fa-cow"></i> Add New Animal</h3>
+                <button class="close-modal" onclick="closeModal('animalModal')">&times;</button>
+            </div>
+            <form onsubmit="saveAnimal(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Tag ID *</label>
+                        <input type="text" id="mTagId" class="form-control" placeholder="e.g. COW-101" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Name / Identifier</label>
+                        <input type="text" id="mName" class="form-control" placeholder="e.g. Bella">
+                    </div>
+                    <div class="form-group">
+                        <label>Species *</label>
+                        <select id="mSpecies" class="form-control" required>
+                            <option value="Cattle">Cattle / Cow</option>
+                            <option value="Goat">Goat</option>
+                            <option value="Sheep">Sheep</option>
+                            <option value="Poultry">Poultry</option>
+                            <option value="Swine">Swine / Pig</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Breed</label>
+                        <input type="text" id="mBreed" class="form-control" placeholder="e.g. Gir, Holstein, Jamunapari">
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select id="mGender" class="form-control">
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Weight (kg)</label>
+                        <input type="number" id="mWeight" class="form-control" placeholder="e.g. 420">
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="mStatus" class="form-control">
+                            <option value="Healthy">Healthy</option>
+                            <option value="Pregnant">Pregnant</option>
+                            <option value="Under Treatment">Under Treatment</option>
+                            <option value="Quarantined">Quarantined</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Barn / Shed Location</label>
+                        <input type="text" id="mLocation" class="form-control" placeholder="e.g. Barn A-2">
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('animalModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Animal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: HEALTH LOG -->
+    <div class="modal-overlay" id="healthModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fas fa-heartbeat"></i> Record Health Log</h3>
+                <button class="close-modal" onclick="closeModal('healthModal')">&times;</button>
+            </div>
+            <form onsubmit="saveHealthLog(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Animal Tag ID *</label>
+                        <select id="hTagId" class="form-control" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Event Type *</label>
+                        <select id="hType" class="form-control" required>
+                            <option value="Vaccination">Vaccination</option>
+                            <option value="Deworming">Deworming</option>
+                            <option value="Medical Checkup">Medical Checkup</option>
+                            <option value="Treatment">Treatment</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Medicine / Vaccine Name *</label>
+                        <input type="text" id="hMedicine" class="form-control" placeholder="e.g. FMD Vaccine" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Administered By (Vet)</label>
+                        <input type="text" id="hVet" class="form-control" placeholder="Dr. Sharma">
+                    </div>
+                    <div class="form-group">
+                        <label>Next Booster Due Date</label>
+                        <input type="date" id="hNextDate" class="form-control">
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('healthModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Log</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: BREEDING -->
+    <div class="modal-overlay" id="breedingModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fas fa-dna"></i> Record Breeding Event</h3>
+                <button class="close-modal" onclick="closeModal('breedingModal')">&times;</button>
+            </div>
+            <form onsubmit="saveBreedingLog(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Dam (Female Tag ID) *</label>
+                        <select id="bDamTag" class="form-control" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Sire Tag / AI Straw Code</label>
+                        <input type="text" id="bSireTag" class="form-control" placeholder="e.g. BULL-09 / AI-HOL-44">
+                    </div>
+                    <div class="form-group">
+                        <label>Mating Date *</label>
+                        <input type="date" id="bMatingDate" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Breeding Method</label>
+                        <select id="bMethod" class="form-control">
+                            <option value="Artificial Insemination (AI)">Artificial Insemination (AI)</option>
+                            <option value="Natural Mating">Natural Mating</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('breedingModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Record</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: PRODUCTION YIELD -->
+    <div class="modal-overlay" id="productionModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fas fa-fill-drip"></i> Record Daily Yield</h3>
+                <button class="close-modal" onclick="closeModal('productionModal')">&times;</button>
+            </div>
+            <form onsubmit="saveProductionLog(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Date *</label>
+                        <input type="date" id="pDate" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Group / Tag ID *</label>
+                        <input type="text" id="pGroup" class="form-control" placeholder="e.g. Dairy Herd A / COW-101" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Product Type *</label>
+                        <select id="pType" class="form-control" required>
+                            <option value="Milk (L)">Milk (Liters)</option>
+                            <option value="Eggs (Count)">Eggs (Count)</option>
+                            <option value="Wool (kg)">Wool (kg)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantity *</label>
+                        <input type="number" step="0.1" id="pQty" class="form-control" placeholder="e.g. 45.5" required>
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('productionModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Yield</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: FEED STOCK -->
+    <div class="modal-overlay" id="feedModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fas fa-wheat-awn"></i> Add Feed Stock</h3>
+                <button class="close-modal" onclick="closeModal('feedModal')">&times;</button>
+            </div>
+            <form onsubmit="saveFeedStock(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Feed Name *</label>
+                        <input type="text" id="fName" class="form-control" placeholder="e.g. Maize Silage" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select id="fType" class="form-control">
+                            <option value="Green Fodder">Green Fodder</option>
+                            <option value="Dry Fodder">Dry Fodder</option>
+                            <option value="Concentrate">Concentrate</option>
+                            <option value="Mineral Mix">Mineral Mix</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantity (kg) *</label>
+                        <input type="number" id="fQty" class="form-control" placeholder="e.g. 500" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cost per kg (₹)</label>
+                        <input type="number" step="0.1" id="fCost" class="form-control" placeholder="e.g. 12">
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('feedModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Stock</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // Data State Store (Persisted in localStorage)
+        const DEFAULT_ANIMALS = [
+            { id: "COW-101", name: "Gauri", species: "Cattle", breed: "Gir", gender: "Female", weight: 430, status: "Healthy", location: "Barn A-1" },
+            { id: "COW-102", name: "Lakshmi", species: "Cattle", breed: "Holstein", gender: "Female", weight: 510, status: "Pregnant", location: "Barn A-2" },
+            { id: "GOT-201", name: "Champa", species: "Goat", breed: "Jamunapari", gender: "Female", weight: 45, status: "Healthy", location: "Pen B-1" },
+            { id: "SHP-301", name: "Rani", species: "Sheep", breed: "Marwari", gender: "Female", weight: 38, status: "Under Treatment", location: "Pen C-3" },
+            { id: "PUL-401", name: "Flock A", species: "Poultry", breed: "BV380 Layer", gender: "Female", weight: 2, status: "Healthy", location: "Coop 1" }
+        ];
+
+        const DEFAULT_HEALTH = [
+            { date: "2026-08-25", tagId: "COW-101", type: "Vaccination", medicine: "FMD Vaccine", vet: "Dr. Sharma", nextDate: "2027-02-25", status: "Completed" },
+            { date: "2026-09-01", tagId: "SHP-301", type: "Treatment", medicine: "Antibiotic Spray", vet: "Dr. Verma", nextDate: "2026-09-10", status: "Ongoing" }
+        ];
+
+        const DEFAULT_BREEDING = [
+            { damTag: "COW-102", sireTag: "BULL-09", matingDate: "2026-01-15", method: "Artificial Insemination (AI)", expDate: "2026-10-25", status: "Confirmed Pregnant" }
+        ];
+
+        const DEFAULT_PRODUCTION = [
+            { date: "2026-09-06", group: "COW-101 & COW-102", type: "Milk (L)", qty: 28.5, grade: "Grade A" },
+            { date: "2026-09-06", group: "Flock A", type: "Eggs (Count)", qty: 120, grade: "Fresh Grade A" }
+        ];
+
+        const DEFAULT_FEED = [
+            { name: "Green Napier Grass", type: "Green Fodder", stock: 1200, cost: 3.5, status: "Sufficient" },
+            { name: "Wheat Straw (Bhusa)", type: "Dry Fodder", stock: 850, cost: 6.0, status: "Sufficient" },
+            { name: "Dairy Concentrate Feed", type: "Concentrate", stock: 300, cost: 22.0, status: "Low Stock Alert" }
+        ];
+
+        let animals = JSON.parse(localStorage.getItem("agri_livestock_animals")) || DEFAULT_ANIMALS;
+        let healthLogs = JSON.parse(localStorage.getItem("agri_livestock_health")) || DEFAULT_HEALTH;
+        let breedingRecords = JSON.parse(localStorage.getItem("agri_livestock_breeding")) || DEFAULT_BREEDING;
+        let productionLogs = JSON.parse(localStorage.getItem("agri_livestock_production")) || DEFAULT_PRODUCTION;
+        let feedStock = JSON.parse(localStorage.getItem("agri_livestock_feed")) || DEFAULT_FEED;
+
+        // Save State
+        function saveState() {
+            localStorage.setItem("agri_livestock_animals", JSON.stringify(animals));
+            localStorage.setItem("agri_livestock_health", JSON.stringify(healthLogs));
+            localStorage.setItem("agri_livestock_breeding", JSON.stringify(breedingRecords));
+            localStorage.setItem("agri_livestock_production", JSON.stringify(productionLogs));
+            localStorage.setItem("agri_livestock_feed", JSON.stringify(feedStock));
+            updateMetrics();
+        }
+
+        // Initialize Page
+        document.addEventListener("DOMContentLoaded", () => {
+            updateMetrics();
+            renderOverview();
+            renderAnimalRecords();
+            renderHealthLogs();
+            renderBreedingLogs();
+            renderProductionLogs();
+            renderFeedStock();
+            populateTagSelectors();
+            
+            // Set default date inputs to today
+            const today = new Date().toISOString().split('T')[0];
+            if (document.getElementById("pDate")) document.getElementById("pDate").value = today;
+            if (document.getElementById("bMatingDate")) document.getElementById("bMatingDate").value = today;
+        });
+
+        // Tab Switcher
+        function switchTab(tabId) {
+            document.querySelectorAll(".nav-item").forEach(el => el.classList.remove("active"));
+            document.querySelectorAll(".tab-pane").forEach(el => el.classList.remove("active"));
+
+            const activeNav = document.querySelector(`.nav-item[onclick="switchTab('${tabId}')"]`);
+            if (activeNav) activeNav.classList.add("active");
+
+            const activeTabPane = document.getElementById(`tab-${tabId}`);
+            if (activeTabPane) activeTabPane.classList.add("active");
+
+            // Headings
+            const headings = {
+                overview: ["Livestock Overview", "Real-time monitoring and herd health management center"],
+                animals: ["Animal Records", "Manage complete herd profiles, breeds, and locations"],
+                health: ["Health & Vaccination Tracking", "Log medical events, vaccinations, and vet checkups"],
+                breeding: ["Breeding & Gestation", "Track heat cycles, AI events, and expected birth dates"],
+                production: ["Production Tracking", "Daily yield records for milk, eggs, and wool"],
+                feed: ["Feed Planning & Rations", "Manage feed inventory and calculate daily herd diets"]
+            };
+
+            if (headings[tabId]) {
+                document.getElementById("tabHeading").textContent = headings[tabId][0];
+                document.getElementById("tabSubheading").textContent = headings[tabId][1];
+            }
+        }
+
+        // Update Key Metrics
+        function updateMetrics() {
+            document.getElementById("statTotalAnimals").textContent = animals.length;
+
+            const healthyCount = animals.filter(a => a.status === "Healthy" || a.status === "Pregnant").length;
+            const healthPct = animals.length > 0 ? Math.round((healthyCount / animals.length) * 100) : 100;
+            document.getElementById("statHealthPct").textContent = `${healthPct}%`;
+
+            const todayMilk = productionLogs
+                .filter(p => p.type.includes("Milk"))
+                .reduce((sum, p) => sum + Number(p.qty), 0);
+            document.getElementById("statMilkYield").textContent = `${todayMilk.toFixed(1)} L`;
+
+            document.getElementById("statPregnancies").textContent = breedingRecords.filter(b => b.status.includes("Pregnant")).length;
+        }
+
+        // Render Overview Tab
+        function renderOverview() {
+            const table = document.getElementById("overviewActivityTable");
+            table.innerHTML = animals.slice(0, 5).map(a => `
+                <tr>
+                    <td><span class="tag-pill">${a.id}</span></td>
+                    <td><strong>${a.name || a.id}</strong></td>
+                    <td>${a.species} (${a.breed})</td>
+                    <td><span class="badge ${getStatusBadgeClass(a.status)}">${a.status}</span></td>
+                    <td>${a.location}</td>
+                </tr>
+            `).join("");
+
+            const alerts = document.getElementById("alertsList");
+            alerts.innerHTML = `
+                <div style="padding:1rem; border-radius:12px; background:rgba(245, 158, 11, 0.1); border-left:4px solid var(--accent-amber);">
+                    <strong style="color:var(--accent-amber); font-size:0.9rem;">Deworming Due Soon</strong>
+                    <p style="font-size:0.82rem; margin-top:0.2rem; color:var(--text-muted);">Sheep Tag SHP-301 requires booster deworming in 4 days.</p>
+                </div>
+                <div style="padding:1rem; border-radius:12px; background:rgba(59, 130, 246, 0.1); border-left:4px solid var(--accent-blue);">
+                    <strong style="color:var(--accent-blue); font-size:0.9rem;">Calving Watchlist</strong>
+                    <p style="font-size:0.82rem; margin-top:0.2rem; color:var(--text-muted);">Cow COW-102 due for delivery on Oct 25, 2026.</p>
+                </div>
+            `;
+        }
+
+        // Render Animal Records
+        function renderAnimalRecords() {
+            const search = document.getElementById("animalSearch").value.toLowerCase();
+            const speciesFilter = document.getElementById("filterSpecies").value;
+            const statusFilter = document.getElementById("filterStatus").value;
+
+            const filtered = animals.filter(a => {
+                const matchesSearch = a.id.toLowerCase().includes(search) || (a.name && a.name.toLowerCase().includes(search)) || a.breed.toLowerCase().includes(search);
+                const matchesSpecies = speciesFilter === "ALL" || a.species === speciesFilter;
+                const matchesStatus = statusFilter === "ALL" || a.status === statusFilter;
+                return matchesSearch && matchesSpecies && matchesStatus;
+            });
+
+            const grid = document.getElementById("animalGrid");
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--text-muted);">No animal records matching your filters.</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(a => `
+                <div class="animal-card">
+                    <div class="animal-card-header">
+                        <span class="tag-pill">${a.id}</span>
+                        <span class="badge ${getStatusBadgeClass(a.status)}">${a.status}</span>
+                    </div>
+                    <div class="animal-card-body">
+                        <h3>${a.name || a.species}</h3>
+                        <div class="animal-meta">
+                            <div><span>Species:</span> <strong>${a.species}</strong></div>
+                            <div><span>Breed:</span> <strong>${a.breed || 'N/A'}</strong></div>
+                            <div><span>Weight:</span> <strong>${a.weight ? a.weight + ' kg' : 'N/A'}</strong></div>
+                            <div><span>Location:</span> <strong>${a.location || 'Main Barn'}</strong></div>
+                        </div>
+                    </div>
+                    <div class="animal-card-actions">
+                        <button class="btn btn-secondary btn-xs" onclick="deleteAnimal('${a.id}')"><i class="fas fa-trash"></i> Remove</button>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        // Render Health Logs
+        function renderHealthLogs() {
+            const table = document.getElementById("healthLogsTable");
+            table.innerHTML = healthLogs.map(h => `
+                <tr>
+                    <td>${h.date}</td>
+                    <td><span class="tag-pill">${h.tagId}</span></td>
+                    <td><strong>${h.type}</strong></td>
+                    <td>${h.medicine}</td>
+                    <td>${h.vet || 'Self'}</td>
+                    <td>${h.nextDate || 'N/A'}</td>
+                    <td><span class="badge badge-green">${h.status}</span></td>
+                </tr>
+            `).join("");
+        }
+
+        // Render Breeding Logs
+        function renderBreedingLogs() {
+            const table = document.getElementById("breedingTable");
+            table.innerHTML = breedingRecords.map(b => {
+                const exp = new Date(b.expDate);
+                const today = new Date();
+                const diffDays = Math.ceil((exp - today) / (1000 * 60 * 60 * 24));
+                return `
+                    <tr>
+                        <td><span class="tag-pill">${b.damTag}</span></td>
+                        <td>${b.sireTag}</td>
+                        <td>${b.matingDate}</td>
+                        <td>${b.method}</td>
+                        <td><strong>${b.expDate}</strong></td>
+                        <td><span class="badge badge-amber">${diffDays > 0 ? diffDays + ' days left' : 'Due Now'}</span></td>
+                        <td><span class="badge badge-purple">${b.status}</span></td>
+                    </tr>
+                `;
+            }).join("");
+        }
+
+        // Render Production Logs
+        function renderProductionLogs() {
+            const table = document.getElementById("productionTable");
+            table.innerHTML = productionLogs.map(p => `
+                <tr>
+                    <td>${p.date}</td>
+                    <td><strong>${p.group}</strong></td>
+                    <td>${p.type}</td>
+                    <td><strong style="color:var(--accent-green);">${p.qty}</strong></td>
+                    <td><span class="badge badge-blue">${p.grade}</span></td>
+                </tr>
+            `).join("");
+        }
+
+        // Render Feed Stock
+        function renderFeedStock() {
+            const table = document.getElementById("feedTable");
+            table.innerHTML = feedStock.map(f => `
+                <tr>
+                    <td><strong>${f.name}</strong></td>
+                    <td>${f.type}</td>
+                    <td>${f.stock} kg</td>
+                    <td><span class="badge ${f.stock < 400 ? 'badge-amber' : 'badge-green'}">${f.status}</span></td>
+                    <td>₹${(f.cost * 15).toFixed(0)}/day</td>
+                </tr>
+            `).join("");
+        }
+
+        // Helpers & Badges
+        function getStatusBadgeClass(status) {
+            switch (status) {
+                case 'Healthy': return 'badge-green';
+                case 'Pregnant': return 'badge-purple';
+                case 'Under Treatment': return 'badge-amber';
+                case 'Quarantined': return 'badge-red';
+                default: return 'badge-blue';
+            }
+        }
+
+        function populateTagSelectors() {
+            const hSelect = document.getElementById("hTagId");
+            const bSelect = document.getElementById("bDamTag");
+
+            const options = animals.map(a => `<option value="${a.id}">${a.id} (${a.name || a.species})</option>`).join("");
+            if (hSelect) hSelect.innerHTML = options;
+            if (bSelect) bSelect.innerHTML = options;
+        }
+
+        // Modal Handlers
+        function openAddAnimalModal() { document.getElementById("animalModal").classList.add("open"); }
+        function openHealthModal() { document.getElementById("healthModal").classList.add("open"); }
+        function openBreedingModal() { document.getElementById("breedingModal").classList.add("open"); }
+        function openProductionModal() { document.getElementById("productionModal").classList.add("open"); }
+        function openFeedModal() { document.getElementById("feedModal").classList.add("open"); }
+
+        function closeModal(id) { document.getElementById(id).classList.remove("open"); }
+
+        // Form Submit Handlers
+        function saveAnimal(e) {
+            e.preventDefault();
+            const newAnimal = {
+                id: document.getElementById("mTagId").value.trim(),
+                name: document.getElementById("mName").value.trim(),
+                species: document.getElementById("mSpecies").value,
+                breed: document.getElementById("mBreed").value.trim(),
+                gender: document.getElementById("mGender").value,
+                weight: Number(document.getElementById("mWeight").value) || 0,
+                status: document.getElementById("mStatus").value,
+                location: document.getElementById("mLocation").value.trim()
+            };
+
+            animals.unshift(newAnimal);
+            saveState();
+            renderAnimalRecords();
+            populateTagSelectors();
+            closeModal("animalModal");
+            showToast("Animal record created successfully!");
+        }
+
+        function deleteAnimal(id) {
+            animals = animals.filter(a => a.id !== id);
+            saveState();
+            renderAnimalRecords();
+            populateTagSelectors();
+            showToast("Animal record removed.");
+        }
+
+        function saveHealthLog(e) {
+            e.preventDefault();
+            const log = {
+                date: new Date().toISOString().split('T')[0],
+                tagId: document.getElementById("hTagId").value,
+                type: document.getElementById("hType").value,
+                medicine: document.getElementById("hMedicine").value,
+                vet: document.getElementById("hVet").value || "Dr. Sharma",
+                nextDate: document.getElementById("hNextDate").value || "N/A",
+                status: "Completed"
+            };
+
+            healthLogs.unshift(log);
+            saveState();
+            renderHealthLogs();
+            closeModal("healthModal");
+            showToast("Health event logged.");
+        }
+
+        function saveBreedingLog(e) {
+            e.preventDefault();
+            const matingDate = new Date(document.getElementById("bMatingDate").value);
+            const expDate = new Date(matingDate.getTime() + (283 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0];
+
+            const log = {
+                damTag: document.getElementById("bDamTag").value,
+                sireTag: document.getElementById("bSireTag").value || "Bull AI",
+                matingDate: document.getElementById("bMatingDate").value,
+                method: document.getElementById("bMethod").value,
+                expDate: expDate,
+                status: "Confirmed Pregnant"
+            };
+
+            breedingRecords.unshift(log);
+            saveState();
+            renderBreedingLogs();
+            closeModal("breedingModal");
+            showToast("Breeding record created. Gestation estimated.");
+        }
+
+        function saveProductionLog(e) {
+            e.preventDefault();
+            const log = {
+                date: document.getElementById("pDate").value,
+                group: document.getElementById("pGroup").value,
+                type: document.getElementById("pType").value,
+                qty: Number(document.getElementById("pQty").value),
+                grade: "Grade A"
+            };
+
+            productionLogs.unshift(log);
+            saveState();
+            renderProductionLogs();
+            closeModal("productionModal");
+            showToast("Daily yield logged.");
+        }
+
+        function saveFeedStock(e) {
+            e.preventDefault();
+            const log = {
+                name: document.getElementById("fName").value,
+                type: document.getElementById("fType").value,
+                stock: Number(document.getElementById("fQty").value),
+                cost: Number(document.getElementById("fCost").value) || 10,
+                status: "Sufficient"
+            };
+
+            feedStock.unshift(log);
+            saveState();
+            renderFeedStock();
+            closeModal("feedModal");
+            showToast("Feed stock added.");
+        }
+
+        // Export Data to CSV
+        function exportLivestockCSV() {
+            let csv = "Tag ID,Name,Species,Breed,Gender,Weight_kg,Status,Location\n";
+            animals.forEach(a => {
+                csv += `"${a.id}","${a.name || ''}","${a.species}","${a.breed || ''}","${a.gender}","${a.weight}","${a.status}","${a.location || ''}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: "text/csv" });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `livestock_records_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            showToast("Exported livestock records to CSV.");
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            const current = document.body.getAttribute("data-theme");
+            const next = current === "dark" ? "light" : "dark";
+            document.body.setAttribute("data-theme", next);
+            document.getElementById("themeIcon").className = next === "dark" ? "fas fa-sun" : "fas fa-moon";
+        }
+
+        // Toast Messages
+        function showToast(msg) {
+            const container = document.getElementById("toastContainer");
+            const toast = document.createElement("div");
+            toast.className = "toast";
+            toast.innerHTML = `<i class="fas fa-check-circle" style="color:var(--accent-green)"></i> ${msg}`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3500);
+        }
+    </script>
+</body>
+
+</html>
