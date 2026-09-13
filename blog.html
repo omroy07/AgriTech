@@ -162,18 +162,32 @@
         </div>
     </div>
 
-    <button
-      class="fab-btn"
-      id="createPostBtn"
-      aria-label="Create a new blog post"
-      aria-haspopup="dialog"
-      aria-controls="createPostModal"
-      aria-expanded="false"
-      title="Create a new post"
-    >
-        <i class="fas fa-plus" aria-hidden="true"></i>
-        <span class="fab-label">New Post</span>
-    </button>
+    <div class="fab-container">
+      <a
+        href="favorites.html"
+        class="fab-btn fab-favorites-btn"
+        id="favoritesFabBtn"
+        aria-label="View Favorite Blogs"
+        title="View Favorite Blogs"
+      >
+          <i class="fas fa-heart" aria-hidden="true"></i>
+          <span class="fab-label">Favorites</span>
+          <span class="fab-badge favorite-count" id="fabFavoritesCount" style="display: none;">0</span>
+      </a>
+
+      <button
+        class="fab-btn fab-create-btn"
+        id="createPostBtn"
+        aria-label="Create a new blog post"
+        aria-haspopup="dialog"
+        aria-controls="createPostModal"
+        aria-expanded="false"
+        title="Create a new post"
+      >
+          <i class="fas fa-plus" aria-hidden="true"></i>
+          <span class="fab-label">New Post</span>
+      </button>
+    </div>
     <div id="createPostModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -343,7 +357,6 @@
     });
     </script>
 
-    <script src="js/features/favorites.js"></script>
     <script src="blog.js"></script>
     <script src="auth.js"></script>
    <script>

@@ -777,31 +777,40 @@ body {
 }
 
 /* ====================================
-   FAB BUTTON (CREATE POST)
+   FAB BUTTONS (CREATE POST & FAVORITES)
    ==================================== */
-.fab-btn {
+.fab-container {
     position: fixed;
     bottom: 30px;
     left: 30px;
-    min-width: 132px;
-    height: 58px;
-    padding: 0 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 999;
+}
+
+.fab-btn {
+    position: relative;
+    min-width: 136px;
+    height: 52px;
+    padding: 0 20px;
     background: linear-gradient(135deg, #7fd89c 0%, var(--green-primary) 55%, var(--green-secondary) 100%);
     color: white;
+    text-decoration: none;
     border: none;
     border-radius: 999px;
     cursor: pointer;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 700;
     letter-spacing: 0.02em;
-    box-shadow: 0 12px 28px rgba(46, 125, 50, 0.28), 0 4px 10px rgba(0, 0, 0, 0.14);
-    z-index: 999;
+    box-shadow: 0 10px 24px rgba(46, 125, 50, 0.28), 0 4px 10px rgba(0, 0, 0, 0.14);
     transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease, background 0.25s ease;
     border: 1px solid rgba(255, 255, 255, 0.22);
+    box-sizing: border-box;
 }
 
 .fab-btn:hover {
@@ -819,12 +828,67 @@ body {
     outline-offset: 4px;
 }
 
+.fab-favorites-btn {
+    background: linear-gradient(135deg, #ff6b6b 0%, #e74c3c 60%, #c0392b 100%);
+    box-shadow: 0 10px 24px rgba(231, 76, 60, 0.32), 0 4px 10px rgba(0, 0, 0, 0.14);
+}
+
+.fab-favorites-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 16px 36px rgba(231, 76, 60, 0.42), 0 6px 16px rgba(0, 0, 0, 0.18);
+    filter: brightness(1.05);
+}
+
+.fab-favorites-btn:focus-visible {
+    outline: 3px solid rgba(231, 76, 60, 0.55);
+    outline-offset: 4px;
+}
+
+.fab-favorites-btn i {
+    color: #ffffff;
+    transition: transform 0.2s ease;
+}
+
+.fab-favorites-btn:hover i {
+    transform: scale(1.25);
+}
+
+.fab-badge {
+    background: #ffffff;
+    color: #e74c3c;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 999px;
+    min-width: 20px;
+    text-align: center;
+    line-height: 1.2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
 .fab-btn i {
     font-size: 1.05rem;
 }
 
 .fab-label {
     white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .fab-container {
+        bottom: 90px;
+        left: 16px;
+        gap: 10px;
+    }
+    .fab-btn {
+        min-width: auto;
+        height: 46px;
+        padding: 0 14px;
+        font-size: 0.85rem;
+    }
 }
 
 /* ====================================
