@@ -32,45 +32,6 @@ connect-src 'self' http://localhost:3000;
 
     <link rel="stylesheet" href="chat.css" />
     <link rel="stylesheet" href="theme.css" />
-    <style>
-      /* Added styles for light green color on specified text */
-
-      .chat-header h2 {
-        color: #22c55e !important; /* Force AgriTech Green */
-        text-shadow: 0 1px 2px rgba(0,0,0,0.3); /* Adds depth for better readability */
-      }
-
-      .logo h1 {
-        color: var(--light-green); /* Light green for AgriBot */
-      }
-
-      /* --- NEW STYLES FOR IMAGE UPLOAD --- */
-      #image-preview-container {
-        display: none;
-        padding: 10px;
-        background: rgba(34, 197, 94, 0.1);
-        border-radius: 8px;
-        margin: 0 20px 10px 20px;
-        align-items: center;
-        gap: 15px;
-        border: 1px dashed #22c55e;
-      }
-      .preview-wrapper { position: relative; display: inline-block; }
-      .preview-wrapper img { max-height: 60px; border-radius: 5px; border: 2px solid #22c55e; }
-      .remove-img {
-        position: absolute; top: -8px; right: -8px;
-        background: #ef4444; color: white; border: none;
-        border-radius: 50%; width: 20px; height: 20px;
-        cursor: pointer; font-size: 12px; display: flex;
-        align-items: center; justify-content: center;
-      }
-      .camera-btn {
-        background: none; border: none; color: #22c55e;
-        cursor: pointer; font-size: 1.3rem; margin-right: 10px;
-        transition: transform 0.2s;
-      }
-      .camera-btn:hover { transform: scale(1.1); }
-    </style>
   </head>
   <body>
     <header>
@@ -113,6 +74,15 @@ connect-src 'self' http://localhost:3000;
     <main>
       <div id="recent-predictions"></div>
       <div id="chat-container">
+        <!-- Drag and Drop Overlay -->
+        <div id="drop-overlay" class="drop-overlay" aria-hidden="true">
+          <div class="drop-overlay-content">
+            <i class="fas fa-cloud-upload-alt drop-icon"></i>
+            <h3>Drop your crop or plant image here</h3>
+            <p>We'll analyze it for diseases and plant health recommendations</p>
+          </div>
+        </div>
+
         <div class="chat-header">
           <i class="fas fa-robot"></i>
           <h2>Ask me about AgriTech features or agriculture support</h2>
@@ -146,18 +116,24 @@ connect-src 'self' http://localhost:3000;
           </div>
         </div>
 
-        <div id="image-preview-container">
+        <!-- Image Preview Container -->
+        <div id="image-preview-container" class="image-preview-container" style="display: none;">
           <div class="preview-wrapper">
-            <img id="image-preview" src="">
-            <button type="button" class="remove-img" onclick="clearImage()">×</button>
+            <img id="image-preview" src="" alt="Selected crop preview" />
+            <button type="button" id="remove-image-btn" class="remove-img" aria-label="Remove image" title="Remove image">
+              <i class="fas fa-times"></i>
+            </button>
           </div>
-          <span style="font-size: 0.85rem; color: #22c55e;">Image attached for AI analysis</span>
+          <div class="preview-meta">
+            <span class="preview-title" id="preview-filename"><i class="fas fa-image"></i> Image attached</span>
+            <span class="preview-hint">Ready for AI crop diagnosis</span>
+          </div>
         </div>
 
         <form id="chat-form">
-          <div class="input-container" style="display: flex; align-items: center;">
-            <input type="file" id="image-input" accept="image/*" style="display: none;" onchange="handleImagePreview(event)">
-            <button type="button" class="camera-btn" onclick="document.getElementById('image-input').click()" title="Upload image for diagnosis">
+          <div class="input-container">
+            <input type="file" id="image-input" accept="image/png, image/jpeg, image/jpg, image/webp" style="display: none;" />
+            <button type="button" id="upload-photo-btn" class="camera-btn" aria-label="Upload crop photo for diagnosis" title="Upload crop photo for AI diagnosis">
               <i class="fas fa-camera"></i>
             </button>
 
@@ -166,40 +142,24 @@ connect-src 'self' http://localhost:3000;
               placeholder="Ask about crops or upload a photo..."
               aria-label="Chat input"
               rows="1"
-              required
             ></textarea>
-            
           </div>
-          <button type="submit" id="send-button">
-            <i class="fas fa-paper-plane"></i> Send
+          <button type="submit" id="send-button" aria-label="Send message">
+            <i class="fas fa-paper-plane"></i> <span>Send</span>
           </button>
         </form>
       </div>
     </main>
 
-    <script>
-      let selectedImageBase64 = null;
-
-      function handleImagePreview(event) {
-          const file = event.target.files[0];
-          if (file) {
-              const reader = new FileReader();
-              reader.onload = function(e) {
-                  document.getElementById('image-preview').src = e.target.result;
-                  document.getElementById('image-preview-container').style.display = 'flex';
-                  // Store base64 data for Python backend
-                  window.selectedImageBase64 = e.target.result.split(',')[1];
-              };
-              reader.readAsDataURL(file);
-          }
-      }
-
-      function clearImage() {
-          selectedImageBase64 = null;
-          document.getElementById('image-input').value = '';
-          document.getElementById('image-preview-container').style.display = 'none';
-      }
-    </script>
+    <!-- Lightbox Modal for Zooming In-Chat Images -->
+    <div id="image-lightbox-modal" class="image-lightbox-modal" aria-hidden="true" style="display: none;">
+      <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
+      <div class="lightbox-content">
+        <button type="button" id="lightbox-close-btn" class="lightbox-close" aria-label="Close full view">&times;</button>
+        <img id="lightbox-img" src="" alt="Full view crop photo" />
+        <div class="lightbox-caption" id="lightbox-caption">Crop diagnosis image</div>
+      </div>
+    </div>
 
     <script src="json-chatbot.js"></script>
     <script src="chat.js"></script>
