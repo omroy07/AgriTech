@@ -134,6 +134,7 @@
   }
 
   .agritech-navbar .nav-logout-btn,
+  .agritech-navbar .nav-fav-link,
   .agritech-navbar .nav-auth-link,
   .agritech-navbar .theme-toggle {
     display: inline-flex;
@@ -153,6 +154,43 @@
     background: transparent;
     color: var(--navbar-text);
     border: 1px solid var(--navbar-border);
+  }
+
+  .agritech-navbar .nav-fav-link {
+    background: transparent;
+    color: var(--navbar-text);
+    border: 1px solid var(--navbar-border);
+    text-decoration: none;
+  }
+
+  .agritech-navbar .nav-fav-link i {
+    color: #ef4444;
+    transition: transform 0.2s ease;
+  }
+
+  .agritech-navbar .nav-fav-link:hover {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.08);
+    transform: translateY(-1px);
+  }
+
+  .agritech-navbar .nav-fav-link:hover i {
+    transform: scale(1.18);
+  }
+
+  .agritech-navbar .nav-fav-badge {
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 999px;
+    min-width: 18px;
+    text-align: center;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .agritech-navbar .nav-auth-link {
@@ -241,6 +279,11 @@
         <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
         <span>Logout</span>
       </button>
+      <a href="favorites.html" class="nav-fav-link" aria-label="View Favorite Blogs" title="View Favorite Blogs">
+        <i class="fas fa-heart" aria-hidden="true"></i>
+        <span>Favorites</span>
+        <span class="nav-fav-badge favorite-count" id="navFavoritesBadge" style="display: none;">0</span>
+      </a>
       <a href="login.html" class="nav-auth-link btn-secondary">Login</a>
       <a href="register.html" class="nav-auth-link btn-primary">Register</a>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme">
@@ -252,3 +295,25 @@
   </div>
 </nav>
 <div class="agritech-navbar-spacer" aria-hidden="true"></div>
+
+<script>
+  (function initNavbarFavorites() {
+    function updateNavFavCount() {
+      try {
+        const favs = JSON.parse(localStorage.getItem('agritech_favorite_blogs')) || [];
+        const badge = document.getElementById('navFavoritesBadge');
+        if (badge) {
+          if (favs.length > 0) {
+            badge.textContent = favs.length;
+            badge.style.display = 'inline-flex';
+          } else {
+            badge.style.display = 'none';
+          }
+        }
+      } catch (e) {}
+    }
+    updateNavFavCount();
+    document.addEventListener('favoriteToggle', updateNavFavCount);
+    document.addEventListener('DOMContentLoaded', updateNavFavCount);
+  })();
+</script>

@@ -531,8 +531,14 @@ function setupEventListeners() {
 function updateFavoriteCounter() {
     if (window.favoritesManager) {
         const favorites = window.favoritesManager.getFavorites();
+        const count = favorites.length;
         document.querySelectorAll('.favorite-count').forEach(element => {
-            element.textContent = favorites.length;
+            element.textContent = count;
+            if (count > 0) {
+                element.style.display = 'inline-flex';
+            } else {
+                element.style.display = 'none';
+            }
         });
     }
 }
