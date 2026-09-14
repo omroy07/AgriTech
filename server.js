@@ -30,12 +30,24 @@ app.post('/api/chat', async (req, res) => {
       });
     }
 
+    const agriculturalVisionPrompt = image 
+      ? `You are AgriBot, an expert agricultural AI specialist. The user has provided an image of a plant, crop, or leaf.
+${message ? `User's question/note: "${message}"` : 'Please analyze this image.'}
+
+Provide a structured response:
+1. 🌿 **Crop Identification**: Identify the crop/plant.
+2. 🔍 **Condition / Diagnosis**: Identify any visible disease (e.g. blight, rust, leaf spot, mildew), pest infestation, or nutrient deficiency.
+3. 💊 **Recommended Remedies**: Provide step-by-step practical remedies (both Organic / Bio-control and Chemical solutions suitable for Indian agriculture).
+4. 🛡️ **Preventive Measures**: How to prevent recurrence (irrigation, crop rotation, soil care).
+Keep the advice clear, friendly, and practical for farmers.`
+      : (message || 'Please provide agriculture advice.');
+
     const payload = {
       contents: [
         {
           role: 'user',
           parts: [
-            { text: message || 'Please analyze this image.' },
+            { text: agriculturalVisionPrompt },
             ...(image
               ? [{
                   inline_data: {
@@ -48,8 +60,8 @@ app.post('/api/chat', async (req, res) => {
         }
       ],
       generationConfig: {
-        temperature: 0.6,
-        maxOutputTokens: 800
+        temperature: 0.5,
+        maxOutputTokens: 1000
       }
     };
 
