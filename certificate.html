@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contributor Participation Certificate | AgriTech</title>
+  <meta name="description" content="Generate and download official participation certificates for AgriTech open-source contributors with dynamic GitHub statistics and authentic verification." />
+  <link rel="icon" type="image/png" href="images/logo.png" />
+
+  <!-- Google Fonts & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- html2canvas for High-Res Certificate Image Generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/certificate.css" />
+
+  <style>
+    /* Global AgriTech Navigation Bar Styling */
+    .agritech-navbar {
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.92);
+      color: #ffffff;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+      box-shadow: 0 10px 28px rgba(2, 6, 23, 0.28);
+    }
+    [data-theme="light"] .agritech-navbar {
+      background: rgba(255, 255, 255, 0.94);
+      color: #0f172a;
+      border-bottom-color: rgba(148, 163, 184, 0.35);
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+    }
+    .agritech-navbar-spacer {
+      height: 76px;
+      width: 100%;
+    }
+    .agritech-navbar .navbar-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0.9rem 1.25rem;
+    }
+    .agritech-navbar .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+    }
+    .agritech-navbar .brand img {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+    }
+    .agritech-navbar .brand-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+    .agritech-navbar .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .agritech-navbar .nav-link {
+      color: inherit;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .agritech-navbar .nav-link:hover,
+    .agritech-navbar .nav-link.active {
+      color: #22c55e;
+    }
+    .theme-toggle-btn {
+      background: transparent;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: inherit;
+      padding: 0.5rem 0.85rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    .theme-toggle-btn:hover {
+      border-color: #22c55e;
+    }
+    
+    .cert-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .cert-info-card {
+      background: var(--cert-surface-card);
+      border: 1px solid var(--cert-border);
+      border-radius: var(--cert-radius);
+      padding: 1.5rem;
+      box-shadow: var(--cert-shadow);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .cert-info-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--cert-border-hover);
+    }
+    .cert-info-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(34, 197, 94, 0.12);
+      color: var(--cert-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .cert-info-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+    }
+    .cert-info-card p {
+      font-size: 0.9rem;
+      color: var(--cert-text-muted);
+      margin: 0;
+    }
+
+    /* Footer styling */
+    .cert-footer {
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      border-top: 1px solid var(--cert-border);
+      color: var(--cert-text-muted);
+      font-size: 0.9rem;
+      margin-top: 4rem;
+    }
+    .cert-footer a {
+      color: var(--cert-accent);
+      text-decoration: none;
+    }
+    .cert-footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body class="certificate-page">
+
+  <!-- Primary Navigation Bar -->
+  <nav class="agritech-navbar" aria-label="Primary navigation">
+    <div class="navbar-content">
+      <a class="brand" href="index.html" aria-label="AgriTech Home">
+        <img src="images/logo.png" alt="AgriTech logo" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/628/628324.png';" />
+        <span class="brand-name">AgriTech</span>
+      </a>
+
+      <div class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="community_forum.html" class="nav-link">Community Forum</a>
+        <a href="levelup.html" class="nav-link"><i class="fas fa-trophy"></i> Level Up</a>
+        <a href="certificate.html" class="nav-link active"><i class="fas fa-certificate"></i> Certificates</a>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <button class="theme-toggle-btn" id="themeToggleBtn" type="button" aria-label="Toggle theme">
+          <i class="fas fa-moon" id="themeIcon"></i>
+          <span id="themeText">Theme</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="agritech-navbar-spacer" aria-hidden="true"></div>
+
+  <!-- Main Container -->
+  <div class="cert-container">
+
+    <!-- Hero Banner -->
+    <header class="cert-hero">
+      <div class="cert-hero-badge">
+        <i class="fas fa-award"></i> Open Source Recognition Program
+      </div>
+      <h1>Contributor Participation Certificates</h1>
+      <p>
+        Recognizing every developer, designer, and agriculture tech enthusiast who contributes to the AgriTech platform. Enter your GitHub handle to generate and download your personalized, verifiable certificate.
+      </p>
+    </header>
+
+    <!-- Controls & Customizer Panel -->
+    <section class="cert-controls-card">
+      <form id="certSearchForm">
+        <div class="cert-controls-grid">
+          <div class="cert-input-group">
+            <label for="contributorSearchInput" class="cert-label">
+              <i class="fab fa-github"></i> Contributor GitHub Username
+            </label>
+            <div class="cert-search-wrapper">
+              <i class="fas fa-search"></i>
+              <input type="text" id="contributorSearchInput" class="cert-search-input" 
+                     placeholder="Enter GitHub handle (e.g. omroy07, Rushabh-Mahajan)" required />
+            </div>
+          </div>
+          <button type="submit" class="cert-btn cert-btn-primary" id="generateCertBtn">
+            <i class="fas fa-certificate"></i> Generate Certificate
+          </button>
+        </div>
+      </form>
+
+      <!-- Quick Select Active Contributors -->
+      <div class="cert-quick-select">
+        <span class="cert-quick-label"><i class="fas fa-users"></i> Top Contributors:</span>
+        <div class="cert-chips-container" id="certChipsContainer">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
+      <!-- Certificate Style & Options -->
+      <div class="cert-options-bar">
+        <div class="cert-theme-selector">
+          <span class="cert-label" style="font-size: 0.85rem;"><i class="fas fa-palette"></i> Certificate Theme:</span>
+          <button type="button" class="cert-theme-btn active" data-theme="theme-emerald">🌿 Emerald Heritage</button>
+          <button type="button" class="cert-theme-btn" data-theme="theme-dark">⚡ Cyber Dark</button>
+          <button type="button" class="cert-theme-btn" data-theme="theme-sapphire">💎 Royal Sapphire</button>
+          <button type="button" class="cert-theme-btn" data-theme="theme-gold">🌾 Golden Harvest</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certificate Preview & Actions -->
+    <section class="cert-preview-section">
+      <!-- Action Toolbar -->
+      <div class="cert-action-toolbar">
+        <button type="button" class="cert-btn cert-btn-primary" id="downloadPngBtn">
+          <i class="fas fa-download"></i> Download PNG Image
+        </button>
+        <button type="button" class="cert-btn cert-btn-secondary" id="printPdfBtn">
+          <i class="fas fa-print"></i> Print / Save as PDF
+        </button>
+        <button type="button" class="cert-btn cert-btn-secondary" id="copyLinkBtn">
+          <i class="fas fa-link"></i> Copy Shareable Link
+        </button>
+        <a id="shareTwitterBtn" href="#" target="_blank" rel="noopener noreferrer" class="cert-btn cert-btn-secondary">
+          <i class="fab fa-x-twitter"></i> Share on X
+        </a>
+        <a id="shareLinkedInBtn" href="#" target="_blank" rel="noopener noreferrer" class="cert-btn cert-btn-secondary">
+          <i class="fab fa-linkedin"></i> Share on LinkedIn
+        </a>
+      </div>
+
+      <!-- Certificate Canvas Container -->
+      <div class="cert-canvas-frame">
+        <article class="cert-document theme-emerald" id="certDocument">
+          <!-- Decorative Corners -->
+          <div class="cert-corner top-left"></div>
+          <div class="cert-corner top-right"></div>
+          <div class="cert-corner bottom-left"></div>
+          <div class="cert-corner bottom-right"></div>
+
+          <!-- Background Watermark -->
+          <div class="cert-watermark"><i class="fas fa-seedling"></i></div>
+
+          <!-- Certificate Header -->
+          <header class="cert-doc-header">
+            <div class="cert-brand-block">
+              <img src="images/logo.png" alt="AgriTech Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/628/628324.png';" />
+              <div class="cert-brand-text">
+                <h2>AgriTech</h2>
+                <p>Open Source Agricultural Innovation</p>
+              </div>
+            </div>
+            <div class="cert-id-badge">
+              <span>CERTIFICATE ID</span>
+              <strong id="certIdText">AGRI-CERT-2026-OMR-7462A1</strong>
+            </div>
+          </header>
+
+          <!-- Certificate Body -->
+          <div class="cert-doc-body">
+            <h1 class="cert-main-title">Certificate of Participation</h1>
+            <div class="cert-sub-title">This is proudly presented in recognition of</div>
+
+            <div class="cert-recipient-wrapper">
+              <img id="certRecipientAvatar" class="cert-recipient-avatar" src="https://avatars.githubusercontent.com/u/74621533?v=4" alt="Contributor Profile Photo" />
+              <div>
+                <h2 id="certRecipientName" class="cert-recipient-name">Om Roy</h2>
+                <div id="certRecipientHandle" class="cert-recipient-handle">@omroy07</div>
+              </div>
+            </div>
+
+            <p class="cert-statement">
+              For exceptional dedication, open-source code contributions, and active collaboration in building sustainable agricultural technology solutions on the <strong>AgriTech</strong> platform repository.
+            </p>
+
+            <div class="cert-stats-ribbon">
+              <div class="cert-stat-item">
+                <i class="fas fa-code-commit"></i>
+                <span id="certCommitCount">142 Commits & Merges</span>
+              </div>
+              <div class="cert-stat-item">
+                <i class="fas fa-award"></i>
+                <span id="certBadgeText">Elite Open Source Pioneer</span>
+              </div>
+              <div class="cert-stat-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span id="certDateText">September 14, 2026</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Certificate Footer & Signature Lines -->
+          <footer class="cert-doc-footer">
+            <div class="cert-sign-col">
+              <div class="cert-signature-line"></div>
+              <div class="cert-signer-title">Om Roy</div>
+              <div class="cert-signer-sub">Lead Maintainer, AgriTech</div>
+            </div>
+
+            <div class="cert-seal">
+              <i class="fas fa-certificate"></i>
+              <span>Official Seal</span>
+            </div>
+
+            <div class="cert-sign-col right">
+              <div class="cert-signature-line"></div>
+              <div class="cert-signer-title">AgriTech Core Council</div>
+              <div class="cert-signer-sub">Issued: <span id="certIssueDateDisplay">September 2026</span></div>
+            </div>
+          </footer>
+        </article>
+      </div>
+    </section>
+
+    <!-- Value Highlights / Feature Cards -->
+    <div class="cert-info-grid">
+      <div class="cert-info-card">
+        <div class="cert-info-icon"><i class="fas fa-sync-alt"></i></div>
+        <h3>Real-time GitHub Synchronization</h3>
+        <p>Your contribution count, profile picture, and activity are dynamically fetched from the GitHub REST API for fair and accurate recognition.</p>
+      </div>
+      <div class="cert-info-card">
+        <div class="cert-info-icon"><i class="fas fa-shield-alt"></i></div>
+        <h3>Cryptographic Verification ID</h3>
+        <p>Each certificate generates a unique deterministic identification hash that can be verified and shared online.</p>
+      </div>
+      <div class="cert-info-card">
+        <div class="cert-info-icon"><i class="fas fa-file-export"></i></div>
+        <h3>Portfolio & Print Ready</h3>
+        <p>Export crisp 300-DPI PNGs or print directly to A4 landscape PDF to showcase on LinkedIn, GitHub, or your resume.</p>
+      </div>
+    </div>
+
+    <!-- Page Footer -->
+    <footer class="cert-footer">
+      <p>© 2026 AgriTech Open Source Initiative. Released under the MIT License.</p>
+      <p>
+        Contribute on <a href="https://github.com/omroy07/AgriTech" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a> • 
+        Track progress on <a href="levelup.html"><i class="fas fa-trophy"></i> Level Up Contributor Hub</a>
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- Certificate Application JS -->
+  <script src="js/certificate.js"></script>
+</body>
+</html>
