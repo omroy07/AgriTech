@@ -445,8 +445,16 @@
         </a>
 
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme">
-          <i class="fas fa-moon"></i>
-        </button>
+        <span class="theme-toggle-track">
+          <span class="theme-toggle-icon sun-icon" aria-hidden="true">
+            <i class="fas fa-sun"></i>
+          </span>
+          <span class="theme-toggle-icon moon-icon" aria-hidden="true">
+            <i class="fas fa-moon"></i>
+          </span>
+          <span class="theme-toggle-thumb"></span>
+        </span>
+      </button>
       </div>
     </div>
   </header>
@@ -527,5 +535,6 @@
       syncThemeIcon();
     });
   </script>
+  <script src="../theme.js"></script>
 </body>
 </html>

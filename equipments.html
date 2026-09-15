@@ -1764,10 +1764,17 @@ body[data-theme="dark"] .cart-panel .close-cart {
                 </a>
             </div>
             <div>
-                <button id="themeToggle" class="theme-toggle">
-                    <i id="themeIcon" class="fas fa-sun"></i>
-                    <span id="themeText">Light</span>
-                </button>
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle light/dark theme">
+        <span class="theme-toggle-track">
+          <span class="theme-toggle-icon sun-icon" aria-hidden="true">
+            <i class="fas fa-sun"></i>
+          </span>
+          <span class="theme-toggle-icon moon-icon" aria-hidden="true">
+            <i class="fas fa-moon"></i>
+          </span>
+          <span class="theme-toggle-thumb"></span>
+        </span>
+      </button>
 
             </div>
         </nav>
@@ -2614,6 +2621,7 @@ body[data-theme="dark"] .cart-panel .close-cart {
 </script>
 <!-- ===== End Back To Top Button ===== -->
 
+  <script src="theme.js"></script>
 </body>
 
 </html>
