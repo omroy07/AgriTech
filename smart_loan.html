@@ -789,6 +789,7 @@ form button:hover::before {
   box-shadow: 0 0 20px #22c55e;
 }
     </style>
+  <link rel="stylesheet" href="footer.css" />
 </head>
 <!-- Floating Chatbot Button -->
 <a href="chat.html" id="chatbotBtn" title="Chat with us" aria-label="AI Assistant">
@@ -1052,7 +1053,33 @@ form button:hover::before {
         </div>
       </div>
 
-      <div class="footer-bottom">© <span id="year"></span> AgriTech • Made for farmers</div>
+      <div class="footer-bottom">© <span id="year"></span> AgriTech • Made for farmers
+        <div class="footer-section footer-newsletter">
+          <h4>Newsletter</h4>
+          <p class="newsletter-desc">
+            Subscribe to get the latest farming insights, tips, and updates.
+          </p>
+          <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
+            <div class="newsletter-input-group">
+              <input
+                type="email"
+                class="newsletter-input"
+                placeholder="Enter your email to get the latest updates..."
+                required
+                aria-label="Email address for newsletter"
+              />
+              <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
+                <span>Subscribe</span>
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+            <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
+            <div class="newsletter-footer-optout">
+              <small>No spam. <a href="javascript:void(0)" onclick="openUnsubscribeModal(event)">Unsubscribe</a> anytime.</small>
+            </div>
+          </form>
+        </div>
+</div>
     </footer>
     <script>
       document.getElementById('year').textContent = new Date().getFullYear();
@@ -1183,6 +1210,7 @@ animateCursor();
 </script>
 <!-- ===== End Back To Top Button ===== -->
 
+  <script src="footer.js"></script>
 </body>
 
 </html>
