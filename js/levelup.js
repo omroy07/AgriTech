@@ -273,6 +273,11 @@ function renderLeaderboardTable(filterText = "") {
       <td><strong>${c.points} pts</strong></td>
       <td>${c.prs} PRs</td>
       <td><span class="lu-streak-pill">🔥 ${c.streak} days</span></td>
+      <td>
+        <a href="certificate.html?user=${encodeURIComponent(c.username)}" class="lu-btn lu-btn-secondary" style="padding:0.35rem 0.65rem; font-size:0.8rem; border-radius:6px; gap:0.3rem;">
+          <i class="fas fa-certificate" style="color:var(--lu-gold);"></i> Claim
+        </a>
+      </td>
     </tr>
   `).join("");
 }
@@ -316,9 +321,14 @@ function renderContributorCards() {
         </div>
       </div>
 
-      <a href="https://github.com/${c.username}" target="_blank" rel="noopener noreferrer" class="lu-btn lu-btn-secondary" style="width:100%; justify-content:center; box-sizing:border-box; margin-top:auto;">
-        <i class="fab fa-github"></i> GitHub Profile
-      </a>
+      <div style="display:flex; gap:0.5rem; margin-top:auto;">
+        <a href="certificate.html?user=${encodeURIComponent(c.username)}" class="lu-btn lu-btn-primary" style="flex:1; justify-content:center; box-sizing:border-box; font-size:0.82rem; padding:0.5rem 0.65rem;">
+          <i class="fas fa-certificate"></i> Certificate
+        </a>
+        <a href="https://github.com/${c.username}" target="_blank" rel="noopener noreferrer" class="lu-btn lu-btn-secondary" style="flex:1; justify-content:center; box-sizing:border-box; font-size:0.82rem; padding:0.5rem 0.65rem;">
+          <i class="fab fa-github"></i> Profile
+        </a>
+      </div>
     </div>
   `).join("");
 }

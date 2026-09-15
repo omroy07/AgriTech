@@ -588,10 +588,16 @@
           <p>Loading contributors...</p>
         </div>
 
-        <a href="https://github.com/omroy07/AgriTech" target="_blank" class="github-cta">
-          <i class="fab fa-github"></i>
-          Become a Contributor
-        </a>
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+          <a href="certificate.html" class="github-cta" style="background: linear-gradient(135deg, var(--accent-green), #2563eb);">
+            <i class="fas fa-certificate"></i>
+            Generate Contributor Certificate
+          </a>
+          <a href="https://github.com/omroy07/AgriTech" target="_blank" class="github-cta">
+            <i class="fab fa-github"></i>
+            Become a Contributor
+          </a>
+        </div>
       </div>
     </section>
 
@@ -798,11 +804,15 @@ document.querySelectorAll(".faq-question").forEach(button => {
           card.className = 'contributor-card';
 
           card.innerHTML = `
-                <a href="${user.html_url}" target="_blank" style="text-decoration: none; color: inherit;">
+                <a href="${user.html_url}" target="_blank" style="text-decoration: none; color: inherit; display: block;">
                     <img src="${user.avatar_url}" alt="${user.login}" 
                          style="width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--accent-green); margin-bottom: 10px;">
                     <h4 style="font-size: 0.9rem;">${user.login}</h4>
                     <span style="font-size: 0.75rem; color: var(--accent-green);">${user.contributions} Commits</span>
+                </a>
+                <a href="certificate.html?user=${encodeURIComponent(user.login)}" title="View Certificate" 
+                   style="display: inline-flex; align-items: center; gap: 4px; font-size: 0.75rem; color: #f59e0b; text-decoration: none; margin-top: 8px; font-weight: 600;">
+                  <i class="fas fa-certificate"></i> Certificate
                 </a>
             `;
           container.appendChild(card);
