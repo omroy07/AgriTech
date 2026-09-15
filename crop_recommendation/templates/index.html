@@ -653,10 +653,17 @@
             <span class="logo-text">AgriTech</span>
           </a>
 
-          <button class="theme-toggle" id="themeToggle">
-            <i class="fas fa-moon" id="themeIcon"></i>
-            <span id="themeText">Dark Mode</span>
-          </button>
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">
+        <span class="theme-toggle-track">
+          <span class="theme-toggle-icon sun-icon" aria-hidden="true">
+            <i class="fas fa-sun"></i>
+          </span>
+          <span class="theme-toggle-icon moon-icon" aria-hidden="true">
+            <i class="fas fa-moon"></i>
+          </span>
+          <span class="theme-toggle-thumb"></span>
+        </span>
+      </button>
         </div>
       </div>
     </header>
@@ -1041,5 +1048,6 @@ function animateCursor() {
 animateCursor();
 </script>
 
+  <script src="../../theme.js"></script>
 </body>
 </html>

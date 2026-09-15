@@ -367,11 +367,16 @@
   </div>
   <div class="nav-right">
     <button class="theme-toggle" aria-label="Toggle theme">
-      <span class="theme-icon">
-        <!-- SVG icon for sun/moon -->
-        ☀️
-      </span>
-    </button>
+        <span class="theme-toggle-track">
+          <span class="theme-toggle-icon sun-icon" aria-hidden="true">
+            <i class="fas fa-sun"></i>
+          </span>
+          <span class="theme-toggle-icon moon-icon" aria-hidden="true">
+            <i class="fas fa-moon"></i>
+          </span>
+          <span class="theme-toggle-thumb"></span>
+        </span>
+      </button>
   </div>
 </nav>
 
@@ -511,6 +516,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="farm_dashboard.js"></script>
+  <script src="theme.js"></script>
 </body>
 
 </html>

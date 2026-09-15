@@ -149,11 +149,124 @@
     transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
   }
 
-  .agritech-navbar .nav-logout-btn,
-  .agritech-navbar .theme-toggle {
+  .agritech-navbar .nav-logout-btn {
     background: transparent;
     color: var(--navbar-text);
     border: 1px solid var(--navbar-border);
+  }
+
+  .agritech-navbar .theme-toggle {
+    position: relative;
+    width: 58px;
+    height: 30px;
+    min-width: 58px;
+    padding: 0;
+    border-radius: 999px;
+    border: 1.5px solid var(--navbar-border);
+    background: var(--navbar-surface);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    user-select: none;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+
+  .agritech-navbar .theme-toggle-track {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6px;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .agritech-navbar .theme-toggle-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    font-size: 13px;
+    z-index: 1;
+    pointer-events: none;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .agritech-navbar .theme-toggle-icon.sun-icon {
+    color: #f59e0b;
+    opacity: 1;
+  }
+
+  .agritech-navbar .theme-toggle-icon.moon-icon {
+    color: #94a3b8;
+    opacity: 0.45;
+  }
+
+  .agritech-navbar .theme-toggle-thumb {
+    position: absolute;
+    top: 2.5px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  [data-theme="light"] .agritech-navbar .theme-toggle {
+    background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+    border-color: #f59e0b;
+  }
+
+  [data-theme="light"] .agritech-navbar .theme-toggle .sun-icon {
+    color: #d97706;
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  [data-theme="light"] .agritech-navbar .theme-toggle .moon-icon {
+    color: #94a3b8;
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+
+  [data-theme="light"] .agritech-navbar .theme-toggle-thumb {
+    transform: translateX(0);
+    background: #ffffff;
+  }
+
+  [data-theme="dark"] .agritech-navbar .theme-toggle {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-color: #38bdf8;
+  }
+
+  [data-theme="dark"] .agritech-navbar .theme-toggle .sun-icon {
+    color: #64748b;
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+
+  [data-theme="dark"] .agritech-navbar .theme-toggle .moon-icon {
+    color: #38bdf8;
+    opacity: 1;
+    transform: scale(1.15);
+  }
+
+  [data-theme="dark"] .agritech-navbar .theme-toggle-thumb {
+    transform: translateX(27px);
+    background: #1e293b;
+    border: 1px solid rgba(56, 189, 248, 0.5);
   }
 
   .agritech-navbar .nav-fav-link {
@@ -286,10 +399,16 @@
       </a>
       <a href="login.html" class="nav-auth-link btn-secondary">Login</a>
       <a href="register.html" class="nav-auth-link btn-primary">Register</a>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme">
-        <i class="fas fa-sun sun-icon" aria-hidden="true"></i>
-        <i class="fas fa-moon moon-icon" aria-hidden="true"></i>
-        <span class="theme-text">Theme</span>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme" title="Toggle theme">
+        <span class="theme-toggle-track">
+          <span class="theme-toggle-icon sun-icon" aria-hidden="true">
+            <i class="fas fa-sun"></i>
+          </span>
+          <span class="theme-toggle-icon moon-icon" aria-hidden="true">
+            <i class="fas fa-moon"></i>
+          </span>
+          <span class="theme-toggle-thumb"></span>
+        </span>
       </button>
     </div>
   </div>

@@ -28,9 +28,17 @@
     <a href="contact.html">Contact</a>
   </div>
 
-  <button class="theme-toggle" onclick="toggleTheme()">
-    <i class="fa-solid fa-sun"></i>
-  </button>
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light/dark theme">
+        <span class="theme-toggle-track">
+          <span class="theme-toggle-icon sun-icon" aria-hidden="true">
+            <i class="fas fa-sun"></i>
+          </span>
+          <span class="theme-toggle-icon moon-icon" aria-hidden="true">
+            <i class="fas fa-moon"></i>
+          </span>
+          <span class="theme-toggle-thumb"></span>
+        </span>
+      </button>
 </nav>
 
 <!-- HERO -->
@@ -160,5 +168,6 @@
 </script>
 <!-- ===== End Back To Top Button ===== -->
 
+  <script src="theme.js"></script>
 </body>
 </html>

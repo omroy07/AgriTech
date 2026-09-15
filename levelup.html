@@ -114,9 +114,16 @@
 
       <div style="display: flex; align-items: center; gap: 0.75rem;">
         <button class="theme-toggle-btn" id="themeToggleBtn" type="button" aria-label="Toggle theme">
-          <i class="fas fa-moon" id="themeIcon"></i>
-          <span id="themeText">Theme</span>
-        </button>
+        <span class="theme-toggle-track">
+          <span class="theme-toggle-icon sun-icon" aria-hidden="true">
+            <i class="fas fa-sun"></i>
+          </span>
+          <span class="theme-toggle-icon moon-icon" aria-hidden="true">
+            <i class="fas fa-moon"></i>
+          </span>
+          <span class="theme-toggle-thumb"></span>
+        </span>
+      </button>
       </div>
     </div>
   </nav>
@@ -372,5 +379,6 @@
 
   <!-- Level Up JS -->
   <script src="js/levelup.js"></script>
+  <script src="theme.js"></script>
 </body>
 </html>

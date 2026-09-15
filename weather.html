@@ -59,25 +59,16 @@
           <!-- Animated Sun/Moon Toggle -->
           <button class="theme-toggle" type="button" id="themeToggle" title="Switch to dark mode"
               aria-label="Switch to dark mode">
-              <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <mask id="moon-mask">
-                      <rect x="0" y="0" width="100%" height="100%" fill="white" />
-                      <circle class="moon-bite" cx="14" cy="9" r="14" fill="black" />
-                  </mask>
-                  <circle class="sun-core" cx="12" cy="12" r="7" fill="currentColor" mask="url(#moon-mask)" />
-                  <g class="sun-rays" stroke="currentColor">
-                      <line x1="12" y1="1" x2="12" y2="3" />
-                      <line x1="12" y1="21" x2="12" y2="23" />
-                      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                      <line x1="1" y1="12" x2="3" y2="12" />
-                      <line x1="21" y1="12" x2="23" y2="12" />
-                      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                  </g>
-              </svg>
-          </button>
+        <span class="theme-toggle-track">
+          <span class="theme-toggle-icon sun-icon" aria-hidden="true">
+            <i class="fas fa-sun"></i>
+          </span>
+          <span class="theme-toggle-icon moon-icon" aria-hidden="true">
+            <i class="fas fa-moon"></i>
+          </span>
+          <span class="theme-toggle-thumb"></span>
+        </span>
+      </button>
           
           <a href="index.html" class="nav-back">
             <i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Home
