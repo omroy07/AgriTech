@@ -41,6 +41,7 @@
 
   <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="footer.css" />
 </head>
 
 <body>
@@ -482,7 +483,33 @@
           <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
         </ul>
       </div>
-    </div>
+    
+        <div class="footer-section footer-newsletter">
+          <h4>Newsletter</h4>
+          <p class="newsletter-desc">
+            Subscribe to get the latest farming insights, tips, and updates.
+          </p>
+          <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
+            <div class="newsletter-input-group">
+              <input
+                type="email"
+                class="newsletter-input"
+                placeholder="Enter your email to get the latest updates..."
+                required
+                aria-label="Email address for newsletter"
+              />
+              <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
+                <span>Subscribe</span>
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+            <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
+            <div class="newsletter-footer-optout">
+              <small>No spam. <a href="javascript:void(0)" onclick="openUnsubscribeModal(event)">Unsubscribe</a> anytime.</small>
+            </div>
+          </form>
+        </div>
+</div>
     <p style="margin-top: 2rem; opacity: 0.8">
       &copy; <span id="current-year"></span> AgriTech | Empowering India's Farming Future 🇮🇳
     </p>
@@ -780,6 +807,7 @@
   </script>
   <!-- ===== End Back To Top Button ===== -->
 
+  <script src="footer.js"></script>
 </body>
 
 </html>

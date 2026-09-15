@@ -598,3 +598,348 @@ html[data-theme="dark"] .footer-bottom-links a:hover {
     transform: none;
   }
 }
+
+/* ==========================================
+   NEWSLETTER SUBSCRIPTION SECTION & MODAL
+   ========================================== */
+
+.footer-newsletter {
+  flex: 1.3 1 280px;
+  min-width: 250px;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+}
+
+.newsletter-desc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-muted, #9ca3af);
+  margin: 0 0 1rem 0;
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.newsletter-input-group {
+  display: flex;
+  align-items: stretch;
+  background: var(--surface-color, #ffffff);
+  border: 1px solid var(--border-color, rgba(0, 0, 0, 0.15));
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html[data-theme="dark"] .newsletter-input-group,
+.tech-dark-theme .newsletter-input-group {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.newsletter-input-group:focus-within {
+  border-color: var(--primary-color, #16a34a);
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.25);
+  transform: translateY(-1px);
+}
+
+.newsletter-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  color: var(--text-color, #1f2937);
+  font-family: inherit;
+}
+
+html[data-theme="dark"] .newsletter-input,
+.tech-dark-theme .newsletter-input {
+  color: #f3f4f6;
+}
+
+.newsletter-input::placeholder {
+  color: var(--text-muted, #9ca3af);
+  font-size: 0.85rem;
+}
+
+.newsletter-btn {
+  background: linear-gradient(135deg, var(--primary-color, #16a34a), #15803d);
+  color: #ffffff;
+  border: none;
+  outline: none;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.newsletter-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #15803d, #166534);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.35);
+  transform: translateY(-1px);
+}
+
+.newsletter-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.newsletter-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.newsletter-feedback {
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: feedbackSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  line-height: 1.4;
+}
+
+@keyframes feedbackSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.newsletter-success {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  color: #15803d;
+}
+
+html[data-theme="dark"] .newsletter-success,
+.tech-dark-theme .newsletter-success {
+  background: rgba(34, 197, 94, 0.18);
+  border-color: rgba(34, 197, 94, 0.45);
+  color: #4ade80;
+}
+
+.newsletter-error {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #b91c1c;
+}
+
+html[data-theme="dark"] .newsletter-error,
+.tech-dark-theme .newsletter-error {
+  background: rgba(239, 68, 68, 0.18);
+  border-color: rgba(239, 68, 68, 0.45);
+  color: #f87171;
+}
+
+.newsletter-info {
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  color: #1d4ed8;
+}
+
+html[data-theme="dark"] .newsletter-info,
+.tech-dark-theme .newsletter-info {
+  background: rgba(59, 130, 246, 0.18);
+  border-color: rgba(59, 130, 246, 0.45);
+  color: #60a5fa;
+}
+
+.newsletter-footer-optout,
+.newsletter-footer-links {
+  font-size: 0.78rem;
+  color: var(--text-muted, #9ca3af);
+  margin-top: 0.3rem;
+  line-height: 1.4;
+}
+
+.newsletter-footer-optout a,
+.newsletter-footer-links a {
+  color: var(--text-muted, #9ca3af);
+  text-decoration: underline;
+  padding: 0;
+  display: inline;
+  font-size: inherit;
+  transition: color 0.2s ease;
+}
+
+.newsletter-footer-optout a:hover,
+.newsletter-footer-links a:hover {
+  color: var(--primary-color, #16a34a);
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Accessible Unsubscribe Modal */
+.agritech-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.agritech-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.agritech-modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.agritech-modal-dialog {
+  position: relative;
+  background: var(--surface-color, #ffffff);
+  color: var(--text-color, #1f2937);
+  border: 1px solid var(--border-color, rgba(0, 0, 0, 0.15));
+  border-radius: 16px;
+  width: 100%;
+  max-width: 460px;
+  padding: 1.75rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transform: scale(0.94) translateY(10px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
+}
+
+html[data-theme="dark"] .agritech-modal-dialog {
+  background: #18221e;
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #f3f4f6;
+}
+
+.agritech-modal.active .agritech-modal-dialog {
+  transform: scale(1) translateY(0);
+}
+
+.agritech-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+  padding-bottom: 0.75rem;
+}
+
+.agritech-modal-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-color, #16a34a);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.agritech-modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: var(--text-muted, #9ca3af);
+  cursor: pointer;
+  padding: 0 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.agritech-modal-close:hover {
+  color: #ef4444;
+}
+
+.agritech-modal-body p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-muted, #9ca3af);
+  margin-bottom: 1.25rem;
+}
+
+.modal-input-group {
+  margin-bottom: 1rem;
+}
+
+.agritech-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.agritech-btn-secondary {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--text-color, #374151);
+  border: 1px solid var(--border-color, rgba(0, 0, 0, 0.15));
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+html[data-theme="dark"] .agritech-btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e5e7eb;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.agritech-btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+html[data-theme="dark"] .agritech-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.agritech-btn-danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.agritech-btn-danger:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+}

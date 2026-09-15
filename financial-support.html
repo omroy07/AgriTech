@@ -1206,6 +1206,7 @@
   background: var(--text-muted);
 }
   </style>
+  <link rel="stylesheet" href="footer.css" />
 </head>
 
 <body>
@@ -1556,6 +1557,32 @@
             </li>
           </ul>
         </div>
+
+        <div class="footer-section footer-newsletter">
+          <h4>Newsletter</h4>
+          <p class="newsletter-desc">
+            Subscribe to get the latest farming insights, tips, and updates.
+          </p>
+          <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
+            <div class="newsletter-input-group">
+              <input
+                type="email"
+                class="newsletter-input"
+                placeholder="Enter your email to get the latest updates..."
+                required
+                aria-label="Email address for newsletter"
+              />
+              <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
+                <span>Subscribe</span>
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+            <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
+            <div class="newsletter-footer-optout">
+              <small>No spam. <a href="javascript:void(0)" onclick="openUnsubscribeModal(event)">Unsubscribe</a> anytime.</small>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
 
@@ -1856,6 +1883,7 @@ animateCursor();
   <script src="theme.js"></script>
   <script src="auth.js"></script>
 
+  <script src="footer.js"></script>
 </body>
 
 </html>
