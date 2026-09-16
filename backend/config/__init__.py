@@ -1,95 +1,90 @@
 import os
+from .settings import get_settings, Settings
 
-from dotenv import load_dotenv
-
-
-load_dotenv(
-    dotenv_path=os.path.abspath(
-        os.path.join(os.path.dirname(__file__), '..', '..', '.env')
-    )
-)
-
-
-def _env_bool(name, default=False):
-    return os.environ.get(name, str(default)).strip().lower() in {'1', 'true', 'yes', 'on'}
+_settings = get_settings()
 
 class Config:
-    """Base Configuration"""
-    SECRET_KEY = os.environ.get('SECRET_KEY')
-    DEBUG = _env_bool('DEBUG', False)
-    TESTING = False
+    """Base Configuration mapped from typed Settings"""
+    SECRET_KEY = _settings.app.secret_key
+    DEBUG = _settings.app.debug
+    TESTING = _settings.app.testing
     
     # Database
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///agritech.db')
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_DATABASE_URI = _settings.database.url
+    SQLALCHEMY_TRACK_MODIFICATIONS = _settings.database.track_modifications
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        "pool_size": _settings.database.pool_size,
+        "max_overflow": _settings.database.max_overflow,
+        "pool_recycle": _settings.database.pool_recycle,
+    } if not _settings.database.url.startswith("sqlite") else {}
 
     # Mail
-    MAIL_SERVER = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
-    MAIL_PORT = int(os.environ.get('MAIL_PORT', 587))
-    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS', 'True').lower() in ['true', 'on', '1']
-    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
-    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
+    MAIL_SERVER = _settings.mail.server
+    MAIL_PORT = _settings.mail.port
+    MAIL_USE_TLS = _settings.mail.use_tls
+    MAIL_USERNAME = _settings.mail.username
+    MAIL_PASSWORD = _settings.mail.password
+    MAIL_DEFAULT_SENDER = _settings.mail.default_sender
 
     # Storage Configuration
-    # Options: 'local', 's3'
-    STORAGE_TYPE = os.environ.get('STORAGE_TYPE', 'local')
-    
-    # Local Storage Settings
-    UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
-    MAX_CONTENT_LENGTH = 10 * 1024 * 1024  # 10MB
+    STORAGE_TYPE = _settings.storage.storage_type
+    UPLOAD_FOLDER = _settings.storage.upload_folder
+    MAX_CONTENT_LENGTH = _settings.storage.max_content_length
     
     # S3 Settings
-    S3_BUCKET = os.environ.get('S3_BUCKET')
-    S3_ACCESS_KEY = os.environ.get('S3_ACCESS_KEY')
-    S3_SECRET_KEY = os.environ.get('S3_SECRET_KEY')
-    S3_REGION = os.environ.get('S3_REGION', 'us-east-1')
-    S3_ENDPOINT_URL = os.environ.get('S3_ENDPOINT_URL') # For MinIO
+    S3_BUCKET = _settings.storage.s3_bucket
+    S3_ACCESS_KEY = _settings.storage.s3_access_key
+    S3_SECRET_KEY = _settings.storage.s3_secret_key
+    S3_REGION = _settings.storage.s3_region
+    S3_ENDPOINT_URL = _settings.storage.s3_endpoint_url
     
     # Gemini API
-    GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
-    GEMINI_MODEL_ID = 'gemini-2.5-flash'
+    GEMINI_API_KEY = _settings.ai.gemini_api_key
+    GEMINI_MODEL_ID = _settings.ai.gemini_model_id
     
     # Weather API
-    WEATHER_API_KEY = os.environ.get('WEATHER_API_KEY')
-    WEATHER_API_URL = "https://api.weatherapi.com/v1"
+    WEATHER_API_KEY = _settings.services.weather_api_key
+    WEATHER_API_URL = _settings.services.weather_api_url
     
     # Firebase
-    FIREBASE_API_KEY = os.environ.get('FIREBASE_API_KEY')
-    FIREBASE_AUTH_DOMAIN = os.environ.get('FIREBASE_AUTH_DOMAIN')
-    FIREBASE_PROJECT_ID = os.environ.get('FIREBASE_PROJECT_ID')
-    FIREBASE_STORAGE_BUCKET = os.environ.get('FIREBASE_STORAGE_BUCKET')
-    FIREBASE_MESSAGING_SENDER_ID = os.environ.get('FIREBASE_MESSAGING_SENDER_ID')
-    FIREBASE_APP_ID = os.environ.get('FIREBASE_APP_ID')
-    FIREBASE_MEASUREMENT_ID = os.environ.get('FIREBASE_MEASUREMENT_ID')
+    FIREBASE_API_KEY = _settings.firebase.api_key
+    FIREBASE_AUTH_DOMAIN = _settings.firebase.auth_domain
+    FIREBASE_PROJECT_ID = _settings.firebase.project_id
+    FIREBASE_STORAGE_BUCKET = _settings.firebase.storage_bucket
+    FIREBASE_MESSAGING_SENDER_ID = _settings.firebase.messaging_sender_id
+    FIREBASE_APP_ID = _settings.firebase.app_id
+    FIREBASE_MEASUREMENT_ID = _settings.firebase.measurement_id
 
     # Redis & Caching
-    REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
-    CACHE_TYPE = 'RedisCache'
-    CACHE_REDIS_URL = REDIS_URL
-    CACHE_DEFAULT_TIMEOUT = 3600  # 1 hour default
+    REDIS_URL = _settings.services.redis_url
+    CACHE_TYPE = _settings.services.cache_type
+    CACHE_REDIS_URL = _settings.services.redis_url
+    CACHE_DEFAULT_TIMEOUT = _settings.services.cache_default_timeout
+
 
 class DevelopmentConfig(Config):
     """Development Configuration"""
-    DEBUG = _env_bool('DEBUG', True)
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL', 'sqlite:///agritech_dev.db')
-    SQLALCHEMY_ECHO = False  # Log SQL queries in development
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = _settings.database.dev_url or 'sqlite:///agritech_dev.db'
+    SQLALCHEMY_ECHO = False
+
 
 class ProductionConfig(Config):
     """Production Configuration"""
-    DEBUG = _env_bool('DEBUG', False)
+    DEBUG = False
+
     @classmethod
     def init_app(cls, app):
-        if not os.environ.get('GEMINI_API_KEY'):
-            pass # raise RuntimeError("GEMINI_API_KEY is not set in production!")
-        if not os.environ.get('DATABASE_URL'):
-            pass # raise RuntimeError("DATABASE_URL is not set in production!")
+        pass
+
 
 class TestingConfig(Config):
     """Testing Configuration"""
     TESTING = True
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'  # In-memory database for testing
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    SQLALCHEMY_ENGINE_OPTIONS = {}
+
 
 config = {
     'development': DevelopmentConfig,
