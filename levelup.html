@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Level Up - Contributor Growth Hub | AgriTech</title>
-  <meta name="description" content="Highlighting open-source contributors, GitHub stats, merged feature impact, contribution streaks, and gamified levels for the AgriTech community." />
-  
+  <meta name="description"
+    content="Highlighting open-source contributors, GitHub stats, merged feature impact, contribution streaks, and gamified levels for the AgriTech community." />
+
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  
+
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/levelup.css" />
 
@@ -29,16 +31,19 @@
       border-bottom: 1px solid rgba(148, 163, 184, 0.22);
       box-shadow: 0 10px 28px rgba(2, 6, 23, 0.28);
     }
+
     [data-theme="light"] .agritech-navbar {
       background: rgba(255, 255, 255, 0.94);
       color: #0f172a;
       border-bottom-color: rgba(148, 163, 184, 0.35);
       box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
     }
+
     .agritech-navbar-spacer {
       height: 76px;
       width: 100%;
     }
+
     .agritech-navbar .navbar-content {
       display: flex;
       align-items: center;
@@ -48,6 +53,7 @@
       margin: 0 auto;
       padding: 0.9rem 1.25rem;
     }
+
     .agritech-navbar .brand {
       display: inline-flex;
       align-items: center;
@@ -55,20 +61,24 @@
       text-decoration: none;
       color: inherit;
     }
+
     .agritech-navbar .brand img {
       width: 40px;
       height: 40px;
       border-radius: 10px;
     }
+
     .agritech-navbar .brand-name {
       font-size: 1.25rem;
       font-weight: 700;
     }
+
     .agritech-navbar .nav-menu {
       display: flex;
       align-items: center;
       gap: 1.25rem;
     }
+
     .agritech-navbar .nav-link {
       color: inherit;
       text-decoration: none;
@@ -76,10 +86,12 @@
       font-weight: 500;
       transition: color 0.2s;
     }
+
     .agritech-navbar .nav-link:hover,
     .agritech-navbar .nav-link.active {
       color: #22c55e;
     }
+
     .theme-toggle-btn {
       background: transparent;
       border: 1px solid rgba(148, 163, 184, 0.4);
@@ -93,14 +105,17 @@
       gap: 0.5rem;
     }
   </style>
+  <link rel="stylesheet" href="footer.css" />
 </head>
+
 <body class="levelup-page">
 
   <!-- Primary Navigation Bar -->
   <nav class="agritech-navbar" aria-label="Primary navigation">
     <div class="navbar-content">
       <a class="brand" href="index.html" aria-label="AgriTech Home">
-        <img src="images/logo.png" alt="AgriTech logo" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/628/628324.png';" />
+        <img src="images/logo.png" alt="AgriTech logo"
+          onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/628/628324.png';" />
         <span class="brand-name">AgriTech</span>
       </a>
 
@@ -115,16 +130,16 @@
 
       <div style="display: flex; align-items: center; gap: 0.75rem;">
         <button class="theme-toggle-btn" id="themeToggleBtn" type="button" aria-label="Toggle theme">
-        <span class="theme-toggle-track">
-          <span class="theme-toggle-icon sun-icon" aria-hidden="true">
-            <i class="fas fa-sun"></i>
+          <span class="theme-toggle-track">
+            <span class="theme-toggle-icon sun-icon" aria-hidden="true">
+              <i class="fas fa-sun"></i>
+            </span>
+            <span class="theme-toggle-icon moon-icon" aria-hidden="true">
+              <i class="fas fa-moon"></i>
+            </span>
+            <span class="theme-toggle-thumb"></span>
           </span>
-          <span class="theme-toggle-icon moon-icon" aria-hidden="true">
-            <i class="fas fa-moon"></i>
-          </span>
-          <span class="theme-toggle-thumb"></span>
-        </span>
-      </button>
+        </button>
       </div>
     </div>
   </nav>
@@ -140,11 +155,13 @@
       </div>
       <h1>Level Up Your Open-Source Impact</h1>
       <p>
-        Celebrating open-source contributors, tracking GitHub commits, PRs, contribution streaks, and gamified level progression for the AgriTech community.
+        Celebrating open-source contributors, tracking GitHub commits, PRs, contribution streaks, and gamified level
+        progression for the AgriTech community.
       </p>
 
       <div class="lu-hero-actions">
-        <a href="certificate.html" class="lu-btn lu-btn-primary" style="background: linear-gradient(135deg, #16a34a, #2563eb);">
+        <a href="certificate.html" class="lu-btn lu-btn-primary"
+          style="background: linear-gradient(135deg, #16a34a, #2563eb);">
           <i class="fas fa-certificate"></i> Generate Participation Certificate
         </a>
         <a href="#leaderboardSection" class="lu-btn lu-btn-secondary">
@@ -181,7 +198,8 @@
       <div class="lu-section-header">
         <div>
           <h2 class="lu-section-title"><i class="fas fa-trophy"></i> Monthly Leaderboard</h2>
-          <div class="lu-section-desc">Recognizing top community rankers by points, merged contributions, and active streaks.</div>
+          <div class="lu-section-desc">Recognizing top community rankers by points, merged contributions, and active
+            streaks.</div>
         </div>
 
         <div class="lu-controls">
@@ -313,7 +331,8 @@
       <div class="lu-section-header">
         <div>
           <h2 class="lu-section-title"><i class="fas fa-fire"></i> Feature Impact Table</h2>
-          <div class="lu-section-desc">Merged feature requests, pull requests, and assigned points for project growth.</div>
+          <div class="lu-section-desc">Merged feature requests, pull requests, and assigned points for project growth.
+          </div>
         </div>
 
         <div class="lu-controls">
@@ -321,7 +340,8 @@
             <i class="fas fa-search"></i>
             <input type="text" id="impactSearch" placeholder="Search features, PRs..." />
           </div>
-          <select id="impactCategory" style="padding:0.6rem 1rem; border-radius: var(--lu-radius-md); background: var(--lu-surface-card); border:1px solid var(--lu-border); color: var(--lu-text); font-size: 0.88rem;">
+          <select id="impactCategory"
+            style="padding:0.6rem 1rem; border-radius: var(--lu-radius-md); background: var(--lu-surface-card); border:1px solid var(--lu-border); color: var(--lu-text); font-size: 0.88rem;">
             <option value="all">All Categories</option>
             <option value="UI/UX">UI/UX</option>
             <option value="Core Platform">Core Platform</option>
@@ -381,6 +401,108 @@
 
   <!-- Level Up JS -->
   <script src="js/levelup.js"></script>
-  <script src="theme.js"></script>
+  <footer class="site-footer tech-dark-theme final-match">
+    <div class="footer-top-accent"></div>
+
+    <div class="footer-inner-content">
+      <div class="footer-section footer-brand">
+        <a href="index.html" class="brand-header">
+          <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
+          <h3>AgriTech</h3>
+        </a>
+
+        <p class="tagline">
+          Empowering India's Farming Future with innovative technology
+          connecting every stakeholder.
+        </p>
+
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="X (formerly Twitter)"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-group-links">
+        <div class="footer-section footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>
+              <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li>
+              <a href="marketplace.html"><i class="fas fa-store"></i> Marketplace</a>
+            </li>
+            <li>
+              <a href="weather_dashboard.html"><i class="fas fa-cloud-sun"></i> Weather</a>
+            </li>
+            <li>
+              <a href="contact.html"><i class="fas fa-headset"></i> Contact Us</a>
+            </li>
+            <li>
+              <a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+            </li>
+            <li>
+              <a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a>
+            </li>
+            <li>
+              <a href="privacy-policy.html"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-contact">
+          <h4>Contact</h4>
+          <ul>
+            <li>
+              <a href="mailto:contact@agritech.com">
+                <i class="fas fa-envelope"></i> contact@agritech.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+910000000000">
+                <i class="fas fa-phone"></i> +91 00000 00000
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-newsletter">
+          <h4>Newsletter</h4>
+          <p class="newsletter-desc">
+            Subscribe to get the latest farming insights, tips, and updates.
+          </p>
+          <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
+            <div class="newsletter-input-group">
+              <input type="email" class="newsletter-input" placeholder="Enter your email to get the latest updates..."
+                required aria-label="Email address for newsletter" />
+              <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
+                <span>Subscribe</span>
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+            <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
+            <div class="newsletter-footer-optout">
+              <small>No spam. <a href="javascript:void(0)" onclick="openUnsubscribeModal(event)">Unsubscribe</a>
+                anytime.</small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="current-year">2026</span> AgriTech. All rights reserved. <a href="privacy-policy.html">Privacy
+          Policy</a> · <a href="terms-and-service.html">Terms</a> · <a href="cookie-policy.html">Cookie Policy</a></p>
+    </div>
+
+    <div class="footer-wave-overlay"></div>
+  </footer>
+  <script src="footer.js"></script>
 </body>
+
 </html>

@@ -8,7 +8,8 @@
     <meta name="description"
         content="Smart Livestock Management System for tracking animal records, health & vaccinations, breeding, daily production, and feed planning.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary: #0f172a;
@@ -306,10 +307,25 @@
             font-size: 1.25rem;
         }
 
-        .icon-green { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); }
-        .icon-blue { background: rgba(59, 130, 246, 0.15); color: var(--accent-blue); }
-        .icon-purple { background: rgba(139, 92, 246, 0.15); color: var(--accent-purple); }
-        .icon-amber { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); }
+        .icon-green {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+        }
+
+        .icon-blue {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-blue);
+        }
+
+        .icon-purple {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--accent-purple);
+        }
+
+        .icon-amber {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-amber);
+        }
 
         .stat-value {
             font-size: 2rem;
@@ -345,8 +361,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Card Container */
@@ -475,11 +498,30 @@
             text-transform: capitalize;
         }
 
-        .badge-green { background: rgba(16, 185, 129, 0.15); color: #059669; }
-        .badge-blue { background: rgba(59, 130, 246, 0.15); color: #2563eb; }
-        .badge-amber { background: rgba(245, 158, 11, 0.15); color: #d97706; }
-        .badge-purple { background: rgba(139, 92, 246, 0.15); color: #7c3aed; }
-        .badge-red { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
+        .badge-green {
+            background: rgba(16, 185, 129, 0.15);
+            color: #059669;
+        }
+
+        .badge-blue {
+            background: rgba(59, 130, 246, 0.15);
+            color: #2563eb;
+        }
+
+        .badge-amber {
+            background: rgba(245, 158, 11, 0.15);
+            color: #d97706;
+        }
+
+        .badge-purple {
+            background: rgba(139, 92, 246, 0.15);
+            color: #7c3aed;
+        }
+
+        .badge-red {
+            background: rgba(239, 68, 68, 0.15);
+            color: #dc2626;
+        }
 
         /* Animal Grid */
         .animal-cards-grid {
@@ -568,17 +610,24 @@
             .grid-2col {
                 grid-template-columns: 1fr;
             }
+
             .app-sidebar {
                 width: 80px;
                 padding: 1.25rem 0.5rem;
             }
-            .brand-title, .sidebar-section-label, .nav-item span, .user-info {
+
+            .brand-title,
+            .sidebar-section-label,
+            .nav-item span,
+            .user-info {
                 display: none;
             }
+
             .nav-item {
                 justify-content: center;
                 padding: 0.85rem;
             }
+
             .app-main {
                 padding: 1.5rem;
             }
@@ -631,8 +680,15 @@
         }
 
         @keyframes modalPop {
-            from { opacity: 0; transform: scale(0.92); }
-            to { opacity: 1; transform: scale(1); }
+            from {
+                opacity: 0;
+                transform: scale(0.92);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .modal-header {
@@ -720,10 +776,18 @@
         }
 
         @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
     </style>
+    <link rel="stylesheet" href="footer.css" />
 </head>
 
 <body>
@@ -736,52 +800,52 @@
             </a>
 
             <div class="sidebar-section-label">Management</a>
-            <nav class="sidebar-nav">
-                <div class="nav-item active" onclick="switchTab('overview')">
-                    <i class="fas fa-chart-pie"></i>
-                    <span>Overview</span>
-                </div>
-                <div class="nav-item" onclick="switchTab('animals')">
-                    <i class="fas fa-cow"></i>
-                    <span>Animal Records</span>
-                </div>
-                <div class="nav-item" onclick="switchTab('health')">
-                    <i class="fas fa-heartbeat"></i>
-                    <span>Health Tracking</span>
-                </div>
-                <div class="nav-item" onclick="switchTab('breeding')">
-                    <i class="fas fa-dna"></i>
-                    <span>Breeding</span>
-                </div>
-                <div class="nav-item" onclick="switchTab('production')">
-                    <i class="fas fa-fill-drip"></i>
-                    <span>Production</span>
-                </div>
-                <div class="nav-item" onclick="switchTab('feed')">
-                    <i class="fas fa-wheat-awn"></i>
-                    <span>Feed Planning</span>
-                </div>
-            </nav>
+                <nav class="sidebar-nav">
+                    <div class="nav-item active" onclick="switchTab('overview')">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Overview</span>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('animals')">
+                        <i class="fas fa-cow"></i>
+                        <span>Animal Records</span>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('health')">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>Health Tracking</span>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('breeding')">
+                        <i class="fas fa-dna"></i>
+                        <span>Breeding</span>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('production')">
+                        <i class="fas fa-fill-drip"></i>
+                        <span>Production</span>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('feed')">
+                        <i class="fas fa-wheat-awn"></i>
+                        <span>Feed Planning</span>
+                    </div>
+                </nav>
 
-            <div class="sidebar-section-label">Portals</div>
-            <nav class="sidebar-nav">
-                <a href="farmer.html" class="nav-item">
-                    <i class="fas fa-user-gear"></i>
-                    <span>Farmer Hub</span>
-                </a>
-                <a href="marketplace.html" class="nav-item">
-                    <i class="fas fa-store"></i>
-                    <span>Marketplace</span>
-                </a>
-            </nav>
+                <div class="sidebar-section-label">Portals</div>
+                <nav class="sidebar-nav">
+                    <a href="farmer.html" class="nav-item">
+                        <i class="fas fa-user-gear"></i>
+                        <span>Farmer Hub</span>
+                    </a>
+                    <a href="marketplace.html" class="nav-item">
+                        <i class="fas fa-store"></i>
+                        <span>Marketplace</span>
+                    </a>
+                </nav>
 
-            <div class="user-quick-profile">
-                <div class="user-avatar">FM</div>
-                <div class="user-info">
-                    <strong>Farm Manager</strong>
-                    <span>Green Valley Ranch</span>
+                <div class="user-quick-profile">
+                    <div class="user-avatar">FM</div>
+                    <div class="user-info">
+                        <strong>Farm Manager</strong>
+                        <span>Green Valley Ranch</span>
+                    </div>
                 </div>
-            </div>
         </aside>
 
         <!-- Main Workspace -->
@@ -822,7 +886,8 @@
                         <div class="stat-icon icon-blue"><i class="fas fa-notes-medical"></i></div>
                     </div>
                     <div class="stat-value" id="statHealthPct">100%</div>
-                    <div class="stat-sub" style="color:var(--accent-blue)"><i class="fas fa-shield-heart"></i> Vaccinated & Healthy</div>
+                    <div class="stat-sub" style="color:var(--accent-blue)"><i class="fas fa-shield-heart"></i>
+                        Vaccinated & Healthy</div>
                 </div>
 
                 <div class="stat-card">
@@ -831,7 +896,8 @@
                         <div class="stat-icon icon-purple"><i class="fas fa-glass-water"></i></div>
                     </div>
                     <div class="stat-value" id="statMilkYield">0 L</div>
-                    <div class="stat-sub" style="color:var(--accent-purple)"><i class="fas fa-arrow-up"></i> +4.2% vs last week</div>
+                    <div class="stat-sub" style="color:var(--accent-purple)"><i class="fas fa-arrow-up"></i> +4.2% vs
+                        last week</div>
                 </div>
 
                 <div class="stat-card">
@@ -840,7 +906,8 @@
                         <div class="stat-icon icon-amber"><i class="fas fa-baby-carriage"></i></div>
                     </div>
                     <div class="stat-value" id="statPregnancies">0</div>
-                    <div class="stat-sub" style="color:var(--accent-amber)"><i class="fas fa-calendar"></i> Expected next 30 days</div>
+                    <div class="stat-sub" style="color:var(--accent-amber)"><i class="fas fa-calendar"></i> Expected
+                        next 30 days</div>
                 </div>
             </div>
 
@@ -887,7 +954,8 @@
                     <div class="controls-bar">
                         <div class="search-box">
                             <i class="fas fa-search"></i>
-                            <input type="text" id="animalSearch" class="search-input" placeholder="Search by Tag ID, Name, or Breed..." oninput="renderAnimalRecords()">
+                            <input type="text" id="animalSearch" class="search-input"
+                                placeholder="Search by Tag ID, Name, or Breed..." oninput="renderAnimalRecords()">
                         </div>
                         <select id="filterSpecies" class="filter-select" onchange="renderAnimalRecords()">
                             <option value="ALL">All Species</option>
@@ -1004,17 +1072,20 @@
                         <div class="panel-header">
                             <h2 class="panel-title"><i class="fas fa-chart-column"></i> 7-Day Production Trend</h2>
                         </div>
-                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Daily milk yield analytics (Liters)</p>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Daily milk yield
+                            analytics (Liters)</p>
                         <div class="chart-container" id="yieldChart">
                             <svg width="100%" height="100%" viewBox="0 0 400 180" preserveAspectRatio="none">
                                 <defs>
                                     <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="#10b981" stop-opacity="0.4"/>
-                                        <stop offset="100%" stop-color="#10b981" stop-opacity="0.0"/>
+                                        <stop offset="0%" stop-color="#10b981" stop-opacity="0.4" />
+                                        <stop offset="100%" stop-color="#10b981" stop-opacity="0.0" />
                                     </linearGradient>
                                 </defs>
-                                <path d="M 10,140 Q 60,90 120,110 T 240,60 T 360,40 L 360,170 L 10,170 Z" fill="url(#chartGrad)" />
-                                <path d="M 10,140 Q 60,90 120,110 T 240,60 T 360,40" fill="none" stroke="#10b981" stroke-width="3" />
+                                <path d="M 10,140 Q 60,90 120,110 T 240,60 T 360,40 L 360,170 L 10,170 Z"
+                                    fill="url(#chartGrad)" />
+                                <path d="M 10,140 Q 60,90 120,110 T 240,60 T 360,40" fill="none" stroke="#10b981"
+                                    stroke-width="3" />
                                 <circle cx="10" cy="140" r="4" fill="#10b981" />
                                 <circle cx="70" cy="100" r="4" fill="#10b981" />
                                 <circle cx="130" cy="110" r="4" fill="#10b981" />
@@ -1032,7 +1103,8 @@
             <section id="tab-feed" class="tab-pane">
                 <div class="panel-card">
                     <div class="panel-header">
-                        <h2 class="panel-title"><i class="fas fa-wheat-field"></i> Feed Inventory & Ration Calculator</h2>
+                        <h2 class="panel-title"><i class="fas fa-wheat-field"></i> Feed Inventory & Ration Calculator
+                        </h2>
                         <button class="btn btn-primary" onclick="openFeedModal()">
                             <i class="fas fa-plus"></i> Add Feed Stock
                         </button>
@@ -1060,12 +1132,18 @@
                             <h3 style="font-size:1.05rem; font-weight:700; margin-bottom:0.75rem;">
                                 <i class="fas fa-calculator"></i> Daily Herd Ration Estimator
                             </h3>
-                            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Recommended daily diet composition per adult dairy cow:</p>
-                            <ul style="font-size:0.88rem; list-style:none; display:flex; flex-direction:column; gap:0.5rem;">
-                                <li><i class="fas fa-check text-green" style="color:var(--accent-green)"></i> <strong>Green Fodder:</strong> 25 - 30 kg</li>
-                                <li><i class="fas fa-check text-green" style="color:var(--accent-green)"></i> <strong>Dry Fodder:</strong> 5 - 8 kg</li>
-                                <li><i class="fas fa-check text-green" style="color:var(--accent-green)"></i> <strong>Concentrates:</strong> 3 - 5 kg</li>
-                                <li><i class="fas fa-check text-green" style="color:var(--accent-green)"></i> <strong>Mineral Mixture:</strong> 50 - 100 g</li>
+                            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Recommended daily
+                                diet composition per adult dairy cow:</p>
+                            <ul
+                                style="font-size:0.88rem; list-style:none; display:flex; flex-direction:column; gap:0.5rem;">
+                                <li><i class="fas fa-check text-green" style="color:var(--accent-green)"></i>
+                                    <strong>Green Fodder:</strong> 25 - 30 kg</li>
+                                <li><i class="fas fa-check text-green" style="color:var(--accent-green)"></i>
+                                    <strong>Dry Fodder:</strong> 5 - 8 kg</li>
+                                <li><i class="fas fa-check text-green" style="color:var(--accent-green)"></i>
+                                    <strong>Concentrates:</strong> 3 - 5 kg</li>
+                                <li><i class="fas fa-check text-green" style="color:var(--accent-green)"></i>
+                                    <strong>Mineral Mixture:</strong> 50 - 100 g</li>
                             </ul>
                         </div>
                     </div>
@@ -1103,7 +1181,8 @@
                     </div>
                     <div class="form-group">
                         <label>Breed</label>
-                        <input type="text" id="mBreed" class="form-control" placeholder="e.g. Gir, Holstein, Jamunapari">
+                        <input type="text" id="mBreed" class="form-control"
+                            placeholder="e.g. Gir, Holstein, Jamunapari">
                     </div>
                     <div class="form-group">
                         <label>Gender</label>
@@ -1211,7 +1290,8 @@
                     </div>
                 </div>
                 <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('breedingModal')">Cancel</button>
+                    <button type="button" class="btn btn-secondary"
+                        onclick="closeModal('breedingModal')">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save Record</button>
                 </div>
             </form>
@@ -1233,7 +1313,8 @@
                     </div>
                     <div class="form-group">
                         <label>Group / Tag ID *</label>
-                        <input type="text" id="pGroup" class="form-control" placeholder="e.g. Dairy Herd A / COW-101" required>
+                        <input type="text" id="pGroup" class="form-control" placeholder="e.g. Dairy Herd A / COW-101"
+                            required>
                     </div>
                     <div class="form-group">
                         <label>Product Type *</label>
@@ -1249,7 +1330,8 @@
                     </div>
                 </div>
                 <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('productionModal')">Cancel</button>
+                    <button type="button" class="btn btn-secondary"
+                        onclick="closeModal('productionModal')">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save Yield</button>
                 </div>
             </form>
@@ -1354,7 +1436,7 @@
             renderProductionLogs();
             renderFeedStock();
             populateTagSelectors();
-            
+
             // Set default date inputs to today
             const today = new Date().toISOString().split('T')[0];
             if (document.getElementById("pDate")) document.getElementById("pDate").value = today;
@@ -1703,7 +1785,110 @@
             setTimeout(() => toast.remove(), 3500);
         }
     </script>
-  <script src="theme.js"></script>
+    <footer class="site-footer tech-dark-theme final-match">
+        <div class="footer-top-accent"></div>
+
+        <div class="footer-inner-content">
+            <div class="footer-section footer-brand">
+                <a href="index.html" class="brand-header">
+                    <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
+                    <h3>AgriTech</h3>
+                </a>
+
+                <p class="tagline">
+                    Empowering India's Farming Future with innovative technology
+                    connecting every stakeholder.
+                </p>
+
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="X (formerly Twitter)"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-group-links">
+                <div class="footer-section footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li>
+                            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                        </li>
+                        <li>
+                            <a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="marketplace.html"><i class="fas fa-store"></i> Marketplace</a>
+                        </li>
+                        <li>
+                            <a href="weather_dashboard.html"><i class="fas fa-cloud-sun"></i> Weather</a>
+                        </li>
+                        <li>
+                            <a href="contact.html"><i class="fas fa-headset"></i> Contact Us</a>
+                        </li>
+                        <li>
+                            <a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+                        </li>
+                        <li>
+                            <a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a>
+                        </li>
+                        <li>
+                            <a href="privacy-policy.html"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="footer-section footer-contact">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>
+                            <a href="mailto:contact@agritech.com">
+                                <i class="fas fa-envelope"></i> contact@agritech.com
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:+910000000000">
+                                <i class="fas fa-phone"></i> +91 00000 00000
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="footer-section footer-newsletter">
+                    <h4>Newsletter</h4>
+                    <p class="newsletter-desc">
+                        Subscribe to get the latest farming insights, tips, and updates.
+                    </p>
+                    <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
+                        <div class="newsletter-input-group">
+                            <input type="email" class="newsletter-input"
+                                placeholder="Enter your email to get the latest updates..." required
+                                aria-label="Email address for newsletter" />
+                            <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
+                                <span>Subscribe</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
+                        <div class="newsletter-footer-optout">
+                            <small>No spam. <a href="javascript:void(0)"
+                                    onclick="openUnsubscribeModal(event)">Unsubscribe</a> anytime.</small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© <span id="current-year">2026</span> AgriTech. All rights reserved. <a
+                    href="privacy-policy.html">Privacy Policy</a> · <a href="terms-and-service.html">Terms</a> · <a
+                    href="cookie-policy.html">Cookie Policy</a></p>
+        </div>
+
+        <div class="footer-wave-overlay"></div>
+    </footer>
+    <script src="footer.js"></script>
 </body>
 
 </html>

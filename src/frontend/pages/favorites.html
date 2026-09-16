@@ -1,154 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Favorite Blogs - AgriTech</title>
-    <link rel="stylesheet" href="../css/blog.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .favorites-page {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-        
-        .favorites-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .favorites-title {
-            font-size: 2.5rem;
-            color: #2c5f2d;
-            margin-bottom: 1rem;
-        }
-        
-        .favorites-stats {
-            font-size: 1.1rem;
-            color: #666;
-        }
-        
-        .favorites-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-        
-        .btn {
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-danger {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-        }
-        
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-        
-        .no-favorites {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: #666;
-        }
-        
-        .no-favorites i {
-            font-size: 4rem;
-            color: #ccc;
-            margin-bottom: 1rem;
-        }
-        
-        .back-to-blog {
-            display: inline-block;
-            margin-top: 2rem;
-            padding: 0.8rem 1.5rem;
-            background: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-        }
-        
-        .back-to-blog:hover {
-            transform: translateY(-2px);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Favorite Blogs - AgriTech</title>
+  <link rel="stylesheet" href="../css/blog.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    .favorites-page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .favorites-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .favorites-title {
+      font-size: 2.5rem;
+      color: #2c5f2d;
+      margin-bottom: 1rem;
+    }
+
+    .favorites-stats {
+      font-size: 1.1rem;
+      color: #666;
+    }
+
+    .favorites-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      color: white;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .no-favorites {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: #666;
+    }
+
+    .no-favorites i {
+      font-size: 4rem;
+      color: #ccc;
+      margin-bottom: 1rem;
+    }
+
+    .back-to-blog {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.8rem 1.5rem;
+      background: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+    }
+
+    .back-to-blog:hover {
+      transform: translateY(-2px);
+    }
+  </style>
+  <link rel="stylesheet" href="../../../footer.css" />
 </head>
+
 <body>
-    <section class="agritech-blog">
-        <div class="favorites-page">
-            <div class="favorites-header">
-                <h1 class="favorites-title"><i class="fas fa-heart"></i> My Favorite Blogs</h1>
-                <p class="favorites-stats">You have <span id="favoritesCount">0</span> saved articles</p>
-            </div>
+  <section class="agritech-blog">
+    <div class="favorites-page">
+      <div class="favorites-header">
+        <h1 class="favorites-title"><i class="fas fa-heart"></i> My Favorite Blogs</h1>
+        <p class="favorites-stats">You have <span id="favoritesCount">0</span> saved articles</p>
+      </div>
 
-            <div class="favorites-actions">
-                <button class="btn btn-danger" onclick="clearAllFavorites()">
-                    <i class="fas fa-trash"></i> Clear All Favorites
-                </button>
-                <button class="btn btn-secondary" onclick="exportFavorites()">
-                    <i class="fas fa-download"></i> Export Favorites
-                </button>
-            </div>
+      <div class="favorites-actions">
+        <button class="btn btn-danger" onclick="clearAllFavorites()">
+          <i class="fas fa-trash"></i> Clear All Favorites
+        </button>
+        <button class="btn btn-secondary" onclick="exportFavorites()">
+          <i class="fas fa-download"></i> Export Favorites
+        </button>
+      </div>
 
-            <div id="favoritesContainer">
-                <!-- Favorites will be loaded here -->
-            </div>
-        </div>
-    </section>
+      <div id="favoritesContainer">
+        <!-- Favorites will be loaded here -->
+      </div>
+    </div>
+  </section>
 
-    <script src="../js/features/favorites.js"></script>
-    <script>
-        class FavoritesPage {
-            constructor() {
-                if (!window.favoritesManager) {
-                    console.error('FavoritesManager not initialized');
-                    return;
-                }
-                this.favoritesManager = window.favoritesManager;
-                this.init();
-            }
+  <script src="../js/features/favorites.js"></script>
+  <script>
+    class FavoritesPage {
+      constructor() {
+        if (!window.favoritesManager) {
+          console.error('FavoritesManager not initialized');
+          return;
+        }
+        this.favoritesManager = window.favoritesManager;
+        this.init();
+      }
 
 
-            init() {
-                this.renderFavorites();
-                this.updateStats();
-            }
+      init() {
+        this.renderFavorites();
+        this.updateStats();
+      }
 
-            renderFavorites() {
-                const container = document.getElementById('favoritesContainer');
-                const favorites = this.favoritesManager.getFavorites();
+      renderFavorites() {
+        const container = document.getElementById('favoritesContainer');
+        const favorites = this.favoritesManager.getFavorites();
 
-                if (favorites.length === 0) {
-                    container.innerHTML = this.getEmptyState();
-                    return;
-                }
+        if (favorites.length === 0) {
+          container.innerHTML = this.getEmptyState();
+          return;
+        }
 
-                container.innerHTML = `
+        container.innerHTML = `
                     <div class="blog-grid">
                         ${favorites.map(blog => this.createFavoriteCard(blog)).join('')}
                     </div>
                 `;
 
-                // Re-initialize favorite buttons
-                this.initializeFavoriteButtons();
-            }
+        // Re-initialize favorite buttons
+        this.initializeFavoriteButtons();
+      }
 
-            createFavoriteCard(blog) {
-                return `
+      createFavoriteCard(blog) {
+        return `
                     <div class="blog-card" data-blog-id="${blog.id}">
                         <img src="${blog.image}" alt="${blog.title}">
                         <button class="favorite-btn active" data-blog-id="${blog.id}">
@@ -166,10 +169,10 @@
                         </div>
                     </div>
                 `;
-            }
+      }
 
-            getEmptyState() {
-                return `
+      getEmptyState() {
+        return `
                     <div class="no-favorites">
                         <i class="far fa-heart"></i>
                         <h3>No Favorite Blogs Yet</h3>
@@ -179,72 +182,175 @@
                         </a>
                     </div>
                 `;
-            }
+      }
 
-            initializeFavoriteButtons() {
-                const favoriteButtons = document.querySelectorAll('.favorite-btn');
-                favoriteButtons.forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        const blogId = button.getAttribute('data-blog-id');
-                        this.removeFavorite(blogId);
-                    });
-                });
-            }
-
-            removeFavorite(blogId) {
-                if (this.favoritesManager.removeFromFavorites(blogId)) {
-                    this.renderFavorites();
-                    this.updateStats();
-                }
-            }
-
-            updateStats() {
-                const favorites = this.favoritesManager.getFavorites();
-                document.getElementById('favoritesCount').textContent = favorites.length;
-            }
-        }
-
-        function clearAllFavorites() {
-            if (confirm('Are you sure you want to remove all favorite blogs? This action cannot be undone.')) {
-                window.favoritesManager.clearFavorites();
-                favoritesPage.renderFavorites();
-                favoritesPage.updateStats();
-            }
-        }
-
-        function exportFavorites() {
-            const favorites = window.favoritesManager.getFavorites();
-            const data = JSON.stringify(favorites, null, 2);
-            const blob = new Blob([data], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'agritech-favorites.json';
-            a.click();
-            URL.revokeObjectURL(url);
-            
-            window.favoritesManager.showNotification('Favorites exported successfully!');
-        }
-
-        function openFavorite(blogId) {
-            window.location.href = `blog.html?id=${encodeURIComponent(blogId)}`;
-        }
-
-        // Initialize favorites page
-        let favoritesPage;
-
-        document.addEventListener('favoritesLoaded', () => {
-            favoritesPage = new FavoritesPage();
-
-            document.addEventListener('favoriteToggle', () => {
-                favoritesPage.renderFavorites();
-                favoritesPage.updateStats();
-            });
+      initializeFavoriteButtons() {
+        const favoriteButtons = document.querySelectorAll('.favorite-btn');
+        favoriteButtons.forEach(button => {
+          button.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const blogId = button.getAttribute('data-blog-id');
+            this.removeFavorite(blogId);
+          });
         });
+      }
 
-    </script>
-  <script src="../../../theme.js"></script>
+      removeFavorite(blogId) {
+        if (this.favoritesManager.removeFromFavorites(blogId)) {
+          this.renderFavorites();
+          this.updateStats();
+        }
+      }
+
+      updateStats() {
+        const favorites = this.favoritesManager.getFavorites();
+        document.getElementById('favoritesCount').textContent = favorites.length;
+      }
+    }
+
+    function clearAllFavorites() {
+      if (confirm('Are you sure you want to remove all favorite blogs? This action cannot be undone.')) {
+        window.favoritesManager.clearFavorites();
+        favoritesPage.renderFavorites();
+        favoritesPage.updateStats();
+      }
+    }
+
+    function exportFavorites() {
+      const favorites = window.favoritesManager.getFavorites();
+      const data = JSON.stringify(favorites, null, 2);
+      const blob = new Blob([data], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'agritech-favorites.json';
+      a.click();
+      URL.revokeObjectURL(url);
+
+      window.favoritesManager.showNotification('Favorites exported successfully!');
+    }
+
+    function openFavorite(blogId) {
+      window.location.href = `blog.html?id=${encodeURIComponent(blogId)}`;
+    }
+
+    // Initialize favorites page
+    let favoritesPage;
+
+    document.addEventListener('favoritesLoaded', () => {
+      favoritesPage = new FavoritesPage();
+
+      document.addEventListener('favoriteToggle', () => {
+        favoritesPage.renderFavorites();
+        favoritesPage.updateStats();
+      });
+    });
+
+  </script>
+  <footer class="site-footer tech-dark-theme final-match">
+    <div class="footer-top-accent"></div>
+
+    <div class="footer-inner-content">
+      <div class="footer-section footer-brand">
+        <a href="../../../index.html" class="brand-header">
+          <img src="../../../images/logo.png" alt="AgriTech logo" class="brand-logo" />
+          <h3>AgriTech</h3>
+        </a>
+
+        <p class="tagline">
+          Empowering India's Farming Future with innovative technology
+          connecting every stakeholder.
+        </p>
+
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="X (formerly Twitter)"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-group-links">
+        <div class="footer-section footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>
+              <a href="../../../index.html"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="../../../login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li>
+              <a href="../../../marketplace.html"><i class="fas fa-store"></i> Marketplace</a>
+            </li>
+            <li>
+              <a href="../../../weather_dashboard.html"><i class="fas fa-cloud-sun"></i> Weather</a>
+            </li>
+            <li>
+              <a href="../../../contact.html"><i class="fas fa-headset"></i> Contact Us</a>
+            </li>
+            <li>
+              <a href="../../../feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+            </li>
+            <li>
+              <a href="../../../terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a>
+            </li>
+            <li>
+              <a href="../../../privacy-policy.html"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-contact">
+          <h4>Contact</h4>
+          <ul>
+            <li>
+              <a href="mailto:contact@agritech.com">
+                <i class="fas fa-envelope"></i> contact@agritech.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+910000000000">
+                <i class="fas fa-phone"></i> +91 00000 00000
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-newsletter">
+          <h4>Newsletter</h4>
+          <p class="newsletter-desc">
+            Subscribe to get the latest farming insights, tips, and updates.
+          </p>
+          <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
+            <div class="newsletter-input-group">
+              <input type="email" class="newsletter-input" placeholder="Enter your email to get the latest updates..."
+                required aria-label="Email address for newsletter" />
+              <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
+                <span>Subscribe</span>
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+            <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
+            <div class="newsletter-footer-optout">
+              <small>No spam. <a href="javascript:void(0)" onclick="openUnsubscribeModal(event)">Unsubscribe</a>
+                anytime.</small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="current-year">2026</span> AgriTech. All rights reserved. <a
+          href="../../../privacy-policy.html">Privacy Policy</a> · <a href="../../../terms-and-service.html">Terms</a> ·
+        <a href="../../../cookie-policy.html">Cookie Policy</a></p>
+    </div>
+
+    <div class="footer-wave-overlay"></div>
+  </footer>
+  <script src="../../../footer.js"></script>
 </body>
+
 </html>
