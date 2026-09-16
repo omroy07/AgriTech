@@ -204,11 +204,18 @@
             </div>
 
             <div id="results"></div>
-            <center style="margin-top: 15px;">
-              <button id="downloadPdfBtn" class="btn" style="display:none;">
-                <span aria-hidden="true">📄</span> Download Result as PDF
+            
+            <div id="resultsActionsBar" class="results-actions-bar" style="display:none;">
+              <button id="compareBtn" class="btn-action-primary">
+                <i class="fas fa-columns" aria-hidden="true"></i> Compare with Previous
               </button>
-            </center>
+              <button id="historyBtn" class="btn-action-outline">
+                <i class="fas fa-history" aria-hidden="true"></i> Diagnosis History <span id="historyCountBadge" class="history-badge">0</span>
+              </button>
+              <button id="downloadPdfBtn" class="btn-action-outline">
+                <i class="fas fa-file-pdf" aria-hidden="true"></i> Download PDF
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -352,6 +359,84 @@
       <div class="modal-section">
         <h3>Comprehensive Plant Database</h3>
         <p>Our AI system has been trained to identify diseases across a wide variety of plant species.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prediction Result Comparison Modal (Current vs Previous) -->
+  <div id="comparisonModal" class="modal" role="dialog" aria-labelledby="comparisonModalTitle" aria-modal="true">
+    <div class="modal-content modal-comparison-dialog">
+      <span class="close" onclick="closeModal('comparisonModal')" aria-label="Close comparison">&times;</span>
+      
+      <div class="comparison-header">
+        <h2 id="comparisonModalTitle">
+          <i class="fas fa-balance-scale" style="color: var(--color-brand);"></i> Diagnosis Comparison
+        </h2>
+        <div class="comparison-controls">
+          <label for="compareSelectPrevious" style="font-size: 0.88rem; font-weight: 600; color: var(--text-gray);">Compare Current with:</label>
+          <select id="compareSelectPrevious" class="comparison-select" aria-label="Select previous diagnosis to compare">
+            <!-- Populated dynamically via JS -->
+          </select>
+          <button id="printComparisonBtn" class="btn-action-outline" style="padding: 6px 14px; font-size: 0.85rem;" title="Print or Save PDF">
+            <i class="fas fa-print"></i> Print
+          </button>
+        </div>
+      </div>
+
+      <!-- Dynamic Smart Summary Banner -->
+      <div id="comparisonSummaryBanner" class="comparison-summary-banner">
+        <!-- Injected via JS -->
+      </div>
+
+      <!-- Side-by-Side Comparison Table -->
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table" id="comparisonTable">
+          <thead>
+            <tr>
+              <th class="param-col">Attribute</th>
+              <th class="prev-col" id="prevColHeader"><i class="fas fa-history"></i> Previous Diagnosis</th>
+              <th class="curr-col" id="currColHeader"><i class="fas fa-camera"></i> Current Diagnosis</th>
+              <th class="diff-col"><i class="fas fa-exchange-alt"></i> Difference / Change</th>
+            </tr>
+          </thead>
+          <tbody id="comparisonTableBody">
+            <!-- Dynamic rows injected via JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
+        <button class="btn-action-outline" onclick="closeModal('comparisonModal')">Close</button>
+        <button id="openHistoryFromCompareBtn" class="btn-action-primary">View All Past Scans</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Diagnosis History Modal -->
+  <div id="historyModal" class="modal" role="dialog" aria-labelledby="historyModalTitle" aria-modal="true">
+    <div class="modal-content" style="max-width: 700px; width: 90%;">
+      <span class="close" onclick="closeModal('historyModal')" aria-label="Close history">&times;</span>
+      
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid var(--border-soft); padding-bottom: 10px;">
+        <h2 id="historyModalTitle" style="margin: 0; color: var(--color-brand-dark); font-size: 1.4rem;">
+          <i class="fas fa-history"></i> Diagnosis History
+        </h2>
+        <button id="clearAllHistoryBtn" class="btn-icon" title="Clear all history" style="color: #ef4444; border-color: #fee2e2;">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+
+      <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 15px;">
+        Review your past plant health diagnoses saved locally on your device. Compare any previous scan with your current diagnosis.
+      </p>
+
+      <div id="historyListContainer" class="history-list">
+        <!-- Populated via JS -->
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px; pt: 10px; border-top: 1px solid var(--border-soft);">
+        <span id="historyTotalText" style="font-size: 0.85rem; color: var(--text-gray);">0 scans stored</span>
+        <button class="btn-action-outline" onclick="closeModal('historyModal')">Close</button>
       </div>
     </div>
   </div>

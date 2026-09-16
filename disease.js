@@ -360,6 +360,337 @@ analyzeBtn.addEventListener("click", async () => {
   analyzeBtn.disabled = false;
 });
 
+// === PREDICTION HISTORY & COMPARISON STATE ===
+const HISTORY_STORAGE_KEY = "agritech_disease_prediction_history";
+let currentPredictionRecord = null;
+let currentPreviewDataUrl = null;
+
+function getPredictionHistory() {
+  try {
+    const raw = localStorage.getItem(HISTORY_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    console.error("Failed to read history from localStorage:", e);
+    return [];
+  }
+}
+
+function savePredictionRecord(result, thumbnailDataUrl) {
+  const history = getPredictionHistory();
+  const crop = result.disease ? result.disease.split("___")[0].replace(/_/g, " ") : "Plant";
+  const now = new Date();
+  
+  const record = {
+    id: "pred_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5),
+    timestamp: now.getTime(),
+    dateFormatted: now.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
+    crop: crop,
+    diseaseKey: result.disease,
+    name: result.info.name,
+    confidence: result.confidence,
+    severity: result.info.severity,
+    description: result.info.description,
+    treatment: result.info.treatment,
+    thumbnail: thumbnailDataUrl || "images/logo.png",
+  };
+
+  // Prepend to history, limit to 25 records
+  history.unshift(record);
+  if (history.length > 25) {
+    history.pop();
+  }
+
+  try {
+    localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
+  } catch (e) {
+    console.warn("Storage quota exceeded or error saving history:", e);
+  }
+
+  currentPredictionRecord = record;
+  updateHistoryUI();
+  return record;
+}
+
+function deleteHistoryItem(id) {
+  let history = getPredictionHistory();
+  history = history.filter((item) => item.id !== id);
+  try {
+    localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
+  } catch (e) {
+    console.warn("Error updating history storage:", e);
+  }
+  updateHistoryUI();
+  renderHistoryList();
+}
+
+function clearAllHistory() {
+  if (confirm("Are you sure you want to clear all stored diagnosis history?")) {
+    localStorage.removeItem(HISTORY_STORAGE_KEY);
+    updateHistoryUI();
+    renderHistoryList();
+    closeModal("historyModal");
+  }
+}
+
+function updateHistoryUI() {
+  const history = getPredictionHistory();
+  const badge = document.getElementById("historyCountBadge");
+  if (badge) {
+    badge.textContent = history.length;
+  }
+  const totalText = document.getElementById("historyTotalText");
+  if (totalText) {
+    totalText.textContent = `${history.length} scan${history.length === 1 ? "" : "s"} stored`;
+  }
+  
+  const compareBtn = document.getElementById("compareBtn");
+  if (compareBtn) {
+    const hasPrevious = history.length >= 2;
+    compareBtn.disabled = !hasPrevious;
+    if (hasPrevious) {
+      const prev = history[1];
+      compareBtn.title = `Compare with previous diagnosis (${prev.crop} - ${prev.name})`;
+    } else {
+      compareBtn.title = "Compare will be available once you have more than 1 scan";
+    }
+  }
+}
+
+function openComparisonModal(specificPreviousId = null) {
+  const history = getPredictionHistory();
+  if (!currentPredictionRecord && history.length > 0) {
+    currentPredictionRecord = history[0];
+  }
+
+  if (!currentPredictionRecord) {
+    alert("Please run a plant disease diagnosis first to compare results.");
+    return;
+  }
+
+  const previousCandidates = history.filter(
+    (item) => item.id !== currentPredictionRecord.id
+  );
+
+  if (previousCandidates.length === 0) {
+    alert("No previous scan found in history to compare with. Please upload another plant image to see side-by-side temporal changes.");
+    return;
+  }
+
+  // Populate Select Dropdown
+  const selectElem = document.getElementById("compareSelectPrevious");
+  if (selectElem) {
+    selectElem.innerHTML = "";
+
+    previousCandidates.forEach((item, index) => {
+      const opt = document.createElement("option");
+      opt.value = item.id;
+      opt.textContent = `${item.dateFormatted} — ${item.crop}: ${item.name} (${item.confidence}%)`;
+      if (specificPreviousId && item.id === specificPreviousId) {
+        opt.selected = true;
+      } else if (!specificPreviousId && index === 0) {
+        opt.selected = true;
+      }
+      selectElem.appendChild(opt);
+    });
+
+    const selectedPrevId = selectElem.value;
+    const prevRecord = previousCandidates.find((item) => item.id === selectedPrevId) || previousCandidates[0];
+    renderComparison(currentPredictionRecord, prevRecord);
+  }
+
+  openModal("comparisonModal");
+}
+
+function renderComparison(curr, prev) {
+  if (!curr || !prev) return;
+
+  const severityOrder = { low: 1, medium: 2, high: 3 };
+  const currSevScore = severityOrder[curr.severity] || 1;
+  const prevSevScore = severityOrder[prev.severity] || 1;
+
+  let severityDiffClass = "diff-badge same";
+  let severityDiffText = "● Unchanged";
+  let severityRowClass = "";
+  if (currSevScore < prevSevScore) {
+    severityDiffClass = "diff-badge improved";
+    severityDiffText = `▲ Improved (${prev.severity} → ${curr.severity})`;
+    severityRowClass = "diff-highlight-improved";
+  } else if (currSevScore > prevSevScore) {
+    severityDiffClass = "diff-badge worsened";
+    severityDiffText = `▼ Worsened (${prev.severity} → ${curr.severity})`;
+    severityRowClass = "diff-highlight-worsened";
+  }
+
+  // Confidence difference
+  const confDelta = Math.round(curr.confidence - prev.confidence);
+  const confDeltaText = confDelta > 0 ? `+${confDelta}%` : `${confDelta}%`;
+  const confDiffClass = confDelta > 0 ? "diff-badge improved" : confDelta < 0 ? "diff-badge changed" : "diff-badge same";
+
+  // Disease match
+  const diseaseMatch = curr.name === prev.name;
+  const diseaseDiffClass = diseaseMatch ? "diff-badge same" : "diff-badge changed";
+  const diseaseDiffText = diseaseMatch ? "✓ Same Condition" : "↔ Different Diagnosis";
+  const diseaseRowClass = diseaseMatch ? "" : "diff-highlight-changed";
+
+  // Crop match
+  const cropMatch = curr.crop.toLowerCase() === prev.crop.toLowerCase();
+  const cropDiffClass = cropMatch ? "diff-badge same" : "diff-badge changed";
+  const cropDiffText = cropMatch ? "✓ Same Crop" : "↔ Different Crop";
+
+  // Smart Summary banner
+  const banner = document.getElementById("comparisonSummaryBanner");
+  if (banner) {
+    let bannerHtml = "";
+    if (cropMatch && diseaseMatch) {
+      if (currSevScore < prevSevScore) {
+        banner.className = "comparison-summary-banner improved";
+        bannerHtml = `<i class="fas fa-check-circle" style="font-size: 1.4rem;"></i>
+          <div><strong>Positive Recovery:</strong> The ${curr.crop} plant shows reduced disease severity compared to the scan on ${prev.dateFormatted}. Continue prescribed treatments!</div>`;
+      } else if (currSevScore > prevSevScore) {
+        banner.className = "comparison-summary-banner worsened";
+        bannerHtml = `<i class="fas fa-exclamation-triangle" style="font-size: 1.4rem;"></i>
+          <div><strong>Attention Required:</strong> Disease severity has progressed from <u>${prev.severity.toUpperCase()}</u> to <u>${curr.severity.toUpperCase()}</u> since ${prev.dateFormatted}. Immediate intervention advised.</div>`;
+      } else {
+        banner.className = "comparison-summary-banner";
+        bannerHtml = `<i class="fas fa-info-circle" style="font-size: 1.4rem;"></i>
+          <div><strong>Consistent Status:</strong> Diagnosis confirmed as <strong>${curr.name}</strong> (${curr.confidence}% confidence) with stable severity level.</div>`;
+      }
+    } else if (cropMatch && !diseaseMatch) {
+      banner.className = "comparison-summary-banner changed";
+      bannerHtml = `<i class="fas fa-exchange-alt" style="font-size: 1.4rem;"></i>
+        <div><strong>Diagnosis Transition on ${curr.crop}:</strong> Previous scan detected <em>${prev.name}</em>, whereas current scan identified <em>${curr.name}</em>. Review updated treatment protocol.</div>`;
+    } else {
+      banner.className = "comparison-summary-banner";
+      bannerHtml = `<i class="fas fa-balance-scale" style="font-size: 1.4rem;"></i>
+        <div><strong>Cross-Crop Comparison:</strong> Comparing <strong>${curr.crop}</strong> (${curr.name}) against previously analyzed <strong>${prev.crop}</strong> (${prev.name}).</div>`;
+    }
+    banner.innerHTML = bannerHtml;
+  }
+
+  // Populate Table Headers
+  const prevHeader = document.getElementById("prevColHeader");
+  if (prevHeader) {
+    prevHeader.innerHTML = `<i class="fas fa-history"></i> Previous (${prev.dateFormatted})`;
+  }
+  const currHeader = document.getElementById("currColHeader");
+  if (currHeader) {
+    currHeader.innerHTML = `<i class="fas fa-camera"></i> Current (${curr.dateFormatted})`;
+  }
+
+  // Build Table Rows
+  const tbody = document.getElementById("comparisonTableBody");
+  if (tbody) {
+    tbody.innerHTML = `
+      <tr>
+        <td class="param-col"><i class="fas fa-image"></i> Leaf Photograph</td>
+        <td class="prev-col">
+          <img src="${prev.thumbnail}" alt="${prev.name}" class="comparison-thumb">
+        </td>
+        <td class="curr-col">
+          <img src="${curr.thumbnail}" alt="${curr.name}" class="comparison-thumb">
+        </td>
+        <td class="diff-col"><span class="diff-badge same">Visual</span></td>
+      </tr>
+      <tr class="${cropMatch ? '' : 'diff-highlight-changed'}">
+        <td class="param-col"><i class="fas fa-seedling"></i> Plant / Crop</td>
+        <td class="prev-col"><strong>${prev.crop}</strong></td>
+        <td class="curr-col"><strong>${curr.crop}</strong></td>
+        <td class="diff-col"><span class="${cropDiffClass}">${cropDiffText}</span></td>
+      </tr>
+      <tr class="${diseaseRowClass}">
+        <td class="param-col"><i class="fas fa-stethoscope"></i> Diagnosed Disease</td>
+        <td class="prev-col"><strong style="color: var(--color-brand-dark);">${prev.name}</strong></td>
+        <td class="curr-col"><strong style="color: var(--color-brand-dark);">${curr.name}</strong></td>
+        <td class="diff-col"><span class="${diseaseDiffClass}">${diseaseDiffText}</span></td>
+      </tr>
+      <tr class="${severityRowClass}">
+        <td class="param-col"><i class="fas fa-shield-virus"></i> Severity Level</td>
+        <td class="prev-col">
+          <span class="comparison-severity-tag ${prev.severity}">${prev.severity.toUpperCase()}</span>
+        </td>
+        <td class="curr-col">
+          <span class="comparison-severity-tag ${curr.severity}">${curr.severity.toUpperCase()}</span>
+        </td>
+        <td class="diff-col"><span class="${severityDiffClass}">${severityDiffText}</span></td>
+      </tr>
+      <tr class="${confDelta !== 0 ? 'diff-highlight-changed' : ''}">
+        <td class="param-col"><i class="fas fa-percentage"></i> AI Confidence</td>
+        <td class="prev-col"><strong>${prev.confidence}%</strong></td>
+        <td class="curr-col"><strong>${curr.confidence}%</strong></td>
+        <td class="diff-col"><span class="${confDiffClass}">${confDelta > 0 ? '▲ ' : confDelta < 0 ? '▼ ' : ''}${confDeltaText}</span></td>
+      </tr>
+      <tr>
+        <td class="param-col"><i class="fas fa-book-open"></i> Description & Symptoms</td>
+        <td class="prev-col" style="font-size: 0.88rem; color: var(--text-gray);">${prev.description}</td>
+        <td class="curr-col" style="font-size: 0.88rem; color: var(--text-gray);">${curr.description}</td>
+        <td class="diff-col"><span class="diff-badge same">${prev.description === curr.description ? 'Identical' : 'Updated'}</span></td>
+      </tr>
+      <tr class="${prev.treatment !== curr.treatment ? 'diff-highlight-changed' : ''}">
+        <td class="param-col"><i class="fas fa-prescription-bottle-alt"></i> Recommended Treatment</td>
+        <td class="prev-col" style="font-size: 0.88rem;">${prev.treatment}</td>
+        <td class="curr-col" style="font-size: 0.88rem;">${curr.treatment}</td>
+        <td class="diff-col"><span class="diff-badge ${prev.treatment === curr.treatment ? 'same' : 'changed'}">${prev.treatment === curr.treatment ? 'Match' : 'Prescription'}</span></td>
+      </tr>
+    `;
+  }
+}
+
+function renderHistoryList() {
+  const history = getPredictionHistory();
+  const container = document.getElementById("historyListContainer");
+  if (!container) return;
+
+  if (history.length === 0) {
+    container.innerHTML = `
+      <div style="text-align: center; padding: 40px 20px; color: var(--text-gray);">
+        <i class="fas fa-folder-open" style="font-size: 2.5rem; color: var(--border); margin-bottom: 10px;"></i>
+        <p>No diagnosis history saved yet. Scanned plants will appear here.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = history.map((item) => `
+    <div class="history-card">
+      <div class="history-card-info">
+        <img src="${item.thumbnail}" alt="${item.name}" style="width: 55px; height: 55px; border-radius: 8px; object-fit: cover; border: 1px solid var(--border);">
+        <div>
+          <h4 style="margin: 0 0 3px 0; color: var(--color-brand-dark); font-size: 0.98rem;">${item.name}</h4>
+          <div style="font-size: 0.8rem; color: var(--text-gray); display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <span><i class="far fa-calendar-alt"></i> ${item.dateFormatted}</span>
+            <span><i class="fas fa-percentage"></i> ${item.confidence}%</span>
+            <span class="comparison-severity-tag ${item.severity}" style="padding: 1px 6px; font-size: 0.72rem;">${item.severity.toUpperCase()}</span>
+          </div>
+        </div>
+      </div>
+      <div class="history-card-actions">
+        <button class="btn-sm-primary" onclick="openComparisonWithHistorical('${item.id}')" title="Compare this scan with current">
+          <i class="fas fa-columns"></i> Compare
+        </button>
+        <button class="btn-icon" onclick="deleteHistoryItem('${item.id}')" title="Delete record">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function openComparisonWithHistorical(id) {
+  closeModal("historyModal");
+  openComparisonModal(id);
+}
+
+function openHistoryModal() {
+  renderHistoryList();
+  openModal("historyModal");
+}
+
 function displayResults(result) {
   const { disease, confidence, info } = result;
 
@@ -371,45 +702,55 @@ function displayResults(result) {
   };
 
   resultsDiv.innerHTML = `
-                <div class="result-card">
-                    <div class="disease-name">${severityEmoji[severityClass]} ${
-    info.name
-  }</div>
-                    <div class="confidence">Confidence: ${confidence}%</div>
-                    <div class="severity ${severityClass}">
-                        Severity: ${
-                          info.severity.charAt(0).toUpperCase() +
-                          info.severity.slice(1)
-                        }
-                    </div>
-                    <div class="description">${info.description}</div>
-                    <div class="treatment">
-                        <h4>🌿 Treatment Recommendations</h4>
-                        <p>${info.treatment}</p>
-                    </div>
-                </div>
-            `;
-           document.getElementById("downloadPdfBtn").style.display = "inline-block";
+    <div class="result-card">
+        <div class="disease-name">${severityEmoji[severityClass]} ${info.name}</div>
+        <div class="confidence">Confidence: ${confidence}%</div>
+        <div class="severity ${severityClass}">
+            Severity: ${info.severity.charAt(0).toUpperCase() + info.severity.slice(1)}
+        </div>
+        <div class="description">${info.description}</div>
+        <div class="treatment">
+            <h4>🌿 Treatment Recommendations</h4>
+            <p>${info.treatment}</p>
+        </div>
+    </div>
+  `;
 
+  // Save prediction into history
+  savePredictionRecord(result, currentPreviewDataUrl);
+
+  // Show action buttons bar
+  const actionsBar = document.getElementById("resultsActionsBar");
+  if (actionsBar) {
+    actionsBar.style.display = "flex";
+  }
 }
 
 // Modal functionality
 function openModal(modalId) {
-  document.getElementById(modalId).style.display = "block";
-  document.body.style.overflow = "hidden";
+  const elem = document.getElementById(modalId);
+  if (elem) {
+    elem.style.display = "block";
+    document.body.style.overflow = "hidden";
+  }
 }
 
 function closeModal(modalId) {
-  document.getElementById(modalId).style.display = "none";
-  document.body.style.overflow = "auto";
+  const elem = document.getElementById(modalId);
+  if (elem) {
+    elem.style.display = "none";
+    document.body.style.overflow = "auto";
+  }
 }
 
 // Add event listeners for modal close buttons
 document.querySelectorAll(".close").forEach((closeBtn) => {
   closeBtn.addEventListener("click", (e) => {
     const modal = e.target.closest(".modal");
-    modal.style.display = "none";
-    document.body.style.overflow = "auto";
+    if (modal) {
+      modal.style.display = "none";
+      document.body.style.overflow = "auto";
+    }
   });
 });
 
@@ -501,8 +842,11 @@ async function handleFileSelect(file) {
     }
 
     selectedFile = file;
+    currentPreviewDataUrl = previewDataUrl;
     previewContainer.innerHTML = `<img src="${previewDataUrl}" alt="Plant preview" class="preview-image">`;
     resultsDiv.innerHTML = "";
+    const actionsBar = document.getElementById("resultsActionsBar");
+    if (actionsBar) actionsBar.style.display = "none";
     document.getElementById("downloadPdfBtn").style.display = "none";
 
     document.getElementById("modelStatus").innerHTML =
@@ -520,6 +864,7 @@ async function handleFileSelect(file) {
     previewContainer.innerHTML =
       '<div class="no-results">📷 Upload an image to get started</div>';
     selectedFile = null;
+    currentPreviewDataUrl = null;
     analyzeBtn.disabled = true;
   } finally {
     if (currentSelectionToken === fileSelectionToken) {
@@ -581,9 +926,52 @@ function downloadPredictionPDF() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("downloadPdfBtn");
-  if (btn) {
-    btn.addEventListener("click", downloadPredictionPDF);
+  // Initialize history UI count badge
+  updateHistoryUI();
+
+  const pdfBtn = document.getElementById("downloadPdfBtn");
+  if (pdfBtn) {
+    pdfBtn.addEventListener("click", downloadPredictionPDF);
+  }
+
+  const compareBtn = document.getElementById("compareBtn");
+  if (compareBtn) {
+    compareBtn.addEventListener("click", () => openComparisonModal());
+  }
+
+  const historyBtn = document.getElementById("historyBtn");
+  if (historyBtn) {
+    historyBtn.addEventListener("click", () => openHistoryModal());
+  }
+
+  const compareSelect = document.getElementById("compareSelectPrevious");
+  if (compareSelect) {
+    compareSelect.addEventListener("change", (e) => {
+      const selectedId = e.target.value;
+      const history = getPredictionHistory();
+      const prevRecord = history.find((item) => item.id === selectedId);
+      if (currentPredictionRecord && prevRecord) {
+        renderComparison(currentPredictionRecord, prevRecord);
+      }
+    });
+  }
+
+  const clearHistoryBtn = document.getElementById("clearAllHistoryBtn");
+  if (clearHistoryBtn) {
+    clearHistoryBtn.addEventListener("click", clearAllHistory);
+  }
+
+  const openHistoryFromCompare = document.getElementById("openHistoryFromCompareBtn");
+  if (openHistoryFromCompare) {
+    openHistoryFromCompare.addEventListener("click", () => {
+      closeModal("comparisonModal");
+      openHistoryModal();
+    });
+  }
+
+  const printCompareBtn = document.getElementById("printComparisonBtn");
+  if (printCompareBtn) {
+    printCompareBtn.addEventListener("click", () => window.print());
   }
 });
 
