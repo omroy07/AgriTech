@@ -1,168 +1,310 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgriTech | Masthead</title>
-<meta name="description" content="AI-powered smart farming platform offering crop recommendations, disease detection, yield prediction, and community collaboration for sustainable agriculture.">
 
-<style>
-:root {
-  --bg-color:#030712;
-  --text-color:#fff;
-  --text-muted:#cbd5e1;
-  --surface-color:rgba(15,23,42,.9);
-  --section-bg:rgba(30,41,59,.7);
-  --border-color:#334155;
-  --accent-color:#22c55e;
-  --shadow-color:rgba(0,0,0,.3);
-}
-[data-theme="light"] {
-  --bg-color:#f8fafc;
-  --text-color:#0f172a;
-  --text-muted:#475569;
-  --surface-color:#fff;
-  --section-bg:#f1f5f9;
-  --border-color:#cbd5e1;
-  --accent-color:#16a34a;
-  --shadow-color:rgba(0,0,0,.1);
-}
-*{box-sizing:border-box;margin:0;padding:0;font-family:Segoe UI,sans-serif}
-body{background:var(--bg-color);color:var(--text-color)}
-header{
-  padding:1.2rem 2rem;
-  display:flex;
-  justify-content:space-between;
-  border-bottom:1px solid var(--border-color);
-}
-button{
-  background:var(--surface-color);
-  color:var(--text-color);
-  border:1px solid var(--border-color);
-  padding:.4rem .8rem;
-  border-radius:6px;
-  cursor:pointer;
-}
-main{max-width:1100px;margin:auto;padding:2rem}
-section{
-  background:var(--section-bg);
-  padding:1.5rem;
-  margin-bottom:1.5rem;
-  border-radius:12px;
-}
-h2{color:var(--accent-color);margin-bottom:.8rem}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:1rem;
-}
-.card{
-  background:var(--surface-color);
-  border:1px solid var(--border-color);
-  padding:1rem;
-  border-radius:10px;
-  text-align:center;
-}
-.card img{
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  margin-bottom:.5rem;
-}
-.card small{color:var(--text-muted)}
-.card a{
-  display:block;
-  margin-top:.4rem;
-  color:var(--accent-color);
-  text-decoration:none;
-  font-size:.9rem;
-}
-.toggle{
-  text-align:right;
-  margin-top:1rem;
-}
-footer{text-align:center;color:var(--text-muted);padding:1rem}
-</style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriTech | Masthead</title>
+  <meta name="description"
+    content="AI-powered smart farming platform offering crop recommendations, disease detection, yield prediction, and community collaboration for sustainable agriculture.">
+
+  <style>
+    :root {
+      --bg-color: #030712;
+      --text-color: #fff;
+      --text-muted: #cbd5e1;
+      --surface-color: rgba(15, 23, 42, .9);
+      --section-bg: rgba(30, 41, 59, .7);
+      --border-color: #334155;
+      --accent-color: #22c55e;
+      --shadow-color: rgba(0, 0, 0, .3);
+    }
+
+    [data-theme="light"] {
+      --bg-color: #f8fafc;
+      --text-color: #0f172a;
+      --text-muted: #475569;
+      --surface-color: #fff;
+      --section-bg: #f1f5f9;
+      --border-color: #cbd5e1;
+      --accent-color: #16a34a;
+      --shadow-color: rgba(0, 0, 0, .1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Segoe UI, sans-serif
+    }
+
+    body {
+      background: var(--bg-color);
+      color: var(--text-color)
+    }
+
+    header {
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    button {
+      background: var(--surface-color);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: .4rem .8rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 2rem
+    }
+
+    section {
+      background: var(--section-bg);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+    }
+
+    h2 {
+      color: var(--accent-color);
+      margin-bottom: .8rem
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .card img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      margin-bottom: .5rem;
+    }
+
+    .card small {
+      color: var(--text-muted)
+    }
+
+    .card a {
+      display: block;
+      margin-top: .4rem;
+      color: var(--accent-color);
+      text-decoration: none;
+      font-size: .9rem;
+    }
+
+    .toggle {
+      text-align: right;
+      margin-top: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 1rem
+    }
+  </style>
+  <link rel="stylesheet" href="footer.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 
 <body>
 
-<header>
-  <h1 style="color:var(--accent-color)">AgriTech Masthead</h1>
-  <button onclick="toggleTheme()" aria-label="Toggle theme">Toggle Theme</button>
-</header>
+  <header>
+    <h1 style="color:var(--accent-color)">AgriTech Masthead</h1>
+    <button onclick="toggleTheme()" aria-label="Toggle theme">Toggle Theme</button>
+  </header>
 
-<main>
+  <main>
 
-<section>
-<h2><span aria-hidden="true">🌱</span> Project Overview</h2>
-<p style="color:var(--text-muted)">
-AI-powered smart farming platform offering crop recommendations, disease detection,
-yield prediction, and community collaboration.
-</p>
-</section>
+    <section>
+      <h2><span aria-hidden="true">🌱</span> Project Overview</h2>
+      <p style="color:var(--text-muted)">
+        AI-powered smart farming platform offering crop recommendations, disease detection,
+        yield prediction, and community collaboration.
+      </p>
+    </section>
 
-<section>
-<h2><span aria-hidden="true">🎯</span> Vision & Mission</h2>
-<p><b>Vision:</b> Empower farmers with AI-driven sustainable agriculture.</p>
-<p><b>Mission:</b> Bridge modern technology with traditional farming.</p>
-</section>
+    <section>
+      <h2><span aria-hidden="true">🎯</span> Vision & Mission</h2>
+      <p><b>Vision:</b> Empower farmers with AI-driven sustainable agriculture.</p>
+      <p><b>Mission:</b> Bridge modern technology with traditional farming.</p>
+    </section>
 
-<section>
-<h2><span aria-hidden="true">🧑‍💼</span> Project Admin</h2>
-<div class="grid">
-  <div class="card"><h3>Om Roy</h3><small>Project Lead · Web · ML</small></div>
-  <div class="card"><h3>Shubhangi Roy</h3><small>ML · Backend</small></div>
-</div>
-</section>
+    <section>
+      <h2><span aria-hidden="true">🧑‍💼</span> Project Admin</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Om Roy</h3><small>Project Lead · Web · ML</small>
+        </div>
+        <div class="card">
+          <h3>Shubhangi Roy</h3><small>ML · Backend</small>
+        </div>
+      </div>
+    </section>
 
-<section>
-<h2><span aria-hidden="true">🤝</span> Contributors</h2>
-<div id="contributors" class="grid"></div>
+    <section>
+      <h2><span aria-hidden="true">🤝</span> Contributors</h2>
+      <div id="contributors" class="grid"></div>
 
-<div class="toggle">
-  <button type="button" onclick="toggleContributors()" style="color:var(--accent-color);background:none;border:none;cursor:pointer">
-    View all contributors →
-  </button>
-</div>
-</section>
+      <div class="toggle">
+        <button type="button" onclick="toggleContributors()"
+          style="color:var(--accent-color);background:none;border:none;cursor:pointer">
+          View all contributors →
+        </button>
+      </div>
+    </section>
 
-<section>
-<h2><span aria-hidden="true">📬</span> Contact</h2>
-<p>
-📧 agritech.opensource@gmail.com <br>
-🌐 <a href="https://github.com/omroy07/AgriTech" target="_blank"
-     rel="noopener noreferrer"
-     style="color:var(--accent-color)">GitHub Repository</a>
-</p>
-</section>
+    <section>
+      <h2><span aria-hidden="true">📬</span> Contact</h2>
+      <p>
+        📧 agritech.opensource@gmail.com <br>
+        🌐 <a href="https://github.com/omroy07/AgriTech" target="_blank" rel="noopener noreferrer"
+          style="color:var(--accent-color)">GitHub Repository</a>
+      </p>
+    </section>
 
-</main>
+  </main>
 
-<footer>
-Made with ❤️ by the AgriTech Community · SWoC 2026
-</footer>
+  <footer class="site-footer tech-dark-theme final-match">
+    <div class="footer-top-accent"></div>
 
-<script>
-const OWNER = "omroy07";
-const REPO = "AgriTech";
-let showAll = false;
-let contributorsData = [];
+    <div class="footer-inner-content">
+      <div class="footer-section footer-brand">
+        <a href="index.html" class="brand-header">
+          <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
+          <h3>AgriTech</h3>
+        </a>
 
-async function fetchContributors() {
-  const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contributors?per_page=100`);
-  contributorsData = await res.json();
-  renderContributors();
-}
+        <p class="tagline">
+          Empowering India's Farming Future with innovative technology
+          connecting every stakeholder.
+        </p>
 
-function renderContributors() {
-  const container = document.getElementById("contributors");
-  container.innerHTML = "";
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="X (formerly Twitter)"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
 
-  const list = showAll ? contributorsData : contributorsData.slice(0,12);
+      <div class="footer-group-links">
+        <div class="footer-section footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>
+              <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li>
+              <a href="marketplace.html"><i class="fas fa-store"></i> Marketplace</a>
+            </li>
+            <li>
+              <a href="weather_dashboard.html"><i class="fas fa-cloud-sun"></i> Weather</a>
+            </li>
+            <li>
+              <a href="contact.html"><i class="fas fa-headset"></i> Contact Us</a>
+            </li>
+            <li>
+              <a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+            </li>
+            <li>
+              <a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a>
+            </li>
+            <li>
+              <a href="privacy-policy.html"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+            </li>
+          </ul>
+        </div>
 
-  list.forEach(c => {
-    container.innerHTML += `
+        <div class="footer-section footer-contact">
+          <h4>Contact</h4>
+          <ul>
+            <li>
+              <a href="mailto:contact@agritech.com">
+                <i class="fas fa-envelope"></i> contact@agritech.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+910000000000">
+                <i class="fas fa-phone"></i> +91 00000 00000
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-newsletter">
+          <h4>Newsletter</h4>
+          <p class="newsletter-desc">
+            Subscribe to get the latest farming insights, tips, and updates.
+          </p>
+          <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
+            <div class="newsletter-input-group">
+              <input type="email" class="newsletter-input" placeholder="Enter your email to get the latest updates..."
+                required aria-label="Email address for newsletter" />
+              <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
+                <span>Subscribe</span>
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+            <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
+            <div class="newsletter-footer-optout">
+              <small>No spam. <a href="javascript:void(0)" onclick="openUnsubscribeModal(event)">Unsubscribe</a>
+                anytime.</small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="current-year">2026</span> AgriTech. All rights reserved. <a href="privacy-policy.html">Privacy
+          Policy</a> · <a href="terms-and-service.html">Terms</a> · <a href="cookie-policy.html">Cookie Policy</a></p>
+    </div>
+
+    <div class="footer-wave-overlay"></div>
+  </footer>
+
+  <script>
+    const OWNER = "omroy07";
+    const REPO = "AgriTech";
+    let showAll = false;
+    let contributorsData = [];
+
+    async function fetchContributors() {
+      const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contributors?per_page=100`);
+      contributorsData = await res.json();
+      renderContributors();
+    }
+
+    function renderContributors() {
+      const container = document.getElementById("contributors");
+      container.innerHTML = "";
+
+      const list = showAll ? contributorsData : contributorsData.slice(0, 12);
+
+      list.forEach(c => {
+        container.innerHTML += `
       <div class="card">
         <img src="${c.avatar_url}" alt="${c.login}">
         <h3>${c.login}</h3>
@@ -170,23 +312,24 @@ function renderContributors() {
         <a href="${c.html_url}" target="_blank" rel="noopener noreferrer">GitHub Profile →</a>
       </div>
     `;
-  });
-}
+      });
+    }
 
-function toggleContributors(){
-  showAll = !showAll;
-  renderContributors();
-}
+    function toggleContributors() {
+      showAll = !showAll;
+      renderContributors();
+    }
 
-function toggleTheme(){
-  const html=document.documentElement;
-  html.setAttribute("data-theme",
-    html.getAttribute("data-theme")==="dark"?"light":"dark");
-}
+    function toggleTheme() {
+      const html = document.documentElement;
+      html.setAttribute("data-theme",
+        html.getAttribute("data-theme") === "dark" ? "light" : "dark");
+    }
 
-fetchContributors();
-</script>
+    fetchContributors();
+  </script>
 
-  <script src="theme.js"></script>
+  <script src="footer.js"></script>
 </body>
+
 </html>

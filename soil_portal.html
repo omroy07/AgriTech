@@ -2,221 +2,324 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soil Health Insights | AgriTech</title>
-    <meta name="description" content="Soil Health Insights dashboard providing farm-wise nutrient trends, soil metrics, and personalized agricultural recommendations.">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        :root {
-            --earth: #78350f;
-            --leaf: #15803d;
-            --clay: #fde68a;
-            --bg: #fafaf9;
-            --card: #ffffff;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soil Health Insights | AgriTech</title>
+  <meta name="description"
+    content="Soil Health Insights dashboard providing farm-wise nutrient trends, soil metrics, and personalized agricultural recommendations.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --earth: #78350f;
+      --leaf: #15803d;
+      --clay: #fde68a;
+      --bg: #fafaf9;
+      --card: #ffffff;
+    }
 
-        body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--bg);
-            color: #1c1917;
-            margin: 0;
-        }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: #1c1917;
+      margin: 0;
+    }
 
-        .app-shell {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            min-height: 100vh;
-        }
+    .app-shell {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      min-height: 100vh;
+    }
 
-        /* Sidebar */
-        .sidebar {
-            background: var(--earth);
-            color: white;
-            padding: 2rem;
-        }
+    /* Sidebar */
+    .sidebar {
+      background: var(--earth);
+      color: white;
+      padding: 2rem;
+    }
 
-        .farm-selector {
-            margin-top: 2rem;
-        }
+    .farm-selector {
+      margin-top: 2rem;
+    }
 
-        .farm-card {
-            padding: 1rem;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            cursor: pointer;
-            transition: 0.3s;
-            margin-bottom: 1rem;
-        }
+    .farm-card {
+      padding: 1rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: 0.3s;
+      margin-bottom: 1rem;
+    }
 
-        .farm-card:hover,
-        .farm-card.active {
-            background: rgba(255, 255, 255, 0.25);
-        }
+    .farm-card:hover,
+    .farm-card.active {
+      background: rgba(255, 255, 255, 0.25);
+    }
 
-        /* Main Content */
-        .main {
-            padding: 3rem;
-            max-width: 1200px;
-        }
+    /* Main Content */
+    .main {
+      padding: 3rem;
+      max-width: 1200px;
+    }
 
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
 
-        .stat-card {
-            background: var(--card);
-            padding: 1.5rem;
-            border-radius: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            text-align: center;
-        }
+    .stat-card {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
 
-        .stat-val {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--leaf);
-        }
+    .stat-val {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--leaf);
+    }
 
-        .stat-label {
-            font-size: 0.8rem;
-            color: #78716c;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+    .stat-label {
+      font-size: 0.8rem;
+      color: #78716c;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
 
-        .dashboard-layout {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 2rem;
-        }
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 2rem;
+    }
 
-        .card {
-            background: var(--card);
-            border-radius: 24px;
-            padding: 2rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        }
+    .card {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
 
-        .recommendation-list {
-            margin-top: 2rem;
-        }
+    .recommendation-list {
+      margin-top: 2rem;
+    }
 
-        .rec-item {
-            padding: 1.25rem;
-            border-left: 4px solid var(--leaf);
-            background: #f0fdf4;
-            border-radius: 0 12px 12px 0;
-            margin-bottom: 1rem;
-        }
+    .rec-item {
+      padding: 1.25rem;
+      border-left: 4px solid var(--leaf);
+      background: #f0fdf4;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 1rem;
+    }
 
-        .rec-item h4 {
-            margin: 0 0 0.5rem 0;
-            color: var(--earth);
-        }
+    .rec-item h4 {
+      margin: 0 0 0.5rem 0;
+      color: var(--earth);
+    }
 
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 12px;
-            border: none;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+    }
 
-        .btn-earth {
-            background: var(--earth);
-            color: white;
-        }
+    .btn-earth {
+      background: var(--earth);
+      color: white;
+    }
 
-        .btn-leaf {
-            background: var(--leaf);
-            color: white;
-        }
+    .btn-leaf {
+      background: var(--leaf);
+      color: white;
+    }
 
-        .nutrient-bar {
-            height: 8px;
-            background: #e7e5e4;
-            border-radius: 4px;
-            margin-top: 0.5rem;
-            overflow: hidden;
-        }
+    .nutrient-bar {
+      height: 8px;
+      background: #e7e5e4;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+      overflow: hidden;
+    }
 
-        .nutrient-fill {
-            height: 100%;
-            border-radius: 4px;
-            transition: 1s ease-out;
-        }
-    </style>
+    .nutrient-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: 1s ease-out;
+    }
+  </style>
+  <link rel="stylesheet" href="footer.css" />
 </head>
 
 <body>
 
-    <div class="app-shell">
-        <aside class="sidebar">
-            <h2 style="color: var(--clay);"><i class="fas fa-seedling"></i> TerraProbe</h2>
-            <p style="opacity: 0.7; font-size: 0.9rem;">Advanced Soil Health Intelligence</p>
-            <div class="farm-selector" id="farm-list" aria-live="polite">
-                <!-- Farm Cards Injected Here -->
-            </div>
-            <button class="btn btn-leaf" style="width: 100%; margin-top: 2rem;" onclick="openTestModal()">+ Log Soil
-                Test</button>
-        </aside>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <h2 style="color: var(--clay);"><i class="fas fa-seedling"></i> TerraProbe</h2>
+      <p style="opacity: 0.7; font-size: 0.9rem;">Advanced Soil Health Intelligence</p>
+      <div class="farm-selector" id="farm-list" aria-live="polite">
+        <!-- Farm Cards Injected Here -->
+      </div>
+      <button class="btn btn-leaf" style="width: 100%; margin-top: 2rem;" onclick="openTestModal()">+ Log Soil
+        Test</button>
+    </aside>
 
-        <main class="main">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                <h1 id="active-farm-name" aria-live="polite">Select a Farm</h1>
-                <div id="last-test-date" style="font-size: 0.9rem; color: #78716c;" aria-live="polite"></div>
-            </div>
+    <main class="main">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h1 id="active-farm-name" aria-live="polite">Select a Farm</h1>
+        <div id="last-test-date" style="font-size: 0.9rem; color: #78716c;" aria-live="polite"></div>
+      </div>
 
-            <div class="metrics-grid">
-                <div class="stat-card">
-                    <div class="stat-val" id="val-ph" aria-live="polite">-</div>
-                    <div class="stat-label">Soil pH</div>
-                    <div class="nutrient-bar">
-                        <div class="nutrient-fill" id="fill-ph" style="background: #f59e0b;"></div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-val" id="val-oc" aria-live="polite">-</div>
-                    <div class="stat-label">Organic Matter (%)</div>
-                    <div class="nutrient-bar">
-                        <div class="nutrient-fill" id="fill-oc" style="background: #10b981;"></div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-val" id="val-ec" aria-live="polite">-</div>
-                    <div class="stat-label">Conductivity (dS/m)</div>
-                    <div class="nutrient-bar">
-                        <div class="nutrient-fill" id="fill-ec" style="background: #3b82f6;"></div>
-                    </div>
-                </div>
-            </div>
+      <div class="metrics-grid">
+        <div class="stat-card">
+          <div class="stat-val" id="val-ph" aria-live="polite">-</div>
+          <div class="stat-label">Soil pH</div>
+          <div class="nutrient-bar">
+            <div class="nutrient-fill" id="fill-ph" style="background: #f59e0b;"></div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="val-oc" aria-live="polite">-</div>
+          <div class="stat-label">Organic Matter (%)</div>
+          <div class="nutrient-bar">
+            <div class="nutrient-fill" id="fill-oc" style="background: #10b981;"></div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="val-ec" aria-live="polite">-</div>
+          <div class="stat-label">Conductivity (dS/m)</div>
+          <div class="nutrient-bar">
+            <div class="nutrient-fill" id="fill-ec" style="background: #3b82f6;"></div>
+          </div>
+        </div>
+      </div>
 
-            <div class="dashboard-layout">
-                <div class="card">
-                    <h3>Nutrient Trend Analysis (ppm)</h3>
-                    <canvas id="nutrientChart">Nutrient trend chart visualization</canvas>
-                </div>
+      <div class="dashboard-layout">
+        <div class="card">
+          <h3>Nutrient Trend Analysis (ppm)</h3>
+          <canvas id="nutrientChart">Nutrient trend chart visualization</canvas>
+        </div>
 
-                <div class="card">
-                    <h3>Personalized Recommendations</h3>
-                    <div id="rec-container" class="recommendation-list" aria-live="polite">
-                        <p style="text-align: center; opacity: 0.5;">Load a farm to see recommendations.</p>
-                    </div>
-                </div>
+        <div class="card">
+          <h3>Personalized Recommendations</h3>
+          <div id="rec-container" class="recommendation-list" aria-live="polite">
+            <p style="text-align: center; opacity: 0.5;">Load a farm to see recommendations.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script defer src="soil_portal.js"></script>
+  <footer class="site-footer tech-dark-theme final-match">
+    <div class="footer-top-accent"></div>
+
+    <div class="footer-inner-content">
+      <div class="footer-section footer-brand">
+        <a href="index.html" class="brand-header">
+          <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
+          <h3>AgriTech</h3>
+        </a>
+
+        <p class="tagline">
+          Empowering India's Farming Future with innovative technology
+          connecting every stakeholder.
+        </p>
+
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="X (formerly Twitter)"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-group-links">
+        <div class="footer-section footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>
+              <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li>
+              <a href="marketplace.html"><i class="fas fa-store"></i> Marketplace</a>
+            </li>
+            <li>
+              <a href="weather_dashboard.html"><i class="fas fa-cloud-sun"></i> Weather</a>
+            </li>
+            <li>
+              <a href="contact.html"><i class="fas fa-headset"></i> Contact Us</a>
+            </li>
+            <li>
+              <a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+            </li>
+            <li>
+              <a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a>
+            </li>
+            <li>
+              <a href="privacy-policy.html"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-contact">
+          <h4>Contact</h4>
+          <ul>
+            <li>
+              <a href="mailto:contact@agritech.com">
+                <i class="fas fa-envelope"></i> contact@agritech.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+910000000000">
+                <i class="fas fa-phone"></i> +91 00000 00000
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-newsletter">
+          <h4>Newsletter</h4>
+          <p class="newsletter-desc">
+            Subscribe to get the latest farming insights, tips, and updates.
+          </p>
+          <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
+            <div class="newsletter-input-group">
+              <input type="email" class="newsletter-input" placeholder="Enter your email to get the latest updates..."
+                required aria-label="Email address for newsletter" />
+              <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
+                <span>Subscribe</span>
+                <i class="fas fa-paper-plane"></i>
+              </button>
             </div>
-        </main>
+            <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
+            <div class="newsletter-footer-optout">
+              <small>No spam. <a href="javascript:void(0)" onclick="openUnsubscribeModal(event)">Unsubscribe</a>
+                anytime.</small>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
-    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script defer src="soil_portal.js"></script>
-  <script src="theme.js"></script>
+    <div class="footer-bottom">
+      <p>© <span id="current-year">2026</span> AgriTech. All rights reserved. <a href="privacy-policy.html">Privacy
+          Policy</a> · <a href="terms-and-service.html">Terms</a> · <a href="cookie-policy.html">Cookie Policy</a></p>
+    </div>
+
+    <div class="footer-wave-overlay"></div>
+  </footer>
+  <script src="footer.js"></script>
 </body>
 
 </html>

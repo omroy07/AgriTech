@@ -1,591 +1,589 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgriTech Blog</title>
-    <link rel="stylesheet" href="blog.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<style>
-/* Fail-proof Scroll Top Button */
-#scrollTopBtn {
-    position: fixed !important;
-    bottom: 30px !important;
-    right: 30px !important;
-    width: 55px !important;
-    height: 55px !important;
-    border-radius: 50% !important;
-    border: none !important;
-    background: #2e7d32 !important; /* AgriTech Green */
-    color: #ffffff !important;
-    font-size: 20px !important;
-    cursor: pointer !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.4) !important;
-    z-index: 999999 !important; /* Above everything else */
-    
-    /* Animation logic */
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease-in-out !important;
-    transform: translateY(10px);
-}
-
-/* This class must be applied by JS */
-#scrollTopBtn.show {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translateY(0) !important;
-}
-
-#scrollTopBtn:hover {
-    background: #1b5e20 !important;
-    transform: scale(1.1) !important;
-}
-
-@media (max-width: 768px) {
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriTech Blog</title>
+  <link rel="stylesheet" href="blog.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* Fail-proof Scroll Top Button */
     #scrollTopBtn {
-        bottom: 100px !important; /* Avoid overlap with FAB */
+      position: fixed !important;
+      bottom: 30px !important;
+      right: 30px !important;
+      width: 55px !important;
+      height: 55px !important;
+      border-radius: 50% !important;
+      border: none !important;
+      background: #2e7d32 !important;
+      /* AgriTech Green */
+      color: #ffffff !important;
+      font-size: 20px !important;
+      cursor: pointer !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4) !important;
+      z-index: 999999 !important;
+      /* Above everything else */
+
+      /* Animation logic */
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease-in-out !important;
+      transform: translateY(10px);
     }
-}
 
-/* ===== Theme Toggle Button ===== */
-.theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1.2rem;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 25px;
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-  min-width: fit-content;
-}
+    /* This class must be applied by JS */
+    #scrollTopBtn.show {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: translateY(0) !important;
+    }
 
-.theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
+    #scrollTopBtn:hover {
+      background: #1b5e20 !important;
+      transform: scale(1.1) !important;
+    }
 
-.theme-toggle:active {
-  transform: translateY(0);
-}
+    @media (max-width: 768px) {
+      #scrollTopBtn {
+        bottom: 100px !important;
+        /* Avoid overlap with FAB */
+      }
+    }
 
-.theme-toggle {
-  background: var(--light-green);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  padding: 0.5rem 1rem;
-}
+    /* ===== Theme Toggle Button ===== */
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      min-width: fit-content;
+    }
 
-/* Theme Toggle Icons */
-.sun-icon,
-.moon-icon {
-  font-size: 1rem;
-  width: 1rem;
-  height: 1rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-</style>
-  </head>
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .theme-toggle:active {
+      transform: translateY(0);
+    }
+
+    .theme-toggle {
+      background: var(--light-green);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 0.5rem 1rem;
+    }
+
+    /* Theme Toggle Icons */
+    .sun-icon,
+    .moon-icon {
+      font-size: 1rem;
+      width: 1rem;
+      height: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+  </style>
+  <link rel="stylesheet" href="footer.css" />
+</head>
+
 <body>
-    <!-- Include Navbar -->
-    <div w3-include-html="navbar.html"></div>
+  <!-- Include Navbar -->
+  <div w3-include-html="navbar.html"></div>
 
-    <section class="agritech-blog">
-        <div class="blog-container">
+  <section class="agritech-blog">
+    <div class="blog-container">
 
-            <div class="search-filter-section">
-                <input type="text" class="search-bar" placeholder="Search blog posts..." id="searchInput">
-                <div class="category-filters">
-                    <button class="filter-btn active" data-category="all">All Posts</button>
-                    <button class="filter-btn" data-category="farming-tips">Farming Tips</button>
-                    <button class="filter-btn" data-category="technology">Technology</button>
-                    <button class="filter-btn" data-category="market-trends">Market Trends</button>
-                    <button class="filter-btn" data-category="sustainability">Sustainability</button>
-                    <button class="filter-btn" data-category="business">Business</button>
-                </div>
-            </div>
-
-         
-
-            <div class="blog-grid" id="blogGrid"></div>
-
-            <div class="load-more-container">
-                <button class="load-more-btn" id="loadMoreBtn">Load More Posts</button>
-            </div>
-        </div>
-    </section>
-
-    <div id="blogModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalContent">
-      <div class="modal-content" tabindex="-1">
-            <div class="modal-header">
-              <div class="modal-header-top">
-                <h2 class="modal-title" id="modalTitle"></h2>
-                <div class="icons">
-                    <button class="close" id="closeBlogModal" aria-label="Close modal">&times;</button>
-                    <button
-                      class="modal-favorite-btn"
-                      id="modalFavoriteBtn"
-                      aria-label="Add blog to favorites"
-                      aria-pressed="false"
-                    >
-                        <i class="far fa-heart" aria-hidden="true"></i>
-                    </button>
-
-                </div>
-              </div>
-              
-              <div class="modal-meta">
-                  <span id="modal-Author"><i class="fas fa-user"></i> </span>
-                  <span id="modal-Date"><i class="far fa-calendar-alt"></i> </span>
-              </div>
-              <span class="modal-category" id="modalCategory"></span>
-            </div>
-            <div class="modal-body">
-                <img class="modal-image" id="modalImage" alt="Blog post image">
-                <div class="modal-text" id="modalContent"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="fab-container">
-      <a
-        href="favorites.html"
-        class="fab-btn fab-favorites-btn"
-        id="favoritesFabBtn"
-        aria-label="View Favorite Blogs"
-        title="View Favorite Blogs"
-      >
-          <i class="fas fa-heart" aria-hidden="true"></i>
-          <span class="fab-label">Favorites</span>
-          <span class="fab-badge favorite-count" id="fabFavoritesCount" style="display: none;">0</span>
-      </a>
-
-      <button
-        class="fab-btn fab-create-btn"
-        id="createPostBtn"
-        aria-label="Create a new blog post"
-        aria-haspopup="dialog"
-        aria-controls="createPostModal"
-        aria-expanded="false"
-        title="Create a new post"
-      >
-          <i class="fas fa-plus" aria-hidden="true"></i>
-          <span class="fab-label">New Post</span>
-      </button>
-    </div>
-    <div id="createPostModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Create New Post</h2>
-                <button class="close" id="closeCreateModal">&times;</button>
-            </div>
-            <div class="modal-body">
-               <form id="createPostForm" class="create-post-form">
-
-    <div class="form-group">
-        <label for="postTitle">Title</label>
-        <input type="text" id="postTitle" required>
-    </div>
-
-    <div class="form-group">
-        <label for="postCategory">Category</label>
-        <select id="postCategory" required>
-            <option value="farming-tips">Farming Tips</option>
-            <option value="technology">Technology</option>
-            <option value="sustainability">Sustainability</option>
-            <option value="market-trends">Market Trends</option>
-            <option value="business">Business</option>
-        </select>
-    </div>
-
-    <!-- ✅ NEW: Featured Image -->
-    <div class="form-group">
-        <label for="postImage">Featured Image URL</label>
-        <input type="url" id="postImage" placeholder="https://example.com/image.jpg" required>
-    </div>
-
-    <!-- ✅ NEW: Tags -->
-    <div class="form-group">
-        <label for="postTags">Tags / Keywords</label>
-        <input type="text" id="postTags" placeholder="AI, IoT, Smart Farming">
-    </div>
-
-    <!-- ✅ NEW: Author -->
-    <div class="form-group">
-        <label for="postAuthor">Author Name (optional)</label>
-        <input type="text" id="postAuthor" placeholder="Author name">
-    </div>
-
-    <div class="form-group">
-        <label for="postContent">Content</label>
-        <textarea id="postContent" required rows="6"></textarea>
-    </div>
-
-    <button type="submit" class="submit-btn">Publish Post</button>
-</form>
-
-            </div>
-        </div>
-    </div>
-
-    <footer class="site-footer tech-dark-theme final-match">
-      <div class="footer-top-accent"></div>
-
-      <div class="footer-inner-content">
-        <div class="footer-section footer-brand">
-          <a href="index.html" class="brand-header">
-            <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
-            <h3>AgriTech</h3>
-          </a>
-
-          <p class="tagline">
-            Empowering India's Farming Future with innovative technology
-            connecting every stakeholder.
-          </p>
-
-          <div class="social-icons">
-            <a href="#" aria-label="Facebook"
-              ><i class="fab fa-facebook-f"></i
-            ></a>
-            <a href="#" aria-label="X (formerly Twitter)"
-              ><i class="fab fa-x-twitter"></i
-            ></a>
-            <a href="#" aria-label="LinkedIn"
-              ><i class="fab fa-linkedin-in"></i
-            ></a>
-            <a href="#" aria-label="Instagram"
-              ><i class="fab fa-instagram"></i
-            ></a>
-          </div>
-        </div>
-
-        <div class="footer-group-links">
-          <div class="footer-section footer-links">
-            <h4>Quick Links</h4>
-            <ul>
-              <li>
-                <a href="index.html"><i class="fas fa-home"></i> Home</a>
-              </li>
-              <li>
-                <a href="login.html"
-                  ><i class="fas fa-tachometer-alt"></i> Dashboard</a
-                >
-              </li>
-              <li>
-                <a href="feed-back.html"
-                  ><i class="fas fa-comment-dots"></i> Feedback</a
-                >
-              </li>
-              <li>
-                <a href="chat.html"
-                  ><i class="fas fa-robot"></i> AI Assistant</a
-                >
-              </li>
-              <li>
-                <a href="terms-and-service.html"
-                  ><i class="fas fa-file-contract"></i> Terms & Service</a
-                >
-              </li>
-            </ul>
-          </div>
-
-          <div class="footer-section footer-contact">
-            <h4>Contact</h4>
-            <ul>
-              <li>
-                <a href="mailto:contact@agritech.com">
-                  <i class="fas fa-envelope"></i> contact@agritech.com
-                </a>
-              </li>
-              <li>
-                <a href="tel:+910000000000">
-                  <i class="fas fa-phone"></i> +91 00000 00000
-                </a>
-              </li>
-            </ul>
-          </div>
+      <div class="search-filter-section">
+        <input type="text" class="search-bar" placeholder="Search blog posts..." id="searchInput">
+        <div class="category-filters">
+          <button class="filter-btn active" data-category="all">All Posts</button>
+          <button class="filter-btn" data-category="farming-tips">Farming Tips</button>
+          <button class="filter-btn" data-category="technology">Technology</button>
+          <button class="filter-btn" data-category="market-trends">Market Trends</button>
+          <button class="filter-btn" data-category="sustainability">Sustainability</button>
+          <button class="filter-btn" data-category="business">Business</button>
         </div>
       </div>
 
-      <div class="footer-bottom">
-        <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
-      </div>
 
-      <div class="footer-wave-overlay"></div>
-    </footer>
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
-        <i class="fas fa-arrow-up"></i>
+
+      <div class="blog-grid" id="blogGrid"></div>
+
+      <div class="load-more-container">
+        <button class="load-more-btn" id="loadMoreBtn">Load More Posts</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="blogModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"
+    aria-describedby="modalContent">
+    <div class="modal-content" tabindex="-1">
+      <div class="modal-header">
+        <div class="modal-header-top">
+          <h2 class="modal-title" id="modalTitle"></h2>
+          <div class="icons">
+            <button class="close" id="closeBlogModal" aria-label="Close modal">&times;</button>
+            <button class="modal-favorite-btn" id="modalFavoriteBtn" aria-label="Add blog to favorites"
+              aria-pressed="false">
+              <i class="far fa-heart" aria-hidden="true"></i>
+            </button>
+
+          </div>
+        </div>
+
+        <div class="modal-meta">
+          <span id="modal-Author"><i class="fas fa-user"></i> </span>
+          <span id="modal-Date"><i class="far fa-calendar-alt"></i> </span>
+        </div>
+        <span class="modal-category" id="modalCategory"></span>
+      </div>
+      <div class="modal-body">
+        <img class="modal-image" id="modalImage" alt="Blog post image">
+        <div class="modal-text" id="modalContent"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fab-container">
+    <a href="favorites.html" class="fab-btn fab-favorites-btn" id="favoritesFabBtn" aria-label="View Favorite Blogs"
+      title="View Favorite Blogs">
+      <i class="fas fa-heart" aria-hidden="true"></i>
+      <span class="fab-label">Favorites</span>
+      <span class="fab-badge favorite-count" id="fabFavoritesCount" style="display: none;">0</span>
+    </a>
+
+    <button class="fab-btn fab-create-btn" id="createPostBtn" aria-label="Create a new blog post" aria-haspopup="dialog"
+      aria-controls="createPostModal" aria-expanded="false" title="Create a new post">
+      <i class="fas fa-plus" aria-hidden="true"></i>
+      <span class="fab-label">New Post</span>
     </button>
-    <script>
+  </div>
+  <div id="createPostModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Create New Post</h2>
+        <button class="close" id="closeCreateModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="createPostForm" class="create-post-form">
+
+          <div class="form-group">
+            <label for="postTitle">Title</label>
+            <input type="text" id="postTitle" required>
+          </div>
+
+          <div class="form-group">
+            <label for="postCategory">Category</label>
+            <select id="postCategory" required>
+              <option value="farming-tips">Farming Tips</option>
+              <option value="technology">Technology</option>
+              <option value="sustainability">Sustainability</option>
+              <option value="market-trends">Market Trends</option>
+              <option value="business">Business</option>
+            </select>
+          </div>
+
+          <!-- ✅ NEW: Featured Image -->
+          <div class="form-group">
+            <label for="postImage">Featured Image URL</label>
+            <input type="url" id="postImage" placeholder="https://example.com/image.jpg" required>
+          </div>
+
+          <!-- ✅ NEW: Tags -->
+          <div class="form-group">
+            <label for="postTags">Tags / Keywords</label>
+            <input type="text" id="postTags" placeholder="AI, IoT, Smart Farming">
+          </div>
+
+          <!-- ✅ NEW: Author -->
+          <div class="form-group">
+            <label for="postAuthor">Author Name (optional)</label>
+            <input type="text" id="postAuthor" placeholder="Author name">
+          </div>
+
+          <div class="form-group">
+            <label for="postContent">Content</label>
+            <textarea id="postContent" required rows="6"></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">Publish Post</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer tech-dark-theme final-match">
+    <div class="footer-top-accent"></div>
+
+    <div class="footer-inner-content">
+      <div class="footer-section footer-brand">
+        <a href="index.html" class="brand-header">
+          <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
+          <h3>AgriTech</h3>
+        </a>
+
+        <p class="tagline">
+          Empowering India's Farming Future with innovative technology
+          connecting every stakeholder.
+        </p>
+
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="X (formerly Twitter)"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-group-links">
+        <div class="footer-section footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>
+              <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li>
+              <a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+            </li>
+            <li>
+              <a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a>
+            </li>
+            <li>
+              <a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-contact">
+          <h4>Contact</h4>
+          <ul>
+            <li>
+              <a href="mailto:contact@agritech.com">
+                <i class="fas fa-envelope"></i> contact@agritech.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+910000000000">
+                <i class="fas fa-phone"></i> +91 00000 00000
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-newsletter">
+          <h4>Newsletter</h4>
+          <p class="newsletter-desc">
+            Subscribe to get the latest farming insights, tips, and updates.
+          </p>
+          <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
+            <div class="newsletter-input-group">
+              <input type="email" class="newsletter-input" placeholder="Enter your email to get the latest updates..."
+                required aria-label="Email address for newsletter" />
+              <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
+                <span>Subscribe</span>
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+            <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
+            <div class="newsletter-footer-optout">
+              <small>No spam. <a href="javascript:void(0)" onclick="openUnsubscribeModal(event)">Unsubscribe</a>
+                anytime.</small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
+    </div>
+
+    <div class="footer-wave-overlay"></div>
+  </footer>
+  <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+  <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const scrollTopBtn = document.getElementById("scrollTopBtn");
+      const scrollTopBtn = document.getElementById("scrollTopBtn");
 
-        if (!scrollTopBtn) return;
+      if (!scrollTopBtn) return;
 
-        // Monitor Scroll Position
-        window.addEventListener("scroll", function () {
-            // Show button after scrolling down 300px
-            if (window.pageYOffset > 300) {
-                scrollTopBtn.classList.add("show");
-            } else {
-                scrollTopBtn.classList.remove("show");
-            }
+      // Monitor Scroll Position
+      window.addEventListener("scroll", function () {
+        // Show button after scrolling down 300px
+        if (window.pageYOffset > 300) {
+          scrollTopBtn.classList.add("show");
+        } else {
+          scrollTopBtn.classList.remove("show");
+        }
+      });
+
+      // Scroll to top on click
+      scrollTopBtn.addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
         });
-
-        // Scroll to top on click
-        scrollTopBtn.addEventListener("click", function () {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        });
+      });
     });
-    </script>
+  </script>
 
-    <script src="blog.js"></script>
-    <script src="auth.js"></script>
-   <script>
-// Include navbar
+  <script src="blog.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    // Include navbar
 
-function includeHTML(callback) {
-    var z, i, elmnt, file, xhttp;
-    z = document.getElementsByTagName("*");
-    for (i = 0; i < z.length; i++) {
+    function includeHTML(callback) {
+      var z, i, elmnt, file, xhttp;
+      z = document.getElementsByTagName("*");
+      for (i = 0; i < z.length; i++) {
         elmnt = z[i];
         file = elmnt.getAttribute("w3-include-html");
         if (file) {
-            xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4) {
-                    if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-                    if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-                    elmnt.removeAttribute("w3-include-html");
+          xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4) {
+              if (this.status == 200) { elmnt.innerHTML = this.responseText; }
+              if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
+              elmnt.removeAttribute("w3-include-html");
 
-                    // Call again recursively
-                    includeHTML(callback);
+              // Call again recursively
+              includeHTML(callback);
 
-                    // After loading navbar, run callback
-                    if (callback) callback();
-                }
+              // After loading navbar, run callback
+              if (callback) callback();
             }
-            xhttp.open("GET", file, true);
-            xhttp.send();
-            return;
+          }
+          xhttp.open("GET", file, true);
+          xhttp.send();
+          return;
         }
+      }
     }
-}
 
-// Initialize theme toggle
-function initThemeToggle() {
-    const themeToggle = document.getElementById('themeToggle');
-    if (!themeToggle) return;
+    // Initialize theme toggle
+    function initThemeToggle() {
+      const themeToggle = document.getElementById('themeToggle');
+      if (!themeToggle) return;
 
-    const themeLabel = themeToggle.querySelector('.theme-label');
-    const themeIcon = themeToggle.querySelector('i');
+      const themeLabel = themeToggle.querySelector('.theme-label');
+      const themeIcon = themeToggle.querySelector('i');
 
-    function updateThemeUI(theme) {
+      function updateThemeUI(theme) {
 
         if (themeLabel) {
-            themeLabel.textContent =
-                theme === 'dark' ? 'Dark' : 'Light';
+          themeLabel.textContent =
+            theme === 'dark' ? 'Dark' : 'Light';
         }
 
         if (themeIcon) {
-            themeIcon.className =
-                theme === 'dark'
-                ? 'fas fa-sun'
-                : 'fas fa-moon';
+          themeIcon.className =
+            theme === 'dark'
+              ? 'fas fa-sun'
+              : 'fas fa-moon';
         }
-    }
+      }
 
-    const savedTheme =
+      const savedTheme =
         localStorage.getItem('agritech-theme') || 'light';
 
-    document.documentElement.setAttribute(
+      document.documentElement.setAttribute(
         'data-theme',
         savedTheme
-    );
+      );
 
-    updateThemeUI(savedTheme);
+      updateThemeUI(savedTheme);
 
-    themeToggle.addEventListener('click', () => {
+      themeToggle.addEventListener('click', () => {
 
         const currentTheme =
-            document.documentElement.getAttribute('data-theme');
+          document.documentElement.getAttribute('data-theme');
 
         const newTheme =
-            currentTheme === 'dark'
+          currentTheme === 'dark'
             ? 'light'
             : 'dark';
 
         document.documentElement.setAttribute(
-            'data-theme',
-            newTheme
+          'data-theme',
+          newTheme
         );
 
         localStorage.setItem(
-            'agritech-theme',
-            newTheme
+          'agritech-theme',
+          newTheme
         );
 
         updateThemeUI(newTheme);
-    });
-}
+      });
+    }
 
-// Initialize mobile hamburger
-function initHamburgerMenu() {
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const overlay = document.getElementById('mobileMenuOverlay');
+    // Initialize mobile hamburger
+    function initHamburgerMenu() {
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const overlay = document.getElementById('mobileMenuOverlay');
 
-    if (!hamburgerBtn || !mobileMenu || !overlay) return;
+      if (!hamburgerBtn || !mobileMenu || !overlay) return;
 
-    hamburgerBtn.addEventListener('click', () => {
+      hamburgerBtn.addEventListener('click', () => {
         mobileMenu.classList.add('active');
         overlay.classList.add('active');
         document.body.style.overflow = 'hidden';
-    });
+      });
 
-    overlay.addEventListener('click', () => {
+      overlay.addEventListener('click', () => {
         mobileMenu.classList.remove('active');
         overlay.classList.remove('active');
         document.body.style.overflow = '';
-    });
-}
-function initNavbarInteractions() {
-  // Desktop Services Dropdown
-  const servicesToggle = document.querySelector('.services-toggle');
-  const servicesDropdown = document.querySelector('.services-dropdown');
-  const servicesArrow = document.querySelector('.services-arrow');
+      });
+    }
+    function initNavbarInteractions() {
+      // Desktop Services Dropdown
+      const servicesToggle = document.querySelector('.services-toggle');
+      const servicesDropdown = document.querySelector('.services-dropdown');
+      const servicesArrow = document.querySelector('.services-arrow');
 
-  if (servicesToggle && servicesDropdown) {
-    servicesToggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      servicesDropdown.classList.toggle('active');
-      servicesArrow?.classList.toggle('rotated');
+      if (servicesToggle && servicesDropdown) {
+        servicesToggle.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          servicesDropdown.classList.toggle('active');
+          servicesArrow?.classList.toggle('rotated');
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!servicesToggle.contains(e.target) && !servicesDropdown.contains(e.target)) {
+            servicesDropdown.classList.remove('active');
+            servicesArrow?.classList.remove('rotated');
+          }
+        });
+      }
+
+      // Mobile Services Dropdown
+      const mobServToggle = document.getElementById('mobileServicesToggle');
+      const mobServList = document.getElementById('mobileServicesList');
+
+      if (mobServToggle && mobServList) {
+        mobServToggle.addEventListener('click', (e) => {
+          e.preventDefault();
+          mobServList.classList.toggle('active');
+        });
+      }
+    }
+
+
+
+    // Run after DOM loads
+    document.addEventListener('DOMContentLoaded', () => {
+      // Apply saved theme
+      const savedTheme = localStorage.getItem('agritech-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+
+      // Include navbar and initialize functions
+      includeHTML(() => {
+        initThemeToggle();
+        initHamburgerMenu();
+        initNavbarInteractions(); // ✅ CORRECT
+      });
+
+
+    });
+  </script>
+  <!-- Cursor Trail -->
+  <div class="circle-container" id="cursorTrail"></div>
+  <script>
+    const container = document.getElementById('cursorTrail');
+    const circleCount = 12;
+    const circles = [];
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    // Create circles
+    for (let i = 0; i < circleCount; i++) {
+      const circle = document.createElement('div');
+      circle.classList.add('cursor-circle');
+      container.appendChild(circle);
+      circles.push({ el: circle, x: 0, y: 0 });
+    }
+
+    // Track mouse
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
     });
 
-    document.addEventListener('click', (e) => {
-      if (!servicesToggle.contains(e.target) && !servicesDropdown.contains(e.target)) {
-        servicesDropdown.classList.remove('active');
-        servicesArrow?.classList.remove('rotated');
+    // Click effect
+    document.addEventListener('mousedown', () => {
+      circles.forEach(c => c.el.classList.add('cursor-clicking'));
+    });
+
+    document.addEventListener('mouseup', () => {
+      circles.forEach(c => c.el.classList.remove('cursor-clicking'));
+    });
+
+    // Hover effect on links & buttons
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('a, button, .btn, .card, .filter-btn')) {
+        circles.forEach(c => c.el.classList.add('cursor-hovering'));
       }
     });
-  }
 
-  // Mobile Services Dropdown
-  const mobServToggle = document.getElementById('mobileServicesToggle');
-  const mobServList = document.getElementById('mobileServicesList');
-
-  if (mobServToggle && mobServList) {
-    mobServToggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      mobServList.classList.toggle('active');
-    });
-  }
-}
-
-
-
-// Run after DOM loads
-document.addEventListener('DOMContentLoaded', () => {
-    // Apply saved theme
-    const savedTheme = localStorage.getItem('agritech-theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-
-    // Include navbar and initialize functions
-    includeHTML(() => {
-    initThemeToggle();
-    initHamburgerMenu();
-    initNavbarInteractions(); // ✅ CORRECT
-});
-
-
-});
-</script>
-<!-- Cursor Trail -->
-<div class="circle-container" id="cursorTrail"></div>
-<script>
-  const container = document.getElementById('cursorTrail');
-  const circleCount = 12;
-  const circles = [];
-
-  let mouseX = 0;
-  let mouseY = 0;
-
-  // Create circles
-  for (let i = 0; i < circleCount; i++) {
-    const circle = document.createElement('div');
-    circle.classList.add('cursor-circle');
-    container.appendChild(circle);
-    circles.push({ el: circle, x: 0, y: 0 });
-  }
-
-  // Track mouse
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
-
-  // Click effect
-  document.addEventListener('mousedown', () => {
-    circles.forEach(c => c.el.classList.add('cursor-clicking'));
-  });
-
-  document.addEventListener('mouseup', () => {
-    circles.forEach(c => c.el.classList.remove('cursor-clicking'));
-  });
-
-  // Hover effect on links & buttons
-  document.addEventListener('mouseover', (e) => {
-    if (e.target.closest('a, button, .btn, .card, .filter-btn')) {
-      circles.forEach(c => c.el.classList.add('cursor-hovering'));
-    }
-  });
-
-  document.addEventListener('mouseout', (e) => {
-    if (e.target.closest('a, button, .btn, .card, .filter-btn')) {
-      circles.forEach(c => c.el.classList.remove('cursor-hovering'));
-    }
-  });
-
-  // Smooth trailing animation
-  function animate() {
-    let x = mouseX;
-    let y = mouseY;
-
-    circles.forEach((circle, index) => {
-      circle.x += (x - circle.x) * 0.25;
-      circle.y += (y - circle.y) * 0.25;
-
-      circle.el.style.left = circle.x + 'px';
-      circle.el.style.top = circle.y + 'px';
-
-      x = circle.x;
-      y = circle.y;
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest('a, button, .btn, .card, .filter-btn')) {
+        circles.forEach(c => c.el.classList.remove('cursor-hovering'));
+      }
     });
 
-    requestAnimationFrame(animate);
-  }
-  animate();
-</script>
+    // Smooth trailing animation
+    function animate() {
+      let x = mouseX;
+      let y = mouseY;
 
-  <script src="theme.js"></script>
+      circles.forEach((circle, index) => {
+        circle.x += (x - circle.x) * 0.25;
+        circle.y += (y - circle.y) * 0.25;
+
+        circle.el.style.left = circle.x + 'px';
+        circle.el.style.top = circle.y + 'px';
+
+        x = circle.x;
+        y = circle.y;
+      });
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+
+  <script src="footer.js"></script>
 </body>
+
 </html>

@@ -2,371 +2,372 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farm Management | AgriTech</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #0f172a;
-            --accent: #10b981;
-            --bg: #f3f4f6;
-            --card: #ffffff;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farm Management | AgriTech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f172a;
+      --accent: #10b981;
+      --bg: #f3f4f6;
+      --card: #ffffff;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
 
-        body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--bg);
-            margin: 0;
-        }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      margin: 0;
+    }
 
-        .app-shell {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            min-height: 100vh;
-        }
+    .app-shell {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
 
-        /* Sidebar Sidebar */
-        .sidebar {
-            background: var(--primary);
-            color: white;
-            padding: 2rem;
-        }
+    /* Sidebar Sidebar */
+    .sidebar {
+      background: var(--primary);
+      color: white;
+      padding: 2rem;
+    }
 
-        .farm-switcher {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    .farm-switcher {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-        .farm-switcher:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
+    .farm-switcher:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
 
-        .nav-link {
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            cursor: pointer;
-        }
+    .nav-link {
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+    }
 
-        .nav-link.active {
-            background: var(--accent);
-            color: white;
-        }
+    .nav-link.active {
+      background: var(--accent);
+      color: white;
+    }
 
-        /* Main Dashboard */
-        .main-content {
-            padding: 3rem;
-        }
+    /* Main Dashboard */
+    .main-content {
+      padding: 3rem;
+    }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
 
-        .stat-card {
-            background: var(--card);
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-        }
+    .stat-card {
+      background: var(--card);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+    }
 
-        .stat-card h3 {
-            color: #64748b;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-        }
+    .stat-card h3 {
+      color: #64748b;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
 
-        .stat-card .value {
-            font-size: 2rem;
-            font-weight: 700;
-        }
+    .stat-card .value {
+      font-size: 2rem;
+      font-weight: 700;
+    }
 
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-        }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+    }
 
-        .card {
-            background: var(--card);
-            padding: 2rem;
-            border-radius: 24px;
-            box-shadow: var(--shadow);
-        }
+    .card {
+      background: var(--card);
+      padding: 2rem;
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
 
-        .asset-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
+    .asset-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
 
-        .asset-item {
-            padding: 1rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .asset-item {
+      padding: 1rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        .member-avatar {
-            width: 40px;
-            height: 40px;
-            background: #e2e8f0;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .member-avatar {
+      width: 40px;
+      height: 40px;
+      background: #e2e8f0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-        }
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
 
-        .modal-body {
-            background: white;
-            width: 90%;
-            max-width: 500px;
-            padding: 2.5rem;
-            border-radius: 24px;
-        }
+    .modal-body {
+      background: white;
+      width: 90%;
+      max-width: 500px;
+      padding: 2.5rem;
+      border-radius: 24px;
+    }
 
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
 
-        .form-group label {
-            display: block;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
 
-        .form-input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border-radius: 10px;
-            border: 1px solid #d1d5db;
-        }
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+    }
 
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            border: none;
-            transition: 0.3s;
-        }
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      border: none;
+      transition: 0.3s;
+    }
 
-        .btn-primary {
-            background: var(--accent);
-            color: white;
-        }
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
 
-        .btn-primary:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
 
-.site-footer {
-  background: linear-gradient(135deg, #1e293b, #065f46); /* dark blue → green */
-  color: #fff;
-  margin-top: auto;
-  padding: 2.5rem 1.5rem;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-}
+    .site-footer {
+      background: linear-gradient(135deg, #1e293b, #065f46);
+      /* dark blue → green */
+      color: #fff;
+      margin-top: auto;
+      padding: 2.5rem 1.5rem;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+    }
 
 
-.footer-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
-  align-items: flex-start;
-}
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
 
-.footer-brand {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
 
-.footer-logo {
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
-  object-fit: cover;
-  background: #fff;
-  padding: 4px;
-}
+    .footer-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #fff;
+      padding: 4px;
+    }
 
-.site-footer h3,
-.site-footer h4 {
-  margin: 0 0 0.5rem 0;
-}
+    .site-footer h3,
+    .site-footer h4 {
+      margin: 0 0 0.5rem 0;
+    }
 
-.site-footer p {
-  margin: 0;
-  opacity: 0.9;
-}
+    .site-footer p {
+      margin: 0;
+      opacity: 0.9;
+    }
 
-.site-footer ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
+    .site-footer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
 
-.site-footer a {
-  color: #fff;
-  text-decoration: none;
-  opacity: 0.9;
-  transition: opacity 0.2s;
-}
+    .site-footer a {
+      color: #fff;
+      text-decoration: none;
+      opacity: 0.9;
+      transition: opacity 0.2s;
+    }
 
-.site-footer a:hover {
-  opacity: 1;
-  text-decoration: underline;
-}
+    .site-footer a:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
 
-.footer-bottom {
-  max-width: 1200px;
-  margin: 1rem auto 0;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.25);
-  text-align: center;
-  font-size: 0.9rem;
-  opacity: 0.9;
-}
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 1rem auto 0;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.25);
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
 
-.social-media {
-  display: flex;
-  gap: 1rem;
-  margin-top: 0.5rem;
-}
+    .social-media {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
 
-.social-media a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  transition: all 0.3s ease;
-  font-size: 1.2rem;
-}
+    .social-media a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+    }
 
-.social-media a:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-}
+    .social-media a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
 
-/* Navbar styling */
-.top-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.5rem;
-  background: rgba(30, 41, 59, 0.95);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border-color);
-  border-radius: 15px;
-  margin-bottom: 1.5rem;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-              background 0.3s ease,
-              border-color 0.3s ease,
-              box-shadow 0.3s ease;
-}
+    /* Navbar styling */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      background: rgba(30, 41, 59, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color);
+      border-radius: 15px;
+      margin-bottom: 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+        background 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+    }
 
-.top-nav a {
-  color: #f1f5f9;
-  text-decoration: none;
-  font-weight: 600;
-  margin-right: 1.5rem;
-  transition: color 0.3s ease;
-}
+    .top-nav a {
+      color: #f1f5f9;
+      text-decoration: none;
+      font-weight: 600;
+      margin-right: 1.5rem;
+      transition: color 0.3s ease;
+    }
 
-.top-nav a:hover {
-  color: var(--accent-primary);
-}
+    .top-nav a:hover {
+      color: var(--accent-primary);
+    }
 
-.nav-logo {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-right: 2rem;
-}
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-right: 2rem;
+    }
 
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
 
-/* Hide on scroll effect */
-.nav-hidden {
-  transform: translateY(-150%);
-}
-
-    </style>
+    /* Hide on scroll effect */
+    .nav-hidden {
+      transform: translateY(-150%);
+    }
+  </style>
+  <link rel="stylesheet" href="footer.css" />
 </head>
 
 <body>
-    <!-- Top Navbar -->
-<nav class="top-nav">
-  <div class="nav-left">
-    <a href="index.html" class="nav-logo">AgriTech Farms</a>
-    <a href="index.html">Home</a>
-    <a href="services.html">Services</a>
-    <a href="pricing.html">Pricing</a>
-    <a href="contact.html">Contact</a>
-  </div>
-  <div class="nav-right">
-    <button class="theme-toggle" aria-label="Toggle theme">
+  <!-- Top Navbar -->
+  <nav class="top-nav">
+    <div class="nav-left">
+      <a href="index.html" class="nav-logo">AgriTech Farms</a>
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" aria-label="Toggle theme">
         <span class="theme-toggle-track">
           <span class="theme-toggle-icon sun-icon" aria-hidden="true">
             <i class="fas fa-sun"></i>
@@ -377,146 +378,168 @@
           <span class="theme-toggle-thumb"></span>
         </span>
       </button>
-  </div>
-</nav>
-
-
-    <div class="app-shell">
-        <aside class="sidebar">
-            <h2 style="margin-bottom: 2rem;">AgriTech Farms</h2>
-
-            <div class="farm-switcher" id="current-farm-name">
-                <i class="fas fa-tractor"></i> <span>Select Farm</span>
-                <i class="fas fa-chevron-down" style="float: right;"></i>
-            </div>
-
-            <nav>
-                <div class="nav-link active"><i class="fas fa-chart-line"></i> Dashboard</div>
-                <div class="nav-link"><i class="fas fa-users"></i> Team Members</div>
-                <div class="nav-link"><i class="fas fa-box-open"></i> Inventory</div>
-                <div class="nav-link"><i class="fas fa-file-invoice-dollar"></i> Financials</div>
-            </nav>
-        </aside>
-
-        <main class="main-content">
-            <div class="header">
-                <h1 id="dashboard-title">Farm Overview</h1>
-                <button class="btn btn-primary" onclick="openNewFarmModal()">+ New Farm</button>
-            </div>
-
-            <div id="no-farm-message" style="display: none; text-align: center; padding: 5rem;">
-                <i class="fas fa-tractor fa-4x" style="color: #cbd5e1; margin-bottom: 1.5rem;"></i>
-                <h2>No farm selected</h2>
-                <p>Register your first farm to start tracking assets and team members.</p>
-            </div>
-
-            <div id="farm-data-view">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h3>Total Asset Value</h3>
-                        <div class="value" id="stat-asset-value">₹0</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Active Production</h3>
-                        <div class="value" id="stat-production">0 kg</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Team Size</h3>
-                        <div class="value" id="stat-team">0</div>
-                    </div>
-                </div>
-
-                <div class="grid-2">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Recent Assets</h2>
-                            <button class="btn" style="background: #f1f5f9;" onclick="openAssetModal()">+ Add
-                                Asset</button>
-                        </div>
-                        <div class="asset-list" id="asset-list">
-                            <!-- Assets injected here -->
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Team</h2>
-                            <button class="btn" style="border: 1px solid #e2e8f0; background: none;"
-                                onclick="openInviteModal()">Invite</button>
-                        </div>
-                        <div class="member-list" id="team-list">
-                            <!-- Members injected here -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
     </div>
+  </nav>
 
-    <!-- Modals -->
-    <div id="new-farm-modal" class="modal">
-        <div class="modal-body">
-            <h2>Add New Farm</h2>
-            <div class="form-group">
-                <label>Farm Name</label>
-                <input type="text" class="form-input" id="farm-name" placeholder="Green Valley Estate">
-            </div>
-            <div class="form-group">
-                <label>Location</label>
-                <input type="text" class="form-input" id="farm-loc" placeholder="District, State">
-            </div>
-            <div class="btn-group" style="display: flex; gap: 1rem;">
-                <button class="btn btn-primary" style="flex: 1;" onclick="createFarm()">Save Farm</button>
-                <button class="btn" style="background: #e5e7eb;" onclick="closeModals()">Cancel</button>
-            </div>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <h2 style="margin-bottom: 2rem;">AgriTech Farms</h2>
+
+      <div class="farm-switcher" id="current-farm-name">
+        <i class="fas fa-tractor"></i> <span>Select Farm</span>
+        <i class="fas fa-chevron-down" style="float: right;"></i>
+      </div>
+
+      <nav>
+        <div class="nav-link active"><i class="fas fa-chart-line"></i> Dashboard</div>
+        <div class="nav-link"><i class="fas fa-users"></i> Team Members</div>
+        <div class="nav-link"><i class="fas fa-box-open"></i> Inventory</div>
+        <div class="nav-link"><i class="fas fa-file-invoice-dollar"></i> Financials</div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="header">
+        <h1 id="dashboard-title">Farm Overview</h1>
+        <button class="btn btn-primary" onclick="openNewFarmModal()">+ New Farm</button>
+      </div>
+
+      <div id="no-farm-message" style="display: none; text-align: center; padding: 5rem;">
+        <i class="fas fa-tractor fa-4x" style="color: #cbd5e1; margin-bottom: 1.5rem;"></i>
+        <h2>No farm selected</h2>
+        <p>Register your first farm to start tracking assets and team members.</p>
+      </div>
+
+      <div id="farm-data-view">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>Total Asset Value</h3>
+            <div class="value" id="stat-asset-value">₹0</div>
+          </div>
+          <div class="stat-card">
+            <h3>Active Production</h3>
+            <div class="value" id="stat-production">0 kg</div>
+          </div>
+          <div class="stat-card">
+            <h3>Team Size</h3>
+            <div class="value" id="stat-team">0</div>
+          </div>
         </div>
-    </div>
 
-    <!-- Footer -->
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
-      <h3>AgriTech</h3>
-      <p>Empowering India's Farming Future</p>
-      <div class="social-media">
-        <a href="https://instagram.com" target="_blank" aria-label="Follow us on Instagram">
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a href="https://github.com/omroy07" target="_blank" aria-label="View our GitHub repositories">
-          <i class="fab fa-github"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank"
-          aria-label="Connect with us on LinkedIn">
-          <i class="fab fa-linkedin"></i>
-        </a>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <h2>Recent Assets</h2>
+              <button class="btn" style="background: #f1f5f9;" onclick="openAssetModal()">+ Add
+                Asset</button>
+            </div>
+            <div class="asset-list" id="asset-list">
+              <!-- Assets injected here -->
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2>Team</h2>
+              <button class="btn" style="border: 1px solid #e2e8f0; background: none;"
+                onclick="openInviteModal()">Invite</button>
+            </div>
+            <div class="member-list" id="team-list">
+              <!-- Members injected here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modals -->
+  <div id="new-farm-modal" class="modal">
+    <div class="modal-body">
+      <h2>Add New Farm</h2>
+      <div class="form-group">
+        <label>Farm Name</label>
+        <input type="text" class="form-input" id="farm-name" placeholder="Green Valley Estate">
+      </div>
+      <div class="form-group">
+        <label>Location</label>
+        <input type="text" class="form-input" id="farm-loc" placeholder="District, State">
+      </div>
+      <div class="btn-group" style="display: flex; gap: 1rem;">
+        <button class="btn btn-primary" style="flex: 1;" onclick="createFarm()">Save Farm</button>
+        <button class="btn" style="background: #e5e7eb;" onclick="closeModals()">Cancel</button>
       </div>
     </div>
-    <div class="footer-links">
-      <h4>Quick Links</h4>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="main.html">Dashboard</a></li>
-        <li><a href="feed-back.html">Feedback</a></li>
-        <li><a href="chat.html">AI Assistant</a></li>
-      </ul>
-    </div>
-    <div class="footer-links">
-      <h4>Tools</h4>
-      <ul>
-        <li><a href="Crop Recommendation/templates/index.html">Crop Recommendation</a></li>
-        <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
-        <li><a href="Disease prediction/template/index.html">Disease Detector</a></li>
-        <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
-      </ul>
-    </div>
   </div>
-  <div class="footer-bottom">© 2025 AgriTech • Made for farmers</div>
-</footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="farm_dashboard.js"></script>
-  <script src="theme.js"></script>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="images/logo.png" alt="AgriTech logo" class="footer-logo">
+        <h3>AgriTech</h3>
+        <p>Empowering India's Farming Future</p>
+        <div class="social-media">
+          <a href="https://instagram.com" target="_blank" aria-label="Follow us on Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://github.com/omroy07" target="_blank" aria-label="View our GitHub repositories">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/om-roy-3b809628a/" target="_blank"
+            aria-label="Connect with us on LinkedIn">
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="main.html">Dashboard</a></li>
+          <li><a href="feed-back.html">Feedback</a></li>
+          <li><a href="chat.html">AI Assistant</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="Crop Recommendation/templates/index.html">Crop Recommendation</a></li>
+          <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
+          <li><a href="Disease prediction/template/index.html">Disease Detector</a></li>
+          <li><a href="Crop_Planning/templates/cropplan.html">Crop Planner</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2025 AgriTech • Made for farmers
+      <div class="footer-section footer-newsletter">
+        <h4>Newsletter</h4>
+        <p class="newsletter-desc">
+          Subscribe to get the latest farming insights, tips, and updates.
+        </p>
+        <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
+          <div class="newsletter-input-group">
+            <input type="email" class="newsletter-input" placeholder="Enter your email to get the latest updates..."
+              required aria-label="Email address for newsletter" />
+            <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
+              <span>Subscribe</span>
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+          <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
+          <div class="newsletter-footer-optout">
+            <small>No spam. <a href="javascript:void(0)" onclick="openUnsubscribeModal(event)">Unsubscribe</a>
+              anytime.</small>
+          </div>
+        </form>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="farm_dashboard.js"></script>
+  <script src="footer.js"></script>
 </body>
 
 </html>

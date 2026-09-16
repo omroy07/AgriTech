@@ -1738,17 +1738,19 @@
             overflow-y: auto;
             margin-top: 1rem;
         }
-        body[data-theme="dark"] .cart-panel {
-    background: #1e1e1e;
-    color: #f0f0f0;
-    border-left: 1px solid #444;
-    box-shadow: -2px 0 10px rgba(0,0,0,0.7);
-}
 
-body[data-theme="dark"] .cart-panel .close-cart {
-    color: #f0f0f0;
-}
+        body[data-theme="dark"] .cart-panel {
+            background: #1e1e1e;
+            color: #f0f0f0;
+            border-left: 1px solid #444;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.7);
+        }
+
+        body[data-theme="dark"] .cart-panel .close-cart {
+            color: #f0f0f0;
+        }
     </style>
+    <link rel="stylesheet" href="footer.css" />
 </head>
 
 <body data-theme="dark">
@@ -1765,16 +1767,16 @@ body[data-theme="dark"] .cart-panel .close-cart {
             </div>
             <div>
                 <button id="themeToggle" class="theme-toggle" aria-label="Toggle light/dark theme">
-        <span class="theme-toggle-track">
-          <span class="theme-toggle-icon sun-icon" aria-hidden="true">
-            <i class="fas fa-sun"></i>
-          </span>
-          <span class="theme-toggle-icon moon-icon" aria-hidden="true">
-            <i class="fas fa-moon"></i>
-          </span>
-          <span class="theme-toggle-thumb"></span>
-        </span>
-      </button>
+                    <span class="theme-toggle-track">
+                        <span class="theme-toggle-icon sun-icon" aria-hidden="true">
+                            <i class="fas fa-sun"></i>
+                        </span>
+                        <span class="theme-toggle-icon moon-icon" aria-hidden="true">
+                            <i class="fas fa-moon"></i>
+                        </span>
+                        <span class="theme-toggle-thumb"></span>
+                    </span>
+                </button>
 
             </div>
         </nav>
@@ -1911,141 +1913,142 @@ body[data-theme="dark"] .cart-panel .close-cart {
                                 <i class="fas fa-star"></i> 4.8
                             </div>
                         </div>
-                        <p class="product-description">Premium quality tractor which can be used to carry upto 100 kg of produce.</p>
+                        <p class="product-description">Premium quality tractor which can be used to carry upto 100 kg of
+                            produce.</p>
                         <div class="product-details">
                             <div class="product-price">₹4,50,000</div>
-                            </div>
                         </div>
-                        <div class="product-actions">
-                            <button class="btn-primary" onclick="addToCart('Fresh Organic Carrots')">
-                                <i class="fas fa-cart-plus"></i> Add to Cart
-                            </button>
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn-primary" onclick="addToCart('Fresh Organic Carrots')">
+                            <i class="fas fa-cart-plus"></i> Add to Cart
+                        </button>
 
-                            <button class="btn-primary" onclick="contactSeller('Kumar Farms')">Contact Seller</button>
-                            <button class="btn-secondary" onclick="toggleLike(this)" aria-label="Add to favorites"
-                                title="Add to favorites"><i class="far fa-heart"></i></button>
-                        </div>
+                        <button class="btn-primary" onclick="contactSeller('Kumar Farms')">Contact Seller</button>
+                        <button class="btn-secondary" onclick="toggleLike(this)" aria-label="Add to favorites"
+                            title="Add to favorites"><i class="far fa-heart"></i></button>
                     </div>
                 </div>
+            </div>
 
-                <div class="product-card" data-category="Storage" data-location="kashmir" data-price="18000"
-                    data-rating="4.9" data-distance="200" data-newest="1">
-                    <div class="product-image">
-                        🏪
-                        <div class="product-badge premium">
-                            24/7</div>
+            <div class="product-card" data-category="Storage" data-location="kashmir" data-price="18000"
+                data-rating="4.9" data-distance="200" data-newest="1">
+                <div class="product-image">
+                    🏪
+                    <div class="product-badge premium">
+                        24/7</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-title">
+                        Storage Space</div>
+                    <div class="product-seller">
+                        <i class="fas fa-user-circle"></i> Mountain Fresh, Kashmir
+                        <div class="seller-rating">
+                            <i class="fas fa-star"></i> 4.9
+                        </div>
                     </div>
-                    <div class="product-info">
-                        <div class="product-title">
-                            Storage Space</div>
-                        <div class="product-seller">
-                            <i class="fas fa-user-circle"></i> Mountain Fresh, Kashmir
-                            <div class="seller-rating">
-                                <i class="fas fa-star"></i> 4.9
-                            </div>
-                        </div>
-                        <p class="product-description">Suitable for all types of crops.</p>
-                        <div class="product-details">
-                            <div class="product-price">₹18000/month</div>
-                            </div>
-                        </div>
-                        <div class="product-actions">
-                            <button class="btn-primary" onclick="addToCart('Kashmiri Red Apples')">
-                                <i class="fas fa-cart-plus"></i> Add to Cart
-                            </button>
-
-
-                            <button class="btn-primary" onclick="contactSeller('Mountain Fresh')">Contact the
-                                seller</button>
-
-                            <button class="btn-secondary" onclick="toggleLike(this)" aria-label="Add to favorites">
-                                <i class="far fa-heart"></i>
-                            </button>
-                        </div>
-
+                    <p class="product-description">Suitable for all types of crops.</p>
+                    <div class="product-details">
+                        <div class="product-price">₹18000/month</div>
                     </div>
                 </div>
+                <div class="product-actions">
+                    <button class="btn-primary" onclick="addToCart('Kashmiri Red Apples')">
+                        <i class="fas fa-cart-plus"></i> Add to Cart
+                    </button>
+
+
+                    <button class="btn-primary" onclick="contactSeller('Mountain Fresh')">Contact the
+                        seller</button>
+
+                    <button class="btn-secondary" onclick="toggleLike(this)" aria-label="Add to favorites">
+                        <i class="far fa-heart"></i>
+                    </button>
                 </div>
 
             </div>
         </div>
+    </div>
 
-        <!-- LOAD MORE + PAGINATION UI (ONLY ADDITION) -->
-        <div id="loadMoreSection">
-            <button id="loadMoreBtn" onclick="loadMoreProducts()">
-                <i class="fas fa-plus-circle"></i> Load More Products
+    </div>
+    </div>
+
+    <!-- LOAD MORE + PAGINATION UI (ONLY ADDITION) -->
+    <div id="loadMoreSection">
+        <button id="loadMoreBtn" onclick="loadMoreProducts()">
+            <i class="fas fa-plus-circle"></i> Load More Products
+        </button>
+        <p>
+            Showing <span id="showingCount">6</span> of <span id="totalCount">2847</span> products
+        </p>
+    </div>
+
+    <div id="paginationSection">
+        <div>
+            <button class="sort-btn" onclick="goToPage(currentPage - 1)" id="prevBtn">
+                <i class="fas fa-chevron-left"></i> Previous
             </button>
-            <p>
-                Showing <span id="showingCount">6</span> of <span id="totalCount">2847</span> products
-            </p>
+
+            <div id="pageNumbers"></div>
+
+            <button class="sort-btn" onclick="goToPage(currentPage + 1)" id="nextBtn">
+                Next <i class="fas fa-chevron-right"></i>
+            </button>
         </div>
 
-        <div id="paginationSection">
-            <div>
-                <button class="sort-btn" onclick="goToPage(currentPage - 1)" id="prevBtn">
-                    <i class="fas fa-chevron-left"></i> Previous
-                </button>
+        <select class="filter-select" onchange="jumpToPage(this.value)" id="pageJump" aria-label="Jump to page">
+            <option value="">Jump to page...</option>
+        </select>
 
-                <div id="pageNumbers"></div>
+        <p>
+            Page <span id="currentPageDisplay">1</span> of <span id="totalPagesDisplay">158</span>
+        </p>
+    </div>
 
-                <button class="sort-btn" onclick="goToPage(currentPage + 1)" id="nextBtn">
-                    Next <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-
-            <select class="filter-select" onchange="jumpToPage(this.value)" id="pageJump" aria-label="Jump to page">
-                <option value="">Jump to page...</option>
-            </select>
-
-            <p>
-                Page <span id="currentPageDisplay">1</span> of <span id="totalPagesDisplay">158</span>
-            </p>
+    <div class="price-tracker">
+        <div class="section-header">
+            <h2><i class="fas fa-chart-line"></i> Market Price Trends</h2>
+            <p>Live price tracking and market analysis</p>
         </div>
-
-        <div class="price-tracker">
-            <div class="section-header">
-                <h2><i class="fas fa-chart-line"></i> Market Price Trends</h2>
-                <p>Live price tracking and market analysis</p>
-            </div>
-            <div class="price-chart">
-                <i class="fas fa-chart-area"></i>
-                <p>Interactive Visualization Ready</p>
-                <p>Real-time data visualization
-                    of commodity prices across different markets</p>
-            </div>
-            <div class="price-trends">
-                <div class="trend-item">
-                    <div class="trend-icon">⛏️</div>
-                    <div class="trend-info">
-                        <h4>Chisels</h4>
-                        <div class="trend-price" id="carrotPrice">₹4500</div>
-                        <div class="trend-change" id="carrotChange">+5% this week
-                        </div>
+        <div class="price-chart">
+            <i class="fas fa-chart-area"></i>
+            <p>Interactive Visualization Ready</p>
+            <p>Real-time data visualization
+                of commodity prices across different markets</p>
+        </div>
+        <div class="price-trends">
+            <div class="trend-item">
+                <div class="trend-icon">⛏️</div>
+                <div class="trend-info">
+                    <h4>Chisels</h4>
+                    <div class="trend-price" id="carrotPrice">₹4500</div>
+                    <div class="trend-change" id="carrotChange">+5% this week
                     </div>
                 </div>
-                <div class="trend-item">
-                    <div class="trend-icon">👢</div>
-                    <div class="trend-info">
-                        <h4>Farming boots</h4>
-                        <div class="trend-price" id="applePrice">₹1300g</div>
-                        <div class="trend-change negative" id="appleChange">-2% this week
-                        </div>
+            </div>
+            <div class="trend-item">
+                <div class="trend-icon">👢</div>
+                <div class="trend-info">
+                    <h4>Farming boots</h4>
+                    <div class="trend-price" id="applePrice">₹1300g</div>
+                    <div class="trend-change negative" id="appleChange">-2% this week
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="cta-section">
-            <h2>Start Trading Today</h2>
-            <p>Join thousands of farmers and buyers in our
-                marketplace</p>
-            <div>
-                <button class="cta-button" onclick="showNotification('Product listing started!', 'success')">List
-                    Your Products</button>
-                <button class="cta-button" onclick="showNotification('Supplier search initiated!', 'info')">Find
-                    Suppliers</button>
-            </div>
+    <div class="cta-section">
+        <h2>Start Trading Today</h2>
+        <p>Join thousands of farmers and buyers in our
+            marketplace</p>
+        <div>
+            <button class="cta-button" onclick="showNotification('Product listing started!', 'success')">List
+                Your Products</button>
+            <button class="cta-button" onclick="showNotification('Supplier search initiated!', 'info')">Find
+                Suppliers</button>
         </div>
+    </div>
     </div>
 
     <div class="cart-widget" id="cartWidget" onclick="toggleCart()">
@@ -2559,69 +2562,174 @@ body[data-theme="dark"] .cart-panel .close-cart {
 
     <script src="auth.js"></script>
     <!-- ===== Universal Back To Top Button (All Pages) ===== -->
-<style>
-  #globalBackToTop {
-    position: fixed;
-    bottom: 90px; /* prevents overlap with chatbot/floating icons */
-    right: 25px;
-    z-index: 9999;
-    display: none;
-    background: #2ecc71;
-    color: #ffffff;
-    border: none;
-    border-radius: 50%;
-    width: 52px;
-    height: 52px;
-    font-size: 22px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-    transition: opacity 0.3s ease, transform 0.2s ease;
-  }
+    <style>
+        #globalBackToTop {
+            position: fixed;
+            bottom: 90px;
+            /* prevents overlap with chatbot/floating icons */
+            right: 25px;
+            z-index: 9999;
+            display: none;
+            background: #2ecc71;
+            color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            width: 52px;
+            height: 52px;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+            transition: opacity 0.3s ease, transform 0.2s ease;
+        }
 
-  #globalBackToTop:hover {
-    transform: scale(1.12);
-    background: #27ae60;
-  }
+        #globalBackToTop:hover {
+            transform: scale(1.12);
+            background: #27ae60;
+        }
 
-  @media (max-width: 768px) {
-    #globalBackToTop {
-      bottom: 100px; /* better spacing on mobile */
-      right: 18px;
-      width: 48px;
-      height: 48px;
-      font-size: 20px;
-    }
-  }
-</style>
+        @media (max-width: 768px) {
+            #globalBackToTop {
+                bottom: 100px;
+                /* better spacing on mobile */
+                right: 18px;
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
+            }
+        }
+    </style>
 
-<button id="globalBackToTop" title="Back to Top">↑</button>
+    <button id="globalBackToTop" title="Back to Top">↑</button>
 
-<script>
-  (function () {
-    const btn = document.getElementById("globalBackToTop");
+    <script>
+        (function () {
+            const btn = document.getElementById("globalBackToTop");
 
-    // Show button after scrolling down
-    window.addEventListener("scroll", function () {
-      if (window.scrollY > 300) {
-        btn.style.display = "block";
-      } else {
-        btn.style.display = "none";
-      }
-    });
+            // Show button after scrolling down
+            window.addEventListener("scroll", function () {
+                if (window.scrollY > 300) {
+                    btn.style.display = "block";
+                } else {
+                    btn.style.display = "none";
+                }
+            });
 
-    // Smooth scroll to top on click
-    btn.addEventListener("click", function () {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    });
-  })();
-</script>
-<!-- ===== End Back To Top Button ===== -->
+            // Smooth scroll to top on click
+            btn.addEventListener("click", function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            });
+        })();
+    </script>
+    <!-- ===== End Back To Top Button ===== -->
 
-  <script src="theme.js"></script>
+    <footer class="site-footer tech-dark-theme final-match">
+        <div class="footer-top-accent"></div>
+
+        <div class="footer-inner-content">
+            <div class="footer-section footer-brand">
+                <a href="index.html" class="brand-header">
+                    <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
+                    <h3>AgriTech</h3>
+                </a>
+
+                <p class="tagline">
+                    Empowering India's Farming Future with innovative technology
+                    connecting every stakeholder.
+                </p>
+
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="X (formerly Twitter)"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-group-links">
+                <div class="footer-section footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li>
+                            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                        </li>
+                        <li>
+                            <a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="marketplace.html"><i class="fas fa-store"></i> Marketplace</a>
+                        </li>
+                        <li>
+                            <a href="weather_dashboard.html"><i class="fas fa-cloud-sun"></i> Weather</a>
+                        </li>
+                        <li>
+                            <a href="contact.html"><i class="fas fa-headset"></i> Contact Us</a>
+                        </li>
+                        <li>
+                            <a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+                        </li>
+                        <li>
+                            <a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a>
+                        </li>
+                        <li>
+                            <a href="privacy-policy.html"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="footer-section footer-contact">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>
+                            <a href="mailto:contact@agritech.com">
+                                <i class="fas fa-envelope"></i> contact@agritech.com
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:+910000000000">
+                                <i class="fas fa-phone"></i> +91 00000 00000
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="footer-section footer-newsletter">
+                    <h4>Newsletter</h4>
+                    <p class="newsletter-desc">
+                        Subscribe to get the latest farming insights, tips, and updates.
+                    </p>
+                    <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
+                        <div class="newsletter-input-group">
+                            <input type="email" class="newsletter-input"
+                                placeholder="Enter your email to get the latest updates..." required
+                                aria-label="Email address for newsletter" />
+                            <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
+                                <span>Subscribe</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
+                        <div class="newsletter-footer-optout">
+                            <small>No spam. <a href="javascript:void(0)"
+                                    onclick="openUnsubscribeModal(event)">Unsubscribe</a> anytime.</small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© <span id="current-year">2026</span> AgriTech. All rights reserved. <a
+                    href="privacy-policy.html">Privacy Policy</a> · <a href="terms-and-service.html">Terms</a> · <a
+                    href="cookie-policy.html">Cookie Policy</a></p>
+        </div>
+
+        <div class="footer-wave-overlay"></div>
+    </footer>
+    <script src="footer.js"></script>
 </body>
 
 </html>

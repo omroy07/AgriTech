@@ -1,479 +1,483 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify Produce - AgriTech Traceability</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify Produce - AgriTech Traceability</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
 
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 30px;
-        }
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 30px;
+    }
 
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
 
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
+    .header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
 
-        .card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            padding: 30px;
-            margin-bottom: 20px;
-        }
+    .card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      padding: 30px;
+      margin-bottom: 20px;
+    }
 
-        .search-section {
-            text-align: center;
-        }
+    .search-section {
+      text-align: center;
+    }
 
-        .search-input {
-            width: 100%;
-            padding: 15px;
-            font-size: 1rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            transition: border-color 0.3s;
-        }
+    .search-input {
+      width: 100%;
+      padding: 15px;
+      font-size: 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      transition: border-color 0.3s;
+    }
 
-        .search-input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
+    .search-input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
 
-        .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
+    .btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
 
-        .btn:hover {
-            transform: translateY(-2px);
-        }
+    .btn:hover {
+      transform: translateY(-2px);
+    }
 
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
 
-        .result-section {
-            display: none;
-        }
+    .result-section {
+      display: none;
+    }
 
-        .result-section.show {
-            display: block;
-        }
+    .result-section.show {
+      display: block;
+    }
 
-        .passport-header {
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
-        }
+    .passport-header {
+      border-bottom: 3px solid #667eea;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
 
-        .passport-header h2 {
-            color: #333;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
+    .passport-header h2 {
+      color: #333;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
 
-        .batch-id {
-            font-family: monospace;
-            background: #f0f0f0;
-            padding: 8px 15px;
-            border-radius: 5px;
-            display: inline-block;
-            color: #667eea;
-            font-weight: bold;
-        }
+    .batch-id {
+      font-family: monospace;
+      background: #f0f0f0;
+      padding: 8px 15px;
+      border-radius: 5px;
+      display: inline-block;
+      color: #667eea;
+      font-weight: bold;
+    }
 
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
 
-        .info-card {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-        }
+    .info-card {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      border-left: 4px solid #667eea;
+    }
 
-        .info-card h3 {
-            color: #667eea;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
+    .info-card h3 {
+      color: #667eea;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
 
-        .info-card p {
-            color: #333;
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
+    .info-card p {
+      color: #333;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
 
-        .status-badge {
-            display: inline-block;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-        }
+    .status-badge {
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+    }
 
-        .status-harvested {
-            background: #fef3c7;
-            color: #92400e;
-        }
+    .status-harvested {
+      background: #fef3c7;
+      color: #92400e;
+    }
 
-        .status-quality_check {
-            background: #dbeafe;
-            color: #1e40af;
-        }
+    .status-quality_check {
+      background: #dbeafe;
+      color: #1e40af;
+    }
 
-        .status-logistics {
-            background: #e0e7ff;
-            color: #4338ca;
-        }
+    .status-logistics {
+      background: #e0e7ff;
+      color: #4338ca;
+    }
 
-        .status-in_shop {
-            background: #d1fae5;
-            color: #065f46;
-        }
+    .status-in_shop {
+      background: #d1fae5;
+      color: #065f46;
+    }
 
-        .journey-section {
-            margin-top: 30px;
-        }
+    .journey-section {
+      margin-top: 30px;
+    }
 
-        .journey-section h3 {
-            color: #333;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-        }
+    .journey-section h3 {
+      color: #333;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+    }
 
-        .journey-section h3::before {
-            content: '🛤️';
-            margin-right: 10px;
-        }
+    .journey-section h3::before {
+      content: '🛤️';
+      margin-right: 10px;
+    }
 
-        .timeline {
-            position: relative;
-            padding-left: 40px;
-        }
+    .timeline {
+      position: relative;
+      padding-left: 40px;
+    }
 
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: #667eea;
-        }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #667eea;
+    }
 
-        .timeline-item {
-            position: relative;
-            margin-bottom: 30px;
-            padding-left: 20px;
-        }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 30px;
+      padding-left: 20px;
+    }
 
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -47px;
-            top: 0;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            background: #667eea;
-            border: 3px solid white;
-            box-shadow: 0 0 0 3px #667eea;
-        }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -47px;
+      top: 0;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: #667eea;
+      border: 3px solid white;
+      box-shadow: 0 0 0 3px #667eea;
+    }
 
-        .timeline-date {
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 5px;
-        }
+    .timeline-date {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 5px;
+    }
 
-        .timeline-event {
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 5px;
-        }
+    .timeline-event {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+    }
 
-        .timeline-role {
-            font-size: 0.9rem;
-            color: #667eea;
-            font-weight: 500;
-        }
+    .timeline-role {
+      font-size: 0.9rem;
+      color: #667eea;
+      font-weight: 500;
+    }
 
-        .timeline-notes {
-            font-size: 0.9rem;
-            color: #666;
-            margin-top: 5px;
-            font-style: italic;
-        }
+    .timeline-notes {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 5px;
+      font-style: italic;
+    }
 
-        .error-message {
-            background: #fee;
-            color: #c00;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            border-left: 4px solid #c00;
-        }
+    .error-message {
+      background: #fee;
+      color: #c00;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      border-left: 4px solid #c00;
+    }
 
-        .loading {
-            text-align: center;
-            padding: 30px;
-        }
+    .loading {
+      text-align: center;
+      padding: 30px;
+    }
 
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #667eea;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
+    }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
 
-        .verified-badge {
-            display: inline-flex;
-            align-items: center;
-            background: #d1fae5;
-            color: #065f46;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-weight: 600;
-            margin-top: 10px;
-        }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
 
-        .verified-badge::before {
-            content: '✓';
-            margin-right: 8px;
-            font-size: 1.2rem;
-        }
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      background: #d1fae5;
+      color: #065f46;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: 600;
+      margin-top: 10px;
+    }
 
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
+    .verified-badge::before {
+      content: '✓';
+      margin-right: 8px;
+      font-size: 1.2rem;
+    }
 
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 1.8rem;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="footer.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
+
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🌾 AgriTech Traceability</h1>
-            <p>Verify the origin and journey of your produce</p>
-        </div>
-
-        <div class="card search-section">
-            <h2 style="margin-bottom: 20px; color: #333;">Enter Batch ID</h2>
-            <input 
-                type="text" 
-                id="batchIdInput" 
-                class="search-input" 
-                placeholder="Enter Batch ID (e.g., BATCH-A1B2C3D4E5F6G7H8)"
-                onkeypress="handleKeyPress(event)"
-            >
-            <button class="btn" onclick="verifyBatch()">Verify Batch</button>
-            <div id="errorMessage"></div>
-        </div>
-
-        <div id="loadingSection" class="card loading" style="display: none;">
-            <div class="spinner"></div>
-            <p>Verifying batch...</p>
-        </div>
-
-        <div id="resultSection" class="card result-section">
-            <div class="passport-header">
-                <h2>Traceability Passport</h2>
-                <span class="batch-id" id="displayBatchId"></span>
-                <div class="verified-badge">Verified Authentic</div>
-            </div>
-
-            <div class="info-grid">
-                <div class="info-card">
-                    <h3>Produce</h3>
-                    <p id="produceName"></p>
-                    <p style="font-size: 0.9rem; color: #666;" id="produceType"></p>
-                </div>
-
-                <div class="info-card">
-                    <h3>Quantity</h3>
-                    <p id="quantity"></p>
-                </div>
-
-                <div class="info-card">
-                    <h3>Origin</h3>
-                    <p id="origin"></p>
-                </div>
-
-                <div class="info-card">
-                    <h3>Harvest Date</h3>
-                    <p id="harvestDate"></p>
-                </div>
-
-                <div class="info-card">
-                    <h3>Quality Grade</h3>
-                    <p id="qualityGrade"></p>
-                </div>
-
-                <div class="info-card">
-                    <h3>Current Status</h3>
-                    <p id="currentStatus"></p>
-                </div>
-
-                <div class="info-card" id="certificationCard" style="display: none;">
-                    <h3>Certification</h3>
-                    <p id="certification"></p>
-                </div>
-            </div>
-
-            <div class="journey-section">
-                <h3>Supply Chain Journey</h3>
-                <div class="timeline" id="journeyTimeline"></div>
-            </div>
-        </div>
+  <div class="container">
+    <div class="header">
+      <h1>🌾 AgriTech Traceability</h1>
+      <p>Verify the origin and journey of your produce</p>
     </div>
 
-    <script>
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                verifyBatch();
-            }
+    <div class="card search-section">
+      <h2 style="margin-bottom: 20px; color: #333;">Enter Batch ID</h2>
+      <input type="text" id="batchIdInput" class="search-input"
+        placeholder="Enter Batch ID (e.g., BATCH-A1B2C3D4E5F6G7H8)" onkeypress="handleKeyPress(event)">
+      <button class="btn" onclick="verifyBatch()">Verify Batch</button>
+      <div id="errorMessage"></div>
+    </div>
+
+    <div id="loadingSection" class="card loading" style="display: none;">
+      <div class="spinner"></div>
+      <p>Verifying batch...</p>
+    </div>
+
+    <div id="resultSection" class="card result-section">
+      <div class="passport-header">
+        <h2>Traceability Passport</h2>
+        <span class="batch-id" id="displayBatchId"></span>
+        <div class="verified-badge">Verified Authentic</div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>Produce</h3>
+          <p id="produceName"></p>
+          <p style="font-size: 0.9rem; color: #666;" id="produceType"></p>
+        </div>
+
+        <div class="info-card">
+          <h3>Quantity</h3>
+          <p id="quantity"></p>
+        </div>
+
+        <div class="info-card">
+          <h3>Origin</h3>
+          <p id="origin"></p>
+        </div>
+
+        <div class="info-card">
+          <h3>Harvest Date</h3>
+          <p id="harvestDate"></p>
+        </div>
+
+        <div class="info-card">
+          <h3>Quality Grade</h3>
+          <p id="qualityGrade"></p>
+        </div>
+
+        <div class="info-card">
+          <h3>Current Status</h3>
+          <p id="currentStatus"></p>
+        </div>
+
+        <div class="info-card" id="certificationCard" style="display: none;">
+          <h3>Certification</h3>
+          <p id="certification"></p>
+        </div>
+      </div>
+
+      <div class="journey-section">
+        <h3>Supply Chain Journey</h3>
+        <div class="timeline" id="journeyTimeline"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function handleKeyPress(event) {
+      if (event.key === 'Enter') {
+        verifyBatch();
+      }
+    }
+
+    async function verifyBatch() {
+      const batchId = document.getElementById('batchIdInput').value.trim();
+      const errorDiv = document.getElementById('errorMessage');
+      const loadingSection = document.getElementById('loadingSection');
+      const resultSection = document.getElementById('resultSection');
+
+      // Clear previous errors
+      errorDiv.innerHTML = '';
+      resultSection.classList.remove('show');
+
+      // Validate input
+      if (!batchId) {
+        errorDiv.innerHTML = '<div class="error-message">Please enter a Batch ID</div>';
+        return;
+      }
+
+      // Show loading
+      loadingSection.style.display = 'block';
+
+      try {
+        // Call API
+        const response = await fetch(`/api/v1/traceability/verify/${batchId}`);
+        const data = await response.json();
+
+        loadingSection.style.display = 'none';
+
+        if (data.status === 'success' && data.data.passport) {
+          displayPassport(data.data.passport);
+        } else {
+          errorDiv.innerHTML = `<div class="error-message">${data.message || 'Batch not found'}</div>`;
         }
+      } catch (error) {
+        loadingSection.style.display = 'none';
+        errorDiv.innerHTML = `<div class="error-message">Error verifying batch: ${error.message}</div>`;
+      }
+    }
 
-        async function verifyBatch() {
-            const batchId = document.getElementById('batchIdInput').value.trim();
-            const errorDiv = document.getElementById('errorMessage');
-            const loadingSection = document.getElementById('loadingSection');
-            const resultSection = document.getElementById('resultSection');
+    function displayPassport(passport) {
+      // Display batch ID
+      document.getElementById('displayBatchId').textContent = passport.batch_id;
 
-            // Clear previous errors
-            errorDiv.innerHTML = '';
-            resultSection.classList.remove('show');
+      // Display produce info
+      document.getElementById('produceName').textContent = passport.produce.name;
+      document.getElementById('produceType').textContent = passport.produce.type;
+      document.getElementById('quantity').textContent = `${passport.produce.quantity} kg`;
 
-            // Validate input
-            if (!batchId) {
-                errorDiv.innerHTML = '<div class="error-message">Please enter a Batch ID</div>';
-                return;
-            }
+      // Display origin
+      document.getElementById('origin').textContent = passport.origin.location;
+      document.getElementById('harvestDate').textContent = formatDate(passport.origin.harvest_date);
 
-            // Show loading
-            loadingSection.style.display = 'block';
+      // Display quality
+      document.getElementById('qualityGrade').textContent = passport.quality.grade || 'Not graded yet';
 
-            try {
-                // Call API
-                const response = await fetch(`/api/v1/traceability/verify/${batchId}`);
-                const data = await response.json();
+      // Display status with badge
+      const statusElement = document.getElementById('currentStatus');
+      const statusClass = `status-${passport.current_status.toLowerCase().replace('_', '')}`;
+      statusElement.innerHTML = `<span class="status-badge ${statusClass}">${passport.current_status}</span>`;
 
-                loadingSection.style.display = 'none';
+      // Display certification if available
+      if (passport.produce.certification) {
+        document.getElementById('certificationCard').style.display = 'block';
+        document.getElementById('certification').textContent = passport.produce.certification;
+      } else {
+        document.getElementById('certificationCard').style.display = 'none';
+      }
 
-                if (data.status === 'success' && data.data.passport) {
-                    displayPassport(data.data.passport);
-                } else {
-                    errorDiv.innerHTML = `<div class="error-message">${data.message || 'Batch not found'}</div>`;
-                }
-            } catch (error) {
-                loadingSection.style.display = 'none';
-                errorDiv.innerHTML = `<div class="error-message">Error verifying batch: ${error.message}</div>`;
-            }
-        }
+      // Display journey
+      displayJourney(passport.journey);
 
-        function displayPassport(passport) {
-            // Display batch ID
-            document.getElementById('displayBatchId').textContent = passport.batch_id;
+      // Show result section
+      document.getElementById('resultSection').classList.add('show');
+    }
 
-            // Display produce info
-            document.getElementById('produceName').textContent = passport.produce.name;
-            document.getElementById('produceType').textContent = passport.produce.type;
-            document.getElementById('quantity').textContent = `${passport.produce.quantity} kg`;
+    function displayJourney(journey) {
+      const timeline = document.getElementById('journeyTimeline');
+      timeline.innerHTML = '';
 
-            // Display origin
-            document.getElementById('origin').textContent = passport.origin.location;
-            document.getElementById('harvestDate').textContent = formatDate(passport.origin.harvest_date);
+      journey.forEach(step => {
+        const item = document.createElement('div');
+        item.className = 'timeline-item';
 
-            // Display quality
-            document.getElementById('qualityGrade').textContent = passport.quality.grade || 'Not graded yet';
+        const eventLabel = getEventLabel(step.event, step.to_status);
 
-            // Display status with badge
-            const statusElement = document.getElementById('currentStatus');
-            const statusClass = `status-${passport.current_status.toLowerCase().replace('_', '')}`;
-            statusElement.innerHTML = `<span class="status-badge ${statusClass}">${passport.current_status}</span>`;
-
-            // Display certification if available
-            if (passport.produce.certification) {
-                document.getElementById('certificationCard').style.display = 'block';
-                document.getElementById('certification').textContent = passport.produce.certification;
-            } else {
-                document.getElementById('certificationCard').style.display = 'none';
-            }
-
-            // Display journey
-            displayJourney(passport.journey);
-
-            // Show result section
-            document.getElementById('resultSection').classList.add('show');
-        }
-
-        function displayJourney(journey) {
-            const timeline = document.getElementById('journeyTimeline');
-            timeline.innerHTML = '';
-
-            journey.forEach(step => {
-                const item = document.createElement('div');
-                item.className = 'timeline-item';
-
-                const eventLabel = getEventLabel(step.event, step.to_status);
-
-                item.innerHTML = `
+        item.innerHTML = `
                     <div class="timeline-date">${formatDateTime(step.timestamp)}</div>
                     <div class="timeline-event">${eventLabel}</div>
                     <div class="timeline-role">By: ${formatRole(step.handler_role)}</div>
@@ -481,119 +485,223 @@
                     ${step.location ? `<div class="timeline-notes">📍 ${step.location}</div>` : ''}
                 `;
 
-                timeline.appendChild(item);
-            });
-        }
-
-        function getEventLabel(event, toStatus) {
-            const labels = {
-                'BATCH_CREATED': '🌱 Batch Created',
-                'STATUS_CHANGE': `➡️ ${toStatus ? toStatus.replace('_', ' ') : 'Status Updated'}`,
-                'QUALITY_UPDATE': '✓ Quality Inspected'
-            };
-            return labels[event] || event;
-        }
-
-        function formatRole(role) {
-            return role.charAt(0).toUpperCase() + role.slice(1).toLowerCase();
-        }
-
-        function formatDate(dateString) {
-            if (!dateString) return 'N/A';
-            const date = new Date(dateString);
-            return date.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-        }
-
-        function formatDateTime(dateString) {
-            if (!dateString) return 'N/A';
-            const date = new Date(dateString);
-            return date.toLocaleString('en-US', { 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
-
-        // Check if batch ID is in URL
-        window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const batchId = urlParams.get('batch');
-            
-            if (batchId) {
-                document.getElementById('batchIdInput').value = batchId;
-                verifyBatch();
-            }
-        });
-    </script>
-    <!-- ===== Universal Back To Top Button (All Pages) ===== -->
-<style>
-  #globalBackToTop {
-    position: fixed;
-    bottom: 90px; /* prevents overlap with chatbot/floating icons */
-    right: 25px;
-    z-index: 9999;
-    display: none;
-    background: #2ecc71;
-    color: #ffffff;
-    border: none;
-    border-radius: 50%;
-    width: 52px;
-    height: 52px;
-    font-size: 22px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-    transition: opacity 0.3s ease, transform 0.2s ease;
-  }
-
-  #globalBackToTop:hover {
-    transform: scale(1.12);
-    background: #27ae60;
-  }
-
-  @media (max-width: 768px) {
-    #globalBackToTop {
-      bottom: 100px; /* better spacing on mobile */
-      right: 18px;
-      width: 48px;
-      height: 48px;
-      font-size: 20px;
+        timeline.appendChild(item);
+      });
     }
-  }
-</style>
 
-<button id="globalBackToTop" title="Back to Top">↑</button>
+    function getEventLabel(event, toStatus) {
+      const labels = {
+        'BATCH_CREATED': '🌱 Batch Created',
+        'STATUS_CHANGE': `➡️ ${toStatus ? toStatus.replace('_', ' ') : 'Status Updated'}`,
+        'QUALITY_UPDATE': '✓ Quality Inspected'
+      };
+      return labels[event] || event;
+    }
 
-<script>
-  (function () {
-    const btn = document.getElementById("globalBackToTop");
+    function formatRole(role) {
+      return role.charAt(0).toUpperCase() + role.slice(1).toLowerCase();
+    }
 
-    // Show button after scrolling down
-    window.addEventListener("scroll", function () {
-      if (window.scrollY > 300) {
-        btn.style.display = "block";
-      } else {
-        btn.style.display = "none";
+    function formatDate(dateString) {
+      if (!dateString) return 'N/A';
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    }
+
+    function formatDateTime(dateString) {
+      if (!dateString) return 'N/A';
+      const date = new Date(dateString);
+      return date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    // Check if batch ID is in URL
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const batchId = urlParams.get('batch');
+
+      if (batchId) {
+        document.getElementById('batchIdInput').value = batchId;
+        verifyBatch();
       }
     });
+  </script>
+  <!-- ===== Universal Back To Top Button (All Pages) ===== -->
+  <style>
+    #globalBackToTop {
+      position: fixed;
+      bottom: 90px;
+      /* prevents overlap with chatbot/floating icons */
+      right: 25px;
+      z-index: 9999;
+      display: none;
+      background: #2ecc71;
+      color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      width: 52px;
+      height: 52px;
+      font-size: 22px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      transition: opacity 0.3s ease, transform 0.2s ease;
+    }
 
-    // Smooth scroll to top on click
-    btn.addEventListener("click", function () {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+    #globalBackToTop:hover {
+      transform: scale(1.12);
+      background: #27ae60;
+    }
+
+    @media (max-width: 768px) {
+      #globalBackToTop {
+        bottom: 100px;
+        /* better spacing on mobile */
+        right: 18px;
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+      }
+    }
+  </style>
+
+  <button id="globalBackToTop" title="Back to Top">↑</button>
+
+  <script>
+    (function () {
+      const btn = document.getElementById("globalBackToTop");
+
+      // Show button after scrolling down
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 300) {
+          btn.style.display = "block";
+        } else {
+          btn.style.display = "none";
+        }
       });
-    });
-  })();
-</script>
-<!-- ===== End Back To Top Button ===== -->
 
-  <script src="theme.js"></script>
+      // Smooth scroll to top on click
+      btn.addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      });
+    })();
+  </script>
+  <!-- ===== End Back To Top Button ===== -->
+
+  <footer class="site-footer tech-dark-theme final-match">
+    <div class="footer-top-accent"></div>
+
+    <div class="footer-inner-content">
+      <div class="footer-section footer-brand">
+        <a href="index.html" class="brand-header">
+          <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
+          <h3>AgriTech</h3>
+        </a>
+
+        <p class="tagline">
+          Empowering India's Farming Future with innovative technology
+          connecting every stakeholder.
+        </p>
+
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="X (formerly Twitter)"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-group-links">
+        <div class="footer-section footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>
+              <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li>
+              <a href="marketplace.html"><i class="fas fa-store"></i> Marketplace</a>
+            </li>
+            <li>
+              <a href="weather_dashboard.html"><i class="fas fa-cloud-sun"></i> Weather</a>
+            </li>
+            <li>
+              <a href="contact.html"><i class="fas fa-headset"></i> Contact Us</a>
+            </li>
+            <li>
+              <a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+            </li>
+            <li>
+              <a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a>
+            </li>
+            <li>
+              <a href="privacy-policy.html"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-contact">
+          <h4>Contact</h4>
+          <ul>
+            <li>
+              <a href="mailto:contact@agritech.com">
+                <i class="fas fa-envelope"></i> contact@agritech.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+910000000000">
+                <i class="fas fa-phone"></i> +91 00000 00000
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-newsletter">
+          <h4>Newsletter</h4>
+          <p class="newsletter-desc">
+            Subscribe to get the latest farming insights, tips, and updates.
+          </p>
+          <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
+            <div class="newsletter-input-group">
+              <input type="email" class="newsletter-input" placeholder="Enter your email to get the latest updates..."
+                required aria-label="Email address for newsletter" />
+              <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
+                <span>Subscribe</span>
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+            <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
+            <div class="newsletter-footer-optout">
+              <small>No spam. <a href="javascript:void(0)" onclick="openUnsubscribeModal(event)">Unsubscribe</a>
+                anytime.</small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="current-year">2026</span> AgriTech. All rights reserved. <a href="privacy-policy.html">Privacy
+          Policy</a> · <a href="terms-and-service.html">Terms</a> · <a href="cookie-policy.html">Cookie Policy</a></p>
+    </div>
+
+    <div class="footer-wave-overlay"></div>
+  </footer>
+  <script src="footer.js"></script>
 </body>
+
 </html>

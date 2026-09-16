@@ -2,274 +2,379 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Field Analytics | AgriTech</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Field Analytics | AgriTech</title>
 
-    <!-- CSS Dependencies -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- CSS Dependencies -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/spatial.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/spatial.css">
+  <link rel="stylesheet" href="footer.css" />
 </head>
 
 <body>
 
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar">
-        <div class="logo">
-            <i class="fa-solid fa-satellite-dish"></i> AgriSpatial
+  <!-- Sidebar Navigation -->
+  <nav class="sidebar">
+    <div class="logo">
+      <i class="fa-solid fa-satellite-dish"></i> AgriSpatial
+    </div>
+    <ul class="nav-links">
+      <li class="active"><a href="#"><i class="fa-solid fa-map"></i> Dashboard</a></li>
+      <li><a href="/"><i class="fa-solid fa-home"></i> Home</a></li>
+      <li><a href="#" id="draw-btn"><i class="fa-solid fa-draw-polygon"></i> Draw Field</a></li>
+      <li><a href="#" id="save-sidebar-btn"><i class="fa-solid fa-floppy-disk"></i> Save Field</a></li>
+      <li><a href="#" id="analyze-btn"><i class="fa-solid fa-chart-line"></i> Analyze</a></li>
+    </ul>
+    <div class="user-profile">
+      <img src="https://via.placeholder.com/40" alt="User">
+      <span>Farmer John</span>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- Header -->
+    <header class="top-bar">
+      <h1>Precision Agriculture Dashboard</h1>
+      <div class="controls">
+        <select id="layer-select" class="glass-input">
+          <option value="satellite">Satellite View</option>
+          <option value="ndvi">NDVI Analysis</option>
+          <option value="soil">Soil Moisture</option>
+        </select>
+        <button class="btn-primary" onclick="saveCurrentField()">Save Field</button>
+      </div>
+    </header>
+
+    <!-- Content Grid -->
+    <div class="dashboard-grid">
+
+      <!-- Map Container -->
+      <div class="card map-card">
+        <div id="map"></div>
+      </div>
+
+      <!-- Side Panel: Stats -->
+      <div class="card stats-panel">
+        <h2>Field Insights</h2>
+
+        <div class="stat-box">
+          <span class="label">Field Health</span>
+          <div class="value-large text-green" id="health-text">Good</div>
+          <div class="progress-bar">
+            <div class="fill" id="health-bar" style="width: 85%"></div>
+          </div>
         </div>
-        <ul class="nav-links">
-            <li class="active"><a href="#"><i class="fa-solid fa-map"></i> Dashboard</a></li>
-            <li><a href="/"><i class="fa-solid fa-home"></i> Home</a></li>
-            <li><a href="#" id="draw-btn"><i class="fa-solid fa-draw-polygon"></i> Draw Field</a></li>
-            <li><a href="#" id="save-sidebar-btn"><i class="fa-solid fa-floppy-disk"></i> Save Field</a></li>
-            <li><a href="#" id="analyze-btn"><i class="fa-solid fa-chart-line"></i> Analyze</a></li>
+
+        <div class="stat-grid">
+          <div class="stat-item">
+            <i class="fa-solid fa-leaf"></i>
+            <span class="val" id="ndvi-val">--</span>
+            <span class="lbl">Avg NDVI</span>
+          </div>
+          <div class="stat-item">
+            <i class="fa-solid fa-droplet"></i>
+            <span class="val" id="moisture-val">--%</span>
+            <span class="lbl">Moisture</span>
+          </div>
+          <div class="stat-item">
+            <i class="fa-solid fa-temperature-half"></i>
+            <span class="val" id="temp-val">--°C</span>
+            <span class="lbl">Temp</span>
+          </div>
+        </div>
+
+        <h3>Recommendations</h3>
+        <ul class="recommendation-list" id="rec-list">
+          <li><i class="fa-solid fa-check-circle text-green"></i> No irrigation needed today.</li>
+          <li><i class="fa-solid fa-exclamation-triangle text-yellow"></i> Monitor Sector B for pest risk.
+          </li>
         </ul>
-        <div class="user-profile">
-            <img src="https://via.placeholder.com/40" alt="User">
-            <span>Farmer John</span>
-        </div>
-    </nav>
 
-    <!-- Main Content -->
-    <main class="main-content">
+      </div>
 
-        <!-- Header -->
-        <header class="top-bar">
-            <h1>Precision Agriculture Dashboard</h1>
-            <div class="controls">
-                <select id="layer-select" class="glass-input">
-                    <option value="satellite">Satellite View</option>
-                    <option value="ndvi">NDVI Analysis</option>
-                    <option value="soil">Soil Moisture</option>
-                </select>
-                <button class="btn-primary" onclick="saveCurrentField()">Save Field</button>
-            </div>
-        </header>
+    </div>
 
-        <!-- Content Grid -->
-        <div class="dashboard-grid">
+  </main>
 
-            <!-- Map Container -->
-            <div class="card map-card">
-                <div id="map"></div>
-            </div>
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/spatial.js"></script>
 
-            <!-- Side Panel: Stats -->
-            <div class="card stats-panel">
-                <h2>Field Insights</h2>
-
-                <div class="stat-box">
-                    <span class="label">Field Health</span>
-                    <div class="value-large text-green" id="health-text">Good</div>
-                    <div class="progress-bar">
-                        <div class="fill" id="health-bar" style="width: 85%"></div>
-                    </div>
-                </div>
-
-                <div class="stat-grid">
-                    <div class="stat-item">
-                        <i class="fa-solid fa-leaf"></i>
-                        <span class="val" id="ndvi-val">--</span>
-                        <span class="lbl">Avg NDVI</span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fa-solid fa-droplet"></i>
-                        <span class="val" id="moisture-val">--%</span>
-                        <span class="lbl">Moisture</span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fa-solid fa-temperature-half"></i>
-                        <span class="val" id="temp-val">--°C</span>
-                        <span class="lbl">Temp</span>
-                    </div>
-                </div>
-
-                <h3>Recommendations</h3>
-                <ul class="recommendation-list" id="rec-list">
-                    <li><i class="fa-solid fa-check-circle text-green"></i> No irrigation needed today.</li>
-                    <li><i class="fa-solid fa-exclamation-triangle text-yellow"></i> Monitor Sector B for pest risk.
-                    </li>
-                </ul>
-
-            </div>
-
-        </div>
-
-    </main>
-
-    <!-- Scripts -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/spatial.js"></script>
-
-    <!-- ===== Universal Back To Top Button (All Pages) ===== -->
-<style>
-  #globalBackToTop {
-    position: fixed;
-    bottom: 90px; /* prevents overlap with chatbot/floating icons */
-    right: 25px;
-    z-index: 9999;
-    display: none;
-    background: #2ecc71;
-    color: #ffffff;
-    border: none;
-    border-radius: 50%;
-    width: 52px;
-    height: 52px;
-    font-size: 22px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-    transition: opacity 0.3s ease, transform 0.2s ease;
-  }
-
-  #globalBackToTop:hover {
-    transform: scale(1.12);
-    background: #27ae60;
-  }
-
-  @media (max-width: 768px) {
+  <!-- ===== Universal Back To Top Button (All Pages) ===== -->
+  <style>
     #globalBackToTop {
-      bottom: 100px; /* better spacing on mobile */
-      right: 18px;
-      width: 48px;
-      height: 48px;
-      font-size: 20px;
+      position: fixed;
+      bottom: 90px;
+      /* prevents overlap with chatbot/floating icons */
+      right: 25px;
+      z-index: 9999;
+      display: none;
+      background: #2ecc71;
+      color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      width: 52px;
+      height: 52px;
+      font-size: 22px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      transition: opacity 0.3s ease, transform 0.2s ease;
     }
-  }
-  /* =========================
+
+    #globalBackToTop:hover {
+      transform: scale(1.12);
+      background: #27ae60;
+    }
+
+    @media (max-width: 768px) {
+      #globalBackToTop {
+        bottom: 100px;
+        /* better spacing on mobile */
+        right: 18px;
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+      }
+    }
+
+    /* =========================
    MOBILE RESPONSIVE FIX
 ========================= */
 
-@media (max-width: 768px) {
+    @media (max-width: 768px) {
 
-  /* Layout becomes vertical */
-  body {
-    flex-direction: column;
-  }
-
-  /* Sidebar full width top navbar style */
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-    padding: 16px;
-    border-right: none;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
-
-  /* Navigation horizontal scroll */
-  .nav-links {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding-bottom: 8px;
-  }
-
-  .nav-links li {
-    flex-shrink: 0;
-  }
-
-  .nav-links a {
-    white-space: nowrap;
-    padding: 10px 14px;
-    font-size: 14px;
-  }
-
-  /* Hide user profile on small screens */
-  .user-profile {
-    display: none;
-  }
-
-  /* Main content takes full width */
-  .main-content {
-    margin-left: 0;
-    width: 100%;
-    padding: 16px;
-  }
-
-  /* Header stack */
-  .top-bar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-
-  .top-bar h1 {
-    font-size: 2rem;
-    line-height: 1.2;
-  }
-
-  .controls {
-    width: 100%;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .glass-input,
-  .btn-primary {
-    width: 100%;
-  }
-
-  /* Grid becomes single column */
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  /* Map responsive */
-  #map {
-    height: 400px;
-    width: 100%;
-  }
-
-  /* Stats responsive */
-  .stat-grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* Prevent overflow */
-  .card {
-    width: 100%;
-    overflow: hidden;
-  }
-}
-</style>
-
-<button id="globalBackToTop" title="Back to Top">↑</button>
-
-<script>
-  (function () {
-    const btn = document.getElementById("globalBackToTop");
-
-    // Show button after scrolling down
-    window.addEventListener("scroll", function () {
-      if (window.scrollY > 300) {
-        btn.style.display = "block";
-      } else {
-        btn.style.display = "none";
+      /* Layout becomes vertical */
+      body {
+        flex-direction: column;
       }
-    });
 
-    // Smooth scroll to top on click
-    btn.addEventListener("click", function () {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+      /* Sidebar full width top navbar style */
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 16px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      /* Navigation horizontal scroll */
+      .nav-links {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        padding-bottom: 8px;
+      }
+
+      .nav-links li {
+        flex-shrink: 0;
+      }
+
+      .nav-links a {
+        white-space: nowrap;
+        padding: 10px 14px;
+        font-size: 14px;
+      }
+
+      /* Hide user profile on small screens */
+      .user-profile {
+        display: none;
+      }
+
+      /* Main content takes full width */
+      .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 16px;
+      }
+
+      /* Header stack */
+      .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .top-bar h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+      }
+
+      .controls {
+        width: 100%;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .glass-input,
+      .btn-primary {
+        width: 100%;
+      }
+
+      /* Grid becomes single column */
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      /* Map responsive */
+      #map {
+        height: 400px;
+        width: 100%;
+      }
+
+      /* Stats responsive */
+      .stat-grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* Prevent overflow */
+      .card {
+        width: 100%;
+        overflow: hidden;
+      }
+    }
+  </style>
+
+  <button id="globalBackToTop" title="Back to Top">↑</button>
+
+  <script>
+    (function () {
+      const btn = document.getElementById("globalBackToTop");
+
+      // Show button after scrolling down
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 300) {
+          btn.style.display = "block";
+        } else {
+          btn.style.display = "none";
+        }
       });
-    });
-  })();
-</script>
-<!-- ===== End Back To Top Button ===== -->
 
-  <script src="theme.js"></script>
+      // Smooth scroll to top on click
+      btn.addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      });
+    })();
+  </script>
+  <!-- ===== End Back To Top Button ===== -->
+
+  <footer class="site-footer tech-dark-theme final-match">
+    <div class="footer-top-accent"></div>
+
+    <div class="footer-inner-content">
+      <div class="footer-section footer-brand">
+        <a href="index.html" class="brand-header">
+          <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
+          <h3>AgriTech</h3>
+        </a>
+
+        <p class="tagline">
+          Empowering India's Farming Future with innovative technology
+          connecting every stakeholder.
+        </p>
+
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="X (formerly Twitter)"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-group-links">
+        <div class="footer-section footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>
+              <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li>
+              <a href="marketplace.html"><i class="fas fa-store"></i> Marketplace</a>
+            </li>
+            <li>
+              <a href="weather_dashboard.html"><i class="fas fa-cloud-sun"></i> Weather</a>
+            </li>
+            <li>
+              <a href="contact.html"><i class="fas fa-headset"></i> Contact Us</a>
+            </li>
+            <li>
+              <a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+            </li>
+            <li>
+              <a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a>
+            </li>
+            <li>
+              <a href="privacy-policy.html"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-contact">
+          <h4>Contact</h4>
+          <ul>
+            <li>
+              <a href="mailto:contact@agritech.com">
+                <i class="fas fa-envelope"></i> contact@agritech.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+910000000000">
+                <i class="fas fa-phone"></i> +91 00000 00000
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-newsletter">
+          <h4>Newsletter</h4>
+          <p class="newsletter-desc">
+            Subscribe to get the latest farming insights, tips, and updates.
+          </p>
+          <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
+            <div class="newsletter-input-group">
+              <input type="email" class="newsletter-input" placeholder="Enter your email to get the latest updates..."
+                required aria-label="Email address for newsletter" />
+              <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
+                <span>Subscribe</span>
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+            <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
+            <div class="newsletter-footer-optout">
+              <small>No spam. <a href="javascript:void(0)" onclick="openUnsubscribeModal(event)">Unsubscribe</a>
+                anytime.</small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="current-year">2026</span> AgriTech. All rights reserved. <a href="privacy-policy.html">Privacy
+          Policy</a> · <a href="terms-and-service.html">Terms</a> · <a href="cookie-policy.html">Cookie Policy</a></p>
+    </div>
+
+    <div class="footer-wave-overlay"></div>
+  </footer>
+  <script src="footer.js"></script>
 </body>
 
 </html>

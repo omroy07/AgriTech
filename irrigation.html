@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Water Management Advisor | AgriTech</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link rel="stylesheet" href="css/irrigation.css" />
+    <link rel="stylesheet" href="footer.css" />
 </head>
+
 <body>
     <div class="advisor-shell">
         <aside class="main-sidebar">
@@ -39,12 +43,15 @@
                     <div class="eyebrow">AI-powered water management advisor</div>
                     <h1>Personalized irrigation schedules for every field</h1>
                     <p>
-                        Enter your crop, soil, farm size, irrigation method, and local weather to generate a daily and weekly
+                        Enter your crop, soil, farm size, irrigation method, and local weather to generate a daily and
+                        weekly
                         watering plan that saves water and protects yield.
                     </p>
                     <div class="hero-actions">
-                        <button type="button" class="btn-primary" id="generate-plan-btn"><i class="fas fa-magic"></i> Generate Plan</button>
-                        <button type="button" class="btn-secondary" id="use-weather-btn"><i class="fas fa-cloud-sun"></i> Pull Live Weather</button>
+                        <button type="button" class="btn-primary" id="generate-plan-btn"><i class="fas fa-magic"></i>
+                            Generate Plan</button>
+                        <button type="button" class="btn-secondary" id="use-weather-btn"><i
+                                class="fas fa-cloud-sun"></i> Pull Live Weather</button>
                     </div>
                 </div>
                 <div class="hero-metrics">
@@ -182,7 +189,8 @@
 
                         <label class="input-field location-field">
                             <span>Farm location for weather</span>
-                            <input id="location" type="text" placeholder="e.g. Indore, Madhya Pradesh" value="Indore" required />
+                            <input id="location" type="text" placeholder="e.g. Indore, Madhya Pradesh" value="Indore"
+                                required />
                         </label>
                     </div>
 
@@ -192,8 +200,10 @@
                             <span>Enable offline SMS-ready alerts</span>
                         </label>
                         <div class="footer-actions">
-                            <button type="submit" class="btn-primary wide"><i class="fas fa-wand-magic-sparkles"></i> Generate advisor</button>
-                            <button type="button" class="btn-secondary" id="download-report"><i class="fas fa-file-pdf"></i> Download report</button>
+                            <button type="submit" class="btn-primary wide"><i class="fas fa-wand-magic-sparkles"></i>
+                                Generate advisor</button>
+                            <button type="button" class="btn-secondary" id="download-report"><i
+                                    class="fas fa-file-pdf"></i> Download report</button>
                         </div>
                     </div>
                 </form>
@@ -204,7 +214,8 @@
                             <span class="card-kicker">Recommendation</span>
                             <h2><i class="fas fa-bullhorn"></i> Advisor summary</h2>
                         </div>
-                        <button type="button" class="ghost-btn" id="copy-sms"><i class="fas fa-sms"></i> Copy SMS</button>
+                        <button type="button" class="ghost-btn" id="copy-sms"><i class="fas fa-sms"></i> Copy
+                            SMS</button>
                     </div>
                     <div id="summary-copy" class="summary-copy">
                         Complete the form and generate a plan to see recommendations.
@@ -254,17 +265,22 @@
                                 <strong>Baseline flood irrigation</strong>
                                 <span id="baseline-label">0 L</span>
                             </div>
-                            <div class="tracker-bar"><div id="baseline-bar" class="tracker-fill baseline"></div></div>
+                            <div class="tracker-bar">
+                                <div id="baseline-bar" class="tracker-fill baseline"></div>
+                            </div>
                         </div>
                         <div class="tracker-row">
                             <div class="tracker-labels">
                                 <strong>Advisor recommendation</strong>
                                 <span id="advisor-label">0 L</span>
                             </div>
-                            <div class="tracker-bar"><div id="advisor-bar" class="tracker-fill advisor"></div></div>
+                            <div class="tracker-bar">
+                                <div id="advisor-bar" class="tracker-fill advisor"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="tracker-note" id="tracker-note">Water savings improve as weather risk and soil moisture are considered.</div>
+                    <div class="tracker-note" id="tracker-note">Water savings improve as weather risk and soil moisture
+                        are considered.</div>
                 </article>
 
                 <article class="card alerts-card">
@@ -291,6 +307,110 @@
     </div>
 
     <script src="js/irrigation.js"></script>
-  <script src="theme.js"></script>
+    <footer class="site-footer tech-dark-theme final-match">
+        <div class="footer-top-accent"></div>
+
+        <div class="footer-inner-content">
+            <div class="footer-section footer-brand">
+                <a href="index.html" class="brand-header">
+                    <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
+                    <h3>AgriTech</h3>
+                </a>
+
+                <p class="tagline">
+                    Empowering India's Farming Future with innovative technology
+                    connecting every stakeholder.
+                </p>
+
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="X (formerly Twitter)"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-group-links">
+                <div class="footer-section footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li>
+                            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                        </li>
+                        <li>
+                            <a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="marketplace.html"><i class="fas fa-store"></i> Marketplace</a>
+                        </li>
+                        <li>
+                            <a href="weather_dashboard.html"><i class="fas fa-cloud-sun"></i> Weather</a>
+                        </li>
+                        <li>
+                            <a href="contact.html"><i class="fas fa-headset"></i> Contact Us</a>
+                        </li>
+                        <li>
+                            <a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+                        </li>
+                        <li>
+                            <a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a>
+                        </li>
+                        <li>
+                            <a href="privacy-policy.html"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="footer-section footer-contact">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>
+                            <a href="mailto:contact@agritech.com">
+                                <i class="fas fa-envelope"></i> contact@agritech.com
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:+910000000000">
+                                <i class="fas fa-phone"></i> +91 00000 00000
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="footer-section footer-newsletter">
+                    <h4>Newsletter</h4>
+                    <p class="newsletter-desc">
+                        Subscribe to get the latest farming insights, tips, and updates.
+                    </p>
+                    <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
+                        <div class="newsletter-input-group">
+                            <input type="email" class="newsletter-input"
+                                placeholder="Enter your email to get the latest updates..." required
+                                aria-label="Email address for newsletter" />
+                            <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
+                                <span>Subscribe</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
+                        <div class="newsletter-footer-optout">
+                            <small>No spam. <a href="javascript:void(0)"
+                                    onclick="openUnsubscribeModal(event)">Unsubscribe</a> anytime.</small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© <span id="current-year">2026</span> AgriTech. All rights reserved. <a
+                    href="privacy-policy.html">Privacy Policy</a> · <a href="terms-and-service.html">Terms</a> · <a
+                    href="cookie-policy.html">Cookie Policy</a></p>
+        </div>
+
+        <div class="footer-wave-overlay"></div>
+    </footer>
+    <script src="footer.js"></script>
 </body>
+
 </html>

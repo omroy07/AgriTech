@@ -1,42 +1,33 @@
 /**
- * AgriTech - Footer Newsletter & Subscription Handler + Global Logo Redirect
- * Provides seamless client-side subscription validation, localStorage persistence,
- * confirmation notifications, email marketing compliance with an Unsubscribe modal,
- * and automatic homepage redirection when clicking website logos.
+ * AgriTech - Footer Newsletter & Subscription Handler
  */
-
 (function () {
   'use strict';
+  // If root footer.js already executed, return
+  if (window.handleNewsletterSubmit) return;
 
   const STORAGE_KEY = 'agritech_newsletter_subscribers';
 
-  // Helper: Retrieve subscribers list
   function getSubscribers() {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       return stored ? JSON.parse(stored) : [];
     } catch (e) {
-      console.warn('LocalStorage error:', e);
       return [];
     }
   }
 
-  // Helper: Save subscribers list
   function saveSubscribers(list) {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-    } catch (e) {
-      console.warn('LocalStorage error:', e);
-    }
+    } catch (e) { }
   }
 
-  // Helper: Validate email format
   function isValidEmail(email) {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(String(email).toLowerCase().trim());
   }
 
-  // Display feedback message in a form
   function showFeedback(form, message, type) {
     let feedbackEl = form.querySelector('.newsletter-feedback') || form.querySelector('.newsletter-message');
     if (!feedbackEl) {
@@ -53,7 +44,6 @@
     feedbackEl.innerHTML = `<i class="${icon}"></i> <span>${message}</span>`;
     feedbackEl.style.display = 'flex';
 
-    // Auto-hide error/info after 6s, keep success visible slightly longer
     setTimeout(() => {
       if (feedbackEl && type !== 'success') {
         feedbackEl.style.display = 'none';
@@ -61,7 +51,6 @@
     }, 6000);
   }
 
-  // Handle Newsletter Form Submit
   function handleNewsletterSubmit(event, formElement) {
     if (event) {
       event.preventDefault();
@@ -78,19 +67,12 @@
 
     const email = emailInput.value.trim().toLowerCase();
 
-    if (!email) {
-      showFeedback(form, 'Please enter your email address.', 'error');
-      emailInput.focus();
-      return false;
-    }
-
-    if (!isValidEmail(email)) {
+    if (!email || !isValidEmail(email)) {
       showFeedback(form, 'Please enter a valid email address.', 'error');
       emailInput.focus();
       return false;
     }
 
-    // Button loading animation
     const originalBtnHTML = submitBtn ? submitBtn.innerHTML : 'Subscribe';
     if (submitBtn) {
       submitBtn.disabled = true;
@@ -122,7 +104,6 @@
     return false;
   }
 
-  // Ensure Unsubscribe Modal exists in DOM
   function ensureUnsubscribeModal() {
     let modal = document.getElementById('agritechUnsubscribeModal');
     if (!modal) {
@@ -158,7 +139,6 @@
       `;
       document.body.appendChild(modal);
 
-      // Close on Esc key
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && modal.classList.contains('active')) {
           window.closeUnsubscribeModal();
@@ -168,7 +148,6 @@
     return modal;
   }
 
-  // Open Unsubscribe Modal
   function openUnsubscribeModal(e) {
     if (e && e.preventDefault) e.preventDefault();
     const modal = ensureUnsubscribeModal();
@@ -182,7 +161,6 @@
     }
   }
 
-  // Close Unsubscribe Modal
   function closeUnsubscribeModal() {
     const modal = document.getElementById('agritechUnsubscribeModal');
     if (modal) {
@@ -190,13 +168,11 @@
     }
   }
 
-  // Handle Unsubscribe submit
   function handleNewsletterUnsubscribeSubmit(event, formElement) {
     if (event) {
       event.preventDefault();
       event.stopPropagation();
     }
-    const form = formElement || document.getElementById('unsubForm');
     const input = document.getElementById('unsubEmailInput');
     const feedback = document.getElementById('unsubFeedback');
     const btn = document.getElementById('unsubSubmitBtn');
@@ -245,88 +221,12 @@
     return false;
   }
 
-  // Handle Logo Click Redirect to Homepage
-  function initLogoRedirect() {
-    const logoSelectors = [
-      '.brand',
-      '.nav-brand',
-      '.brand-header',
-      '.logo',
-      '.nav-logo',
-      '.footer-logo',
-      '.brand-logo',
-      '.site-logo',
-      '.header-logo',
-      '.sidebar-brand',
-      'img[src*="logo.png"]',
-      'img[alt*="logo" i]',
-      'img[alt*="AgriTech" i]'
-    ];
-
-    let homeUrl = 'index.html';
-    const scriptEl = document.querySelector('script[src*="footer.js"]');
-    if (scriptEl) {
-      const src = scriptEl.getAttribute('src') || '';
-      homeUrl = src.replace('footer.js', 'index.html');
-      if (homeUrl === '') homeUrl = 'index.html';
-    }
-
-    document.querySelectorAll(logoSelectors.join(',')).forEach(el => {
-      const parentLink = el.closest('a');
-      if (parentLink) {
-        const href = parentLink.getAttribute('href');
-        if (!href || href === '#' || href === '' || href === 'javascript:void(0)') {
-          parentLink.setAttribute('href', homeUrl);
-        }
-        parentLink.style.cursor = 'pointer';
-        return;
-      }
-
-      if (el.tagName.toLowerCase() === 'a') {
-        const href = el.getAttribute('href');
-        if (!href || href === '#' || href === '' || href === 'javascript:void(0)') {
-          el.setAttribute('href', homeUrl);
-        }
-        el.style.cursor = 'pointer';
-        return;
-      }
-
-      el.style.cursor = 'pointer';
-      el.setAttribute('role', 'link');
-      el.setAttribute('tabindex', '0');
-      el.setAttribute('title', 'Go to AgriTech Homepage');
-      el.setAttribute('aria-label', 'AgriTech Homepage');
-
-      if (!el.dataset.logoRedirectAttached) {
-        el.dataset.logoRedirectAttached = 'true';
-        el.addEventListener('click', function (e) {
-          if (e.target.closest('button') || e.target.closest('input') || (e.target.closest('a') && e.target.closest('a') !== el)) {
-            return;
-          }
-          window.location.href = homeUrl;
-        });
-        el.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            window.location.href = homeUrl;
-          }
-        });
-      }
-    });
-  }
-
-  // Initialize all newsletter forms and logo redirects on page
   function initNewsletter() {
-    // Dynamic Year updater
     const year = new Date().getFullYear();
     document.querySelectorAll('#current-year, .current-year').forEach(el => {
       el.textContent = year;
     });
 
-    // Initialize logo redirect
-    initLogoRedirect();
-
-    // Attach submit handlers
     const forms = document.querySelectorAll('.newsletter-form, [data-newsletter-form]');
     forms.forEach(form => {
       if (!form.dataset.initialized) {
@@ -338,7 +238,6 @@
     });
   }
 
-  // Expose methods to global scope
   window.handleNewsletterSubmit = handleNewsletterSubmit;
   window.handleNewsletterSubscribe = handleNewsletterSubmit;
   window.openUnsubscribeModal = openUnsubscribeModal;
@@ -348,7 +247,6 @@
     if (e && e.preventDefault) e.preventDefault();
     openUnsubscribeModal(e);
   };
-  window.initLogoRedirect = initLogoRedirect;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initNewsletter);

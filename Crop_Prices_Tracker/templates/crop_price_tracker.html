@@ -1,48 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <link rel="icon" type="image/png" href="/images/logo.png">
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Crop Price Tracker</title>
-    <script>
-      (function () {
-        const saved = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)",
-        ).matches;
-        document.documentElement.setAttribute(
-          "data-theme",
-          saved || (prefersDark ? "dark" : "light"),
-        );
-      })();
-    </script>
-    <link rel="stylesheet" href="../static/styles.css">
-    <link rel="stylesheet" href="../../theme.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-    <style>
-      /* --- GLOBAL RESET --- */
-      html, body {
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        overflow-x: hidden !important;
-        min-height: 100vh;
-      }
-
-      /* --- 1. THEME VARIABLES --- */
-      :root {
-        --bg-color: #030712;
-        --text-color: #ffffff;
-        --text-muted: #cbd5e1;
-        --surface-color: rgba(15, 23, 42, 0.9);
-        --section-bg: rgba(30, 41, 59, 0.7);
-        --border-color: #334155;
-        --accent-color: #22c55e;
-        --shadow-color: rgba(0, 0, 0, 0.3);
-      }
 
 <head>
   <link rel="icon" type="image/png" href="/images/logo.png">
@@ -66,6 +23,39 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
+    /* --- GLOBAL RESET --- */
+    html,
+    body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      overflow-x: hidden !important;
+      min-height: 100vh;
+    }
+
+    /* --- 1. THEME VARIABLES --- */
+    :root {
+      --bg-color: #030712;
+      --text-color: #ffffff;
+      --text-muted: #cbd5e1;
+      --surface-color: rgba(15, 23, 42, 0.9);
+      --section-bg: rgba(30, 41, 59, 0.7);
+      --border-color: #334155;
+      --accent-color: #22c55e;
+      --shadow-color: rgba(0, 0, 0, 0.3);
+    }
+
+    <head><link rel="icon" type="image/png" href="/images/logo.png"><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Crop Price Tracker</title><script>(function () {
+        const saved=localStorage.getItem("theme");
+        const prefersDark=window.matchMedia("(prefers-color-scheme: dark)",
+        ).matches;
+        document.documentElement.setAttribute("data-theme",
+          saved || (prefersDark ? "dark" : "light"),
+        );
+      })();
+    </script><link rel="stylesheet" href="../static/styles.css"><link rel="stylesheet" href="../../theme.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" /><style>
+
     /* --- GLOBAL RESET --- */
     html,
     body {
@@ -526,6 +516,7 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="../../footer.css" />
 </head>
 
 <body>
@@ -546,16 +537,16 @@
     <button
       style="position:fixed;top:2rem;right:2rem;z-index:999;display:flex;align-items:center;justify-content:center;"
       class="theme-toggle" type="button" id="themeToggle" title="Switch theme" aria-label="Switch theme">
-        <span class="theme-toggle-track">
-          <span class="theme-toggle-icon sun-icon" aria-hidden="true">
-            <i class="fas fa-sun"></i>
-          </span>
-          <span class="theme-toggle-icon moon-icon" aria-hidden="true">
-            <i class="fas fa-moon"></i>
-          </span>
-          <span class="theme-toggle-thumb"></span>
+      <span class="theme-toggle-track">
+        <span class="theme-toggle-icon sun-icon" aria-hidden="true">
+          <i class="fas fa-sun"></i>
         </span>
-      </button>
+        <span class="theme-toggle-icon moon-icon" aria-hidden="true">
+          <i class="fas fa-moon"></i>
+        </span>
+        <span class="theme-toggle-thumb"></span>
+      </span>
+    </button>
     <h2>🌾 Crop Price Tracker</h2>
     <div style="width: 50px;"></div>
   </div>
@@ -586,87 +577,94 @@
         </select>
       </div>
 
-    <div class="header">
-      <a href="/main.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Main</a>
+      <div class="header">
+        <a href="/main.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Main</a>
         <button
           style="position:fixed;top:2rem;right:2rem;z-index:999;display:flex;align-items:center;justify-content:center;"
           class="theme-toggle" type="button" id="themeToggle" title="Switch theme" aria-label="Switch theme">
-        <span class="theme-toggle-track">
-          <span class="theme-toggle-icon sun-icon" aria-hidden="true">
-            <i class="fas fa-sun"></i>
+          <span class="theme-toggle-track">
+            <span class="theme-toggle-icon sun-icon" aria-hidden="true">
+              <i class="fas fa-sun"></i>
+            </span>
+            <span class="theme-toggle-icon moon-icon" aria-hidden="true">
+              <i class="fas fa-moon"></i>
+            </span>
+            <span class="theme-toggle-thumb"></span>
           </span>
-          <span class="theme-toggle-icon moon-icon" aria-hidden="true">
-            <i class="fas fa-moon"></i>
-          </span>
-          <span class="theme-toggle-thumb"></span>
-        </span>
-      </button>
-      <h2>🌾 Crop Price Tracker</h2>
-      <div style="width: 50px;"></div> 
-    </div>
-
-    <div class="form-container">
-      <form method="POST" id="priceForm">
-        <div class="form-row">
-          <label for="crop" class="form-label">Select Crop</label>
-          <select name="crop" id="crop" required>
-            <option value="">-- Choose your crop --</option>
-            <option value="Wheat">Wheat</option>
-            <option value="Rice">Rice</option>
-            <option value="Cotton">Cotton</option>
-          </select>
-        </div>
-
-        <div class="form-row">
-          <label for="state" class="form-label">Select State</label>
-          <select name="state" id="state" required disabled>
-            <option value="">-- First select a crop --</option>
-          </select>
-        </div>
-
-        <div class="form-row">
-          <label for="market" class="form-label">Select Market</label>
-          <select name="market" id="market" required disabled>
-            <option value="">-- First select a state --</option>
-          </select>
-        </div>
-
-        <button type="submit" class="submit-button" id="submitBtn" disabled>
-          Track Prices
         </button>
-      </form>
-    </div>
+        <h2>🌾 Crop Price Tracker</h2>
+        <div style="width: 50px;"></div>
+      </div>
 
-    <div class="results-container">
-      <h3>📈 Latest Market Prices (Preview)</h3>
-      <div class="price-grid">
-        <div class="price-card">
-          <div class="price-date">14 JAN 2026</div>
-          <div class="price-amount">₹2,450 / quintal</div>
-          <div class="price-location"><i class="fas fa-map-marker-alt"></i> Ahmedabad, Gujarat</div>
-        </div>
-        <div class="price-card">
-          <div class="price-date">13 JAN 2026</div>
-          <div class="price-amount">₹2,380 / quintal</div>
-          <div class="price-location"><i class="fas fa-map-marker-alt"></i> Rajkot, Gujarat</div>
-        </div>
-        <div class="price-card">
-          <div class="price-date">12 JAN 2026</div>
-          <div class="price-amount">₹2,410 / quintal</div>
-          <div class="price-location"><i class="fas fa-map-marker-alt"></i> Surat, Gujarat</div>
+      <div class="form-container">
+        <form method="POST" id="priceForm">
+          <div class="form-row">
+            <label for="crop" class="form-label">Select Crop</label>
+            <select name="crop" id="crop" required>
+              <option value="">-- Choose your crop --</option>
+              <option value="Wheat">Wheat</option>
+              <option value="Rice">Rice</option>
+              <option value="Cotton">Cotton</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="state" class="form-label">Select State</label>
+            <select name="state" id="state" required disabled>
+              <option value="">-- First select a crop --</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="market" class="form-label">Select Market</label>
+            <select name="market" id="market" required disabled>
+              <option value="">-- First select a state --</option>
+            </select>
+          </div>
+
+          <button type="submit" class="submit-button" id="submitBtn" disabled>
+            Track Prices
+          </button>
+        </form>
+      </div>
+
+      <div class="results-container">
+        <h3>📈 Latest Market Prices (Preview)</h3>
+        <div class="price-grid">
+          <div class="price-card">
+            <div class="price-date">14 JAN 2026</div>
+            <div class="price-amount">₹2,450 / quintal</div>
+            <div class="price-location"><i class="fas fa-map-marker-alt"></i> Ahmedabad, Gujarat</div>
+          </div>
+          <div class="price-card">
+            <div class="price-date">13 JAN 2026</div>
+            <div class="price-amount">₹2,380 / quintal</div>
+            <div class="price-location"><i class="fas fa-map-marker-alt"></i> Rajkot, Gujarat</div>
+          </div>
+          <div class="price-card">
+            <div class="price-date">12 JAN 2026</div>
+            <div class="price-amount">₹2,410 / quintal</div>
+            <div class="price-location"><i class="fas fa-map-marker-alt"></i> Surat, Gujarat</div>
+          </div>
         </div>
       </div>
-    </div>
   </div>
 
-  <footer class="site-footer">
+  <footer class="site-footer tech-dark-theme final-match">
+    <div class="footer-top-accent"></div>
+
     <div class="footer-inner-content">
       <div class="footer-section footer-brand">
-        <a href="../../index.html" class="brand-header" style="display:flex; align-items:center; gap:10px;">
-          <img src="/images/logo.png" alt="logo" width="30">
+        <a href="../../index.html" class="brand-header">
+          <img src="../../images/logo.png" alt="AgriTech logo" class="brand-logo" />
           <h3>AgriTech</h3>
         </a>
-        <p class="tagline">Empowering India's Farming Future with innovative technology.</p>
+
+        <p class="tagline">
+          Empowering India's Farming Future with innovative technology
+          connecting every stakeholder.
+        </p>
+
         <div class="social-icons">
           <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
           <a href="#" aria-label="X (formerly Twitter)"><i class="fab fa-x-twitter"></i></a>
@@ -674,25 +672,85 @@
           <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
-      <div class="footer-section">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-          <li><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-          <li><a href="#"><i class="fas fa-robot"></i> AI Assistant</a></li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h4>Contact</h4>
-        <ul>
-          <li><a href="mailto:contact@agritech.com"><i class="fas fa-envelope"></i> Email Us</a></li>
-          <li><a href="tel:+910000000000"><i class="fas fa-phone"></i> Call Us</a></li>
-        </ul>
+
+      <div class="footer-group-links">
+        <div class="footer-section footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>
+              <a href="../../index.html"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="../../login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li>
+              <a href="../../marketplace.html"><i class="fas fa-store"></i> Marketplace</a>
+            </li>
+            <li>
+              <a href="../../weather_dashboard.html"><i class="fas fa-cloud-sun"></i> Weather</a>
+            </li>
+            <li>
+              <a href="../../contact.html"><i class="fas fa-headset"></i> Contact Us</a>
+            </li>
+            <li>
+              <a href="../../feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+            </li>
+            <li>
+              <a href="../../terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a>
+            </li>
+            <li>
+              <a href="../../privacy-policy.html"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-contact">
+          <h4>Contact</h4>
+          <ul>
+            <li>
+              <a href="mailto:contact@agritech.com">
+                <i class="fas fa-envelope"></i> contact@agritech.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+910000000000">
+                <i class="fas fa-phone"></i> +91 00000 00000
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-newsletter">
+          <h4>Newsletter</h4>
+          <p class="newsletter-desc">
+            Subscribe to get the latest farming insights, tips, and updates.
+          </p>
+          <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
+            <div class="newsletter-input-group">
+              <input type="email" class="newsletter-input" placeholder="Enter your email to get the latest updates..."
+                required aria-label="Email address for newsletter" />
+              <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
+                <span>Subscribe</span>
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+            <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
+            <div class="newsletter-footer-optout">
+              <small>No spam. <a href="javascript:void(0)" onclick="openUnsubscribeModal(event)">Unsubscribe</a>
+                anytime.</small>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
+
     <div class="footer-bottom">
-      <p>© <span id="current-year"></span> AgriTech. All rights reserved.</p>
+      <p>© <span id="current-year">2026</span> AgriTech. All rights reserved. <a
+          href="../../privacy-policy.html">Privacy Policy</a> · <a href="../../terms-and-service.html">Terms</a> · <a
+          href="../../cookie-policy.html">Cookie Policy</a></p>
     </div>
+
+    <div class="footer-wave-overlay"></div>
   </footer>
 
   <script>
@@ -734,6 +792,7 @@
     marketSelect.addEventListener("change", updateSubmitButton);
   </script>
   <script src="../../theme.js"></script>
+  <script src="../../footer.js"></script>
 </body>
 
 </html>

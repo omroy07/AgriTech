@@ -2,120 +2,222 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knowledge Hub | AgriTech</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="knowledge_hub.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Knowledge Hub | AgriTech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="knowledge_hub.css">
+  <link rel="stylesheet" href="footer.css" />
 </head>
 
 <body>
-    <div class="hub-container">
-        <!-- Sidebar -->
-        <aside class="kb-sidebar">
-            <div class="user-stats-card">
-                <div class="avatar-placeholder">
-                    <i class="fas fa-user-graduate"></i>
-                </div>
-                <h3 id="user-display-name">Farmer Expert</h3>
-                <div class="rep-badge">
-                    <i class="fas fa-star"></i> <span id="user-total-rep">--</span> Rep
-                </div>
-                <div class="badges-row" id="user-badges-hub">
-                    <!-- Badges injected here -->
-                </div>
-            </div>
-
-            <nav class="kb-nav">
-                <h4>Categories</h4>
-                <ul id="kb-categories">
-                    <li class="active" data-cat="General">General</li>
-                    <li data-cat="Soil">Soil Health</li>
-                    <li data-cat="Pests">Pest Control</li>
-                    <li data-cat="Irrigation">Irrigation</li>
-                    <li data-cat="Livestock">Livestock</li>
-                </ul>
-            </nav>
-        </aside>
-
-        <!-- Main Feed -->
-        <main class="kb-main">
-            <header class="kb-header">
-                <div class="search-wrap">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="kb-search-input" placeholder="Search questions, solutions, experts...">
-                </div>
-                <button class="btn-primary" id="btn-ask-question">
-                    <i class="fas fa-plus"></i> Ask Question
-                </button>
-            </header>
-
-            <div class="feed-tabs">
-                <button class="active" data-sort="newest">Newest</button>
-                <button data-sort="popular">Popular</button>
-                <button data-sort="trending">Trending</button>
-            </div>
-
-            <div id="questions-feed" class="questions-list">
-                <!-- Questions injected here -->
-                <div class="kb-loader">Loading intelligence...</div>
-            </div>
-        </main>
-
-        <!-- Right Panels -->
-        <aside class="kb-widgets">
-            <div class="widget-card">
-                <h3>Top Experts</h3>
-                <div class="expert-list" id="top-experts-list">
-                    <!-- Experts injected here -->
-                </div>
-            </div>
-
-            <div class="widget-card">
-                <h3>Trending Tags</h3>
-                <div class="tags-cloud">
-                    <span>#organic</span>
-                    <span>#wheat</span>
-                    <span>#drip_irrigation</span>
-                    <span>#pesticide_free</span>
-                </div>
-            </div>
-        </aside>
-    </div>
-
-    <!-- Modals -->
-    <div id="ask-modal" class="kb-modal">
-        <div class="kb-modal-content">
-            <h2>Post Question</h2>
-            <div class="kb-form-group">
-                <label>Title</label>
-                <input type="text" id="q-title" placeholder="e.g., Best way to handle whitefly in cotton?">
-            </div>
-            <div class="kb-form-group">
-                <label>Category</label>
-                <select id="q-category">
-                    <option value="General">General</option>
-                    <option value="Soil">Soil Health</option>
-                    <option value="Pests">Pest Control</option>
-                    <option value="Irrigation">Irrigation</option>
-                </select>
-            </div>
-            <div class="kb-form-group">
-                <label>Details</label>
-                <textarea id="q-content" placeholder="Describe your problem in detail..."></textarea>
-            </div>
-            <div class="kb-modal-actions">
-                <button class="btn-outline" onclick="closeModal()">Cancel</button>
-                <button class="btn-primary" onclick="submitQuestion()">Post</button>
-            </div>
+  <div class="hub-container">
+    <!-- Sidebar -->
+    <aside class="kb-sidebar">
+      <div class="user-stats-card">
+        <div class="avatar-placeholder">
+          <i class="fas fa-user-graduate"></i>
         </div>
+        <h3 id="user-display-name">Farmer Expert</h3>
+        <div class="rep-badge">
+          <i class="fas fa-star"></i> <span id="user-total-rep">--</span> Rep
+        </div>
+        <div class="badges-row" id="user-badges-hub">
+          <!-- Badges injected here -->
+        </div>
+      </div>
+
+      <nav class="kb-nav">
+        <h4>Categories</h4>
+        <ul id="kb-categories">
+          <li class="active" data-cat="General">General</li>
+          <li data-cat="Soil">Soil Health</li>
+          <li data-cat="Pests">Pest Control</li>
+          <li data-cat="Irrigation">Irrigation</li>
+          <li data-cat="Livestock">Livestock</li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Feed -->
+    <main class="kb-main">
+      <header class="kb-header">
+        <div class="search-wrap">
+          <i class="fas fa-search"></i>
+          <input type="text" id="kb-search-input" placeholder="Search questions, solutions, experts...">
+        </div>
+        <button class="btn-primary" id="btn-ask-question">
+          <i class="fas fa-plus"></i> Ask Question
+        </button>
+      </header>
+
+      <div class="feed-tabs">
+        <button class="active" data-sort="newest">Newest</button>
+        <button data-sort="popular">Popular</button>
+        <button data-sort="trending">Trending</button>
+      </div>
+
+      <div id="questions-feed" class="questions-list">
+        <!-- Questions injected here -->
+        <div class="kb-loader">Loading intelligence...</div>
+      </div>
+    </main>
+
+    <!-- Right Panels -->
+    <aside class="kb-widgets">
+      <div class="widget-card">
+        <h3>Top Experts</h3>
+        <div class="expert-list" id="top-experts-list">
+          <!-- Experts injected here -->
+        </div>
+      </div>
+
+      <div class="widget-card">
+        <h3>Trending Tags</h3>
+        <div class="tags-cloud">
+          <span>#organic</span>
+          <span>#wheat</span>
+          <span>#drip_irrigation</span>
+          <span>#pesticide_free</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Modals -->
+  <div id="ask-modal" class="kb-modal">
+    <div class="kb-modal-content">
+      <h2>Post Question</h2>
+      <div class="kb-form-group">
+        <label>Title</label>
+        <input type="text" id="q-title" placeholder="e.g., Best way to handle whitefly in cotton?">
+      </div>
+      <div class="kb-form-group">
+        <label>Category</label>
+        <select id="q-category">
+          <option value="General">General</option>
+          <option value="Soil">Soil Health</option>
+          <option value="Pests">Pest Control</option>
+          <option value="Irrigation">Irrigation</option>
+        </select>
+      </div>
+      <div class="kb-form-group">
+        <label>Details</label>
+        <textarea id="q-content" placeholder="Describe your problem in detail..."></textarea>
+      </div>
+      <div class="kb-modal-actions">
+        <button class="btn-outline" onclick="closeModal()">Cancel</button>
+        <button class="btn-primary" onclick="submitQuestion()">Post</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="knowledge_hub.js"></script>
+  <footer class="site-footer tech-dark-theme final-match">
+    <div class="footer-top-accent"></div>
+
+    <div class="footer-inner-content">
+      <div class="footer-section footer-brand">
+        <a href="index.html" class="brand-header">
+          <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
+          <h3>AgriTech</h3>
+        </a>
+
+        <p class="tagline">
+          Empowering India's Farming Future with innovative technology
+          connecting every stakeholder.
+        </p>
+
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="X (formerly Twitter)"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-group-links">
+        <div class="footer-section footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>
+              <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li>
+              <a href="marketplace.html"><i class="fas fa-store"></i> Marketplace</a>
+            </li>
+            <li>
+              <a href="weather_dashboard.html"><i class="fas fa-cloud-sun"></i> Weather</a>
+            </li>
+            <li>
+              <a href="contact.html"><i class="fas fa-headset"></i> Contact Us</a>
+            </li>
+            <li>
+              <a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+            </li>
+            <li>
+              <a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a>
+            </li>
+            <li>
+              <a href="privacy-policy.html"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-contact">
+          <h4>Contact</h4>
+          <ul>
+            <li>
+              <a href="mailto:contact@agritech.com">
+                <i class="fas fa-envelope"></i> contact@agritech.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+910000000000">
+                <i class="fas fa-phone"></i> +91 00000 00000
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section footer-newsletter">
+          <h4>Newsletter</h4>
+          <p class="newsletter-desc">
+            Subscribe to get the latest farming insights, tips, and updates.
+          </p>
+          <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
+            <div class="newsletter-input-group">
+              <input type="email" class="newsletter-input" placeholder="Enter your email to get the latest updates..."
+                required aria-label="Email address for newsletter" />
+              <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
+                <span>Subscribe</span>
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+            <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
+            <div class="newsletter-footer-optout">
+              <small>No spam. <a href="javascript:void(0)" onclick="openUnsubscribeModal(event)">Unsubscribe</a>
+                anytime.</small>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
-    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="knowledge_hub.js"></script>
-  <script src="theme.js"></script>
+    <div class="footer-bottom">
+      <p>© <span id="current-year">2026</span> AgriTech. All rights reserved. <a href="privacy-policy.html">Privacy
+          Policy</a> · <a href="terms-and-service.html">Terms</a> · <a href="cookie-policy.html">Cookie Policy</a></p>
+    </div>
+
+    <div class="footer-wave-overlay"></div>
+  </footer>
+  <script src="footer.js"></script>
 </body>
 
 </html>
