@@ -105,7 +105,7 @@ def get_classifier(architecture):
 
 # --- Sidebar ---
 with st.sidebar:
-    st.image("https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=500&auto=format&fit=crop&q=60", use_column_width=True)
+    st.image("https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=500&auto=format&fit=crop&q=60", use_container_width=True)
     st.markdown("### ⚙️ Model Settings")
 
     selected_architecture = st.selectbox(
@@ -172,7 +172,7 @@ with tab1:
             )
             if uploaded_file is not None:
                 image_to_classify = Image.open(uploaded_file).convert("RGB")
-                st.image(image_to_classify, caption="Uploaded Image", use_column_width=True)
+                st.image(image_to_classify, caption="Uploaded Image", use_container_width=True)
         else:
             # Check for sample images in Images/ or Dataset/
             sample_options = list(CLASS_NAMES)
@@ -186,7 +186,7 @@ with tab1:
             sample_images = list(sample_dir.glob("*.png")) + list(sample_dir.glob("*.jpg"))
             if sample_images:
                 image_to_classify = Image.open(sample_images[0]).convert("RGB")
-                st.image(image_to_classify, caption=f"Sample: {selected_sample_class}", use_column_width=True)
+                st.image(image_to_classify, caption=f"Sample: {selected_sample_class}", use_container_width=True)
 
     with col2:
         st.subheader("2. Prediction & Agricultural Advisory")
@@ -306,7 +306,7 @@ with tab3:
         # Check if confusion matrix image exists
         cm_image_path = IMAGES_DIR / "confusion matrix.png"
         if cm_image_path.exists():
-            st.image(str(cm_image_path), caption="Plant Seedlings Multi-Class Confusion Matrix", use_column_width=True)
+            st.image(str(cm_image_path), caption="Plant Seedlings Multi-Class Confusion Matrix", use_container_width=True)
         else:
             dummy_cm = np.eye(len(CLASS_NAMES), dtype=int) * 35 + np.random.randint(0, 3, (len(CLASS_NAMES), len(CLASS_NAMES)))
             fig_cm = plot_confusion_matrix(dummy_cm, class_names=CLASS_NAMES, model_name=selected_architecture)
@@ -316,7 +316,7 @@ with tab3:
         st.markdown("#### Training & Validation Accuracy Trajectory")
         plant2_path = IMAGES_DIR / "plant2.png"
         if plant2_path.exists():
-            st.image(str(plant2_path), caption="Training & Validation Convergence Curves", use_column_width=True)
+            st.image(str(plant2_path), caption="Training & Validation Convergence Curves", use_container_width=True)
         else:
             st.info("Learning curves will appear here upon executing training runs.")
 
