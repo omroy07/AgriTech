@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  # Streamlit Web Dashboard
+  seedling-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: plant-seedling-dashboard
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./Dataset:/app/Dataset
+      - ./saved_models:/app/saved_models
+      - ./outputs:/app/outputs
+    command: streamlit run app.py --server.port=8501 --server.address=0.0.0.0
+    environment:
+      - STREAMLIT_SERVER_HEADLESS=true
+      - STREAMLIT_SERVER_ENABLE_CORS=false
+
+  # FastAPI REST Inference Service
+  seedling-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: plant-seedling-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./saved_models:/app/saved_models
+      - ./Dataset:/app/Dataset
+    command: uvicorn api:app --host 0.0.0.0 --port 8000
