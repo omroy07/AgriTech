@@ -115,9 +115,22 @@ with app.app_context():
     db.create_all()
 
 # Initialize Gemini API
-# Configure Gemini Client
-genai.configure(api_key=app.config['GEMINI_API_KEY'])
-model = genai.GenerativeModel(app.config['GEMINI_MODEL_ID'])
+# Validate presence of GEMINI_API_KEY at startup
+gemini_api_key = app.config.get('GEMINI_API_KEY')
+if not gemini_api_key or not str(gemini_api_key).strip():
+    if not app.config.get('TESTING'):
+        error_msg = (
+            "CRITICAL STARTUP ERROR: GEMINI_API_KEY is missing or empty. "
+            "The AgriTech backend requires a valid GEMINI_API_KEY to initialize AI services. "
+            "Please configure GEMINI_API_KEY in your .env file or environment variables before starting the server."
+        )
+        logger.critical(error_msg)
+        raise ValueError(error_msg)
+    else:
+        gemini_api_key = "test-gemini-api-key"
+
+genai.configure(api_key=gemini_api_key)
+model = genai.GenerativeModel(app.config.get('GEMINI_MODEL_ID', 'gemini-2.5-flash'))
 
 
 
