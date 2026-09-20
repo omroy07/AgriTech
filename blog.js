@@ -830,3 +830,59 @@ function handleCreatePost(e) {
 
     alert('✅ Blog post published successfully!');
 }
+
+/* =========================================
+   MULTILINGUAL DYNAMIC BLOG SUPPORT
+   ========================================= */
+let originalBlogTitles = {};
+let originalBlogDescriptions = {};
+
+async function updateBlogTranslations(lang) {
+    if (!lang) {
+        lang = localStorage.getItem('agritech-lang') || 'en';
+    }
+
+    if (lang === 'en') {
+        // Restore original English titles/descriptions
+        blogPosts.forEach(post => {
+            if (originalBlogTitles[post.id]) post.title = originalBlogTitles[post.id];
+            if (originalBlogDescriptions[post.id]) post.description = originalBlogDescriptions[post.id];
+        });
+        filterPosts();
+        return;
+    }
+
+    // Cache original English text first
+    blogPosts.forEach(post => {
+        if (!originalBlogTitles[post.id]) originalBlogTitles[post.id] = post.title;
+        if (!originalBlogDescriptions[post.id]) originalBlogDescriptions[post.id] = post.description;
+    });
+
+    if (window.i18nManager && typeof window.i18nManager.translateBatch === 'function') {
+        try {
+            const titles = blogPosts.map(p => originalBlogTitles[p.id] || p.title);
+            const translatedTitles = await window.i18nManager.translateBatch(titles, lang);
+            if (translatedTitles && translatedTitles.length === blogPosts.length) {
+                blogPosts.forEach((p, idx) => {
+                    p.title = translatedTitles[idx];
+                });
+            }
+        } catch (err) {
+            console.debug('Dynamic blog translation fallback:', err);
+        }
+    }
+
+    filterPosts();
+}
+
+window.addEventListener('languageChanged', (e) => {
+    const lang = e.detail ? e.detail.lang : 'en';
+    updateBlogTranslations(lang);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const initialLang = localStorage.getItem('agritech-lang') || 'en';
+    if (initialLang && initialLang !== 'en') {
+        setTimeout(() => updateBlogTranslations(initialLang), 300);
+    }
+});

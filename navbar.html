@@ -276,6 +276,101 @@
     text-decoration: none;
   }
 
+  /* Language Selector Styles */
+  .agritech-navbar .navbar-lang-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .agritech-navbar .navbar-lang-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.75rem;
+    background: var(--navbar-surface);
+    color: var(--navbar-text);
+    border: 1px solid var(--navbar-border);
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .agritech-navbar .navbar-lang-trigger:hover,
+  .agritech-navbar .navbar-lang-container.active .navbar-lang-trigger {
+    border-color: var(--navbar-accent);
+    background: rgba(34, 197, 94, 0.08);
+    transform: translateY(-1px);
+  }
+
+  .agritech-navbar .navbar-lang-trigger i.fa-globe {
+    color: var(--navbar-accent);
+  }
+
+  .agritech-navbar .navbar-lang-trigger i.fa-chevron-down {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    transition: transform 0.2s ease;
+  }
+
+  .agritech-navbar .navbar-lang-container.active .navbar-lang-trigger i.fa-chevron-down {
+    transform: rotate(180deg);
+  }
+
+  .agritech-navbar .navbar-lang-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 145px;
+    background: var(--navbar-bg);
+    border: 1px solid var(--navbar-border);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px var(--navbar-shadow);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 6px;
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    z-index: 1050;
+    animation: navFadeIn 0.2s ease;
+  }
+
+  @keyframes navFadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .agritech-navbar .navbar-lang-container.active .navbar-lang-dropdown,
+  .agritech-navbar .navbar-lang-dropdown.active {
+    display: flex;
+  }
+
+  .agritech-navbar .navbar-lang-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: 8px;
+    color: var(--navbar-text);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+  }
+
+  .agritech-navbar .navbar-lang-option:hover,
+  .agritech-navbar .navbar-lang-option.active {
+    background: var(--navbar-surface);
+    color: var(--navbar-accent);
+    font-weight: 600;
+  }
+
   .agritech-navbar .nav-fav-link i {
     color: #ef4444;
     transition: transform 0.2s ease;
@@ -400,6 +495,26 @@
       </a>
       <a href="login.html" class="nav-auth-link btn-secondary">Login</a>
       <a href="register.html" class="nav-auth-link btn-primary">Register</a>
+      <!-- Language Selector -->
+      <div class="navbar-lang-container" id="navbarLangContainer">
+        <button class="navbar-lang-trigger" id="navbarLangTrigger" type="button" aria-label="Select Language" title="Select Language">
+          <i class="fas fa-globe"></i>
+          <span class="current-lang-label" id="navbarCurrentLang">English</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="navbar-lang-dropdown" id="navbarLangDropdown">
+          <button class="navbar-lang-option" type="button" data-lang-code="en" onclick="setLanguage('en', 'English')">
+            <span>🇺🇸</span> <span>English</span>
+          </button>
+          <button class="navbar-lang-option" type="button" data-lang-code="hi" onclick="setLanguage('hi', 'हिन्दी')">
+            <span>🇮🇳</span> <span>हिन्दी (Hindi)</span>
+          </button>
+          <button class="navbar-lang-option" type="button" data-lang-code="kn" onclick="setLanguage('kn', 'ಕನ್ನಡ')">
+            <span>🇮🇳</span> <span>ಕನ್ನಡ (Kannada)</span>
+          </button>
+        </div>
+      </div>
+
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark theme" title="Toggle theme">
         <span class="theme-toggle-track">
           <span class="theme-toggle-icon sun-icon" aria-hidden="true">
@@ -435,5 +550,63 @@
     updateNavFavCount();
     document.addEventListener('favoriteToggle', updateNavFavCount);
     document.addEventListener('DOMContentLoaded', updateNavFavCount);
+  })();
+
+  (function initNavbarLanguage() {
+    function setupNavbarLang() {
+      const trigger = document.getElementById('navbarLangTrigger');
+      const container = document.getElementById('navbarLangContainer');
+      const label = document.getElementById('navbarCurrentLang');
+      const options = document.querySelectorAll('.navbar-lang-option');
+
+      const names = { 'en': 'English', 'hi': 'हिन्दी', 'kn': 'ಕನ್ನಡ' };
+      const current = localStorage.getItem('agritech-lang') || localStorage.getItem('selectedLang') || 'en';
+
+      if (label) {
+        label.textContent = names[current] || current.toUpperCase();
+      }
+
+      options.forEach(opt => {
+        if (opt.getAttribute('data-lang-code') === current) {
+          opt.classList.add('active');
+        } else {
+          opt.classList.remove('active');
+        }
+      });
+
+      if (trigger && container) {
+        trigger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          container.classList.toggle('active');
+        });
+
+        document.addEventListener('click', () => {
+          container.classList.remove('active');
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupNavbarLang);
+    } else {
+      setupNavbarLang();
+    }
+
+    window.addEventListener('languageChanged', (e) => {
+      const lang = e.detail ? e.detail.lang : null;
+      if (lang) {
+        const names = { 'en': 'English', 'hi': 'हिन्दी', 'kn': 'ಕನ್ನಡ' };
+        const label = document.getElementById('navbarCurrentLang');
+        if (label) label.textContent = names[lang] || lang.toUpperCase();
+
+        document.querySelectorAll('.navbar-lang-option').forEach(opt => {
+          if (opt.getAttribute('data-lang-code') === lang) {
+            opt.classList.add('active');
+          } else {
+            opt.classList.remove('active');
+          }
+        });
+      }
+    });
   })();
 </script>
