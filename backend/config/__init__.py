@@ -92,3 +92,18 @@ config = {
     'testing': TestingConfig,
     'default': DevelopmentConfig
 }
+
+
+def validate_required_config(app):
+    """
+    Validates required configuration keys at startup.
+    Fails fast with ValueError if critical keys like GEMINI_API_KEY are missing.
+    """
+    if not app.config.get('TESTING'):
+        gemini_key = app.config.get('GEMINI_API_KEY')
+        if not gemini_key or not str(gemini_key).strip():
+            raise ValueError(
+                "CRITICAL STARTUP ERROR: GEMINI_API_KEY is missing or empty. "
+                "The AgriTech backend requires a valid GEMINI_API_KEY to initialize AI services. "
+                "Please configure GEMINI_API_KEY in your .env file or environment variables before starting the server."
+            )
