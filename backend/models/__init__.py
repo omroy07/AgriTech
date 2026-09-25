@@ -6,6 +6,7 @@ from .user import User, UserRole
 from .token import Token
 from .loan_request import LoanRequest
 from .prediction_history import PredictionHistory
+from .market import MarketPrice, PriceWatchlist
 from .misc import (
     Notification,
     File,
