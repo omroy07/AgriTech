@@ -58,6 +58,7 @@ from .government_scheme import gov_scheme_bp
 from .soil_analytics import soil_analytics_bp
 from .crop_advisory import advisory_bp
 from .irrigation_v2 import irrigation_v2_bp
+from .translations import translation_bp, content_bp
 
 # Create v1 API blueprint
 api_v1 = Blueprint("api_v1", __name__, url_prefix="/api/v1")
@@ -135,3 +136,5 @@ api_v1.register_blueprint(carbon_bp, url_prefix='/carbon')
 api_v1.register_blueprint(carbon_v2_bp, url_prefix='/carbon-v2')
 api_v1.register_blueprint(nutrient_api_bp, url_prefix='/nutrient-optimization')
 api_v1.register_blueprint(irrigation_v2_bp, url_prefix='/irrigation-v2')
+api_v1.register_blueprint(translation_bp, url_prefix='/translate')
+api_v1.register_blueprint(content_bp, url_prefix='/content')

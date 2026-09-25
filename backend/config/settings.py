@@ -120,6 +120,7 @@ class FeatureFlags:
     enable_voice_input: bool = _get_bool("ENABLE_VOICE_INPUT", True)
     enable_offline_cache: bool = _get_bool("ENABLE_OFFLINE_CACHE", True)
     enable_rate_limiter: bool = _get_bool("ENABLE_RATE_LIMITER", True)
+    enable_multilingual_support: bool = _get_bool("ENABLE_MULTILINGUAL_SUPPORT", True)
 
 
 @dataclass(frozen=True)
@@ -133,6 +134,7 @@ class ServicesConfig:
     weather_api_key: Optional[str] = os.environ.get("WEATHER_API_KEY")
     weather_api_url: str = os.environ.get("WEATHER_API_URL", "https://api.weatherapi.com/v1")
     fx_api_url: str = os.environ.get("FX_API_URL", "https://api.exchangerate-api.com/v4/latest")
+    google_translation_api_key: Optional[str] = os.environ.get("GOOGLE_TRANSLATION_API_KEY")
 
 
 @dataclass(frozen=True)
