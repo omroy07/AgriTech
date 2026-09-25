@@ -133,7 +133,6 @@ Note: Backend and frontend must be running simultaneously for proper functionali
 ## 🌟 Core Features
 
 - 🌾 Crop Recommendation
-- 🌿 Fertilizer Recommendation
 - 📉 Yield Prediction
 - 🔬 Disease Detection
 - � **AI Chatbot** - Platform guidance & agriculture support
@@ -141,13 +140,11 @@ Note: Backend and frontend must be running simultaneously for proper functionali
 - 🛒 Shopkeeper Listings
 
 ---
-
 ## 🤖 AI Chatbot
 
 AgriTech's AI-powered chatbot provides comprehensive support for farmers:
 
 ### Features
-
 - **Platform Guidance**: Explains how to use all AgriTech features and tools
 - **Agriculture Support**: Answers farming questions, crop recommendations, pest control
 - **Decision Making**: Provides region-specific, season-based farming advice
@@ -155,14 +152,12 @@ AgriTech's AI-powered chatbot provides comprehensive support for farmers:
 - **24/7 Support**: Always available for instant farming assistance
 
 ### Technical Implementation
-
 - **Dual Mode**: AI-powered (Google Gemini) + Rule-based fallback
 - **Smart Matching**: Fuzzy search with keyword analysis for accurate responses
 - **Offline Capability**: Works without internet using JSON-based responses
 - **Image Processing**: Analyzes plant photos for disease identification
 
 ### Usage
-
 ```bash
 # Start the chatbot server
 npm install
@@ -172,11 +167,9 @@ node server.js
 ```
 
 ### API Endpoints
-
 - `POST /api/chat` - Send messages and images for AI analysis
 
 ---
-
 ## 🛠️ Tech Stack
 
 ### 🎨 Frontend
@@ -227,7 +220,6 @@ AGRITECH/
 │       ├── 📁 css/             # Stylesheets
 │       └── 📁 js/              # Client-side scripts
 ├── 📁 Crop Recommendation/   # 🌾 Crop recommendation module
-├── 📁 Fertiliser Recommendation System/   # 🌿 Fertilizer recommendation ML module
 ├── 📁 Disease Prediction/     # 🔬 Disease detection module
 ├── 📁 Crop Yield Prediction/   # 📊 Yield forecasting module
 ├── 📁 Community/               # 💬 community/forum backend
@@ -269,24 +261,6 @@ FIREBASE_MEASUREMENT_ID=your_measurement_id
 
 ---
 
-## 🔐 Registration Validation Rules
-
-To maintain clean user data and enforce business policies, AgriTech now applies strict
-validation whenever a new account is created (frontend **and** backend):
-
-- **Full Name / Username:** only alphabetic characters and spaces are allowed. The
-  same rule is enforced in the database model, API routes, and client-side form.
-- **Email:** registrations are limited to `@gmail.com` addresses. Non‑Gmail domains
-  are rejected both on the client and by API endpoints.
-
-Error messages are shown immediately on the form and the backend returns a descriptive
-400 response when validation fails. Automated tests cover both model‑level and
-endpoint behavior.
-
----
-
----
-
 ## 🛣️ Roadmap
 
 - Cloud Deployment
@@ -309,10 +283,10 @@ Read **[CONTRIBUTING.md](CONTRIBUTING.md)** for SWoC 2026 guidelines.
 
 ## 👥 Team
 
-| Name          | Role                    |
-| ------------- | ----------------------- |
-| Om Roy        | Project Lead · Web · ML |
-| Shubhangi Roy | ML · Backend            |
+| Name                    | Role                    |
+| ----------------------- | ----------------------- |
+| Om Roy                  | Project Lead · Web · ML |
+| Shubhangi Roy           | ML · Backend            |
 
 ---
 
@@ -360,7 +334,6 @@ Found a bug or want a new feature? [Open an issue](https://github.com/omroy07/Ag
 This project is licensed under the [MIT License](LICENSE).
 
 ---
-
 ## 🛠️ Common Issues & Fixes
 
 - ❌ **ModuleNotFoundError**
@@ -394,4 +367,4 @@ A: Ensure the backend server is running correctly and that the /health route is 
 
 ---
 
-**Made with ❤️ by the AgriTech Community — Nexus Spring Of Code 2026**
+**Made with ❤️ by the AgriTech Community — SWoC 2026**
