@@ -1,7 +1,6 @@
 import sys
 import os
 import importlib.util
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
 import pytest
 from flask import Flask
@@ -10,7 +9,7 @@ from backend.services.translation_service import TranslationService, SUPPORTED_L
 # Load translations blueprint directly without triggering eager loads of unrelated optional ML modules
 spec = importlib.util.spec_from_file_location(
     "translations_module",
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "api", "v1", "translations.py"))
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "backend", "api", "v1", "translations.py"))
 )
 translations_module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(translations_module)

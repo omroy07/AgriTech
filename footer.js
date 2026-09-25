@@ -275,9 +275,23 @@
     openUnsubscribeModal(e);
   };
 
+  // Universal i18n loader to ensure all pages have language switching support
+  function ensureI18nLoaded() {
+    if (!window.i18nManager && !document.querySelector('script[src*="scripts/i18n.js"]')) {
+      const script = document.createElement('script');
+      script.src = 'scripts/i18n.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initNewsletter);
+    document.addEventListener('DOMContentLoaded', function () {
+      initNewsletter();
+      ensureI18nLoaded();
+    });
   } else {
     initNewsletter();
+    ensureI18nLoaded();
   }
 })();

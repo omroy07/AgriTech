@@ -1,5 +1,8 @@
 from flask import Blueprint, request, jsonify, current_app
-import google.generativeai as genai
+try:
+    import google.generativeai as genai
+except ImportError:
+    genai = None
 from backend.utils.validation import sanitize_input, validate_input
 from backend.services.audit_service import AuditService
 

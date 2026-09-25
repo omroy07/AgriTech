@@ -8,8 +8,7 @@ and multi-tier fallback support (Google Cloud Translation API -> deep-translator
 import os
 import logging
 import requests
-from typing import List, Dict, Any, Optional, Union
-from functools import lru_cache
+from typing import List, Dict, Any, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -175,7 +174,6 @@ class TranslationService:
         if not texts or target_lang == source_lang or (target_lang == "en" and source_lang in ("en", "auto")):
             return texts
 
-        # Translate each text (leveraging in-memory cache)
         return [cls.translate_text(t, target_lang, source_lang) for t in texts]
 
     @classmethod
