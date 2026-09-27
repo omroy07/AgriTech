@@ -4,25 +4,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Climate Guardian | IoT Dashboard</title>
+  <title>Hyperlocal Precision Irrigation & Climate Risk Early Warning | AgriTech</title>
+  
+  <link rel="icon" type="image/png" href="/images/logo.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet.js Map CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  
+  <!-- Chart.js & SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <style>
     :root {
       --primary: #0ea5e9;
       --secondary: #10b981;
+      --warning: #f59e0b;
       --accent: #f43f5e;
       --bg: #020617;
+      --sidebar-bg: #030712;
       --card: #0f172a;
+      --card-border: rgba(255, 255, 255, 0.08);
       --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
       font-family: 'Outfit', sans-serif;
       background: var(--bg);
       color: var(--text);
-      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
     .dashboard-container {
@@ -31,302 +52,523 @@
       min-height: 100vh;
     }
 
-    /* Sidebar UI */
+    /* SIDEBAR */
     .sidebar {
-      background: #010409;
-      padding: 2.5rem;
-      border-right: 1px solid rgba(255, 255, 255, 0.05);
+      background: var(--sidebar-bg);
+      padding: 2rem;
+      border-right: 1px solid var(--card-border);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
     }
-
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .brand-logo i {
+      color: var(--secondary);
+      font-size: 1.6rem;
+    }
+    .sidebar-section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .zone-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
     .zone-pill {
-      padding: 1.25rem;
+      padding: 1.1rem;
       border-radius: 16px;
-      margin-bottom: 1rem;
       cursor: pointer;
       background: rgba(255, 255, 255, 0.03);
-      border: 1px solid transparent;
-      transition: 0.3s;
+      border: 1px solid var(--card-border);
+      transition: all 0.25s ease;
     }
-
     .zone-pill:hover {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(14, 165, 233, 0.08);
+      border-color: rgba(14, 165, 233, 0.3);
     }
-
     .zone-pill.active {
       background: rgba(14, 165, 233, 0.15);
       border-color: var(--primary);
+      box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);
     }
-
-    /* Main View */
-    .main-content {
-      padding: 3rem;
-      overflow-y: auto;
+    .zone-title {
+      font-weight: 700;
+      font-size: 0.95rem;
     }
-
-    .header {
+    .zone-meta {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 4px;
       display: flex;
       justify-content: space-between;
+    }
+
+    /* SATELLITE SYNC BADGE */
+    .satellite-card {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 14px;
+      padding: 1rem;
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .sat-header {
+      display: flex;
       align-items: center;
-      margin-bottom: 4rem;
-    }
-
-    .gauges-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-    }
-
-    .gauge-card {
-      background: var(--card);
-      padding: 2rem;
-      border-radius: 24px;
-      text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .val-display {
-      font-size: 3rem;
+      gap: 6px;
+      color: var(--secondary);
       font-weight: 700;
-      color: var(--primary);
-      display: block;
     }
 
-    .val-unit {
-      font-size: 0.9rem;
-      opacity: 0.6;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .viz-row {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
+    /* MAIN CONTENT */
+    .main-content {
+      padding: 2.5rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
       gap: 2rem;
     }
 
-    .viz-card {
-      background: var(--card);
-      border-radius: 28px;
-      padding: 2.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .header-title-block h2 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    .header-title-block p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+    .header-actions {
+      display: flex;
+      gap: 12px;
     }
 
-    /* VPD Status Labels */
-    .status-chip {
-      padding: 0.4rem 1rem;
-      border-radius: 50px;
-      font-size: 0.75rem;
+    .btn {
+      padding: 0.75rem 1.4rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
+    }
+    .btn-primary:hover {
+      background: #0284c7;
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--card-border);
+    }
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* CLIMATE RISK TICKER BANNER */
+    .risk-ticker-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .risk-card {
+      padding: 1rem 1.25rem;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid transparent;
+      animation: slideIn 0.3s ease-out;
+    }
+    .risk-frost {
+      background: rgba(14, 165, 233, 0.12);
+      border-color: var(--primary);
+    }
+    .risk-blight {
+      background: rgba(245, 158, 11, 0.12);
+      border-color: var(--warning);
+    }
+    .risk-heat {
+      background: rgba(244, 63, 94, 0.12);
+      border-color: var(--accent);
+    }
+    .risk-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .risk-icon {
+      font-size: 1.5rem;
+    }
+    .risk-info h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+    .risk-info p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .risk-tag {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
       font-weight: 700;
       text-transform: uppercase;
     }
 
-    .status-propagation {
-      background: rgba(16, 185, 129, 0.2);
-      color: #10b981;
+    /* GAUGES GRID */
+    .gauges-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+    .gauge-card {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
+      position: relative;
+      overflow: hidden;
+    }
+    .gauge-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .val-display {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--text);
+      margin: 8px 0 2px;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+    .val-unit {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .gauge-subtext {
+      font-size: 0.78rem;
+      color: var(--secondary);
+      font-weight: 600;
     }
 
-    .status-vegetative {
-      background: rgba(14, 165, 233, 0.2);
-      color: #0ea5e9;
+    /* TWO-COL WORKSPACE */
+    .workspace-row {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 1080px) {
+      .dashboard-container { grid-template-columns: 1fr; }
+      .workspace-row { grid-template-columns: 1fr; }
     }
 
-    .status-stress {
-      background: rgba(244, 63, 94, 0.2);
-      color: #f43f5e;
+    .panel-card {
+      background: var(--card);
+      border-radius: 22px;
+      padding: 1.75rem;
+      border: 1px solid var(--card-border);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
     }
-
-    .btn {
-      padding: 0.8rem 1.5rem;
-      border-radius: 12px;
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 0.8rem;
+    }
+    .panel-title {
+      font-size: 1.1rem;
       font-weight: 700;
-      cursor: pointer;
-      border: none;
-      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .btn-primary {
-      background: var(--primary);
-      color: white;
+    /* FIELD MAPPER */
+    #field-polygon-map {
+      height: 340px;
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      z-index: 1;
+    }
+
+    /* 3-DAY IRRIGATION SCHEDULE CARDS */
+    .schedule-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .schedule-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all 0.25s ease;
+    }
+    .schedule-card.irrigate-now {
+      border-left: 4px solid var(--secondary);
+      background: rgba(16, 185, 129, 0.05);
+    }
+    .schedule-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .sched-day {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .sched-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .badge-irrigate {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+    }
+    .badge-conserve {
+      background: rgba(148, 163, 184, 0.2);
+      color: var(--text-muted);
+    }
+    .sched-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .sched-metrics strong {
+      color: var(--text);
+    }
+    .sched-action {
+      font-size: 0.82rem;
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    /* CHART CONTAINER */
+    .chart-container {
+      position: relative;
+      height: 260px;
+      width: 100%;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(-8px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
   </style>
-  <link rel="stylesheet" href="footer.css" />
 </head>
 
 <body>
 
   <div class="dashboard-container">
+    
+    <!-- SIDEBAR: FIELD ZONES & SATELLITE TELEMETRY -->
     <aside class="sidebar">
-      <h2 style="color: var(--primary); font-size: 1.8rem;"><i class="fas fa-microchip"></i> CLIMATE HUB</h2>
-      <p style="opacity: 0.5; font-size: 0.85rem; margin-bottom: 3rem;">Global IoT Infrastructure</p>
-
-      <div id="zone-list">
-        <!-- Zones Injected Here -->
+      <div class="brand-logo">
+        <i class="fas fa-droplet"></i>
+        <span>HydroGuardian AI</span>
       </div>
 
-      <button class="btn btn-primary" style="width: 100%; margin-top: 2rem;" onclick="addNode()">+ Register New
-        Node</button>
+      <div>
+        <div class="sidebar-section-title">Farm Polygon Zones</div>
+        <div id="polygon-zone-list" class="zone-list">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <div class="satellite-card">
+        <div class="sat-header">
+          <i class="fas fa-satellite"></i> Copernicus Sentinel-2
+        </div>
+        <p style="color: var(--text-muted);">10m SAR & Optical Soil Moisture Layer active. Overpass refreshed 3h ago.</p>
+        <button class="btn btn-secondary" onclick="syncSatelliteTelemetry()" style="width: 100%; padding: 0.5rem; font-size: 0.75rem; margin-top: 4px;">
+          <i class="fas fa-rotate"></i> Sync Sentinel-2 Grid
+        </button>
+      </div>
+
+      <div>
+        <button class="btn btn-secondary" onclick="openProvisionModal()" style="width: 100%;">
+          <i class="fas fa-plus"></i> Add IoT Sensor Node
+        </button>
+      </div>
     </aside>
 
+    <!-- MAIN DASHBOARD CONTENT -->
     <main class="main-content">
-      <header class="header">
-        <div>
-          <h1 id="active-zone-title">Select a Climate Zone</h1>
-          <p style="opacity: 0.6; margin-top: 0.6rem;" id="zone-coords">Real-time telemetry stream</p>
+      
+      <!-- TOP HEADER -->
+      <div class="top-header">
+        <div class="header-title-block">
+          <h2 id="active-field-title">North Block - Tomato Greenhouse</h2>
+          <p>FAO-56 Penman-Monteith Evapotranspiration, Root-Zone Moisture & Microclimate Alerts</p>
         </div>
-        <div id="connection-status" class="status-chip status-vegetative">STREAMS ACTIVE</div>
-      </header>
+        <div class="header-actions">
+          <button class="btn btn-primary" onclick="recalculateIrrigation()">
+            <i class="fas fa-calculator"></i> Run Water Balance
+          </button>
+        </div>
+      </div>
 
+      <!-- MICROCLIMATE RISK EARLY WARNING TICKER -->
+      <div id="risk-ticker-container" class="risk-ticker-container">
+        <!-- Injected via JS -->
+      </div>
+
+      <!-- ROOT ZONE MOISTURE GAUGES & FAO-56 TELEMETRY -->
       <div class="gauges-grid">
         <div class="gauge-card">
-          <span class="val-display" id="stat-temp">--</span>
-          <span class="val-unit">Temperature °C</span>
+          <div class="gauge-top">
+            <span>Root-Zone (0-30cm)</span>
+            <i class="fas fa-droplet" style="color: var(--primary);"></i>
+          </div>
+          <div class="val-display">
+            <span id="gauge-moist-top">22.4</span>
+            <span class="val-unit">% VWC</span>
+          </div>
+          <div id="gauge-moist-sub" class="gauge-subtext">Optimal Moisture Band</div>
         </div>
+
         <div class="gauge-card">
-          <span class="val-display" id="stat-hum">--</span>
-          <span class="val-unit">Humidity %</span>
+          <div class="gauge-top">
+            <span>Plant Available Water</span>
+            <i class="fas fa-seedling" style="color: var(--secondary);"></i>
+          </div>
+          <div class="val-display">
+            <span id="gauge-paw">68.5</span>
+            <span class="val-unit">% PAW</span>
+          </div>
+          <div class="gauge-subtext" style="color: #38bdf8;">Field Capacity: 32% | PWP: 18%</div>
         </div>
+
         <div class="gauge-card">
-          <span class="val-display" id="stat-vpd">--</span>
-          <span class="val-unit">VPD kPa</span>
+          <div class="gauge-top">
+            <span>FAO-56 ET₀ (Reference)</span>
+            <i class="fas fa-sun" style="color: var(--warning);"></i>
+          </div>
+          <div class="val-display">
+            <span id="gauge-et0">4.8</span>
+            <span class="val-unit">mm / day</span>
+          </div>
+          <div class="gauge-subtext" id="gauge-etc-sub">Crop ETc: 5.52 mm (Kc 1.15)</div>
         </div>
+
         <div class="gauge-card">
-          <span class="val-display" id="stat-co2">--</span>
-          <span class="val-unit">CO2 ppm</span>
+          <div class="gauge-top">
+            <span>Soil Moisture Deficit</span>
+            <i class="fas fa-glass-water" style="color: var(--accent);"></i>
+          </div>
+          <div class="val-display">
+            <span id="gauge-smd">14.2</span>
+            <span class="val-unit">mm</span>
+          </div>
+          <div class="gauge-subtext" id="gauge-liters-sub">Req: ~57,400 L / acre</div>
         </div>
       </div>
 
-      <div class="viz-row">
-        <div class="viz-card">
-          <h3>Environmental 24h Trend</h3>
-          <canvas id="telemetryChart"></canvas>
+      <!-- WORKSPACE ROW 1: FIELD POLYGON MAPPER & 3-DAY SCHEDULE -->
+      <div class="workspace-row">
+        
+        <!-- LEAFLET INTERACTIVE POLYGON MAPPER -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-draw-polygon" style="color: var(--primary);"></i>
+              <span>Interactive Field Polygon Mapper</span>
+            </div>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Root-Zone Moisture Heatmap</span>
+          </div>
+          <div id="field-polygon-map"></div>
         </div>
-        <div class="viz-card">
-          <h3>Scientific Assessment</h3>
-          <div id="assessment-block" style="margin-top: 2rem;">
-            <div style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 20px; margin-bottom: 1rem;">
-              <h4 style="margin: 0;">VPD Classification</h4>
-              <p id="vpd-desc" style="opacity: 0.7; font-size: 0.9rem;">Analytical engine pending data...
-              </p>
-              <span id="vpd-tag" class="status-chip">OFFLINE</span>
+
+        <!-- 3-DAY OPTIMAL IRRIGATION WINDOWS -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fas fa-calendar-check" style="color: var(--secondary);"></i>
+              <span>3-Day Optimal Irrigation Windows</span>
             </div>
-            <div style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 20px;">
-              <h4 style="margin: 0;">Automation State</h4>
-              <ul id="active-triggers"
-                style="padding-left: 1.2rem; font-size: 0.85rem; opacity: 0.7; margin-top: 0.8rem;">
-                <li>Scan active triggers...</li>
-              </ul>
-            </div>
+            <span style="font-size: 0.8rem; color: #34d399; font-weight: 700;">Drip Efficiency: 90%</span>
+          </div>
+          <div id="schedule-list-container" class="schedule-list">
+            <!-- Injected dynamically -->
           </div>
         </div>
+
       </div>
+
+      <!-- WORKSPACE ROW 2: HISTORICAL MOISTURE TRENDS & VPD -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title">
+            <i class="fas fa-chart-line" style="color: var(--primary);"></i>
+            <span>Real-time Soil Moisture & Atmospheric Vapor Pressure Deficit (VPD)</span>
+          </div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">
+            VPD Status: <span id="vpd-status-badge" style="color: var(--secondary); font-weight: 700;">VEGETATIVE (1.18 kPa)</span>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="telemetryCombinedChart"></canvas>
+        </div>
+      </div>
+
     </main>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- SCRIPT ENGINE -->
   <script src="climate_dashboard.js"></script>
-  <footer class="site-footer tech-dark-theme final-match">
-    <div class="footer-top-accent"></div>
-
-    <div class="footer-inner-content">
-      <div class="footer-section footer-brand">
-        <a href="index.html" class="brand-header">
-          <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
-          <h3>AgriTech</h3>
-        </a>
-
-        <p class="tagline">
-          Empowering India's Farming Future with innovative technology
-          connecting every stakeholder.
-        </p>
-
-        <div class="social-icons">
-          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" aria-label="X (formerly Twitter)"><i class="fab fa-x-twitter"></i></a>
-          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        </div>
-      </div>
-
-      <div class="footer-group-links">
-        <div class="footer-section footer-links">
-          <h4>Quick Links</h4>
-          <ul>
-            <li>
-              <a href="index.html"><i class="fas fa-home"></i> Home</a>
-            </li>
-            <li>
-              <a href="login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            </li>
-            <li>
-              <a href="marketplace.html"><i class="fas fa-store"></i> Marketplace</a>
-            </li>
-            <li>
-              <a href="weather_dashboard.html"><i class="fas fa-cloud-sun"></i> Weather</a>
-            </li>
-            <li>
-              <a href="contact.html"><i class="fas fa-headset"></i> Contact Us</a>
-            </li>
-            <li>
-              <a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a>
-            </li>
-            <li>
-              <a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a>
-            </li>
-            <li>
-              <a href="privacy-policy.html"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="footer-section footer-contact">
-          <h4>Contact</h4>
-          <ul>
-            <li>
-              <a href="mailto:contact@agritech.com">
-                <i class="fas fa-envelope"></i> contact@agritech.com
-              </a>
-            </li>
-            <li>
-              <a href="tel:+910000000000">
-                <i class="fas fa-phone"></i> +91 00000 00000
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="footer-section footer-newsletter">
-          <h4>Newsletter</h4>
-          <p class="newsletter-desc">
-            Subscribe to get the latest farming insights, tips, and updates.
-          </p>
-          <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
-            <div class="newsletter-input-group">
-              <input type="email" class="newsletter-input" placeholder="Enter your email to get the latest updates..."
-                required aria-label="Email address for newsletter" />
-              <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
-                <span>Subscribe</span>
-                <i class="fas fa-paper-plane"></i>
-              </button>
-            </div>
-            <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
-            <div class="newsletter-footer-optout">
-              <small>No spam. <a href="javascript:void(0)" onclick="openUnsubscribeModal(event)">Unsubscribe</a>
-                anytime.</small>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <p>© <span id="current-year">2026</span> AgriTech. All rights reserved. <a href="privacy-policy.html">Privacy
-          Policy</a> · <a href="terms-and-service.html">Terms</a> · <a href="cookie-policy.html">Cookie Policy</a></p>
-    </div>
-
-    <div class="footer-wave-overlay"></div>
-  </footer>
-  <script src="footer.js"></script>
 </body>
 
 </html>
