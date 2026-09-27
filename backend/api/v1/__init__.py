@@ -59,11 +59,13 @@ from .soil_analytics import soil_analytics_bp
 from .crop_advisory import advisory_bp
 from .irrigation_v2 import irrigation_v2_bp
 from .translations import translation_bp, content_bp
+from .bot_webhook import bot_webhook_bp
 
 # Create v1 API blueprint
 api_v1 = Blueprint("api_v1", __name__, url_prefix="/api/v1")
 
 # Register sub-blueprints
+api_v1.register_blueprint(bot_webhook_bp, url_prefix="/bot")
 api_v1.register_blueprint(loan_bp)
 api_v1.register_blueprint(auth_bp, url_prefix="/auth")
 api_v1.register_blueprint(config_bp)
