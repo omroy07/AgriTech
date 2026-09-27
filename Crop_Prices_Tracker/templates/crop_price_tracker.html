@@ -5,794 +5,919 @@
   <link rel="icon" type="image/png" href="/images/logo.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Crop Price Tracker</title>
+  <title>Predictive Mandi Price Intelligence & Net-Profit Optimizer | AgriTech</title>
+  
   <script>
     (function () {
       const saved = localStorage.getItem("theme");
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)",
-      ).matches;
-      document.documentElement.setAttribute(
-        "data-theme",
-        saved || (prefersDark ? "dark" : "light"),
-      );
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.setAttribute("data-theme", saved || (prefersDark ? "dark" : "light"));
     })();
   </script>
+
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="../static/styles.css">
   <link rel="stylesheet" href="../../theme.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Leaflet.js Map Styles -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Leaflet.js -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <style>
-    /* --- GLOBAL RESET --- */
-    html,
-    body {
-      margin: 0 !important;
-      padding: 0 !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      overflow-x: hidden !important;
-      min-height: 100vh;
-    }
-
-    /* --- 1. THEME VARIABLES --- */
-    :root {
-      --bg-color: #030712;
-      --text-color: #ffffff;
-      --text-muted: #cbd5e1;
-      --surface-color: rgba(15, 23, 42, 0.9);
-      --section-bg: rgba(30, 41, 59, 0.7);
-      --border-color: #334155;
-      --accent-color: #22c55e;
-      --shadow-color: rgba(0, 0, 0, 0.3);
-    }
-
-    <head><link rel="icon" type="image/png" href="/images/logo.png"><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Crop Price Tracker</title><script>(function () {
-        const saved=localStorage.getItem("theme");
-        const prefersDark=window.matchMedia("(prefers-color-scheme: dark)",
-        ).matches;
-        document.documentElement.setAttribute("data-theme",
-          saved || (prefersDark ? "dark" : "light"),
-        );
-      })();
-    </script><link rel="stylesheet" href="../static/styles.css"><link rel="stylesheet" href="../../theme.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" /><style>
-
-    /* --- GLOBAL RESET --- */
-    html,
-    body {
-      margin: 0 !important;
-      padding: 0 !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      overflow-x: hidden !important;
-      min-height: 100vh;
-    }
-
-    /* --- 1. THEME VARIABLES --- */
-    :root {
-      --bg-color: #030712;
-      --text-color: #ffffff;
-      --text-muted: #cbd5e1;
-      --surface-color: rgba(15, 23, 42, 0.9);
-      --section-bg: rgba(30, 41, 59, 0.7);
-      --border-color: #334155;
-      --accent-color: #22c55e;
-      --shadow-color: rgba(0, 0, 0, 0.3);
-    }
-
-    [data-theme="light"] {
-      --bg-color: #f8fafc;
-      --text-color: #0f172a;
-      --text-muted: #475569;
-      --surface-color: rgba(255, 255, 255, 0.95);
-      --section-bg: rgba(241, 245, 249, 0.8);
-      --border-color: #cbd5e1;
-      --accent-color: #16a34a;
-      --shadow-color: rgba(0, 0, 0, 0.1);
-    }
-
-    /* --- 2. LAYOUT --- */
-    body {
-      display: flex;
-      flex-direction: column;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      font-family: 'Open Sans', sans-serif;
-      position: relative;
-    }
-
-    /* Animated Ambient Background */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(circle at 15% 50%, rgba(34, 197, 94, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 85% 30%, rgba(34, 197, 94, 0.05) 0%, transparent 40%);
-      z-index: -1;
-      animation: pulseBg 8s ease-in-out infinite alternate;
-    }
-
-    @keyframes pulseBg {
-      from {
-        opacity: 0.5;
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
-
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
+    /* --- GLOBAL RESET & THEME VARIABLES --- */
+    * {
       box-sizing: border-box;
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border-color);
-      animation: fadeInDown 0.8s ease-out;
-    }
-
-    .header h2 {
       margin: 0;
-      color: var(--accent-color);
-    }
-
-    .back-button {
-      text-decoration: none;
-      color: var(--text-muted);
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: transform 0.3s ease;
-    }
-
-    .back-button:hover {
-      color: var(--accent-color);
-      transform: translateX(-5px);
-    }
-
-    /* --- 3. FORM CARD STYLING --- */
-    .form-container {
-      backdrop-filter: blur(12px);
-      position: relative;
-      z-index: 1;
-      max-width: 600px;
-      width: 90%;
-      margin: 2rem auto;
-      padding: 2.5rem;
-      border-radius: 16px;
-      background: var(--surface-color);
-      border: 1px solid var(--border-color);
-      animation: fadeSlideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-    }
-
-    .form-container::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 16px;
-      background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), transparent);
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .form-row {
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeSlideUp 0.5s ease forwards;
-    }
-
-    .form-row:nth-child(1) {
-      animation-delay: 0.2s;
-    }
-
-    .form-row:nth-child(2) {
-      animation-delay: 0.3s;
-    }
-
-    .form-row:nth-child(3) {
-      animation-delay: 0.4s;
-    }
-
-    .form-label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-      color: var(--text-color);
-    }
-
-    select {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-color);
-      color: var(--text-color);
-      font-size: 1rem;
-      outline: none;
-      transition: all 0.3s ease;
-    }
-
-    select:focus {
-      border-color: var(--accent-color);
-      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
-      transform: translateY(-1px);
-    }
-
-    /* --- 4. BUTTON STYLING --- */
-    .submit-button {
-      display: block;
-      margin: 2rem auto 0 auto;
-      width: auto;
-      min-width: 200px;
-      padding: 12px 30px;
-      background-color: var(--accent-color);
-      color: white;
-      border: none;
-      border-radius: 50px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .submit-button:hover:not(:disabled) {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 8px 25px rgba(34, 197, 94, 0.5);
-      background-color: #16a34a;
-    }
-
-    .submit-button:active:not(:disabled) {
-      transform: translateY(0) scale(0.95);
-    }
-
-    .submit-button::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: 0.5s;
-    }
-
-    .submit-button:hover::after {
-      left: 100%;
-    }
-
-    .submit-button:disabled {
-      background-color: var(--border-color);
-      cursor: not-allowed;
-      box-shadow: none;
-      color: var(--text-muted);
-      opacity: 0.7;
-    }
-
-    /* --- 5. RESULTS STYLING --- */
-    .results-container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto 3rem auto;
-      padding: 0 20px;
-      box-sizing: border-box;
-      animation: fadeIn 1s ease 0.6s both;
-    }
-
-    .results-container h3 {
-      text-align: center;
-      color: var(--accent-color);
-      margin-bottom: 1.5rem;
-      font-size: 1.8rem;
-    }
-
-    .price-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .price-card {
-      background: var(--surface-color);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 12px var(--shadow-color);
-      border-left: 5px solid var(--accent-color);
-      transition: all 0.3s ease;
-      opacity: 0;
-      animation: cardReveal 0.6s ease forwards;
-    }
-
-    .price-card:nth-child(1) {
-      animation-delay: 0.8s;
-    }
-
-    .price-card:nth-child(2) {
-      animation-delay: 0.9s;
-    }
-
-    .price-card:nth-child(3) {
-      animation-delay: 1.0s;
-    }
-
-    .price-card:hover {
-      transform: translateY(-8px) rotate(1deg);
-      box-shadow: 0 12px 24px var(--shadow-color);
-      background: rgba(34, 197, 94, 0.05);
-    }
-
-    .price-date {
-      display: inline-block;
-      font-size: 0.85rem;
-      color: var(--accent-color);
-      background: rgba(34, 197, 94, 0.1);
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .price-amount {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: var(--text-color);
-      margin: 5px 0;
-    }
-
-    .price-location {
-      font-size: 1rem;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    /* --- 6. FLOATING ICONS --- */
-    .floating-icons-wrapper {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -1;
-      overflow: hidden;
-    }
-
-    .floating-icon {
-      position: absolute;
-      font-size: 1.5rem;
-      color: var(--accent-color);
-      opacity: 0.15;
-      animation: floatAround infinite linear;
-    }
-
-    @keyframes floatAround {
-      0% {
-        transform: translateY(100vh) rotate(0deg);
-      }
-
-      100% {
-        transform: translateY(-20vh) rotate(360deg);
-      }
-    }
-
-    /* --- 7. KEYFRAMES --- */
-    @keyframes fadeSlideUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
-
-    @keyframes cardReveal {
-      from {
-        opacity: 0;
-        transform: scale(0.9) translateY(20px);
-      }
-
-      to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-    }
-
-    /* --- 8. FOOTER --- */
-    .site-footer {
-      background: var(--surface-color);
-      color: var(--text-color);
-      border-top: 1px solid var(--border-color);
-      margin-top: auto;
-      width: 100%;
-    }
-
-    .footer-inner-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 3rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      gap: 3rem;
-      flex-wrap: wrap;
-    }
-
-    .footer-brand {
-      flex: 1 1 280px;
-    }
-
-    .footer-brand h3 {
-      color: var(--accent-color);
-      margin: 0;
-    }
-
-    .social-icons {
-      display: flex;
-      gap: 0.7rem;
-      margin-top: 1rem;
-    }
-
-    .social-icons a {
-      width: 36px;
-      height: 36px;
-      background: rgba(34, 197, 94, 0.1);
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      color: var(--accent-color);
-      transition: 0.3s;
-    }
-
-    .social-icons a:hover {
-      background: var(--accent-color);
-      color: #fff;
-      transform: scale(1.2);
-    }
-
-    .footer-section ul {
-      list-style: none;
       padding: 0;
     }
-
-    .footer-section ul a {
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: 0.3s;
+    :root {
+      --bg-color: #030712;
+      --surface-color: rgba(15, 23, 42, 0.92);
+      --section-bg: rgba(30, 41, 59, 0.75);
+      --border-color: #334155;
+      --text-color: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-color: #10b981;
+      --accent-hover: #059669;
+      --card-bg: #0f172a;
+      --shadow-color: rgba(0, 0, 0, 0.35);
+    }
+    [data-theme="light"] {
+      --bg-color: #f8fafc;
+      --surface-color: rgba(255, 255, 255, 0.95);
+      --section-bg: rgba(241, 245, 249, 0.85);
+      --border-color: #cbd5e1;
+      --text-color: #0f172a;
+      --text-muted: #475569;
+      --accent-color: #059669;
+      --accent-hover: #047857;
+      --card-bg: #ffffff;
+      --shadow-color: rgba(0, 0, 0, 0.08);
     }
 
-    .footer-section ul a:hover {
-      color: var(--accent-color);
-      padding-left: 5px;
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    .footer-bottom {
+    /* HEADER & NAV */
+    .app-header {
+      background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+      color: white;
+      padding: 32px 20px 24px;
       text-align: center;
-      padding: 1rem;
-      background: var(--section-bg);
+      position: relative;
+      box-shadow: 0 4px 20px rgba(6, 78, 59, 0.4);
+    }
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(8px);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .app-header h1 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .app-header p {
+      font-size: 15px;
+      color: #a7f3d0;
+      max-width: 720px;
+      margin: 0 auto;
     }
 
-    @media (max-width: 768px) {
-      .footer-inner-content {
-        flex-direction: column;
-      }
+    /* MAIN CONTAINER */
+    .main-container {
+      max-width: 1280px;
+      margin: 24px auto;
+      padding: 0 16px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      flex: 1;
+    }
 
-      .header h2 {
-        font-size: 1.1rem;
+    /* TOP STATS TICKER */
+    .stats-ticker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 4px 12px var(--shadow-color);
+    }
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+    .stat-info h4 {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .stat-info .stat-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-color);
+      margin-top: 2px;
+    }
+
+    /* TWO COLUMN WORKSPACE */
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 960px) {
+      .workspace-grid {
+        grid-template-columns: 1fr;
       }
+    }
+
+    .panel-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 6px 18px var(--shadow-color);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 14px;
+    }
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-color);
+    }
+    .panel-title i {
+      color: var(--accent-color);
+    }
+
+    /* FORM CONTROLS */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .form-control {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      background: var(--surface-color);
+      color: var(--text-color);
+      font-size: 14px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .form-control:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+      transition: all 0.2s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.5);
+    }
+    .btn-secondary {
+      background: var(--surface-color);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .btn-secondary:hover {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+
+    /* LEAFLET MAP */
+    #mandi-map {
+      height: 380px;
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      z-index: 1;
+    }
+    .map-legend {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    /* ARBITRAGE BANNER */
+    .arbitrage-banner {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.25) 100%);
+      border: 1px solid #10b981;
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .arbitrage-icon {
+      font-size: 32px;
+      color: var(--accent-color);
+    }
+    .arbitrage-text h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-color);
+    }
+    .arbitrage-text p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* RANKED MANDI LIST */
+    .mandi-rankings-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+    .mandi-rankings-table th {
+      text-align: left;
+      padding: 10px 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .mandi-rankings-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-color);
+    }
+    .mandi-rankings-table tr:hover {
+      background: var(--surface-color);
+    }
+    .rank-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 12px;
+    }
+    .rank-1 { background: #f59e0b; color: #78350f; }
+    .rank-2 { background: #94a3b8; color: #0f172a; }
+    .rank-3 { background: #b45309; color: #fef3c7; }
+    .rank-other { background: var(--surface-color); color: var(--text-muted); }
+
+    .profit-pill {
+      font-weight: 700;
+      color: #10b981;
+    }
+
+    /* ALERT MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .alert-modal-content {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px;
+      width: 440px;
+      max-width: 90vw;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    /* FOOTER */
+    footer {
+      background: #020617;
+      color: #94a3b8;
+      padding: 24px;
+      text-align: center;
+      font-size: 13px;
+      border-top: 1px solid #1e293b;
+      margin-top: 40px;
     }
   </style>
-  <link rel="stylesheet" href="../../footer.css" />
 </head>
 
 <body>
-  <div class="floating-icons-wrapper">
-    <div class="floating-icon" style="left: 5%; animation-duration: 15s;"><i class="fas fa-leaf"></i></div>
-    <div class="floating-icon" style="left: 20%; animation-duration: 18s; animation-delay: 2s;"><i
-        class="fas fa-seedling"></i></div>
-    <div class="floating-icon" style="left: 40%; animation-duration: 22s;"><i class="fas fa-coins"></i></div>
-    <div class="floating-icon" style="left: 65%; animation-duration: 14s; animation-delay: 5s;"><i
-        class="fas fa-wheat-awn"></i></div>
-    <div class="floating-icon" style="left: 80%; animation-duration: 20s;"><i class="fas fa-wallet"></i></div>
-    <div class="floating-icon" style="left: 90%; animation-duration: 16s; animation-delay: 1s;"><i
-        class="fas fa-hand-holding-dollar"></i></div>
-  </div>
 
-  <div class="header">
-    <a href="/main.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Main</a>
-    <button
-      style="position:fixed;top:2rem;right:2rem;z-index:999;display:flex;align-items:center;justify-content:center;"
-      class="theme-toggle" type="button" id="themeToggle" title="Switch theme" aria-label="Switch theme">
-      <span class="theme-toggle-track">
-        <span class="theme-toggle-icon sun-icon" aria-hidden="true">
-          <i class="fas fa-sun"></i>
-        </span>
-        <span class="theme-toggle-icon moon-icon" aria-hidden="true">
-          <i class="fas fa-moon"></i>
-        </span>
-        <span class="theme-toggle-thumb"></span>
-      </span>
-    </button>
-    <h2>🌾 Crop Price Tracker</h2>
-    <div style="width: 50px;"></div>
-  </div>
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-badge">
+      <i class="fas fa-chart-line"></i> Agmarknet & e-NAM AI Intelligence
+    </div>
+    <h1>🌾 Predictive Mandi Price Intelligence & Net-Profit Optimizer</h1>
+    <p>14-day ARIMA/Prophet time-series price forecasts with confidence intervals, road freight matrix, and farmgate net-profit maximization.</p>
+  </header>
 
-  <div class="form-container">
-    <form method="POST" id="priceForm">
-      <div class="form-row">
-        <label for="crop" class="form-label">Select Crop</label>
-        <select name="crop" id="crop" required>
-          <option value="">-- Choose your crop --</option>
-          <option value="Wheat">Wheat</option>
-          <option value="Rice">Rice</option>
-          <option value="Cotton">Cotton</option>
-        </select>
+  <!-- MAIN CONTAINER -->
+  <main class="main-container">
+
+    <!-- REAL-TIME KPI TICKER -->
+    <div class="stats-ticker-grid">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-tags"></i></div>
+        <div class="stat-info">
+          <h4>Tracked Mandis</h4>
+          <div class="stat-value">15+ Major APMCs</div>
+        </div>
       </div>
-
-      <div class="form-row">
-        <label for="state" class="form-label">Select State</label>
-        <select name="state" id="state" required disabled>
-          <option value="">-- First select a crop --</option>
-        </select>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-brain"></i></div>
+        <div class="stat-info">
+          <h4>Forecast Horizon</h4>
+          <div class="stat-value">14 Days (95% CI)</div>
+        </div>
       </div>
-
-      <div class="form-row">
-        <label for="market" class="form-label">Select Market</label>
-        <select name="market" id="market" required disabled>
-          <option value="">-- First select a state --</option>
-        </select>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-truck-moving"></i></div>
+        <div class="stat-info">
+          <h4>Logistics Engine</h4>
+          <div class="stat-value">Multi-Vehicle OSRM</div>
+        </div>
       </div>
-
-      <div class="header">
-        <a href="/main.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Main</a>
-        <button
-          style="position:fixed;top:2rem;right:2rem;z-index:999;display:flex;align-items:center;justify-content:center;"
-          class="theme-toggle" type="button" id="themeToggle" title="Switch theme" aria-label="Switch theme">
-          <span class="theme-toggle-track">
-            <span class="theme-toggle-icon sun-icon" aria-hidden="true">
-              <i class="fas fa-sun"></i>
-            </span>
-            <span class="theme-toggle-icon moon-icon" aria-hidden="true">
-              <i class="fas fa-moon"></i>
-            </span>
-            <span class="theme-toggle-thumb"></span>
-          </span>
-        </button>
-        <h2>🌾 Crop Price Tracker</h2>
-        <div style="width: 50px;"></div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-bell"></i></div>
+        <div class="stat-info">
+          <h4>Price Alerts</h4>
+          <div class="stat-value">SMS & Web Push</div>
+        </div>
       </div>
+    </div>
 
-      <div class="form-container">
-        <form method="POST" id="priceForm">
-          <div class="form-row">
-            <label for="crop" class="form-label">Select Crop</label>
-            <select name="crop" id="crop" required>
-              <option value="">-- Choose your crop --</option>
-              <option value="Wheat">Wheat</option>
-              <option value="Rice">Rice</option>
-              <option value="Cotton">Cotton</option>
-            </select>
+    <!-- WORKSPACE ROW 1: OPTIMIZER & FORECAST CHART -->
+    <div class="workspace-grid">
+      
+      <!-- LOGISTICS & NET PROFIT OPTIMIZER FORM -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title">
+            <i class="fas fa-calculator"></i> Net-Profit Optimizer
           </div>
-
-          <div class="form-row">
-            <label for="state" class="form-label">Select State</label>
-            <select name="state" id="state" required disabled>
-              <option value="">-- First select a crop --</option>
-            </select>
-          </div>
-
-          <div class="form-row">
-            <label for="market" class="form-label">Select Market</label>
-            <select name="market" id="market" required disabled>
-              <option value="">-- First select a state --</option>
-            </select>
-          </div>
-
-          <button type="submit" class="submit-button" id="submitBtn" disabled>
-            Track Prices
+          <button id="btn-detect-loc" class="btn-secondary" title="Use current GPS location">
+            <i class="fas fa-location-crosshairs"></i> Detect GPS
           </button>
-        </form>
-      </div>
+        </div>
 
-      <div class="results-container">
-        <h3>📈 Latest Market Prices (Preview)</h3>
-        <div class="price-grid">
-          <div class="price-card">
-            <div class="price-date">14 JAN 2026</div>
-            <div class="price-amount">₹2,450 / quintal</div>
-            <div class="price-location"><i class="fas fa-map-marker-alt"></i> Ahmedabad, Gujarat</div>
+        <form id="optimizer-form" onsubmit="handleOptimize(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="opt-crop"><i class="fas fa-wheat-awn"></i> Commodity / Crop</label>
+              <select id="opt-crop" class="form-control">
+                {% for c in crops %}
+                <option value="{{ c }}" {% if c == 'Tomato' %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="opt-volume"><i class="fas fa-weight-hanging"></i> Volume (Quintals)</label>
+              <input type="number" id="opt-volume" class="form-control" value="50" min="1" max="10000" step="1">
+            </div>
+
+            <div class="form-group">
+              <label for="opt-vehicle"><i class="fas fa-truck"></i> Transport Vehicle</label>
+              <select id="opt-vehicle" class="form-control">
+                <option value="tractor_trolley" selected>Tractor Trolley (4.5T / ₹24/km)</option>
+                <option value="auto_pickup">Pickup Truck (1.5T / ₹16/km)</option>
+                <option value="mini_truck">Eicher Mini Truck (8.5T / ₹34/km)</option>
+                <option value="heavy_truck">Heavy Commercial Truck (22T / ₹54/km)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="opt-horizon"><i class="fas fa-calendar-days"></i> Harvest Date</label>
+              <input type="date" id="opt-date" class="form-control">
+            </div>
+
+            <div class="form-group full-width">
+              <label for="opt-location-select"><i class="fas fa-map-marker-alt"></i> Farmer Location / Base District</label>
+              <select id="opt-location-select" class="form-control">
+                <option value="19.9975,73.7898" selected>Nashik / Lasalgaon (Maharashtra)</option>
+                <option value="18.5204,73.8567">Pune (Maharashtra)</option>
+                <option value="28.7041,77.1025">Delhi / NCR</option>
+                <option value="30.9010,75.8573">Ludhiana / Khanna (Punjab)</option>
+                <option value="16.3067,80.4365">Guntur (Andhra Pradesh)</option>
+                <option value="21.1702,72.8311">Surat (Gujarat)</option>
+                <option value="22.7196,75.8577">Indore (Madhya Pradesh)</option>
+                <option value="13.1367,78.1291">Kolar / Bengaluru (Karnataka)</option>
+              </select>
+            </div>
           </div>
-          <div class="price-card">
-            <div class="price-date">13 JAN 2026</div>
-            <div class="price-amount">₹2,380 / quintal</div>
-            <div class="price-location"><i class="fas fa-map-marker-alt"></i> Rajkot, Gujarat</div>
+
+          <div style="display: flex; gap: 12px; margin-top: 14px;">
+            <button type="submit" class="btn-primary" style="flex: 1;">
+              <i class="fas fa-bolt"></i> Compute Net Profit Ranking
+            </button>
+            <button type="button" class="btn-secondary" onclick="openAlertModal()">
+              <i class="fas fa-bell"></i> Set Price Alert
+            </button>
           </div>
-          <div class="price-card">
-            <div class="price-date">12 JAN 2026</div>
-            <div class="price-amount">₹2,410 / quintal</div>
-            <div class="price-location"><i class="fas fa-map-marker-alt"></i> Surat, Gujarat</div>
+        </form>
+
+        <!-- Arbitrage Banner -->
+        <div id="arbitrage-box" class="arbitrage-banner" style="display: none;">
+          <div class="arbitrage-icon"><i class="fas fa-arrow-trend-up"></i></div>
+          <div class="arbitrage-text">
+            <h4 id="arbitrage-title">Arbitrage Opportunity Detected</h4>
+            <p id="arbitrage-desc">Analyzing road transport vs market price spread...</p>
           </div>
         </div>
       </div>
+
+      <!-- 7-14 DAY PRICE FORECAST CHART -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title">
+            <i class="fas fa-chart-area"></i> 14-Day Price Forecast (95% CI)
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn-secondary" onclick="updateForecast(7)">7D</button>
+            <button class="btn-secondary" onclick="updateForecast(14)">14D</button>
+          </div>
+        </div>
+
+        <div style="position: relative; height: 260px; width: 100%;">
+          <canvas id="forecastChart"></canvas>
+        </div>
+
+        <div id="forecast-recommendation-box" style="background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; font-size: 13px;">
+          <strong>💡 AI Recommendation:</strong> <span id="forecast-rec-text">Loading intelligence...</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- WORKSPACE ROW 2: LEAFLET MAP & RANKED MANDI LIST -->
+    <div class="workspace-grid">
+      
+      <!-- INTERACTIVE LEAFLET MANDI HEATMAP -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title">
+            <i class="fas fa-map-location-dot"></i> Mandi Price & Logistics Map
+          </div>
+          <div class="map-legend">
+            <div class="legend-item"><span class="legend-dot" style="background: #10b981;"></span> High Profit</div>
+            <div class="legend-item"><span class="legend-dot" style="background: #f59e0b;"></span> Moderate</div>
+            <div class="legend-item"><span class="legend-dot" style="background: #ef4444;"></span> Low Realization</div>
+          </div>
+        </div>
+
+        <div id="mandi-map"></div>
+      </div>
+
+      <!-- RANKED NET-PROFIT TABLE -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title">
+            <i class="fas fa-ranking-star"></i> Ranked Mandis by Net Profit
+          </div>
+          <span id="rankings-crop-tag" style="font-size: 12px; background: rgba(16, 185, 129, 0.15); color: var(--accent-color); padding: 4px 10px; border-radius: 12px; font-weight: 600;">Tomato (50 Q)</span>
+        </div>
+
+        <div style="overflow-x: auto; max-height: 380px; overflow-y: auto;">
+          <table class="mandi-rankings-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Mandi / APMC</th>
+                <th>Modal Price</th>
+                <th>Logistics Cost</th>
+                <th>Net Profit</th>
+              </tr>
+            </thead>
+            <tbody id="mandi-rankings-tbody">
+              <tr>
+                <td colspan="5" style="text-align: center; color: var(--text-muted);">Click "Compute Net Profit Ranking" to analyze nearby mandis.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- TARGET PRICE ALERT MODAL -->
+  <div id="alert-modal" class="modal-overlay">
+    <div class="alert-modal-content">
+      <div class="panel-header">
+        <div class="panel-title"><i class="fas fa-bell"></i> Subscribe to Price Alert</div>
+        <button class="btn-secondary" onclick="closeAlertModal()" style="padding: 4px 8px;">&times;</button>
+      </div>
+      <form id="alert-form" onsubmit="handleAlertSubscribe(event)" style="margin-top: 14px; display: flex; flex-direction: column; gap: 12px;">
+        <div class="form-group">
+          <label>Commodity</label>
+          <input type="text" id="alert-crop" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+          <label>Target Price Threshold (₹ / Quintal)</label>
+          <input type="number" id="alert-price" class="form-control" value="3200" required>
+        </div>
+        <div class="form-group">
+          <label>Mobile Number (For SMS / WhatsApp)</label>
+          <input type="tel" id="alert-phone" class="form-control" placeholder="+91 98765 43210" required>
+        </div>
+        <div class="form-group">
+          <label>Notification Channel</label>
+          <select id="alert-channel" class="form-control">
+            <option value="SMS">SMS Message</option>
+            <option value="WHATSAPP">WhatsApp Advisory</option>
+            <option value="PUSH">Browser Web Push</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-primary" style="margin-top: 8px;">
+          <i class="fas fa-check"></i> Activate Alert Trigger
+        </button>
+      </form>
+    </div>
   </div>
 
-  <footer class="site-footer tech-dark-theme final-match">
-    <div class="footer-top-accent"></div>
-
-    <div class="footer-inner-content">
-      <div class="footer-section footer-brand">
-        <a href="../../index.html" class="brand-header">
-          <img src="../../images/logo.png" alt="AgriTech logo" class="brand-logo" />
-          <h3>AgriTech</h3>
-        </a>
-
-        <p class="tagline">
-          Empowering India's Farming Future with innovative technology
-          connecting every stakeholder.
-        </p>
-
-        <div class="social-icons">
-          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" aria-label="X (formerly Twitter)"><i class="fab fa-x-twitter"></i></a>
-          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        </div>
-      </div>
-
-      <div class="footer-group-links">
-        <div class="footer-section footer-links">
-          <h4>Quick Links</h4>
-          <ul>
-            <li>
-              <a href="../../index.html"><i class="fas fa-home"></i> Home</a>
-            </li>
-            <li>
-              <a href="../../login.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            </li>
-            <li>
-              <a href="../../marketplace.html"><i class="fas fa-store"></i> Marketplace</a>
-            </li>
-            <li>
-              <a href="../../weather_dashboard.html"><i class="fas fa-cloud-sun"></i> Weather</a>
-            </li>
-            <li>
-              <a href="../../contact.html"><i class="fas fa-headset"></i> Contact Us</a>
-            </li>
-            <li>
-              <a href="../../feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a>
-            </li>
-            <li>
-              <a href="../../terms-and-service.html"><i class="fas fa-file-contract"></i> Terms & Service</a>
-            </li>
-            <li>
-              <a href="../../privacy-policy.html"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="footer-section footer-contact">
-          <h4>Contact</h4>
-          <ul>
-            <li>
-              <a href="mailto:contact@agritech.com">
-                <i class="fas fa-envelope"></i> contact@agritech.com
-              </a>
-            </li>
-            <li>
-              <a href="tel:+910000000000">
-                <i class="fas fa-phone"></i> +91 00000 00000
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="footer-section footer-newsletter">
-          <h4>Newsletter</h4>
-          <p class="newsletter-desc">
-            Subscribe to get the latest farming insights, tips, and updates.
-          </p>
-          <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
-            <div class="newsletter-input-group">
-              <input type="email" class="newsletter-input" placeholder="Enter your email to get the latest updates..."
-                required aria-label="Email address for newsletter" />
-              <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
-                <span>Subscribe</span>
-                <i class="fas fa-paper-plane"></i>
-              </button>
-            </div>
-            <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
-            <div class="newsletter-footer-optout">
-              <small>No spam. <a href="javascript:void(0)" onclick="openUnsubscribeModal(event)">Unsubscribe</a>
-                anytime.</small>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <p>© <span id="current-year">2026</span> AgriTech. All rights reserved. <a
-          href="../../privacy-policy.html">Privacy Policy</a> · <a href="../../terms-and-service.html">Terms</a> · <a
-          href="../../cookie-policy.html">Cookie Policy</a></p>
-    </div>
-
-    <div class="footer-wave-overlay"></div>
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 AgriTech Mandi Intelligence Engine. Integrated with Agmarknet, e-NAM, and Leaflet.js.</p>
   </footer>
 
+  <!-- SCRIPT LOGIC -->
   <script>
-    const cropSelect = document.getElementById("crop");
-    const stateSelect = document.getElementById("state");
-    const marketSelect = document.getElementById("market");
-    const submitBtn = document.getElementById("submitBtn");
+    let map = null;
+    let mapMarkers = [];
+    let routePolyline = null;
+    let forecastChart = null;
 
-    document.getElementById("current-year").textContent = new Date().getFullYear();
+    // Set today's date
+    document.getElementById('opt-date').value = new Date().toISOString().split('T')[0];
 
-    function updateSubmitButton() {
-      const isFormComplete = cropSelect.value && stateSelect.value && marketSelect.value;
-      submitBtn.disabled = !isFormComplete;
+    // Initialize Map
+    function initMap() {
+      if (map) return;
+      map = L.map('mandi-map').setView([20.5937, 78.9629], 5);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 18
+      }).addTo(map);
     }
 
-    cropSelect.addEventListener("change", function () {
-      stateSelect.innerHTML = `<option value="">Loading...</option>`;
-      stateSelect.disabled = true;
+    // Initialize Chart
+    function initChart() {
+      const ctx = document.getElementById('forecastChart').getContext('2d');
+      forecastChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: 'Predicted Price (₹/Q)',
+              data: [],
+              borderColor: '#10b981',
+              backgroundColor: 'rgba(16, 185, 129, 0.1)',
+              borderWidth: 3,
+              tension: 0.35,
+              fill: false
+            },
+            {
+              label: 'Upper 95% Bound',
+              data: [],
+              borderColor: 'rgba(16, 185, 129, 0.3)',
+              borderDash: [4, 4],
+              borderWidth: 1.5,
+              fill: '+1',
+              backgroundColor: 'rgba(16, 185, 129, 0.08)'
+            },
+            {
+              label: 'Lower 95% Bound',
+              data: [],
+              borderColor: 'rgba(16, 185, 129, 0.3)',
+              borderDash: [4, 4],
+              borderWidth: 1.5,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: '#94a3b8', font: { size: 11 } } },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` ₹${ctx.parsed.y} / Quintal`
+              }
+            }
+          },
+          scales: {
+            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8', font: { size: 11 } } },
+            y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8', font: { size: 11 } } }
+          }
+        }
+      });
+    }
 
-      setTimeout(() => {
-        stateSelect.innerHTML = '<option value="">-- Select State --</option>';
-        stateSelect.innerHTML += `<option value="Gujarat">Gujarat</option>`;
-        stateSelect.innerHTML += `<option value="Punjab">Punjab</option>`;
-        stateSelect.disabled = false;
-        updateSubmitButton();
-      }, 500);
-    });
+    // Fetch and Update Forecast
+    async function updateForecast(horizon = 14) {
+      const crop = document.getElementById('opt-crop').value;
+      try {
+        const res = await fetch(`/api/forecast?crop=${encodeURIComponent(crop)}&horizon_days=${horizon}`);
+        const data = await res.json();
+        
+        if (data.forecast) {
+          const labels = data.forecast.map(f => f.day_name);
+          const yhat = data.forecast.map(f => f.yhat);
+          const yhat_upper = data.forecast.map(f => f.yhat_upper);
+          const yhat_lower = data.forecast.map(f => f.yhat_lower);
 
-    stateSelect.addEventListener("change", function () {
-      if (this.value) {
-        marketSelect.innerHTML = '<option value="">-- Select Market --</option>';
-        marketSelect.innerHTML += `<option value="Ahmedabad">Ahmedabad</option>`;
-        marketSelect.innerHTML += `<option value="Rajkot">Rajkot</option>`;
-        marketSelect.disabled = false;
-        updateSubmitButton();
+          forecastChart.data.labels = labels;
+          forecastChart.data.datasets[0].data = yhat;
+          forecastChart.data.datasets[1].data = yhat_upper;
+          forecastChart.data.datasets[2].data = yhat_lower;
+          forecastChart.update();
+
+          document.getElementById('forecast-rec-text').innerText = data.recommendation;
+        }
+      } catch (e) {
+        console.warn('Forecast error:', e);
+      }
+    }
+
+    // Handle Net Profit Optimization
+    async function handleOptimize(e) {
+      if (e) e.preventDefault();
+      
+      const crop = document.getElementById('opt-crop').value;
+      const volume = parseFloat(document.getElementById('opt-volume').value) || 50;
+      const vehicle = document.getElementById('opt-vehicle').value;
+      const [lat, lng] = document.getElementById('opt-location-select').value.split(',').map(Number);
+      const harvestDate = document.getElementById('opt-date').value;
+
+      document.getElementById('rankings-crop-tag').innerText = `${crop} (${volume} Q)`;
+
+      try {
+        const res = await fetch('/api/optimize-profit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            crop: crop,
+            volume: volume,
+            vehicle_type: vehicle,
+            lat: lat,
+            lng: lng,
+            harvest_date: harvestDate
+          })
+        });
+        const data = await res.json();
+        renderOptimizationResults(data, lat, lng);
+        updateForecast(14);
+      } catch (err) {
+        console.error('Optimization error:', err);
+      }
+    }
+
+    function renderOptimizationResults(data, farmerLat, farmerLng) {
+      const mandis = data.ranked_mandis || [];
+      const tbody = document.getElementById('mandi-rankings-tbody');
+
+      if (!mandis.length) return;
+
+      tbody.innerHTML = mandis.map((m, idx) => `
+        <tr>
+          <td>
+            <span class="rank-badge ${idx === 0 ? 'rank-1' : idx === 1 ? 'rank-2' : idx === 2 ? 'rank-3' : 'rank-other'}">
+              ${m.rank}
+            </span>
+          </td>
+          <td>
+            <strong>${m.mandi_name}</strong><br>
+            <small style="color: var(--text-muted);">${m.district}, ${m.state} (${m.distance_km} km)</small>
+          </td>
+          <td>₹${m.mandi_price_per_qtl.toLocaleString()}</td>
+          <td>₹${m.costs.total_logistics.toLocaleString()}</td>
+          <td><span class="profit-pill">₹${m.net_profit.toLocaleString()}</span></td>
+        </tr>
+      `).join('');
+
+      // Render Arbitrage Banner
+      const arbBox = document.getElementById('arbitrage-box');
+      if (data.arbitrage_opportunity && data.arbitrage_opportunity.exists) {
+        arbBox.style.display = 'flex';
+        document.getElementById('arbitrage-title').innerText = `Arbitrage Alert: +₹${data.arbitrage_opportunity.extra_net_gain_inr.toLocaleString()} Extra Profit!`;
+        document.getElementById('arbitrage-desc').innerText = data.arbitrage_opportunity.summary;
+      } else {
+        arbBox.style.display = 'none';
+      }
+
+      // Update Map Markers & Polyline
+      mapMarkers.forEach(m => map.removeLayer(m));
+      mapMarkers = [];
+      if (routePolyline) map.removeLayer(routePolyline);
+
+      // Add Farmer Home Pin
+      const farmerMarker = L.marker([farmerLat, farmerLng], {
+        icon: L.divIcon({
+          className: 'custom-farmer-icon',
+          html: '<div style="background:#3b82f6; width:16px; height:16px; border-radius:50%; border:3px solid white; box-shadow:0 0 10px rgba(59,130,246,0.8);"></div>'
+        })
+      }).addTo(map).bindPopup('<strong>📍 Your Farm Origin</strong>');
+      mapMarkers.push(farmerMarker);
+
+      mandis.forEach((m, idx) => {
+        const color = idx === 0 ? '#10b981' : idx <= 3 ? '#f59e0b' : '#ef4444';
+        const circle = L.circleMarker([m.lat, m.lng], {
+          radius: idx === 0 ? 12 : 8,
+          fillColor: color,
+          color: '#ffffff',
+          weight: 2,
+          opacity: 1,
+          fillOpacity: 0.85
+        }).addTo(map);
+
+        circle.bindPopup(`
+          <div style="font-family: inherit; padding: 4px;">
+            <h4 style="margin: 0 0 4px 0; color: #0f172a;">${m.mandi_name} (Rank #${m.rank})</h4>
+            <p style="margin: 0; font-size: 12px; color: #475569;">
+              <strong>Price:</strong> ₹${m.mandi_price_per_qtl} / Q<br>
+              <strong>Distance:</strong> ${m.distance_km} km (${m.transit_time_hours} hrs)<br>
+              <strong>Logistics Cost:</strong> ₹${m.costs.total_logistics}<br>
+              <strong style="color: #059669;">Net Profit: ₹${m.net_profit.toLocaleString()}</strong>
+            </p>
+          </div>
+        `);
+        mapMarkers.push(circle);
+      });
+
+      // Draw Polyline to Top Mandi
+      const topMandi = mandis[0];
+      routePolyline = L.polyline([
+        [farmerLat, farmerLng],
+        [topMandi.lat, topMandi.lng]
+      ], {
+        color: '#10b981',
+        weight: 3,
+        dashArray: '6, 6'
+      }).addTo(map);
+
+      map.fitBounds([
+        [farmerLat, farmerLng],
+        [topMandi.lat, topMandi.lng]
+      ], { padding: [40, 40] });
+    }
+
+    // Modal Handlers
+    function openAlertModal() {
+      document.getElementById('alert-crop').value = document.getElementById('opt-crop').value;
+      document.getElementById('alert-modal').classList.add('active');
+    }
+    function closeAlertModal() {
+      document.getElementById('alert-modal').classList.remove('active');
+    }
+
+    async function handleAlertSubscribe(e) {
+      e.preventDefault();
+      const crop = document.getElementById('alert-crop').value;
+      const price = document.getElementById('alert-price').value;
+      const phone = document.getElementById('alert-phone').value;
+      const channel = document.getElementById('alert-channel').value;
+
+      try {
+        const res = await fetch('/api/alert-subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ crop, target_price: price, phone, channel })
+        });
+        const data = await res.json();
+        alert(data.message);
+        closeAlertModal();
+      } catch (err) {
+        alert('Failed to register alert.');
+      }
+    }
+
+    // Detect GPS
+    document.getElementById('btn-detect-loc')?.addEventListener('click', () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((pos) => {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          const select = document.getElementById('opt-location-select');
+          const opt = document.createElement('option');
+          opt.value = `${lat},${lng}`;
+          opt.text = `📍 My Current GPS (${lat.toFixed(3)}, ${lng.toFixed(3)})`;
+          opt.selected = true;
+          select.prepend(opt);
+          handleOptimize();
+        }, () => {
+          alert('GPS permission denied or unavailable. Using default location.');
+        });
       }
     });
 
-    marketSelect.addEventListener("change", updateSubmitButton);
+    // Boot
+    document.addEventListener('DOMContentLoaded', () => {
+      initMap();
+      initChart();
+      handleOptimize();
+    });
   </script>
-  <script src="../../theme.js"></script>
-  <script src="../../footer.js"></script>
 </body>
 
 </html>
