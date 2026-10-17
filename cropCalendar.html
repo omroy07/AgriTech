@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Interactive Crop Calendar - AgriTech</title>
 
-  <link rel="icon" type="image/png" href="../images/logo.png" />
+  <link rel="icon" type="image/png" href="images/logo.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,7 +29,8 @@
   </script>
 
   <link rel="stylesheet" href="cropCalendar.css" />
-  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="theme.css" />
+  <link rel="stylesheet" href="footer.css" />
   <style>
     /* 1. GLOBAL VARIABLES (Matching index.html) */
     :root {
@@ -39,6 +40,9 @@
       --text-muted: #64748b;
       --accent-color: #16a34a; /* Green */
       --accent-hover: #15803d;
+      --primary-color: #16a34a;
+      --secondary-color: #22c55e;
+      --section-bg: #f8fafc;
       --border-color: #e2e8f0;
       --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
       --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
@@ -51,6 +55,9 @@
       --surface-color: #1e293b;
       --text-color: #f8fafc;
       --text-muted: #cbd5e1;
+      --primary-color: #22c55e;
+      --secondary-color: #4ade80;
+      --section-bg: #0f172a;
       --border-color: #334155;
     }
 
@@ -196,96 +203,6 @@
       min-width: 800px; /* Ensures grid doesn't squish on small screens */
     }
 
-    /* 5. FOOTER STYLES */
-    .site-footer {
-      background-color: #1e293b; /* Dark Slate */
-      color: #f8fafc;
-      padding: 3rem 1.5rem;
-      margin-top: auto;
-    }
-
-    .footer-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-    }
-
-    .footer-brand h3 {
-      font-family: var(--font-serif);
-      font-size: 1.5rem;
-      color: var(--accent-color);
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .footer-brand img {
-      height: 40px;
-      width: auto;
-      background: white;
-      padding: 4px;
-      border-radius: 6px;
-    }
-
-    .footer-links h4 {
-      color: var(--accent-color);
-      margin-bottom: 1rem;
-      font-family: var(--font-serif);
-      font-size: 1.1rem;
-    }
-
-    .footer-links ul {
-      list-style: none;
-    }
-
-    .footer-links a {
-      color: #cbd5e1;
-      text-decoration: none;
-      display: block;
-      margin-bottom: 0.5rem;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover {
-      color: var(--accent-color);
-    }
-
-    .social-media {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .social-media a {
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255,255,255,0.1);
-      border-radius: 50%;
-      color: white;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-
-    .social-media a:hover {
-      background: var(--accent-color);
-      transform: translateY(-2px);
-    }
-
-    .footer-bottom {
-      text-align: center;
-      margin-top: 2rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      color: #94a3b8;
-      font-size: 0.9rem;
-    }
-    
    /* --- Cursor Trail Container --- */
 .circle-container {
   position: fixed;
@@ -331,14 +248,13 @@
   box-shadow: 0 0 20px #22c55e;
 }
   </style>
-  <link rel="stylesheet" href="footer.css" />
 </head>
 
 <body>
   <header>
     <h1>Crop Calendar</h1>
     <div class="header-actions">
-      <a href="../index.html" class="back-btn">
+      <a href="index.html" class="back-btn">
         <i class="fas fa-arrow-left"></i> Back to Home
       </a>
     <button class="theme-toggle" type="button" id="themeToggle" title="Switch theme" aria-label="Switch theme">
@@ -379,64 +295,83 @@
     </div>
   </main>
 
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <h3><img src="../images/logo.png" alt="Logo"> AgriTech</h3>
-        <p>Empowering India's Farming Future with technology and data-driven insights.</p>
-        <div class="social-media">
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-github"></i></a>
-          <a href="#"><i class="fab fa-linkedin"></i></a>
+  <footer class="site-footer tech-dark-theme final-match">
+    <div class="footer-top-accent"></div>
+
+    <div class="footer-inner-content">
+      <!-- Column 1: Brand / Logo + short description -->
+      <div class="footer-section footer-brand">
+        <a href="index.html" class="brand-header">
+          <img src="images/logo.png" alt="AgriTech logo" class="brand-logo" />
+          <h3>AgriTech</h3>
+        </a>
+        <p class="tagline">
+          Empowering India's Farming Future with innovative technology
+          connecting every stakeholder.
+        </p>
+      </div>
+
+      <div class="footer-group-links">
+        <!-- Column 2: Quick Links -->
+        <div class="footer-section footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="main.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li><a href="feed-back.html"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+            <li><a href="chat.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
+            <li><a href="terms-and-service.html"><i class="fas fa-file-contract"></i> Terms &amp; Service</a></li>
+          </ul>
         </div>
-      </div>
-      <div class="footer-links">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="../index.html">Home</a></li>
-          <li><a href="../main.html">Dashboard</a></li>
-          <li><a href="../chat.html">AI Assistant</a></li>
-          <li><a href="../feed-back.html">Feedback</a></li>
-        </ul>
-      </div>
-      <div class="footer-links">
-        <h4>Smart Tools</h4>
-        <ul>
-          <li><a href="../Crop Recommendation/templates/index.html">Crop Recommendation</a></li>
-          <li><a href="../Disease prediction/template/index.html">Disease Detector</a></li>
-          <li><a href="../Crop Yield Prediction/crop_yield_app/templates/index.html">Yield Prediction</a></li>
-        </ul>
+
+        <!-- Column 3: Tools / Features -->
+        <div class="footer-section footer-links">
+          <h4>Tools / Features</h4>
+          <ul>
+            <li><a href="crop_recommendation/templates/index.html"><i class="fas fa-seedling"></i> Crop Recommendation</a></li>
+            <li><a href="Disease prediction/template/index.html"><i class="fas fa-shield-virus"></i> Disease Detector</a></li>
+            <li><a href="Crop Yield Prediction/crop_yield_app/templates/index.html"><i class="fas fa-chart-line"></i> Yield Prediction</a></li>
+            <li><a href="Crop_Planning/templates/cropplan.html"><i class="fas fa-calendar-check"></i> Crop Planner</a></li>
+            <li><a href="crop_advisory.html"><i class="fas fa-cloud-sun"></i> Crop Advisory</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Social links / Contact information -->
+        <div class="footer-section footer-contact">
+          <h4>Contact &amp; Social</h4>
+          <ul>
+            <li>
+              <a href="mailto:contact@agritech.com">
+                <i class="fas fa-envelope"></i> contact@agritech.com
+              </a>
+            </li>
+            <li>
+              <a href="tel:+910000000000">
+                <i class="fas fa-phone"></i> +91 00000 00000
+              </a>
+            </li>
+            <li>
+              <a href="contact.html">
+                <i class="fas fa-headset"></i> Support Center
+              </a>
+            </li>
+          </ul>
+          <div class="social-icons" style="margin-top: 1rem;">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="X (formerly Twitter)"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
       </div>
     </div>
+
     <div class="footer-bottom">
-      &copy; 2026 AgriTech. All rights reserved.
-    
-        <div class="footer-section footer-newsletter">
-          <h4>Newsletter</h4>
-          <p class="newsletter-desc">
-            Subscribe to get the latest farming insights, tips, and updates.
-          </p>
-          <form class="newsletter-form" onsubmit="return handleNewsletterSubmit(event, this)">
-            <div class="newsletter-input-group">
-              <input
-                type="email"
-                class="newsletter-input"
-                placeholder="Enter your email to get the latest updates..."
-                required
-                aria-label="Email address for newsletter"
-              />
-              <button type="submit" class="newsletter-btn" aria-label="Subscribe to newsletter">
-                <span>Subscribe</span>
-                <i class="fas fa-paper-plane"></i>
-              </button>
-            </div>
-            <div class="newsletter-feedback" style="display:none;" role="status" aria-live="polite"></div>
-            <div class="newsletter-footer-optout">
-              <small>No spam. <a href="javascript:void(0)" onclick="openUnsubscribeModal(event)">Unsubscribe</a> anytime.</small>
-            </div>
-          </form>
-        </div>
-</div>
+      <p>© <span id="current-year">2026</span> AgriTech. All rights reserved.</p>
+    </div>
+
+    <div class="footer-wave-overlay"></div>
   </footer>
  <!-- Cursor Trail -->
 <div class="circle-container" id="cursorTrail"></div>
