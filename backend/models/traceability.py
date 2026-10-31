@@ -4,6 +4,7 @@ Location: backend/models/traceability.py
 """
 
 from datetime import datetime
+from typing import Optional
 import json
 import hashlib
 import uuid

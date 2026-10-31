@@ -14,7 +14,7 @@ from typing import Dict, List
 import logging
 import requests
 
-from backend.celery_app import celery
+from backend.celery_app import celery_app as celery
 from backend.extensions import db
 from backend.services.fx_service import FXService
 from backend.services.vault_service import VaultService
@@ -23,9 +23,16 @@ from backend.models.ledger import Vault, VaultCurrencyPosition, FXRate
 logger = logging.getLogger(__name__)
 
 
-# FX API Configuration (example using exchangerate-api.com)
+# FX API Configuration
+# Primary: ExchangeRate-API
 FX_API_BASE_URL = "https://api.exchangerate-api.com/v4/latest"
+# Backup: open.er-api.com (also ExchangeRate-API — same provider, kept for parity)
 FX_API_BACKUP_URL = "https://open.er-api.com/v6/latest"
+# Independent fallback: AllRatesToday (keyless, free, ECB reference rates)
+# Terms: please link to https://allratestoday.com where rates are displayed
+FX_API_FALLBACK_URL = "https://allratestoday.com/api/open/latest"
+# Historical rates: AllRatesToday Frankfurter-compatible endpoint (weekends return prev business day)
+FX_API_HISTORICAL_URL = "https://allratestoday.com/api/compat/frankfurter"
 
 
 @celery.task(name='fx.sync_rates')
@@ -43,11 +50,15 @@ def sync_fx_rates_task(base_currency: str = 'USD') -> Dict:
     try:
         # Try primary API
         rates = _fetch_rates_from_api(base_currency)
-        
+
         if not rates:
-            # Try backup API
+            # Try backup API (same provider as primary, different endpoint)
             rates = _fetch_rates_from_backup_api(base_currency)
-        
+
+        if not rates:
+            # Independent third-party fallback (AllRatesToday — different provider)
+            rates = _fetch_rates_from_fallback_api(base_currency)
+
         if not rates:
             raise Exception("Failed to fetch rates from all APIs")
         
@@ -127,6 +138,28 @@ def _fetch_rates_from_backup_api(base_currency: str) -> Dict[str, float]:
         
     except Exception as e:
         logger.error(f"Backup FX API error: {str(e)}")
+        return {}
+
+
+def _fetch_rates_from_fallback_api(base_currency: str) -> Dict[str, float]:
+    """Fetch rates from independent fallback API (AllRatesToday).
+
+    Completely independent provider from primary/backup (both ExchangeRate-API).
+    Free, keyless. Terms: link to https://allratestoday.com where rates are shown.
+    Covers ~30 ECB reference rate currencies, including all SUPPORTED_CURRENCIES.
+    """
+    try:
+        response = requests.get(
+            f"{FX_API_FALLBACK_URL}/{base_currency}",
+            timeout=30
+        )
+        if response.status_code == 200:
+            data = response.json()
+            return data.get('rates', {})
+        logger.warning(f"Fallback FX API (AllRatesToday) returned {response.status_code}")
+        return {}
+    except Exception as e:
+        logger.error(f"Fallback FX API (AllRatesToday) error: {str(e)}")
         return {}
 
 
@@ -303,9 +336,12 @@ def backfill_historical_rates_task(
         current_date = start_date
         while current_date <= end_date:
             try:
-                # Fetch historical rates (using historical endpoint)
+                # Fetch historical rates via AllRatesToday Frankfurter-compatible endpoint.
+                # The exchangerate-api.com /v4/history endpoint returns 404 on free tier.
+                # AllRatesToday weekends automatically return the previous business day's rates.
                 response = requests.get(
-                    f"https://api.exchangerate-api.com/v4/history/{base_currency}/{current_date.isoformat()}",
+                    f"{FX_API_HISTORICAL_URL}/{current_date.isoformat()}",
+                    params={"base": base_currency},
                     timeout=30
                 )
                 
